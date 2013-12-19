@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="40" height="40" tilewidth="128" tileheight="64">
+ <properties>
+  <property name="asdqwe" value="45"/>
+  <property name="fgdg" value="32"/>
+ </properties>
+ <tileset firstgid="1" name="finalised sprites_1x1" tilewidth="128" tileheight="128">
+  <image source="finalised sprites_1x1.png" trans="ff00ff" width="512" height="1024"/>
+  <tile id="0">
+   <properties>
+    <property name="dfs" value="0"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="asdasdasd" value="weawe"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="cost" value="100"/>
+    <property name="description" value="placeholder"/>
+    <property name="name" value="no roof"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="cost" value="100"/>
+    <property name="description" value="placeholder"/>
+    <property name="name" value="thatched"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="33" name="FinalisedBlks_2x2" tilewidth="256" tileheight="256">
+  <tileoffset x="-64" y="0"/>
+  <image source="FinalisedBlks_2x2.png" trans="ff00ff" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="37" name="terrain_flat" tilewidth="128" tileheight="64">
+  <tileoffset x="2" y="1"/>
+  <image source="Environment Sprites/terrain_flat.png" trans="ff00ff" width="256" height="256"/>
+  <tile id="5">
+   <properties>
+    <property name="impassable" value="1"/>
+    <property name="unbuildable" value="1"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="impassable" value="0"/>
+    <property name="unbuildable" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="45" name="022_HQ_3x3" tilewidth="384" tileheight="384">
+  <tileoffset x="-128" y="0"/>
+  <image source="022_HQ_3x3.PNG" trans="ff00ff" width="384" height="384"/>
+ </tileset>
+ <layer name="Ground_0" width="40" height="40">
+  <properties>
+   <property name="number_of_tiles" value="5"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1lsOAyEIBVA308TZ/wb71cQQUOFesG38IGnTyhzBxzyttefGjRtQvBwxjtFyyHxZLsQ/y4XUyJNHy2s9h+FD6z97RrSf7DVsuaPzzYhoDStsSI9O2JB91wuN3hw90beq5cwtXZlGhi+7ppEzVzN0ESzbymnNR3oyfJZL83t8GbbImJkNdbLu36qeRt9htP+gXsb9q8XHpPV8xzt7x0LnttNz+X18trY30d5Gzs6dXPJ3xtpgxthr+fm0zaohY398g89aG3K8x9I3jNYeW9Uxui5W97d1LlX4dmys872ifl57Zf0izhP9rfR5jJE1+m8+pMden/dM18axbL/gewNpAvjD
+  </data>
+ </layer>
+ <layer name="Ground_1" width="40" height="40" visible="0">
+  <properties>
+   <property name="number_of_tiles" value="11"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztlu1qwzAMReXIfv9XXgK5cHbR2FhprB89INyktqXow9aKiHXKuMc8ZZ5y3LJu0TuNiTUL/2nuxPos1g/M43rJKPY9sFfiWfYP6NScYZKYp30Ten0N303bg/tkoZvP0jWitpXjgTkem4R+jvS39k4T+s+/rdJBm2d8t9n9RtuvMbC3Q9+krWecqYvf5XbR51w/bG7AX2IW9jH3q9yQHs8N5iNhDdGeVcz9C24L8025w996fgrWLn0lOxPvK3+9G9kj/1V+89g/hdcl7eN5GPH//HkF3g08V+i/J/3l8Jzyc1J27oJ5z9r0mtiFYuf3umKs97tgj8C8Yx7utE/IV37P7ajXn/BegP1cF9gjdrSP/SPrpAvsuTucfxXspzra5zXSDeWcaqQb9F+n2hXsBTvC2u1Ix5wjHXOO6P7oiuq3K7t75t/oHNuLruee6Bzbi861cdE9vh8+7OQLt94Egg==
+  </data>
+ </layer>
+ <layer name="Building" width="40" height="40" visible="0">
+  <properties>
+   <property name="number_of_tiles" value="3"/>
+   <property name="start_tile_offset" value="16"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt17ERgDAMQ9GsQNh/V3oucFyILYH/qwJNZJmG1oB4uzoAfm1TB0Aq9j2nWm/R87r06ZIjW9TcVft0tWIfVXbaB+/ezu7SnUuOJ7Kz9ouzMsfoWWH1/+e5U4cZ72Tnc/sG1PfP+mpuAHB3AKnOAf0=
+  </data>
+ </layer>
+ <layer name="Building_2" width="40" height="40" visible="0">
+  <properties>
+   <property name="number_of_tiles" value="4"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztzkENAAAIBCCraP+Q/q+Ac4MEVAEAaa4Dz/R1AAAAACAsn6wARA==
+  </data>
+ </layer>
+ <layer name="Ground_2" width="40" height="40" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztllEPwyAIhAX1///ldYmX3G61zdYHeOBLjEu1cAXEeWvNj2HHmMcYa57rma/fnYbLmq/3bM1d5iH2jWzycxc/U3x08sH+2fdsn9+BGfuNfGJd33vv2wHd2AdbRrHR+Bits48htgbZmBca7kD8EJMzPZxLjf/O5l1sfkG/XWsHup7E4QmcL60troEoOMeaZ85xFIgXNGpt9RarDzWv/SwL3OdQc5n0sSbMFqroG/Ti6LO6g89tVJ/bwbnFWckE3+VZ44f8os9kgv+bZTwf0JXhrj0D+c3a+wDut6xku3eVbH2lKIqiKIqiKIr/eQFZNAKf
+  </data>
+ </layer>
+ <layer name="Ground_3" width="40" height="40" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztlt0KhiAQRP3J93/lz8ADQ/h1aXMxBxZDzKbZdq2WUtqMOmOsqCvu+T7jktjNsbat+5usGzIyvwMNTfYcct0fI/vzzFPgDzrVA9Xz7z1Pgefq41XOevUG+vSbc4Ic4p8bWofk1wl6Bb3EDe1LjvnVuu0fa9mBd676tEc76uOcoC+7QV28ndlfgi7n/PJf4Ao14gpniDPO+b1x1xdCCCGEEEIIp/gBWEYBZQ==
+  </data>
+ </layer>
+ <layer name="Metadata" width="40" height="40" visible="0">
+  <properties>
+   <property name="number_of_tiles" value="2"/>
+   <property name="start_tile_offset" value="5"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1UEKwCAMRFHP4/0P2G0ZxCTWJgr/gaBQyBgttobbdJnrqMjTZf5e67e76ul+R/sf9Uez7shnZZqNaJ3VbBlW82Xw9sG6I3/x1qn636O9yxQ52wqRs63gvU/ks+tXvsVq9i6djHzfnHL/AAAAAOAUD4tpDh0=
+  </data>
+ </layer>
+</map>

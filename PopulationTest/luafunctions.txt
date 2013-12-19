@@ -1,0 +1,257 @@
+=== All implemented lua functionality to be defined here ==
+
+Note: I implemented the lua connection in such a way that it uses a global static GameSprite pointer. This pointer changes as I loop through all the GameSprites on the map, and with it the targeted AI routine.
+
+GoHome()
+returns: boolean
+This makes the sprite create a path to his own home.
+Returns false if the sprite has no home yet, or if the sprite is unable to find a path back home (shouldn't be possible). Returns true otherwise.
+                                                                                                  
+HasHouse()
+returns: boolean
+This checks if the sprite has a home. Returns false if the sprite has no home yet, and true if it does.
+Note: Each sprite may only have 1 house.
+                                                                                                
+GoToWork()
+returns: boolean
+Makes the sprite create a path to his workplace. Returns false if the sprite has no job yet. Returns true otherwise.
+                                                                                                  
+HasWork()
+returns: boolean
+This checks if the sprite has a job. Returns false if the sprite has no home yet, and true if it does.
+Note: Each sprite may only have 1 job.
+
+GoToBuildingWithID(int building_id)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Makes the sprite create a path to the target building. Returns false if there isn't a path. Returns true otherwise.
+
+GetCashOnHand()
+returns: int
+Retuns the amount of cash the sprite has at the moment. If it's negative, ask the programmer to check the GameSprite pointer.
+                                                                                                  
+GetLevel()
+returns: int
+Returns the education level of the sprite. 
+The education level remains as is no matter what sprite the class is, so it is possible to have a Level 15 farmer (undergone 3 class changes to become a farmer). 
+If you need to use another stat to measure, tell me. - Larry
+
+GetEnergy()
+returns: int
+Returns the energy valiue the sprite has at the moment. If it's negative, ask the programmer to check the GameSprite pointer.
+
+FollowPath()
+returns: boolean
+Makes the sprite follow a path, if it already created one. Returns false if there is no path, true otherwise.
+Note that this function returns true if the Sprite is already following a path, it just does nothing else.
+DEPRECATED - sprites now do this automatically in Wander(), GoToBuildingWithID(), GoHome() and GoToWork(), and all future pathfinding commands will automatically call this.   
+                                                                                               
+GetAllHomeIDs()
+No return value
+Populates a global array structure in lua called "homes" with Building IDs (integer). These can be used to call building specific functions later.
+Refer to this structure in lua as #homes, and access this like an array structure ( for eg, item at index 0 is homes[0]).
+This global array will be reset every time this function is called.
+
+
+GetAllJobIDs()
+No return value
+Populates a global array structure in lua called "job_locations" with Building IDs (integer). These can be used to call building specific functions later.
+A job is currently set as any building that isn't a type HOUSING.
+Refer to this structure in lua as #job_locations, and access this like an array structure ( for eg, item at index 0 is job_locations[0]).
+This global array will be reset every time this function is called.
+
+GetBuildingsOfType(string building_typename)
+No return value
+strings are to be supplied in no caps.
+valid inputs are "housing", "amenity", "military", "education", "commerce", "social"
+populates a global array "returned_buildings" with Building IDs (integer). These can be used to call building specific functions later.
+Refer to this structure in lua as #returned_buildings, and access this like an array structure ( for eg, item at index 0 is returned_buildings[0]).
+This global array will be reset every time this function is called.
+
+
+IsDestinationInRange(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Checks if where the sprite intends to go is close enough to the sprite's home. Returns false if the destination is too far away. Returns true if the destination is close enough.
+Special case: Always returns true if the Sprite has no home yet, meaning the sprite can go anywhere in the city until it finds a home.
+                                                                                    
+IsIdle()
+returns: boolean
+Checks if sprite is in the IDLE state, i.e standing still. Returns true if it is, false if it isn't.
+Note that if a sprite has already been asked to stop, it will still be WALKING until it hits the next square, so this may return anomalous results if the check is done too soon. 
+                                                                                                  
+Wander()
+returns: boolean
+Attempts to create a path to a random destination on the map. There is no home ownership range check in this function. 
+Returns true if the random location is reachable, and false if the random location isn't reachable.
+Note: has an implicit call to FollowPath if a path is found, or automatically sets the action to Idle if no path is found.
+
+
+
+StopMoving()
+returns: boolean
+Tells the sprite to stop moving and go into idle when it hits the next tile square, whatever its actions might be right now. The boolean check is to see if the
+Sprite pointer is valid.
+
+GetCostOfBuildingWithID(int destination_building_ID)
+returns: int
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Gets the buying price of the building. if it returns < 0, the building ID doesn't exist in the game map.
+Note: has NOTHING to do with the cost to build the building - it's the cost at which a sprite must pay to live in the building.
+
+GetRentOfBuildingWithID(int destination_building_ID)
+returns: int
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Gets the rent price of the building. if it returns < 0, the building ID doesn't exist in the game map.
+Note: has NOTHING to do with the cost to build the building - it's the cost at which a sprite must pay to rent the building.
+Note2: Rent mechanic not implemented yet.
+
+IsBuildingWithIDFull(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Checks if building has all its vacancies filled. Returns true if it is, false if it isn't.
+
+BuyHouseWithID(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Attempts to buy a house supplied at the buildingID.
+Returns false if the attempt fails, true if the attempt is successful.
+Note: this function will disregard the overpopulate state of a given building. A building is assumed to be full here IF the populationLimit == current population.
+
+BuySqueezeHouseWithID(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Attempts to buy a house supplied at the buildingID. 
+Returns false if the attempt fails, true if the attempt is successful.
+Note: Unlike BuyHouseWithID, this function acknowledges the overpopulate stat. If the building somehow is no longer overpopulated while buying takes place, the lucky guy will still buy the house.
+
+
+RentHouseWithID(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Attempts to RENT a house supplied at the buildingID.
+Returns false if the attempt fails, true if the attempt is successful.
+Note: This function works like BuySqueezeHouse. A person renting doesn't care if a Housing is overpopulated.
+Note2: A rented property will be sold automatically after 10 visits, leaving the sprite homeless again. 
+Note3: If new homes are created, *ONLY homeowners will react*. Rented property owners are still tied by contract and will not react.
+
+SellHouse()
+returns: boolean
+Attempts to make the Sprite sell his home. The result is a sprite with no home location and a bit more cash. 
+returns true if the sale is successful. False if the sprite never had a house in the first place, or the sprite pointer is invalid.
+Note: Rented properties will sell for $0. It IS rented after all.
+
+
+AssignJobWithID(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Attempts to find a job at a given building. Returns true if a job is found, false if it isn't.
+Note: since a building can have many jobs, this function incorporates a qualification and vacancy check with every single job on the property. No further checks should be done before calling this. The sprite is hired for the first suitable job with vacancies it comes across.
+Note2: the sprite strictly searches for a job that matches its class and experience level here!
+
+AssignLowerJobWithID(int destination_building_ID)
+returns: boolean
+Use GetAllHomeIDs or GetAllJobIDs or GetAllBuildingsIDsWithType to get the ID value to pass into this function. One ID at a time, please.
+Attempts to find a job at a given building. Returns true if a job is found, false if it isn't.
+Note: works like AssignJobWithID, except that the sprite is made to look for a job 1 class lower, or accepts the class "All". class level still applies. If the sprite is at the lowest class (Farmer), this function will still search for jobs with "All", but it will not list farmers anymore.
+
+IsJobSuitable()
+returns: boolean
+Checks if the sprite has a suitable job. This means the job must match at least the Sprite's CLASS.
+Note: A sprite with no job will still return FALSE here.
+
+IsHomeSuitable()
+returns: boolean
+Checks if the sprite's home is livable. A home is livable as long as it isn't overcrowded. Note that having aliens in the premises doesn't count!
+Note: A sprite with no home will still return FALSE here.
+
+IsBetterHouseAvailable()
+returns: boolean
+Checks if a better house is available out of all HOUSING locations on the map. A better house is one that isn't overcrowded and still has a vacancy.
+Ignores cost (that's checked when buying a house) - and ignores max distance.
+Will NOT check if sprite already has a suitable home. Use HasHome() and IsHomeSuitable() for that.
+Doesn't supply the house, it's a general function that tells the sprite a better house is out there.
+
+IsBetterJobAvailable()
+returns: boolean
+Checks if a better job is available out of all job locations on the map (i.e all AMENITY, EDUCATION, SOCIAL, COMMERCE, MILITARY buildings).
+A sprite's ideal job is one that matches the sprite's class and education level. 
+Will NOT check if sprite already has a suitable job. Use HasJob() and IsJobSuitable() for that.
+Doesn't supply the job location, it just tells the sprite there's a better one out there.
+
+SetClassLevel(int targetLevel)
+returns: None
+Sets the current CLASS level of the sprite. Target level is anywhere from 1-5. Any other number will be forced to these limits. 
+Note: setting a Class level to 5 will likely cause the sprite to change class, unless the sprite is already a chieftain. 
+
+ModifyHappiness(int mod)
+returns: None
+Modifys the happiness possession of the sprite by <mod>. Mod can be negative or positive. Minimum happiness is 0.
+
+ModifyLoyalty(int mod)
+returns: None
+Modifys the loyalty possession of the sprite by <mod>. Mod can be negative or positive. Minimum happiness is 0.
+
+ModifySocial(int mod)
+returns: None
+Modifys the social possession of the sprite by <mod>. Mod can be negative or positive. Minimum happiness is 0.
+
+QuitJob()
+returns: boolean
+Makes the sprite quit its job.
+Should always return true, unless the sprite never had a job in the first place.
+
+GetBuildingLevelWithID(int destination_building_ID)
+returns: int
+supplied with a buildingID, will return the building's level.
+
+GetBuildingLevelWithID(int destination_building_ID)
+returns: int
+supplied with a buildingID, will return the building's level.
+
+
+GetBuildingLevelWithID(int destination_building_ID)
+returns: int
+supplied with a buildingID, will return the building's level.
+
+
+IsAtMaxClassLevel()
+returns: bool
+Returns whether the sprite is at its max class level (i.e ready for upgrade). 
+Class level is different from Education level, but the sprite stops gaining levels as soon as a maximum class level is reached.
+
+IsAtAbsoluteMaxLevel()
+returns: bool
+Returns whether the sprite has reached the absolute maximum Education Level (20). No further ugprades are possible from this stage.
+
+
+HasMetUpgradeCriteria()
+returns: bool
+Returns whether the sprite has met the criteria to change classes. (This is different from IsAtMaxClassLevel, as each class has a set of requirements. Check inside the class CFG files for details.)
+
+TriggerUpgrade()
+returns: None
+Attempts to make the sprite upgrade itself. The sprite will make its way towards the High Temple (specialOnMap[0], always, cannot be destroyed), where it will attempt to upgrade.
+Call this after checking HasMetUpgradeCriteria(), as this function doesn't actually do the checking again and will cause the sprite to 
+
+TriggerSocialInteraction()
+returns: boolean
+Returns whether a social interaction was successfully triggered.
+When called, selects the first available foreginer not already in a social interaction, and selects a random social building. Both the sprite calling this function, AND the foreigner, will travel to the social building. The building will then handle the rest of the interaction. 
+Note: will return false if:
+- no social buildings are present on the map 
+- no aliens are present on the map.
+- sprite is already in the middle of a social interaction.
+- foreginer is in the middle of a social interaction.
+This function is meant to be used only with Mayans, as it specifically looks for an Alien to perform the interaction with.
+This function will interrupt the current action of any Alien it happens to select.
+
+GetSocialInteractionChance()
+returns: Number
+Returns the percent chance of a social interaction event occuring. Default 30% - which means in Lua is 30. 
+To roll against this number using lua's rand() function, roll a rand(0, 100) and compare the result against the number returned from this function. 
+
+
+
+
+

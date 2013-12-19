@@ -1,0 +1,160 @@
+The tutorial is a json document, containing many items, played in sequence from top to bottom.
+
+Each item contains 3 sections:
+
+Pre-sequence - runs once when the tutorial handler begins the sequence. If this is blank, this section will be ignored.
+valid actions:
+1. "\"pre_action\":\"message\","
+    "\"pre_targettype\":\"alert\","
+    "\"pre_content\":\"Your message here!\","
+Shows a message as a pop up.
+
+2. "\"pre_action\":\"message\","
+    "\"pre_targettype\":\"hint\","
+    "\"pre_content\":\"Your message here!\","
+Shows a message as a hint box which disappears after awhile.
+
+3."\"pre_action\":\"system\","
+    "\"pre_targettype\":\"spawning\","
+    "\"pre_content\":\"on/off\","
+Switches the spawn mechanism in the Policy menu on and off.
+
+4."\"pre_action\":\"system\","
+    "\"pre_targettype\":\"policymenu\","
+    "\"pre_content\":\"enable/disabe\","
+Enables/Disables the Policy Menu.
+
+5."\"pre_action\":\"system\","
+    "\"pre_targettype\":\"researchmenu\","
+    "\"pre_content\":\"enable/disabe\","
+Enables/Disables the Research Menu
+
+
+6."\"pre_action\":\"makeresearchable\","
+    "\"pre_targettype\":\"BUILDING_CATEGORY_HERE\","
+    "\"pre_content\":\"building_name_here\","
+Makes a building researchable. This overrides any prerequisite detection.
+A building category must be supplied. This can be HOUSING, AMENITY, COMMERCE, MILITARY, SOCIAL, EDUCATION (in caps).
+Building name is the exact building name. It is not compulsory, but not supplying the building name means the game enables the very first locked building it comes it. This value will be converted to small caps. If the building isn't found, nothing happens.
+
+7."\"pre_action\":\"makebuildable\","
+    "\"pre_targettype\":\"BUILDING_CATEGORY_HERE\","
+    "\"pre_content\":\"building_name_here\","
+Makes a building buildable. This overrides any prerequisite detection, and bypasses the research completely.
+A building category must be supplied. This can be HOUSING, AMENITY, COMMERCE, MILITARY, SOCIAL, EDUCATION (in caps).
+Building name is the exact building name. It is not compulsory, but not supplying the building name means the game enables the very first locked building it comes it. This value will be converted to small caps. If the building isn't found, nothing happens.
+
+8."\"pre_action\":\"spawn\","
+    "\"pre_targettype\":\"mayan/alien\","
+    "\"pre_content\":\"sprite class here\","
+Sets the next spawn of the Policy's autospawner to a given class.
+targettype must be either mayan or alien.
+class can be any one of:
+- mayan: citizen, farmer, warrior, merchant
+- alien: citizen, researcher
+Does nothing if the class doesn't exist for a given type.
+
+
+Wait-sequence - this does not run anything. It waits for a defined user's action. The user's action will then end this sequence and cause the tutorial handler to load the next item in the sequence. If this is blank, the item ends and the tutorial goes into the next item in the sequence.
+Valid waits:
+1. "\"wait_action\":\"alert\","
+ "\"wait_targettype\":\"clicked\","
+ "\"wait_content\":\"\","
+ Listens for an alert box closed. Responds to both yes and no, if any. I assume that there's only one alert box to listen for, and that should be the one that's thrown up by a post-action from the last item, or a pre-action.
+ 
+2. "\"wait_action\":\"hint\","
+ "\"wait_targettype\":\"timeout\","
+ "\"wait_content\":\"\","
+Listens for the hint function to automatically timeout and close. There's always only one hint at all times in the game. I assume the one this function is waiting for is a hint that is triggered from a pre-action or post-action.
+
+3. "\"wait_action\":\"constructioncomplete\","
+ "\"wait_targettype\":\"building\","
+ "\"wait_content\":\"BUILDING_CATEGORY_HERE\","
+Listens for a building construction complete, i.e after the build preview timer expires.
+A building category must be supplied. This can be HOUSING, AMENITY, COMMERCE, MILITARY, SOCIAL, EDUCATION (in caps).
+
+4. "\"wait_action\":\"researchcomplete\","
+ "\"wait_targettype\":\"building\","
+ "\"wait_content\":\"BUILDING_CATEGORY_HERE\","
+Listens for a building research complete, i.e after the research timer expires.
+A building category must be supplied. This can be HOUSING, AMENITY, COMMERCE, MILITARY, SOCIAL, EDUCATION (in caps).
+
+
+5. "\"wait_action\":\"spawncomplete\","
+ "\"wait_targettype\":\"alien/mayan\","
+ "\"wait_content\":\"class here\","
+Listens for a specific type of sprite to spawn. targettype and content must match the sprite's race and class to work.
+valid classes:
+- mayan: citizen, farmer, warrior, merchant
+- alien: citizen, researcher
+
+6. "\"wait_action\":\"count\","
+ "\"wait_targettype\":\"population/building\","
+ "\"wait_content\":number_here,"
+Checked if a new sprite enters the area of it a new building is constructed. Listens for when there are number_here buildings OR number_here sprites on the map.
+
+
+Post-section - runs after a wait-sequence is complete before going into the next item. If blank, this section will be ignored.
+valid actions:
+1. "\"post_action\":\"message\","
+    "\"post_targettype\":\"alert\","
+    "\"post_content\":\"Your message here!\","
+Shows a message as a pop up.
+
+2. "\"post_action\":\"message\","
+    "\"post_targettype\":\"hint\","
+    "\"post_content\":\"Your message here!\","
+Shows a message as a hint box which disappears after awhile.
+
+3."\"post_action\":\"system\","
+    "\"post_targettype\":\"spawning\","
+    "\"post_content\":\"on/off\","
+Switches the spawn mechanism in the Policy menu on and off.
+
+4."\"post_action\":\"system\","
+    "\"post_targettype\":\"policymenu\","
+    "\"post_content\":\"enable/disabe\","
+Enables/Disables the Policy Menu.
+
+5."\"post_action\":\"system\","
+    "\"post_targettype\":\"researchmenu\","
+    "\"post_content\":\"enable/disabe\","
+Enables/Disables the Research Menu
+
+
+6."\"post_action\":\"makeresearchable\","
+    "\"post_targettype\":\"BUILDING_CATEGORY_HERE\","
+    "\"post_content\":\"building_name_here\","
+Makes a building researchable. This overrides any prerequisite detection.
+A building category must be supplied. This can be HOUSING, AMENITY, COMMERCE, MILITARY, SOCIAL, EDUCATION (in caps).
+Building name is the exact building name. It is not compulsory, but not supplying the building name means the game enables the very first locked building it comes it. This value will be converted to small caps. If the building isn't found, nothing happens.
+
+7."\"post_action\":\"makebuildable\","
+    "\"post_targettype\":\"BUILDING_CATEGORY_HERE\","
+    "\"post_content\":\"building_name_here\","
+Makes a building buildable. This overrides any prerequisite detection, and bypasses the research completely.
+A building category must be supplied. This can be HOUSING, AMENITY, COMMERCE, MILITARY, SOCIAL, EDUCATION (in caps).
+Building name is the exact building name. It is not compulsory, but not supplying the building name means the game enables the very first locked building it comes it. This value will be converted to small caps. If the building isn't found, nothing happens.
+
+8."\"post_action\":\"spawn\","
+    "\"post_targettype\":\"mayan/alien\","
+    "\"post_content\":\"sprite class here\","
+Sets the next spawn of the Policy's autospawner to a given class.
+targettype must be either mayan or alien.
+class can be any one of:
+- mayan: citizen, farmer, warrior, merchant
+- alien: citizen, researcher
+Does nothing if the class doesn't exist for a given type.
+ 
+
+    
+    
+ 
+  
+    
+    
+
+     
+        
+        
+    }
