@@ -9,10 +9,10 @@ function hasNoHouse()
 x = HasHouse()
 
 if(x == false) then
-print("Researcher got no House, go Buy one")
+print("soldier got no House, go Buy one")
 return 1
 else
-print("Researcher got House liao")
+print("soldier got House liao")
 return 0
 end
 end
@@ -29,11 +29,11 @@ if (cash >= cost and cost ~= 0) then
 bought = BuyHouseWithID(homes[i])
 if (bought == true) then
 GoHome()
-print("Researcher Buying House: " .. homes[i])
+print("soldier Buying House: " .. homes[i])
 --break
 return 1
 else
-print("Researcher Failed to buy. Next!")
+print("soldier Failed to buy. Next!")
 
 end
 end
@@ -51,11 +51,11 @@ if (cash >= cost and cost ~= 0) then
 bought = BuySqueezeHouseWithID(homes[i])
 if (bought == true) then
 GoHome()
-print("Researcher Squeezing House: " .. homes[i])
+print("soldier Squeezing House: " .. homes[i])
 --break
 return 1
 else
-print("Researcher Failed to squeeze. Next!")
+print("soldier Failed to squeeze. Next!")
 end
 end
 end
@@ -65,7 +65,7 @@ end
 function gotNoHouseWarning()
 x = HasHouse()
 if (x == false) then
-print ("Researcher no house go wander")
+print ("soldier no house go wander")
 Wander()
 --StopMoving()
 return 1
@@ -92,7 +92,7 @@ end
 -- methods for determining the need to go work
 
 function goWork()
-print("Researcher Going to Work")
+print("soldier Going to Work")
 GoToWork()
 return 1
 end
@@ -100,17 +100,17 @@ end
 function hasWorkAlready()
 a = HasWork()
 if (a == true) then
-print("Researcher Has Job")
+print("soldier Has Job")
 return 1
 else
-print("Researcher no Job, Next")
+print("soldier no Job, Next")
 return 0
 end
 end
 
 function gotNoMoney()
 a = GetCashOnHand()
-print ("Researcher have cash: " .. a)
+print ("soldier have cash: " .. a)
 
 if (a <= 50) then
 return 1
@@ -124,7 +124,7 @@ end
 function gotNoWork()
 a = HasWork()
 if (a ~= true) then
-print("Researcher got no work")
+print("soldier got no work")
 return 1
 else
 return 0
@@ -132,24 +132,24 @@ end
 end
 
 function findWork()
-print("Researcher find Work")
+print("soldier find Work")
 
-GetBuildingsOfType("education")
+GetBuildingsOfType("military")
 
 if next(returned_buildings) == nil then
-print("Researcher no education available")
+print("soldier no military available")
 return 1
 end
 
 for i=1, #returned_buildings do
-print ("Researcher finding job in building " .. returned_buildings[i])
+print ("soldier finding job in building " .. returned_buildings[i])
 gotjob = AssignJobWithID(returned_buildings[i])
 if (gotjob == true) then
-print ("Researcher got a job")
+print ("soldier got a job")
 GoToWork()
 return 0
 else
-print ("Researcher problem signing up for job, NEXT")
+print ("soldier problem signing up for job, NEXT")
 end
 end
 -- never return 0 in the middle of the loop as it will end the loop early.
@@ -161,19 +161,19 @@ print("find lower level work")
 GetAllJobIDs()
 
 if (#job_locations == 0) then
-print("Researcher no low jobs available")
+print("soldier no low jobs available")
 return 1
 end
 
 for i=1, #job_locations do
-print ("finding job again in building " .. job_locations[i])
+print ("soldier finding job again in building " .. job_locations[i])
 gotjob = AssignLowerJobWithID(job_locations[i])
 if (gotjob == true) then
-print ("Researcher got a Lower job")
+print ("soldier got a Lower job")
 GoToWork()
 return 0
 else
-print ("Researcher problem signing up for Lower job, NEXT")
+print ("soldier problem signing up for Lower job, NEXT")
 end
 end
 -- never return 0 in the middle of the loop as it will end the loop early.
@@ -182,13 +182,13 @@ return 1
 end
 
 function noJobFound()
-print("Researcher Cannot find a job! Go wander")
+print("soldier Cannot find a job! Go wander")
 Wander()
 return 1
 end
 
 function noNeedActivity()
-print("Researcher There is nothing I need to do now")
+print("soldier There is nothing I need to do now")
 return 0
 end
 
@@ -204,7 +204,7 @@ end
 function isSqueezingHouse()
 s = IsHomeSuitable()
 if (a~=true) then
-print("Researcher is squeezing in house")
+print("soldier is squeezing in house")
 return 1
 else
 return 0
@@ -212,7 +212,7 @@ end
 end
 
 function upgradeHouse()
-print ("Researcher upgrading House")
+print ("soldier upgrading House")
 
 findHouse = IsBetterHouseAvailable()
 
@@ -226,20 +226,40 @@ for i=1, #homes do
 cost = GetCostOfBuildingWithID(homes[i])
 
 if (cash >= cost and cost ~= 0) then
-print ("Researcher sold House")
+print ("soldier sold House")
 SellHouse()
 bought = BuyHouseWithID(homes[i])
 if (bought == true) then
 GoHome()
-print("Researcher Upgraded House: " .. homes[i])
+print("soldier Upgraded House: " .. homes[i])
 --break
 return 1
 else
-print("Researcher Failed to Upgrade. Next!")
+print("soldier Failed to Upgrade. Next!")
 end
 end
 end
 return 0
+end
+
+function isMaxClass()
+a = IsAtMaxClassLevel()
+if (a == true) then
+print("farmer is ready to upgrade class")
+return 1
+else
+return 0
+end
+end
+
+function upgradeClass()
+b = HasMetUpgradeCriteria()
+if (b == true) then
+TriggerUpgrade()
+return 1
+else
+return 0
+end
 end
 
 function isJobMatching()
@@ -252,26 +272,35 @@ end
 end
 
 function upgradeJob()
-print("Researcher upgrading Job")
+print("soldier upgrading Job")
 
-GetBuildingsOfType("education")
+findjob = IsBetterJobAvailable()
 
-if next(returned_buildings) == nil then
-print("Researcher no education available")
-return 1
+if (findjob ~= true) then
+print("soldier no Upgrade Job Available")
+return 0
+else
+print("soldier quit Job")
+QuitJob()
 end
 
-QuitJob()
+
+GetBuildingsOfType("military")
+
+if next(returned_buildings) == nil then
+print("soldier no military available")
+return 0
+end
 
 for i=1, #returned_buildings do
-print ("Researcher finding job in building " .. returned_buildings[i])
+print ("soldier finding job in building " .. returned_buildings[i])
 gotjob = AssignJobWithID(returned_buildings[i])
 if (gotjob == true) then
-print ("Researcher upgraded a job")
+print ("soldier upgraded a job")
 GoToWork()
 return 1
 else
-print ("Researcher problem upgrading job, NEXT")
+print ("soldier problem upgrading job, NEXT")
 end
 end
 -- never return 0 in the middle of the loop as it will end the loop early.
@@ -279,73 +308,75 @@ return 0
 end
 
 function findShop()
-print ("Researcher finding shop")
+print ("soldier finding shop")
 GetBuildingsOfType("commerce")
 loc = math.random(0, #returned_buildings)
 dist = IsDestinationInRange(loc)
 if (dist == true) then
-print ("Researcher go Shopping")
+print ("soldier go Shopping")
 GoToBuildingWithID(loc)
 return 1
 else
-print ("Researcher cant go shopping")
+print ("soldier cant go shopping")
 
 end
 return 0
 end
 
 function findSocial()
-print ("Researcher finding social")
+print ("soldier finding social")
 GetBuildingsOfType("social")
 loc = math.random(0, #returned_buildings)
 dist = IsDestinationInRange(loc)
 if (dist == true) then
-print ("Researcher go Social")
+print ("soldier go Social")
 GoToBuildingWithID(loc)
 return 1
 else
-print ("Researcher cant go social")
+print ("soldier cant go social")
 
 end
 return 0
 end
 
 function findEdu()
-print ("Researcher finding education")
+print ("soldier finding education")
 GetBuildingsOfType("education")
 loc = math.random(0, #returned_buildings)
 dist = IsDestinationInRange(loc)
 if (dist == true) then
-print ("Researcher go education")
+print ("soldier go education")
 GoToBuildingWithID(loc)
 return 1
 else
-print ("Researcher cant go education")
+print ("soldier cant go education")
 
 end
 return 0
 end
 
+function checkInteract()
+    print ("soldier checking for social interaction")
+    interactchance = math.random(0, 100)
+    print (interactchance)
+    print (GetSocialInteractionChance())
+    
+    if (interactchance <= GetSocialInteractionChance()) then
+        return 1
+    else
+        return 0
+    end
 
-function gotLoyalty()
-a = GetLoyalty()
- if (a>100) then
-    print("I'm quite a loyal Xenos")
-    return 1
- else
-    print("Not so loyal Researcher")
-    return 0
- end
 end
 
-function changeRace()
-print("Time to change Race to Mayan")
-BecomeLocal()
+function goInteract()
+    TriggerSocialInteraction()
 end
+
 
 function jalanJalan()
 Wander()
-print("Researcher nothing else to do, go jalan jalan")
+print("soldier nothing else to do, go jalan jalan")
 return 1
 end
 

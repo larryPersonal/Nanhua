@@ -14,13 +14,16 @@
 //Config headers
 #include "CitizenCFG.h"
 #include "FarmerCFG.h"
-#include "WarriorCFG.h"
-#include "ResearcherCFG.h"
-#include "ChiefCFG.h"
-#include "MerchantCFG.h"
-#include "ACitizenCFG.h"
-#include "AMerchantCFG.h"
-#include "AChiefCFG.h"
+#include "SoldierCFG.h"
+#include "RefugeeCFG.h"
+#include "BuilderCFG.h"
+#include "BanditCFG.h"
+//#include "ResearcherCFG.h"
+//#include "ChiefCFG.h"
+//#include "MerchantCFG.h"
+//#include "ACitizenCFG.h"
+//#include "AMerchantCFG.h"
+//#include "AChiefCFG.h"
 
 #include "NameGenerator.h"
 
@@ -108,6 +111,7 @@ void SpriteHandler::initialize()
         switch (i)
         {
             case 0:
+            /*
                 fileName = "AFC";
                 targetIdleF = 4;
                 targetWalkF = 4;
@@ -115,10 +119,11 @@ void SpriteHandler::initialize()
                 defaultContent = acitizenDefaults;
                 targetClass = "citizen";
                 targetGender = 'm';
-                targetRace = 'a';
+                targetRace = 'a';*/
 
                 break;
             case 1:
+            /*
                 fileName = "AMC";
                 targetIdleF = 4;
                 targetWalkF = 4;
@@ -128,9 +133,10 @@ void SpriteHandler::initialize()
                 targetClass = "citizen";
                 targetGender = 'm';
                 targetRace = 'a';
-                
+                */
                 break;
             case 2:
+            /*
                 fileName = "ARF";
                 targetIdleF = 2;
                 targetWalkF = 2;
@@ -138,10 +144,11 @@ void SpriteHandler::initialize()
                 defaultContent = researcherDefaults;
                 targetClass = "researcher";
                 targetGender = 'f';
-                targetRace = 'a';
+                targetRace = 'a';*/
                 
                 break;
             case 3:
+            /*
                 fileName = "ARM";
                 targetIdleF = 2;
                 targetWalkF = 2;
@@ -150,9 +157,10 @@ void SpriteHandler::initialize()
                 targetClass = "researcher";
                 targetGender = 'm';
                 targetRace = 'a';
-                
+                */
                 break;
             case 4:
+            /*
                 fileName = "FMC";
 
                 targetIdleF = 3;
@@ -163,9 +171,10 @@ void SpriteHandler::initialize()
                 targetClass = "citizen";
                 targetGender = 'f';
                 targetRace = 'h';
-
+*/
                 break;
             case 5:
+            /*
                 fileName = "FMF";
                 targetIdleF = 3;
                 targetWalkF = 4;
@@ -175,127 +184,8 @@ void SpriteHandler::initialize()
                 targetGender = 'f';
                 targetRace = 'h';
 
-                break;
-            case 6:
-                fileName = "FMW";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = warriorConfig;
-                defaultContent = warriorDefaults;
-                targetClass = "warrior";
-                targetGender = 'f';
-                targetRace = 'h';
-
-                break;
-            case 7:
-                fileName = "MMC";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = citizenConfig;
-                defaultContent = citizenDefaults;
-                targetClass = "citizen";
-                targetGender = 'm';
-                targetRace = 'h';
-
-                break;
-            case 8:
-                fileName = "MMF";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = farmerConfig;
-                defaultContent = farmerDefaults;
-                targetClass = "farmer";
-                targetGender = 'm';
-                targetRace = 'h';
-
-                break;
-            case 9:
-                fileName = "MMW";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = warriorConfig;
-                defaultContent = warriorDefaults;
-                targetClass = "warrior";
-                targetGender = 'm';
-                targetRace = 'h';
-                
-                break;
-            case 10:
-                fileName = "AC";
-                targetIdleF = 2;
-                targetWalkF = 4;
-                configContent = achiefConfig;
-                defaultContent = achiefDefaults;
-                targetClass = "chief";
-                targetRace = 'a';
-                targetGender = 'n';
-                
-                break;
-            case 11:
-                fileName = "MC";
-                targetIdleF = 2;
-                targetWalkF = 4;
-                configContent = chiefConfig;
-                defaultContent = chiefDefaults;
-                targetClass = "chief";
-                targetGender = 'n';
-                targetRace = 'h';
-
-                break;
-            case 12:
-                fileName = "MMC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = merchantConfig;
-                defaultContent = merchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'm';
-                targetRace = 'h';
-
-                break;
-
-            case 13:
-                fileName = "FMC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = merchantConfig;
-                defaultContent = merchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'f';
-                targetRace = 'h';
-
-                break;
-
-            case 14:
-                fileName = "AMC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = amerchantConfig;
-                defaultContent = amerchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'm';
-                targetRace = 'a';
-
-                break;
-
-            case 15:
-                fileName = "AFC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = amerchantConfig;
-                defaultContent = amerchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'f';
-                targetRace = 'a';
-
+             */
+      
                 break;
                 
         }
@@ -384,10 +274,11 @@ void SpriteHandler::initClassRequirements()
     
     initClass(citizenRequirements);
     initClass(farmerRequirements);
-    initClass(merchantRequirements);
-    initClass(chiefRequirements);
-    initClass(warriorRequirements);
-    initClass(researcherRequirements);
+    //initClass(banditRequirements);
+    //initClass(refugeeRequirements);
+    //initClass(builderRequirements);
+    //initClass(soldierRequirements);
+    
 }
 
 
@@ -417,7 +308,7 @@ GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender,
     if (!allSprites) return NULL;
     if (allSprites->count() == 0) return NULL;
     
-    
+    /*
     if (strcmp(classname, "chief") == 0)
     {
         if (race == 'a')
@@ -439,7 +330,9 @@ GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender,
         }
         
         return NULL;
-    }
+    }*/
+    
+    return NULL;
 }
 
 
@@ -623,11 +516,14 @@ void SpriteHandler::NewHousingLocationCreated()
 
 int SpriteHandler::getRank(std::string spriteclass)
 {
+    /*
     if (spriteclass.compare("farmer") ==0|| spriteclass.compare("citizen") == 0) return 0;
     if (spriteclass.compare("merchant")==0 || spriteclass.compare("researcher") == 0) return 1;
     if (spriteclass.compare("warrior") ==0) return 2;
     if (spriteclass.compare("chief")==0) return 3;
+    */
     
+    //Rank doesn't matter anymore.
     return 0;
 }
 
@@ -635,14 +531,7 @@ int SpriteHandler::getRank(std::string spriteclass)
 
 int SpriteHandler::getAlienCount()
 {
-    /*
-    int count = 0;
-    for (int i = 0; i < spritesOnMap->count(); ++i)
-    {
-        GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        if (sp->race == 'a')
-            ++count;
-    }*/
+
     
     return aliensOnMap->count();
 }

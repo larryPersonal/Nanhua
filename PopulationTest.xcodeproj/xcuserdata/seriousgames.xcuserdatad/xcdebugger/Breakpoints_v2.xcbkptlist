@@ -477,7 +477,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "440"
             endingLineNumber = "440"
-            landmarkName = "GameScene::FirstRunPopulate()"
+            landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -843,7 +843,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "572"
             endingLineNumber = "572"
-            landmarkName = "SpriteHandler::removeSpriteFromMap(GameSprite* sprite)"
+            landmarkName = "SpriteHandler::getAlienCount()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1723,7 +1723,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "393"
             endingLineNumber = "393"
-            landmarkName = "GameScene::FirstRunPopulate()"
+            landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1899,7 +1899,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "419"
             endingLineNumber = "419"
-            landmarkName = "SpriteHandler::getSpriteTemplate(const char *classname, char gender, char race)"
+            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1915,7 +1915,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "430"
             endingLineNumber = "430"
-            landmarkName = "SpriteHandler::getSpriteTemplate(const char *classname, char gender, char race)"
+            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1931,7 +1931,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "420"
             endingLineNumber = "420"
-            landmarkName = "SpriteHandler::getSpriteTemplate(const char *classname, char gender, char race)"
+            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2091,7 +2091,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "510"
             endingLineNumber = "510"
-            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
+            landmarkName = "SpriteHandler::NewHousingLocationCreated()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2107,7 +2107,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "505"
             endingLineNumber = "505"
-            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
+            landmarkName = "SpriteHandler::NewHousingLocationCreated()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2139,7 +2139,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "490"
             endingLineNumber = "490"
-            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
+            landmarkName = "SpriteHandler::NewJobLocationCreated()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2155,7 +2155,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "502"
             endingLineNumber = "502"
-            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
+            landmarkName = "SpriteHandler::NewHousingLocationCreated()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2171,7 +2171,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "523"
             endingLineNumber = "523"
-            landmarkName = "SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &amp;tilePos, GameSprite *sp, std::string details)"
+            landmarkName = "SpriteHandler::getRank(std::string spriteclass)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2299,7 +2299,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "518"
             endingLineNumber = "518"
-            landmarkName = "GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)"
+            landmarkName = "GameScene::FirstRunPopulate()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2331,7 +2331,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "517"
             endingLineNumber = "517"
-            landmarkName = "GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)"
+            landmarkName = "GameScene::FirstRunPopulate()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4294,9 +4294,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1286"
-            endingLineNumber = "1286"
-            landmarkName = "GameSprite::FindLowerLevelJobAt(int instanceID)"
-            landmarkType = "5">
+            endingLineNumber = "1286">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4503,7 +4501,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "626"
             endingLineNumber = "626"
-            landmarkName = "SpriteHandler::getRank(std::string spriteclass)"
+            landmarkName = "SpriteHandler::getAlienCount()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

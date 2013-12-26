@@ -31,9 +31,14 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
+/*
 enum SpriteType { F_ALIEN_CITIZEN = 0, M_ALIEN_CITIZEN, F_ALIEN_RESEARCHER, M_ALIEN_RESEARCHER, F_MAYAN_CITIZEN, F_MAYAN_FARMER, F_MAYAN_WARRIOR, M_MAYAN_CITIZEN, M_MAYAN_FARMER, M_MAYAN_WARRIOR, ALIEN_CHIEF, MAYAN_CHIEF, M_MAYAN_MERCHANT, F_MAYAN_MERCHANT, M_ALIEN_MERCHANT, F_ALIEN_MERCHANT, SPRITETYPE_END = 16};
+*/
 
-enum SpriteAction { IDLE = 0, WALKING, ACTION_END = 3};
+enum SpriteType { REFUGEE = 0, CITIZEN, FARMER, SOLDIER, BUILDER, BANDIT, SPRITETYPE_END = 6};
+
+
+enum SpriteAction { IDLE = 0, WALKING, CARRYING, ACTION_END = 3};
 
 
 
@@ -93,13 +98,14 @@ private:
     
     CCCallFuncN* callback;
 public:
+    
+    /*unused*/
     int fdaysLeft;
     int internal_rank;
-    
-    
-    
+   
     bool isLeavingNextUpdate;
     bool isInteractingSocial;
+    /* End unused*/
     bool isInBuilding;
     
     static GameSprite* create();
@@ -111,7 +117,6 @@ public:
     
     std::string spriteName;
     std::string spriteClass;
-    
     std::string spriteDisplayedName;
     
     

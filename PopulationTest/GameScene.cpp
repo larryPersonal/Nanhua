@@ -527,6 +527,7 @@ void GameScene::FirstRunPopulate()
     {
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(5,18);
+        /*
         spriteHandler->addSpriteToMap(target, M_MAYAN_FARMER);
         
         target.x += 1;
@@ -534,7 +535,7 @@ void GameScene::FirstRunPopulate()
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, M_MAYAN_FARMER);
-
+*/
         
     }
     

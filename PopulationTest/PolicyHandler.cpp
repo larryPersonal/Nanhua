@@ -38,17 +38,17 @@ PolicyHandler::PolicyHandler()
     int aliengender = rand() % 2;
     if (gender > 0)
     {
-        nextMayanSpawn = M_MAYAN_FARMER;
+    //    nextMayanSpawn = M_MAYAN_FARMER;
     }
     else
-        nextMayanSpawn = F_MAYAN_FARMER;
+      //  nextMayanSpawn = F_MAYAN_FARMER;
     
     if (aliengender > 0)
     {
-        nextAlienSpawn = M_ALIEN_CITIZEN;
+       // nextAlienSpawn = M_ALIEN_CITIZEN;
     }
     else
-        nextAlienSpawn = F_ALIEN_CITIZEN;
+    //    nextAlienSpawn = F_ALIEN_CITIZEN;
     
     pauseAutoSpawning = true;
     
@@ -124,10 +124,10 @@ void PolicyHandler::BirthNewAlien()
         
         if (aliengender > 0)
         {
-            nextAlienSpawn = M_ALIEN_CITIZEN;
+          //  nextAlienSpawn = M_ALIEN_CITIZEN;
         }
-        else
-            nextAlienSpawn = F_ALIEN_CITIZEN;
+        else {}
+            //nextAlienSpawn = F_ALIEN_CITIZEN;
     }
     GameManager::getThis()->UpdateUnlocks();
 }
@@ -160,10 +160,10 @@ void PolicyHandler::BirthNewLocal()
         int gender = rand() % 2;
         if (gender > 0)
         {
-            nextMayanSpawn = M_MAYAN_FARMER;
+           // nextMayanSpawn = M_MAYAN_FARMER;
         }
-        else
-            nextMayanSpawn = F_MAYAN_FARMER;
+        else {}
+           // nextMayanSpawn = F_MAYAN_FARMER;
     }
     GameManager::getThis()->UpdateUnlocks();
    // ImportForeignersInBuilding((Building*)GameScene::getThis()->buildingHandler->allBuildingsOnMap->objectAtIndex(0), 3);
@@ -204,10 +204,10 @@ void PolicyHandler::ImportForeignersInBuilding(Building *b, int amt)
         for (int i = 0; i < amt; ++i)
         {
             int gender = rand() % 2;
-            if (gender > 0)
-                 GameScene::getThis()->spriteHandler->addSpriteToMap(position, M_ALIEN_CITIZEN);
-            else
-                 GameScene::getThis()->spriteHandler->addSpriteToMap(position, F_ALIEN_CITIZEN);
+            if (gender > 0) {}
+                 //GameScene::getThis()->spriteHandler->addSpriteToMap(position, M_ALIEN_CITIZEN);
+            else {}
+                 //GameScene::getThis()->spriteHandler->addSpriteToMap(position, F_ALIEN_CITIZEN);
           
         }
         
@@ -456,6 +456,7 @@ void PolicyHandler::startSpawn()
 
 void PolicyHandler::setToSpawn(std::string& spriteclass, char race)
 {
+    /*
     SpriteType st;
     int gender = rand() % 2;
     if (race == 'a')
@@ -534,7 +535,8 @@ void PolicyHandler::setToSpawn(std::string& spriteclass, char race)
         }
     }
     
-    toSpawnSprite = st;
+    
+    toSpawnSprite = st;*/
 }
 
 SpriteType PolicyHandler::getToSpawn()

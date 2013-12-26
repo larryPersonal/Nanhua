@@ -39,7 +39,7 @@
 		36041A4F1713AB7C00A14BE6 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 36041A2D1713AB7C00A14BE6 /* lvm.c */; };
 		36041A501713AB7C00A14BE6 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 36041A2F1713AB7C00A14BE6 /* lzio.c */; };
 		36041A511713AB7C00A14BE6 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 36041A311713AB7C00A14BE6 /* print.c */; };
-		36041A551713B61300A14BE6 /* acitizenbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 36041A541713B61300A14BE6 /* acitizenbehavior.lua */; };
+		36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 36041A541713B61300A14BE6 /* banditbehavior.lua */; };
 		36041A6E1714093C00A14BE6 /* 1x1 build update.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36041A5C1714090100A14BE6 /* 1x1 build update.plist */; };
 		36041A6F1714093C00A14BE6 /* 1x1 build update.png in Resources */ = {isa = PBXBuildFile; fileRef = 36041A5D1714090100A14BE6 /* 1x1 build update.png */; };
 		36041A701714093C00A14BE6 /* 1x1 build update.tps in Resources */ = {isa = PBXBuildFile; fileRef = 36041A5E1714090200A14BE6 /* 1x1 build update.tps */; };
@@ -132,15 +132,14 @@
 		3619CAE317A6599400B59924 /* button-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3619CAE017A6599200B59924 /* button-up.png */; };
 		3619CAE417A6599400B59924 /* button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3619CAE117A6599300B59924 /* button-down.png */; };
 		3619CAE517A6599400B59924 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3619CAE217A6599300B59924 /* bar.png */; };
-		361A56371754BF3200854FE1 /* merchantbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361A56361754BF3200854FE1 /* merchantbehavior.lua */; };
+		361A56371754BF3200854FE1 /* builderbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361A56361754BF3200854FE1 /* builderbehavior.lua */; };
 		361DA9A317A7B47F004838A6 /* Droidiga.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3619CAE617A6661000B59924 /* Droidiga.otf */; };
 		361DA9A417A7B47F004838A6 /* MBBlockType.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3619CAE717A6661000B59924 /* MBBlockType.ttf */; };
 		361DA9A517A7B47F004838A6 /* Vinland.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3619CAE817A6661000B59924 /* Vinland.ttf */; };
 		361DA9A817A8E87C004838A6 /* NameGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 361DA9A617A8E87C004838A6 /* NameGenerator.cpp */; };
-		361FDE0E171BF14000665EDE /* chiefbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361FDE09171BF13D00665EDE /* chiefbehavior.lua */; };
+		361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361FDE09171BF13D00665EDE /* refugeebehavior.lua */; };
 		361FDE10171BF14000665EDE /* farmerbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361FDE0B171BF13D00665EDE /* farmerbehavior.lua */; };
-		361FDE11171BF14000665EDE /* researcherbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361FDE0C171BF13D00665EDE /* researcherbehavior.lua */; };
-		361FDE12171BF14000665EDE /* warriorbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361FDE0D171BF13E00665EDE /* warriorbehavior.lua */; };
+		361FDE12171BF14000665EDE /* soldierbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 361FDE0D171BF13E00665EDE /* soldierbehavior.lua */; };
 		36237D3B17155E940070FB13 /* environment build 1x1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36237D3517155E930070FB13 /* environment build 1x1.plist */; };
 		36237D3C17155E940070FB13 /* environment build 1x1.png in Resources */ = {isa = PBXBuildFile; fileRef = 36237D3617155E930070FB13 /* environment build 1x1.png */; };
 		36237D3D17155E940070FB13 /* environment build 1x1.tps in Resources */ = {isa = PBXBuildFile; fileRef = 36237D3717155E930070FB13 /* environment build 1x1.tps */; };
@@ -385,8 +384,6 @@
 		367613ED1712AEF400CD354B /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 367613E41712AEF400CD354B /* json_writer.cpp */; };
 		3692450117AF744400F799C4 /* SystemMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84DF3ECD175349DB00B19557 /* SystemMenu.cpp */; };
 		36C38C7C176ED60B00CE0F8D /* tutorial.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36C38C7B176ED60B00CE0F8D /* tutorial.txt */; };
-		36C38C81176EEF1900CE0F8D /* amerchantbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 36C38C80176EEF1800CE0F8D /* amerchantbehavior.lua */; };
-		36C38C83176EEF3300CE0F8D /* achief.lua in Resources */ = {isa = PBXBuildFile; fileRef = 36C38C82176EEF3300CE0F8D /* achief.lua */; };
 		36D551F6173788E500C20BBD /* JobCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D551F4173788E500C20BBD /* JobCollection.cpp */; };
 		36D87A7417BB3F1D00C41D54 /* AMC_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A6817BB3F1C00C41D54 /* AMC_port.png */; };
 		36D87A7517BB3F1D00C41D54 /* AFC_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A6917BB3F1C00C41D54 /* AFC_port.png */; };
@@ -507,7 +504,7 @@
 		36041A2F1713AB7C00A14BE6 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lzio.c; path = libs/lua/lzio.c; sourceTree = "<group>"; };
 		36041A301713AB7C00A14BE6 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = libs/lua/lzio.h; sourceTree = "<group>"; };
 		36041A311713AB7C00A14BE6 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = libs/lua/print.c; sourceTree = "<group>"; };
-		36041A541713B61300A14BE6 /* acitizenbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = acitizenbehavior.lua; sourceTree = "<group>"; };
+		36041A541713B61300A14BE6 /* banditbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = banditbehavior.lua; sourceTree = "<group>"; };
 		36041A5C1714090100A14BE6 /* 1x1 build update.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "1x1 build update.plist"; sourceTree = "<group>"; };
 		36041A5D1714090100A14BE6 /* 1x1 build update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1x1 build update.png"; sourceTree = "<group>"; };
 		36041A5E1714090200A14BE6 /* 1x1 build update.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "1x1 build update.tps"; sourceTree = "<group>"; };
@@ -607,21 +604,19 @@
 		3619CAE617A6661000B59924 /* Droidiga.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Droidiga.otf; sourceTree = "<group>"; };
 		3619CAE717A6661000B59924 /* MBBlockType.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MBBlockType.ttf; sourceTree = "<group>"; };
 		3619CAE817A6661000B59924 /* Vinland.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vinland.ttf; sourceTree = "<group>"; };
-		361A56351754BCE800854FE1 /* MerchantCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MerchantCFG.h; sourceTree = "<group>"; };
-		361A56361754BF3200854FE1 /* merchantbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = merchantbehavior.lua; sourceTree = "<group>"; };
+		361A56361754BF3200854FE1 /* builderbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = builderbehavior.lua; sourceTree = "<group>"; };
 		361DA9A617A8E87C004838A6 /* NameGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NameGenerator.cpp; sourceTree = "<group>"; };
 		361DA9A717A8E87C004838A6 /* NameGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameGenerator.h; sourceTree = "<group>"; };
 		361F25DB16FA97F8002C823B /* PathfindingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathfindingNode.cpp; sourceTree = "<group>"; };
 		361F25DC16FA97F8002C823B /* PathfindingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathfindingNode.h; sourceTree = "<group>"; };
 		361FDE02171BA94E00665EDE /* Possessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Possessions.h; sourceTree = "<group>"; };
-		361FDE05171BEA1400665EDE /* ChiefCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChiefCFG.h; sourceTree = "<group>"; };
+		361FDE05171BEA1400665EDE /* BuilderCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuilderCFG.h; sourceTree = "<group>"; };
 		361FDE06171BEA7900665EDE /* FarmerCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FarmerCFG.h; sourceTree = "<group>"; };
-		361FDE07171BEDE400665EDE /* WarriorCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WarriorCFG.h; sourceTree = "<group>"; };
-		361FDE08171BEE4400665EDE /* ResearcherCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearcherCFG.h; sourceTree = "<group>"; };
-		361FDE09171BF13D00665EDE /* chiefbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chiefbehavior.lua; sourceTree = "<group>"; };
+		361FDE07171BEDE400665EDE /* SoldierCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoldierCFG.h; sourceTree = "<group>"; };
+		361FDE08171BEE4400665EDE /* RefugeeCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RefugeeCFG.h; sourceTree = "<group>"; };
+		361FDE09171BF13D00665EDE /* refugeebehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = refugeebehavior.lua; sourceTree = "<group>"; };
 		361FDE0B171BF13D00665EDE /* farmerbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = farmerbehavior.lua; sourceTree = "<group>"; };
-		361FDE0C171BF13D00665EDE /* researcherbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = researcherbehavior.lua; sourceTree = "<group>"; };
-		361FDE0D171BF13E00665EDE /* warriorbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = warriorbehavior.lua; sourceTree = "<group>"; };
+		361FDE0D171BF13E00665EDE /* soldierbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = soldierbehavior.lua; sourceTree = "<group>"; };
 		36237D3517155E930070FB13 /* environment build 1x1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment build 1x1.plist"; sourceTree = "<group>"; };
 		36237D3617155E930070FB13 /* environment build 1x1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "environment build 1x1.png"; sourceTree = "<group>"; };
 		36237D3717155E930070FB13 /* environment build 1x1.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "environment build 1x1.tps"; sourceTree = "<group>"; };
@@ -1132,11 +1127,7 @@
 		36825E101765886500D32A8F /* GameDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameDefaults.h; sourceTree = "<group>"; };
 		36912F61174E234C0010608E /* GameUnlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameUnlocks.h; sourceTree = "<group>"; };
 		36C38C7B176ED60B00CE0F8D /* tutorial.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tutorial.txt; sourceTree = "<group>"; };
-		36C38C7D176EE71F00CE0F8D /* ACitizenCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACitizenCFG.h; sourceTree = "<group>"; };
-		36C38C7E176EEA0E00CE0F8D /* AMerchantCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMerchantCFG.h; sourceTree = "<group>"; };
-		36C38C7F176EEDA000CE0F8D /* AChiefCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AChiefCFG.h; sourceTree = "<group>"; };
-		36C38C80176EEF1800CE0F8D /* amerchantbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = amerchantbehavior.lua; sourceTree = "<group>"; };
-		36C38C82176EEF3300CE0F8D /* achief.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = achief.lua; sourceTree = "<group>"; };
+		36C38C7D176EE71F00CE0F8D /* BanditCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BanditCFG.h; sourceTree = "<group>"; };
 		36D551F4173788E500C20BBD /* JobCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JobCollection.cpp; sourceTree = "<group>"; };
 		36D551F5173788E500C20BBD /* JobCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobCollection.h; sourceTree = "<group>"; };
 		36D551F717378A5100C20BBD /* luafunctions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = luafunctions.txt; sourceTree = "<group>"; };
@@ -2320,31 +2311,25 @@
 			isa = PBXGroup;
 			children = (
 				3647C7FA17C20BB0008FA626 /* Soundtrack */,
-				36041A541713B61300A14BE6 /* acitizenbehavior.lua */,
+				36041A541713B61300A14BE6 /* banditbehavior.lua */,
 				365FBC5816E5E31000A57CF0 /* Prefix.pch */,
-				361FDE09171BF13D00665EDE /* chiefbehavior.lua */,
+				361FDE09171BF13D00665EDE /* refugeebehavior.lua */,
 				361FDE0B171BF13D00665EDE /* farmerbehavior.lua */,
-				361FDE0C171BF13D00665EDE /* researcherbehavior.lua */,
-				361FDE0D171BF13E00665EDE /* warriorbehavior.lua */,
+				361FDE0D171BF13E00665EDE /* soldierbehavior.lua */,
 				3632030B1716988F003C094D /* CitizenCFG.h */,
 				361FDE06171BEA7900665EDE /* FarmerCFG.h */,
-				361FDE05171BEA1400665EDE /* ChiefCFG.h */,
-				361FDE07171BEDE400665EDE /* WarriorCFG.h */,
-				361FDE08171BEE4400665EDE /* ResearcherCFG.h */,
+				361FDE05171BEA1400665EDE /* BuilderCFG.h */,
+				361FDE07171BEDE400665EDE /* SoldierCFG.h */,
+				361FDE08171BEE4400665EDE /* RefugeeCFG.h */,
 				366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */,
 				36D551F717378A5100C20BBD /* luafunctions.txt */,
 				36D551F81737B9CA00C20BBD /* JobsInGame.h */,
 				36912F61174E234C0010608E /* GameUnlocks.h */,
-				361A56351754BCE800854FE1 /* MerchantCFG.h */,
-				361A56361754BF3200854FE1 /* merchantbehavior.lua */,
+				361A56361754BF3200854FE1 /* builderbehavior.lua */,
 				362C899E175DE0600045F5FB /* Tutorial.h */,
 				36825E101765886500D32A8F /* GameDefaults.h */,
 				36C38C7B176ED60B00CE0F8D /* tutorial.txt */,
-				36C38C7D176EE71F00CE0F8D /* ACitizenCFG.h */,
-				36C38C7E176EEA0E00CE0F8D /* AMerchantCFG.h */,
-				36C38C7F176EEDA000CE0F8D /* AChiefCFG.h */,
-				36C38C80176EEF1800CE0F8D /* amerchantbehavior.lua */,
-				36C38C82176EEF3300CE0F8D /* achief.lua */,
+				36C38C7D176EE71F00CE0F8D /* BanditCFG.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2963,7 +2948,7 @@
 				367613E81712AEF400CD354B /* json_internalarray.inl in Resources */,
 				367613E91712AEF400CD354B /* json_internalmap.inl in Resources */,
 				367613EC1712AEF400CD354B /* json_valueiterator.inl in Resources */,
-				36041A551713B61300A14BE6 /* acitizenbehavior.lua in Resources */,
+				36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */,
 				36041A6E1714093C00A14BE6 /* 1x1 build update.plist in Resources */,
 				36041A6F1714093C00A14BE6 /* 1x1 build update.png in Resources */,
 				36041A701714093C00A14BE6 /* 1x1 build update.tps in Resources */,
@@ -2994,10 +2979,9 @@
 				363203161716AF95003C094D /* MC.plist in Resources */,
 				363203171716AF95003C094D /* MC.tps in Resources */,
 				B43A57A31717CE09004D7104 /* terrain_flat.png in Resources */,
-				361FDE0E171BF14000665EDE /* chiefbehavior.lua in Resources */,
+				361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */,
 				361FDE10171BF14000665EDE /* farmerbehavior.lua in Resources */,
-				361FDE11171BF14000665EDE /* researcherbehavior.lua in Resources */,
-				361FDE12171BF14000665EDE /* warriorbehavior.lua in Resources */,
+				361FDE12171BF14000665EDE /* soldierbehavior.lua in Resources */,
 				366F6CA0171CFD5700CDCC6F /* citizenbehavior.lua in Resources */,
 				B497C34917263EA900993475 /* main-menu-bg.png in Resources */,
 				B497C34F1726474F00993475 /* building-menu-bg.png in Resources */,
@@ -3009,11 +2993,9 @@
 				B4B0148617389F540071E59F /* exit_normal.png in Resources */,
 				B4B0148717389F540071E59F /* exit_pressed.png in Resources */,
 				B4999F621752ED64005F04E1 /* building-menu-overload-slot.png in Resources */,
-				361A56371754BF3200854FE1 /* merchantbehavior.lua in Resources */,
+				361A56371754BF3200854FE1 /* builderbehavior.lua in Resources */,
 				8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */,
 				36C38C7C176ED60B00CE0F8D /* tutorial.txt in Resources */,
-				36C38C81176EEF1900CE0F8D /* amerchantbehavior.lua in Resources */,
-				36C38C83176EEF3300CE0F8D /* achief.lua in Resources */,
 				362A2AAB178A4F9300AC8216 /* README.md in Resources */,
 				362A2AAC178A4F9300AC8216 /* release_notes.md in Resources */,
 				3619CADF17A6596600B59924 /* button-side.png in Resources */,
