@@ -559,7 +559,7 @@ bool GameManager::saveGameData()
             bPosition = GameScene::getThis()->mapHandler->tilePosFromLocation(bPosition);
             
             
-            writeFile << b->buildingName +":" + GlobalHelper::Convert(bPosition.x) +":" + GlobalHelper::Convert(bPosition.y) +":" +GlobalHelper::Convert(b->happiness_mod) + "|" + GlobalHelper::Convert(b->loyalty_mod) + "|" + GlobalHelper::Convert(b->social_mod) +"|" +GlobalHelper::Convert(b->int_mod) +"|" +GlobalHelper::Convert(b->energy_mod) +"|" +GlobalHelper::Convert(b->cash_mod) + "|" +GlobalHelper::Convert(b->currentExp) +"|" + GlobalHelper::Convert(b->currentLevel) + "|" + GlobalHelper::Convert(b->ID) + "\n";
+            writeFile << b->buildingName +":" + GlobalHelper::Convert(bPosition.x) +":" + GlobalHelper::Convert(bPosition.y) +":" +GlobalHelper::Convert(b->currentExp) +"|" + GlobalHelper::Convert(b->currentLevel) + "|" + GlobalHelper::Convert(b->ID) + "\n";
             
         }
             
@@ -581,14 +581,14 @@ bool GameManager::saveGameData()
                 homeID = sp->getPossessions()->homeLocation->ID;
             else
                 homeID = -1;
-            
+            /*
             if (sp->getPossessions()->hasJob)
                 workID = sp->getPossessions()->jobLocation->ID;
             else
                 workID = -1;
-            
+            */
             writeFile << sp->spriteClass +":" +sp->gender +":" + sp->race + ":" +GlobalHelper::Convert(sPosition.x)+ ":" +GlobalHelper::Convert(sPosition.y) +":" +GlobalHelper::Convert(sp->getPossessions()->cashOnHand) +"|" + GlobalHelper::Convert(sp->getPossessions()->happinessRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->loyaltyRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->educationLevel) +"|" + GlobalHelper::Convert(sp->getPossessions()->intelligenceRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->socialRating) + "|" + GlobalHelper::Convert(sp->getPossessions()->movementRange) + "|" + GlobalHelper::Convert(sp->getPossessions()->energyRating) +"|" +
-            GlobalHelper::Convert(sp->getPossessions()->classLevel) + "|" + GlobalHelper::Convert(sp->getPossessions()->expRating) + "|" + GlobalHelper::Convert(sp->getPossessions()->hasHouse) + "|"+ GlobalHelper::Convert(homeID) + "|"+ GlobalHelper::Convert(sp->getPossessions()->isRentalProperty) + "|"+ GlobalHelper::Convert(sp->getPossessions()->isSqueezing) + "|"+ GlobalHelper::Convert(sp->getPossessions()->rentalVisitsLeft) + "|"+ GlobalHelper::Convert(sp->getPossessions()->hasJob) + "|"+ GlobalHelper::Convert(workID) + "|"+ sp->getPossessions()->jobClass +"|" + GlobalHelper::Convert(sp->getPossessions()->jobIndex) +
+            GlobalHelper::Convert(sp->getPossessions()->classLevel) + "|" + GlobalHelper::Convert(sp->getPossessions()->expRating) + "|" + GlobalHelper::Convert(sp->getPossessions()->hasHouse) + "|"+ GlobalHelper::Convert(homeID) + "|" + GlobalHelper::Convert(workID) +
             "\n";
         }
         

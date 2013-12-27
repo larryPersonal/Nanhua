@@ -107,84 +107,147 @@ void SpriteHandler::initialize()
         std::string configContent;
         std::string defaultContent;
         std::string targetClass;
-        char targetGender, targetRace;
+        char targetGender;
+        
+        //randomly spawn as male or female.
+      
+        //it's always a human now.
+        char targetRace = 'h';
+        
+        
         switch (i)
         {
             case 0:
-            /*
-                fileName = "AFC";
+                targetGender = 'm';
+                fileName = "MMC";
                 targetIdleF = 4;
                 targetWalkF = 4;
-                configContent = acitizenConfig;
-                defaultContent = acitizenDefaults;
-                targetClass = "citizen";
-                targetGender = 'm';
-                targetRace = 'a';*/
+                configContent = refugeeConfig;
+                defaultContent = refugeeDefaults;
+                targetClass = "refugee";
 
                 break;
             case 1:
-            /*
-                fileName = "AMC";
+                targetGender = 'f';
+                fileName = "FMC";
                 targetIdleF = 4;
                 targetWalkF = 4;
-                
-                configContent = acitizenConfig;
-                defaultContent = acitizenDefaults;
-                targetClass = "citizen";
-                targetGender = 'm';
-                targetRace = 'a';
-                */
+            
+                configContent = refugeeConfig;
+                defaultContent = refugeeDefaults;
+                targetClass = "refugee";
                 break;
             case 2:
-            /*
-                fileName = "ARF";
-                targetIdleF = 2;
-                targetWalkF = 2;
-                configContent = researcherConfig;
-                defaultContent = researcherDefaults;
-                targetClass = "researcher";
-                targetGender = 'f';
-                targetRace = 'a';*/
-                
-                break;
-            case 3:
-            /*
-                fileName = "ARM";
-                targetIdleF = 2;
-                targetWalkF = 2;
-                configContent = researcherConfig;
-                defaultContent = researcherDefaults;
-                targetClass = "researcher";
                 targetGender = 'm';
-                targetRace = 'a';
-                */
-                break;
-            case 4:
-            /*
-                fileName = "FMC";
-
-                targetIdleF = 3;
+                fileName = "MMC";
+                targetIdleF = 4;
                 targetWalkF = 4;
-                
+            
                 configContent = citizenConfig;
                 defaultContent = citizenDefaults;
                 targetClass = "citizen";
+                break;
+            case 3:
                 targetGender = 'f';
-                targetRace = 'h';
-*/
+                fileName = "FMC";
+                targetIdleF = 4;
+                targetWalkF = 4;
+            
+                configContent = citizenConfig;
+                defaultContent = citizenDefaults;
+                targetClass = "citizen";
+                break;
+            case 4:
+                targetGender = 'm';
+                fileName = "FMC";
+                targetIdleF = 4;
+                targetWalkF = 4;
+            
+                configContent = builderConfig;
+                defaultContent = builderDefaults;
+            
+                targetClass = "builder";
+            
+                
                 break;
             case 5:
-            /*
+                targetGender = 'f';
+                fileName = "FMC";
+                targetIdleF = 4;
+                targetWalkF = 4;
+            
+                configContent = builderConfig;
+                defaultContent = builderDefaults;
+            
+                targetClass = "builder";
+            
+                break;
+            
+            case 6:
+                targetGender = 'm';
+                fileName = "MMF";
+                targetIdleF = 3;
+                targetWalkF = 4;
+                configContent = farmerConfig;
+                defaultContent = farmerDefaults;
+                targetClass = "farmer";
+            
+                break;
+            
+            case 7:
+                targetGender = 'f';
                 fileName = "FMF";
                 targetIdleF = 3;
                 targetWalkF = 4;
                 configContent = farmerConfig;
                 defaultContent = farmerDefaults;
                 targetClass = "farmer";
-                targetGender = 'f';
-                targetRace = 'h';
+            
+                break;
+            case 8:
+                targetGender = 'm';
+                fileName = "MMW";
+          
+                targetIdleF = 3;
+                targetWalkF = 4;
+                
+                configContent = soldierConfig;
+                defaultContent = soldierDefaults;
+                targetClass = "soldier";
 
-             */
+                break;
+            case 9:
+                targetGender = 'f';
+                fileName = "FMW";
+                targetIdleF = 3;
+                targetWalkF = 4;
+            
+                configContent = soldierConfig;
+                defaultContent = soldierDefaults;
+                targetClass = "soldier";
+
+            case 10:
+                targetGender = 'm';
+                fileName = "MMW";
+            
+                targetIdleF = 3;
+                targetWalkF = 4;
+            
+                configContent = banditConfig;
+                defaultContent = banditDefaults;
+                targetClass = "bandit";
+            
+                break;
+            case 11:
+                targetGender = 'f';
+                fileName = "FMW";
+                targetIdleF = 3;
+                targetWalkF = 4;
+            
+                configContent = banditConfig;
+                defaultContent = banditDefaults;
+                targetClass = "bandit";
+            
       
                 break;
                 
@@ -418,29 +481,29 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
                 newSprite->getPossessions()->homeLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(homeID);
                 
                // newSprite->getPossessions()->homeLocation->addPopulation(newSprite);
-                
+                /*
                 newSprite->getPossessions()->isRentalProperty = !!atoi(tokens[12].c_str());
                 newSprite->getPossessions()->isSqueezing = !!atoi(tokens[13].c_str());
                 newSprite->getPossessions()->rentalVisitsLeft = atoi(tokens[14].c_str());
                 
-                
+                */
                 
             }
-            
+            /*
             newSprite->getPossessions()->hasJob = !!atoi(tokens[15].c_str());
             if (newSprite->getPossessions()->hasJob)
             {
                 int jobID = atoi(tokens[16].c_str());
-                newSprite->getPossessions()->jobLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(jobID);
+               // newSprite->getPossessions()->jobLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(jobID);
+              /
+               // newSprite->getPossessions()->jobLocation->addPopulation(newSprite);
                 
-                newSprite->getPossessions()->jobLocation->addPopulation(newSprite);
+               // newSprite->getPossessions()->jobClass = tokens[17];
+               // newSprite->getPossessions()->jobIndex = atoi(tokens[18].c_str());
                 
-                newSprite->getPossessions()->jobClass = tokens[17];
-                newSprite->getPossessions()->jobIndex = atoi(tokens[18].c_str());
+               // ((Job*)newSprite->getPossessions()->jobLocation->getJobsAvailable()->objectAtIndex(newSprite->getPossessions()->jobIndex))->signUpJob();
                 
-                ((Job*)newSprite->getPossessions()->jobLocation->getJobsAvailable()->objectAtIndex(newSprite->getPossessions()->jobIndex))->signUpJob();
-                
-            }
+            }*/
             
             
         }

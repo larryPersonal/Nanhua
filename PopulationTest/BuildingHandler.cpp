@@ -153,7 +153,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                 if (properties)
                 {
                     const CCString* currProperty;
-                   
+                    /*
                     currProperty = properties->valueForKey("jobs_available");
                    
                      if (currProperty)
@@ -164,6 +164,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     else b->jobs = "";
                     //else the jobs array for this building is null or empty.
+                    */
                     
                     currProperty = properties->valueForKey("name");
                     if (currProperty)
@@ -213,7 +214,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     else
                         b->buildingBuyPrice = 9999.0f;
-
+                    /*
                     currProperty = properties->valueForKey("rent_cost");
                     if (currProperty)
                     {
@@ -225,8 +226,8 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     {
                         b->buildingRentPrice = 9999.0f;
                         //b->cash_mod = 0;
-                    }
-                    
+                    }*/
+                    /*
                     currProperty = properties->valueForKey("mod_cash");
                     if (currProperty)
                     {
@@ -236,7 +237,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                     {
                         b->cash_mod = -10;
-                    }
+                    }*/
                     
                     
                     currProperty = properties->valueForKey("maint_cost");
@@ -261,7 +262,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         b->populationLimit = 0;
                     
                     
-                    currProperty = properties->valueForKey("population_overload");
+                    /*currProperty = properties->valueForKey("population_overload");
                     if (currProperty)
                     {
                         CCString* cost = CCStringMake(properties->valueForKey("population_overload")->getCString());
@@ -311,7 +312,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                         b->happiness_mod = 0;
                     
-                    
+                    */
                     // Example format in Tiled: (level_exp_req) 100, 120, 140, 160, 0
                     currProperty = properties->valueForKey("level_exp_req");
                  //   b->expToLevel = CCArray::create();
@@ -518,15 +519,15 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     b->buildingDesc=  "You forgot to set a property somewhere";
                     b->buildingCost = 9999.0f;
                     b->buildingBuyPrice = 9999.0f;
-                    b->buildingRentPrice = 9999.0f;
+                 //   b->buildingRentPrice = 9999.0f;
                     b->buildingType = BUILDINGCATEGORYMAX;
                     b->populationLimit = 0;
-                    b->populationOverload = 0;
-                    b->int_mod = 0;
-                    b->social_mod = 0;
-                    b->loyalty_mod = 0;
-                    b->happiness_mod = 0;
-                    b->cash_mod = -10;
+                  //  b->populationOverload = 0;
+                  //  b->int_mod = 0;
+                  //  b->social_mod = 0;
+                 //   b->loyalty_mod = 0;
+                 //   b->happiness_mod = 0;
+                 //   b->cash_mod = -10;
                     b->expToLevel->initWithObject(CCInteger::create(0));
                 
                 }
@@ -593,7 +594,7 @@ void BuildingHandler::addBuildingToMap(Building *b)
             specialOnMap->addObject(b);
             break;
     }
-    b->initializeJobs();
+  //  b->initializeJobs();
     allBuildingsOnMap->addObject(b);
 }
 
@@ -764,6 +765,7 @@ void BuildingHandler::EmptyBuildingFirst(Building *b)
             
         }
     }
+    /*
     else
     {
         for (int i = 0; i < sh->spritesOnMap->count(); ++i)
@@ -775,7 +777,7 @@ void BuildingHandler::EmptyBuildingFirst(Building *b)
             
         }
         
-    }
+    }*/
     /*
     for (int i = 0; i < sh->spritesOnmap()
     */

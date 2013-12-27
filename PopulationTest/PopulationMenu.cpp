@@ -66,14 +66,15 @@ void PopulationMenu::createMenuItems()
         homeItem->setContentSize(menuItem->boundingBox().size);
         homeItem->setTag(1001);
  
-        Building* wloc = currSprite->getPossessions()->jobLocation;
+ //       Building* wloc = currSprite->getPossessions()->jobLocation;
         
         CCSprite* workImg =  CCSprite::create();
+       /*
         if (wloc != NULL)
         {
            workImg->initWithTexture(wloc->buildingTexture, wloc->buildingRect);
             workImg->setScale(newScale * 0.75);
-        }
+        }*/
         
         
         CCMenuItemSprite *workItem = CCMenuItemSprite::create(workImg, NULL, this, menu_selector(PopulationMenu::onBuildingItemSelected));
@@ -333,14 +334,15 @@ void PopulationMenu::addPopulationToList(GameSprite* sprite)
     homeItem->setContentSize(menuItem->boundingBox().size);
     homeItem->setTag(1001);
     
-    Building* wloc = sprite->getPossessions()->jobLocation;
+    //Building* wloc = sprite->getPossessions()->jobLocation;
     
     CCSprite* workImg =  CCSprite::create();
+    /*
     if (wloc != NULL)
     {
         workImg->initWithTexture(wloc->buildingTexture, wloc->buildingRect);
         workImg->setScale(newScale * 0.75);
-    }
+    }*/
     
     
     CCMenuItemSprite *workItem = CCMenuItemSprite::create(workImg, NULL, this, menu_selector(PopulationMenu::onBuildingItemSelected));

@@ -48,13 +48,13 @@ bool Senario::init()
     return true;
 }
 
-void Senario::playSenario(char* senario)
+void Senario::playSenario(const char* senario)
 {
     readSenarioFile(senario);
     createGUI();
 }
 
-void Senario::readSenarioFile(char *senario)
+void Senario::readSenarioFile(const char *senario)
 {
     
 }

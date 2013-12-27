@@ -17,20 +17,20 @@ Building::Building()
 {
     buildingValue = 0;
     populationLimit = 0;
-    populationOverload = populationOverloadLimit = 0;
-    buildingBuyPrice = buildingRentPrice = 0;
+   // populationOverload = populationOverloadLimit = 0;
+    buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
     constructionTime = 10.0f;
     researchCost = 100.0f;
     researchTime = 10.0f;
-    jobsInthisBuilding = CCArray::create();
-    jobsInthisBuilding->retain();
+    //jobsInthisBuilding = CCArray::create();
+    //jobsInthisBuilding->retain();
     
     currVisitors = CCArray::create();
     currVisitors->retain();
     
     ID = 0;
-    
+    /*
     exp_mod = 0;
     cash_mod = 0;
     social_mod = 0;
@@ -38,7 +38,7 @@ Building::Building()
     energy_mod = 0;
     loyalty_mod = 0;
     int_mod = 0;
-    
+    */
     currentExp = 0;
     currentLevel = 1;
     maintCost = 0;
@@ -68,10 +68,10 @@ Building::~Building()
     {
         delete jobsInthisBuilding->objectAtIndex(i);
     }*/
-    
+    /*
     jobsInthisBuilding->removeAllObjects();
     jobsInthisBuilding->release();
-    
+    */
    // if (expToLevel != NULL)
    // {
        /*
@@ -159,16 +159,17 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->buildingType = this->buildingType;
         pCopy->buildingValue = this->buildingValue;
         pCopy->buildingBuyPrice = this->buildingBuyPrice;
-        pCopy->buildingRentPrice = this->buildingRentPrice;
+     //   pCopy->buildingRentPrice = this->buildingRentPrice;
         pCopy->ID = -1;  /*IDs will be assigned only after construction completes! *///GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
         pCopy->targetGUID = this->targetGUID;   // Copy the target GUID too
-        pCopy->jobs = this->jobs;
-        pCopy->populationOverload = this->populationOverload;
-        pCopy->populationOverloadLimit = this->populationLimit + this->populationOverload;
+       // pCopy->jobs = this->jobs;
+       // pCopy->populationOverload = this->populationOverload;
+       // pCopy->populationOverloadLimit = this->populationLimit + this->populationOverload;
         
         //unlocking doesn't matter, that's for the benefit of the build menu and research menu only.
         
         //Mods
+        /*
         pCopy->exp_mod = this->exp_mod;
         pCopy->cash_mod = this->cash_mod;
         pCopy->social_mod = this->social_mod;
@@ -176,7 +177,7 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->energy_mod = this->energy_mod;
         pCopy->loyalty_mod = this->loyalty_mod;
         pCopy->int_mod = this->int_mod;
-        
+        */
         pCopy->currentExp = this->currentExp;
    //    pCopy->expToLevel = CCArray::create();
         pCopy->expToLevel->initWithArray(this->expToLevel);
@@ -200,12 +201,12 @@ int Building::getExpToLevel()
 {
     return ((CCInteger*)expToLevel->objectAtIndex(currentLevel - 1))->getValue();
 }
-
+/*
 CCArray* Building::getJobsAvailable()
 {
     return jobsInthisBuilding;
 }
-
+*/
 /*use this to determine what happens when a sprite enters the building.*/
 void Building::ArriveHandler(GameSprite* sp)
 {
@@ -248,6 +249,7 @@ void Building::ArriveHandler(GameSprite* sp)
     
     
     /*if the building happens to be the job location*/
+    /*
     if (sp->getPossessions()->jobLocation)
     {
         if (sp->getPossessions()->jobLocation == this)
@@ -264,7 +266,7 @@ void Building::ArriveHandler(GameSprite* sp)
         }
          return;
     }
-    
+    */
     /*
     if the building is neither a home nor a job location, check if building is an upgrade location.
     sp->CheckUpgrade();
@@ -274,6 +276,7 @@ void Building::ArriveHandler(GameSprite* sp)
     //only commerce buildings are shoppping locations. Note that at this point I've already determined that it's not the sprite's job location.
     
     /*shopping should only be a one time cost*/
+    /*
     if (buildingType == COMMERCE)
     {
         sp->increasePossession(STATS_CASHONHAND, cash_mod * currentLevel);
@@ -281,7 +284,7 @@ void Building::ArriveHandler(GameSprite* sp)
         GameManager::getThis()->currentMoney += (abs(cash_mod) * currentLevel);
         GameHUD::getThis()->updateMoneyLabel();
     
-    }
+    }*/
     
     
     
@@ -336,6 +339,7 @@ void Building::Leavehandler(GameSprite *sp)
     currVisitors->removeObject(sp);
 }
 //Doing it in the copy constructor unfortunately fails. Doing this in a separate function instead.
+/*
 void Building::initializeJobs()
 {
     if (jobs.length() == 0) return;
@@ -358,6 +362,7 @@ void Building::initializeJobs()
      while (ss);
     
 }
+*/
 
 void Building::ModifyStats(GameSprite *sp)
 {
@@ -371,16 +376,17 @@ void Building::ModifyStats(GameSprite *sp)
         GameHUD::getThis()->updateMoneyLabel();
     }*/
     
-    
+    /*
     sp->increasePossession(STATS_ENERGY, energy_mod);
     sp->increasePossession(STATS_HAPPINESS, happiness_mod);
     sp->increasePossession(STATS_INTELLIGENCE, int_mod);
     sp->increasePossession(STATS_SOCIAL, social_mod);
     sp->increasePossession(STATS_LOYALTY, loyalty_mod);
-    
+    */
+    /*
     if (sp->race != 'a' && !sp->getPossessions()->isAtAbsoluteMax() && !sp->getPossessions()->isAtMaxLevel()) //aliens don't "learn" unless conversion happens.
         sp->increasePossession(STATS_EXP, exp_mod);
-    
+    */
 }
 
 void Building::gainExp(int expToGain)
@@ -412,14 +418,14 @@ void Building::gainExp(int expToGain)
             if (gain != NULL)
             {
                 this->populationLimit += gain->getValue();
-                this->populationOverloadLimit = this->populationLimit + this->populationOverload;
+             //   this->populationOverloadLimit = this->populationLimit + this->populationOverload;
             }
             
             gain = (CCInteger*)buildingData->levelGainPopOverload->objectForKey(currentLevel);
             if (gain != NULL)
             {
-                this->populationOverload += gain->getValue();
-                this->populationOverloadLimit = this->populationLimit + this->populationOverload;
+               // this->populationOverload += gain->getValue();
+               // this->populationOverloadLimit = this->populationLimit + this->populationOverload;
             }
         
             gain = (CCInteger*)buildingData->levelGainPrice->objectForKey(currentLevel);
@@ -596,11 +602,13 @@ int Building::getAlienPopulationCount()
 int Building::getUnoccupiedCount()
 {
     //Only residences count from population
-    if (buildingType == HOUSING)
-        return (populationLimit - currPopulation.size()); //squeeze not counted
+    //if (buildingType == HOUSING)
+    return (populationLimit - currPopulation.size());
+    /*
     else
     {
         int count = 0;
+     
         for (int i = 0; i < jobsInthisBuilding->count(); ++i)
         {
             if (((Job*) jobsInthisBuilding->objectAtIndex(i))->job_isTaken == false)
@@ -609,7 +617,7 @@ int Building::getUnoccupiedCount()
             }
         }
         return count;
-        
-    }
+     
+    }*/
     
 }

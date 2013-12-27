@@ -87,14 +87,6 @@
 		3604971017AB96BC00CACE25 /* jobbutton_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3604970E17AB96BC00CACE25 /* jobbutton_pressed.png */; };
 		3604971117AB96BC00CACE25 /* jobbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3604970F17AB96BC00CACE25 /* jobbutton.png */; };
 		3604971317ABB3B500CACE25 /* innerbox-info.png in Resources */ = {isa = PBXBuildFile; fileRef = 3604971217ABB3B400CACE25 /* innerbox-info.png */; };
-		3608CAF61704343E00AB65A3 /* AFC.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE21704343E00AB65A3 /* AFC.plist */; };
-		3608CAF71704343E00AB65A3 /* AFC.png in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE31704343E00AB65A3 /* AFC.png */; };
-		3608CAF81704343E00AB65A3 /* AMC.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE41704343E00AB65A3 /* AMC.plist */; };
-		3608CAF91704343E00AB65A3 /* AMC.png in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE51704343E00AB65A3 /* AMC.png */; };
-		3608CAFA1704343E00AB65A3 /* ARF.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE61704343E00AB65A3 /* ARF.plist */; };
-		3608CAFB1704343E00AB65A3 /* ARF.png in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE71704343E00AB65A3 /* ARF.png */; };
-		3608CAFC1704343E00AB65A3 /* ARM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE81704343E00AB65A3 /* ARM.plist */; };
-		3608CAFD1704343E00AB65A3 /* ARM.png in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAE91704343E00AB65A3 /* ARM.png */; };
 		3608CAFE1704343E00AB65A3 /* FMC.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAEA1704343E00AB65A3 /* FMC.plist */; };
 		3608CAFF1704343E00AB65A3 /* FMC.png in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAEB1704343E00AB65A3 /* FMC.png */; };
 		3608CB001704343E00AB65A3 /* FMF.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3608CAEC1704343E00AB65A3 /* FMF.plist */; };
@@ -155,12 +147,6 @@
 		362A2AAC178A4F9300AC8216 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 362A2AA8178A4F9300AC8216 /* release_notes.md */; };
 		362C899D175D9ABD0045F5FB /* TutorialHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 362C899B175D9ABD0045F5FB /* TutorialHandler.cpp */; };
 		36320308171666DA003C094D /* CCLayerPanZoom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36320306171666DA003C094D /* CCLayerPanZoom.cpp */; };
-		3632030E1716AF74003C094D /* AC.png in Resources */ = {isa = PBXBuildFile; fileRef = 3632030C1716AF74003C094D /* AC.png */; };
-		3632030F1716AF74003C094D /* MC.png in Resources */ = {isa = PBXBuildFile; fileRef = 3632030D1716AF74003C094D /* MC.png */; };
-		363203121716AF88003C094D /* AC.plist in Resources */ = {isa = PBXBuildFile; fileRef = 363203101716AF88003C094D /* AC.plist */; };
-		363203131716AF88003C094D /* AC.tps in Resources */ = {isa = PBXBuildFile; fileRef = 363203111716AF88003C094D /* AC.tps */; };
-		363203161716AF95003C094D /* MC.plist in Resources */ = {isa = PBXBuildFile; fileRef = 363203141716AF94003C094D /* MC.plist */; };
-		363203171716AF95003C094D /* MC.tps in Resources */ = {isa = PBXBuildFile; fileRef = 363203151716AF95003C094D /* MC.tps */; };
 		3641C539172F5E9900655E25 /* Job.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3641C537172F5E9900655E25 /* Job.cpp */; };
 		3647C7E817C1D98C008FA626 /* path-destroy.png in Resources */ = {isa = PBXBuildFile; fileRef = 3647C7E617C1D98C008FA626 /* path-destroy.png */; };
 		3647C7E917C1D98C008FA626 /* path.png in Resources */ = {isa = PBXBuildFile; fileRef = 3647C7E717C1D98C008FA626 /* path.png */; };
@@ -398,7 +384,6 @@
 		36D87A7E17BB3F1D00C41D54 /* MMW_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A7217BB3F1D00C41D54 /* MMW_port.png */; };
 		36D87A7F17BB3F1D00C41D54 /* MC_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A7317BB3F1D00C41D54 /* MC_port.png */; };
 		36E467851739F765002C0642 /* PolicyHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36E467831739F765002C0642 /* PolicyHandler.cpp */; };
-		36EC6DEA16EF0686006CB43E /* ex_terrain_2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 36EC6DE916EF0686006CB43E /* ex_terrain_2.tmx */; };
 		36EC6DF816EF1B7A006CB43E /* BuildingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36EC6DF716EF1B79006CB43E /* BuildingHandler.cpp */; };
 		36F364AF16E9988400FAFD99 /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36F364AE16E9988400FAFD99 /* GameHUD.cpp */; };
 		36F597B716F30D6700AC6ECA /* InGameMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36F597B516F30D6700AC6ECA /* InGameMenu.cpp */; };
@@ -552,14 +537,6 @@
 		3604970E17AB96BC00CACE25 /* jobbutton_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jobbutton_pressed.png; sourceTree = "<group>"; };
 		3604970F17AB96BC00CACE25 /* jobbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jobbutton.png; sourceTree = "<group>"; };
 		3604971217ABB3B400CACE25 /* innerbox-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "innerbox-info.png"; sourceTree = "<group>"; };
-		3608CAE21704343E00AB65A3 /* AFC.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AFC.plist; sourceTree = "<group>"; };
-		3608CAE31704343E00AB65A3 /* AFC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AFC.png; sourceTree = "<group>"; };
-		3608CAE41704343E00AB65A3 /* AMC.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AMC.plist; sourceTree = "<group>"; };
-		3608CAE51704343E00AB65A3 /* AMC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AMC.png; sourceTree = "<group>"; };
-		3608CAE61704343E00AB65A3 /* ARF.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ARF.plist; sourceTree = "<group>"; };
-		3608CAE71704343E00AB65A3 /* ARF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ARF.png; sourceTree = "<group>"; };
-		3608CAE81704343E00AB65A3 /* ARM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ARM.plist; sourceTree = "<group>"; };
-		3608CAE91704343E00AB65A3 /* ARM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ARM.png; sourceTree = "<group>"; };
 		3608CAEA1704343E00AB65A3 /* FMC.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FMC.plist; sourceTree = "<group>"; };
 		3608CAEB1704343E00AB65A3 /* FMC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FMC.png; sourceTree = "<group>"; };
 		3608CAEC1704343E00AB65A3 /* FMF.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FMF.plist; sourceTree = "<group>"; };
@@ -638,12 +615,6 @@
 		36320306171666DA003C094D /* CCLayerPanZoom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayerPanZoom.cpp; sourceTree = "<group>"; };
 		36320307171666DA003C094D /* CCLayerPanZoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayerPanZoom.h; sourceTree = "<group>"; };
 		3632030B1716988F003C094D /* CitizenCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitizenCFG.h; sourceTree = "<group>"; };
-		3632030C1716AF74003C094D /* AC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AC.png; sourceTree = "<group>"; };
-		3632030D1716AF74003C094D /* MC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MC.png; sourceTree = "<group>"; };
-		363203101716AF88003C094D /* AC.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AC.plist; sourceTree = "<group>"; };
-		363203111716AF88003C094D /* AC.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AC.tps; sourceTree = "<group>"; };
-		363203141716AF94003C094D /* MC.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MC.plist; sourceTree = "<group>"; };
-		363203151716AF95003C094D /* MC.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MC.tps; sourceTree = "<group>"; };
 		3636E0F917460D7900B1B012 /* Requirements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Requirements.h; sourceTree = "<group>"; };
 		3641C537172F5E9900655E25 /* Job.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Job.cpp; sourceTree = "<group>"; };
 		3641C538172F5E9900655E25 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Job.h; sourceTree = "<group>"; };
@@ -1146,7 +1117,6 @@
 		36D87A7317BB3F1D00C41D54 /* MC_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MC_port.png; sourceTree = "<group>"; };
 		36E467831739F765002C0642 /* PolicyHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolicyHandler.cpp; sourceTree = "<group>"; };
 		36E467841739F765002C0642 /* PolicyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolicyHandler.h; sourceTree = "<group>"; };
-		36EC6DE916EF0686006CB43E /* ex_terrain_2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ex_terrain_2.tmx; sourceTree = "<group>"; };
 		36EC6DF616EF1B6C006CB43E /* BuildingHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildingHandler.h; sourceTree = "<group>"; };
 		36EC6DF716EF1B79006CB43E /* BuildingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BuildingHandler.cpp; sourceTree = "<group>"; };
 		36F364AC16E9987100FAFD99 /* GameHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameHUD.h; sourceTree = "<group>"; };
@@ -1273,20 +1243,6 @@
 		3608CA9E1702C59A00AB65A3 /* Sprite sheet */ = {
 			isa = PBXGroup;
 			children = (
-				3632030C1716AF74003C094D /* AC.png */,
-				363203101716AF88003C094D /* AC.plist */,
-				363203111716AF88003C094D /* AC.tps */,
-				3632030D1716AF74003C094D /* MC.png */,
-				363203141716AF94003C094D /* MC.plist */,
-				363203151716AF95003C094D /* MC.tps */,
-				3608CAE21704343E00AB65A3 /* AFC.plist */,
-				3608CAE31704343E00AB65A3 /* AFC.png */,
-				3608CAE41704343E00AB65A3 /* AMC.plist */,
-				3608CAE51704343E00AB65A3 /* AMC.png */,
-				3608CAE61704343E00AB65A3 /* ARF.plist */,
-				3608CAE71704343E00AB65A3 /* ARF.png */,
-				3608CAE81704343E00AB65A3 /* ARM.plist */,
-				3608CAE91704343E00AB65A3 /* ARM.png */,
 				3608CAEA1704343E00AB65A3 /* FMC.plist */,
 				3608CAEB1704343E00AB65A3 /* FMC.png */,
 				3608CAEC1704343E00AB65A3 /* FMF.plist */,
@@ -1460,7 +1416,6 @@
 				848F1B1E16FA9E3B0069EF18 /* GameMenu */,
 				848F1B0116FA9DBE0069EF18 /* MainMenu */,
 				367612B8170ECF7E00CD354B /* MayanMap.tmx */,
-				36EC6DE916EF0686006CB43E /* ex_terrain_2.tmx */,
 				365FB9C516E5E30B00A57CF0 /* iTunesArtwork */,
 				365FB9C716E5E30B00A57CF0 /* Info.plist */,
 				8489ADA9175C96C1004CCB84 /* GameData.plist */,
@@ -2923,15 +2878,6 @@
 				365FBA5F16E5E30D00A57CF0 /* ChangeLog in Resources */,
 				365FBC5416E5E31000A57CF0 /* cocos2dx-ext.mkf in Resources */,
 				365FBC5616E5E31000A57CF0 /* cocos2dx-ext_public.defines.txt in Resources */,
-				36EC6DEA16EF0686006CB43E /* ex_terrain_2.tmx in Resources */,
-				3608CAF61704343E00AB65A3 /* AFC.plist in Resources */,
-				3608CAF71704343E00AB65A3 /* AFC.png in Resources */,
-				3608CAF81704343E00AB65A3 /* AMC.plist in Resources */,
-				3608CAF91704343E00AB65A3 /* AMC.png in Resources */,
-				3608CAFA1704343E00AB65A3 /* ARF.plist in Resources */,
-				3608CAFB1704343E00AB65A3 /* ARF.png in Resources */,
-				3608CAFC1704343E00AB65A3 /* ARM.plist in Resources */,
-				3608CAFD1704343E00AB65A3 /* ARM.png in Resources */,
 				3608CAFE1704343E00AB65A3 /* FMC.plist in Resources */,
 				3608CAFF1704343E00AB65A3 /* FMC.png in Resources */,
 				3608CB001704343E00AB65A3 /* FMF.plist in Resources */,
@@ -2972,12 +2918,6 @@
 				36237D3E17155E940070FB13 /* farm build.plist in Resources */,
 				36237D3F17155E940070FB13 /* farm build.png in Resources */,
 				36237D4017155E940070FB13 /* farm build.tps in Resources */,
-				3632030E1716AF74003C094D /* AC.png in Resources */,
-				3632030F1716AF74003C094D /* MC.png in Resources */,
-				363203121716AF88003C094D /* AC.plist in Resources */,
-				363203131716AF88003C094D /* AC.tps in Resources */,
-				363203161716AF95003C094D /* MC.plist in Resources */,
-				363203171716AF95003C094D /* MC.tps in Resources */,
 				B43A57A31717CE09004D7104 /* terrain_flat.png in Resources */,
 				361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */,
 				361FDE10171BF14000665EDE /* farmerbehavior.lua in Resources */,

@@ -15,6 +15,7 @@
 /*Glue functions. Defined here to avoid double include problem existing in Sprite.h*/
 static GameSprite* sprite = NULL;
 
+/*
 static int GetRatioSocialInteraction_Glue(lua_State *L)
 {
     lua_pushinteger(L, GameScene::getThis()->policyHandler->getCulturalExchangeRatio());
@@ -82,7 +83,7 @@ static int TriggerSocialInteraction_Glue(lua_State *L)
     }
     
     return 1;
-}
+}*/
 
 static int IsAtMaxLevel_Glue(lua_State* L)
 {
@@ -111,6 +112,7 @@ static int IsAtAbsoluteMaxLevel_Glue(lua_State* L)
     return 1;
 }
 
+/*
 static int HasMetUpgradeCriteria_Glue(lua_State* L)
 {
     if (!sprite)
@@ -122,9 +124,9 @@ static int HasMetUpgradeCriteria_Glue(lua_State* L)
         lua_pushboolean(L, sprite->CheckUpgradeReq());
     }
     return 1;
-}
+}*/
 
-
+/*
 static int UpgradeClass_Glue(lua_State* L)
 {
     if (!sprite)
@@ -138,8 +140,9 @@ static int UpgradeClass_Glue(lua_State* L)
         lua_pushboolean(L, true);
     }
     return 1;
-}
+}*/
 
+/*
 static int ConvertToLocal_Glue(lua_State* L)
 {
     if (!sprite)
@@ -153,7 +156,7 @@ static int ConvertToLocal_Glue(lua_State* L)
         lua_pushboolean(L, true);
     }
     return 1;
-}
+}*/
 
 /* calls the current sprite set in the global to Go Home.*/
 static int GoHome_Glue(lua_State* L)
@@ -170,6 +173,9 @@ static int GoHome_Glue(lua_State* L)
     return 1;
 }
 
+//REWRITE. Larry
+
+/*
 //Note: to actually BUY a house please don't check if a better house is available. Otherwise the sprite won't squeeze.
 //This function specifically avoids putting a sprite in a squeezy house.
 static int IsBetterHouseAvailable_Glue(lua_State* L)
@@ -181,14 +187,14 @@ static int IsBetterHouseAvailable_Glue(lua_State* L)
     else
     {
         
-        /*
+ 
         //I won't move house if mine isn't overpopulated.
         if (sprite->getPossessions()->hasHouse && !sprite->getPossessions()->isSqueezing)
         {
             lua_pushboolean(L, false);
             return 1;
             
-        }*/
+        }
         
         
         BuildingHandler* bh = GameScene::getThis()->buildingHandler;
@@ -210,7 +216,7 @@ static int IsBetterHouseAvailable_Glue(lua_State* L)
             Building * b = (Building*)bh->housingOnMap->objectAtIndex(i);
             if (!b->isOverpopulated() && b->populationLimit > b->getPopulationCount())// && b->populationLimit
             {
-                /*sprite will move to a more expensive or cheaper house if it means he doesn't have to squeeze. */
+                //sprite will move to a more expensive or cheaper house if it means he doesn't have to squeeze.
                 if (sprite->getPossessions()->isSqueezing == true)
                 {
                     lua_pushboolean(L, true);
@@ -224,20 +230,10 @@ static int IsBetterHouseAvailable_Glue(lua_State* L)
                 }
                 else if (b->buildingBuyPrice > sprite->getPossessions()->homeLocation->buildingBuyPrice)
                 {
-                    /*if not squeezing, the target building isn't overpopulated and has space, then the value of the building is compared.*/
-                    
-                        //               {
                         lua_pushboolean(L, true);
                         return 1;
                 }
                 
-                /*
-                if ()
-                {
-                    lua_pushboolean(L, true);
-                    return 1;
-                    
-                }*/
                 
                 
             }
@@ -249,10 +245,11 @@ static int IsBetterHouseAvailable_Glue(lua_State* L)
 
     return 1;
 }
+*/
 
+//No longer automatically looks for job.
 
-
-
+/*
 static int IsBetterJobAvailable_Glue(lua_State* L)
 {
     if (!sprite)
@@ -437,7 +434,8 @@ static int IsBetterJobAvailable_Glue(lua_State* L)
     }
     return 1;
 }
-
+*/
+ 
 /*Asks if the current sprite set in the global if it already has a house*/
 static int HasHouse_Glue(lua_State *L)
 {
@@ -491,7 +489,7 @@ static int BuyHouseWithID_Glue(lua_State *L)
     return 1;
 }
 
-
+/*
 static int RentHouseWithID_Glue(lua_State *L)
 {
     if (!sprite)
@@ -527,9 +525,9 @@ static int RentHouseWithID_Glue(lua_State *L)
     }
     return 1;
 }
+*/
 
-
-
+/*
 static int BuySqueezeHouse_Glue(lua_State* L)
 {
     if (!sprite)
@@ -566,7 +564,7 @@ static int BuySqueezeHouse_Glue(lua_State* L)
     return 1;
 
 }
-
+*/
 /*gets a list of IDs that belong to the buildingType HOUSING, and sends it to Lua*/
 static int GetAllHomes_Glue(lua_State *L)
 {
@@ -664,7 +662,8 @@ static int SetEducationLevel_Glue(lua_State*L)
     
 }
 
-/*Assigns a job to the current sprite occupied by the pointer. Pass the building ID from Lua.*/
+/*
+Assigns a job to the current sprite occupied by the pointer. Pass the building ID from Lua.
 static int AssignJobWithID_Glue(lua_State *L)
 {
     if (!sprite)
@@ -702,8 +701,9 @@ static int AssignJobWithID_Glue(lua_State *L)
         
     }
     return 1;
-}
+}*/
 
+/*
 static int AssignLowerJobWithID_Glue(lua_State *L)
 {
     if (!sprite)
@@ -745,9 +745,10 @@ static int AssignLowerJobWithID_Glue(lua_State *L)
     }
     return 1;
 }
-
+*/
 
 /*causes the sprite to quit its current job.*/
+/*
 static int QuitJob_Glue(lua_State *L)
 {
     if (!sprite)
@@ -758,7 +759,7 @@ static int QuitJob_Glue(lua_State *L)
   
     
     return 1;
-}
+}*/
 
 /*causes the sprite to sell its house.*/
 static int SellHouse_Glue(lua_State* L)
@@ -814,6 +815,7 @@ static int GoToWork_Glue(lua_State* L)
 }
 
 /*checks if the current sprite set in the global has a job.*/
+/*
 static int HasWork_Glue(lua_State *L)
 {
     if (!sprite)
@@ -855,7 +857,7 @@ static int IsHomeSuitable_Glue(lua_State *L)
         lua_pushboolean(L, (!sprite->getPossessions()->homeLocation->isOverpopulated()));
     }
     return 1;
-}
+}*/
 
 /*Makes the sprite go to a building. ID will be supplied.*/
 static int GoToBuilding_Glue(lua_State* L)
@@ -964,7 +966,9 @@ static int GetBuildingCost_Glue(lua_State *L)
     return 1;
 }
 
+
 /*gets the rent of the building by selected buildingID*/
+/*
 static int GetBuildingRent_Glue(lua_State* L)
 {
     int args = lua_gettop(L);
@@ -997,7 +1001,7 @@ static int GetBuildingRent_Glue(lua_State* L)
     }
     
     return 1;
-}
+}*/
 
 
 /*gets the current sprite's cash on hand.*/
@@ -1529,7 +1533,7 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "GoHome", GoHome_Glue);
     lua_register(L, "HasHouse", HasHouse_Glue);
     lua_register(L, "GoToWork", GoToWork_Glue);
-    lua_register(L, "HasWork", HasWork_Glue);
+   // lua_register(L, "HasWork", HasWork_Glue);
     lua_register(L, "GetLevel", GetLevel_Glue);
     lua_register(L, "GoToBuildingWithID", GoToBuilding_Glue);
     
@@ -1550,14 +1554,14 @@ void Behavior::registerFunctions(lua_State* L)
     
     /*buying or renting house*/
     lua_register(L, "GetCostOfBuildingWithID", GetBuildingCost_Glue);
-    lua_register(L, "GetRentOfBuildingWithID", GetBuildingRent_Glue);
+ //   lua_register(L, "GetRentOfBuildingWithID", GetBuildingRent_Glue);
     lua_register(L, "GetBuildingLevelWithID", GetBuildingLevel_Glue);
     lua_register(L, "IsBuildingWithIDFull", IsBuildingFullyOccupied_Glue);
     lua_register(L, "GetAllHomeIDs", GetAllHomes_Glue);
     lua_register(L, "BuyHouseWithID", BuyHouseWithID_Glue);
-    lua_register(L, "RentHouseWithID", RentHouseWithID_Glue);
+  //  lua_register(L, "RentHouseWithID", RentHouseWithID_Glue);
     
-    lua_register(L, "BuySqueezeHouseWithID", BuySqueezeHouse_Glue);
+   // lua_register(L, "BuySqueezeHouseWithID", BuySqueezeHouse_Glue);
     
     //makes the sprite sell his house. 
     lua_register(L, "SellHouse", SellHouse_Glue);
@@ -1567,12 +1571,12 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "GetAllCommerceIDs", GetAllCommerce_Glue);
     
     //AssignJobWithID incorporates a vacancy and qualification check.
-    lua_register(L, "AssignJobWithID", AssignJobWithID_Glue);
-    lua_register(L, "AssignLowerJobWithID", AssignLowerJobWithID_Glue);
+   // lua_register(L, "AssignJobWithID", AssignJobWithID_Glue);
+  //  lua_register(L, "AssignLowerJobWithID", AssignLowerJobWithID_Glue);
     //Makes the sprite quit his job
-    lua_register(L, "IsJobSuitable", IsJobSuitable_Glue);
-    lua_register(L, "IsHomeSuitable", IsHomeSuitable_Glue);
-    lua_register(L, "QuitJob", QuitJob_Glue);
+   // lua_register(L, "IsJobSuitable", IsJobSuitable_Glue);
+  //  lua_register(L, "IsHomeSuitable", IsHomeSuitable_Glue);
+  //  lua_register(L, "QuitJob", QuitJob_Glue);
     
     lua_register(L, "ModifyHappiness", ModifyHappiness_Glue);
     lua_register(L, "ModifySocial", ModifySocial_Glue);
@@ -1584,23 +1588,23 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "GetSocial", GetSocial_Glue);
     lua_register(L, "GetLoyalty", GetLoyalty_Glue);
     
-    lua_register(L, "BecomeLocal", ConvertToLocal_Glue);
+  //  lua_register(L, "BecomeLocal", ConvertToLocal_Glue);
     
     /*general building type retriever*/
     lua_register(L,"GetBuildingsOfType", GetBuildingsOfType_Glue);
     
     
-    lua_register(L, "IsBetterHouseAvailable", IsBetterHouseAvailable_Glue);
-    lua_register(L, "IsBetterJobAvailable", IsBetterJobAvailable_Glue);
+  //  lua_register(L, "IsBetterHouseAvailable", IsBetterHouseAvailable_Glue);
+  //  lua_register(L, "IsBetterJobAvailable", IsBetterJobAvailable_Glue);
     
     /*Checks for upgrade requirements.*/
     lua_register(L, "IsAtMaxClassLevel", IsAtMaxLevel_Glue);
     lua_register(L, "IsAtAbsoluteMaxlevel", IsAtAbsoluteMaxLevel_Glue);
-    lua_register(L, "HasMetUpgradeCriteria", HasMetUpgradeCriteria_Glue);
-    lua_register(L, "TriggerUpgrade", UpgradeClass_Glue);
+  //  lua_register(L, "HasMetUpgradeCriteria", HasMetUpgradeCriteria_Glue);
+  //  lua_register(L, "TriggerUpgrade", UpgradeClass_Glue);
     
-    lua_register(L, "GetSocialInteractionChance", GetRatioSocialInteraction_Glue);
-    lua_register(L, "TriggerSocialInteraction", TriggerSocialInteraction_Glue);
+  //  lua_register(L, "GetSocialInteractionChance", GetRatioSocialInteraction_Glue);
+  //  lua_register(L, "TriggerSocialInteraction", TriggerSocialInteraction_Glue);
   //  CCLog("Functions registered");
 }
 

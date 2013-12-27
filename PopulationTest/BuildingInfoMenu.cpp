@@ -71,11 +71,11 @@ void BuildingInfoMenu::createMenuItems()
     mBuildingExpMax = building->getExpToLevel();
     mBuildingLevel = building->currentLevel;
     mBuildingPrice = building->buildingCost * GameScene::getThis()->policyHandler->percentTax * 0.01;
-    if (building->buildingType == HOUSING)
+   // if (building->buildingType == HOUSING)
         mBuildingVacancy = building->populationLimit;
-    else
-        mBuildingVacancy = building->getJobsAvailable()->count();
-    mBuildingOverload = building->populationOverload;
+   // else
+     //   mBuildingVacancy = building->getJobsAvailable()->count();
+ //   mBuildingOverload = building->populationOverload;
     mBuildingCurrPopulation = building->getPopulationCount();
     
     // Create header
@@ -95,7 +95,7 @@ void BuildingInfoMenu::createMenuItems()
     spCash = CCSprite::create("money icon.png");
     spCash->setScale(0.75);
     
-    
+    /*
     textInt = CCLabelTTF::create(GlobalHelper::Convert(building->int_mod).c_str(), "Droidiga", 26);
     textInt->setColor(colorGreen);
     textLoy = CCLabelTTF::create(GlobalHelper::Convert(building->loyalty_mod).c_str(), "Droidiga", 26);
@@ -107,7 +107,7 @@ void BuildingInfoMenu::createMenuItems()
     
     textCashMod = CCLabelTTF::create(GlobalHelper::Convert(building->cash_mod).c_str(), "Droidiga", 26);
     textCashMod->setColor(colorGreen);
-    
+    */
     std::stringstream ss;
     ss << "Yearly: " << mBuildingPrice << " G";
     textPrice = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
@@ -360,7 +360,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             }
         }
     }
-    
+    /*
     if (mBuildingOverload != building->populationOverload)
     {
         int diff = building->populationOverload - mBuildingOverload;
@@ -385,7 +385,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
                 spritePopulationOverloadSlot.pop_back();
             }
         }
-    }
+    }*/
     
     if (mBuildingCurrPopulation != building->getPopulationCount())
     {
@@ -420,12 +420,12 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         }
     }
     
-    
+    /*
     textInt->setString(GlobalHelper::Convert(building->int_mod).c_str());
     textLoy->setString(GlobalHelper::Convert(building->loyalty_mod).c_str());
     textSoc->setString(GlobalHelper::Convert(building->social_mod).c_str());
     textHap->setString(GlobalHelper::Convert(building->happiness_mod).c_str());
-    
+    */
     
     if (isPositionDirty)
         reposition();

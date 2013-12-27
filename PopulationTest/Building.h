@@ -32,7 +32,7 @@ enum BuildingCategory {
 
 class Building: public CCObject
 {
-    CCArray* jobsInthisBuilding;
+  //  CCArray* jobsInthisBuilding;
     CCArray* currVisitors;
     
     vector<GameSprite*> currPopulation;
@@ -53,12 +53,12 @@ public:
      
     BuildingCategory buildingType;
     int populationLimit;
-    int populationOverload;
-    int populationOverloadLimit;
+    //int populationOverload;
+    //int populationOverloadLimit;
     
     int buildingValue;
     int buildingBuyPrice;
-    int buildingRentPrice;
+    //int buildingRentPrice;
      
     int targetGUID;
     int GUID_offset;
@@ -67,15 +67,15 @@ public:
     int height;
     
     /*modifications to anyone entering building*/
-    int happiness_mod;
-    int loyalty_mod;
-    int social_mod;
-    int int_mod;
+    //int happiness_mod;
+    //int loyalty_mod;
+    //int social_mod;
+    //int int_mod;
     
-    int energy_mod;
-    int cash_mod;
+    //int energy_mod;
+    //int cash_mod;
    
-    int exp_mod;
+    //int exp_mod;
     /*end modifications to anyone entering building*/
     
     /*unlock requirements*/
@@ -119,12 +119,12 @@ public:
     CCPoint getWorldPosition();
     
     /*jobs*/
-    std::string jobs;
-    void initializeJobs();
+ //   std::string jobs;
+  //  void initializeJobs();
     
     
-    CCArray* getJobsAvailable();
-    bool isQualifiedForJob(GameSprite* sp, int jobindex);
+  //  CCArray* getJobsAvailable();
+   // bool isQualifiedForJob(GameSprite* sp, int jobindex);
     
     /*called when the sprite arrives in the building.*/
     void ArriveHandler(GameSprite* sp);

@@ -114,17 +114,19 @@ static int max_cultural_percent = 100;
 
 static int min_cultural_policy_duration_months = 1;
 #pragma unused(min_cultural_policy_duration_months)
+
 static int max_cultural_policy_duration_months = 12;
 #pragma unused(max_cultural_policy_duration_months)
+
 static int cost_per_1_cultural_rate_per_month = 10;
 #pragma unused(cost_per_1_cultural_rate_per_month)
+
 //unoccupied penalty
 static int maint_per_unoccupied_residence = 100;
 #pragma unused(maint_per_unoccupied_residence)
 
 static int maint_per_unoccupied_job = 200;
 #pragma unused(maint_per_unoccupied_job)
-
 
 static int alien_visa_duration_months = 24;
 #pragma unused(alien_visa_duration_months)
