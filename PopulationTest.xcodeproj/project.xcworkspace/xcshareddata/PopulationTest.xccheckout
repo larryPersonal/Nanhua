@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>85B0C953-659F-4D7D-ABC2-00C4254667C4</string>
+	<string>7FF8452B-A0EF-426E-B742-277CEBF6EDF3</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PopulationTest</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>8F3E87ED-6AB2-44CC-BCB9-3D5175E3FB65</key>
-		<string>ssh://bitbucket.org/greatchicken/population-game.git</string>
+		<key>70C648A8-9019-440A-82C5-41D452BF4925</key>
+		<string>https://github.com/larryPersonal/Nanhua.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PopulationTest.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>8F3E87ED-6AB2-44CC-BCB9-3D5175E3FB65</key>
+		<key>70C648A8-9019-440A-82C5-41D452BF4925</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://bitbucket.org/greatchicken/population-game.git</string>
+	<string>https://github.com/larryPersonal/Nanhua.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>8F3E87ED-6AB2-44CC-BCB9-3D5175E3FB65</string>
+	<string>70C648A8-9019-440A-82C5-41D452BF4925</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8F3E87ED-6AB2-44CC-BCB9-3D5175E3FB65</string>
+			<string>70C648A8-9019-440A-82C5-41D452BF4925</string>
 			<key>IDESourceControlWCCName</key>
-			<string>PopulationTest</string>
+			<string>Nanhua Values</string>
 		</dict>
 	</array>
 </dict>

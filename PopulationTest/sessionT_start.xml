@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project>
+	<slide>
+        <dialogue>
+			<width>17.35998</width>
+			<height>16.44629</height>
+			<left>13.65508</left>
+			<top>41.33709</top>
+			<src>new slide.png</src>
+			<font>Arresto</font>
+			<fontSize>128</fontSize>
+			<text>Hello World!</text>
+		</dialogue>
+		<sprite>
+			<width>12.97961</width>
+			<height>16.3953</height>
+			<left>70.28693</left>
+			<top>55.38438</top>
+			<src>addPicture.png</src>
+		</sprite>
+		<sprite>
+			<width>12.97961</width>
+			<height>16.3953</height>
+			<left>70.28693</left>
+			<top>15.38438</top>
+			<src>addPicture.png</src>
+		</sprite>
+	</slide>
+	<slide>
+		<sprite>
+			<width>12.97961</width>
+			<height>16.3953</height>
+			<left>70.28693</left>
+			<top>35.38438</top>
+			<src>addPicture.png</src>
+		</sprite>
+		<dialogue>
+			<width>17.35998</width>
+			<height>16.44629</height>
+			<left>53.65508</left>
+			<top>41.33709</top>
+			<src>new slide.png</src>
+			<font>Arresto</font>
+			<fontSize>128</fontSize>
+			<text>I am the king of the world!</text>
+		</dialogue>
+	</slide>
+</project>
+

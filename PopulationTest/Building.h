@@ -10,10 +10,10 @@
 #define PopulationTest_Building_h
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
+//#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
-using namespace CocosDenshion;
+//using namespace CocosDenshion;
 using namespace std;
 
 class GameSprite;

@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "GameScene.h"
+#include "SenarioManager.h"
 
 using namespace cocos2d;
 
@@ -25,6 +26,13 @@ public:
     char* text;
     
     bool active;
+    
+    int curSlide;
+    
+    vector<CCSprite*> spriteList;
+    vector<CCMenu*> menuList;
+    
+    CCArray* slidesList;
     
 public:
     Senario();
@@ -44,6 +52,12 @@ public:
     void buttonSelect();
     
     void updateGameScene();
+    
+    void constructSenarioStage();
+    
+    void test();
+    
+    void clearElements();
 };
 
 #endif
