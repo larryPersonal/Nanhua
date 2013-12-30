@@ -22,6 +22,9 @@ struct Possessions
    
     int movementRange;
     
+    float movementSpeed;
+    float animateSpeed;
+    
     int defaultEnergy;
     int energyRating;
     

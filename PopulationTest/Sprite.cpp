@@ -90,6 +90,8 @@ void GameSprite::initAI(bool isUpgrade)
         possessions->happinessRating = atoi(defaultsRoot["default_happiness"].asString().c_str());
         possessions->loyaltyRating = atoi(defaultsRoot["default_loyalty"].asString().c_str());
         possessions->movementRange =atoi( defaultsRoot["default_move_range"].asString().c_str());
+        possessions->movementSpeed = atof( defaultsRoot["default_movement_speed"].asString().c_str());
+        possessions->animateSpeed = atof( defaultsRoot["default_animate_speed"].asString().c_str());
         possessions->energyRating = atoi(defaultsRoot["default_energy"].asString().c_str());
         possessions->defaultEnergy = possessions->energyRating;
         
@@ -233,6 +235,7 @@ GameSprite* GameSprite::create()
 
  void GameSprite::makeSprite(CCPoint* tilePos)
  {
+     possessions = new Possessions();
      spriteRep = CCSprite::create();
      
      std::string initName = spriteName.c_str();
@@ -246,10 +249,10 @@ GameSprite* GameSprite::create()
      setAction(IDLE);
      idleDelay = 0.0f;
      
+     initAI();
+     
      changeAnimation("DL");
      currentDir = "DL";
-     possessions = new Possessions();
-     initAI();
      
      //Speech bubble
      speechBubble = new SpeechBubble();
@@ -489,8 +492,7 @@ void GameSprite::changeAnimation(std::string dir)
         
     }
     
-    
-    animation = CCAnimation::createWithSpriteFrames(animFrames, 0.2f);
+    animation = CCAnimation::createWithSpriteFrames(animFrames, 50.0f / possessions->animateSpeed * 0.2f);
  //   animFrames->removeAllObjects();
  //   animFrames->release();
     animation->setRestoreOriginalFrame(false);
@@ -525,7 +527,8 @@ void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
 
     callback = CCCallFuncN::create(pSender, callfuncN_selector(GameSprite::moveComplete));
     callback->retain();
-    spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(1, diff), callback);
+    spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f / possessions->movementSpeed, diff), callback);
+    //spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f, diff), callback);
 
     spriteRep->runAction(spriteRunAction);
     
@@ -1216,6 +1219,8 @@ void GameSprite::ReplaceSpriteRep()
     spriteRep->initWithSpriteFrameName(initName.c_str());
    // spriteRep->retain();
     
+    initAI(true);
+    
     spriteRep->setPosition(pos);
     setAction(IDLE);
     idleDelay = 0.0f;
@@ -1223,7 +1228,7 @@ void GameSprite::ReplaceSpriteRep()
     changeAnimation("DL");
     currentDir = "DL";
 
-     initAI(true);
+    
    // behaviorTree->BehaviorInit();
     
     //Speech bubble
