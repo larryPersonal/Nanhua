@@ -2878,7 +2878,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					365FB99A16E5E30B00A57CF0 = {
-						DevelopmentTeam = QAT7Q4CF37;
+						DevelopmentTeam = SY936FX3R9;
 					};
 				};
 			};
@@ -3423,8 +3423,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Larry Leow (97KX8W57R8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3459,8 +3459,8 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "75E4D10A-8857-4733-AF7B-4109CFC11B03";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75E4D10A-8857-4733-AF7B-4109CFC11B03";
+				PROVISIONING_PROFILE = "A1990926-5354-4C4B-8CF3-9C1ED8176EC0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1990926-5354-4C4B-8CF3-9C1ED8176EC0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -3473,8 +3473,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Larry Leow (97KX8W57R8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PopulationTest/Prefix.pch;
@@ -3508,8 +3508,8 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "75E4D10A-8857-4733-AF7B-4109CFC11B03";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75E4D10A-8857-4733-AF7B-4109CFC11B03";
+				PROVISIONING_PROFILE = "A1990926-5354-4C4B-8CF3-9C1ED8176EC0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1990926-5354-4C4B-8CF3-9C1ED8176EC0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

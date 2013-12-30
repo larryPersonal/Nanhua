@@ -51,7 +51,6 @@ public:
     
     virtual void onOrientationChanged();
     
-    void updateItemCashLabel(GameSprite* sprite);
     void updateItemJobLabel(GameSprite* sprite);
     void updateItemHomeLabel(GameSprite* sprite);
     void updateItemClassLabel(GameSprite* sprite);

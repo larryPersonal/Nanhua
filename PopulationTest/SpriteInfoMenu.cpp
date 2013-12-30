@@ -54,11 +54,11 @@ void SpriteInfoMenu::createMenuItems()
     // Set variables which may become dirty
     mGameSpriteEnergy = gameSprite->getPossessions()->energyRating;
     mGameSpriteEnergyMax = gameSprite->getPossessions()->defaultEnergy;
-    mGameSpriteCash = gameSprite->getPossessions()->cashOnHand;
-    mGameSpriteEduLvl = gameSprite->getPossessions()->educationLevel;
-    mGameSpriteInt = gameSprite->getPossessions()->intelligenceRating;
+   // mGameSpriteCash = gameSprite->getPossessions()->cashOnHand;
+   // mGameSpriteEduLvl = gameSprite->getPossessions()->educationLevel;
+   // mGameSpriteInt = gameSprite->getPossessions()->intelligenceRating;
     mGameSpriteLoy = gameSprite->getPossessions()->loyaltyRating;
-    mGameSpriteSoc = gameSprite->getPossessions()->socialRating;
+   // mGameSpriteSoc = gameSprite->getPossessions()->socialRating;
     mGameSpriteHap = gameSprite->getPossessions()->happinessRating;
     mGameSpriteExp = gameSprite->getPossessions()->expRating;
     mGameSpriteExpMax = gameSprite->getPossessions()->getExpToLevel();
@@ -325,6 +325,7 @@ void SpriteInfoMenu::refreshAllMenuItemValues()
         barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
     }
     
+    /*
     if (mGameSpriteCash != gameSprite->getPossessions()->cashOnHand)
     {
         mGameSpriteCash = gameSprite->getPossessions()->cashOnHand;
@@ -360,7 +361,7 @@ void SpriteInfoMenu::refreshAllMenuItemValues()
         ss.str(std::string());
         ss << mGameSpriteSoc/10;
         textSoc->setString(ss.str().c_str());
-    }
+    }*/
     if (mGameSpriteHap != gameSprite->getPossessions()->happinessRating)
     {
         mGameSpriteHap = gameSprite->getPossessions()->happinessRating;

@@ -461,12 +461,12 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
     
         if (tokens.size() == 19)
         {
-            newSprite->getPossessions()->cashOnHand = atoi(tokens[0].c_str());
+       //     newSprite->getPossessions()->cashOnHand = atoi(tokens[0].c_str());
             newSprite->getPossessions()->happinessRating = atoi(tokens[1].c_str());
             newSprite->getPossessions()->loyaltyRating = atoi(tokens[2].c_str());
-            newSprite->getPossessions()->educationLevel = atoi(tokens[3].c_str());
-            newSprite->getPossessions()->intelligenceRating = atoi(tokens[4].c_str());
-            newSprite->getPossessions()->socialRating = atoi(tokens[5].c_str());
+         //   newSprite->getPossessions()->educationLevel = atoi(tokens[3].c_str());
+          //  newSprite->getPossessions()->intelligenceRating = atoi(tokens[4].c_str());
+           // newSprite->getPossessions()->socialRating = atoi(tokens[5].c_str());
             newSprite->getPossessions()->movementRange = atoi(tokens[6].c_str());
             newSprite->getPossessions()->energyRating = atoi(tokens[7].c_str());
             newSprite->getPossessions()->classLevel = atoi(tokens[8].c_str());
