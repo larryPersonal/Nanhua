@@ -96,15 +96,10 @@ void PopulationMenu::createMenuItems()
         //Tag labels to it
         CCLabelTTF* nameLabel =         CCLabelTTF::create( currSprite->spriteDisplayedName.c_str(), "Droidiga", 20);
       //  CCLabelTTF* descriptionLabel =  CCLabelTTF::create( currSprite->spriteClass.c_str(), "Droidiga", 26);
-        std::stringstream ss;
-        ss << currSprite->getPossessions()->cashOnHand << " G";
-        CCLabelTTF* cashLabel =         CCLabelTTF::create(ss.str().c_str(), "Droidiga", 30);
-        cashLabel->setTag(1000);
-    
+        
         menuItem->addChild(nameLabel);
     //    menuItem->addChild(descriptionLabel);
         menuItem->addChild(classImg);
-        menuItem->addChild(cashLabel);
         menuItem->addChild(workItem);
         menuItem->addChild(homeItem);
         
@@ -113,7 +108,6 @@ void PopulationMenu::createMenuItems()
         nameLabel->         setPosition(ccp(menuImage->boundingBox().size.width * 0.5f , 0));// - menuItem->boundingBox().size.height));
     //    descriptionLabel->  setPosition(ccp(PopulationMenuSize.width * 0.5f,  0));
         classImg->setPosition(ccp(PopulationMenuSize.width * 0.2f + offset, classImg->boundingBox().size.height * 0.5f));
-        cashLabel->         setPosition(ccp(PopulationMenuSize.width * 0.8f + offset, menuItem->boundingBox().size.height * 0.45f));
         
         
         workItem->setPosition(ccp(PopulationMenuSize.width * 0.375f, workItem->boundingBox().size.height));
@@ -272,12 +266,13 @@ void PopulationMenu::onOrientationChanged()
     
 }
 
+/*
 void PopulationMenu::updateItemCashLabel(GameSprite* sprite)
 {
     std::stringstream ss;
     ss << sprite->getPossessions()->cashOnHand << " G";
     ((CCLabelTTF*)menu->getChildByTag((int)sprite)->getChildByTag(1000))->setString(ss.str().c_str());
-}
+}*/
 
 void PopulationMenu::updateItemJobLabel(GameSprite* sprite)
 {
@@ -314,10 +309,6 @@ void PopulationMenu::addPopulationToList(GameSprite* sprite)
     
     //Tag labels to it
     CCLabelTTF* nameLabel =         CCLabelTTF::create( sprite->spriteDisplayedName.c_str(), "Droidiga", 20);
-    std::stringstream ss;
-    ss << sprite->getPossessions()->cashOnHand << " G";
-    CCLabelTTF* cashLabel =         CCLabelTTF::create(ss.str().c_str(), "Droidiga", 30);
-    cashLabel->setTag(1000);
 
     Building* hloc = sprite->getPossessions()->homeLocation;
 
@@ -365,7 +356,6 @@ void PopulationMenu::addPopulationToList(GameSprite* sprite)
     
     menuItem->addChild(nameLabel);
     menuItem->addChild(classImg);
-    menuItem->addChild(cashLabel);
     menuItem->addChild(workItem);
     menuItem->addChild(homeItem);
     
@@ -373,7 +363,6 @@ void PopulationMenu::addPopulationToList(GameSprite* sprite)
     
     nameLabel->         setPosition(ccp(menuImage->boundingBox().size.width * 0.5f , 0));// - menuItem->boundingBox().size.height));
     classImg->setPosition(ccp(PopulationMenuSize.width * 0.2f + offset, classImg->boundingBox().size.height * 0.5f));
-    cashLabel->         setPosition(ccp(PopulationMenuSize.width * 0.8f + offset, menuItem->boundingBox().size.height * 0.45f));
     workItem->setPosition(ccp(PopulationMenuSize.width * 0.375f, workItem->boundingBox().size.height));
     homeItem->setPosition(ccp(PopulationMenuSize.width * 0.575f, homeItem->boundingBox().size.height));
     

@@ -55,9 +55,6 @@ private:
     //This ensures that a move instruction other than Wander will not be interrupted by another instruction that resets the path.
     bool isFollowingMoveInstruction;
 
-    std::string getEvolveClass();
-    std::string getPreviousClass();
-    
     int spriteW;
     int spriteH;
     
@@ -184,20 +181,15 @@ public:
     void removePossessionsFromMap();
     void increasePossession(PossessionStats statType, int value);
     
-   // Requirements* getRequirements();
-    
     //Wrapped speech bubble to show text
     void saySpeech(const char* text, float timeInSeconds);
     
     /*transactions*/
     bool BuyHouse(int instanceID); //note: doesnt' take into account population squeeze limit.
     bool BuySqueezeHouse(int InstanceID); //will take into account squeeze limit.
-    bool RentHouse(int instanceID);
     bool SellHouse();
     
     bool FindJobAt(int instanceID);
-   // bool FindLowerLevelJobAt(int instanceID);
-  //  bool QuitJob();
     
     /*movement*/
     bool Wander();
@@ -214,9 +206,6 @@ public:
     //destinations shold always be buildings.
     bool isDestinationInRange(int buildingID);
     
-    bool CheckUpgradeReq();
-    void UpgradeSprite();
-    
     void ChangeSpriteTo(GameSprite* sp);
     
     int getLevel();
@@ -226,7 +215,6 @@ public:
     
 
     void CallbackDayPassed();
-    void ConvertToLocal();
 };
 
 

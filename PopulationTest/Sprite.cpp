@@ -87,13 +87,13 @@ void GameSprite::initAI(bool isUpgrade)
         {
         std::string encoding = defaultsRoot.get("encoding", "UTF-8" ).asString();
         
-        possessions->cashOnHand = atoi(defaultsRoot["default_money"].asString().c_str());
+      //  possessions->cashOnHand = atoi(defaultsRoot["default_money"].asString().c_str());
         possessions->happinessRating = atoi(defaultsRoot["default_happiness"].asString().c_str());
         possessions->loyaltyRating = atoi(defaultsRoot["default_loyalty"].asString().c_str());
-        possessions->educationLevel =atoi( defaultsRoot["default_education_level"].asString().c_str());
+       // possessions->educationLevel =atoi( defaultsRoot["default_education_level"].asString().c_str());
         possessions->movementRange =atoi( defaultsRoot["default_move_range"].asString().c_str());
-        possessions->intelligenceRating = atoi(defaultsRoot["default_intelligence"].asString().c_str());
-        possessions->socialRating = atoi(defaultsRoot["default_social"].asString().c_str());
+       // possessions->intelligenceRating = atoi(defaultsRoot["default_intelligence"].asString().c_str());
+       // possessions->socialRating = atoi(defaultsRoot["default_social"].asString().c_str());
         possessions->energyRating = atoi(defaultsRoot["default_energy"].asString().c_str());
         possessions->defaultEnergy = possessions->energyRating;
         
@@ -816,14 +816,17 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
     std::string statName = "Exp";
     switch (statType)
     {
+        /*
         case STATS_CASHONHAND:
             pStat = &possessions->cashOnHand;
             statName = "Cash";
             break;
+         */
         case STATS_HAPPINESS:
             pStat = &possessions->happinessRating;
             statName = "Hap";
             break;
+        /*
         case STATS_LOYALTY:
             pStat = &possessions->loyaltyRating;
             statName = "Loy";
@@ -836,7 +839,8 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
             pStat = &possessions->socialRating;
             statName = "Soc";
             break;
-        case STATS_ENERGY:
+        */
+         case STATS_ENERGY:
             pStat = &possessions->energyRating;
             statCap = possessions->defaultEnergy;
             statName = "Energy";
@@ -882,6 +886,7 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
     // Do aftermath
     switch (statType)
     {
+        /*
         case STATS_CASHONHAND:
             if (GameHUD::getThis()->getMenuMode() == 4)
             {
@@ -890,6 +895,7 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
                         menu->updateItemCashLabel(this);
             }
             break;
+         */
         case STATS_HAPPINESS:
             GameManager::getThis()->totalHappiness += diff;
             GameHUD::getThis()->updateAvgHapLabel();
@@ -916,7 +922,7 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
                 {
                     saySpeech("LEVEL UP!", 3.0f);
                     
-                    possessions->educationLevel++;
+                    //possessions->educationLevel++;
                     possessions->classLevel++;
                 }
             }
@@ -924,139 +930,6 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
         default:
             return;
     }
-}
-
-/*hax. Evolve class is in one direction only.*/
-std::string GameSprite::getEvolveClass()
-{
-    if (spriteClass.compare("chief") != 0)
-    {
-        if (race != 'a')
-        {
-            if (spriteClass.compare("farmer")==0)
-                return "merchant";
-            if (spriteClass.compare("citizen")==0)
-                return "merchant";
-            if (spriteClass.compare("merchant")==0)
-                return "warrior";
-           // if (spriteClass.compare("citizen")==0)
-           //     return "warrior";
-            if (spriteClass.compare("warrior")==0)
-                return "chief";
-        }
-    }
-    
-    
-    return "";
-}
-
-
-std::string GameSprite::getPreviousClass()
-{
-    if (spriteClass.compare("chief") == 0)
-        return "warrior";
-    if (spriteClass.compare("warrior") == 0)
-        return "merchant";
-    if (spriteClass.compare("merchant") == 0)
-        return "farmer";
-    return "";
-}
-
-void GameSprite::UpgradeSprite()
-{
-    
-    if (!shouldUpgrade) return;
-    
-    std::string origTarget = spriteClass;
-    std::string upgradeTarget = getEvolveClass();
-   
-    if (upgradeTarget.length() == 0) return;
-    GameSprite* newSprite = GameScene::getThis()->spriteHandler->getSpriteTemplate(upgradeTarget.c_str(), gender, race);
-    if (newSprite != NULL)
-    {
-        GameHUD::getThis()->showHint(spriteDisplayedName + " has upgraded to " + upgradeTarget);
-        
-        
-        ChangeSpriteTo(newSprite);
-        possessions->classLevel = 1;
-    
-    }
-    
-    shouldUpgrade = false;
-
-}
-
-//Alien researchers and citizens become local citizens. There is no local researcher class.
-void GameSprite::ConvertToLocal()
-{
-    if (!shouldUpgrade) return;
-    if (race=='h') return;
-    
-    GameSprite* newSprite = GameScene::getThis()->spriteHandler->getSpriteTemplate("citizen", gender, 'h');
-    if (newSprite != NULL)
-    {
-        GameHUD::getThis()->showHint(spriteDisplayedName + " is now a member of the community.");
-        
-        
-        ChangeSpriteTo(newSprite);
-        possessions->classLevel = 1;
-        
-    }
-    
-    shouldUpgrade = false;
-
-    
-    race = 'm';
-    
-}
-
-
-bool GameSprite::CheckUpgradeReq()
-{
-    //Note: should only be called if the building is capable of upgrading a sprite. If it isn't, make sure the Building won't call this function ever.
-    //if the sprite is suitable for upgrading to the next sprite type, it will do so.
-    if (!possessions->isAtMaxLevel())
-    {
-        CCLog("Already at max level");
-        return false;
-        
-    }
-    //find suitable sprite.
-    std::string upgradeTarget = getEvolveClass();
-    if (upgradeTarget.length() == 0)
-    {
-        CCLog("can't get evolve class");
-        return false;
-    }
-    
-    CCArray* allClassRequirements = GameScene::getThis()->spriteHandler->allClassRequirements;
-    
-    Requirements* r = NULL;
-    for (int i = 0; i < allClassRequirements->count(); ++i)
-    {
-        r = (Requirements*)allClassRequirements->objectAtIndex(i);
-        if (upgradeTarget.compare(r->className) == 0)
-        {
-        
-            if (r->hasMetRequirements(possessions->loyaltyRating,
-                                      possessions->socialRating,
-                                      possessions->intelligenceRating,
-                                      possessions->educationLevel, spriteClass.c_str()))
-            {
-                return true;
-            }
-            else
-            {
-                CCLog("has NOT met upgrade requirements");
-                return false;
-            }
-        }
-        
-    }
-    
-    CCLog("Can't find class requirement of upgrade. ?!?!?!");
-    return false;
-    
 }
 
 void GameSprite::saySpeech(const char* text, float timeInSeconds)
@@ -1100,13 +973,12 @@ bool GameSprite::BuyHouse(int instanceID)
         CCLog("Building has reached its population limit!");
         return false;
     }
-    possessions->cashOnHand -= b->buildingBuyPrice;
+    //possessions->cashOnHand -= b->buildingBuyPrice;
     
     possessions->homeLocation = b;
     b->addPopulation(this);
     possessions->hasHouse = true;
-  //  possessions->isRentalProperty = false;
-   // possessions->rentalVisitsLeft = 0;
+
 
     //house successfully bought
     return true;
@@ -1656,7 +1528,7 @@ int GameSprite::getLevel()
 {
     if (!possessions) return -1;
     
-    return possessions->educationLevel;
+    return possessions->classLevel;// educationLevel;
 }
 
 void GameSprite::TakeStockOfDay()

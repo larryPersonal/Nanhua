@@ -36,11 +36,9 @@
     <property name="mod_loy" value="0"/>
     <property name="mod_soc" value="0"/>
     <property name="name" value="Brick House"/>
-    <property name="own_cost" value="250"/>
     <property name="population_limit" value="2"/>
     <property name="population_overload" value="1"/>
     <property name="prereqs" value="Straw House"/>
-    <property name="rent_cost" value="150"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
@@ -59,17 +57,13 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
     <property name="mod_hap" value="5"/>
     <property name="mod_int" value="0"/>
     <property name="mod_loy" value="0"/>
     <property name="mod_soc" value="0"/>
     <property name="name" value="Straw House"/>
-    <property name="own_cost" value="150"/>
     <property name="population_limit" value="1"/>
-    <property name="population_overload" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="50"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="0"/>
@@ -414,11 +408,11 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="mod_cash" value="-10"/>
     <property name="mod_hap" value="5"/>
     <property name="mod_int" value="5"/>
     <property name="mod_loy" value="0"/>
     <property name="mod_soc" value="0"/>
-    <property name="mod_cash" value="-10"/>
     <property name="name" value="Stone Refinery"/>
     <property name="own_cost" value="120"/>
     <property name="population_limit" value="1"/>
@@ -1153,7 +1147,6 @@
     <property name="req_building_count" value="50"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="50"/>
-       
     <property name="research_cost" value="3000"/>
     <property name="research_time" value="120"/>
     <property name="unlocked_at_start" value="no"/>

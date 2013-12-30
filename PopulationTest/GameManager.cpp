@@ -587,7 +587,7 @@ bool GameManager::saveGameData()
             else
                 workID = -1;
             */
-            writeFile << sp->spriteClass +":" +sp->gender +":" + sp->race + ":" +GlobalHelper::Convert(sPosition.x)+ ":" +GlobalHelper::Convert(sPosition.y) +":" +GlobalHelper::Convert(sp->getPossessions()->cashOnHand) +"|" + GlobalHelper::Convert(sp->getPossessions()->happinessRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->loyaltyRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->educationLevel) +"|" + GlobalHelper::Convert(sp->getPossessions()->intelligenceRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->socialRating) + "|" + GlobalHelper::Convert(sp->getPossessions()->movementRange) + "|" + GlobalHelper::Convert(sp->getPossessions()->energyRating) +"|" +
+            writeFile << sp->spriteClass +":" +sp->gender +":" + sp->race + ":" +GlobalHelper::Convert(sPosition.x)+ ":" +GlobalHelper::Convert(sPosition.y) +":" +"|" + GlobalHelper::Convert(sp->getPossessions()->happinessRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->loyaltyRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->movementRange) + "|" + GlobalHelper::Convert(sp->getPossessions()->energyRating) +"|" +
             GlobalHelper::Convert(sp->getPossessions()->classLevel) + "|" + GlobalHelper::Convert(sp->getPossessions()->expRating) + "|" + GlobalHelper::Convert(sp->getPossessions()->hasHouse) + "|"+ GlobalHelper::Convert(homeID) + "|" + GlobalHelper::Convert(workID) +
             "\n";
         }

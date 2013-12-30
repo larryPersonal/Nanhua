@@ -216,10 +216,11 @@ void Building::ArriveHandler(GameSprite* sp)
     
     if (buildingType == SPECIAL)
     {
+    /*
         if (sp->race == 'a')
             sp->ConvertToLocal();
         else
-            sp->UpgradeSprite();
+            sp->UpgradeSprite();*/
         return;
     }
     
@@ -304,6 +305,8 @@ void Building::StickAroundHandler(GameSprite *sp)
         ModifyStats(sp);
     
     
+    //social interaction disabled
+    /*
     if (buildingType == SOCIAL && sp->isInteractingSocial)
     {
         if (currVisitors->count() > 0)
@@ -329,7 +332,7 @@ void Building::StickAroundHandler(GameSprite *sp)
                 }
             }
         }
-    }
+    }*/
 }
 
 

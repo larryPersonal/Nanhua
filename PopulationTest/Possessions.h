@@ -17,18 +17,16 @@
 /* this is contained as a private member inside Sprite and used as a private pointer inside Behavior.*/
 struct Possessions
 {
-    int cashOnHand;
-    int happinessRating;
+     int happinessRating;
     int loyaltyRating;
-    int educationLevel;
-    int intelligenceRating;
-    int socialRating;
+   
     int movementRange;
     
     int defaultEnergy;
     int energyRating;
     
     int classLevel;
+    
     int expRating;
     CCArray* expToLevel;
     
@@ -47,23 +45,11 @@ struct Possessions
     
     Possessions()
     {
-        cashOnHand = 0;
-        hasHouse = false;
-        homeLocation = NULL;
-      //  isRentalProperty = false;
-       // isSqueezing = false;
-      //  rentalVisitsLeft = 0;
+       hasHouse = false;
+       homeLocation = NULL;
         
-        
-      //  jobLocation = NULL;
-      //  jobIndex = -1;
-      //  jobClass = "";
-        
-        
+      
         loyaltyRating = happinessRating = 50;
-      //  educationLevel = classLevel = 1;
-        intelligenceRating = 1;
-        socialRating = 1;
         //note: movement range is range from a sprite's HOME. If the sprite has no home, this value will be ignored.
         movementRange = 1;
         energyRating = defaultEnergy = 100;
@@ -94,7 +80,7 @@ struct Possessions
     
     bool isAtAbsoluteMax()
     {
-        return educationLevel == 20;
+        return classLevel >= 5;
     }
     
     
@@ -114,17 +100,7 @@ struct Possessions
         classLevel = targetLevel;
 
     }
-    void SetEducationLevel(int targetLevel)
-    {
-        if (targetLevel < 1)
-        {
-            educationLevel = 1;
-            return;
-        }
-        educationLevel = targetLevel;
-        //Note: I do NOT check numbers here, please ensure that the value provided is correct! 
-    }
-    
+   
     
 
 };

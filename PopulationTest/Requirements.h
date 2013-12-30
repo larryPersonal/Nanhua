@@ -29,13 +29,15 @@ struct Requirements: public CCObject
     
     bool hasMetRequirements(int loy, int soc, int intel, int edlvl, const char* prevClass)
     {
-        
+        //no need maybe?
+        /*
         return (required_education_level <= edlvl) &&
             (required_social <= soc) &&
             (required_intelligence <= intel) &&
         (required_loyalty <= loy) &&
          strcmp(className.c_str(), prevClass) != 0;
-    
+         */
+        return true;
     
     }
     
