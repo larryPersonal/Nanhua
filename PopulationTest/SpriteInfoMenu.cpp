@@ -260,6 +260,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
             //job location
             if (gameSprite != NULL)
             {
+               /*
                 if (gameSprite->getPossessions()->hasJob)
                 {
                     this->closeMenu(false);
@@ -267,7 +268,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(gameSprite->getPossessions()->jobLocation);//new BuildingInfoMenu(selectedTile->building);
                     //   buildingInfoMenu->autorelease();
                     buildingInfoMenu->useAsTopmostPopupMenu();
-                }
+                }*/
             }
         }
             break;

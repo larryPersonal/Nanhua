@@ -1,15 +1,15 @@
 //
-//  CitizenCFG.h
+//  builderCFG.h
 //  PopulationTest
 //
-//  Created by Serious Games on 11/4/13.
+//  Created by Serious Games on 15/4/13.
 //
 //
 
-#ifndef PopulationTest_CitizenCFG_h
-#define PopulationTest_CitizenCFG_h
+#ifndef PopulationTest_builderCFG_h
+#define PopulationTest_builderCFG_h
 
-std::string citizenDefaults =
+std::string builderDefaults =
 "{\"name\":\"root\","
 "\"default_happiness\":\"50\","
 "\"default_money\":\"200\","
@@ -27,8 +27,8 @@ std::string citizenDefaults =
 "\"spawn_cost\":\"500\""
 "}";
 
-std::string citizenRequirements =
-"{\"name\":\"citizen\","
+std::string builderRequirements =
+"{\"name\":\"builder\","
 "\"required_loyalty\":\"50\","
 "\"required_education_level\":\"1\","
 "\"required_intelligence\":\"50\","
@@ -37,21 +37,21 @@ std::string citizenRequirements =
 
 
 
-std::string citizenConfig =
+std::string builderConfig =
 "{\"name\":\"root\","
-    "\"type\":\"sequence\","
-    "\"items\":"
-    "[{"
-            "\"name\":\"Template\","
-            "\"type\":\"selector\","
-            "\"items\":"
-            "[{"
-                "\"name\":\"Walk Around\","
-                "\"type\":\"behaviour\","
-                "\"file_name\":\"citizenbehavior.lua\","
-                "\"func_name\":\"Wander\""
-            "}]"
-    "}]"
+"\"type\":\"sequence\","
+"\"items\":"
+"[{"
+"\"name\":\"Template\","
+"\"type\":\"selector\","
+"\"items\":"
+"[{"
+"\"name\":\"Walk Around\","
+"\"type\":\"behaviour\","
+"\"file_name\":\"citizenbehavior.lua\","
+"\"func_name\":\"Wander\""
+"}]"
+"}]"
 "}";
 
 #endif

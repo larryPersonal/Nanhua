@@ -657,10 +657,10 @@ void PolicyMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
                     GameHUD::getThis()->updateMoneyLabel();
 
                     int gender = rand() % 2;
-                    if (gender > 0)
-                        GameScene::getThis()->policyHandler->SpawnImmediately(M_ALIEN_CITIZEN);
-                    else
-                        GameScene::getThis()->policyHandler->SpawnImmediately(F_ALIEN_CITIZEN);
+                    if (gender > 0) {}
+                       // GameScene::getThis()->policyHandler->SpawnImmediately(M_ALIEN_CITIZEN);
+                    else {}
+                       // GameScene::getThis()->policyHandler->SpawnImmediately(F_ALIEN_CITIZEN);
             
                     this->closeMenu();
                 }
@@ -688,10 +688,10 @@ void PolicyMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
                     GameManager::getThis()->currentMoney -= import_alien_researcher_cost;
                     GameHUD::getThis()->updateMoneyLabel();
                     int gender = rand() % 2;
-                    if (gender > 0)
-                        GameScene::getThis()->policyHandler->SpawnImmediately(M_ALIEN_RESEARCHER);
-                    else
-                        GameScene::getThis()->policyHandler->SpawnImmediately(F_ALIEN_RESEARCHER);
+                    if (gender > 0) {}
+//                        GameScene::getThis()->policyHandler->SpawnImmediately(M_ALIEN_RESEARCHER);
+                    else {}
+ //                       GameScene::getThis()->policyHandler->SpawnImmediately(F_ALIEN_RESEARCHER);
                     
                     
                     this->closeMenu();

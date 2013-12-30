@@ -34,41 +34,41 @@ struct Possessions
     
     bool hasHouse;
     Building* homeLocation;
-    bool isRentalProperty;
-    bool isSqueezing;
-    int rentalVisitsLeft;
+   // bool isRentalProperty;
+  //  bool isSqueezing;
+   // int rentalVisitsLeft;
     
-    bool hasJob;
-    Building* jobLocation;
-    std::string jobClass; //check for this == to sprite class to know if sprite has taken the correct job
-    int jobIndex;
+   // bool hasJob;
+   // Building* jobLocation;
+   // std::string jobClass; //check for this == to sprite class to know if sprite has taken the correct job
+   // int jobIndex;
     //I think I'll store the index instead of the job pointer.
     //call jobLocation->getJobsAvailable()->objectAtIndex(jobIndex) and cast to a Job*
     
     Possessions()
     {
         cashOnHand = 0;
-        hasHouse = hasJob = false;
+        hasHouse = false;
         homeLocation = NULL;
-        isRentalProperty = false;
-        isSqueezing = false;
-        rentalVisitsLeft = 0;
+      //  isRentalProperty = false;
+       // isSqueezing = false;
+      //  rentalVisitsLeft = 0;
         
         
-        jobLocation = NULL;
-        jobIndex = -1;
-        jobClass = "";
+      //  jobLocation = NULL;
+      //  jobIndex = -1;
+      //  jobClass = "";
         
         
         loyaltyRating = happinessRating = 50;
-        educationLevel = classLevel = 1;
+      //  educationLevel = classLevel = 1;
         intelligenceRating = 1;
         socialRating = 1;
         //note: movement range is range from a sprite's HOME. If the sprite has no home, this value will be ignored.
         movementRange = 1;
         energyRating = defaultEnergy = 100;
         
-        expRating = 0;
+        expRating = 0;    
         expToLevel = CCArray::create();
         expToLevel->retain();
     }

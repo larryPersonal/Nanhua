@@ -270,6 +270,7 @@ void TutorialPiece::PerformAction(std::string &action, std::string &targetType, 
     
     if (action.compare("spawnimmediate") == 0)
     {
+        /*
         SpriteType st;
         int gender = rand() % 2;
         if (targetType.compare("alien") == 0)
@@ -351,15 +352,16 @@ void TutorialPiece::PerformAction(std::string &action, std::string &targetType, 
             }
             GameScene::getThis()->policyHandler->SpawnImmediately(st);
             return;
-
+         
         }
      
-        
+        */
         
     }
     
     if (action.compare("spawn") == 0)
     {
+        /*
         SpriteType st;
         int gender = rand() % 2;
         if (targetType.compare("alien") == 0)
@@ -445,7 +447,7 @@ void TutorialPiece::PerformAction(std::string &action, std::string &targetType, 
         }
         
         
-        
+     */   
     }
 
     

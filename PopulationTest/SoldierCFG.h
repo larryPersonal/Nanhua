@@ -1,43 +1,43 @@
 //
-//  FarmerCFG.h
+//  WarriorCFG.h
 //  PopulationTest
 //
 //  Created by Serious Games on 15/4/13.
 //
 //
 
-#ifndef PopulationTest_FarmerCFG_h
-#define PopulationTest_FarmerCFG_h
+#ifndef PopulationTest_SoldierCFG_h
+#define PopulationTest_SoldierCFG_h
 
-std::string farmerDefaults =
+std::string soldierDefaults =
 "{\"name\":\"root\","
 "\"default_happiness\":\"50\","
-"\"default_money\":\"200\","
+"\"default_money\":\"300\","
 "\"default_loyalty\":\"50\","
-"\"default_education_level\":\"1\","
+"\"default_education_level\":\"6\","
 "\"default_move_range\":\"20\","
 "\"default_intelligence\":\"50\","
 "\"default_social\":\"50\","
 "\"default_energy\":\"100\","
-"\"default_exp_level1\":\"50\","
-"\"default_exp_level2\":\"60\","
-"\"default_exp_level3\":\"70\","
-"\"default_exp_level4\":\"85\","
-"\"default_exp_level5\":\"100\","
+"\"default_exp_level1\":\"150\","
+"\"default_exp_level2\":\"180\","
+"\"default_exp_level3\":\"240\","
+"\"default_exp_level4\":\"300\","
+"\"default_exp_level5\":\"0\","
 "\"spawn_cost\":\"500\""
 "}";
 
-std::string farmerRequirements =
-"{\"name\":\"farmer\","
-"\"required_loyalty\":\"50\","
+std::string soldierRequirements =
+"{\"name\":\"soldier\","
+"\"required_loyalty\":\"80\","
 "\"required_education_level\":\"1\","
-"\"required_intelligence\":\"50\","
+"\"required_intelligence\":\"25\","
 "\"required_social\":\"50\""
 "}";
 
 
 
-std::string farmerConfig =
+std::string soldierConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","
 "\"items\":"

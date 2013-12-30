@@ -1,34 +1,35 @@
 //
-//  FarmerCFG.h
+//  bandit.h
 //  PopulationTest
 //
-//  Created by Serious Games on 15/4/13.
+//  Created by Serious Games on 17/6/13.
 //
 //
 
-#ifndef PopulationTest_FarmerCFG_h
-#define PopulationTest_FarmerCFG_h
+#ifndef PopulationTest_bandit_h
+#define PopulationTest_bandit_h
 
-std::string farmerDefaults =
+
+std::string banditDefaults =
 "{\"name\":\"root\","
 "\"default_happiness\":\"50\","
-"\"default_money\":\"200\","
+"\"default_money\":\"500\","
 "\"default_loyalty\":\"50\","
-"\"default_education_level\":\"1\","
+"\"default_education_level\":\"3\","
 "\"default_move_range\":\"20\","
 "\"default_intelligence\":\"50\","
 "\"default_social\":\"50\","
 "\"default_energy\":\"100\","
-"\"default_exp_level1\":\"50\","
-"\"default_exp_level2\":\"60\","
-"\"default_exp_level3\":\"70\","
-"\"default_exp_level4\":\"85\","
-"\"default_exp_level5\":\"100\","
+"\"default_exp_level1\":\"100\","
+"\"default_exp_level2\":\"120\","
+"\"default_exp_level3\":\"140\","
+"\"default_exp_level4\":\"160\","
+"\"default_exp_level5\":\"0\","
 "\"spawn_cost\":\"500\""
 "}";
 
-std::string farmerRequirements =
-"{\"name\":\"farmer\","
+std::string banditRequirements =
+"{\"name\":\"bandit\","
 "\"required_loyalty\":\"50\","
 "\"required_education_level\":\"1\","
 "\"required_intelligence\":\"50\","
@@ -37,7 +38,7 @@ std::string farmerRequirements =
 
 
 
-std::string farmerConfig =
+std::string banditConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","
 "\"items\":"

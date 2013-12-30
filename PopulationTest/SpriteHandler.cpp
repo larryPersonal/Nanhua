@@ -14,13 +14,16 @@
 //Config headers
 #include "CitizenCFG.h"
 #include "FarmerCFG.h"
-#include "WarriorCFG.h"
-#include "ResearcherCFG.h"
-#include "ChiefCFG.h"
-#include "MerchantCFG.h"
-#include "ACitizenCFG.h"
-#include "AMerchantCFG.h"
-#include "AChiefCFG.h"
+#include "SoldierCFG.h"
+#include "RefugeeCFG.h"
+#include "BuilderCFG.h"
+#include "BanditCFG.h"
+//#include "ResearcherCFG.h"
+//#include "ChiefCFG.h"
+//#include "MerchantCFG.h"
+//#include "ACitizenCFG.h"
+//#include "AMerchantCFG.h"
+//#include "AChiefCFG.h"
 
 #include "NameGenerator.h"
 
@@ -104,198 +107,148 @@ void SpriteHandler::initialize()
         std::string configContent;
         std::string defaultContent;
         std::string targetClass;
-        char targetGender, targetRace;
+        char targetGender;
+        
+        //randomly spawn as male or female.
+      
+        //it's always a human now.
+        char targetRace = 'h';
+        
+        
         switch (i)
         {
             case 0:
-                fileName = "AFC";
+                targetGender = 'm';
+                fileName = "MMC";
                 targetIdleF = 4;
                 targetWalkF = 4;
-                configContent = acitizenConfig;
-                defaultContent = acitizenDefaults;
-                targetClass = "citizen";
-                targetGender = 'm';
-                targetRace = 'a';
+                configContent = refugeeConfig;
+                defaultContent = refugeeDefaults;
+                targetClass = "refugee";
 
                 break;
             case 1:
-                fileName = "AMC";
+                targetGender = 'f';
+                fileName = "FMC";
                 targetIdleF = 4;
                 targetWalkF = 4;
-                
-                configContent = acitizenConfig;
-                defaultContent = acitizenDefaults;
-                targetClass = "citizen";
-                targetGender = 'm';
-                targetRace = 'a';
-                
+            
+                configContent = refugeeConfig;
+                defaultContent = refugeeDefaults;
+                targetClass = "refugee";
                 break;
             case 2:
-                fileName = "ARF";
-                targetIdleF = 2;
-                targetWalkF = 2;
-                configContent = researcherConfig;
-                defaultContent = researcherDefaults;
-                targetClass = "researcher";
-                targetGender = 'f';
-                targetRace = 'a';
-                
+                targetGender = 'm';
+                fileName = "MMC";
+                targetIdleF = 4;
+                targetWalkF = 4;
+            
+                configContent = citizenConfig;
+                defaultContent = citizenDefaults;
+                targetClass = "citizen";
                 break;
             case 3:
-                fileName = "ARM";
-                targetIdleF = 2;
-                targetWalkF = 2;
-                configContent = researcherConfig;
-                defaultContent = researcherDefaults;
-                targetClass = "researcher";
-                targetGender = 'm';
-                targetRace = 'a';
-                
+                targetGender = 'f';
+                fileName = "FMC";
+                targetIdleF = 4;
+                targetWalkF = 4;
+            
+                configContent = citizenConfig;
+                defaultContent = citizenDefaults;
+                targetClass = "citizen";
                 break;
             case 4:
+                targetGender = 'm';
                 fileName = "FMC";
-
-                targetIdleF = 3;
+                targetIdleF = 4;
                 targetWalkF = 4;
+            
+                configContent = builderConfig;
+                defaultContent = builderDefaults;
+            
+                targetClass = "builder";
+            
                 
-                configContent = citizenConfig;
-                defaultContent = citizenDefaults;
-                targetClass = "citizen";
-                targetGender = 'f';
-                targetRace = 'h';
-
                 break;
             case 5:
-                fileName = "FMF";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = farmerConfig;
-                defaultContent = farmerDefaults;
-                targetClass = "farmer";
                 targetGender = 'f';
-                targetRace = 'h';
-
+                fileName = "FMC";
+                targetIdleF = 4;
+                targetWalkF = 4;
+            
+                configContent = builderConfig;
+                defaultContent = builderDefaults;
+            
+                targetClass = "builder";
+            
                 break;
+            
             case 6:
-                fileName = "FMW";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = warriorConfig;
-                defaultContent = warriorDefaults;
-                targetClass = "warrior";
-                targetGender = 'f';
-                targetRace = 'h';
-
-                break;
-            case 7:
-                fileName = "MMC";
-                targetIdleF = 3;
-                targetWalkF = 4;
-                configContent = citizenConfig;
-                defaultContent = citizenDefaults;
-                targetClass = "citizen";
                 targetGender = 'm';
-                targetRace = 'h';
-
-                break;
-            case 8:
                 fileName = "MMF";
                 targetIdleF = 3;
                 targetWalkF = 4;
                 configContent = farmerConfig;
                 defaultContent = farmerDefaults;
                 targetClass = "farmer";
+            
+                break;
+            
+            case 7:
+                targetGender = 'f';
+                fileName = "FMF";
+                targetIdleF = 3;
+                targetWalkF = 4;
+                configContent = farmerConfig;
+                defaultContent = farmerDefaults;
+                targetClass = "farmer";
+            
+                break;
+            case 8:
                 targetGender = 'm';
-                targetRace = 'h';
+                fileName = "MMW";
+          
+                targetIdleF = 3;
+                targetWalkF = 4;
+                
+                configContent = soldierConfig;
+                defaultContent = soldierDefaults;
+                targetClass = "soldier";
 
                 break;
             case 9:
-                fileName = "MMW";
+                targetGender = 'f';
+                fileName = "FMW";
                 targetIdleF = 3;
                 targetWalkF = 4;
-                configContent = warriorConfig;
-                defaultContent = warriorDefaults;
-                targetClass = "warrior";
-                targetGender = 'm';
-                targetRace = 'h';
-                
-                break;
+            
+                configContent = soldierConfig;
+                defaultContent = soldierDefaults;
+                targetClass = "soldier";
+
             case 10:
-                fileName = "AC";
-                targetIdleF = 2;
+                targetGender = 'm';
+                fileName = "MMW";
+            
+                targetIdleF = 3;
                 targetWalkF = 4;
-                configContent = achiefConfig;
-                defaultContent = achiefDefaults;
-                targetClass = "chief";
-                targetRace = 'a';
-                targetGender = 'n';
-                
+            
+                configContent = banditConfig;
+                defaultContent = banditDefaults;
+                targetClass = "bandit";
+            
                 break;
             case 11:
-                fileName = "MC";
-                targetIdleF = 2;
-                targetWalkF = 4;
-                configContent = chiefConfig;
-                defaultContent = chiefDefaults;
-                targetClass = "chief";
-                targetGender = 'n';
-                targetRace = 'h';
-
-                break;
-            case 12:
-                fileName = "MMC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = merchantConfig;
-                defaultContent = merchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'm';
-                targetRace = 'h';
-
-                break;
-
-            case 13:
-                fileName = "FMC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = merchantConfig;
-                defaultContent = merchantDefaults;
-                targetClass = "merchant";
                 targetGender = 'f';
-                targetRace = 'h';
-
-                break;
-
-            case 14:
-                fileName = "AMC";
-                
+                fileName = "FMW";
                 targetIdleF = 3;
                 targetWalkF = 4;
-                
-                configContent = amerchantConfig;
-                defaultContent = amerchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'm';
-                targetRace = 'a';
-
-                break;
-
-            case 15:
-                fileName = "AFC";
-                
-                targetIdleF = 3;
-                targetWalkF = 4;
-                
-                configContent = amerchantConfig;
-                defaultContent = amerchantDefaults;
-                targetClass = "merchant";
-                targetGender = 'f';
-                targetRace = 'a';
-
+            
+                configContent = banditConfig;
+                defaultContent = banditDefaults;
+                targetClass = "bandit";
+            
+      
                 break;
                 
         }
@@ -384,10 +337,11 @@ void SpriteHandler::initClassRequirements()
     
     initClass(citizenRequirements);
     initClass(farmerRequirements);
-    initClass(merchantRequirements);
-    initClass(chiefRequirements);
-    initClass(warriorRequirements);
-    initClass(researcherRequirements);
+    //initClass(banditRequirements);
+    //initClass(refugeeRequirements);
+    //initClass(builderRequirements);
+    //initClass(soldierRequirements);
+    
 }
 
 
@@ -417,7 +371,7 @@ GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender,
     if (!allSprites) return NULL;
     if (allSprites->count() == 0) return NULL;
     
-    
+    /*
     if (strcmp(classname, "chief") == 0)
     {
         if (race == 'a')
@@ -439,7 +393,9 @@ GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender,
         }
         
         return NULL;
-    }
+    }*/
+    
+    return NULL;
 }
 
 
@@ -525,29 +481,29 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
                 newSprite->getPossessions()->homeLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(homeID);
                 
                // newSprite->getPossessions()->homeLocation->addPopulation(newSprite);
-                
+                /*
                 newSprite->getPossessions()->isRentalProperty = !!atoi(tokens[12].c_str());
                 newSprite->getPossessions()->isSqueezing = !!atoi(tokens[13].c_str());
                 newSprite->getPossessions()->rentalVisitsLeft = atoi(tokens[14].c_str());
                 
-                
+                */
                 
             }
-            
+            /*
             newSprite->getPossessions()->hasJob = !!atoi(tokens[15].c_str());
             if (newSprite->getPossessions()->hasJob)
             {
                 int jobID = atoi(tokens[16].c_str());
-                newSprite->getPossessions()->jobLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(jobID);
+               // newSprite->getPossessions()->jobLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(jobID);
+              /
+               // newSprite->getPossessions()->jobLocation->addPopulation(newSprite);
                 
-                newSprite->getPossessions()->jobLocation->addPopulation(newSprite);
+               // newSprite->getPossessions()->jobClass = tokens[17];
+               // newSprite->getPossessions()->jobIndex = atoi(tokens[18].c_str());
                 
-                newSprite->getPossessions()->jobClass = tokens[17];
-                newSprite->getPossessions()->jobIndex = atoi(tokens[18].c_str());
+               // ((Job*)newSprite->getPossessions()->jobLocation->getJobsAvailable()->objectAtIndex(newSprite->getPossessions()->jobIndex))->signUpJob();
                 
-                ((Job*)newSprite->getPossessions()->jobLocation->getJobsAvailable()->objectAtIndex(newSprite->getPossessions()->jobIndex))->signUpJob();
-                
-            }
+            }*/
             
             
         }
@@ -623,11 +579,14 @@ void SpriteHandler::NewHousingLocationCreated()
 
 int SpriteHandler::getRank(std::string spriteclass)
 {
+    /*
     if (spriteclass.compare("farmer") ==0|| spriteclass.compare("citizen") == 0) return 0;
     if (spriteclass.compare("merchant")==0 || spriteclass.compare("researcher") == 0) return 1;
     if (spriteclass.compare("warrior") ==0) return 2;
     if (spriteclass.compare("chief")==0) return 3;
+    */
     
+    //Rank doesn't matter anymore.
     return 0;
 }
 
@@ -635,14 +594,7 @@ int SpriteHandler::getRank(std::string spriteclass)
 
 int SpriteHandler::getAlienCount()
 {
-    /*
-    int count = 0;
-    for (int i = 0; i < spritesOnMap->count(); ++i)
-    {
-        GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        if (sp->race == 'a')
-            ++count;
-    }*/
+
     
     return aliensOnMap->count();
 }

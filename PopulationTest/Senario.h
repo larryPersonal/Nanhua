@@ -43,9 +43,9 @@ public:
     
     bool init();
     
-    void playSenario(char* senario);
+    void playSenario(const char* senario);
     
-    void readSenarioFile(char* senario);
+    void readSenarioFile(const char* senario);
     
     void createGUI();
     

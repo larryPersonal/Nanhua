@@ -80,7 +80,9 @@ CCScene* GameScene::scene()
     scene->addChild(layer, 0);
     
     Senario* senlayer = Senario::create();
-    senlayer->playSenario("tutorial.xml");
+    std::string filename = "tutorial.xml";
+    
+    senlayer->playSenario(filename.c_str());
     scene->addChild(senlayer, 1);
     
     /*
@@ -527,13 +529,14 @@ void GameScene::FirstRunPopulate()
     {
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(5,18);
-        spriteHandler->addSpriteToMap(target, M_MAYAN_FARMER);
+        
+        spriteHandler->addSpriteToMap(target, M_REFUGEE);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, F_MAYAN_FARMER);
+        spriteHandler->addSpriteToMap(target, F_REFUGEE);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, M_MAYAN_FARMER);
+        spriteHandler->addSpriteToMap(target, M_REFUGEE);
 
         
     }

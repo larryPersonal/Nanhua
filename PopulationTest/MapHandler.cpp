@@ -571,12 +571,12 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
             {
             
                 cloneBuilding->ID = atoi(tokens[8].c_str());
-                cloneBuilding->happiness_mod = atoi(tokens[0].c_str());
-                cloneBuilding->loyalty_mod = atoi(tokens[1].c_str());
-                cloneBuilding->social_mod = atoi(tokens[2].c_str());
-                cloneBuilding->int_mod = atoi(tokens[3].c_str());
-                cloneBuilding->energy_mod = atoi(tokens[4].c_str());
-                cloneBuilding->cash_mod = atoi(tokens[5].c_str());
+               // cloneBuilding->happiness_mod = atoi(tokens[0].c_str());
+               // cloneBuilding->loyalty_mod = atoi(tokens[1].c_str());
+               // cloneBuilding->social_mod = atoi(tokens[2].c_str());
+               // cloneBuilding->int_mod = atoi(tokens[3].c_str());
+               // cloneBuilding->energy_mod = atoi(tokens[4].c_str());
+               // cloneBuilding->cash_mod = atoi(tokens[5].c_str());
                 cloneBuilding->currentExp = atoi(tokens[6].c_str());
                 cloneBuilding->currentLevel = atoi(tokens[7].c_str());
             }
