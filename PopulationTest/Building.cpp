@@ -213,16 +213,7 @@ void Building::ArriveHandler(GameSprite* sp)
     if (!sp) return;
     
     currVisitors->addObject(sp);
-    
-    if (buildingType == SPECIAL)
-    {
-    /*
-        if (sp->race == 'a')
-            sp->ConvertToLocal();
-        else
-            sp->UpgradeSprite();*/
-        return;
-    }
+
     
     
     /*deal with the case where a building is the guy's home first.*/

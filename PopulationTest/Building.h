@@ -50,11 +50,9 @@ public:
     int ID;
     
     CCSprite* buildingRep;
-     
     BuildingCategory buildingType;
     int populationLimit;
-    //int populationOverload;
-    //int populationOverloadLimit;
+    int storageLimit; //for food.
     
     int buildingValue;
     int buildingBuyPrice;
@@ -65,18 +63,6 @@ public:
     
     int width;
     int height;
-    
-    /*modifications to anyone entering building*/
-    //int happiness_mod;
-    //int loyalty_mod;
-    //int social_mod;
-    //int int_mod;
-    
-    //int energy_mod;
-    //int cash_mod;
-   
-    //int exp_mod;
-    /*end modifications to anyone entering building*/
     
     /*unlock requirements*/
     /*unlock requirements will only exist in allBuildings. Anything on the map will have these values set to 0.*/

@@ -615,6 +615,7 @@ void GameScene::lostGame(cocos2d::CCObject *psender)
 bool GameScene::handleTouchSprite(CCPoint touchLoc)
 {
     CCArray* gameSprites = spriteHandler->spritesOnMap;
+    if (gameSprites->count() == 0) return false;
     for (int i = 0; i < gameSprites->count(); i++)
     {
         GameSprite* gameSprite = static_cast<GameSprite*>(gameSprites->objectAtIndex(i));

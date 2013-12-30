@@ -43,13 +43,10 @@ void JobCollection::createJobWithJson(Json::Value json)
     
     j->jobName = json["job_name"].asString();
     j->energy_mod = -json["job_energycost"].asInt();
-    j->cash_mod = json["job_monthlypay"].asInt();
     j->exp_mod = json["job_expgain"].asInt();
     
     j->happiness_mod = json["job_mod_hap"].asInt();
     j->loyalty_mod = json["job_mod_loy"].asInt();
-    j->int_mod = json["job_mod_int"].asInt();
-    j->social_mod = json["job_mod_soc"].asInt();
     
     
     j->job_targetEducationLevel = json["job_edlevel"].asInt();

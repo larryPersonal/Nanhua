@@ -20,26 +20,20 @@ public:
     
     static Job* create();
     
-    
     std::string jobName;
     
     int job_targetEducationLevel;
     std::string job_targetSpriteType;
-    int job_targetSpriteType_rank;
     
     int happiness_mod;
     int loyalty_mod;
-    int social_mod;
-    int int_mod;
     
     int energy_mod;
-    int cash_mod;
     
     int exp_mod;
     
     bool job_isTaken;
-    
-   
+       
     Job();
     virtual ~Job();
     

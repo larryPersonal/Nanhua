@@ -12,8 +12,7 @@
 Job::Job()
 {
     //job_targetEducationLevel = job_energyCost = job_monthlyPay = job_expGain = 0;
-    exp_mod = energy_mod = cash_mod = loyalty_mod = social_mod = happiness_mod =
-    int_mod = 0;
+    exp_mod = energy_mod = loyalty_mod = happiness_mod =0;
     
     job_isTaken = false;
 }
@@ -55,16 +54,12 @@ Job* Job::copyWithZone(CCZone *pZone)
         pCopy->jobName = this->jobName;
         pCopy->job_isTaken = false;
         pCopy->energy_mod = this->energy_mod;
-        pCopy->cash_mod = this->cash_mod;
         pCopy->exp_mod = this->exp_mod;
         pCopy->loyalty_mod = this->loyalty_mod;
-        pCopy->social_mod = this->social_mod;
         pCopy->happiness_mod = this->happiness_mod;
-        pCopy->int_mod = this->int_mod;
         
         pCopy->job_targetEducationLevel = this->job_targetEducationLevel;
         pCopy->job_targetSpriteType = this->job_targetSpriteType;
-        pCopy->job_targetSpriteType_rank = GameScene::getThis()->spriteHandler->getRank(pCopy->job_targetSpriteType);
         pNewZone = new CCZone(pCopy);
         
     }
@@ -75,7 +70,7 @@ Job* Job::copyWithZone(CCZone *pZone)
 
 bool Job::isJobBetter(int qualLvl, int targetrank)
 {
-    if (targetrank >= job_targetSpriteType_rank) return false;
+    //if (targetrank >= job_targetSpriteType_rank) return false;
     
 //    if (job_targetEducationLevel <= qualLvl)  return false; //qualifications to be reenabled later.
     
@@ -140,12 +135,9 @@ void Job::leaveJob()
 void Job::ModifyStats(GameSprite* sp)
 {
     if (sp==NULL) return;
-    sp->increasePossession(STATS_CASHONHAND, cash_mod);
     sp->increasePossession(STATS_ENERGY, energy_mod);
     sp->increasePossession(STATS_EXP, exp_mod);
     sp->increasePossession(STATS_HAPPINESS, happiness_mod);
-    sp->increasePossession(STATS_INTELLIGENCE, int_mod);
-    sp->increasePossession(STATS_SOCIAL, social_mod);
     sp->increasePossession(STATS_LOYALTY, loyalty_mod);
 }
 
