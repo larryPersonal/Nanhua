@@ -18,6 +18,8 @@ std::string farmerDefaults =
 "\"default_move_range\":\"20\","
 "\"default_intelligence\":\"50\","
 "\"default_social\":\"50\","
+"\"default_movement_speed\":\"1.0\","  // basic default value is 50 for mayan game
+"\"default_animate_speed\":\"100\","  // basic default value is 50 for mayan game
 "\"default_energy\":\"100\","
 "\"default_exp_level1\":\"50\","
 "\"default_exp_level2\":\"60\","

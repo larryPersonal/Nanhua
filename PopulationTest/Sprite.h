@@ -61,7 +61,6 @@ private:
     int spriteW;
     int spriteH;
     
-    
     //I assume all animations are using the same number of frames.
     int idleFrameCount;
     int walkingFrameCount;

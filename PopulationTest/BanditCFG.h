@@ -19,6 +19,7 @@ std::string banditDefaults =
 "\"default_move_range\":\"20\","
 "\"default_intelligence\":\"50\","
 "\"default_social\":\"50\","
+"\"default_movement_speed\":\"50\","
 "\"default_energy\":\"100\","
 "\"default_exp_level1\":\"100\","
 "\"default_exp_level2\":\"120\","
