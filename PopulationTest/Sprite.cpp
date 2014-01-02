@@ -92,16 +92,11 @@ void GameSprite::initAI(bool isUpgrade)
         possessions->loyaltyRating = atoi(defaultsRoot["default_loyalty"].asString().c_str());
        // possessions->educationLevel =atoi( defaultsRoot["default_education_level"].asString().c_str());
         possessions->movementRange =atoi( defaultsRoot["default_move_range"].asString().c_str());
-<<<<<<< HEAD
         possessions->movementSpeed = atof( defaultsRoot["default_movement_speed"].asString().c_str());
         possessions->animateSpeed = atof( defaultsRoot["default_animate_speed"].asString().c_str());
             
-        possessions->intelligenceRating = atoi(defaultsRoot["default_intelligence"].asString().c_str());
-        possessions->socialRating = atoi(defaultsRoot["default_social"].asString().c_str());
-=======
        // possessions->intelligenceRating = atoi(defaultsRoot["default_intelligence"].asString().c_str());
        // possessions->socialRating = atoi(defaultsRoot["default_social"].asString().c_str());
->>>>>>> 857ad69a8324b4e0a3d4fb36bc11a527fa433c57
         possessions->energyRating = atoi(defaultsRoot["default_energy"].asString().c_str());
         possessions->defaultEnergy = possessions->energyRating;
         
