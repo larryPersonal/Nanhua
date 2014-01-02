@@ -10,6 +10,7 @@
 #include "Sprite.h"
 #include "Building.h"
 #include "GameScene.h"
+#include "GameManager.h"
 //#include "cocos2d.h"
 
 /*Glue functions. Defined here to avoid double include problem existing in Sprite.h*/
@@ -60,27 +61,104 @@ static int GoHome_Glue(lua_State* L)
 //all
 static int GoEat_Glue(lua_State* L)
 {
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+  
+        
+    }
+    else
+    {
+        //lua_pushboolean(L, sprite->PathToResources());
+        
+    }
     return 1;
 }
 
 //bandit
 static int GoPillage_Glue(lua_State* L)
 {
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+        
+        
+    }
+    else
+    {
+        //lua_pushboolean(L, sprite->PathToResources());
+    }
+    
+    //find the nearest Granary, Marketplace or Main
+    //go to it.
+    return 1;
+}
+
+//bandit
+static int Retreat_Glue(lua_State* L)
+{
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+        
+        
+    }
+    else
+    {
+        //lua_pushboolean(L, sprite->pathToExit());
+    }
+    
+    //find the nearest exit
+    //go to it.
     return 1;
 }
 
 //builder
 static int GoBuild_Glue(lua_State* L)
 {
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+        
+        
+    }
+    else
+    {
+        //lua_pushboolean(L, sprite->pathToBuild());
+    }
+    
+    //find a building under construction
+    //go to it.
     return 1;
 }
 
 static int GoStoreItem_Glue(lua_State *L)
 {
+    //find the nearest storage building
+    //go to it carrying item produced.
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+
+        
+    }
+    else
+    {
+        //lua_pushboolean(L, sprite->pathToResources());
+        
+    }
+    
     return 1;
 }
 
 
+static int HasStorageSpaceLeft_Glue(lua_State * L)
+{
+
+    lua_pushboolean(L, GameManager::getThis()->hasStorageLeft());
+    
+    return 1;
+}
 //REWRITE. Larry
 
 /*
@@ -243,7 +321,6 @@ static int GetAllJobs_Glue(lua_State *L)
         {
             ++index;
             lua_pushnumber(L, index);
-            CCLog("%d",b->ID);
             lua_pushnumber(L, b->ID);
             lua_rawset(L, -3);
         }

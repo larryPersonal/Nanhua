@@ -34,6 +34,7 @@ public:
     CCArray * allBuildingsOnMap;
     
     /*it'd probably be easier on the search and the head if I kept them as separate CCArrays.*/
+    /*I'm not sure whether I still need any of these categories, but I'll leave them alone.*/
     CCArray* housingOnMap;
     CCArray* amenityOnMap;
     CCArray* commerceOnMap;
@@ -41,6 +42,7 @@ public:
     CCArray* educationOnMap;
     CCArray* socialOnMap;
     
+    CCArray* storageOnMap;
     CCArray* specialOnMap;
     
     /*Searches for anything that says "onMap"*/

@@ -888,9 +888,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "566"
-            endingLineNumber = "566"
-            landmarkName = "BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)"
-            landmarkType = "5">
+            endingLineNumber = "566">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1049,7 +1047,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "585"
             endingLineNumber = "585"
-            landmarkName = "BuildingHandler::addBuildingToMap(Building *b)"
+            landmarkName = "BuildingHandler::getBuilding(std::string&amp; buildingName)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1065,7 +1063,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "588"
             endingLineNumber = "588"
-            landmarkName = "BuildingHandler::addBuildingToMap(Building *b)"
+            landmarkName = "BuildingHandler::getBuilding(std::string&amp; buildingName)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1081,22 +1079,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "244"
             endingLineNumber = "244"
-            landmarkName = "GetAllJobs_Glue(lua_State *L)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "410081285.534986"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
             landmarkName = "GetAllJobs_Glue(lua_State *L)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1785,7 +1767,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "594"
             endingLineNumber = "594"
-            landmarkName = "BuildingHandler::addBuildingToMap(Building *b)"
+            landmarkName = "BuildingHandler::getBuilding(std::string&amp; buildingName)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2199,22 +2181,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "12"
             endingLineNumber = "12">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/Building.cpp"
-            timestampString = "396782706.552626"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "Building::~Building()"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2729,22 +2695,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PopulationTest/Building.cpp"
-            timestampString = "409831596.264715"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
-            landmarkName = "Building::copyWithZone(CCZone *pZone)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
             timestampString = "410092200.407733"
             startingColumnNumber = "9223372036854775807"
@@ -2764,9 +2714,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "hasMetCriteria(int currCash)"
-            landmarkType = "7">
+            endingLineNumber = "106">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2861,70 +2809,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
             endingLineNumber = "130">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/BuildingHandler.cpp"
-            timestampString = "409831596.264715"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/BuildingHandler.cpp"
-            timestampString = "409831596.264715"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
-            landmarkName = "BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/BuildingHandler.cpp"
-            timestampString = "409831596.264715"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
-            landmarkName = "BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/BuildingHandler.cpp"
-            timestampString = "409831596.264715"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
-            landmarkName = "BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

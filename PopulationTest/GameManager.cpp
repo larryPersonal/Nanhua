@@ -876,3 +876,34 @@ bool GameManager::hasLostGame()
     return false;
 
 }
+
+void GameManager::addMaxStorageValue(Building *justbuilt)
+{
+    maxStorageVal += justbuilt->storageLimit;
+}
+
+void GameManager::subtractMaxStorageValue(Building *justdestroyed)
+{
+    maxStorageVal -= justdestroyed->storageLimit;
+    //additional food over limit is wasted.
+    if (currStorageVal > maxStorageVal)
+        currStorageVal = maxStorageVal;
+}
+
+void GameManager::storage_store(int amt)
+{
+    currStorageVal += amt;
+    //additional food over limit is wasted.
+    if (currStorageVal > maxStorageVal)
+        currStorageVal = maxStorageVal;
+}
+
+void GameManager::storage_consume(int amt)
+{
+    currStorageVal -= amt;
+    if (currStorageVal < 0) currStorageVal = 0;
+}
+bool GameManager::hasStorageLeft()
+{
+    return (currStorageVal < maxStorageVal);
+}

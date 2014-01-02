@@ -17,28 +17,16 @@ Building::Building()
 {
     buildingValue = 0;
     populationLimit = 0;
-   // populationOverload = populationOverloadLimit = 0;
     buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
     constructionTime = 10.0f;
     researchCost = 100.0f;
     researchTime = 10.0f;
-    //jobsInthisBuilding = CCArray::create();
-    //jobsInthisBuilding->retain();
     
     currVisitors = CCArray::create();
     currVisitors->retain();
     
     ID = 0;
-    /*
-    exp_mod = 0;
-    cash_mod = 0;
-    social_mod = 0;
-    happiness_mod = 0;
-    energy_mod = 0;
-    loyalty_mod = 0;
-    int_mod = 0;
-    */
     currentExp = 0;
     currentLevel = 1;
     maintCost = 0;
@@ -47,10 +35,10 @@ Building::Building()
     levelGainPopOverload = NULL;
     levelGainPrice = NULL;
     
-  //  expToLevel = NULL;
     expToLevel = CCArray::create();
     expToLevel->retain();
-    //  pCopy->expToLevel->retain();
+    
+    
     
     
     unlocked = false;
@@ -61,27 +49,8 @@ Building::~Building()
 {
     EndAnim();
     
-    //buildingTexture->release();
-    /*
-    
-    for (int i = 0; i < jobsInthisBuilding->count(); ++i)
-    {
-        delete jobsInthisBuilding->objectAtIndex(i);
-    }*/
-    /*
-    jobsInthisBuilding->removeAllObjects();
-    jobsInthisBuilding->release();
-    */
-   // if (expToLevel != NULL)
-   // {
-       /*
-        for (int i = 0; i < expToLevel->count(); ++i)
-        {
-            expToLevel->objectAtIndex(i)->release();
-        }*/
-    expToLevel->removeAllObjects();
+      expToLevel->removeAllObjects();
     expToLevel->release();
-    // }
     
     if (levelGainVacancy)
     {
@@ -106,8 +75,7 @@ Building::~Building()
    
     
     currVisitors->removeAllObjects();
-//    currVisitors->release();
-    
+   
     currVisitors->release();
 }
 
@@ -159,29 +127,10 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->buildingType = this->buildingType;
         pCopy->buildingValue = this->buildingValue;
         pCopy->buildingBuyPrice = this->buildingBuyPrice;
-     //   pCopy->buildingRentPrice = this->buildingRentPrice;
         pCopy->ID = -1;  /*IDs will be assigned only after construction completes! *///GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
         pCopy->targetGUID = this->targetGUID;   // Copy the target GUID too
-       // pCopy->jobs = this->jobs;
-       // pCopy->populationOverload = this->populationOverload;
-       // pCopy->populationOverloadLimit = this->populationLimit + this->populationOverload;
-        
-        //unlocking doesn't matter, that's for the benefit of the build menu and research menu only.
-        
-        //Mods
-        /*
-        pCopy->exp_mod = this->exp_mod;
-        pCopy->cash_mod = this->cash_mod;
-        pCopy->social_mod = this->social_mod;
-        pCopy->happiness_mod = this->happiness_mod;
-        pCopy->energy_mod = this->energy_mod;
-        pCopy->loyalty_mod = this->loyalty_mod;
-        pCopy->int_mod = this->int_mod;
-        */
         pCopy->currentExp = this->currentExp;
-   //    pCopy->expToLevel = CCArray::create();
         pCopy->expToLevel->initWithArray(this->expToLevel);
-    //    pCopy->retain();
         
         pNewZone = new CCZone(pCopy);    }
     

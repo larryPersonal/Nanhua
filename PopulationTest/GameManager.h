@@ -197,6 +197,16 @@ public:
     CCArray* unlockedBuildings;
     CCArray* researchableBuildings;
     CCArray* lockedBuildings;
+
+    /*storage value: stores food.*/
+    int maxStorageVal;
+    int currStorageVal;
+
+    void addMaxStorageValue(Building *justbuilt);
+    void subtractMaxStorageValue(Building *justdestroyed);
+    void storage_store(int amt);
+    void storage_consume(int amt);
+    bool hasStorageLeft();
     
    
     void UpdateUnlocks();

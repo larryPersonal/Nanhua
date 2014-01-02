@@ -1055,15 +1055,8 @@ bool GameSprite::PathToBuildingOverride(int building_id)
         CCLog("Building ain't in map anymore");
         return false;
     }
-    /*
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }*/
 
-    //this will also allow aliens to visit military buildings.
-    
+
     
     CCPoint startPos = getWorldPosition();
     startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
@@ -1129,6 +1122,24 @@ bool GameSprite::PathToBuilding(int building_id)
 
     
 }
+
+/*Paths to a building under construction. Fails if there isn't a building under construction.*/
+
+bool GameSprite::PathToBuild()
+{
+    return false;
+    
+}
+
+
+bool GameSprite::PathToExit()
+{
+    
+    
+    
+    return false;
+}
+
 
 /*checks if destination is within range of home. If any.*/
 bool GameSprite::isDestinationInRange(int destinationID)
@@ -1274,18 +1285,7 @@ void GameSprite::TakeStockOfDay()
         }
         
     }
-    
-    /*
-    //no job is done elsewhere.
-    if (possessions->hasJob)
-    {
-        if (possessions->jobClass.compare(spriteClass) != 0)
-        {
-           increasePossession(STATS_HAPPINESS, happiness_mod_unsuitable_job);
-        }
-        
-    }*/
-   
+ 
 }
 
 
@@ -1335,6 +1335,12 @@ void GameSprite::CallbackDayPassed()
         saySpeech("My contract's up.",2);
         isLeavingNextUpdate = true;
     }
+    
+}
+
+//
+void GameSprite::CallbackPerformingTask()
+{
     
 }
 

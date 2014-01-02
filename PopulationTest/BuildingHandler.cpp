@@ -24,6 +24,8 @@ BuildingHandler::BuildingHandler()
     militaryOnMap = NULL;
     educationOnMap = NULL;
     socialOnMap = NULL;
+    
+    storageOnMap = NULL;
 }
 
 BuildingHandler::~BuildingHandler()
@@ -45,13 +47,11 @@ BuildingHandler::~BuildingHandler()
     socialOnMap->release();
     specialOnMap->release();
     
+    storageOnMap->release();
+    
+    
     if (allBuildingsOnMap)
     {
-        /*
-        for (int i = 0; i < allBuildingsOnMap->count(); ++i)
-        {
-           allBuildingsOnMap->objectAtIndex(i)->release();
-        }*/
         if (allBuildingsOnMap->count() > 0)
             allBuildingsOnMap->removeAllObjects();
         allBuildingsOnMap->release();
@@ -63,11 +63,6 @@ BuildingHandler::~BuildingHandler()
     if (allBuildings)
     {
         
-        /*
-        for (int i = 0; i < allBuildings->count(); ++i)
-        {
-            allBuildings->objectAtIndex(i)->release();
-        }*/
         if (allBuildings->count() > 0)
             allBuildings->removeAllObjects();
         allBuildings->release();
@@ -214,32 +209,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     else
                         b->buildingBuyPrice = 9999.0f;
-                    /*
-                    currProperty = properties->valueForKey("rent_cost");
-                    if (currProperty)
-                    {
-                        CCString* cost = CCStringMake(properties->valueForKey("rent_cost")->getCString());
-                        b->buildingRentPrice = atoi(cost->getCString());
-                        //b->cash_mod = b->buildingRentPrice;
-                    }
-                    else
-                    {
-                        b->buildingRentPrice = 9999.0f;
-                        //b->cash_mod = 0;
-                    }*/
-                    /*
-                    currProperty = properties->valueForKey("mod_cash");
-                    if (currProperty)
-                    {
-                        CCString* cost = CCStringMake(properties->valueForKey("mod_cash")->getCString());
-                        b->cash_mod = atoi(cost->getCString());
-                    }
-                    else
-                    {
-                        b->cash_mod = -10;
-                    }*/
-                    
-                    
+             
                     currProperty = properties->valueForKey("maint_cost");
                     if (currProperty)
                     {
@@ -261,59 +231,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                         b->populationLimit = 0;
                     
-                    
-                    /*currProperty = properties->valueForKey("population_overload");
-                    if (currProperty)
-                    {
-                        CCString* cost = CCStringMake(properties->valueForKey("population_overload")->getCString());
-                        b->populationOverload = atoi(cost->getCString());
-                        
-                    }
-                    else
-                        b->populationOverload = 0;
-                    
-                    
-                    currProperty = properties->valueForKey("mod_int");
-                    if (currProperty)
-                    {
-                        CCString* modInt = CCStringMake(properties->valueForKey("mod_int")->getCString());
-                        b->int_mod = atoi(modInt->getCString());
-                    }
-                    else
-                        b->int_mod = 0;
-                    
-                    
-                    currProperty = properties->valueForKey("mod_soc");
-                    if (currProperty)
-                    {
-                        CCString* modSoc = CCStringMake(properties->valueForKey("mod_soc")->getCString());
-                        b->social_mod = atoi(modSoc->getCString());
-                    }
-                    else
-                        b->social_mod = 0;
-                    
-                    
-                    currProperty = properties->valueForKey("mod_loy");
-                    if (currProperty)
-                    {
-                        CCString* modLoy = CCStringMake(properties->valueForKey("mod_loy")->getCString());
-                        b->loyalty_mod = atoi(modLoy->getCString());
-                    }
-                    else
-                        b->loyalty_mod = 0;
-
-                    
-                    currProperty = properties->valueForKey("mod_hap");
-                    if (currProperty)
-                    {
-                        CCString* modHap = CCStringMake(properties->valueForKey("mod_hap")->getCString());
-                        b->happiness_mod = atoi(modHap->getCString());
-                    }
-                    else
-                        b->happiness_mod = 0;
-                    
-                    */
-                    // Example format in Tiled: (level_exp_req) 100, 120, 140, 160, 0
+                  // Example format in Tiled: (level_exp_req) 100, 120, 140, 160, 0
                     currProperty = properties->valueForKey("level_exp_req");
                  //   b->expToLevel = CCArray::create();
                  //   b->expToLevel->retain();
@@ -519,16 +437,9 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     b->buildingDesc=  "You forgot to set a property somewhere";
                     b->buildingCost = 9999.0f;
                     b->buildingBuyPrice = 9999.0f;
-                 //   b->buildingRentPrice = 9999.0f;
-                    b->buildingType = BUILDINGCATEGORYMAX;
+                   b->buildingType = BUILDINGCATEGORYMAX;
                     b->populationLimit = 0;
-                  //  b->populationOverload = 0;
-                  //  b->int_mod = 0;
-                  //  b->social_mod = 0;
-                 //   b->loyalty_mod = 0;
-                 //   b->happiness_mod = 0;
-                 //   b->cash_mod = -10;
-                    b->expToLevel->initWithObject(CCInteger::create(0));
+                     b->expToLevel->initWithObject(CCInteger::create(0));
                 
                 }
                 
@@ -555,6 +466,9 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     
     specialOnMap=CCArray::create();
     
+    storageOnMap=CCArray::create();
+    
+    
     housingOnMap->retain();
     amenityOnMap->retain();
     commerceOnMap->retain();
@@ -563,6 +477,10 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     socialOnMap->retain();
     
     specialOnMap->retain();
+    
+    
+    //TODO: Populate this!;
+    storageOnMap->retain();
 }
 
 void BuildingHandler::addBuildingToMap(Building *b)
