@@ -29,7 +29,10 @@ BuildingHandler::BuildingHandler()
 BuildingHandler::~BuildingHandler()
 {
     housingOnMap->removeAllObjects();
-        
+    
+    // granary
+    granaryOnMap->removeAllObjects();
+    
     amenityOnMap->removeAllObjects();
     commerceOnMap->removeAllObjects();
     militaryOnMap->removeAllObjects();
@@ -38,6 +41,10 @@ BuildingHandler::~BuildingHandler()
     specialOnMap->removeAllObjects();
     
     housingOnMap->release();
+    
+    // granary
+    granaryOnMap->release();
+    
     amenityOnMap->release();
     commerceOnMap->release();
     militaryOnMap->release();
@@ -261,6 +268,43 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                         b->populationLimit = 0;
                     
+                    // for storage
+                    currProperty = properties->valueForKey("storage");
+                    if (currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("storage")->getCString());
+                        b->currentStorage = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->currentStorage = 0;
+                    }
+                    
+                    // for storage limit
+                    currProperty = properties->valueForKey("storage_limit");
+                    if(currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("storage_limit")->getCString());
+                        b->storageLimit = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->storageLimit = 0;
+                    }
+                    
+                    // for build unit limit
+                    currProperty = properties->valueForKey("build_uint_required");
+                    if(currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("build_uint_required")->getCString());
+                        b->build_uint_required = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->build_uint_required = 0;
+                    }
+                    
+                    
                     
                     /*currProperty = properties->valueForKey("population_overload");
                     if (currProperty)
@@ -416,6 +460,10 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                             {
                                 b->buildingType = HOUSING;
                             }
+                            if (type == "granary")
+                            {
+                                b->buildingType = GRANARY;
+                            }
                             if (type == "amenity")
                             {
                                 b->buildingType = AMENITY;
@@ -529,7 +577,13 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                  //   b->happiness_mod = 0;
                  //   b->cash_mod = -10;
                     b->expToLevel->initWithObject(CCInteger::create(0));
-                
+                    
+                    // for storage
+                    b->currentStorage = 0;
+                    b->storageLimit = 0;
+                    
+                    // build unit limit
+                    b->build_uint_required = 0;
                 }
                 
                 b->ID = buildingID;
@@ -547,6 +601,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     allBuildingsOnMap->retain();
     
     housingOnMap= CCArray::create();
+    granaryOnMap = CCArray::create();
     amenityOnMap= CCArray::create();
     commerceOnMap= CCArray::create();
     militaryOnMap= CCArray::create();
@@ -556,6 +611,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     specialOnMap=CCArray::create();
     
     housingOnMap->retain();
+    granaryOnMap->retain();
     amenityOnMap->retain();
     commerceOnMap->retain();
     militaryOnMap->retain();
@@ -574,6 +630,9 @@ void BuildingHandler::addBuildingToMap(Building *b)
     {
         case HOUSING:
             housingOnMap->addObject(b);
+            break;
+        case GRANARY:
+            granaryOnMap->addObject(b);
             break;
         case AMENITY:
             amenityOnMap->addObject(b);
@@ -606,6 +665,9 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
     {
         case HOUSING:
             housingOnMap->removeObject(b);
+            break;
+        case GRANARY:
+            granaryOnMap->removeObject(b);
             break;
         case AMENITY:
             amenityOnMap->removeObject(b);

@@ -81,7 +81,7 @@ void PopupMenu::useAsExclusivePopupMenu()
 void PopupMenu::useAsTopmostPopupMenu()
 {
     pOpenPopupMenu.push_back(this);
-    if (GameHUD::getThis() !=NULL)
+    if (GameHUD::getThis() != NULL)
         GameHUD::getThis()->addChild(this, 1);
     else
         MainMenuScene::getThis()->addChild(this, 1);

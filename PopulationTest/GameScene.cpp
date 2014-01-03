@@ -19,8 +19,6 @@
 
 #include <cmath>
 
-#define COCOS2D_DEBUG 1
-
 GameScene* GameScene::SP;
 
 GameScene::GameScene()
@@ -181,16 +179,27 @@ void GameScene::setupScene()
     initOrientationChange();
 }
 
+/*
+ * Move function is the function used to handle the camera movement in the GameScene.
+ */
 void GameScene::move(float time)
 {
+    // get the screen dimension.
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    // get the centre of the screen
     float xPos = screenCenter->getPositionX();
     float yPos = screenCenter->getPositionY();
+    
+    // get the horizontal and vertical length difference between the screen centre and the target position!
     float xDiff = screenSize.width / 2.0f - xPos;
     float yDiff = screenSize.height / 2.0f - yPos;
+    
+    // set the horizontal speed and proportionate vertical speed, so that the object will move to the target at the same time both horizontally or vertically!
     float xSpeed = 32.0f;
     float ySpeed = 32.0f * (yDiff / xDiff);
     
+    // update the position of the screen centre.
     screenCenter->setPosition(xPos + xSpeed, yPos + ySpeed);
     
     if((xPos + xSpeed) > (screenSize.width / 2.0f))
@@ -615,6 +624,7 @@ void GameScene::lostGame(cocos2d::CCObject *psender)
 bool GameScene::handleTouchSprite(CCPoint touchLoc)
 {
     CCArray* gameSprites = spriteHandler->spritesOnMap;
+    if (gameSprites->count() == 0) return false;
     for (int i = 0; i < gameSprites->count(); i++)
     {
         GameSprite* gameSprite = static_cast<GameSprite*>(gameSprites->objectAtIndex(i));

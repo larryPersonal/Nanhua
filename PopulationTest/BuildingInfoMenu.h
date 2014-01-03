@@ -19,6 +19,22 @@ using namespace cocos2d::extension;
 
 using namespace std;
 
+struct Rect
+{
+    float width;
+    float height;
+    float left;
+    float top;
+    
+    void ini(float wid, float hei, float lef, float to)
+    {
+        width = wid;
+        height = hei;
+        left = lef;
+        top = to;
+    }
+};
+
 class BuildingInfoMenu:public PopupMenu
 {
     
@@ -33,11 +49,14 @@ private:
     int mBuildingOverload;
     int mBuildingCurrPopulation;
     
+    // Background Rect
+    Rect* background_rect;
+    
     // Graphical items
     Building* building;
     
     CCSprite* spriteBackground;
-    CCSprite* spriteBackgroundInner; 
+    CCSprite* spriteBackgroundInner;
     
     CCSprite* spriteBuilding;
     vector<CCSprite*> spritePopulationSlot;

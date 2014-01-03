@@ -17,6 +17,13 @@ Building::Building()
 {
     buildingValue = 0;
     populationLimit = 0;
+    
+    // for storage.
+    currentStorage = 0;
+    storageLimit = 0;
+    
+    build_uint_required = 0;
+    
    // populationOverload = populationOverloadLimit = 0;
     buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
@@ -156,6 +163,13 @@ Building* Building::copyWithZone(CCZone *pZone)
         
         pCopy->buildingRect = this->buildingRect;
         pCopy->populationLimit = this->populationLimit;
+        
+        // for storage.
+        pCopy->currentStorage = this->currentStorage;
+        pCopy->storageLimit = this->storageLimit;
+        
+        pCopy->build_uint_required = this->build_uint_required;
+        
         pCopy->buildingType = this->buildingType;
         pCopy->buildingValue = this->buildingValue;
         pCopy->buildingBuyPrice = this->buildingBuyPrice;
@@ -213,16 +227,7 @@ void Building::ArriveHandler(GameSprite* sp)
     if (!sp) return;
     
     currVisitors->addObject(sp);
-    
-    if (buildingType == SPECIAL)
-    {
-    /*
-        if (sp->race == 'a')
-            sp->ConvertToLocal();
-        else
-            sp->UpgradeSprite();*/
-        return;
-    }
+
     
     
     /*deal with the case where a building is the guy's home first.*/

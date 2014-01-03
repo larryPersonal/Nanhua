@@ -43,6 +43,12 @@ BuildingInfoMenu::BuildingInfoMenu(Building* building)
     if (!building) CCLog("Warning NO BUILDING!!!");
     this->building = building;
     
+    // create the gui handler
+    background_rect = new Rect();
+    
+    // initialize the gui handler
+    background_rect->ini(700, 100, 100, 200);
+    
     mBuildingVacancy = mBuildingOverload = 0;
     mBuildingExp = mBuildingExpMax = mBuildingPrice = 0;
 }
@@ -61,7 +67,7 @@ void BuildingInfoMenu::createMenuItems()
     
     // Create constant menu items
     spriteBackground = CCSprite::create("outerbox.png");
-    spriteBackground->setScale(700 / spriteBackground->boundingBox().size.width);
+    spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width);
     
     spriteBackgroundInner = CCSprite::create("innerbox-info.png");
     spriteBackgroundInner->setScale(spriteBackground->getScale());
@@ -165,10 +171,10 @@ void BuildingInfoMenu::createMenuItems()
     scrollArea->addItem(spLoy, ccp(405, 95));
     scrollArea->addItem(spSoc, ccp(405, 145));
     scrollArea->addItem(spHap, ccp(405, 195));
-    scrollArea->addItem(textInt, ccp(505, 60));
-    scrollArea->addItem(textLoy, ccp(505, 110));
-    scrollArea->addItem(textSoc, ccp(505, 160));
-    scrollArea->addItem(textHap, ccp(505, 210));
+    //scrollArea->addItem(textInt, ccp(505, 60));
+    //scrollArea->addItem(textLoy, ccp(505, 110));
+    //scrollArea->addItem(textSoc, ccp(505, 160));
+    //scrollArea->addItem(textHap, ccp(505, 210));
 
     if (building->buildingType == COMMERCE)
     {

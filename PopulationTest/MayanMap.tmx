@@ -23,6 +23,7 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
@@ -30,26 +31,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="10"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Brick House"/>
     <property name="population_limit" value="2"/>
-    <property name="population_overload" value="1"/>
     <property name="prereqs" value="Straw House"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
     <property name="research_time" value="20"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
     <property name="build_time" value="10"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="A house with a thatched roof"/>
@@ -57,24 +56,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Straw House"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="research_time" value=""/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="250"/>
     <property name="description" value="A house infused with Alien technology"/>
@@ -82,28 +81,25 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="15"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="High House"/>
     <property name="own_cost" value="300"/>
     <property name="population_limit" value="3"/>
-    <property name="population_overload" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="100"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="10"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="200"/>
     <property name="research_time" value="40"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="build_time" value="15"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="education"/>
     <property name="cost" value="150"/>
     <property name="description" value="A stone tablet store selling stone tablets of Alien Knowledge"/>
@@ -111,26 +107,25 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="5"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Stone Tablet Store"/>
     <property name="own_cost" value="150"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value="Stone Quarry"/>
-    <property name="rent_cost" value="15"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="100"/>
     <property name="research_time" value="10"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="education"/>
     <property name="cost" value="300"/>
     <property name="description" value="Observatory of the Oracles to view the stars"/>
@@ -138,26 +133,25 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="25"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Observatory"/>
     <property name="own_cost" value="500"/>
     <property name="population_limit" value="3"/>
     <property name="prereqs" value="Library"/>
-    <property name="rent_cost" value="50"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="300"/>
     <property name="research_time" value="40"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="200"/>
     <property name="description" value="Barn"/>
@@ -165,53 +159,50 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="10"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Barn"/>
     <property name="own_cost" value="200"/>
     <property name="population_limit" value="2"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="15"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
     <property name="research_time" value="15"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="100"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="6">
    <properties>
     <property name="build_time" value="10"/>
-    <property name="building_type" value="amenity"/>
+    <property name="build_uint_required" value="0"/>
+    <property name="building_type" value="granary"/>
     <property name="cost" value="100"/>
     <property name="description" value="Farming bees for honey"/>
     <property name="jobs_available" value="farmer"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="0"/>
-    <property name="name" value="Bee Farm"/>
-    <property name="own_cost" value="100"/>
+    <property name="name" value="Granary"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="5"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="4"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="research_time" value=""/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="7">
    <properties>
     <property name="build_time" value="15"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="120"/>
     <property name="description" value="A place for people to socialize"/>
@@ -219,26 +210,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="5"/>
     <property name="name" value="City Centre"/>
-    <property name="own_cost" value="100"/>
     <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="0"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="100"/>
     <property name="research_time" value="15"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="8">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="200"/>
     <property name="description" value="Refine honey from bee farms"/>
@@ -246,26 +235,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="5"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Honey Refinery"/>
-    <property name="own_cost" value="200"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value="Bee Farm"/>
-    <property name="rent_cost" value="15"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="200"/>
     <property name="research_time" value="20"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="9">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="education"/>
     <property name="cost" value="200"/>
     <property name="description" value="Library of Stone Tablets for Knowledge"/>
@@ -273,26 +260,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="15"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Library"/>
-    <property name="own_cost" value="200"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value="Stone Tablet Store"/>
-    <property name="rent_cost" value="20"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="15"/>
     <property name="research_cost" value="200"/>
     <property name="research_time" value="20"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="10">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="120"/>
     <property name="description" value="process lumber and produce lumber"/>
@@ -300,26 +285,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="10"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Lumber Camp"/>
-    <property name="own_cost" value="120"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="10"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="10"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
     <property name="research_time" value="15"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="11">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="120"/>
     <property name="description" value="making pots"/>
@@ -327,26 +310,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="10"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Pottery"/>
-    <property name="own_cost" value="120"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="5"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="5"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="6"/>
     <property name="research_cost" value="450"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="12">
    <properties>
     <property name="build_time" value="45"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="150"/>
     <property name="description" value="Sculpting stones from the quarry"/>
@@ -354,26 +335,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Sculpture Studio"/>
-    <property name="own_cost" value="150"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value="Lumber Camp"/>
-    <property name="rent_cost" value="15"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
     <property name="research_time" value="20"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="13">
    <properties>
     <property name="build_time" value="15"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Quarry for mining stones and granite"/>
@@ -381,26 +360,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Stone Quarry"/>
-    <property name="own_cost" value="100"/>
     <property name="population_limit" value="2"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="0"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="8"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="5"/>
     <property name="research_cost" value="100"/>
     <property name="research_time" value="15"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="14">
    <properties>
     <property name="build_time" value="15"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="120"/>
     <property name="description" value="refine stones for other places to use"/>
@@ -408,27 +385,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_cash" value="-10"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="5"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Stone Refinery"/>
-    <property name="own_cost" value="120"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value="Stone Quarry"/>
-    <property name="rent_cost" value="10"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="5"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="5"/>
     <property name="research_cost" value="150"/>
     <property name="research_time" value="15"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="15">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="250"/>
     <property name="description" value="refine wine from fruit orchards"/>
@@ -436,20 +410,17 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="5"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Wine Refinery"/>
-    <property name="own_cost" value="125"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="10"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="300"/>
     <property name="research_time" value="40"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
@@ -480,6 +451,7 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="45"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="500"/>
     <property name="description" value="A Majestic statue that bonds the civilization"/>
@@ -487,26 +459,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="15"/>
     <property name="name" value="Mayan Statue"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="30"/>
     <property name="research_cost" value="1000"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
     <property name="build_time" value=""/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="special"/>
     <property name="cost" value="20000"/>
     <property name="description" value="All Mayans and otherwise are born from here. "/>
@@ -514,26 +484,24 @@
     <property name="level_exp_req" value=""/>
     <property name="level_gain_cost" value=""/>
     <property name="level_gain_population_limit" value=""/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="High Temple"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="2000"/>
     <property name="req_capita" value="10000"/>
     <property name="req_population" value="3000"/>
     <property name="research_cost" value=""/>
     <property name="research_time" value=""/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
     <property name="build_time" value="45"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="450"/>
     <property name="description" value="Alien mansion, used by high class."/>
@@ -541,28 +509,25 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="25"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Alien Mansion"/>
-    <property name="own_cost" value="500"/>
     <property name="population_limit" value="4"/>
     <property name="population_overload" value="1"/>
     <property name="prereqs" value="Alien Quarry"/>
-    <property name="rent_cost" value="500"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="30"/>
     <property name="research_cost" value="800"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="500"/>
     <property name="description" value="A Quarry filled with glowing minerals used by Alien technology"/>
@@ -570,26 +535,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="5"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Alien Quarry"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value="5"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="300"/>
     <property name="research_time" value="40"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
     <property name="build_time" value="15"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="An Alien Dormitory for mass reside"/>
@@ -597,28 +560,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Alien Quarters"/>
-    <property name="own_cost" value="200"/>
     <property name="population_limit" value="3"/>
-    <property name="population_overload" value="5"/>
     <property name="prereqs" value="Alien Quarry"/>
-    <property name="rent_cost" value="200"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="25"/>
     <property name="research_cost" value="500"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="750"/>
     <property name="description" value="Grand Fortress"/>
@@ -626,26 +585,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="25"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Fortress"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value="3"/>
     <property name="prereqs" value="Guard Outpost"/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="500"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="6">
    <properties>
     <property name="build_time" value="45"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="1000"/>
     <property name="description" value="Drama for everyone!"/>
@@ -653,26 +610,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="50"/>
     <property name="name" value="Theatre"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="30"/>
     <property name="research_cost" value="1200"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="7">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="400"/>
     <property name="description" value="The new, improved and bigger bee farms"/>
@@ -680,26 +635,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="20"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Bee Factory"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value="4"/>
     <property name="prereqs" value="Honey Refinery"/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="25"/>
     <property name="research_cost" value="200"/>
     <property name="research_time" value="30"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="8">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="200"/>
     <property name="description" value="Guarding outpost"/>
@@ -707,26 +660,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="15"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Guard Outpost"/>
-    <property name="own_cost" value="200"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value="Lumber Camp"/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="15"/>
     <property name="research_cost" value="250"/>
     <property name="research_time" value="30"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="9">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="350"/>
     <property name="description" value="a better stone house"/>
@@ -734,28 +685,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="20"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Brick House II"/>
-    <property name="own_cost" value="1100"/>
     <property name="population_limit" value="3"/>
-    <property name="population_overload" value="2"/>
     <property name="prereqs" value="Brick House"/>
-    <property name="rent_cost" value="550"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="25"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="300"/>
     <property name="research_time" value="30"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="10">
    <properties>
     <property name="build_time" value="45"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="500"/>
     <property name="description" value="bigger mansion but yet save space, amazing space warping alien technology"/>
@@ -763,28 +710,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="30"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Mansion"/>
-    <property name="own_cost" value="550"/>
     <property name="population_limit" value="6"/>
-    <property name="population_overload" value="1"/>
     <property name="prereqs" value="Fine House"/>
-    <property name="rent_cost" value="300"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="30"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="30"/>
     <property name="research_cost" value="1000"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="11">
    <properties>
     <property name="build_time" value="60"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="750"/>
     <property name="description" value="a new better mansion"/>
@@ -792,28 +735,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="35"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="High Mansion"/>
-    <property name="own_cost" value="800"/>
     <property name="population_limit" value="8"/>
-    <property name="population_overload" value="1"/>
     <property name="prereqs" value="Mansion"/>
-    <property name="rent_cost" value="400"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="45"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="30"/>
     <property name="research_cost" value="1500"/>
     <property name="research_time" value="60"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="12">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="500"/>
     <property name="description" value="Marketplace for all sorts of trading to occur"/>
@@ -821,26 +760,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="5"/>
-    <property name="mod_int" value="10"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="5"/>
     <property name="name" value="Market"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value="3"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="250"/>
     <property name="research_time" value="30"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="13">
    <properties>
     <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="250"/>
     <property name="description" value="resting shed"/>
@@ -848,20 +785,17 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="10"/>
     <property name="name" value="Rest Shed"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
     <property name="research_time" value="15"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
@@ -882,6 +816,7 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
@@ -889,21 +824,18 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="20"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Farm"/>
-    <property name="own_cost" value="100"/>
     <property name="population_limit" value="3"/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value="5"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="15"/>
     <property name="research_cost" value="300"/>
     <property name="research_time" value="30"/>
-    <property name="unlocked_at_start" value="no"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
    </properties>
   </tile>
   <tile id="1">
@@ -938,6 +870,7 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="60"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="1000"/>
     <property name="description" value="The HQ for military activities"/>
@@ -945,26 +878,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="40"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Military HQ"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value="5"/>
     <property name="prereqs" value="Fortress"/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="30"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="30"/>
     <property name="research_cost" value="1500"/>
     <property name="research_time" value="60"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
     <property name="build_time" value="90"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="1500"/>
     <property name="description" value="A place for the games to occur"/>
@@ -972,26 +903,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="40"/>
     <property name="name" value="Colosseum"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="30"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="40"/>
     <property name="research_cost" value="2000"/>
     <property name="research_time" value="90"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
     <property name="build_time" value="60"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="Special"/>
     <property name="cost" value="5000"/>
     <property name="description" value="Alien conversion machine to allow Aliens to be converted into Mayans and enjoy Mayan privileges"/>
@@ -999,26 +928,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value=""/>
-    <property name="mod_int" value=""/>
-    <property name="mod_loy" value=""/>
-    <property name="mod_soc" value=""/>
     <property name="name" value="Coversion Pod"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="20"/>
     <property name="req_capita" value="5000"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="1500"/>
     <property name="research_time" value="120"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="750"/>
     <property name="description" value="Ball court for socializing"/>
@@ -1026,26 +953,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="0"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="30"/>
     <property name="name" value="Ball Court"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
     <property name="research_cost" value="500"/>
     <property name="research_time" value="45"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
     <property name="build_time" value="90"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="800"/>
     <property name="description" value="Alien Palace"/>
@@ -1053,28 +978,24 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="40"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Alien Palace"/>
-    <property name="own_cost" value="850"/>
     <property name="population_limit" value="8"/>
-    <property name="population_overload" value="1"/>
     <property name="prereqs" value="Alien Mansion"/>
-    <property name="rent_cost" value="400"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="50"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="50"/>
     <property name="research_cost" value="2500"/>
     <property name="research_time" value="90"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
     <property name="build_time" value="90"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="1200"/>
     <property name="description" value="Mayan Palace"/>
@@ -1082,22 +1003,18 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="level_gain_population_overload" value="4:1"/>
-    <property name="mod_hap" value="50"/>
-    <property name="mod_int" value="0"/>
-    <property name="mod_loy" value="0"/>
-    <property name="mod_soc" value="0"/>
     <property name="name" value="Mayan Palace"/>
-    <property name="own_cost" value="1200"/>
     <property name="population_limit" value="10"/>
     <property name="population_overload" value="1"/>
     <property name="prereqs" value="High Mansion"/>
-    <property name="rent_cost" value="600"/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="50"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="50"/>
     <property name="research_cost" value="2500"/>
     <property name="research_time" value="90"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>
@@ -1128,6 +1045,7 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="120"/>
+    <property name="build_uint_required" value="0"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="3000"/>
     <property name="description" value="All citizens can vist and have fun at this zoo"/>
@@ -1135,20 +1053,17 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="mod_hap" value="15"/>
-    <property name="mod_int" value="5"/>
-    <property name="mod_loy" value="10"/>
-    <property name="mod_soc" value="50"/>
     <property name="name" value="Zoo"/>
-    <property name="own_cost" value=""/>
     <property name="population_limit" value=""/>
     <property name="prereqs" value=""/>
-    <property name="rent_cost" value=""/>
+    <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="50"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="50"/>
     <property name="research_cost" value="3000"/>
     <property name="research_time" value="120"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
    </properties>
   </tile>

@@ -35,6 +35,7 @@ public:
     
     /*it'd probably be easier on the search and the head if I kept them as separate CCArrays.*/
     CCArray* housingOnMap;
+    CCArray* granaryOnMap;
     CCArray* amenityOnMap;
     CCArray* commerceOnMap;
     CCArray* militaryOnMap;

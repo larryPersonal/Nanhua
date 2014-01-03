@@ -87,16 +87,12 @@ void GameSprite::initAI(bool isUpgrade)
         {
         std::string encoding = defaultsRoot.get("encoding", "UTF-8" ).asString();
         
-      //  possessions->cashOnHand = atoi(defaultsRoot["default_money"].asString().c_str());
         possessions->happinessRating = atoi(defaultsRoot["default_happiness"].asString().c_str());
         possessions->loyaltyRating = atoi(defaultsRoot["default_loyalty"].asString().c_str());
-       // possessions->educationLevel =atoi( defaultsRoot["default_education_level"].asString().c_str());
         possessions->movementRange =atoi( defaultsRoot["default_move_range"].asString().c_str());
         possessions->movementSpeed = atof( defaultsRoot["default_movement_speed"].asString().c_str());
         possessions->animateSpeed = atof( defaultsRoot["default_animate_speed"].asString().c_str());
-            
-       // possessions->intelligenceRating = atoi(defaultsRoot["default_intelligence"].asString().c_str());
-       // possessions->socialRating = atoi(defaultsRoot["default_social"].asString().c_str());
+
         possessions->energyRating = atoi(defaultsRoot["default_energy"].asString().c_str());
         possessions->defaultEnergy = possessions->energyRating;
         
@@ -719,11 +715,7 @@ void GameSprite::updateSprite(float dt)
         
         }
       
-        /*
-         if (possessions->happinessRating < happiness_level_before_loyalty_affected)
-         {
-         saySpeech("T_T",2.0f);
-         }*/
+
         
         //modify loyalty based on happiness;
         
@@ -820,31 +812,12 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
     std::string statName = "Exp";
     switch (statType)
     {
-        /*
-        case STATS_CASHONHAND:
-            pStat = &possessions->cashOnHand;
-            statName = "Cash";
-            break;
-         */
+
         case STATS_HAPPINESS:
             pStat = &possessions->happinessRating;
             statName = "Hap";
             break;
-        /*
-        case STATS_LOYALTY:
-            pStat = &possessions->loyaltyRating;
-            statName = "Loy";
-            break;
-        case STATS_INTELLIGENCE:
-            pStat = &possessions->intelligenceRating;
-            statName = "Int";
-            break;
-        case STATS_SOCIAL:
-            pStat = &possessions->socialRating;
-            statName = "Soc";
-            break;
-        */
-         case STATS_ENERGY:
+        case STATS_ENERGY:
             pStat = &possessions->energyRating;
             statCap = possessions->defaultEnergy;
             statName = "Energy";
@@ -890,16 +863,7 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
     // Do aftermath
     switch (statType)
     {
-        /*
-        case STATS_CASHONHAND:
-            if (GameHUD::getThis()->getMenuMode() == 4)
-            {
-                if (PopupMenu::openPopupCount() > 0)
-                    if (PopulationMenu* menu = dynamic_cast<PopulationMenu*>(PopupMenu::getBottommostPopupMenu()))
-                        menu->updateItemCashLabel(this);
-            }
-            break;
-         */
+
         case STATS_HAPPINESS:
             GameManager::getThis()->totalHappiness += diff;
             GameHUD::getThis()->updateAvgHapLabel();
@@ -988,264 +952,20 @@ bool GameSprite::BuyHouse(int instanceID)
     return true;
 }
 
-/*
-bool GameSprite::BuySqueezeHouse(int instanceID)
-{
-    if (isInteractingSocial) return false;
-    
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("still moving. Can't obey.");
-        return false;
-
-    }
-    
-   
-    Building* b = (Building*)GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(instanceID);
-    if (!b)
-    {
-        CCLog("invalid Instance ID!");
-        return false;
-    }
-    
-    if (b->buildingType != HOUSING)
-    {
-        CCLog("Building isn't a house!");
-        return false;
-    }
-    //looks like I have to do this after all.
-    if (b->getPopulationCount() >= b->populationOverloadLimit)
-    {
-        CCLog("Building has reached its overload limit!");
-        return false;
-    }
-    possessions->cashOnHand -= b->buildingBuyPrice;
-    
-    possessions->homeLocation = b;
-    b->addPopulation(this);
-    possessions->hasHouse = true;
-    //possessions->isRentalProperty = false;
-    //possessions->rentalVisitsLeft = 0;
-    //possessions->isSqueezing = true;
-    //house successfully bought
-    return true;
-
-    
-}*/
-
-/*rentals do NOT care if the house is overloaded.*/
-/*
-bool GameSprite::RentHouse(int instanceID)
-{
-    if (isInteractingSocial) return false;
-    
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("still moving. Can't obey.");
-        return false;
-    }
-
-    Building* b = (Building*)GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(instanceID);
-    if (!b)
-    {
-        CCLog("invalid Instance ID!");
-        return false;
-    }
-    
-    if (b->buildingType != HOUSING)
-    {
-        CCLog("Building isn't a house!");
-        return false;
-    }
-    //looks like I have to do this after all.
- 
-    if (b->getPopulationCount() >= b->populationOverloadLimit)
-    {
-        CCLog("Building has reached its population + overload limit!");
-        return false;
-    }
-    //possessions->cashOnHand -= b->buildingRentPrice;
-    
-    possessions->homeLocation = b;
-    b->addPopulation(this);
-    possessions->hasHouse = true;
-  //  possessions->isRentalProperty = true;
-   // possessions->rentalVisitsLeft = 10;
-    
-   // if (b->isOverpopulated()) possessions->isSqueezing = true;
-    
-    //house successfully bought
-    return true;
-
-}*/
-
 bool GameSprite::SellHouse()
 {
       //disown property
     if (!possessions->homeLocation) return false;
     
-    //do something different when renting. Rental houses sell for nothing.
-   // if (possessions->isRentalProperty == false)
-    //    possessions->cashOnHand += possessions->homeLocation->buildingBuyPrice;
 
     possessions->hasHouse = false;
     possessions->homeLocation->removePopulation(this);
     possessions->homeLocation = NULL;
  
-  //  possessions->isRentalProperty = false;
-   // possessions->rentalVisitsLeft = 0;
-    //possessions->isSqueezing = false;
     
     justSoldHouse = true;
     return true;
 }
-
-/*
-bool GameSprite::FindJobAt(int instanceID)
-{
-    if (isInteractingSocial) return false;
-    
-    if (isFollowingMoveInstruction)
-    {
-       // CCLog("still moving. Can't obey.");
-        return false;
-    }
-    
-      //check if building has job vacancy
-    BuildingHandler* bh = GameScene::getThis()->buildingHandler;
-    
- 
-    Building* b = (Building*)bh->getBuildingOnMapWithID(instanceID);
-    if (b == NULL) return false;
-    if (b->buildingType == HOUSING) return false;
-    
-    CCArray* jobs = b->getJobsAvailable();
-  
-    if (jobs == NULL)
-    {
-        CCLog("Building has no jobs as array is null");
-        return false;
-    }
-    
-    if (jobs->count() == 0)
-    {
-      //  CCLog("%s", b->buildingName->getCString());
-        CCLog("Building has no jobs as count is 0");
-        return false;
-    }
-    //find the first job that the guy is suitable for.
-    for (int i = 0; i < jobs->count(); ++i)
-    {
-        //prefer jobs for MY class
-        Job* j = (Job*)jobs->objectAtIndex(i);
-        if (j->job_targetSpriteType.compare(spriteClass) != 0) continue;
-        
-    
-        int qualresponse = j->isCandidateQualified(possessions->educationLevel, spriteClass.c_str());
-        
-        //disable overqualified. Sprites are meant to grab jobs that are of a lower level.
-        if (qualresponse == 0 && j->job_isTaken == false)
-        {
-            b->addPopulation(this);
-            j->signUpJob();
-         //   possessions->jobLocation =b;
-          //  possessions->jobIndex = i;
-           // possessions->hasJob = true;
-            //possessions->jobClass = j->job_targetSpriteType;
-            saySpeech("Found a job!",2);
-            return true;
-        }
-    }
-    
-    saySpeech("Can't find anything suitable.",2);
-    
-    return false;
-}*/
-/*
-bool GameSprite::FindLowerLevelJobAt(int instanceID)
-{
-    if (isInteractingSocial) return false;
-    
-    if (isFollowingMoveInstruction)
-    {
-        // CCLog("still moving. Can't obey.");
-        return false;
-    }
-    
-    //check if building has job vacancy
-    BuildingHandler* bh = GameScene::getThis()->buildingHandler;
-    
-    
-    Building* b = (Building*)bh->getBuildingOnMapWithID(instanceID);
-    if (b == NULL) return false;
-    if (b->buildingType == HOUSING) return false;
-    
-    CCArray* jobs = b->getJobsAvailable();
-    if (jobs == NULL)
-    {
-        CCLog("Building has no jobs as array is null");
-        return false;
-    }
-    
-    if (jobs->count() == 0)
-    {
-        //  CCLog("%s", b->buildingName->getCString());
-        CCLog("Building has no jobs as count is 0");
-        return false;
-    }
-    //find the first job that the guy is suitable for.
-    for (int i = 0; i < jobs->count(); ++i)
-    {
-        Job* j = (Job*)jobs->objectAtIndex(i);
-        
-       // prefer jobs for MY class, but I'm gonna take 1 step back. Anything with ALL or this lower level class is game.
-        
-        std::string lowerLevel = getPreviousClass();
-        
-        int qualresponse = j->isCandidateQualified(possessions->educationLevel,lowerLevel, true);
-        
-        //disable overqualified. Sprites are meant to grab jobs that are of a lower level.
-        if (qualresponse == 0 && j->job_isTaken == false)
-        {
-            b->addPopulation(this);
-            j->signUpJob();
-         //   possessions->jobLocation =b;
-          //  possessions->jobIndex = i;
-           // possessions->hasJob = true;
-            //possessions->jobClass = j->job_targetSpriteType;
-            saySpeech("Found a job.",2);
-            return true;
-        }
-    }
-    
-   // at this point, there's absolutely no jobs available
-    saySpeech("Can't find a job at all.",2);
-    
-    return false;
-
-}
-*/
-
-
-/*
-
-bool GameSprite::QuitJob()
-{
-    if (!possessions->jobLocation) return false;
-    
-    Job* j = (Job*)possessions->jobLocation->getJobsAvailable()->objectAtIndex( possessions->jobIndex);
-    j->leaveJob();
-    possessions->jobLocation->removePopulation(this);
-    
-    possessions->jobIndex = -1;
-    possessions->jobLocation = NULL;
-    possessions->hasJob = false;
-    possessions->jobClass = "";
-    
-    justQuitJob = true;
-    return true;
-}
-*/
 /*pathing*/
 /*paths back home, if possible. Ignores range for obvious reasons.*/
 bool GameSprite::PathToHome()

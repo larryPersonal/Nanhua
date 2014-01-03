@@ -18,7 +18,7 @@ std::string Unlocks
     "[{"
         "\"unlock_name\":\"area_default\","
         "\"unlock_prereq\":\"\","
-        "\"unlock_min_x\":0,"
+        "\"unlock_min_x\":1,"
         "\"unlock_max_x\":25,"
         "\"unlock_min_y\":10,"
         "\"unlock_max_y\":25,"

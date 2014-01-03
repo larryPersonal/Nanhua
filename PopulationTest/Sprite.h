@@ -44,7 +44,7 @@ enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
                 SPRITETYPE_END = 12};
 
 
-enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ACTION_END = 4};
+enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, EATING, WORKING, RESTING, ACTION_END = 6};
 
 
 

@@ -57,6 +57,30 @@ static int GoHome_Glue(lua_State* L)
     return 1;
 }
 
+//all
+static int GoEat_Glue(lua_State* L)
+{
+    return 1;
+}
+
+//bandit
+static int GoPillage_Glue(lua_State* L)
+{
+    return 1;
+}
+
+//builder
+static int GoBuild_Glue(lua_State* L)
+{
+    return 1;
+}
+
+static int GoStoreItem_Glue(lua_State *L)
+{
+    return 1;
+}
+
+
 //REWRITE. Larry
 
 /*
@@ -184,82 +208,6 @@ static int BuyHouseWithID_Glue(lua_State *L)
     return 1;
 }
 
-/*
-static int RentHouseWithID_Glue(lua_State *L)
-{
-    if (!sprite)
-    {
-        lua_pushboolean(L, false);
-        
-    }
-    else
-    {
-        if (sprite->getPossessions()->homeLocation != NULL)
-        {
-            lua_pushboolean(L, false); //already lives somewhere;
-            
-            return 1;
-        }
-        //  CCLog(sprite->spriteName->getCString());
-        int args = lua_gettop(L);
-        if (args == 0)
-        {
-            lua_pushboolean(L, false); //invalid ID;
-            return 1;
-        }
-        int targetID = lua_tonumber(L, 1);
-        
-        if (targetID < 0)
-        {
-            lua_pushboolean(L, false); //invalidID;
-            return 1;
-        }
-        
-        lua_pushboolean(L, sprite->RentHouse(targetID));
-        
-    }
-    return 1;
-}
-*/
-
-/*
-static int BuySqueezeHouse_Glue(lua_State* L)
-{
-    if (!sprite)
-    {
-        lua_pushboolean(L, false);
-        
-    }
-    else
-    {
-        if (sprite->getPossessions()->homeLocation != NULL)
-        {
-            lua_pushboolean(L, false); //already lives somewhere;
-            
-            return 1;
-        }
-        //  CCLog(sprite->spriteName->getCString());
-        int args = lua_gettop(L);
-        if (args == 0)
-        {
-            lua_pushboolean(L, false); //invalid ID;
-            return 1;
-        }
-        int targetID = lua_tonumber(L, 1);
-        
-        if (targetID < 0)
-        {
-            lua_pushboolean(L, false); //invalidID;
-            return 1;
-        }
-        
-        lua_pushboolean(L, sprite->BuySqueezeHouse(targetID));
-        
-    }
-    return 1;
-
-}
-*/
 /*gets a list of IDs that belong to the buildingType HOUSING, and sends it to Lua*/
 static int GetAllHomes_Glue(lua_State *L)
 {
@@ -384,50 +332,7 @@ static int GoToWork_Glue(lua_State* L)
     return 1;
 }
 
-/*checks if the current sprite set in the global has a job.*/
-/*
-static int HasWork_Glue(lua_State *L)
-{
-    if (!sprite)
-    {
-        lua_pushboolean(L,false);
-    }
-    else
-    {
-        lua_pushboolean(L, sprite->getPossessions()->hasJob);
-    }
-    return 1;
-}
 
-static int IsJobSuitable_Glue(lua_State *L)
-{
-    if (!sprite)
-    {
-        lua_pushboolean(L, false);
-        
-    }
-    else
-    {
-        lua_pushboolean(L, (sprite->getPossessions()->hasJob && ((sprite->getPossessions()->jobClass.compare(sprite->spriteClass) == 0)
-                                                                 ||
-                                                                 (sprite->getPossessions()->jobClass.compare("all") == 0 && (sprite->spriteClass.compare("farmer") == 0 || sprite->spriteClass.compare("citizen") == 0)))));
-
-    }
-    return 1;
-}
-
-static int IsHomeSuitable_Glue(lua_State *L)
-{
-    if (!sprite)
-    {
-        lua_pushboolean(L, false);
-    }
-    else
-    {
-        lua_pushboolean(L, (!sprite->getPossessions()->homeLocation->isOverpopulated()));
-    }
-    return 1;
-}*/
 
 /*Makes the sprite go to a building. ID will be supplied.*/
 static int GoToBuilding_Glue(lua_State* L)
@@ -675,30 +580,6 @@ static int GetLoyalty_Glue(lua_State *L)
     
 }
 
-/*
-static int GetSocial_Glue(lua_State *L)
-{
-    if (!sprite)
-        lua_pushinteger(L, -1);
-    else
-        lua_pushinteger(L, sprite->getPossessions()->socialRating);
-    
-    
-    return 1;
-    
-}
-
-static int GetIntelligence_Glue(lua_State*L)
-{
-    if (!sprite)
-        lua_pushinteger(L, -1);
-    else
-        lua_pushinteger(L, sprite->getPossessions()->intelligenceRating);
-    
-    
-    return 1;
-    
-}*/
 
 static int ModifyHappiness_Glue(lua_State* L)
 {
