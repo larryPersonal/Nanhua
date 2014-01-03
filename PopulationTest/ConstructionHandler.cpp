@@ -29,7 +29,7 @@ void ConstructionHandler::update(float deltaTime)
 {
     if (constructingBuildings->count() <= 0)
         return;
-    
+    /*
     float currentTime = GameManager::getThis()->getCurrentTime();
     
     for (int i = getConstructingBuildingCount() - 1; i >= 0; i--)   //reverse iterate due to removals
@@ -44,7 +44,24 @@ void ConstructionHandler::update(float deltaTime)
             if (progressBar != NULL)
             progressBar->setValue(1.0f - ((building->constructionEndTime - currentTime) /building->constructionTime)); //TODO: get building construct time
         }
+    }*/
+    
+    for (int i = getConstructingBuildingCount() - 1; i >= 0; i-- )
+    {
+        Building* building = (Building*)constructingBuildings->objectAtIndex(i);
+       if (building->build_uint_current >= building->build_uint_required || building->build_uint_required == 0)
+       {
+           completeConstructingBuilding(building);
+       }
+       else
+       {
+           ProgressBar* progressBar = (ProgressBar*)building->buildingRep->getChildByTag(PROGRESSBAR_TAG);
+           if (progressBar != NULL)
+               progressBar->setValue(building->build_uint_current/building->build_uint_required); //TODO: get building construct time
+           
+       }
     }
+    
 }
 
 void ConstructionHandler::addConstructingBuilding(Building* building)
@@ -61,7 +78,11 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     progressBar->setPosition(0, building->buildingRep->boundingBox().size.height);
     
     building->buildingRep->setOpacity(150);
-    building->constructionEndTime = GameManager::getThis()->getCurrentTime() + building->constructionTime; //TODO: get building construct time
+   
+    /*
+    building->constructionEndTime = GameManager::getThis()->getCurrentTime() + building->constructionTime; //TODO: get building construct time*/
+    
+    
     constructingBuildings->addObject(building);
     
 }

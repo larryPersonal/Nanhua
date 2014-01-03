@@ -514,7 +514,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     {
                         b->researchTime = 10.0f;
                     }
-                    
+                    /*
                     currProperty = properties->valueForKey("build_time");
                     if (currProperty)
                     {
@@ -527,7 +527,22 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                     {
                         b->constructionTime = 10.0f;
+                    }*/
+                    
+                    currProperty = properties->valueForKey("build_uint");
+                    if (currProperty)
+                    {
+                        CCString* build = CCStringMake(properties->valueForKey("build_uint")->getCString());
+                        if (build->length() > 0)
+                        {
+                            b->build_uint_required = atoi(build->getCString());
+                            
+                        }
+                        else
+                            b->build_uint_required = 0;
                     }
+                    else
+                        b->build_uint_required = 0;
 
                                                         
                 }
@@ -539,6 +554,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     b->buildingBuyPrice = 9999.0f;
                    b->buildingType = BUILDINGCATEGORYMAX;
                     b->populationLimit = 0;
+                    b->build_uint_required = 0;
                   //  b->populationOverload = 0;
                   //  b->int_mod = 0;
                   //  b->social_mod = 0;

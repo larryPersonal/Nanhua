@@ -44,10 +44,7 @@ enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
                 SPRITETYPE_END = 12};
 
 
-enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, EATING, WORKING, RESTING, ACTION_END = 6};
-
-
-
+enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, ACTION_END = 10};
 
 class GameSprite: public CCObject
 {
@@ -134,6 +131,7 @@ public:
     SpriteType type;
     SpriteAction lastFrameAction;
     SpriteAction currAction;
+    SpriteAction nextAction;
     
     /*note: The following line defines which layer the sprite would be batched with.  Do NOT populate this manually! The SpriteHandler should populate and depopulate this from the
      list of layers it has. */

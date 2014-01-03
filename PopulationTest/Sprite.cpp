@@ -23,6 +23,7 @@ GameSprite::GameSprite()
     spriteH = 128;
     spriteSpeed = 50;
     currAction = IDLE;
+    nextAction = IDLE;
     config_doc = "";
     shouldStopNextSquare = false;
     speechBubble = NULL;
@@ -652,6 +653,10 @@ SpriteAction GameSprite::getAction()
 }
 
 
+bool GameSprite::PathToResources()
+{
+    return false;
+}
 
 void GameSprite::updateSprite(float dt)
 {
@@ -663,7 +668,7 @@ void GameSprite::updateSprite(float dt)
     lastFrameAction = currAction;
   
     //After this part, only functions relating to IDLE will be called. This is because WALKING already has its own function calls.
-    
+
     if (idleDelay > 0.0f)
     {
         if (idleDelay > dt)
@@ -676,7 +681,7 @@ void GameSprite::updateSprite(float dt)
     {
       
         
-        if (currAction != IDLE) return;     
+        if (currAction != IDLE) return;
      
         if (isLeavingNextUpdate)
         {
@@ -705,12 +710,8 @@ void GameSprite::updateSprite(float dt)
             if (currTile->building)
             {
                 currTile->building->StickAroundHandler(this);
-  //          stickAroundDelay = 10.0f;
-            }
-            else
-            {
-   //           stickAroundDelay -=dt;
-            }
+           }
+            
         
         
         }
@@ -1128,6 +1129,11 @@ bool GameSprite::PathToBuilding(int building_id)
 
 bool GameSprite::PathToBuild()
 {
+    if (GameScene::getThis()->constructionHandler->getConstructingBuildingCount() == 0) return false; //no buildings under construction, stop.
+    
+    
+    
+    
     return false;
     
 }

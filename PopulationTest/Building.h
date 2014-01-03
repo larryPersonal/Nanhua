@@ -59,6 +59,7 @@ public:
     int storageLimit;
     
     int build_uint_required;
+    int build_uint_current;
     
     int buildingValue;
     int buildingBuyPrice;

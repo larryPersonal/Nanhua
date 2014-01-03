@@ -23,14 +23,18 @@ Building::Building()
     storageLimit = 0;
     
     build_uint_required = 0;
+    build_uint_current = 0;
     
    // populationOverload = populationOverloadLimit = 0;
 
     buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
     constructionTime = 10.0f;
+   
     researchCost = 100.0f;
     researchTime = 10.0f;
+    
+    
     
     currVisitors = CCArray::create();
     currVisitors->retain();
@@ -131,6 +135,10 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->researchTime = this->researchTime;
         pCopy->researchCost = this->researchCost;
         
+        
+        pCopy->build_uint_required = this->build_uint_required;
+        pCopy->build_uint_current = 0;
+        
         pCopy->buildingRect = this->buildingRect;
         pCopy->populationLimit = this->populationLimit;
         
@@ -183,6 +191,7 @@ void Building::ArriveHandler(GameSprite* sp)
     
     /*deal with the case where a building is the guy's home first.*/
     /* A guy can't possibly work in his home, so.*/
+    /*
     if (buildingType == HOUSING)
     {
         if (sp->getPossessions()->homeLocation)
@@ -197,10 +206,10 @@ void Building::ArriveHandler(GameSprite* sp)
             }
         }
         return;
-    }
+    }*/
     
 
-        
+    //what happens next is
      
         
     
@@ -258,8 +267,10 @@ void Building::StickAroundHandler(GameSprite *sp)
 {
     if (!sp) return;
     if (buildingType != HOUSING)
-        ModifyStats(sp);
-    
+    {
+        
+    }
+
     
     //social interaction disabled
     /*

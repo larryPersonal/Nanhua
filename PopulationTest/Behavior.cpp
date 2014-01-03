@@ -52,6 +52,13 @@ static int GoHome_Glue(lua_State* L)
     }
     else
     {
+        bool hasNext =sprite->PathToResources();
+        if (hasNext)
+            sprite->nextAction = RESTING;
+        else
+            sprite->nextAction = IDLE;
+        
+        
         lua_pushboolean(L, sprite->PathToHome());
         
     }
@@ -69,7 +76,14 @@ static int GoEat_Glue(lua_State* L)
     }
     else
     {
-        //lua_pushboolean(L, sprite->PathToResources());
+        bool hasNext =sprite->PathToResources();
+        if (hasNext)
+            sprite->nextAction = EATING;
+        else
+            sprite->nextAction = IDLE;
+        
+        
+        lua_pushboolean(L, hasNext);
         
     }
     return 1;
@@ -124,6 +138,13 @@ static int GoBuild_Glue(lua_State* L)
     }
     else
     {
+        bool hasNext =sprite->PathToBuild();
+        
+        if (hasNext)
+            sprite->nextAction;
+        else
+            sprite->nextAction = IDLE;
+        
         //lua_pushboolean(L, sprite->pathToBuild());
     }
     
