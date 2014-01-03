@@ -202,6 +202,11 @@ public:
     bool PathToBuilding(int building_id);
     bool PathToBuildingOverride(int building_id);
     
+    bool PathToResources();
+    bool PathToExit();
+    bool PathToBuild();
+    
+    
     //destinations shold always be buildings.
     bool isDestinationInRange(int buildingID);
     
@@ -214,6 +219,7 @@ public:
     
 
     void CallbackDayPassed();
+    void CallbackPerformingTask();
 };
 
 
