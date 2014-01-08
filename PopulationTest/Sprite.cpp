@@ -14,6 +14,7 @@
 #include "PopulationMenu.h"
 #include "GameDefaults.h"
 #include "NameGenerator.h"
+#include "BuildingHandler.h"
 
 #include <sstream>
 
@@ -655,7 +656,24 @@ SpriteAction GameSprite::getAction()
 
 bool GameSprite::PathToResources()
 {
-    return false;
+    Building* b = GameScene::getThis()->buildingHandler->getNearestStorage(this);
+    if (b == NULL) return false;
+    
+    CCPoint startPos = getWorldPosition();
+    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    
+    CCPoint endPos =b->getWorldPosition();
+    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+    
+    bool hasPath = CreatePath(startPos, endPos);
+    if (hasPath)
+    {
+        isFollowingMoveInstruction = true;
+        followPath();
+    }
+    
+    
+    return hasPath;
 }
 
 void GameSprite::updateSprite(float dt)
@@ -1131,10 +1149,47 @@ bool GameSprite::PathToBuild()
 {
     if (GameScene::getThis()->constructionHandler->getConstructingBuildingCount() == 0) return false; //no buildings under construction, stop.
     
+    Building* target = NULL;
+    CCPoint startPos = getWorldPosition();
+    CCPoint endPos;
+    
+    float shortestDist = 9999.0f;
+    
+    if (GameScene::getThis()->constructionHandler->getConstructingBuildingCount() == 1)
+    {
+        target = (Building*)GameScene::getThis()->constructionHandler->getConstructingBuildings()->objectAtIndex(0);
+        endPos = target->getWorldPosition();
+    }
+    else
+    {
+        for (int i = 0; i <GameScene::getThis()->constructionHandler->getConstructingBuildingCount(); ++i)
+        {
+            target =(Building*)GameScene::getThis()->constructionHandler->getConstructingBuildings()->objectAtIndex(i);
+            CCPoint tEndPos = target->getWorldPosition();
+            
+            float dist = ccpDistanceSQ(startPos, tEndPos);
+            if (dist < shortestDist)
+            {
+                shortestDist = dist;
+                endPos = tEndPos;
+            }
+            
+            
+        }
+    }
     
     
+    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
     
-    return false;
+    bool hasPath = CreatePath(startPos, endPos);
+    if (hasPath)
+    {
+        isFollowingMoveInstruction = true;
+        followPath();
+    }
+    
+    return hasPath;
     
 }
 

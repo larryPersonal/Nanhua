@@ -50,8 +50,8 @@ std::string refugeeConfig =
 "[{"
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
-"\"file_name\":\"citizenbehavior.lua\","
-"\"func_name\":\"Wander\""
+"\"file_name\":\"refugeebehavior.lua\","
+"\"func_name\":\"goWander\""
 "}]"
 "}]"
 "}";

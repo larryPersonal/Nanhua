@@ -48,7 +48,7 @@
   <tile id="1">
    <properties>
     <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="100"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="A house with a thatched roof"/>
@@ -1119,7 +1119,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzkENACAMBLC9EUAy/0bxwOdgaRW0ipd0OgAAAFxb6QBj7XQAAAAAAAA+cQDTAgA6
+   eJzt1kENACAMBMG+K4AE/0YxAWlaZhTs/S5jjqwOuGDHjB0AAPAjX55XVnUAAAAAAAA0cQBPbQBY
   </data>
  </layer>
  <layer name="Building_2" width="50" height="50">

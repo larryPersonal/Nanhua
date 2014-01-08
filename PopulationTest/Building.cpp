@@ -188,7 +188,7 @@ void Building::ArriveHandler(GameSprite* sp)
     currVisitors->addObject(sp);
 
     
-    
+    sp->setAction(sp->nextAction);
     /*deal with the case where a building is the guy's home first.*/
     /* A guy can't possibly work in his home, so.*/
     /*
@@ -266,11 +266,26 @@ void Building::ArriveHandler(GameSprite* sp)
 void Building::StickAroundHandler(GameSprite *sp)
 {
     if (!sp) return;
+    if (this->build_uint_required > this->build_uint_current)
+    {
+        
+        if (sp->spriteClass.compare("builder") == 0)
+        {
+            this->build_uint_current += 1;
+            
+        }
+        
+        
+        return;
+        
+    }
+    
+    
     if (buildingType != HOUSING)
     {
         
     }
-
+    
     
     //social interaction disabled
     /*

@@ -22,7 +22,7 @@ static bool testMode = false;
 static int starting_capital = 9000;
 #pragma unused(starting_capital)
 
-static int path_cost_per_tile = 10;
+static int path_cost_per_tile = 0;
 #pragma unused(path_cost_per_tile)
 
 //happiness mods

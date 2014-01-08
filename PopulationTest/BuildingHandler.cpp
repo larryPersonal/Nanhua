@@ -275,58 +275,6 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     
                     
-                    
-                    /*currProperty = properties->valueForKey("population_overload");
-                    if (currProperty)
-                    {
-                        CCString* cost = CCStringMake(properties->valueForKey("population_overload")->getCString());
-                        b->populationOverload = atoi(cost->getCString());
-                        
-                    }
-                    else
-                        b->populationOverload = 0;
-                    
-                    
-                    currProperty = properties->valueForKey("mod_int");
-                    if (currProperty)
-                    {
-                        CCString* modInt = CCStringMake(properties->valueForKey("mod_int")->getCString());
-                        b->int_mod = atoi(modInt->getCString());
-                    }
-                    else
-                        b->int_mod = 0;
-                    
-                    
-                    currProperty = properties->valueForKey("mod_soc");
-                    if (currProperty)
-                    {
-                        CCString* modSoc = CCStringMake(properties->valueForKey("mod_soc")->getCString());
-                        b->social_mod = atoi(modSoc->getCString());
-                    }
-                    else
-                        b->social_mod = 0;
-                    
-                    
-                    currProperty = properties->valueForKey("mod_loy");
-                    if (currProperty)
-                    {
-                        CCString* modLoy = CCStringMake(properties->valueForKey("mod_loy")->getCString());
-                        b->loyalty_mod = atoi(modLoy->getCString());
-                    }
-                    else
-                        b->loyalty_mod = 0;
-
-                    
-                    currProperty = properties->valueForKey("mod_hap");
-                    if (currProperty)
-                    {
-                        CCString* modHap = CCStringMake(properties->valueForKey("mod_hap")->getCString());
-                        b->happiness_mod = atoi(modHap->getCString());
-                    }
-                    else
-                        b->happiness_mod = 0;
-                    
-                    */
                     // Example format in Tiled: (level_exp_req) 100, 120, 140, 160, 0
                     currProperty = properties->valueForKey("level_exp_req");
                  //   b->expToLevel = CCArray::create();
@@ -514,29 +462,15 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     {
                         b->researchTime = 10.0f;
                     }
-                    /*
-                    currProperty = properties->valueForKey("build_time");
-                    if (currProperty)
-                    {
-                        CCString* research = CCStringMake(properties->valueForKey("build_time")->getCString());
-                        if (research->length() > 0)
-                            b->constructionTime = atof(research->getCString());
-                        else
-                            b->constructionTime = 10.0f;
-                    }
-                    else
-                    {
-                        b->constructionTime = 10.0f;
-                    }*/
+          
                     
-                    currProperty = properties->valueForKey("build_uint");
+                    currProperty = properties->valueForKey("build_uint_required");
                     if (currProperty)
                     {
-                        CCString* build = CCStringMake(properties->valueForKey("build_uint")->getCString());
+                        CCString* build = CCStringMake(properties->valueForKey("build_uint_required")->getCString());
                         if (build->length() > 0)
                         {
                             b->build_uint_required = atoi(build->getCString());
-                            
                         }
                         else
                             b->build_uint_required = 0;
@@ -698,6 +632,33 @@ Building* BuildingHandler::getBuildingWithGID(int GID)
         if (currBuilding->targetGUID == GID) return currBuilding;
     }
     return NULL;
+}
+
+Building* BuildingHandler::getNearestStorage(GameSprite* sp)
+{
+    if (sp == NULL) return NULL;
+    if (storageOnMap->count() == 0) return NULL;
+    CCPoint spritePosition = sp->spriteRep->getPosition();
+ 
+    float shortestDist = 9999.0f;
+    
+    Building* currBuilding;
+    Building* shortedstDistBuilding = NULL;
+    for (int i = 0; i < storageOnMap->count(); ++i)
+    {
+        currBuilding = (Building*)storageOnMap->objectAtIndex(i);
+        CCPoint buildingPos = currBuilding->buildingRep->getPosition();
+        
+        float dist = ccpDistanceSQ(buildingPos, spritePosition);
+        if (dist < shortestDist)
+        {
+            shortestDist = dist;
+            shortedstDistBuilding = currBuilding;
+        }
+        
+    }
+    
+    return shortedstDistBuilding;
 }
 
 //I definitely need to optimize this, but CCArray no have searching. Meh.

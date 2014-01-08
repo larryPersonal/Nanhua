@@ -68,6 +68,8 @@ public:
     Building* getFirstBuildingOfCategory(BuildingCategory bc);
     Building* getBuildingWithGID(int GID);
     
+    Building* getNearestStorage(GameSprite* sp);
+    
     void init(CCTMXTiledMap* mapPtr, JobCollection* jc);
     
 //    CCArray* getAllBuildingsWithCategory(std::string category);

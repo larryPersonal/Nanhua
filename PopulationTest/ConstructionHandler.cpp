@@ -48,17 +48,26 @@ void ConstructionHandler::update(float deltaTime)
     
     for (int i = getConstructingBuildingCount() - 1; i >= 0; i-- )
     {
+
         Building* building = (Building*)constructingBuildings->objectAtIndex(i);
-       if (building->build_uint_current >= building->build_uint_required || building->build_uint_required == 0)
+        if (building->build_uint_current >= building->build_uint_required || building->build_uint_required == 0)
        {
+           CCLog("%i", building->build_uint_current);
            completeConstructingBuilding(building);
        }
        else
        {
            ProgressBar* progressBar = (ProgressBar*)building->buildingRep->getChildByTag(PROGRESSBAR_TAG);
            if (progressBar != NULL)
-               progressBar->setValue(building->build_uint_current/building->build_uint_required); //TODO: get building construct time
-           
+           {
+               float newVal = (building->build_uint_current/(float)building->build_uint_required);
+               
+               progressBar->setValue(newVal);
+           }
+           else
+           {
+               //PROGRESSBAR IS NULL
+           }
        }
     }
     
@@ -135,6 +144,11 @@ int ConstructionHandler::getConstructingBuildingCount()
     return constructingBuildings->count();
 }
 
+
+CCArray* ConstructionHandler::getConstructingBuildings()
+{
+    return constructingBuildings;
+}
 
 
 
