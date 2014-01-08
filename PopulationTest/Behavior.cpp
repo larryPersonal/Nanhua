@@ -141,7 +141,7 @@ static int GoBuild_Glue(lua_State* L)
         bool hasNext =sprite->PathToBuild();
         
         if (hasNext)
-            sprite->nextAction;
+            sprite->nextAction = BUILD;
         else
             sprite->nextAction = IDLE;
         
@@ -958,7 +958,7 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "IsDestinationInRange", IsDestinationInRange_Glue);
     lua_register(L, "IsIdle", IsIdle_Glue);
     lua_register(L, "StopMoving", StopMoving_Glue);
-    lua_register(L, "Wander", PickRandomDestination_Glue);
+    lua_register(L, "goWander", PickRandomDestination_Glue);
     
     /*buying or renting house*/
     lua_register(L, "GetCostOfBuildingWithID", GetBuildingCost_Glue);
@@ -984,6 +984,8 @@ void Behavior::registerFunctions(lua_State* L)
     /*Checks for upgrade requirements.*/
     lua_register(L, "IsAtMaxClassLevel", IsAtMaxLevel_Glue);
     lua_register(L, "IsAtAbsoluteMaxlevel", IsAtAbsoluteMaxLevel_Glue);
+    
+    lua_register(L, "goBuild", GoBuild_Glue);
  
 }
 

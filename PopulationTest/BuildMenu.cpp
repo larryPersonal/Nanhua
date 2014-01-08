@@ -469,11 +469,11 @@ void BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
     //        return;
     //    }
     
+    
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     int tag = (int)pMenuItem->getTag();
     
     //    Animate();
-    
     switch (tag)
     {
         case -1 : //Deconstruct
@@ -502,7 +502,7 @@ void BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
             else
             {
                 //Audio feedback?
-                //Visual feedback?
+                //Visual feedback? //No money
             }
         }
             break;
@@ -516,18 +516,20 @@ void BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
         {
             Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(tag);
             //If enough money
-            if (GameManager::getThis()->currentMoney >= buildingToBuy->buildingCost) {
+         //   if (GameManager::getThis()->currentMoney >= buildingToBuy->buildingCost) {
                 GameHUD::getThis()->setTapMode(1);
                 GameHUD::getThis()->showBuildLabel(buildingToBuy->buildingName.c_str() );
                 GameHUD::getThis()->updateBuildCostLabel(buildingToBuy->buildingCost);
                 GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
                 GameScene::getThis()->isThisTapCounted = true;
                 this->closeMenu();
-            }
-            else{
+          //  }
+          //  else{
                 //Audio feedback?
+                
+                
                 //Visual feedback?
-            }
+          //  }
         }
             break;
     }

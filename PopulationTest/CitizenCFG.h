@@ -51,7 +51,7 @@ std::string citizenConfig =
                 "\"name\":\"Walk Around\","
                 "\"type\":\"behaviour\","
                 "\"file_name\":\"citizenbehavior.lua\","
-                "\"func_name\":\"Wander\""
+                "\"func_name\":\"goWander\""
             "}]"
     "}]"
 "}";

@@ -31,6 +31,8 @@ public:
     void completeConstructingBuilding(Building* building);
     int getConstructingBuildingCount();
     
+    CCArray* getConstructingBuildings();
+    
 };
 
 #endif /* defined(__PopulationTest__ConstructionHandler__) */

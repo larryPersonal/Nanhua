@@ -50,8 +50,8 @@ std::string soldierConfig =
 "[{"
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
-"\"file_name\":\"citizenbehavior.lua\","
-"\"func_name\":\"Wander\""
+"\"file_name\":\"soldierbehavior.lua\","
+"\"func_name\":\"goWander\""
 "}]"
 "}]"
 "}";

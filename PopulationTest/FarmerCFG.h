@@ -50,8 +50,8 @@ std::string farmerConfig =
 "[{"
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
-"\"file_name\":\"citizenbehavior.lua\","
-"\"func_name\":\"Wander\""
+"\"file_name\":\"farmerbehavior.lua\","
+"\"func_name\":\"goWander\""
 "}]"
 "}]"
 "}";

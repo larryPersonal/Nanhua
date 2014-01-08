@@ -50,8 +50,8 @@ std::string builderConfig =
 "[{"
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
-"\"file_name\":\"citizenbehavior.lua\","
-"\"func_name\":\"Wander\""
+"\"file_name\":\"builderbehavior.lua\","
+"\"func_name\":\"goBuild\""
 "}]"
 "}]"
 "}";
