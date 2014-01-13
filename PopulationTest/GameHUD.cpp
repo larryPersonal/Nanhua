@@ -341,7 +341,7 @@ void GameHUD::createInfoBars()
     
     //Create top info bar items
     std::stringstream ss;
-    ss << GameManager::getThis()->currentMoney << " G";
+    ss << "Gold: " << GameManager::getThis()->currentMoney << " G";
     moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 30);
     topInfoBar->addItem("moneyLabel", moneyLabel);
     topInfoBar->anchorItem("moneyLabel", 12.0f, ANCHOR_RIGHT);

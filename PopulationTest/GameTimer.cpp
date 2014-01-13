@@ -62,11 +62,13 @@ bool GameTimer::init()
     timeLabel = CCLabelTTF::create(timeString->getCString(), "Droidiga", 25);
     timeLabel->setAnchorPoint(ccp(-0.05f, 0.5f));
     addChild(timeLabel);
+    timeLabel->setString(timeString->getCString());
     
     return true;
 }
 
 void GameTimer::updateTimer(float deltaTime){
+    CCLog("Hello World");
     timeElapsed += deltaTime;
     GameManager::getThis()->currentSecsElapsed = timeElapsed;
     
@@ -77,10 +79,11 @@ void GameTimer::updateTimer(float deltaTime){
     lastTime = timeElapsed;
     int secs = (int)timeElapsed;
     
-    currentDay = secs/secToDayRatio%dayToWeekRatio + initialDate;
+    currentDay = ((secs / secToDayRatio) % dayToWeekRatio) + initialDate;
     currentWeek = secs/secToDayRatio/dayToWeekRatio%weekToMonthRatio + initialDate;
     currentMonth = secs/secToDayRatio/dayToWeekRatio/weekToMonthRatio%monthToYearRatio + initialDate;
     currentYear = secs/secToDayRatio/dayToWeekRatio/weekToMonthRatio/monthToYearRatio + initialDate;
+
     
     CCString* timeString = CCString::createWithFormat("Year: %i  Month: %i  Week: %i  Day: %i", currentYear, currentMonth, currentWeek, currentDay);
     timeLabel->setString(timeString->getCString());

@@ -571,7 +571,7 @@ void GameScene::FirstRunPopulate()
         else
             GameManager::getThis()->UnlockAll();
     }
-    this->schedule(schedule_selector(GameScene::update), 1/60.0f);
+    this->schedule(schedule_selector(GameScene::update), 1.0f/120.0f);
     
     
 }

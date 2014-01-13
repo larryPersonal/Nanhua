@@ -17,7 +17,8 @@ using namespace cocos2d;
 class GameTimer: public CCLayer
 {
     static GameTimer* SP;
-    float timeElapsed, lastTime;
+    float timeElapsed;
+    float lastTime;
     CCLabelTTF* timeLabel;
     
     int secToDayRatio = 1;
@@ -25,10 +26,10 @@ class GameTimer: public CCLayer
     int weekToMonthRatio = 4;
     int monthToYearRatio = 12;
     
-    int currentDay;
-    int currentWeek;
-    int currentMonth;
-    int currentYear;
+    int currentDay = 1;
+    int currentWeek = 1;
+    int currentMonth = 1;
+    int currentYear = 1;
     const int initialDate = 1;
     
 public:

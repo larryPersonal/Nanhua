@@ -99,6 +99,7 @@ void BuildingInfoMenu::createMenuItems()
     spPrice = CCSprite::create("money icon.png");
     spPrice->setScale(0.75);
     spCash = CCSprite::create("money icon.png");
+    //spCash = CCSprite::create("happiness icon.png");
     spCash->setScale(0.75);
     
     /*
@@ -122,6 +123,10 @@ void BuildingInfoMenu::createMenuItems()
     // Sprite
     spriteBuilding = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
     spriteBuilding->setScale(128.0f / spriteBuilding->boundingBox().size.width);
+    spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
+    
+    //spriteGy = CCSprite::create("blue square.png", CCRectMake(0, 0, 610, 600));
+    //spriteGy->setScale(610 / spriteGy->boundingBox().size.width);
     
     // Attribute labels
     ss.str(std::string());
@@ -166,7 +171,7 @@ void BuildingInfoMenu::createMenuItems()
     scrollArea->enableScrollVertical(10, "bar.png", "bar.png");
     scrollArea->hideScroll();
     
-    scrollArea->addItem(spriteBuilding, ccp(90, 45));
+    scrollArea->addItem(spriteBuilding, ccp(105, 45));
     scrollArea->addItem(spInt, ccp(405, 45));
     scrollArea->addItem(spLoy, ccp(405, 95));
     scrollArea->addItem(spSoc, ccp(405, 145));
@@ -195,6 +200,7 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(textPrice);
     this->addChild(menu, 3);
     this->addChild(scrollArea);
+    //this->addChild(spriteGy);
     
     // Done creation, now position them
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
@@ -203,6 +209,7 @@ void BuildingInfoMenu::createMenuItems()
     textPrice->setAnchorPoint(ccp(1, 0));
     scrollArea->setAnchorPoint(ccp(0.5, 0.5));
     buttonClose->setAnchorPoint(ccp(1, 1));
+    //spriteGy->setAnchorPoint(ccp(0.5, 0.5));
     
     // Create population icons
     for (int i = 0; i < mBuildingVacancy; i++)
@@ -299,6 +306,8 @@ void BuildingInfoMenu::reposition()
     scrollArea->CCNode::setPosition(spriteBackground->getPositionX() - 305,
                                     spriteBackground->getPositionY() - 150);
     scrollArea->reposition();
+    
+    //spriteGy->CCNode::setPosition(spriteBackground->getPositionX(), spriteBackground->getPositionY());
 }
 
 void BuildingInfoMenu::refreshAllMenuItemValues()

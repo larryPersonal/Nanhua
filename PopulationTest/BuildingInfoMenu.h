@@ -59,6 +59,8 @@ private:
     CCSprite* spriteBackgroundInner;
     
     CCSprite* spriteBuilding;
+    //CCSprite* spriteGy;
+    
     vector<CCSprite*> spritePopulationSlot;
     vector<CCSprite*> spritePopulationOverloadSlot;
     vector<CCMenuItemImage*> spritePopulation;
