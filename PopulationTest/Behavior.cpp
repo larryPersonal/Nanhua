@@ -172,6 +172,12 @@ static int GoStoreItem_Glue(lua_State *L)
     return 1;
 }
 
+static int HasBuildingUnderConstruction_Glue(lua_State *L)
+{
+    lua_pushboolean(L, GameScene::getThis()->constructionHandler->getConstructingBuildingCount() > 0);
+    return 1;
+}
+
 
 static int HasStorageSpaceLeft_Glue(lua_State * L)
 {
@@ -958,7 +964,7 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "IsDestinationInRange", IsDestinationInRange_Glue);
     lua_register(L, "IsIdle", IsIdle_Glue);
     lua_register(L, "StopMoving", StopMoving_Glue);
-    lua_register(L, "goWander", PickRandomDestination_Glue);
+    lua_register(L, "GoWander", PickRandomDestination_Glue);
     
     /*buying or renting house*/
     lua_register(L, "GetCostOfBuildingWithID", GetBuildingCost_Glue);
@@ -985,7 +991,8 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "IsAtMaxClassLevel", IsAtMaxLevel_Glue);
     lua_register(L, "IsAtAbsoluteMaxlevel", IsAtAbsoluteMaxLevel_Glue);
     
-    lua_register(L, "goBuild", GoBuild_Glue);
+    lua_register(L, "GoBuild", GoBuild_Glue);
+    lua_register(L, "HasConstructingBuildings", HasBuildingUnderConstruction_Glue);
  
 }
 
