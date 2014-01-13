@@ -36,7 +36,6 @@ public:
     /*it'd probably be easier on the search and the head if I kept them as separate CCArrays.*/
     /*I'm not sure whether I still need any of these categories, but I'll leave them alone.*/
     CCArray* housingOnMap;
-    CCArray* granaryOnMap;
     CCArray* amenityOnMap;
     CCArray* commerceOnMap;
     CCArray* militaryOnMap;

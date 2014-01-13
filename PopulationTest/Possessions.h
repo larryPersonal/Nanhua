@@ -33,14 +33,12 @@ struct Possessions
     int expRating;
     CCArray* expToLevel;
     
-    bool hasHouse;
     Building* homeLocation;
    // bool isRentalProperty;
   //  bool isSqueezing;
    // int rentalVisitsLeft;
     
-   // bool hasJob;
-   // Building* jobLocation;
+    Building* jobLocation;
    // std::string jobClass; //check for this == to sprite class to know if sprite has taken the correct job
    // int jobIndex;
     //I think I'll store the index instead of the job pointer.
@@ -48,9 +46,8 @@ struct Possessions
     
     Possessions()
     {
-       hasHouse = false;
        homeLocation = NULL;
-        
+        jobLocation = NULL;
       
         loyaltyRating = happinessRating = 50;
         //note: movement range is range from a sprite's HOME. If the sprite has no home, this value will be ignored.
@@ -104,7 +101,57 @@ struct Possessions
 
     }
    
+    int PerformTask()
+    {
+        --energyRating;
+        if (energyRating < 0)
+        {
+            energyRating = 0;
+            CCLog("out of energy");
+            return 0;
+        }
+        //the rate of
+        return 1;
+        
+    }
     
+    int Rest()
+    {
+        ++energyRating;
+        if (energyRating > defaultEnergy)
+        {
+            energyRating = defaultEnergy;
+            return 0;
+        }
+        return 1;
+    }
+    
+    bool setJob(Building* jobl)
+    {
+        if (jobl->buildingType == HOUSING) return false;
+        jobLocation = jobl;
+        return true;
+    }
+    
+    //you can normally setJob(anotherJob) to get a new job. BUT if you just want to leave the job because the building is deconstructed...
+    void LeaveJob()
+    {
+        jobLocation = NULL;
+    }
+
+    
+    bool setHome(Building* homel)
+    {
+        if (homel->buildingType != HOUSING) return false;
+        homeLocation = homel;
+        return true;
+    }
+    
+    //see LeaveJob();
+    void LeaveHome()
+    {
+        homeLocation = NULL;
+    }
 
 };
 

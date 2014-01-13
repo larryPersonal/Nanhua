@@ -270,14 +270,14 @@ static int HasHouse_Glue(lua_State *L)
     }
     else
     {
-        lua_pushboolean(L, sprite->getPossessions()->hasHouse);
+        lua_pushboolean(L, sprite->getPossessions()->homeLocation != NULL);
     }
     
     return 1;
 }
 
 /*Buys a house. ID to be supplied from the LUA side.*/
-static int BuyHouseWithID_Glue(lua_State *L)
+static int SetHouseWithID_Glue(lua_State *L)
 {
     if (!sprite)
     {
@@ -307,7 +307,7 @@ static int BuyHouseWithID_Glue(lua_State *L)
             return 1;
         }
         
-        lua_pushboolean(L, sprite->BuyHouse(targetID));
+        lua_pushboolean(L, sprite->SetHouse(targetID));
     
     }
     return 1;
@@ -384,13 +384,13 @@ static int SetClassLevel_Glue(lua_State *L)
 }
 
 /*causes the sprite to sell its house.*/
-static int SellHouse_Glue(lua_State* L)
+static int LeaveHouse_Glue(lua_State* L)
 {
     if (!sprite)
         lua_pushboolean(L, false); //no sprite
     
     
-    lua_pushboolean(L, sprite->SellHouse());
+    lua_pushboolean(L, sprite->LeaveHouse());
     
     
     return 1;
@@ -966,15 +966,14 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "StopMoving", StopMoving_Glue);
     lua_register(L, "GoWander", PickRandomDestination_Glue);
     
-    /*buying or renting house*/
     lua_register(L, "GetCostOfBuildingWithID", GetBuildingCost_Glue);
     lua_register(L, "GetBuildingLevelWithID", GetBuildingLevel_Glue);
     lua_register(L, "IsBuildingWithIDFull", IsBuildingFullyOccupied_Glue);
     lua_register(L, "GetAllHomeIDs", GetAllHomes_Glue);
-    lua_register(L, "BuyHouseWithID", BuyHouseWithID_Glue);
     
-    //makes the sprite sell his house. 
-    lua_register(L, "SellHouse", SellHouse_Glue);
+    //buy and sell house
+    lua_register(L, "SetHouseWithID", SetHouseWithID_Glue);
+    lua_register(L, "LeaveHouse", LeaveHouse_Glue);
     
     /*finding jobs*/
     lua_register(L, "GetAllJobIDs", GetAllJobs_Glue);

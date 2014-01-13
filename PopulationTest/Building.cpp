@@ -25,7 +25,6 @@ Building::Building()
     build_uint_required = 0;
     build_uint_current = 0;
     
-   // populationOverload = populationOverloadLimit = 0;
 
     buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
@@ -34,6 +33,8 @@ Building::Building()
     researchCost = 100.0f;
     researchTime = 10.0f;
     
+    jobsInthisBuilding = CCArray::create();
+    jobsInthisBuilding->retain();
     
     
     currVisitors = CCArray::create();
@@ -86,6 +87,10 @@ Building::~Building()
     
     currPopulation.clear();
    
+    
+    jobsInthisBuilding->removeAllObjects();
+    jobsInthisBuilding->release();
+    
     
     currVisitors->removeAllObjects();
    
@@ -142,6 +147,9 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->buildingRect = this->buildingRect;
         pCopy->populationLimit = this->populationLimit;
         
+        pCopy->jobs = this->jobs;
+        
+        
         // for storage.
         pCopy->currentStorage = this->currentStorage;
         pCopy->storageLimit = this->storageLimit;
@@ -156,7 +164,8 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->currentExp = this->currentExp;
         pCopy->expToLevel->initWithArray(this->expToLevel);
         
-        pNewZone = new CCZone(pCopy);    }
+        pNewZone = new CCZone(pCopy);
+    }
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -189,73 +198,11 @@ void Building::ArriveHandler(GameSprite* sp)
 
     
     sp->setAction(sp->nextAction);
-    /*deal with the case where a building is the guy's home first.*/
-    /* A guy can't possibly work in his home, so.*/
-    /*
-    if (buildingType == HOUSING)
-    {
-        if (sp->getPossessions()->homeLocation)
-        {
-            if (sp->getPossessions()->homeLocation == this)
-            {
-                CCLog("reached home. Energy reset.");
-                sp->increasePossession(STATS_ENERGY, sp->getPossessions()->defaultEnergy);
-                
-                CCLog("taking stock of day spent.");
-                sp->TakeStockOfDay();
-            }
-        }
-        return;
-    }*/
-    
 
-    //what happens next is
-     
-        
-    
-    
-    /*if the building happens to be the job location*/
-    /*
-    if (sp->getPossessions()->jobLocation)
-    {
-        if (sp->getPossessions()->jobLocation == this)
-        {
-            CCLog("reached workplace.");
-            Job* j = (Job*)getJobsAvailable()->objectAtIndex(sp->getPossessions()->jobIndex);
-            j->ModifyStats(sp);
-            //sp->increasePossession(STATS_ENERGY, -j->energy_mod);
-            //sp->increasePossession(STATS_EXP, j->exp_mod);
-            
-            //todo: check if payday. If it is,
-            //sp->getPossessions()->cashOnHand += j->job_monthlyPay;
-           
-        }
-         return;
-    }
-    */
-    /*
-    if the building is neither a home nor a job location, check if building is an upgrade location.
-    sp->CheckUpgrade();
-    */
-    
-    
-    //only commerce buildings are shoppping locations. Note that at this point I've already determined that it's not the sprite's job location.
-    
-    /*shopping should only be a one time cost*/
-    /*
-    if (buildingType == COMMERCE)
-    {
-        sp->increasePossession(STATS_CASHONHAND, cash_mod * currentLevel);
-        
-        GameManager::getThis()->currentMoney += (abs(cash_mod) * currentLevel);
-        GameHUD::getThis()->updateMoneyLabel();
-    
-    }*/
-    
     
     
     //if this isn't the character's job, home or an upgrade location, modify all stats based on building stats.
-    ModifyStats(sp);
+    //ModifyStats(sp);
     this->gainExp(10);
     
     
@@ -271,7 +218,17 @@ void Building::StickAroundHandler(GameSprite *sp)
         
         if (sp->spriteClass.compare("builder") == 0)
         {
-            this->build_uint_current += 1;
+            
+            int workval = sp->getPossessions()->PerformTask();
+            if (workval > 0)
+       
+                this->build_uint_current += workval;
+            else
+            {
+                //TODO: sprite has run out of energy.
+                
+                //what do I want to do here? Meanwhile he keeps working even if he has no energy. Must go home and rest I think.
+            }
             
         }
         
@@ -283,38 +240,38 @@ void Building::StickAroundHandler(GameSprite *sp)
     
     if (buildingType != HOUSING)
     {
-        
-    }
-    
-    
-    //social interaction disabled
-    /*
-    if (buildingType == SOCIAL && sp->isInteractingSocial)
-    {
-        if (currVisitors->count() > 0)
+        if (buildingType == AMENITY) //where Amenity == House that creates stuff. A Farm is one of them.
         {
-            for (int i = 0; i < currVisitors->count(); ++i)
+            if (sp->spriteClass.compare("farmer") == 0)
             {
-                GameSprite* spr = (GameSprite*)currVisitors->objectAtIndex(i);
-                
-                if (spr != sp)
+                if (sp->getPossessions()->jobLocation == this && sp->getAction() == FARMING)
                 {
-                    if (spr->isInteractingSocial)
+                    int workval = sp->getPossessions()->PerformTask();
+                    if (workval > 0)
                     {
-                        if ((sp->race == 'a' && spr->race == 'h') ||
-                            (sp->race == 'h' && spr->race == 'a'))
-                        {
-                            sp->getPossessions()->socialRating += 10;
-                            spr->getPossessions()->socialRating += 10;
-                            
-                            spr->isInteractingSocial = false;
-                            sp->isInteractingSocial = false;
-                        }
+                        
+                    }
+                    else
+                    {
+                        //TODO: sprite has run out of energy.
+                        
+                        //what do I want to do here? Meanwhile he keeps working even if he has no energy. Must go home and rest I think.
                     }
                 }
             }
         }
-    }*/
+        
+        
+    }
+    else
+    {
+        //is a house. Rest?
+        if (sp->getPossessions()->homeLocation == this) //if this is my home
+        {
+          
+            sp->getPossessions()->Rest(); //recharge energy
+        }
+    }
 }
 
 
@@ -324,7 +281,7 @@ void Building::Leavehandler(GameSprite *sp)
     currVisitors->removeObject(sp);
 }
 //Doing it in the copy constructor unfortunately fails. Doing this in a separate function instead.
-/*
+
 void Building::initializeJobs()
 {
     if (jobs.length() == 0) return;
@@ -347,7 +304,7 @@ void Building::initializeJobs()
      while (ss);
     
 }
-*/
+
 
 void Building::ModifyStats(GameSprite *sp)
 {

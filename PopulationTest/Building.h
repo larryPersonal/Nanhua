@@ -33,7 +33,7 @@ enum BuildingCategory {
 
 class Building: public CCObject
 {
-  //  CCArray* jobsInthisBuilding;
+    CCArray* jobsInthisBuilding;
     CCArray* currVisitors;
     
     vector<GameSprite*> currPopulation;
@@ -112,12 +112,11 @@ public:
     CCPoint getWorldPosition();
     
     /*jobs*/
- //   std::string jobs;
-  //  void initializeJobs();
+    std::string jobs;
+    void initializeJobs();
     
     
-  //  CCArray* getJobsAvailable();
-   // bool isQualifiedForJob(GameSprite* sp, int jobindex);
+    CCArray* getJobsAvailable();
     
     /*called when the sprite arrives in the building.*/
     void ArriveHandler(GameSprite* sp);

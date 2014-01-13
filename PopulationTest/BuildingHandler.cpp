@@ -32,8 +32,6 @@ BuildingHandler::~BuildingHandler()
 {
     housingOnMap->removeAllObjects();
     
-    // granary
-    granaryOnMap->removeAllObjects();
     
     amenityOnMap->removeAllObjects();
     commerceOnMap->removeAllObjects();
@@ -44,8 +42,6 @@ BuildingHandler::~BuildingHandler()
     
     housingOnMap->release();
     
-    // granary
-    granaryOnMap->release();
     
     amenityOnMap->release();
     commerceOnMap->release();
@@ -522,7 +518,6 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     allBuildingsOnMap->retain();
     
     housingOnMap= CCArray::create();
-    granaryOnMap = CCArray::create();
     amenityOnMap= CCArray::create();
     commerceOnMap= CCArray::create();
     militaryOnMap= CCArray::create();
@@ -535,8 +530,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     
     
     housingOnMap->retain();
-    granaryOnMap->retain();
-    amenityOnMap->retain();
+     amenityOnMap->retain();
     commerceOnMap->retain();
     militaryOnMap->retain();
     educationOnMap->retain();
@@ -560,7 +554,7 @@ void BuildingHandler::addBuildingToMap(Building *b)
             housingOnMap->addObject(b);
             break;
         case GRANARY:
-            granaryOnMap->addObject(b);
+            storageOnMap->addObject(b);
             break;
         case AMENITY:
             amenityOnMap->addObject(b);
@@ -581,7 +575,7 @@ void BuildingHandler::addBuildingToMap(Building *b)
             specialOnMap->addObject(b);
             break;
     }
-  //  b->initializeJobs();
+    b->initializeJobs();
     allBuildingsOnMap->addObject(b);
 }
 
@@ -595,7 +589,7 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
             housingOnMap->removeObject(b);
             break;
         case GRANARY:
-            granaryOnMap->removeObject(b);
+            storageOnMap->removeObject(b);
             break;
         case AMENITY:
             amenityOnMap->removeObject(b);
@@ -778,7 +772,7 @@ void BuildingHandler::EmptyBuildingFirst(Building *b)
         {
             GameSprite *spr = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
             Possessions* p = spr->getPossessions();
-            if (p->homeLocation == b) spr->SellHouse();
+            if (p->homeLocation == b) spr->LeaveHouse();
             
         }
     }

@@ -42,15 +42,13 @@ void JobCollection::createJobWithJson(Json::Value json)
     
     
     j->jobName = json["job_name"].asString();
-    j->energy_mod = -json["job_energycost"].asInt();
-    j->exp_mod = json["job_expgain"].asInt();
-    
-    j->happiness_mod = json["job_mod_hap"].asInt();
-    j->loyalty_mod = json["job_mod_loy"].asInt();
-    
-    
-    j->job_targetEducationLevel = json["job_edlevel"].asInt();
-
+    j->job_currworkval = 0;
+    j->job_workvalreq = json["job_workvalreq"].asInt();
+    j->job_expmod = json["job_expgain"].asInt();
+    j->job_hapmod = json["job_mod_hap"].asInt();
+    j->job_loymod = json["job_mod_loy"].asInt();
+    j->job_isTaken = false;
+   
     j->job_targetSpriteType = json["job_spriteclass"].asString();
     allJobsInGame->addObject(j);
 }

@@ -78,16 +78,16 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     // change to RGBA8888
     pImageinfo->hasAlpha = true;
     pImageinfo->bitsPerComponent = 8;
+    
     pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
     colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(pImageinfo->data, 
+    CGContextRef context = CGBitmapContextCreate( pImageinfo->data,
                                                  pImageinfo->width, 
                                                  pImageinfo->height,
                                                  8, 
-                                                 4 * pImageinfo->width, 
+                                                 4 * pImageinfo->width,
                                                  colorSpace, 
                                                  info | kCGBitmapByteOrder32Big);
-    
     CGContextClearRect(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height));
     //CGContextTranslateCTM(context, 0, 0);
     CGContextDrawImage(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height), cgImage);

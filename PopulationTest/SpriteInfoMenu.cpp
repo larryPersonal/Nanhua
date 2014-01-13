@@ -244,7 +244,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
             //home location
             if (gameSprite != NULL)
             {
-                if (gameSprite->getPossessions()->hasHouse)
+                if (gameSprite->getPossessions()->homeLocation != NULL)
                 {
                     this->closeMenu(false);
                 

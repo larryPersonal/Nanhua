@@ -182,11 +182,11 @@ public:
     void saySpeech(const char* text, float timeInSeconds);
     
     /*transactions*/
-    bool BuyHouse(int instanceID); //note: doesnt' take into account population squeeze limit.
-    bool BuySqueezeHouse(int InstanceID); //will take into account squeeze limit.
-    bool SellHouse();
+    bool SetHouse(int instanceID); //note: doesnt' take into account population squeeze limit.
+    bool LeaveHouse();
     
-    bool FindJobAt(int instanceID);
+    bool SetJob(int instanceID);
+    bool LeaveJob();
     
     /*movement*/
     bool Wander();

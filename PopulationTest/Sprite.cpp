@@ -300,8 +300,8 @@ void GameSprite::unmakeSpriteEndGame()
 
  void GameSprite::unmakeSprite()
  {
-    // QuitJob();
-     SellHouse();
+     LeaveJob();
+     LeaveHouse();
      delete possessions;
      possessions= NULL;
      delete behaviorTree;
@@ -745,7 +745,7 @@ void GameSprite::updateSprite(float dt)
         
         
         //I didn't want hasJob to trigger if there is no house.
-        if (!possessions->hasHouse && !justSoldHouse)
+        if (possessions->homeLocation == NULL && !justSoldHouse)
         {
             saySpeech("Homeless..", 2.0f);
             //I need to do this the manual way. Otherwise the 2nd saySpeech overrides the first.
@@ -931,7 +931,7 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
 }
 
 /*transactions*/
-bool GameSprite::BuyHouse(int instanceID)
+bool GameSprite::SetHouse(int instanceID)
 {
     if (isInteractingSocial) return false;
     
@@ -960,28 +960,36 @@ bool GameSprite::BuyHouse(int instanceID)
         CCLog("Building has reached its population limit!");
         return false;
     }
-    //possessions->cashOnHand -= b->buildingBuyPrice;
     
-    possessions->homeLocation = b;
-    b->addPopulation(this);
-    possessions->hasHouse = true;
-
+    bool boughtHouse = possessions->setHome(b);
+    
+    if (boughtHouse)
+        b->addPopulation(this);
+    
 
     //house successfully bought
+    return boughtHouse;
+}
+
+bool GameSprite::LeaveJob()
+{
+        if (possessions->jobLocation != NULL)
+        {
+            possessions->LeaveJob();
+            
+        }
+    justQuitJob = true;
     return true;
 }
 
-bool GameSprite::SellHouse()
-{
-      //disown property
-    if (!possessions->homeLocation) return false;
-    
 
-    possessions->hasHouse = false;
-    possessions->homeLocation->removePopulation(this);
-    possessions->homeLocation = NULL;
- 
-    
+bool GameSprite::LeaveHouse()
+{
+    if (possessions->homeLocation != NULL)
+    {
+        possessions->homeLocation->removePopulation(this);
+        possessions->LeaveHome();
+    }
     justSoldHouse = true;
     return true;
 }
@@ -1001,7 +1009,7 @@ bool GameSprite::PathToHome()
         CCLog("still moving. Can't obey.");
         return false;
     }
-    if (possessions->hasHouse == false)
+    if (possessions->homeLocation == NULL)
     {
        //we don't do this anymoe
         //CCLog("No house?");
@@ -1211,7 +1219,7 @@ bool GameSprite::isDestinationInRange(int destinationID)
      character has infinite range.*/
     Building* destination = (Building*)GameScene::getThis()->buildingHandler->allBuildingsOnMap->objectAtIndex(destinationID);
     
-    if (!possessions->hasHouse) return true;
+    if (possessions->homeLocation != NULL) return true;
     
     /*create a Path first before using by calling CreatePath */
     if (!path) return false;
@@ -1332,7 +1340,7 @@ int GameSprite::getLevel()
 void GameSprite::TakeStockOfDay()
 {
     //I assume that the sprite has a home.
-    if (possessions->hasHouse)
+    if (possessions->homeLocation != NULL)
     {
         if (possessions->homeLocation->isOverpopulated())
         {

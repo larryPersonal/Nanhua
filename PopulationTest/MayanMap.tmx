@@ -1110,7 +1110,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztziEBAAAIA7BXon85/B0KsyVYAgB38x0AAAAAAAAAACgLbzoAMg==
+   eJztzkERAAAEADCFPPQvJ4OXc7YEiwCAudoOAMABuR0AAAAAAAB4pgHwlgBf
   </data>
  </layer>
  <layer name="Building_1" width="50" height="50">

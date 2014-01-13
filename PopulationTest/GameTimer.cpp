@@ -68,7 +68,7 @@ bool GameTimer::init()
 }
 
 void GameTimer::updateTimer(float deltaTime){
-    CCLog("Hello World");
+  //  CCLog("Hello World");
     timeElapsed += deltaTime;
     GameManager::getThis()->currentSecsElapsed = timeElapsed;
     

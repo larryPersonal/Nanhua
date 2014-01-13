@@ -474,21 +474,18 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
             
             //house
             
-            newSprite->getPossessions()->hasHouse = !!atoi(tokens[10].c_str());
-            if (newSprite->getPossessions()->hasHouse)
-            {
-                int homeID = atoi(tokens[11].c_str());
+            //newSprite->getPossessions()->hasHouse = false;//!!atoi(tokens[10].c_str());
+            /*
+            int homeID = atoi(tokens[11].c_str());
                 newSprite->getPossessions()->homeLocation = GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(homeID);
                 
                // newSprite->getPossessions()->homeLocation->addPopulation(newSprite);
-                /*
                 newSprite->getPossessions()->isRentalProperty = !!atoi(tokens[12].c_str());
                 newSprite->getPossessions()->isSqueezing = !!atoi(tokens[13].c_str());
                 newSprite->getPossessions()->rentalVisitsLeft = atoi(tokens[14].c_str());
                 
-                */
-                
-            }
+             
+            }*/
             /*
             newSprite->getPossessions()->hasJob = !!atoi(tokens[15].c_str());
             if (newSprite->getPossessions()->hasJob)
