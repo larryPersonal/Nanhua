@@ -40,7 +40,7 @@ private:
     CCLabelTTF* TitleLabel;
    
     
-    protected:
+protected:
     
     //General create menu
     virtual void createMenuItems();

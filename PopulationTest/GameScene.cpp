@@ -571,7 +571,7 @@ void GameScene::FirstRunPopulate()
         else
             GameManager::getThis()->UnlockAll();
     }
-    this->schedule(schedule_selector(GameScene::update), 1.0f/120.0f);
+    this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
     
     
 }
@@ -624,6 +624,9 @@ void GameScene::lostGame(cocos2d::CCObject *psender)
 bool GameScene::handleTouchSprite(CCPoint touchLoc)
 {
     CCArray* gameSprites = spriteHandler->spritesOnMap;
+    if(gameSprites == NULL){
+        return false;
+    }
     if (gameSprites->count() == 0) return false;
     for (int i = 0; i < gameSprites->count(); i++)
     {

@@ -68,7 +68,7 @@ bool GameHUD::init()
 
 void GameHUD::update(float deltaTime)
 {
-    gameTimer->updateTimer(deltaTime);
+    //gameTimer->updateTimer(deltaTime);
     
     if (curr_hint_show_time > 0)
         --curr_hint_show_time;
