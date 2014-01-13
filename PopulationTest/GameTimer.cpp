@@ -64,11 +64,13 @@ bool GameTimer::init()
     addChild(timeLabel);
     timeLabel->setString(timeString->getCString());
     
+    //this->schedule(schedule_selector(GameTimer::updateTimer), 1.0f/60.0f);
+    
     return true;
 }
 
 void GameTimer::updateTimer(float deltaTime){
-  //  CCLog("Hello World");
+
     timeElapsed += deltaTime;
     GameManager::getThis()->currentSecsElapsed = timeElapsed;
     
@@ -79,7 +81,7 @@ void GameTimer::updateTimer(float deltaTime){
     lastTime = timeElapsed;
     int secs = (int)timeElapsed;
     
-    currentDay = ((secs / secToDayRatio) % dayToWeekRatio) + initialDate;
+    currentDay++;// = ((secs / secToDayRatio) % dayToWeekRatio) + initialDate;
     currentWeek = secs/secToDayRatio/dayToWeekRatio%weekToMonthRatio + initialDate;
     currentMonth = secs/secToDayRatio/dayToWeekRatio/weekToMonthRatio%monthToYearRatio + initialDate;
     currentYear = secs/secToDayRatio/dayToWeekRatio/weekToMonthRatio/monthToYearRatio + initialDate;

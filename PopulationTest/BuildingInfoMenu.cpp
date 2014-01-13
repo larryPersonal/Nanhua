@@ -10,6 +10,7 @@
 #include "GameHUD.h"
 #include "GlobalHelper.h"
 #include "SpriteInfoMenu.h"
+#include "SelectPopulation.h"
 
 float portraitScale; //hack
 
@@ -227,7 +228,25 @@ void BuildingInfoMenu::createMenuItems()
         this->addChild(spritePopulationOverloadSlot.back());
     }
     
+    for (int i = 0; i < mBuildingVacancy + mBuildingOverload; i++)
+    {
+        std::string spriteName = "empty_profile.gif";
+        
+        CCMenuItemImage* menuItem = CCMenuItemImage::create(spriteName.c_str(), NULL, this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
+        
+        menuItem->setTag(i);
+        spritePopulation.push_back(menuItem);
+        
+        portraitScale = 40.0f / spritePopulation[i]->boundingBox().size.width;
+        
+        spritePopulation.back()->CCNode::setScale(portraitScale);
+        spritePopulation.back()->setAnchorPoint(ccp(-0.20, -0.25));
+        
+        menuItems->addObject(menuItem);
+        menu->addChild(menuItem);
+    }
     
+    /*
     for (int i = 0; i < mBuildingCurrPopulation; i++)
     {
         std::string spriteName = building->getPopulationAt(i)->spriteName + "_port.png";
@@ -245,6 +264,7 @@ void BuildingInfoMenu::createMenuItems()
         menuItems->addObject(menuItem);
         menu->addChild(menuItem);
     }
+    */
     
     reposition();
     this->schedule(schedule_selector(BuildingInfoMenu::update), 0.25f);
@@ -265,8 +285,13 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
             
         default:
         {
+            /*
             SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu((GameSprite*)pMenuItem->getTag());
             spriteInfoMenu->useAsTopmostPopupMenu();
+            */
+            
+            SelectPopulation* selectPopulationMenu = new SelectPopulation(this->building);
+            selectPopulationMenu->useAsTopmostPopupMenu();
         }
         break;
     }
@@ -299,8 +324,11 @@ void BuildingInfoMenu::reposition()
         spritePopulationSlot[i]->CCNode::setPosition(-halfWidth + 28.0f + (60.0f * i), -halfHeight + 28.0f);
     for (int i = 0; i < mBuildingOverload; i++)
         spritePopulationOverloadSlot[i]->CCNode::setPosition(-halfWidth + 28.0f + (60.0f * (i+mBuildingVacancy)), -halfHeight + 28.0f);
-    for (int i = 0; i < mBuildingCurrPopulation; i++)
+    
+    for (int i = 0; i < spritePopulation.size(); i++)
+    {
         spritePopulation[i]->CCNode::setPosition(-halfWidth + 28.0f + (60.0f * i), -halfHeight + 28.0f);
+    }
     
     // Scroll area in center
     scrollArea->CCNode::setPosition(spriteBackground->getPositionX() - 305,

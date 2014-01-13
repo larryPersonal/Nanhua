@@ -17,6 +17,22 @@ class PopupMenu:public cocos2d::CCLayer
 { 
 protected:
     
+    struct Rect
+    {
+        float width;
+        float height;
+        float left;
+        float top;
+        
+        void ini(float wid, float hei, float lef, float to)
+        {
+            width = wid;
+            height = hei;
+            left = lef;
+            top = to;
+        }
+    };
+    
     //Override anything that is = 0 in subclass please
     //This is protected, only call useAsPopupMenu() or useOverPopupMenu().
     virtual void createMenuItems() = 0;
