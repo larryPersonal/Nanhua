@@ -1,10 +1,9 @@
-function goWander()
-{
-    Wander()
-    return 1
-}
 function goBuild()
-{
-    GoBuild()
+    if (HasConstructingBuildings()) then
+    
+        GoBuild()
+    else
+        GoWander()
+    end
     return 1
-}
+end

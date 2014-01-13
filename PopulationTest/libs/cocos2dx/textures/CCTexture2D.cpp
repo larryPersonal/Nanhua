@@ -350,9 +350,10 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
             for(unsigned int i = 0; i < length; ++i)
             {
                 *outPixel16++ = 
-                (((((*inPixel8)++) & 0xFF) >> 3) << 11) |  // R
-                (((((*inPixel8)++) & 0xFF) >> 2) << 5)  |  // G
-                (((((*inPixel8)++) & 0xFF) >> 3) << 0);    // B
+
+                ((((*inPixel8 >> 0) & 0xFF) >> 3) << 11) |  // R
+                ((((*inPixel8 >> 8) & 0xFF) >> 2) << 5)  |  // G
+                ((((*inPixel8 >> 16) & 0xFF) >> 3) << 0);    // B
             }
         }    
     }

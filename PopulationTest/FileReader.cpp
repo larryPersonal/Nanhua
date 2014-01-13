@@ -21,7 +21,7 @@ FileReader::FileReader( string pFileName, char pMode ) {
     string thisLine, result, fullPath, contents;
     
     // Get absolute path of file
-    fullPath = CCFileUtils::sharedFileUtils( ) -> fullPathFromRelativePath( pFileName.c_str( ) );
+    fullPath = CCFileUtils::sharedFileUtils( ) -> fullPathForFilename( pFileName.c_str( ) );
     
     // Get data of file
     fileContents = CCFileUtils::sharedFileUtils( ) -> getFileData( fullPath.c_str( ) , "r", &fileSize );

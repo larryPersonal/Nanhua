@@ -1,5 +1,4 @@
 function goWander()
-{
-    Wander()
+    GoWander()
     return 1
-}
+end

@@ -22,6 +22,7 @@ private:
     
 public:
     
+    
     ConstructionHandler();
     ~ConstructionHandler();
     virtual void update(float deltaTime);
