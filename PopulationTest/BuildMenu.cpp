@@ -69,6 +69,7 @@ BuildMenu* BuildMenu::create()
 }*/
 void BuildMenu::createMenuItems()
 {
+
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     this->setTouchPriority(-129);
     /*build menu*/
@@ -399,15 +400,15 @@ void BuildMenu::createMenuItems()
         /*screw layering rules, I'm gonna handle it on my own*/
         tabItem->setEnabled(false);
 
-        if (menuItemArray[i]->count() == 0)
-        {
-            label->setColor(colorGrey);
+      //  if (menuItemArray[i]->count() == 0)
+       // {
+        //    label->setColor(colorGrey);
             
-        }
-        else
-        {
-            label->setColor(ccc3(111, 107, 50));
-        }
+        //}
+       // else
+       // {
+       //     label->setColor(ccc3(111, 107, 50));
+       // }
         label->setScale(1.0f / tabItem->getScale());
         label->CCNode::setPosition(tabItem->getContentSize().width / 2.0f, tabItem->getContentSize().height / 2.0f);
         tabItem->addChild(label);

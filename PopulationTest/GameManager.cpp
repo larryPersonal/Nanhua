@@ -167,19 +167,19 @@ void GameManager::initGameData()
     researchableBuildings->removeAllObjects();
 
     //Loaded game must be set from the main menu, if player chooses to continue game instead of starting a new game.
-    if (!loadedGame)
+   // if (!loadedGame)
         NewGameUnlocks();
-    else
-        loadGameData();
+   // else
+//        loadGameData();
 
     GameHUD::getThis()->updateMoneyLabel();
 
-    
-    
     // Init arrays of locked and unlocked buildings
     for (list<int>::iterator it = unlockedBuildingIDs.begin(); it != unlockedBuildingIDs.end(); it++)
+    {
+        CCLog("%d", (*it));
         unlockedBuildings->addObject(GameScene::getThis()->buildingHandler->getBuilding(*it));
-    
+    }
     for (list<int>::iterator it = researchableBuildingIDs.begin(); it != researchableBuildingIDs.end(); it++)
         researchableBuildings->addObject(GameScene::getThis()->buildingHandler->getBuilding(*it));
     
@@ -748,10 +748,11 @@ void GameManager::NewGameUnlocks()
             if (ResearchConditionsMet(b))
                 researchableBuildingIDs.push_back(b->ID);
         
+        /*
         if (UnlockConditionsMet(b))
         {
             unlockedBuildingIDs.push_back(b->ID);
-        }
+        }*/
         
     }
 }
