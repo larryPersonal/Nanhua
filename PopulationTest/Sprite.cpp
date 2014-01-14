@@ -1152,6 +1152,29 @@ bool GameSprite::PathToBuilding(int building_id)
 }
 
 /*Paths to a building under construction. Fails if there isn't a building under construction.*/
+bool GameSprite::GoBuild(Building *b)
+{
+    if (b->build_uint_current >= b->build_uint_required) return false; //already built
+    
+    this->nextAction = BUILD;
+    
+    CCPoint startPos = getWorldPosition();
+    CCPoint endPos = b->getWorldPosition();
+    
+    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+    
+    bool hasPath = CreatePath(startPos, endPos);
+    if (hasPath)
+    {
+        isFollowingMoveInstruction = true;
+        followPath();
+    }
+    
+    return hasPath;
+    
+}
+
 
 bool GameSprite::PathToBuild()
 {

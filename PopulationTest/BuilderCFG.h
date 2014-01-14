@@ -51,7 +51,7 @@ std::string builderConfig =
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
 "\"file_name\":\"builderbehavior.lua\","
-"\"func_name\":\"goBuild\""
+"\"func_name\":\"goWander\""
 "}]"
 "}]"
 "}";

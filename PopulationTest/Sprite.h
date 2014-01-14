@@ -204,6 +204,8 @@ public:
     bool PathToExit();
     bool PathToBuild();
     
+    bool GoBuild(Building *b);
+    
     
     //destinations shold always be buildings.
     bool isDestinationInRange(int buildingID);

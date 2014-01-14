@@ -1868,11 +1868,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "411302887.44998"
+            timestampString = "411357264.226986"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1259"
-            endingLineNumber = "1259"
+            startingLineNumber = "1282"
+            endingLineNumber = "1282"
             landmarkName = "GameSprite::ChangeSpriteTo(GameSprite *sp)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1884,11 +1884,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "411302887.44998"
+            timestampString = "411357264.226986"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1274"
-            endingLineNumber = "1274"
+            startingLineNumber = "1297"
+            endingLineNumber = "1297"
             landmarkName = "GameSprite::ReplaceSpriteRep()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1900,11 +1900,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "411302887.44998"
+            timestampString = "411357264.226986"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1267"
-            endingLineNumber = "1267">
+            startingLineNumber = "1290"
+            endingLineNumber = "1290">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
