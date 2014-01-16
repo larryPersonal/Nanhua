@@ -159,7 +159,7 @@ void SpriteHandler::initialize()
                 break;
             case 4:
                 targetGender = 'm';
-                fileName = "FMC";
+                fileName = "MMC";
                 targetIdleF = 4;
                 targetWalkF = 4;
             
