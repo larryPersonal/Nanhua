@@ -542,7 +542,7 @@ void GameScene::FirstRunPopulate()
         spriteHandler->addSpriteToMap(target, M_BUILDER);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, F_BUILDER);
+        spriteHandler->addSpriteToMap(target, M_BUILDER);
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, M_FARMER);
