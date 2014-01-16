@@ -198,8 +198,8 @@ void Building::ArriveHandler(GameSprite* sp)
 
     
     sp->setAction(sp->nextAction);
-
     
+    sp->setIsDoingJob(true);
     
     //if this isn't the character's job, home or an upgrade location, modify all stats based on building stats.
     //ModifyStats(sp);
@@ -209,34 +209,41 @@ void Building::ArriveHandler(GameSprite* sp)
    // sp->ChangeSpriteTo(GameScene::getThis()->spriteHandler->getSpriteByType(M_MAYAN_FARMER));
 }
 
-/* use this to determine what happens when a sprite spends an update cycle IDLE in the building. */
+// when a villager performs a task in a building, this will direct the villager's behavior
 void Building::StickAroundHandler(GameSprite *sp)
 {
+    // defensive programming (no villager)
     if (!sp) return;
-    if (this->build_uint_required > this->build_uint_current)
-    {
-        
-        if (sp->spriteClass.compare("builder") == 0)
-        {
-            
-            int workval = sp->getPossessions()->PerformTask();
-            if (workval > 0)
-       
-                this->build_uint_current += workval;
-            else
-            {
-                //TODO: sprite has run out of energy.
-                
-                //what do I want to do here? Meanwhile he keeps working even if he has no energy. Must go home and rest I think.
-            }
-            
-        }
-        
-        
-        return;
-        
-    }
     
+    // when villager's action is build and villager has a job of builder and villager is doing his/her job, trigger for the behavior
+    if(sp->currAction == BUILD && sp->getIsDoingJob() && sp->getJob() == BUILDER && sp->spriteClass.compare("builder") == 0)
+    {
+        // if the building is under construction, construct the building
+        if (this->build_uint_required > this->build_uint_current)
+        {
+            int workval = sp->getPossessions()->PerformTask();
+            
+            // workval > 0 means the construction is successful, so update the construction scale and the energy scale
+            if(workval > 0)
+            {
+                this->build_uint_current += workval;
+                sp->updateIdleDelay(1.0f);
+            }
+            else
+            // workval = 0, means the the villager is out of energy
+            {
+                
+            }
+        }
+        else
+        // the building has finished the construction process, the villagers will leave the building and become idle
+        {
+            sp->currAction = IDLE;
+            sp->setIsDoingJob(false);
+            sp->setJob(NONE);
+            sp->spriteClass = "builder";
+        }
+    }
     
     if (buildingType != HOUSING)
     {

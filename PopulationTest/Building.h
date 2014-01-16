@@ -53,6 +53,7 @@ public:
     CCSprite* buildingRep;
     BuildingCategory buildingType;
     int populationLimit;
+    int builderLimit;
     
     // for food, one for the current storage amount, the other for the limitation of storage.
     int currentStorage;

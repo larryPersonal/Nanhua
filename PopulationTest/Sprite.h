@@ -46,6 +46,8 @@ enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
 
 enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, ACTION_END = 10};
 
+enum SpriteJob { NONE = 0, BUILDER, GUARD, FARMER = 3 };
+
 class GameSprite: public CCObject
 {
 private:
@@ -96,6 +98,12 @@ private:
     bool shouldUpgrade;
     
     CCCallFuncN* callback;
+    
+    // jerry added
+    Building* jobLocation;
+    SpriteJob job;
+    bool isDoingJob;
+    
 public:
     
     /*unused*/
@@ -220,6 +228,18 @@ public:
 
     void CallbackDayPassed();
     void CallbackPerformingTask();
+    
+    // jerry added
+    SpriteJob getJob();
+    void setJob(SpriteJob);
+    
+    Building* getJobLocation();
+    void setJobLocation(Building*);
+    
+    bool getIsDoingJob();
+    void setIsDoingJob(bool);
+    
+    void updateIdleDelay(float delay);
 };
 
 

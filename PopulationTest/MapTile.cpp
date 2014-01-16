@@ -68,7 +68,7 @@ void MapTile::unpathHere()
 
 void MapTile::Build(Building *b)
 {
-   building = b;
+    building = b;
 }
 
 void MapTile::UnBuild()

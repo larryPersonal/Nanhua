@@ -662,6 +662,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         
         if (selectedTile->building)
         {
+            this->setTouchEnabled(false);
             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
          //   buildingInfoMenu->autorelease();
             buildingInfoMenu->useAsBasePopupMenu();
@@ -696,6 +697,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 if (selectedTile->building &&
                     selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc))
                 {
+                    this->setTouchEnabled(false);
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                    // buildingInfoMenu->autorelease();
                     buildingInfoMenu->useAsBasePopupMenu();

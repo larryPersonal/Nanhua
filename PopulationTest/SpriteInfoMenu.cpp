@@ -15,7 +15,6 @@ SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
 {
     if (!gameSprite) CCLog("Warning NO SPRITE!!!");
     this->gameSprite = gameSprite;
-    scrollArea = NULL;
     mGameSpriteEnergy = 0;
     mGameSpriteEnergyMax = 0;
     mGameSpriteCash = 0;
@@ -30,12 +29,6 @@ SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
 
 SpriteInfoMenu::~SpriteInfoMenu()
 {
-    
-    if (scrollArea != NULL)
-    {
-        delete scrollArea;
-        scrollArea = NULL;
-    }
 }
 
 void SpriteInfoMenu::createMenuItems()
@@ -64,72 +57,58 @@ void SpriteInfoMenu::createMenuItems()
     mGameSpriteExpMax = gameSprite->getPossessions()->getExpToLevel();
     
     // Create header
-    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(gameSprite->spriteDisplayedName).c_str(), "Droidiga", 32);
+    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(gameSprite->spriteDisplayedName).c_str(), "Droidiga", 32, CCSizeMake(gameSprite->spriteDisplayedName.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textName->setColor(colorYellow);
     
     // Cash
     spCash = CCSprite::create("money icon.png");
     spCash->setScale(0.75);
-    /*
-    labelCash = CCLabelTTF::create("CASH:", "Droidiga", 26);
+    
+    std::string tempStr = "CASH";
+    labelCash = CCLabelTTF::create(tempStr.c_str(), "Droidiga", 26, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelCash->setColor(colorYellow);
-    */
+    
     std::stringstream ss;
     ss << mGameSpriteCash << " G";
-    textCash = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
+    textCash = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textCash->setColor(colorYellow);
     
     // Sprite
     string spriteFrameName = gameSprite->spriteName.c_str();
     spriteFrameName += "_IDL001.png";
     gameSpriteImage = CCSprite::createWithSpriteFrameName(spriteFrameName.c_str());
-    gameSpriteImage->setScale(150.0f / gameSpriteImage->boundingBox().size.width);
+    gameSpriteImage->setScale(128.0f / gameSpriteImage->boundingBox().size.width);
     
     // Attribute labels
    
     ss.str(std::string());
     ss << "Skill Level: " << mGameSpriteEduLvl;
-    textEduLvl = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20);
-    textEduLvl->setColor(colorGreen);
+    textEduLvl = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    textEduLvl->setColor(colorBlack);
     
-    
-    spInt = CCSprite::create("intelligence icon.png");
-    spInt->setScale(0.75);
     spLoy = CCSprite::create("loyalty icon.png");
     spLoy->setScale(0.75);
-
-    spSoc = CCSprite::create("social icon.png");
-    spSoc->setScale(0.75);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->loyaltyRating;
+    loyaltyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    loyaltyLabel->setColor(colorBlack);
 
     spHap = CCSprite::create("happiness icon.png");
     spHap->setScale(0.75);
     
-    
-
-    // Attribute text
     ss.str(std::string());
-    ss << mGameSpriteInt/10;
-    textInt = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
-    textInt->setColor(colorGreen);
-    ss.str(std::string());
-    ss << mGameSpriteLoy/10;
-    textLoy = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
-    textLoy->setColor(colorGreen);
-    ss.str(std::string());
-    ss << mGameSpriteSoc/10;
-    textSoc = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
-    textSoc->setColor(colorGreen);
-    ss.str(std::string());
-    ss << mGameSpriteHap/10;
-    textHap = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
-    textHap->setColor(colorGreen);
+    ss << gameSprite->getPossessions()->happinessRating;
+    happinessLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    happinessLabel->setColor(colorBlack);
     
     // Exp
-    labelExp = CCLabelTTF::create("NEXT LEVEL", "Droidiga", 20);
+    tempStr = "NEXT LEVEL";
+    labelExp = CCLabelTTF::create(tempStr.c_str(), "Droidiga", 20, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelExp->setColor(colorBlack);
     ss.str(std::string());
     ss << mGameSpriteExp << "/" << mGameSpriteExpMax;
-    textExp = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20);
+    textExp = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textExp->setColor(colorBlack);
     
     barExp = new ProgressBar();
@@ -141,6 +120,18 @@ void SpriteInfoMenu::createMenuItems()
                               "loadingbar-full.png");
     barExp->setValue(mGameSpriteExp / (float)mGameSpriteExpMax);
     
+    // energty stats
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->energyRating << "/" << gameSprite->getPossessions()->defaultEnergy;
+    energyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    energyLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << "Energy:";
+    energyTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 30.0f, 5.0f), kCCTextAlignmentLeft);
+    energyTitleLabel->setColor(colorBlack);
+    
+    
     // Energy Bar
     barEnergy = new ProgressBar();
     barEnergy->createProgressBar(CCRectMake(0, 0, 160, 20),
@@ -150,6 +141,47 @@ void SpriteInfoMenu::createMenuItems()
                                  "loadingbar-right.png",
                                  "loadingbar-full.png");
     barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
+    
+    ss.str(std::string());
+    ss << "Class:";
+    classTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 30.0f, 5.0f), kCCTextAlignmentLeft);
+    classTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->spriteClass;
+    classLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 30.0f, 5.0f), kCCTextAlignmentLeft);
+    classLabel->setColor(colorBlack);
+    
+    // stats
+    ss.str(std::string());
+    ss << "Gender:";
+    genderTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    genderTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->gender;
+    genderLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    genderLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << "Race:";
+    raceTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    raceTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->race;
+    raceLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    raceLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << "MS:";
+    movementSpeedTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementSpeedTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->movementSpeed;
+    movementSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementSpeedLabel->setColor(colorBlack);
     
     // Menu items
     menuItems = CCArray::create();
@@ -177,50 +209,78 @@ void SpriteInfoMenu::createMenuItems()
     CCMenu* menu = CCMenu::createWithArray(menuItems);
     menu->setPosition(CCPointZero);
     
-    // Scroll Area
-    scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(610, 275), CCSizeMake(610, 275));
-    scrollArea->enableScrollVertical(10, "bar.png", "bar.png");
-    scrollArea->hideScroll();
-    scrollArea->addItem(barEnergy, ccp(80, 20));
-    scrollArea->addItem(gameSpriteImage, ccp(90, 25));
-    scrollArea->addItem(textEduLvl, ccp(70, 175));
-    scrollArea->addItem(spInt, ccp(405, 25));
-    scrollArea->addItem(spLoy, ccp(405, 75));
-    scrollArea->addItem(spSoc, ccp(405, 125));
-    scrollArea->addItem(spHap, ccp(405, 175));
-    scrollArea->addItem(textInt, ccp(505, 40));
-    scrollArea->addItem(textLoy, ccp(505, 90));
-    scrollArea->addItem(textSoc, ccp(505, 140));
-    scrollArea->addItem(textHap, ccp(505, 190));
-    scrollArea->addItem(labelExp, ccp(35, 225));
-    scrollArea->addItem(barExp, ccp(170, 225));
-    scrollArea->addItem(textExp, ccp(260, 225));
-    
-    
-    scrollArea->updateScrollBars();
-    
     // Add children
     this->addChild(spriteBackground);
     this->addChild(spriteBackgroundInner);
     this->addChild(spCash);
+    this->addChild(labelCash);
     this->addChild(textName);
     this->addChild(textCash);
     this->addChild(menu);
     
-    this->addChild(scrollArea);
+    this->addChild(barEnergy);
+    this->addChild(energyLabel);
+    this->addChild(energyTitleLabel);
+    
+    this->addChild(classLabel);
+    this->addChild(classTitleLabel);
+    
+    this->addChild(gameSpriteImage);
+    this->addChild(textEduLvl);
+    
+    this->addChild(labelExp);
+    this->addChild(textExp);
+    this->addChild(barExp);
+    
+    this->addChild(genderLabel);
+    this->addChild(genderTitleLabel);
+    this->addChild(raceLabel);
+    this->addChild(raceTitleLabel);
+    this->addChild(movementSpeedLabel);
+    this->addChild(movementSpeedTitleLabel);
+    
+    this->addChild(spLoy);
+    this->addChild(loyaltyLabel);
+    this->addChild(spHap);
+    this->addChild(happinessLabel);
     
     // Done creation, now position them
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     textName->setAnchorPoint(ccp(0.5, 1));
     spCash->setAnchorPoint(ccp(1, 0));
+    labelCash->setAnchorPoint(ccp(1, 0));
     textCash->setAnchorPoint(ccp(1, 0));
-    scrollArea->setAnchorPoint(ccp(0.5, 0.5));
     buttonClose->setAnchorPoint(ccp(1, 1));
     
     buttonHome->setAnchorPoint(ccp(1, 1));
     
     buttonWorkPlace->setAnchorPoint(ccp(1, 1));
+    
+    barEnergy->setAnchorPoint(ccp(0, 1));
+    energyLabel->setAnchorPoint(ccp(0, 1));
+    energyTitleLabel->setAnchorPoint(ccp(0, 1));
+    
+    classLabel->setAnchorPoint(ccp(0, 1));
+    classTitleLabel->setAnchorPoint(ccp(0, 1));
+    
+    gameSpriteImage->setAnchorPoint(ccp(0, 1));
+    textEduLvl->setAnchorPoint(ccp(0, 1));
+    
+    labelExp->setAnchorPoint(ccp(0, 1));
+    textExp->setAnchorPoint(ccp(0, 1));
+    barExp->setAnchorPoint(ccp(0, 1));
+    
+    genderLabel->setAnchorPoint(ccp(0, 1));
+    genderTitleLabel->setAnchorPoint(ccp(0, 1));
+    raceLabel->setAnchorPoint(ccp(0, 1));
+    raceTitleLabel->setAnchorPoint(ccp(0, 1));
+    movementSpeedLabel->setAnchorPoint(ccp(0, 1));
+    movementSpeedTitleLabel->setAnchorPoint(ccp(0, 1));
+    
+    spLoy->setAnchorPoint(ccp(0, 1));
+    loyaltyLabel->setAnchorPoint(ccp(0, 1));
+    spHap->setAnchorPoint(ccp(0, 1));
+    happinessLabel->setAnchorPoint(ccp(0, 1));
     
     reposition();
     
@@ -289,6 +349,34 @@ void SpriteInfoMenu::reposition()
     float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
     
+    // Anchored top left
+    barEnergy->CCNode::setPosition(-140.0f, 140.0f);
+    energyLabel->CCNode::setPosition(-140.0f, 160.0f);
+    energyTitleLabel->CCNode::setPosition(-280.0f, 156.0f);
+    
+    classTitleLabel->CCNode::setPosition(60.0f, 156.0f);
+    classLabel->CCNode::setPosition(160.0f, 156.0f);
+    
+    gameSpriteImage->CCNode::setPosition(-195.0f, 100.0f);
+    textEduLvl->CCNode::setPosition(-210.0f, -20.0f);
+    
+    labelExp->CCNode::setPosition(-200.0f, -50.0f);
+    barExp->CCNode::setPosition(-200.0f, -80.0f);
+    textExp->CCNode::setPosition(-110.0f, -80.0f);
+    
+    genderTitleLabel->CCNode::setPosition(120.0f, 80.0f);
+    genderLabel->CCNode::setPosition(240.0f, 80.0f);
+    raceTitleLabel->CCNode::setPosition(120.0f, 30.0f);
+    raceLabel->CCNode::setPosition(240.0f, 30.0f);
+    movementSpeedTitleLabel->CCNode::setPosition(120.0f, -10.0f);
+    movementSpeedLabel->CCNode::setPosition(240.0f, -10.0f);
+    
+    spLoy->CCNode::setPosition(120.0f, -35.0f);
+    loyaltyLabel->CCNode::setPosition(240.0f, -50.0f);
+    spHap->CCNode::setPosition(120.0f, -75.0f);
+    happinessLabel->CCNode::setPosition(240.0f, -90.0f);
+    
+    
     // Anchored top
     textName->CCNode::setPosition(0, halfHeight - 40.0f);
     
@@ -299,13 +387,9 @@ void SpriteInfoMenu::reposition()
     
     
     // Anchored bottom right
-    textCash->CCNode::setPosition(halfWidth - 55.0f, -halfHeight + 40.0f);
-    spCash->CCNode::setPosition(halfWidth - 150.0f, -halfHeight + 40.0f);
-    
-    // Scroll area in center
-    scrollArea->CCNode::setPosition(spriteBackground->getPositionX() - 305,
-                                    spriteBackground->getPositionY() - 150);
-    scrollArea->reposition();
+    textCash->CCNode::setPosition(halfWidth - 25.0f, -halfHeight + 40.0f);
+    labelCash->CCNode::setPosition(halfWidth - 120.0f, -halfHeight + 40.0f);
+    spCash->CCNode::setPosition(halfWidth - 200.0f, -halfHeight + 40.0f);
 }
 
 void SpriteInfoMenu::refreshAllMenuItemValues()
@@ -367,7 +451,7 @@ void SpriteInfoMenu::refreshAllMenuItemValues()
         mGameSpriteHap = gameSprite->getPossessions()->happinessRating;
         ss.str(std::string());
         ss << mGameSpriteHap/10;
-        textHap->setString(ss.str().c_str());
+        //textHap->setString(ss.str().c_str());
     }
     
     if (mGameSpriteExp != gameSprite->getPossessions()->expRating)

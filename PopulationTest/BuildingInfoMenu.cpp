@@ -89,12 +89,8 @@ void BuildingInfoMenu::createMenuItems()
     textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Droidiga", 32);
     textName->setColor(colorYellow);
     
-    spInt = CCSprite::create("intelligence icon.png");
-    spInt->setScale(0.75);
     spLoy = CCSprite::create("loyalty icon.png");
     spLoy->setScale(0.75);
-    spSoc = CCSprite::create("social icon.png");
-    spSoc->setScale(0.75);
     spHap = CCSprite::create("happiness icon.png");
     spHap->setScale(0.75);
     spPrice = CCSprite::create("money icon.png");
@@ -104,12 +100,8 @@ void BuildingInfoMenu::createMenuItems()
     spCash->setScale(0.75);
     
     /*
-    textInt = CCLabelTTF::create(GlobalHelper::Convert(building->int_mod).c_str(), "Droidiga", 26);
-    textInt->setColor(colorGreen);
     textLoy = CCLabelTTF::create(GlobalHelper::Convert(building->loyalty_mod).c_str(), "Droidiga", 26);
     textLoy->setColor(colorGreen);
-    textSoc = CCLabelTTF::create(GlobalHelper::Convert(building->social_mod).c_str(), "Droidiga", 26);
-    textSoc->setColor(colorGreen);
     textHap = CCLabelTTF::create(GlobalHelper::Convert(building->happiness_mod).c_str(), "Droidiga", 26);
     textHap->setColor(colorGreen);
     
@@ -132,15 +124,32 @@ void BuildingInfoMenu::createMenuItems()
     // Attribute labels
     ss.str(std::string());
     ss << "Level: " << mBuildingLevel;
-    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
+    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelLevel->setColor(colorGreen);
     // Exp
-    labelExp = CCLabelTTF::create("NEXT LEVEL", "Droidiga", 20);
+    labelExp = CCLabelTTF::create("NEXT LEVEL", "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelExp->setColor(colorBlack);
     ss.str(std::string());
     ss << mBuildingExp << "/" << mBuildingExpMax;
-    textExp = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20);
+    textExp = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textExp->setColor(colorBlack);
+    
+    ss.str(std::string());
+    if(building->build_uint_current < building->build_uint_required)
+    {
+        ss << "Under construction!";
+    }
+    else
+    {
+        ss << "Ready for service";
+    }
+    labelStatus = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelStatus->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << building->build_uint_current << "/" << building->build_uint_required;
+    unitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    unitLabel->setColor(colorBlack);
     
     barExp = new ProgressBar();
     barExp->createProgressBar(CCRectMake(0, 0, 80, 20),
@@ -150,6 +159,17 @@ void BuildingInfoMenu::createMenuItems()
                               "loadingbar-right.png",
                               "loadingbar-full.png");
     barExp->setValue(mBuildingExp / (float)mBuildingExpMax);
+    
+    unitBar = new ProgressBar();
+    unitBar->createProgressBar(
+                               CCRectMake(0, 0, 80, 20),
+                               CCRectMake(5, 5, 70, 10),
+                               "loadingbar-empty.png",
+                               "loadingbar-left.png",
+                               "loadingbar-right.png",
+                               "loadingbar-full.png"
+    );
+    unitBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
     
     // Menu items
     menuItems = CCArray::create();
@@ -166,33 +186,6 @@ void BuildingInfoMenu::createMenuItems()
     menu = CCMenu::createWithArray(menuItems);
     menu->setPosition(CCPointZero);
     
-    // Scroll Area
-    scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(610, 300), CCSizeMake(610, 300));
-    scrollArea->enableScrollVertical(10, "bar.png", "bar.png");
-    scrollArea->hideScroll();
-    
-    scrollArea->addItem(spriteBuilding, ccp(105, 45));
-    scrollArea->addItem(spInt, ccp(405, 45));
-    scrollArea->addItem(spLoy, ccp(405, 95));
-    scrollArea->addItem(spSoc, ccp(405, 145));
-    scrollArea->addItem(spHap, ccp(405, 195));
-    //scrollArea->addItem(textInt, ccp(505, 60));
-    //scrollArea->addItem(textLoy, ccp(505, 110));
-    //scrollArea->addItem(textSoc, ccp(505, 160));
-    //scrollArea->addItem(textHap, ccp(505, 210));
-
-    if (building->buildingType == COMMERCE)
-    {
-        scrollArea->addItem(spCash, ccp(405, 245));
-        scrollArea->addItem(textCashMod , ccp(505, 260));
-    }
-    scrollArea->addItem(labelLevel, ccp(50, 195));
-    scrollArea->addItem(labelExp, ccp(35, 245));
-    scrollArea->addItem(barExp, ccp(170, 245));
-    scrollArea->addItem(textExp, ccp(260, 245));
-    scrollArea->updateScrollBars();
-    
     // Add children
     this->addChild(spriteBackground);
     this->addChild(spriteBackgroundInner);
@@ -200,17 +193,32 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(textName);
     this->addChild(textPrice);
     this->addChild(menu, 3);
-    this->addChild(scrollArea);
-    //this->addChild(spriteGy);
+    
+    this->addChild(spriteBuilding);
+    this->addChild(labelLevel);
+    this->addChild(barExp);
+    this->addChild(textExp);
+    
+    this->addChild(labelStatus);
+    this->addChild(unitBar);
+    this->addChild(unitLabel);
     
     // Done creation, now position them
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     textName->setAnchorPoint(ccp(0.5, 1));
     spPrice->setAnchorPoint(ccp(1, 0));
     textPrice->setAnchorPoint(ccp(1, 0));
-    scrollArea->setAnchorPoint(ccp(0.5, 0.5));
     buttonClose->setAnchorPoint(ccp(1, 1));
-    //spriteGy->setAnchorPoint(ccp(0.5, 0.5));
+    
+    spriteBuilding->setAnchorPoint(ccp(0, 1));
+    labelLevel->setAnchorPoint(ccp(0, 1));
+    labelExp->setAnchorPoint(ccp(0, 1));
+    textExp->setAnchorPoint(ccp(0, 1));
+    barExp->setAnchorPoint(ccp(0, 1));
+    
+    labelStatus->setAnchorPoint(ccp(0, 1));
+    unitBar->setAnchorPoint(ccp(0, 1));
+    unitLabel->setAnchorPoint(ccp(0, 1));
     
     // Create population icons
     for (int i = 0; i < mBuildingVacancy; i++)
@@ -280,6 +288,7 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
         {
             // buttonClose
             this->closeMenu(true);
+            GameScene::getThis()->setTouchEnabled(true);
         }
         break;
             
@@ -290,7 +299,8 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
             spriteInfoMenu->useAsTopmostPopupMenu();
             */
             
-            SelectPopulation* selectPopulationMenu = new SelectPopulation(this->building);
+            //SelectPopulation* selectPopulationMenu = new SelectPopulation(this->building);
+            SelectPopulation* selectPopulationMenu = SelectPopulation::create(this->building);
             selectPopulationMenu->useAsTopmostPopupMenu();
         }
         break;
@@ -308,6 +318,16 @@ void BuildingInfoMenu::reposition()
     
     float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+    
+    // Anchored top left
+    spriteBuilding->CCNode::setPosition(-195.0f, 100.0f);
+    labelLevel->CCNode::setPosition(-250.0f, -50.0f);
+    barExp->CCNode::setPosition(-250.0f, -80.0f);
+    textExp->CCNode::setPosition(-250.0f + barExp->boundingBox().size.width + 10.0f, -80.0f);
+    
+    labelStatus->CCNode::setPosition(60.0f, 60.0f);
+    unitBar->CCNode::setPosition(60.0f, 0);
+    unitLabel->CCNode::setPosition(160.0f, 0);
     
     // Anchored top
     textName->CCNode::setPosition(0, halfHeight - 40.0f);
@@ -329,13 +349,6 @@ void BuildingInfoMenu::reposition()
     {
         spritePopulation[i]->CCNode::setPosition(-halfWidth + 28.0f + (60.0f * i), -halfHeight + 28.0f);
     }
-    
-    // Scroll area in center
-    scrollArea->CCNode::setPosition(spriteBackground->getPositionX() - 305,
-                                    spriteBackground->getPositionY() - 150);
-    scrollArea->reposition();
-    
-    //spriteGy->CCNode::setPosition(spriteBackground->getPositionX(), spriteBackground->getPositionY());
 }
 
 void BuildingInfoMenu::refreshAllMenuItemValues()

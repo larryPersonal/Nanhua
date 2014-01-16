@@ -23,7 +23,8 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
@@ -49,6 +50,7 @@
    <properties>
     <property name="build_time" value="10"/>
     <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="A house with a thatched roof"/>
@@ -73,7 +75,8 @@
   <tile id="2">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="250"/>
     <property name="description" value="A house infused with Alien technology"/>
@@ -99,7 +102,8 @@
   <tile id="3">
    <properties>
     <property name="build_time" value="15"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="education"/>
     <property name="cost" value="150"/>
     <property name="description" value="A stone tablet store selling stone tablets of Alien Knowledge"/>
@@ -125,7 +129,8 @@
   <tile id="4">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="education"/>
     <property name="cost" value="300"/>
     <property name="description" value="Observatory of the Oracles to view the stars"/>
@@ -152,6 +157,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="200"/>
     <property name="description" value="Barn"/>
@@ -178,6 +184,7 @@
    <properties>
     <property name="build_time" value="10"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="granary"/>
     <property name="cost" value="100"/>
     <property name="description" value="Farming bees for honey"/>
@@ -203,6 +210,7 @@
    <properties>
     <property name="build_time" value="15"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="120"/>
     <property name="description" value="A place for people to socialize"/>
@@ -228,6 +236,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="200"/>
     <property name="description" value="Refine honey from bee farms"/>
@@ -253,6 +262,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="education"/>
     <property name="cost" value="200"/>
     <property name="description" value="Library of Stone Tablets for Knowledge"/>
@@ -278,6 +288,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="120"/>
     <property name="description" value="process lumber and produce lumber"/>
@@ -303,6 +314,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="120"/>
     <property name="description" value="making pots"/>
@@ -328,6 +340,7 @@
    <properties>
     <property name="build_time" value="45"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="150"/>
     <property name="description" value="Sculpting stones from the quarry"/>
@@ -353,6 +366,7 @@
    <properties>
     <property name="build_time" value="15"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Quarry for mining stones and granite"/>
@@ -378,6 +392,7 @@
    <properties>
     <property name="build_time" value="15"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="120"/>
     <property name="description" value="refine stones for other places to use"/>
@@ -403,6 +418,7 @@
    <properties>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="250"/>
     <property name="description" value="refine wine from fruit orchards"/>
@@ -452,6 +468,7 @@
    <properties>
     <property name="build_time" value="45"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="500"/>
     <property name="description" value="A Majestic statue that bonds the civilization"/>
@@ -477,6 +494,7 @@
    <properties>
     <property name="build_time" value=""/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="special"/>
     <property name="cost" value="20000"/>
     <property name="description" value="All Mayans and otherwise are born from here. "/>
@@ -502,6 +520,7 @@
    <properties>
     <property name="build_time" value="45"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="450"/>
     <property name="description" value="Alien mansion, used by high class."/>
@@ -528,6 +547,7 @@
    <properties>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="500"/>
     <property name="description" value="A Quarry filled with glowing minerals used by Alien technology"/>
@@ -553,6 +573,7 @@
    <properties>
     <property name="build_time" value="15"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="An Alien Dormitory for mass reside"/>
@@ -578,6 +599,7 @@
    <properties>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="750"/>
     <property name="description" value="Grand Fortress"/>
@@ -603,6 +625,7 @@
    <properties>
     <property name="build_time" value="45"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="1000"/>
     <property name="description" value="Drama for everyone!"/>
@@ -628,6 +651,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="400"/>
     <property name="description" value="The new, improved and bigger bee farms"/>
@@ -653,6 +677,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="200"/>
     <property name="description" value="Guarding outpost"/>
@@ -678,6 +703,7 @@
    <properties>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="350"/>
     <property name="description" value="a better stone house"/>
@@ -703,6 +729,7 @@
    <properties>
     <property name="build_time" value="45"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="500"/>
     <property name="description" value="bigger mansion but yet save space, amazing space warping alien technology"/>
@@ -728,6 +755,7 @@
    <properties>
     <property name="build_time" value="60"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="750"/>
     <property name="description" value="a new better mansion"/>
@@ -753,6 +781,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="commerce"/>
     <property name="cost" value="500"/>
     <property name="description" value="Marketplace for all sorts of trading to occur"/>
@@ -778,6 +807,7 @@
    <properties>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="250"/>
     <property name="description" value="resting shed"/>
@@ -817,6 +847,7 @@
    <properties>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
@@ -871,6 +902,7 @@
    <properties>
     <property name="build_time" value="60"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="1000"/>
     <property name="description" value="The HQ for military activities"/>
@@ -896,6 +928,7 @@
    <properties>
     <property name="build_time" value="90"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="1500"/>
     <property name="description" value="A place for the games to occur"/>
@@ -921,6 +954,7 @@
    <properties>
     <property name="build_time" value="60"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="Special"/>
     <property name="cost" value="5000"/>
     <property name="description" value="Alien conversion machine to allow Aliens to be converted into Mayans and enjoy Mayan privileges"/>
@@ -946,6 +980,7 @@
    <properties>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="750"/>
     <property name="description" value="Ball court for socializing"/>
@@ -971,6 +1006,7 @@
    <properties>
     <property name="build_time" value="90"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="800"/>
     <property name="description" value="Alien Palace"/>
@@ -996,6 +1032,7 @@
    <properties>
     <property name="build_time" value="90"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="1200"/>
     <property name="description" value="Mayan Palace"/>
@@ -1046,6 +1083,7 @@
    <properties>
     <property name="build_time" value="120"/>
     <property name="build_uint_required" value="0"/>
+    <property name="builder_limit" value="3"/>
     <property name="building_type" value="social"/>
     <property name="cost" value="3000"/>
     <property name="description" value="All citizens can vist and have fun at this zoo"/>

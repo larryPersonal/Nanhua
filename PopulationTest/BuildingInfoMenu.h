@@ -49,9 +49,7 @@ private:
     vector<CCMenuItemImage*> spritePopulation;
     
     CCSprite* spPrice;
-    CCSprite* spInt;
     CCSprite* spLoy;
-    CCSprite* spSoc;
     CCSprite* spHap;
     CCSprite* spCash;
     
@@ -60,10 +58,7 @@ private:
 /*
     CCLabelTTF* labelPrice;
  
-    
-    CCLabelTTF* labelInt;
     CCLabelTTF* labelLoy;
-    CCLabelTTF* labelSoc;
     CCLabelTTF* labelHap;
   */  
     CCLabelTTF* textName;
@@ -71,18 +66,17 @@ private:
     CCLabelTTF* textExp;
 
     ProgressBar* barExp;
+    ProgressBar* unitBar;
     
-    
-    CCLabelTTF* textInt;
     CCLabelTTF* textLoy;
-    CCLabelTTF* textSoc;
     CCLabelTTF* textHap;
     
     CCLabelTTF* textCashMod;
     
-    CCMenuItemImage* buttonClose;
+    CCLabelTTF* labelStatus;
+    CCLabelTTF* unitLabel;
     
-    ScrollArea* scrollArea;
+    CCMenuItemImage* buttonClose;
     
     CCMenu* menu;
     

@@ -582,7 +582,8 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
             }
         }
         
-
+        cloneBuilding->build_uint_current = cloneBuilding->build_uint_required;
+        
         GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
     }
     else

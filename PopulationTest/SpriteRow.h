@@ -11,7 +11,9 @@
 
 #include "cocos2d.h"
 #include "Sprite.h"
+#include "Building.h"
 #include "ScrollArea.h"
+#include "ProgressBar.h"
 using namespace cocos2d;
 
 class SpriteRow : CCObject
@@ -19,38 +21,55 @@ class SpriteRow : CCObject
 private:
     CCSprite* villagerImage;
     CCLabelTTF* villagerNameLabel;
-    CCLabelTTF* villagerGenderLabel;
+    //CCLabelTTF* villagerGenderLabel;
     
-    CCLabelTTF* villagerIntLabel;
-    CCLabelTTF* villagerLoyLabel;
-    CCLabelTTF* villagerSocLabel;
-    CCLabelTTF* villagerHapLabel;
+    //CCLabelTTF* villagerLoyLabel;
+    //CCLabelTTF* villagerHapLabel;
+    
+    //CCLabelTTF* villagerLevelLabel;
+    //CCLabelTTF* movementSpeedLabel;
+    
+    ProgressBar* villagerEnergyBar;
+    CCLabelTTF* villagerEnergyLabel;
+    
+    CCLabelTTF* actionLabel;
+    CCLabelTTF* isDongingJobLabel;
+    CCLabelTTF* jobLabel;
     
     CCMenuItemImage* villagerSelectButton;
+    CCMenuItemImage* villagerCancelButton;
     
     GameSprite* gameSprite;
     ScrollArea* scrollArea;
-    
+    Building* building;
     int index;
     
+    CCArray* menuItems;
+    CCPointArray* menuItemPositions;
+    CCMenu* menu;
+    
 public:
-    SpriteRow(GameSprite*, ScrollArea*, int);
+    SpriteRow(GameSprite*, ScrollArea*, Building*, int);
     ~SpriteRow();
     
-    static SpriteRow* create(GameSprite*, ScrollArea*, int);
+    static SpriteRow* create(GameSprite*, ScrollArea*, Building*, int);
     
     void init();
-    void clear();
     
     CCSprite* getVillagerImage();
     CCLabelTTF* getVillagerNameLabel();
     CCLabelTTF* getVillagerGenderLabel();
-    CCLabelTTF* getVillagerIntLabel();
     CCLabelTTF* getVillagerLoyLabel();
-    CCLabelTTF* getVillagerSocLabel();
     CCLabelTTF* getVillagerHapLabel();
     
     CCMenuItemImage* getVillagerSelectButton();
+    
+    void construction();
+    void doJob();
+    void cancelJob();
+    
+    std::string getJobString(SpriteJob);
+    std::string getActionString(SpriteAction);
 };
 
 #endif

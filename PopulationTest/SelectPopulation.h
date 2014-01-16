@@ -20,24 +20,6 @@ using namespace cocos2d::extension;
 
 using namespace std;
 
-/*
-struct Rect
-{
-    float width;
-    float height;
-    float left;
-    float top;
-    
-    void ini(float wid, float hei, float lef, float to)
-    {
-        width = wid;
-        height = hei;
-        left = lef;
-        top = to;
-    }
-};
-*/
-
 class SelectPopulation: public PopupMenu
 {
 
@@ -58,18 +40,18 @@ private:
     CCArray* spriteRowArray;
     
     // stats graphics
-    CCSprite* spInt;
+    //CCSprite* spInt;
     CCSprite* spLoy;
-    CCSprite* spSoc;
+    //CCSprite* spSoc;
     CCSprite* spHap;
     
     // labels
     CCLabelTTF* labelBuildingName;
     CCLabelTTF* labelBuildingLevel;
     
-    CCLabelTTF* labelTextInt;
+    //CCLabelTTF* labelTextInt;
     CCLabelTTF* labelTextLoy;
-    CCLabelTTF* labelTextSoc;
+    //CCLabelTTF* labelTextSoc;
     CCLabelTTF* labelTextHap;
     
     // sprite row header
@@ -78,13 +60,18 @@ private:
     
     ScrollArea* scrollArea;
     
+    ProgressBar* progressBar;
+    CCLabelTTF* progressBarLabel;
+    
     CCMenu* menu;
     
 protected:
     virtual void createMenuItems();
     
 public:
+    static SelectPopulation* SP;
     static SelectPopulation* create(Building* building);
+    static SelectPopulation* getThis();
     virtual void cleanup();
     
     virtual ~SelectPopulation();
@@ -99,7 +86,6 @@ public:
     
     //Public function
     void reposition();
-    void clear();
     //void refreshAllMenuItemValues();
     
     //Update

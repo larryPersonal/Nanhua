@@ -53,6 +53,10 @@ GameSprite::GameSprite()
     idleDelay = 0.0f;
     fdaysLeft = 0.0f;
     
+    jobLocation = NULL;
+    job = NONE;
+    isDoingJob = false;
+    
 }
 
 
@@ -687,6 +691,8 @@ void GameSprite::updateSprite(float dt)
   
     //After this part, only functions relating to IDLE will be called. This is because WALKING already has its own function calls.
 
+    
+    
     if (idleDelay > 0.0f)
     {
         if (idleDelay > dt)
@@ -697,7 +703,13 @@ void GameSprite::updateSprite(float dt)
     }
     else
     {
-      
+        if(isDoingJob)
+        {
+            if(jobLocation != NULL)
+            {
+                jobLocation->StickAroundHandler(this);
+            }
+        }
         
         if (currAction != IDLE) return;
      
@@ -723,16 +735,16 @@ void GameSprite::updateSprite(float dt)
             
         }
         //todo: make sure this is not called every frame the sprite remains idle in the building.
+        /*
         if (currTile != NULL)
         {
             if (currTile->building)
             {
                 currTile->building->StickAroundHandler(this);
-           }
-            
-        
-        
+            }
         }
+        */
+        
       
 
         
@@ -1437,3 +1449,37 @@ void GameSprite::CallbackPerformingTask()
     
 }
 
+SpriteJob GameSprite::getJob()
+{
+    return job;
+}
+
+void GameSprite::setJob(SpriteJob job)
+{
+    this->job = job;
+}
+
+Building* GameSprite::getJobLocation()
+{
+    return jobLocation;
+}
+
+void GameSprite::setJobLocation(Building* building)
+{
+    jobLocation = building;
+}
+
+bool GameSprite::getIsDoingJob()
+{
+    return isDoingJob;
+}
+
+void GameSprite::setIsDoingJob(bool isDoingJob)
+{
+    this->isDoingJob = isDoingJob;
+}
+
+void GameSprite::updateIdleDelay(float delay)
+{
+    this->idleDelay = delay;
+}

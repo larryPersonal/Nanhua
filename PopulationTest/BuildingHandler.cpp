@@ -234,6 +234,17 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                         b->populationLimit = 0;
                     
+                    currProperty = properties->valueForKey("builder_limit");
+                    if(currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("builder_limit")->getCString());
+                        b->builderLimit = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->builderLimit = 0;
+                    }
+                    
                     // for storage
                     currProperty = properties->valueForKey("storage");
                     if (currProperty)
@@ -264,12 +275,12 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     {
                         CCString* cost = CCStringMake(properties->valueForKey("build_uint_required")->getCString());
                         b->build_uint_required = atoi(cost->getCString());
+                        
                     }
                     else
                     {
                         b->build_uint_required = 0;
                     }
-                    
                     
                     // Example format in Tiled: (level_exp_req) 100, 120, 140, 160, 0
                     currProperty = properties->valueForKey("level_exp_req");
@@ -467,6 +478,11 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         if (build->length() > 0)
                         {
                             b->build_uint_required = atoi(build->getCString());
+                            
+                            // construct all buldings at the initialization.
+                            // PS: for this approach, unconstruct building is not possible at the begining of the game.
+                            b->build_uint_current = b->build_uint_required;
+
                         }
                         else
                             b->build_uint_required = 0;
@@ -482,7 +498,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     b->buildingDesc=  "You forgot to set a property somewhere";
                     b->buildingCost = 9999.0f;
                     b->buildingBuyPrice = 9999.0f;
-                   b->buildingType = BUILDINGCATEGORYMAX;
+                    b->buildingType = BUILDINGCATEGORYMAX;
                     b->populationLimit = 0;
                     b->build_uint_required = 0;
                   //  b->populationOverload = 0;

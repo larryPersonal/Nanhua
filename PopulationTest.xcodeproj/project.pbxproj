@@ -392,8 +392,12 @@
 		36FE13B816F1BA3000AB0528 /* BuildMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FE13B716F1BA3000AB0528 /* BuildMenu.cpp */; };
 		36FE13BB16F1BE2800AB0528 /* PopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FE13B916F1BE2800AB0528 /* PopupMenu.cpp */; };
 		36FFC1D216F029B30045C11F /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FFC1D116F029B30045C11F /* Building.cpp */; };
+		841845211884DF9000895275 /* job.png in Resources */ = {isa = PBXBuildFile; fileRef = 8418451F1884DF9000895275 /* job.png */; };
+		841845221884DF9000895275 /* construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 841845201884DF9000895275 /* construction.png */; };
+		841845241884FC5A00895275 /* dismiss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841845231884FC5A00895275 /* dismiss.jpg */; };
 		84315337187CFA8200F5B5E2 /* blue square.png in Resources */ = {isa = PBXBuildFile; fileRef = 84315336187CFA8200F5B5E2 /* blue square.png */; };
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
+		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
 		8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8489ADA9175C96C1004CCB84 /* GameData.plist */; };
 		848BD5B31754A59000D5346A /* PopulationMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848BD5B11754A58F00D5346A /* PopulationMenu.cpp */; };
 		848BD5B61754A65000D5346A /* InfoMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848BD5B41754A65000D5346A /* InfoMenu.cpp */; };
@@ -1144,9 +1148,13 @@
 		36FE13BA16F1BE2800AB0528 /* PopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenu.h; sourceTree = "<group>"; };
 		36FFC1D016F029A60045C11F /* Building.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		36FFC1D116F029B30045C11F /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
+		8418451F1884DF9000895275 /* job.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = job.png; sourceTree = "<group>"; };
+		841845201884DF9000895275 /* construction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = construction.png; sourceTree = "<group>"; };
+		841845231884FC5A00895275 /* dismiss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dismiss.jpg; sourceTree = "<group>"; };
 		84315336187CFA8200F5B5E2 /* blue square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue square.png"; sourceTree = "<group>"; };
 		843AFFB8187FE7DD0053546B /* SelectPopulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPopulation.h; sourceTree = "<group>"; };
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
+		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		8489ADA9175C96C1004CCB84 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		848BD5B11754A58F00D5346A /* PopulationMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopulationMenu.cpp; sourceTree = "<group>"; };
 		848BD5B21754A58F00D5346A /* PopulationMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopulationMenu.h; sourceTree = "<group>"; };
@@ -2594,6 +2602,10 @@
 		848D2FE61859764C00EB9257 /* gy */ = {
 			isa = PBXGroup;
 			children = (
+				84509B7C18879C2900EF8BD8 /* cancel.png */,
+				841845231884FC5A00895275 /* dismiss.jpg */,
+				8418451F1884DF9000895275 /* job.png */,
+				841845201884DF9000895275 /* construction.png */,
 				84F4933A18838E6600377957 /* empty_profile.gif */,
 				84315336187CFA8200F5B5E2 /* blue square.png */,
 				84EB328218684185003B5CEB /* addPicture.png */,
@@ -3015,6 +3027,7 @@
 				3617293A17AA6C9900D2558E /* arrow-right2.png in Resources */,
 				3617293D17AA6DCA00D2558E /* closebutton-down.png in Resources */,
 				3617293E17AA6DCA00D2558E /* closebutton-up.png in Resources */,
+				84509B7D18879C2900EF8BD8 /* cancel.png in Resources */,
 				3617294017AA6E0600D2558E /* hint box.png in Resources */,
 				360496E217AB49DC00CACE25 /* chief-icon.png in Resources */,
 				360496E317AB49DC00CACE25 /* researcher-icon.png in Resources */,
@@ -3046,6 +3059,7 @@
 				3604971017AB96BC00CACE25 /* jobbutton_pressed.png in Resources */,
 				3604971117AB96BC00CACE25 /* jobbutton.png in Resources */,
 				3604971317ABB3B500CACE25 /* innerbox-info.png in Resources */,
+				841845241884FC5A00895275 /* dismiss.jpg in Resources */,
 				36D87A7417BB3F1D00C41D54 /* AMC_port.png in Resources */,
 				36D87A7517BB3F1D00C41D54 /* AFC_port.png in Resources */,
 				36D87A7617BB3F1D00C41D54 /* ARF_port.png in Resources */,
@@ -3067,12 +3081,14 @@
 				3647C7F917C1D9E3008FA626 /* Icon-144.png in Resources */,
 				3647C7FD17C20BD8008FA626 /* creditsoundtrack in Resources */,
 				3647C80917C213CE008FA626 /* Default-568h@2x.png in Resources */,
+				841845211884DF9000895275 /* job.png in Resources */,
 				3647C80B17C22D4B008FA626 /* Default@2x.png in Resources */,
 				3647C80D17C2329D008FA626 /* Default-Landscape.png in Resources */,
 				3647C80F17C232BC008FA626 /* Default-Landscape~ipad.png in Resources */,
 				84F4933B18838E6600377957 /* empty_profile.gif in Resources */,
 				3647C81117C232D5008FA626 /* Default-Landscape@2x~ipad.png in Resources */,
 				3624032817C308AD005BED27 /* Tikopia.mp3 in Resources */,
+				841845221884DF9000895275 /* construction.png in Resources */,
 				3624032917C308AD005BED27 /* Rite of Passage.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

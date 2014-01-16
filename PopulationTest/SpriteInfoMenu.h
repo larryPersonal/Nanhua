@@ -14,7 +14,6 @@ using namespace cocos2d::extension;
 
 #include "PopupMenu.h"
 #include "ProgressBar.h"
-#include "ScrollArea.h"
 #include "Sprite.h"
 
 using namespace std;
@@ -42,20 +41,14 @@ private:
     CCSprite* spriteBackground;
     CCSprite* spriteBackgroundInner;
     CCSprite* gameSpriteImage;
-    CCLabelTTF* labelExp;
     
-    /*
+    CCLabelTTF* labelExp;
     CCLabelTTF* labelCash;
-   CCLabelTTF* labelInt;
-    CCLabelTTF* labelLoy;
-    CCLabelTTF* labelSoc;
-    CCLabelTTF* labelHap;
-    */
+    
     CCSprite* spCash;
     CCSprite* spEduLvl;
-    CCSprite* spInt;
+    
     CCSprite* spLoy;
-    CCSprite* spSoc;
     CCSprite* spHap;
     
     
@@ -69,14 +62,27 @@ private:
     CCLabelTTF* textSoc;
     CCLabelTTF* textHap;
     
+    CCLabelTTF* energyLabel;
+    CCLabelTTF* energyTitleLabel;
+    CCLabelTTF* classLabel;
+    CCLabelTTF* classTitleLabel;
+    
+    CCLabelTTF* genderLabel;
+    CCLabelTTF* genderTitleLabel;
+    CCLabelTTF* raceLabel;
+    CCLabelTTF* raceTitleLabel;
+    
+    CCLabelTTF* movementSpeedLabel;
+    CCLabelTTF* movementSpeedTitleLabel;
+    CCLabelTTF* loyaltyLabel;
+    CCLabelTTF* happinessLabel;
+    
     ProgressBar* barExp;
     ProgressBar* barEnergy;
     
     CCMenuItemImage* buttonClose;
     CCMenuItemImage* buttonWorkPlace;
     CCMenuItemImage* buttonHome;
-    
-    ScrollArea* scrollArea;
     
 protected:
     
