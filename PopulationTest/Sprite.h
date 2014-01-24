@@ -44,9 +44,9 @@ enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
                 SPRITETYPE_END = 12};
 
 
-enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, ACTION_END = 10};
+enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, GET_HOME, ACTION_END = 11};
 
-enum SpriteJob { NONE = 0, BUILDER, GUARD, FARMER = 3 };
+enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, GUARD = 4 };
 
 class GameSprite: public CCObject
 {
@@ -56,6 +56,8 @@ private:
 
     int spriteW;
     int spriteH;
+    
+    int foodCarried;  // indicate the food carried by the farmer to transport into the granary.
     
     //I assume all animations are using the same number of frames.
     int idleFrameCount;
@@ -70,13 +72,18 @@ private:
    
     std::string currentDir;
     
+    float cumulativeTime;
+    
+public:
     std::string config_doc;
     std::string defaults_doc;
+    std::string sprite_doc;
     
     Behavior* behaviorTree;
     
     Json::Value root;
     Json::Value defaultsRoot;
+    Json::Value spriteRoot;
     Json::Reader reader;
 
     Behavior* buildTreeWithJsonValue(Json::Value json);
@@ -141,6 +148,9 @@ public:
     SpriteAction currAction;
     SpriteAction nextAction;
     
+    SpriteAction futureAction1;
+    SpriteAction futureAction2;
+    
     /*note: The following line defines which layer the sprite would be batched with.  Do NOT populate this manually! The SpriteHandler should populate and depopulate this from the
      list of layers it has. */
     int batchLayerIndex;
@@ -179,6 +189,7 @@ public:
     /*setters for the spritehandler constructor*/
     void setAIConfig(std::string config);
     void setDefaultsConfig(std::string config);
+    void setSpriteConfig(std::string config);
    // void setRequirementsConfig(std::string config);
     
     Possessions* getPossessions();
@@ -230,16 +241,65 @@ public:
     void CallbackPerformingTask();
     
     // jerry added
+    Building* getHome();
+    void setHome(Building*);
+    
     SpriteJob getJob();
     void setJob(SpriteJob);
     
     Building* getJobLocation();
     void setJobLocation(Building*);
     
+    Building* getTargetLocation();
+    void setTargetLocation(Building*);
+    
     bool getIsDoingJob();
     void setIsDoingJob(bool);
     
+    int getTargetHungry();
+    void setTargetHungry(int);
+    
+    void setIsFollowingMovementInstruction(bool);
+    
+    bool GoBuilding(Building* b);
+    
+    bool GoRest(Building* b);
+    bool GoEat(Building* b);
+    bool GoFarming(Building* b);
+    bool GoGranary(Building* b);
+    bool returnFarm(Building* b);
+    bool GoHome(Building* b);
+    
     void updateIdleDelay(float delay);
+    
+    // jerry edited
+    void changeToCitizen();
+    
+    void setFoodCarried(int);
+    int getFoodCarried();
+    
+    Building* findNearestGranary();
+    
+    bool loadSpriteSetup();
+    bool loadClassSetup();
+    void loadSpritePossessions();
+    void loadClassPossessions();
+    void clearSetup();
+    
+    bool isHungry();
+    
+    
+    void setCumulativeTime(float);
+    float getCumulativeTime();
+    
+    void goToEat();
+    void goToSleep();
+    void goToOccupyHome(Building*);
+    
+    bool hasEmptyHouse();
+    bool findNearestHome();
+    
+    int getPathDistance(CCPoint, CCPoint);
 };
 
 

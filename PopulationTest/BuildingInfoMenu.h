@@ -21,9 +21,7 @@ using namespace std;
 
 class BuildingInfoMenu:public PopupMenu
 {
-    
 private:
-    
     // Building variables
     int mBuildingExp;
     int mBuildingExpMax;
@@ -32,6 +30,13 @@ private:
     int mBuildingVacancy;
     int mBuildingOverload;
     int mBuildingCurrPopulation;
+    
+    int mBuildingUnitCurrent;
+    int mBuildingUnitRequired;
+    int mBuildingFoodStorageCurrent;
+    int mBuildingFoodStorageMax;
+    int mBuildingWorkUnitCurrent;
+    int mBuildingWorkUnitRequired;
     
     // Background Rect
     Rect* background_rect;
@@ -57,10 +62,10 @@ private:
     CCLabelTTF* labelExp;
 /*
     CCLabelTTF* labelPrice;
- 
+*/ 
     CCLabelTTF* labelLoy;
     CCLabelTTF* labelHap;
-  */  
+
     CCLabelTTF* textName;
     CCLabelTTF* textPrice;
     CCLabelTTF* textExp;
@@ -76,6 +81,20 @@ private:
     CCLabelTTF* labelStatus;
     CCLabelTTF* unitLabel;
     
+    CCLabelTTF* recoveryRateTitleLabel;
+    CCLabelTTF* recoveryRateLabel;
+    
+    CCLabelTTF* foodConsumptionRateTitleLabel;
+    CCLabelTTF* foodConsumptionRateLabel;
+    
+    ProgressBar* foodStorageBar;
+    CCLabelTTF* foodStorageLabel;
+    CCLabelTTF* foodStorageTitleLabel;
+    
+    ProgressBar* workCompleteBar;
+    CCLabelTTF* workCompleteLabel;
+    CCLabelTTF* workCompleteTitleLabel;
+    
     CCMenuItemImage* buttonClose;
     
     CCMenu* menu;
@@ -87,10 +106,10 @@ protected:
     
 public:
     static BuildingInfoMenu* create(Building* building);
+    
     virtual void cleanup();
     
-    
-    virtual ~BuildingInfoMenu() {}
+    virtual ~BuildingInfoMenu();
     // Constructor with Building object
     BuildingInfoMenu(Building* building);
     
@@ -106,6 +125,8 @@ public:
     
     //Update
     virtual void update(float deltaTime);
+    
+    Building* getBuilding();
 };
 
 #endif

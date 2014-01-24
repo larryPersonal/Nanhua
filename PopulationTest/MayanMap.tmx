@@ -28,6 +28,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
+    <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -35,7 +36,7 @@
     <property name="name" value="Brick House"/>
     <property name="population_limit" value="2"/>
     <property name="prereqs" value="Straw House"/>
-    <property name="recovery_rate" value="0"/>
+    <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
@@ -44,6 +45,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="1">
@@ -54,6 +57,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="A house with a thatched roof"/>
+    <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -61,7 +65,7 @@
     <property name="name" value="Straw House"/>
     <property name="population_limit" value="1"/>
     <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="0"/>
+    <property name="recovery_rate" value="2"/>
     <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="0"/>
@@ -70,6 +74,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="2">
@@ -80,6 +86,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="250"/>
     <property name="description" value="A house infused with Alien technology"/>
+    <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -88,7 +95,7 @@
     <property name="own_cost" value="300"/>
     <property name="population_limit" value="3"/>
     <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="0"/>
+    <property name="recovery_rate" value="3"/>
     <property name="req_building_count" value="10"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="20"/>
@@ -97,6 +104,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="3">
@@ -107,6 +116,7 @@
     <property name="building_type" value="education"/>
     <property name="cost" value="150"/>
     <property name="description" value="A stone tablet store selling stone tablets of Alien Knowledge"/>
+    <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="researcher"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -124,6 +134,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="4">
@@ -134,6 +146,7 @@
     <property name="building_type" value="education"/>
     <property name="cost" value="300"/>
     <property name="description" value="Observatory of the Oracles to view the stars"/>
+    <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="researcher researcher"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -151,6 +164,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="5">
@@ -161,6 +176,7 @@
     <property name="building_type" value="amenity"/>
     <property name="cost" value="200"/>
     <property name="description" value="Barn"/>
+    <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="farmer farmer"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -178,32 +194,37 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="100"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="6">
    <properties>
     <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="200"/>
     <property name="builder_limit" value="3"/>
-    <property name="building_type" value="granary"/>
+    <property name="building_type" value="amenity"/>
     <property name="cost" value="100"/>
-    <property name="description" value="Farming bees for honey"/>
-    <property name="jobs_available" value="farmer"/>
+    <property name="description" value="Granary for storing food!"/>
+    <property name="food_consumption_rate" value="1"/>
+    <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Granary"/>
-    <property name="population_limit" value="1"/>
+    <property name="population_limit" value="3"/>
     <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="0"/>
-    <property name="req_building_count" value="4"/>
+    <property name="recovery_rate" value="10"/>
+    <property name="req_building_count" value="0"/>
     <property name="req_capita" value="0"/>
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="research_time" value=""/>
-    <property name="storage" value="0"/>
-    <property name="storage_limit" value="0"/>
-    <property name="unlocked_at_start" value="no"/>
+    <property name="storage" value="200"/>
+    <property name="storage_limit" value="9999"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="7">
@@ -214,6 +235,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="120"/>
     <property name="description" value="A place for people to socialize"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -230,6 +252,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="8">
@@ -240,6 +264,7 @@
     <property name="building_type" value="commerce"/>
     <property name="cost" value="200"/>
     <property name="description" value="Refine honey from bee farms"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="merchant"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -256,6 +281,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="9">
@@ -266,6 +293,7 @@
     <property name="building_type" value="education"/>
     <property name="cost" value="200"/>
     <property name="description" value="Library of Stone Tablets for Knowledge"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="researcher"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -282,6 +310,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="10">
@@ -292,6 +322,7 @@
     <property name="building_type" value="amenity"/>
     <property name="cost" value="120"/>
     <property name="description" value="process lumber and produce lumber"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="farmer"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -308,6 +339,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="11">
@@ -318,6 +351,7 @@
     <property name="building_type" value="amenity"/>
     <property name="cost" value="120"/>
     <property name="description" value="making pots"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="potter"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -334,6 +368,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="12">
@@ -344,6 +380,7 @@
     <property name="building_type" value="commerce"/>
     <property name="cost" value="150"/>
     <property name="description" value="Sculpting stones from the quarry"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="merchant"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -360,6 +397,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="13">
@@ -370,6 +409,7 @@
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Quarry for mining stones and granite"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="miner miner"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -386,6 +426,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="14">
@@ -396,6 +438,7 @@
     <property name="building_type" value="commerce"/>
     <property name="cost" value="120"/>
     <property name="description" value="refine stones for other places to use"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="merchant"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -412,6 +455,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="15">
@@ -422,6 +467,7 @@
     <property name="building_type" value="commerce"/>
     <property name="cost" value="250"/>
     <property name="description" value="refine wine from fruit orchards"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="merchant"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -438,6 +484,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="16">
@@ -472,6 +520,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="500"/>
     <property name="description" value="A Majestic statue that bonds the civilization"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -488,6 +537,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="1">
@@ -498,6 +549,7 @@
     <property name="building_type" value="special"/>
     <property name="cost" value="20000"/>
     <property name="description" value="All Mayans and otherwise are born from here. "/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value=""/>
     <property name="level_gain_cost" value=""/>
@@ -514,6 +566,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="2">
@@ -524,6 +578,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="450"/>
     <property name="description" value="Alien mansion, used by high class."/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -541,6 +596,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="3">
@@ -551,6 +608,7 @@
     <property name="building_type" value="amenity"/>
     <property name="cost" value="500"/>
     <property name="description" value="A Quarry filled with glowing minerals used by Alien technology"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="miner miner miner miner miner"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -567,6 +625,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="4">
@@ -577,6 +637,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="150"/>
     <property name="description" value="An Alien Dormitory for mass reside"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -593,6 +654,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="5">
@@ -603,6 +666,7 @@
     <property name="building_type" value="military"/>
     <property name="cost" value="750"/>
     <property name="description" value="Grand Fortress"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="warrior warrior warrior"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -619,6 +683,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="6">
@@ -629,6 +695,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="1000"/>
     <property name="description" value="Drama for everyone!"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -645,6 +712,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="7">
@@ -655,6 +724,7 @@
     <property name="building_type" value="amenity"/>
     <property name="cost" value="400"/>
     <property name="description" value="The new, improved and bigger bee farms"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="farmer farmer farmer farmer"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -671,6 +741,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="8">
@@ -681,6 +753,7 @@
     <property name="building_type" value="military"/>
     <property name="cost" value="200"/>
     <property name="description" value="Guarding outpost"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="warrior"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -697,6 +770,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="9">
@@ -707,6 +782,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="350"/>
     <property name="description" value="a better stone house"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -723,6 +799,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="10">
@@ -733,6 +811,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="500"/>
     <property name="description" value="bigger mansion but yet save space, amazing space warping alien technology"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -749,6 +828,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="11">
@@ -759,6 +840,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="750"/>
     <property name="description" value="a new better mansion"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -775,6 +857,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="12">
@@ -785,6 +869,7 @@
     <property name="building_type" value="commerce"/>
     <property name="cost" value="500"/>
     <property name="description" value="Marketplace for all sorts of trading to occur"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="merchant merchant merchant"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -801,6 +886,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="13">
@@ -811,6 +898,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="250"/>
     <property name="description" value="resting shed"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -827,6 +915,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="14">
@@ -846,11 +936,12 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="0"/>
+    <property name="build_uint_required" value="50"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="farmer farmer farmer"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -865,8 +956,10 @@
     <property name="research_cost" value="300"/>
     <property name="research_time" value="30"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="0"/>
+    <property name="storage_limit" value="2000"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value="0"/>
+    <property name="work_unit_required" value="4000"/>
    </properties>
   </tile>
   <tile id="1">
@@ -906,6 +999,7 @@
     <property name="building_type" value="military"/>
     <property name="cost" value="1000"/>
     <property name="description" value="The HQ for military activities"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="warrior warrior warrior warrior warrior"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -922,6 +1016,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="1">
@@ -932,6 +1028,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="1500"/>
     <property name="description" value="A place for the games to occur"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -948,6 +1045,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="2">
@@ -958,6 +1057,7 @@
     <property name="building_type" value="Special"/>
     <property name="cost" value="5000"/>
     <property name="description" value="Alien conversion machine to allow Aliens to be converted into Mayans and enjoy Mayan privileges"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -974,6 +1074,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="3">
@@ -984,6 +1086,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="750"/>
     <property name="description" value="Ball court for socializing"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -1000,6 +1103,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="4">
@@ -1010,6 +1115,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="800"/>
     <property name="description" value="Alien Palace"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -1026,6 +1132,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="5">
@@ -1036,6 +1144,7 @@
     <property name="building_type" value="housing"/>
     <property name="cost" value="1200"/>
     <property name="description" value="Mayan Palace"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -1053,6 +1162,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="6">
@@ -1087,6 +1198,7 @@
     <property name="building_type" value="social"/>
     <property name="cost" value="3000"/>
     <property name="description" value="All citizens can vist and have fun at this zoo"/>
+    <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value=""/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
@@ -1103,6 +1215,8 @@
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="no"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="1">

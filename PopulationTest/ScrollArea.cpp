@@ -170,6 +170,11 @@ void ScrollArea::addItem(CCNode* node, CCPoint position)
     node->setPosition(position);
 }
 
+void ScrollArea::removeI(CCNode* node)
+{
+    layer->removeChild(node);
+}
+
 void ScrollArea::setViewSize(CCSize viewSize)
 {
     scrollView->setViewSize(viewSize);
@@ -398,6 +403,11 @@ void ScrollArea::onExit()
         isUpdateScheduled = false;
         this->unschedule(schedule_selector(ScrollArea::update));
     }
+}
+
+CCLayer* ScrollArea::getLayer()
+{
+    return layer;
 }
 
 

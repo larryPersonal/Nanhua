@@ -11,11 +11,11 @@
 #include "Senario.h"
 #include "PopupMenu.h"
 #include "Sprite.h"
-#include "SpriteInfoMenu.h"
 #include "BuildingInfoMenu.h"
 #include "AlertBox.h"
 #include "SoundtrackManager.h"
 #include "GameDefaults.h"
+#include "SpriteInfoMenu.h"
 
 #include <cmath>
 
@@ -539,13 +539,13 @@ void GameScene::FirstRunPopulate()
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(5,18);
         
-        spriteHandler->addSpriteToMap(target, M_BUILDER);
+        spriteHandler->addSpriteToMap(target, M_REFUGEE);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, M_BUILDER);
+        spriteHandler->addSpriteToMap(target, M_REFUGEE);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, M_FARMER);
+        spriteHandler->addSpriteToMap(target, F_REFUGEE);
 
         
     }
@@ -592,6 +592,7 @@ void GameScene::update(float time)
     policyHandler->Update();
     
     tutorialHandler->update();
+    spriteHandler->update(time);
     
     // check lose game
     /*
@@ -664,7 +665,6 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         {
             this->setTouchEnabled(false);
             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-         //   buildingInfoMenu->autorelease();
             buildingInfoMenu->useAsBasePopupMenu();
             return true;
         }
@@ -699,7 +699,6 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 {
                     this->setTouchEnabled(false);
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                   // buildingInfoMenu->autorelease();
                     buildingInfoMenu->useAsBasePopupMenu();
                     return true;
                 }

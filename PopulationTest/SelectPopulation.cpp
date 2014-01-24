@@ -9,7 +9,6 @@
 #include "SelectPopulation.h"
 #include "GameScene.h"
 #include "Sprite.h"
-#include "SpriteRow.h"
 
 SelectPopulation* SelectPopulation::SP;
 
@@ -45,6 +44,9 @@ SelectPopulation::SelectPopulation(Building* building){
     spriteRowArray = CCArray::create();
     spriteRowArray->retain();
     
+    memberSpriteRowArray = CCArray::create();
+    memberSpriteRowArray->retain();
+    
     this->building = building;
     
     // create gui handler
@@ -52,6 +54,13 @@ SelectPopulation::SelectPopulation(Building* building){
     
     // initialize the gui handler
     background_rect->ini(700, 100, 100, 200);
+    
+    mBuildingBuilderCurrent = 0;
+    mBuildingBuilderLimit = 0;
+    mBuildingMemberCurrent = 0;
+    mBuildingPopulationLimit = 0;
+    mBuildingUnitCurrent = 0;
+    mBuildingUnitRequired = 0;
 }
 
 SelectPopulation::~SelectPopulation()
@@ -64,10 +73,19 @@ SelectPopulation::~SelectPopulation()
      }*/
     spriteRowArray->removeAllObjects();
     CC_SAFE_RELEASE(spriteRowArray);
+    memberSpriteRowArray->removeAllObjects();
+    CC_SAFE_RELEASE(memberSpriteRowArray);
 }
 
 void SelectPopulation::createMenuItems()
 {
+    mBuildingUnitCurrent = building->build_uint_current;
+    mBuildingUnitRequired = building->build_uint_required;
+    mBuildingMemberCurrent = memberSpriteRowArray->count();
+    mBuildingPopulationLimit = building->populationLimit;
+    mBuildingBuilderCurrent = memberSpriteRowArray->count();
+    mBuildingBuilderLimit = building->builderLimit;
+    
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
     ccColor3B colorGreen = ccc3(81, 77, 2);
@@ -165,27 +183,106 @@ void SelectPopulation::createMenuItems()
     labelSRImage = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelSRImage->setColor(colorBlack);
     
-    // scroll section
+    // member sprite row header
+    ss.str(std::string());
+    if(building->buildingType == HOUSING)
+    {
+        ss << "Resident";
+    }
+    else
+    {
+        ss << "Member";
+    }
+    
+    labelSRMember = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelSRMember->setColor(colorBlack);
+    labelSRMember->setAnchorPoint(ccp(0, 1));
+    
+    ss.str(std::string());
+    ss << building->memberSpriteList->count() << "/" << building->populationLimit;
+    memberLabel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    memberLabel->setColor(colorBlack);
+    memberLabel->setAnchorPoint(ccp(0, 1));
+    
+    ss.str(std::string());
+    ss << building->memberSpriteList->count() << "/" << building->builderLimit;
+    builderLabel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    builderLabel->setColor(colorBlack);
+    builderLabel->setAnchorPoint(ccp(0, 1));
+    
+    // scroll section for members
+    memberScrollArea = new ScrollArea();
+    memberScrollArea->createScrollArea(CCSizeMake(spriteBackground->boundingBox().size.width,spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRMember->boundingBox().size.height - 290.0f), CCSizeMake(spriteBackground->boundingBox().size.width, spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRMember->boundingBox().size.height - 290.0f));
+    memberScrollArea->enableScrollVertical(0, "bar.png", "bar.png");
+    memberScrollArea->hideScroll();
+    
+    // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(spriteBackground->boundingBox().size.width, spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRImage->boundingBox().size.height - 18.0f), CCSizeMake(spriteBackground->boundingBox().size.width, spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRImage->boundingBox().size.height - 18.0f));
+    scrollArea->createScrollArea(CCSizeMake(spriteBackground->boundingBox().size.width, spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRImage->boundingBox().size.height - labelSRMember->boundingBox().size.height - memberScrollArea->boundingBox().size.height - 190.0f), CCSizeMake(spriteBackground->boundingBox().size.width, spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRImage->boundingBox().size.height - labelSRMember->boundingBox().size.height - memberScrollArea->boundingBox().size.height - 190.0f));
     scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
     scrollArea->hideScroll();
     
-    customSprite = CCSprite::create("blue square.png");
-    customSprite->setScale(64.0f / customSprite->boundingBox().size.width);
-    customSprite->setAnchorPoint(ccp(0.5, 0.5));
-    
     CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    for (int i = 0; i < spritesOnMap->count(); i++)
+    int index1 = 0;
+    int index2 = 0;
+    
+    for(int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* sprite = (GameSprite*)spritesOnMap->objectAtIndex(i);
         
-        SpriteRow* sp = SpriteRow::create(sprite, scrollArea, building, i);
-        spriteRowArray->addObject((CCObject*) sp);
+        
+
+        // when the building is house, only refugee will be listed in the waiting home list.
+        if(building->buildingType == HOUSING && building->build_uint_current >= building->build_uint_required)
+        {
+            if(sprite->getHome() == building)
+            {
+                SpriteRow* sr = SpriteRow::create(sprite, memberScrollArea, building, index1, true);
+                memberSpriteRowArray->addObject((CCObject*) sr);
+                index1++;
+            }
+            else if(sprite->spriteClass.compare("refugee") == 0)
+            {
+                SpriteRow* sr = SpriteRow::create(sprite, scrollArea, building, index2, false);
+                spriteRowArray->addObject((CCObject*) sr);
+                index2++;
+            }
+        }
+        else if(building->buildingType == AMENITY && building->food_consumption_rate > 0 && building->build_uint_current >= building->build_uint_required)
+        // when the building is granary, every villagers (includes refugee) is able to eat food in the building.
+        {
+            if(sprite->getTargetLocation() == building)
+            {
+                SpriteRow* sr = SpriteRow::create(sprite, memberScrollArea, building, index1, true);
+                memberSpriteRowArray->addObject((CCObject*) sr);
+                index1++;
+            }
+            else if(sprite->getPossessions()->currentHungry <= 20)
+            {
+                SpriteRow* sr = SpriteRow::create(sprite, scrollArea, building, index2, false);
+                spriteRowArray->addObject((CCObject*) sr);
+                index2++;
+            }
+        }
+        else
+        // when the builidng is those building that provide jobs, only citizens will be listed in the waiting home list
+        {
+            if(sprite->getJobLocation() == building)
+            {
+                SpriteRow* sr = SpriteRow::create(sprite, memberScrollArea, building, index1, true);
+                memberSpriteRowArray->addObject((CCObject*) sr);
+                index1++;
+            }
+            else if(sprite->spriteClass.compare("citizen") == 0)
+            {
+                SpriteRow* sr = SpriteRow::create(sprite, scrollArea, building, index2, false);
+                spriteRowArray->addObject((CCObject*) sr);
+                index2++;
+            }
+        }
     }
     
-    scrollArea->addItem(customSprite, ccp(spriteBackground->boundingBox().size.width / 2.0f, spriteBackground->boundingBox().size.height / 2.0f));
-    
+    memberScrollArea->updateScrollBars();
     scrollArea->updateScrollBars();
     
     // add children
@@ -211,8 +308,13 @@ void SelectPopulation::createMenuItems()
     
     // sprite row header
     this->addChild(labelSRImage);
+    this->addChild(labelSRMember);
     
+    this->addChild(memberScrollArea);
     this->addChild(scrollArea);
+    
+    this->addChild(memberLabel);
+    this->addChild(builderLabel);
     
     // done creation
     spriteBuilding->setAnchorPoint(ccp(0, 1));
@@ -241,6 +343,22 @@ void SelectPopulation::createMenuItems()
     scrollArea->setAnchorPoint(ccp(0.5, 0.5));
     
     reposition();
+    
+    this->schedule(schedule_selector(SelectPopulation::update), 0.25f);
+    
+    /*
+     * Organize the display of all elements
+     */
+    if(building->isUnderConstruction())
+    {
+        memberLabel->setVisible(false);
+        builderLabel->setVisible(true);
+    }
+    else
+    {
+        memberLabel->setVisible(true);
+        builderLabel->setVisible(false);
+    }
 }
 
 void SelectPopulation::onMenuItemSelected(CCObject* pSender){
@@ -288,21 +406,68 @@ void SelectPopulation::reposition(){
     progressBar->CCNode::setPosition(-halfWidth + 250.0f, halfHeight - spriteBuilding->boundingBox().size.height / 4.0f + progressBar->boundingBox().size.height / 2.0f - 12.0f);
     progressBarLabel->CCNode::setPosition(-halfWidth + 360.0f, halfHeight - 14.0f);
     
+    // member sprite row header
+    labelSRMember->CCNode::setPosition(-halfWidth + 10.0f, halfHeight - spriteBuilding->boundingBox().size.height - 15.0f);
+    memberLabel->CCNode::setPosition(-halfWidth + 140.0f, halfHeight - spriteBuilding->boundingBox().size.height - 15.0f);
+    builderLabel->CCNode::setPosition(-halfWidth + 140.0f, halfHeight - spriteBuilding->boundingBox().size.height - 15.0f);
+    
     // sprite row header
-    labelSRImage->CCNode::setPosition(-halfWidth + 10.0f, halfHeight - spriteBuilding->boundingBox().size.height - 15.0f);
+    labelSRImage->CCNode::setPosition(-halfWidth + 10.0f, halfHeight - spriteBuilding->boundingBox().size.height - 200.0f);
     
     
     
     // Scroll area in center
     scrollArea->CCNode::setPosition(-halfWidth,
-                                    -halfHeight);
+                                    -halfHeight + 11.0f);
+    memberScrollArea->CCNode::setPosition(-halfWidth, 10.0f);
     
+    memberScrollArea->reposition();
     scrollArea->reposition();
 }
 
-//void SelectPopulation::refreshAllMenuItemValues(){
+void SelectPopulation::refreshAllMenuItemValues()
+{
+    // refresh all the sprite rows
+    for(int i = 0; i < spriteRowArray->count(); i++)
+    {
+        ((SpriteRow*) spriteRowArray->objectAtIndex(i))->refreshAllMenuItems();
+    }
     
-//}
+    for(int i = 0; i < memberSpriteRowArray->count(); i++)
+    {
+        ((SpriteRow*) memberSpriteRowArray->objectAtIndex(i))->refreshAllMenuItems();
+    }
+    
+    std::stringstream ss;
+    // refresh other elements
+    if(mBuildingUnitCurrent != building->build_uint_current || mBuildingUnitRequired != building->build_uint_required)
+    {
+        mBuildingUnitCurrent = building->build_uint_current;
+        mBuildingUnitRequired = building->build_uint_required;
+        ss.str(std::string());
+        ss << building->build_uint_current << "/" << building->build_uint_required;
+        progressBar->setValue((float) building->build_uint_current / (float) building->build_uint_required);
+        progressBarLabel->setString(ss.str().c_str());
+    }
+    
+    if(mBuildingMemberCurrent != memberSpriteRowArray->count() || mBuildingPopulationLimit != building->populationLimit)
+    {
+        mBuildingMemberCurrent = memberSpriteRowArray->count();
+        mBuildingPopulationLimit = building->populationLimit;
+        ss.str(std::string());
+        ss << memberSpriteRowArray->count() << "/" << building->populationLimit;
+        memberLabel->setString(ss.str().c_str());
+    }
+    
+    if(mBuildingBuilderCurrent != memberSpriteRowArray->count() || mBuildingBuilderLimit != building->builderLimit)
+    {
+        mBuildingBuilderCurrent = memberSpriteRowArray->count();
+        mBuildingBuilderLimit = building->builderLimit;
+        ss.str(std::string());
+        ss << memberSpriteRowArray->count() << "/" << building->builderLimit;
+        builderLabel->setString(ss.str().c_str());
+    }
+}
 
 void SelectPopulation::willChangeOrientation(){
     
@@ -313,7 +478,33 @@ void SelectPopulation::onOrientationChanged(){
 }
 
 void SelectPopulation::update(float deltaTime){
+    refreshAllMenuItemValues();
+}
+
+void SelectPopulation::addMemberRow(GameSprite* gameSprite, SpriteRow* spriteRow)
+{
+    spriteRowArray->removeObject((CCObject*)spriteRow);
+    
+    for(int i = 0; i < spriteRowArray->count(); i++)
+    {
+        ((SpriteRow*)(spriteRowArray->objectAtIndex(i)))->rearrange(i);
+    }
+    
+    SpriteRow* sr = SpriteRow::create(gameSprite, memberScrollArea, building, memberSpriteRowArray->count(), true);
+    memberSpriteRowArray->addObject((CCObject*)sr);
     
 }
 
+void SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * spriteRow)
+{
+    memberSpriteRowArray->removeObject((CCObject*)spriteRow);
+    
+    for(int i = 0; i < memberSpriteRowArray->count(); i++)
+    {
+        ((SpriteRow*)(memberSpriteRowArray->objectAtIndex(i)))->rearrange(i);
+    }
+    
+    SpriteRow* sr = SpriteRow::create(gameSprite, scrollArea, building, spriteRowArray->count(), false);
+    spriteRowArray->addObject((CCObject*) sr);
+}
 

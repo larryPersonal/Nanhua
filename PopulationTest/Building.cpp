@@ -11,10 +11,13 @@
 #include "Sprite.h"
 #include "GameHUD.h"
 #include "InfoMenu.h"
+#include "BuildingInfoMenu.h"
 #include <iterator>
 
 Building::Building()
 {
+    farmState = WAITING;
+    
     buildingValue = 0;
     populationLimit = 0;
     
@@ -25,6 +28,11 @@ Building::Building()
     build_uint_required = 0;
     build_uint_current = 0;
     
+    work_unit_current = 0;
+    work_unit_required = 0;
+    
+    recovery_rate = 0;
+    food_consumption_rate = 0;
 
     buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
@@ -40,6 +48,9 @@ Building::Building()
     currVisitors = CCArray::create();
     currVisitors->retain();
     
+    memberSpriteList = CCArray::create();
+    memberSpriteList->retain();
+    
     ID = 0;
     currentExp = 0;
     currentLevel = 1;
@@ -51,9 +62,6 @@ Building::Building()
     
     expToLevel = CCArray::create();
     expToLevel->retain();
-    
-    
-    
     
     unlocked = false;
     
@@ -91,6 +99,9 @@ Building::~Building()
     jobsInthisBuilding->removeAllObjects();
     jobsInthisBuilding->release();
     
+    
+    memberSpriteList->removeAllObjects();
+    memberSpriteList->release();
     
     currVisitors->removeAllObjects();
    
@@ -140,9 +151,11 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->researchTime = this->researchTime;
         pCopy->researchCost = this->researchCost;
         
-        
         pCopy->build_uint_required = this->build_uint_required;
         pCopy->build_uint_current = 0;
+        
+        pCopy->work_unit_required = this->work_unit_required;
+        pCopy->work_unit_current = 0;
         
         pCopy->buildingRect = this->buildingRect;
         pCopy->populationLimit = this->populationLimit;
@@ -155,6 +168,9 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->storageLimit = this->storageLimit;
         
         pCopy->build_uint_required = this->build_uint_required;
+        
+        pCopy->food_consumption_rate = this->food_consumption_rate;
+        pCopy->recovery_rate = this->recovery_rate;
         
         pCopy->buildingType = this->buildingType;
         pCopy->buildingValue = this->buildingValue;
@@ -189,6 +205,8 @@ CCArray* Building::getJobsAvailable()
     return jobsInthisBuilding;
 }
 */
+
+
 /*use this to determine what happens when a sprite enters the building.*/
 void Building::ArriveHandler(GameSprite* sp)
 {
@@ -199,18 +217,24 @@ void Building::ArriveHandler(GameSprite* sp)
     
     sp->setAction(sp->nextAction);
     
-    sp->setIsDoingJob(true);
+    if(sp->currAction == RESTING)
+    {
+        
+    }
     
-    //if this isn't the character's job, home or an upgrade location, modify all stats based on building stats.
-    //ModifyStats(sp);
-    this->gainExp(10);
+    if(sp->currAction == EATING && sp->getTargetLocation() == this)
+    {
+        //sp->setTargetHungry(sp->getPossessions()->energyRating + 15 > sp->getPossessions()->defaultEnergy ? sp->getPossessions()->defaultEnergy : sp->getPossessions()->energyRating + 15);
+    }
     
-    
-   // sp->ChangeSpriteTo(GameScene::getThis()->spriteHandler->getSpriteByType(M_MAYAN_FARMER));
+    if(sp->getJobLocation() == this)
+    {
+        sp->setIsDoingJob(true);
+    }
 }
 
 // when a villager performs a task in a building, this will direct the villager's behavior
-void Building::StickAroundHandler(GameSprite *sp)
+void Building::StickAroundHandler(GameSprite *sp, float dt)
 {
     // defensive programming (no villager)
     if (!sp) return;
@@ -219,7 +243,7 @@ void Building::StickAroundHandler(GameSprite *sp)
     if(sp->currAction == BUILD && sp->getIsDoingJob() && sp->getJob() == BUILDER && sp->spriteClass.compare("builder") == 0)
     {
         // if the building is under construction, construct the building
-        if (this->build_uint_required > this->build_uint_current)
+        if (isUnderConstruction())
         {
             int workval = sp->getPossessions()->PerformTask();
             
@@ -227,25 +251,263 @@ void Building::StickAroundHandler(GameSprite *sp)
             if(workval > 0)
             {
                 this->build_uint_current += workval;
-                sp->updateIdleDelay(1.0f);
+                
+                // update the building infor menu.
+                //if(GameScene::buildingInfoMenu != NULL && GameScene::buildingInfoMenu->getBuilding() == this)
+                //{
+                    //GameScene::buildingInfoMenu->updateConstructionStatus();
+                //}
+                
+                
+                
+                sp->updateIdleDelay(0.2f);
             }
             else
             // workval = 0, means the the villager is out of energy
             {
-                
+                //sp->currAction = IDLE;
+                //sp->nextAction = IDLE;
+                //sp->setTargetLocation(NULL);
+               // sp->setIsFollowingMovementInstruction(false);
+                //
+                ///sp->setTargetLocation(sp->getHome());
+                //sp->GoRest(sp->getHome());
             }
         }
         else
         // the building has finished the construction process, the villagers will leave the building and become idle
         {
-            sp->currAction = IDLE;
-            sp->setIsDoingJob(false);
-            sp->setJob(NONE);
-            sp->spriteClass = "builder";
+            for(int i = 0; i < memberSpriteList->count(); i++)
+            {
+                CCLog("test4");
+                GameSprite* gameS = (GameSprite*) memberSpriteList->objectAtIndex(i);
+                
+                gameS->currAction = IDLE;
+                gameS->nextAction = IDLE;
+                gameS->setIsDoingJob(false);
+                gameS->spriteClass = "citizen";
+                gameS->setJob(NONE);
+                gameS->setJobLocation(NULL);
+                gameS->setTargetLocation(NULL);
+                gameS->changeToCitizen();
+            }
+            memberSpriteList->removeAllObjects();
         }
     }
-    
-    if (buildingType != HOUSING)
+    else if(sp->currAction == GET_HOME && sp->getTargetLocation() == this && sp->getPossessions()->targetHomeLocation == this)
+    {
+        sp->currAction = IDLE;
+        sp->nextAction = IDLE;
+        sp->futureAction1 = IDLE;
+        sp->futureAction2 = IDLE;
+        sp->setTargetLocation(NULL);
+        sp->getPossessions()->targetHomeLocation = NULL;
+        if(memberSpriteList->count() < populationLimit)
+        {
+            
+            sp->setHome(this);
+            sp->setIsDoingJob(false);
+            sp->spriteClass = "citizen";
+            sp->changeToCitizen();
+            memberSpriteList->addObject(sp);
+        }
+    }
+    else if(sp->currAction == EATING && sp->getTargetLocation() == this)
+    // eating
+    {
+        // if there is still food in the granary
+        if(hasFood())
+        {
+            // if the sprite is still hungry
+            if (sp->isHungry())
+            {
+                int gainVal = sp->getPossessions()->EatFood();
+                
+                if(gainVal > 0)
+                {
+                    this->currentStorage -= food_consumption_rate;
+                    sp->getPossessions()->currentHungry += gainVal;
+                    sp->updateIdleDelay(0.2f);
+                }
+            }
+            else
+                // the sprite has finished eating the food, the villagers will leave the building and become idle
+            {
+                //sp->getPossessions()->energyRating = sp->getPossessions()->targetHungry;
+                leaveGranuary(sp);
+            }
+        }
+        else
+        // no food anymore sprite will leave the granary (probably with penalty? I guess!)
+        {
+            leaveGranuary(sp);
+            // add the penalty here!
+        }
+    }
+    else if(sp->currAction == FARMING && sp->getTargetLocation() == this && sp->getJob() == FARMER)
+    // farming
+    {
+        // if the farming process not finished!
+        if(notHavest() && farmState == FARM && currentStorage <= 0)
+        {
+            // a farmer will never quit a farming job naturally
+            //int workval = sp->getPossessions()->PerformTask();
+            
+            // workval > 0 means the farming process is successful, so update the farming scale and the energy scale
+            if(sp->getPossessions()->energyRating >= 0)
+            {
+                sp->setCumulativeTime(sp->getCumulativeTime() + dt);
+                if(sp->getCumulativeTime() >= 0.33333333f)
+                {
+                    sp->getPossessions()->energyRating -= 0.1f;
+                    work_unit_current += sp->getPossessions()->default_work_unit_per_day / 12.0f;
+                    sp->setCumulativeTime(0.0f);
+                }
+                
+                if(work_unit_current >= work_unit_required)
+                {
+                    work_unit_current = 0;
+                    currentStorage = storageLimit;
+                }
+                
+                if(sp->getPossessions()->energyRating < 0)
+                {
+                    sp->getPossessions()->energyRating = 0;
+                }
+                sp->updateIdleDelay(0.2f);
+            }
+            else
+                // workval = 0, means the the villager is out of energy
+            {
+                //sp->currAction = IDLE;
+                //sp->nextAction = IDLE;
+                //sp->setTargetLocation(NULL);
+                //sp->setIsFollowingMovementInstruction(false);
+                
+                //sp->setTargetLocation(sp->getHome());
+                //sp->GoRest(sp->getHome());
+            }
+        }
+        else
+        // the farming process has been finished, the farm goes into harvest state and it will not cumulate farm point any more.
+        {
+            // if the state of the farm is farm, then the farm finishes farming process, so the state changes to harvest.
+            if(farmState == FARM)
+            {
+                farmState = HARVEST;
+            }
+            
+            // if the state of the farm is harvest, trigger the sprites (farmers to havest the food)
+            if(farmState == HARVEST)
+            {
+                sp->setJob(DELIVERER);
+                if(currentStorage <= sp->getPossessions()->default_food_carriage_limit)
+                {
+                    sp->setFoodCarried(currentStorage);
+                    currentStorage = 0;
+                    farmState = FARM;
+                    
+                    // finish farming process....
+                    for(int i = 0; i < memberSpriteList->count(); i++)
+                    {
+                        GameSprite* gameS = (GameSprite*) memberSpriteList->objectAtIndex(i);
+                        if(gameS->getJob() == FARMER || (gameS->getJob() == DELIVERER && gameS->getFoodCarried() <= 0))
+                        {
+                            // all farmer and delivery without carring food will leave the job
+                            // if has scheduled task, do the task, otherwise, leave the building
+                            gameS->currAction = IDLE;
+                            gameS->nextAction =IDLE;
+                            gameS->setIsDoingJob(false);
+                            gameS->spriteClass = "citizen";
+                            gameS->setJob(NONE);
+                            gameS->setJobLocation(NULL);
+                            gameS->setTargetLocation(NULL);
+                            gameS->changeToCitizen();
+                        }
+                    }
+                }
+                else
+                {
+                    sp->setFoodCarried(sp->getPossessions()->default_food_carriage_limit);
+                    currentStorage -= sp->getFoodCarried();
+                }
+                
+                Building* gran = sp->findNearestGranary();
+                if(gran != NULL)
+                {
+                    sp->setTargetLocation(gran);
+                    sp->GoGranary(gran);
+                }
+            }
+        }
+
+    }
+    else if(sp->currAction == STORING && sp->getTargetLocation() == this && sp->getJob() == DELIVERER)
+    // the delivery reach the granary and store the food
+    {
+        // if the granary can only store some of the food
+        if(currentStorage + sp->getFoodCarried() > storageLimit)
+        {
+            currentStorage = storageLimit;
+            sp->setFoodCarried(currentStorage + sp->getFoodCarried() - storageLimit);
+            // TODO: go next granary
+        }
+        else
+        // all food has been stored into the granary, go back to the farm
+        {
+            currentStorage += sp->getFoodCarried();
+            sp->setFoodCarried(0);
+            
+            // check the whether the job location still has food to be transported
+            if(sp->getJobLocation()->currentStorage > 0)
+            {
+                sp->setJob(FARMER);
+                sp->setTargetLocation(sp->getJobLocation());
+                sp->GoFarming(sp->getJobLocation());
+            }
+            else
+            // no more food already, job has been completed, quit the job.
+            {
+                    sp->currAction = IDLE;
+                    sp->nextAction = IDLE;
+                    sp->setIsDoingJob(false);
+                    sp->spriteClass = "citizen";
+                    sp->setJob(NONE);
+                    sp->setJobLocation(NULL);
+                    sp->setTargetLocation(NULL);
+                    sp->changeToCitizen();
+            }
+        }
+    }
+    else if (this->recovery_rate > 0 && this->food_consumption_rate == 0)
+    // if the house is a place for resting
+    {
+        // if the sprite is resting now and the sprite is not a refugee, update the resting process
+        if (sp->currAction == RESTING)
+        {
+            // if it is the home house of the sprite, recharge energy
+            if(sp->getHome() == this)
+            {
+                // if the sprite is fully recharged it will leave the home
+                if(sp->getPossessions()->energyRating >= sp->getPossessions()->default_energy_limit)
+                {
+                    leaveHouse(sp);
+                }
+                else
+                    // if the sprite is not fully recharged, it will recharge energy.
+                {
+                    sp->getPossessions()->Rest();
+                }
+            }
+            else
+                // if it is not the home house, leave the house
+            {
+                // TODO::because the house is not sprite's home, so the spirte still does not have been recharged, to have enough energy to do other tasks, it needs to be recharged first, so try to find his home in other place, if no home, just wander around....
+                leaveHouse(sp);
+            }
+        }
+    }
+    else
     {
         if (buildingType == AMENITY) //where Amenity == House that creates stuff. A Farm is one of them.
         {
@@ -270,17 +532,53 @@ void Building::StickAroundHandler(GameSprite *sp)
         
         
     }
-    else
-    {
-        //is a house. Rest?
-        if (sp->getPossessions()->homeLocation == this) //if this is my home
-        {
-          
-            sp->getPossessions()->Rest(); //recharge energy
-        }
-    }
 }
 
+void Building::leaveHouse(GameSprite* sp)
+{
+    /*
+    if(sp->getJobLocation() != NULL)
+    // if the sprite has a job
+    {
+        sp->setTargetLocation(sp->getJobLocation());
+        // if the job is builder
+        if(sp->getJobLocation()->isUnderConstruction())
+        {
+            sp->GoBuild(sp->getJobLocation());
+        }
+        else if(sp->getJobLocation()->storageLimit > 0 && sp->getJobLocation()->food_consumption_rate == 0)
+        // if the job is farmer
+        {
+            // farmer will always go to the farm to continue work!
+            sp->GoFarming(sp->getJobLocation());
+        }
+        else
+        {
+            // for some one time job, when finishes the task, the sprite will change back to citizen!
+            sp->currAction = IDLE;
+            sp->nextAction = IDLE;
+            sp->setIsDoingJob(false);
+            sp->setJob(NONE);
+            sp->spriteClass = "citizen";
+            sp->setJob(NONE);
+            sp->setJobLocation(NULL);
+            sp->setTargetLocation(NULL);
+            sp->changeToCitizen();
+        }
+        sp->setIsFollowingMovementInstruction(false);
+    }
+    else
+    // the sprite does not have a job, just leave the hosue
+    {
+    */
+        sp->currAction = IDLE;
+        sp->nextAction = IDLE;
+        sp->setTargetLocation(NULL);
+        sp->setIsFollowingMovementInstruction(false);
+        sp->futureAction1 = IDLE;
+        sp->futureAction2 = IDLE;
+    /*}*/
+}
 
 void Building::Leavehandler(GameSprite *sp)
 {
@@ -569,4 +867,66 @@ int Building::getUnoccupiedCount()
      
     }*/
     
+}
+
+bool Building::isUnderConstruction()
+{
+    return build_uint_current < build_uint_required;
+}
+
+bool Building::hasFood()
+{
+    return currentStorage > 0;
+}
+
+bool Building::notHavest()
+{
+    return work_unit_current < work_unit_required;
+}
+
+void Building::leaveGranuary(GameSprite* sp)
+{
+    if(sp->getJob() == FARMER)
+    {
+        //sp->getPossessions()->energyRating = sp->getPossessions()->targetHungry;
+        sp->setTargetLocation(sp->jobLocation);
+        sp->GoFarming(sp->jobLocation);
+    }
+    else if(sp->getJob() == BUILDER)
+    {
+        CCPoint startPos = sp->getWorldPosition();
+        CCPoint endPos = sp->jobLocation->getWorldPosition();
+        
+        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        
+        if(startPos.equals(endPos))
+        {
+            currVisitors->addObject(sp);
+            sp->currAction = BUILD;
+            sp->setTargetLocation(sp->jobLocation);
+            sp->isDoingJob = true;
+        }
+        else
+        {
+            sp->setTargetLocation(sp->jobLocation);
+            sp->GoBuild(sp->jobLocation);
+        }
+    }
+    else
+    {
+        sp->setTargetLocation(NULL);
+        if(sp->futureAction1 == RESTING || sp->futureAction2 == RESTING)
+        {
+            sp->futureAction1 = RESTING;
+            sp->futureAction2 = IDLE;
+        }
+        else
+        {
+            sp->futureAction1 = IDLE;
+            sp->futureAction2 = IDLE;
+        }
+        sp->currAction = IDLE;
+        sp->nextAction = IDLE;
+    }
 }

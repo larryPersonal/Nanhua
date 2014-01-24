@@ -12,7 +12,6 @@
 #include "cocos2d.h"
 #include "Sprite.h"
 
-
 class SpriteHandler
 {
 private:
@@ -21,6 +20,8 @@ private:
     void initClassRequirements();
     void initClass(std::string classConfig);
   //  void AddToCacheWithPlist(std::string animName);
+    
+    float cumulatedTime;
 public:
     ~SpriteHandler();
     
@@ -55,6 +56,10 @@ public:
     //All because we didn't decide the ranking of various sprite classes from the get go. Now I need a conversion function because nothing stores the rank by default.
     int getRank(std::string spriteclass);
     
+    void update(float);
+    
+    float getCumulatedTime();
+    void setCumulatedTime(float);
 };
 
 

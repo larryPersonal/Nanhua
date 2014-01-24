@@ -27,13 +27,17 @@ private:
     int mGameSpriteEnergy;
     int mGameSpriteEnergyMax;
     int mGameSpriteCash;
-    int mGameSpriteEduLvl;
-    int mGameSpriteInt;
     int mGameSpriteLoy;
-    int mGameSpriteSoc;
     int mGameSpriteHap;
-    int mGameSpriteExp;
-    int mGameSpriteExpMax;
+    SpriteAction mGameSpriteCurrAction;
+    int mGameSpriteFoodCarriage;
+    int mGameSpriteFoodCarriageLimit;
+    int mGameSpriteHungry;
+    int mGameSpriteHungryMax;
+    int mGameSpriteWorkRate;
+    float mGameSpriteWorkUnitPerDay;
+    
+    
     
     // Graphical items
     GameSprite* gameSprite;
@@ -42,11 +46,9 @@ private:
     CCSprite* spriteBackgroundInner;
     CCSprite* gameSpriteImage;
     
-    CCLabelTTF* labelExp;
     CCLabelTTF* labelCash;
     
     CCSprite* spCash;
-    CCSprite* spEduLvl;
     
     CCSprite* spLoy;
     CCSprite* spHap;
@@ -54,12 +56,8 @@ private:
     
     CCLabelTTF* textName;
     CCLabelTTF* textCash;
-    CCLabelTTF* textEduLvl;
     
-    CCLabelTTF* textExp;
-    CCLabelTTF* textInt;
     CCLabelTTF* textLoy;
-    CCLabelTTF* textSoc;
     CCLabelTTF* textHap;
     
     CCLabelTTF* energyLabel;
@@ -77,12 +75,36 @@ private:
     CCLabelTTF* loyaltyLabel;
     CCLabelTTF* happinessLabel;
     
-    ProgressBar* barExp;
     ProgressBar* barEnergy;
     
     CCMenuItemImage* buttonClose;
     CCMenuItemImage* buttonWorkPlace;
     CCMenuItemImage* buttonHome;
+    
+    ProgressBar* barHungry;
+    CCLabelTTF* hungryTitleLabel;
+    CCLabelTTF* hungryLabel;
+    
+    ProgressBar* barFoodCarriage;
+    CCLabelTTF* foodCarriageTitleLabel;
+    CCLabelTTF* foodCarriageLabel;
+    
+    CCLabelTTF* workRateTitleLabel;
+    CCLabelTTF* workRateLabel;
+    CCLabelTTF* workUnitPerDayTitleLabel;
+    CCLabelTTF* workUnitPerDayLabel;
+    
+    CCLabelTTF* movementRangeTitleLabel;
+    CCLabelTTF* movementRangeLabel;
+    
+    CCLabelTTF* animateSpeedTitleLabel;
+    CCLabelTTF* animateSpeedLabel;
+    
+    CCLabelTTF* currentActionTitleLabel;
+    CCLabelTTF* currentActionLabel;
+    
+    CCLabelTTF* targetLocationTitleLabel;
+    CCMenuItemImage* targetLocationImage;
     
 protected:
     

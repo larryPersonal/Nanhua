@@ -10,23 +10,13 @@
 #define PopulationTest_CitizenCFG_h
 
 std::string citizenDefaults =
-"{\"name\":\"root\","
-"\"default_happiness\":\"50\","
-"\"default_money\":\"200\","
-"\"default_loyalty\":\"50\","
-"\"default_education_level\":\"1\","
-"\"default_move_range\":\"20\","
-"\"default_intelligence\":\"50\","
-"\"default_social\":\"50\","
+"{\"default_movement_range\":\"20\","
 "\"default_movement_speed\":\"50\","  // basic default value is 50 for mayan game
 "\"default_animate_speed\":\"50\","  // basic default value is 50 for mayan game
-"\"default_energy\":\"100\","
-"\"default_exp_level1\":\"100\","
-"\"default_exp_level2\":\"120\","
-"\"default_exp_level3\":\"140\","
-"\"default_exp_level4\":\"160\","
-"\"default_exp_level5\":\"0\","
-"\"spawn_cost\":\"500\""
+"\"default_hungry_limit\":\"100\","
+"\"default_food_carriage_limit\":\"0\","
+"\"default_energy_limit\":\"100\","
+"\"default_work_unit_per_day\":\"0\""
 "}";
 
 std::string citizenRequirements =

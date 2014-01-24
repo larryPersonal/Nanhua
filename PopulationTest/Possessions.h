@@ -13,92 +13,153 @@
 #include "Sprite.h"
 #include "Behavior.h"
 #include "Job.h"
+
 /* contains the sprite's possessions at the moment*/
 /* this is contained as a private member inside Sprite and used as a private pointer inside Behavior.*/
 struct Possessions
 {
-     int happinessRating;
+    /* game sprite common stats */
+    int happinessRating;
     int loyaltyRating;
-   
-    int movementRange;
     
-    float movementSpeed;
-    float animateSpeed;
+    int currentHungry;
+    int targetHungry;
+    float energyRating;
     
-    int defaultEnergy;
-    int energyRating;
+    int default_work_rate;
+    int default_hapiness_limit;
+    int default_loyalty_limit;
+    int default_exp_level1;
+    int default_exp_level2;
+    int default_exp_level3;
+    int default_exp_level4;
+    int default_exp_level5;
+    int default_spawn_cost;
+    
+    int bonus_work_rate;
+    int bonus_hapiness_limit;
+    int bonus_loyalty_limit;
+    int bonus_exp_level1;
+    int bonus_exp_level2;
+    int bonus_exp_level3;
+    int bonus_exp_level4;
+    int bonus_exp_level5;
+    int bonus_spawn_cost;
+    
+    /* special stats */
+    float default_work_unit_per_day;
+    int default_movement_range;
+    int default_movement_speed;
+    int default_animate_speed;
+    int default_hungry_limit;
+    int default_food_carriage_limit;
+    int default_energy_limit;
+    
+    float bonus_work_unit_per_day;
+    int bonus_movement_range;
+    int bonus_movement_speed;
+    int bonus_animate_speed;
+    int bonus_hungry_limit;
+    int bonus_food_carriage_limit;
+    int bonus_energy_limit;
+    
+    /* variable stats */
+    int current_farmer_exp;
+    int current_sodier_exp;
+    
+    int current_farmer_level;
+    int current_sodier_level;
     
     int classLevel;
     
-    int expRating;
-    CCArray* expToLevel;
-    
     Building* homeLocation;
-   // bool isRentalProperty;
-  //  bool isSqueezing;
-   // int rentalVisitsLeft;
-    
     Building* jobLocation;
-   // std::string jobClass; //check for this == to sprite class to know if sprite has taken the correct job
-   // int jobIndex;
-    //I think I'll store the index instead of the job pointer.
-    //call jobLocation->getJobsAvailable()->objectAtIndex(jobIndex) and cast to a Job*
+    Building* targetLocation;
+    Building* targetHomeLocation;
     
     Possessions()
     {
-       homeLocation = NULL;
-        jobLocation = NULL;
-      
-        loyaltyRating = happinessRating = 50;
-        //note: movement range is range from a sprite's HOME. If the sprite has no home, this value will be ignored.
-        movementRange = 1;
-        energyRating = defaultEnergy = 100;
+        /* common stats */
+        loyaltyRating = 0;
+        happinessRating = 0;
         
-        expRating = 0;    
-        expToLevel = CCArray::create();
-        expToLevel->retain();
+        currentHungry = 0;
+        targetHungry = 0;
+        energyRating = 0;
+        
+        default_work_rate = 0;
+        default_hapiness_limit = 0;
+        default_loyalty_limit = 0;
+        default_exp_level1 = 0;
+        default_exp_level2 = 0;
+        default_exp_level3 = 0;
+        default_exp_level4 = 0;
+        default_exp_level5 = 0;
+        default_spawn_cost = 0;
+        
+        bonus_work_rate = 0;
+        bonus_hapiness_limit = 0;
+        bonus_loyalty_limit = 0;
+        bonus_exp_level1 = 0;
+        bonus_exp_level2 = 0;
+        bonus_exp_level3 = 0;
+        bonus_exp_level4 = 0;
+        bonus_exp_level5 = 0;
+        bonus_spawn_cost = 0;
+        
+        /* special stats */
+        default_work_unit_per_day = 0;
+        default_movement_range = 0;
+        default_movement_speed = 0;
+        default_animate_speed = 0;
+        default_hungry_limit = 0;
+        default_food_carriage_limit = 0;
+        default_energy_limit = 0;
+        
+        bonus_work_unit_per_day = 0;
+        bonus_movement_range = 0;
+        bonus_movement_speed = 0;
+        bonus_animate_speed = 0;
+        bonus_hungry_limit = 0;
+        bonus_food_carriage_limit = 0;
+        bonus_energy_limit = 0;
+        
+        /* variable stats */
+        current_farmer_exp = 0;
+        current_sodier_exp = 0;
+        
+        current_farmer_level = 0;
+        current_sodier_level = 0;
+        
+        classLevel = 0;
+        
+        homeLocation = NULL;
+        jobLocation = NULL;
+        targetLocation = NULL;
     }
     
     ~Possessions()
     {
-        
-        expToLevel->removeAllObjects();
-            expToLevel->release();
     }
     
     int getExpToLevel()
     {
-        if ((classLevel-1) >= expToLevel->count()) return 0;
-        
-        return ((CCInteger*)expToLevel->objectAtIndex(classLevel-1))->getValue();
+        return 0;
     }
     
     bool isAtMaxLevel()
     {
-        return classLevel == expToLevel->count();
+        return false;
     }
     
     bool isAtAbsoluteMax()
     {
-        return classLevel >= 5;
+        return false;
     }
     
     
     void setClassLevel(int targetLevel)
     {
-        if (targetLevel < 1)
-        {
-            classLevel = 1;
-            return;
-        }
-        if (targetLevel > expToLevel->count())
-        {
-            classLevel = expToLevel->count();
-            return;
-        }
-        
-        classLevel = targetLevel;
-
     }
    
     int PerformTask()
@@ -115,12 +176,25 @@ struct Possessions
         
     }
     
+    int EatFood()
+    {
+        currentHungry++;
+        if(currentHungry > default_hungry_limit + bonus_hungry_limit)
+        {
+            currentHungry = default_hungry_limit + bonus_hungry_limit;
+            CCLog("finish eating food!");
+            return 0;
+        }
+        
+        return 1;
+    }
+    
     int Rest()
     {
-        ++energyRating;
-        if (energyRating > defaultEnergy)
+        energyRating++;
+        if (energyRating > default_energy_limit + bonus_energy_limit)
         {
-            energyRating = defaultEnergy;
+            energyRating = default_energy_limit + bonus_energy_limit;
             return 0;
         }
         return 1;
@@ -165,5 +239,6 @@ enum PossessionStats
     STATS_ENERGY,
     STATS_EXP
 };
+
 
 #endif /* defined(__PopulationTest__Possessions__) */

@@ -19,11 +19,53 @@
 
 using namespace cocos2d;
 
+struct Date
+{
+    int year;
+    int month;
+    int week;
+    int day;
+    
+    Date()
+    {
+        year = 0;
+        month = 0;
+        week = 0;
+        day = 0;
+    }
+    
+    void addDay()
+    {
+        day++;
+        if(day >= 7)
+        {
+            day = 0;
+            week++;
+        }
+        
+        if(week >= 4)
+        {
+            week = 0;
+            month++;
+        }
+        
+        if(month >= 12)
+        {
+            month = 0;
+            year++;
+        }
+    }
+};
 
 class GameHUD : public CCLayer
 {
     static GameHUD* SP;
 
+    int mGameDay;
+    int mGameWeek;
+    int mGameMonth;
+    int mGameYear;
+    
     CCMenuItemImage* menuButton;
     CCMenuItemImage* miscButton;
     
@@ -53,8 +95,12 @@ class GameHUD : public CCLayer
     tapMode currTapMode;
     MenuMode currMenuMode;
     
+    // Time label
+    Date* date;
+    CCLabelTTF* timeLabel;
+    
+    
     //InfoBar and items
-    InfoBar* topInfoBar;
     InfoBar* bottomInfoBar;
     InfoBar* hintInfoBar;
     
@@ -73,9 +119,10 @@ class GameHUD : public CCLayer
     
     CCMenu* pMenu;
     
+    float cumulatedTime;
+    
  public:
     ResearchIndicator* ri;
-
     
     bool menuIsOpen;
     GameTimer* gameTimer;
@@ -86,7 +133,6 @@ class GameHUD : public CCLayer
     static GameHUD* getThis();
     
     CCLabelTTF* miscLabel;
-    
     
     bool init();
     void createInitialGUI();
@@ -120,6 +166,8 @@ class GameHUD : public CCLayer
     void showHint(std::string hintText);
     
     CCMenuItemImage* getMenuButton();
+    
+    Date* getDate();
     
 };
 

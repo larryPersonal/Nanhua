@@ -14,7 +14,6 @@
 
 float portraitScale; //hack
 
-
 BuildingInfoMenu* BuildingInfoMenu::create(Building* building)
 {
     BuildingInfoMenu *pRet = new BuildingInfoMenu(building);
@@ -42,6 +41,7 @@ void BuildingInfoMenu::cleanup()
 BuildingInfoMenu::BuildingInfoMenu(Building* building)
 {
     if (!building) CCLog("Warning NO BUILDING!!!");
+    
     this->building = building;
     
     // create the gui handler
@@ -52,6 +52,10 @@ BuildingInfoMenu::BuildingInfoMenu(Building* building)
     
     mBuildingVacancy = mBuildingOverload = 0;
     mBuildingExp = mBuildingExpMax = mBuildingPrice = 0;
+}
+
+BuildingInfoMenu::~BuildingInfoMenu()
+{
 }
 
 void BuildingInfoMenu::createMenuItems()
@@ -78,15 +82,18 @@ void BuildingInfoMenu::createMenuItems()
     mBuildingExpMax = building->getExpToLevel();
     mBuildingLevel = building->currentLevel;
     mBuildingPrice = building->buildingCost * GameScene::getThis()->policyHandler->percentTax * 0.01;
-   // if (building->buildingType == HOUSING)
-        mBuildingVacancy = building->populationLimit;
-   // else
-     //   mBuildingVacancy = building->getJobsAvailable()->count();
- //   mBuildingOverload = building->populationOverload;
+    mBuildingVacancy = building->populationLimit;
     mBuildingCurrPopulation = building->getPopulationCount();
     
+    mBuildingUnitCurrent = building->build_uint_current;
+    mBuildingUnitRequired = building->build_uint_required;
+    mBuildingFoodStorageCurrent = building->currentStorage;
+    mBuildingFoodStorageMax = building->storageLimit;
+    mBuildingWorkUnitCurrent = building->work_unit_current;
+    mBuildingWorkUnitRequired = building->work_unit_required;
+    
     // Create header
-    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Droidiga", 32);
+    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Droidiga", 32, CCSizeMake(building->buildingName.length() * 25.0f, 5.0f), kCCTextAlignmentLeft);
     textName->setColor(colorYellow);
     
     spLoy = CCSprite::create("loyalty icon.png");
@@ -99,27 +106,15 @@ void BuildingInfoMenu::createMenuItems()
     //spCash = CCSprite::create("happiness icon.png");
     spCash->setScale(0.75);
     
-    /*
-    textLoy = CCLabelTTF::create(GlobalHelper::Convert(building->loyalty_mod).c_str(), "Droidiga", 26);
-    textLoy->setColor(colorGreen);
-    textHap = CCLabelTTF::create(GlobalHelper::Convert(building->happiness_mod).c_str(), "Droidiga", 26);
-    textHap->setColor(colorGreen);
-    
-    textCashMod = CCLabelTTF::create(GlobalHelper::Convert(building->cash_mod).c_str(), "Droidiga", 26);
-    textCashMod->setColor(colorGreen);
-    */
     std::stringstream ss;
     ss << "Yearly: " << mBuildingPrice << " G";
-    textPrice = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26);
+    textPrice = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textPrice->setColor(colorYellow);
     
     // Sprite
     spriteBuilding = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
     spriteBuilding->setScale(128.0f / spriteBuilding->boundingBox().size.width);
     spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
-    
-    //spriteGy = CCSprite::create("blue square.png", CCRectMake(0, 0, 610, 600));
-    //spriteGy->setScale(610 / spriteGy->boundingBox().size.width);
     
     // Attribute labels
     ss.str(std::string());
@@ -171,6 +166,88 @@ void BuildingInfoMenu::createMenuItems()
     );
     unitBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
     
+    /*
+    // loyalty
+    ss.str(std::string());
+    ss << "0";
+    labelLoy = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelLoy->setColor(colorBlack);
+    
+    // hapiness
+    ss.str(std::string());
+    ss << "0";
+    labelHap = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelHap->setColor(colorBlack);
+    */
+    
+    // recovery rate
+    ss.str(std::string());
+    ss << "RR:";
+    recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    recoveryRateTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << building->recovery_rate;
+    recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    recoveryRateLabel->setColor(colorBlack);
+    
+    // food consumption rate
+    ss.str(std::string());
+    ss << "FC:";
+    foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodConsumptionRateTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    
+    ss << building->food_consumption_rate;
+    foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodConsumptionRateLabel->setColor(colorBlack);
+    
+    // food storage limit
+    ss.str(std::string());
+    ss << "Food Storage:";
+    foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodStorageTitleLabel->setColor(colorBlack);
+    
+    // food storage
+    foodStorageBar = new ProgressBar();
+    foodStorageBar->createProgressBar(
+                               CCRectMake(0, 0, 80, 20),
+                               CCRectMake(5, 5, 70, 10),
+                               "loadingbar-empty.png",
+                               "loadingbar-left.png",
+                               "loadingbar-right.png",
+                               "loadingbar-full.png"
+                               );
+    foodStorageBar->setValue((float)building->currentStorage / (float)building->storageLimit);
+    
+    ss.str(std::string());
+    ss << building->currentStorage << "/" << building->storageLimit;
+    foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodStorageLabel->setColor(colorBlack);
+    
+    // work unit done
+    ss.str(std::string());
+    ss << "Work Unit Done:";
+    workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workCompleteTitleLabel->setColor(colorBlack);
+    
+    workCompleteBar = new ProgressBar();
+    workCompleteBar->createProgressBar(
+                                      CCRectMake(0, 0, 80, 20),
+                                      CCRectMake(5, 5, 70, 10),
+                                      "loadingbar-empty.png",
+                                      "loadingbar-left.png",
+                                      "loadingbar-right.png",
+                                      "loadingbar-full.png"
+                                      );
+    workCompleteBar->setValue((float)building->work_unit_current / (float)building->work_unit_required);
+    
+    ss.str(std::string());
+    ss << (int) building->work_unit_current << "/" << (int) building->work_unit_required;
+    workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workCompleteLabel->setColor(colorBlack);
+    
     // Menu items
     menuItems = CCArray::create();
     menuItems->retain();
@@ -202,6 +279,42 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(labelStatus);
     this->addChild(unitBar);
     this->addChild(unitLabel);
+    //this->addChild(spLoy);
+    //this->addChild(spHap);
+    //this->addChild(labelLoy);
+    //this->addChild(labelHap);
+    
+    this->addChild(recoveryRateTitleLabel);
+    this->addChild(recoveryRateLabel);
+    this->addChild(foodConsumptionRateLabel);
+    this->addChild(foodConsumptionRateTitleLabel);
+    this->addChild(foodStorageTitleLabel);
+    this->addChild(foodStorageBar);
+    this->addChild(foodStorageLabel);
+    
+    this->addChild(workCompleteTitleLabel);
+    this->addChild(workCompleteBar);
+    this->addChild(workCompleteLabel);
+    
+    if(building->buildingType == HOUSING)
+    {
+        foodConsumptionRateLabel->setVisible(false);
+        foodConsumptionRateTitleLabel->setVisible(false);
+        
+        foodStorageTitleLabel->setVisible(false);
+        foodStorageBar->setVisible(false);
+        foodStorageLabel->setVisible(false);
+    }
+    else if(building->food_consumption_rate > 0)
+    {
+        foodConsumptionRateLabel->setVisible(false);
+        foodConsumptionRateTitleLabel->setVisible(false);
+    }
+    else
+    {
+        recoveryRateTitleLabel->setVisible(false);
+        recoveryRateLabel->setVisible(false);
+    }
     
     // Done creation, now position them
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
@@ -219,6 +332,22 @@ void BuildingInfoMenu::createMenuItems()
     labelStatus->setAnchorPoint(ccp(0, 1));
     unitBar->setAnchorPoint(ccp(0, 1));
     unitLabel->setAnchorPoint(ccp(0, 1));
+    //spLoy->setAnchorPoint(ccp(0, 1));
+    //spHap->setAnchorPoint(ccp(0, 1));
+    //labelLoy->setAnchorPoint(ccp(0, 1));
+    //labelHap->setAnchorPoint(ccp(0, 1));
+    
+    recoveryRateTitleLabel->setAnchorPoint(ccp(0, 1));
+    recoveryRateLabel->setAnchorPoint(ccp(0, 1));
+    foodConsumptionRateLabel->setAnchorPoint(ccp(0, 1));
+    foodConsumptionRateTitleLabel->setAnchorPoint(ccp(0, 1));
+    foodStorageTitleLabel->setAnchorPoint(ccp(0, 1));
+    foodStorageBar->setAnchorPoint(ccp(0, 1));
+    foodStorageLabel->setAnchorPoint(ccp(0, 1));
+    
+    workCompleteTitleLabel->setAnchorPoint(ccp(0, 1));
+    workCompleteBar->setAnchorPoint(ccp(0, 1));
+    workCompleteLabel->setAnchorPoint(ccp(0, 1));
     
     // Create population icons
     for (int i = 0; i < mBuildingVacancy; i++)
@@ -325,9 +454,27 @@ void BuildingInfoMenu::reposition()
     barExp->CCNode::setPosition(-250.0f, -80.0f);
     textExp->CCNode::setPosition(-250.0f + barExp->boundingBox().size.width + 10.0f, -80.0f);
     
-    labelStatus->CCNode::setPosition(60.0f, 60.0f);
-    unitBar->CCNode::setPosition(60.0f, 0);
-    unitLabel->CCNode::setPosition(160.0f, 0);
+    labelStatus->CCNode::setPosition(60.0f, 100.0f);
+    unitBar->CCNode::setPosition(60.0f, 70.0f);
+    unitLabel->CCNode::setPosition(160.0f, 70.0f);
+    //spLoy->CCNode::setPosition(60.0f, 50.0f);
+    //spHap->CCNode::setPosition(60.0f, 0.0f);
+    //labelLoy->CCNode::setPosition(160.0f, 50.0f - spLoy->boundingBox().size.height / 2.0f + labelLoy->boundingBox().size.height / 2.0f);
+    //labelHap->CCNode::setPosition(160.0f, 0.0f - spHap->boundingBox().size.height / 2.0f + labelHap->boundingBox().size.height / 2.0f);
+    
+    recoveryRateTitleLabel->CCNode::setPosition(60.0f, 40.0f);
+    recoveryRateLabel->CCNode::setPosition(160.0f, 40.0f);
+    
+    foodConsumptionRateTitleLabel->CCNode::setPosition(60.0f, 40.0f);
+    foodConsumptionRateLabel->CCNode::setPosition(160.0f, 40.0f);
+    
+    foodStorageTitleLabel->CCNode::setPosition(60.0f, 10.0f);
+    foodStorageBar->CCNode::setPosition(60.0f, -20.0f);
+    foodStorageLabel->CCNode::setPosition(160.0f, -20.0f);
+    
+    workCompleteTitleLabel->CCNode::setPosition(60.0f, -50.0f);
+    workCompleteBar->CCNode::setPosition(60.0f, -80.0f);
+    workCompleteLabel->CCNode::setPosition(160.0f, -80.0f);
     
     // Anchored top
     textName->CCNode::setPosition(0, halfHeight - 40.0f);
@@ -336,7 +483,7 @@ void BuildingInfoMenu::reposition()
     buttonClose->setPosition(halfWidth - 20.0f, halfHeight - 20.0f);
     
     // Anchored bottom right
-    textPrice->CCNode::setPosition(halfWidth - 55.0f, -halfHeight + 40.0f);
+    textPrice->CCNode::setPosition(halfWidth, -halfHeight + 40.0f);
     spPrice->CCNode::setPosition(halfWidth - 250.0f, -halfHeight + 40.0f);
     
     // Anchored bottom left
@@ -416,32 +563,41 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             }
         }
     }
-    /*
-    if (mBuildingOverload != building->populationOverload)
+    
+    // during construction update the construction status of the building
+    if(mBuildingUnitCurrent != building->build_uint_current || mBuildingUnitRequired != building->build_uint_required)
     {
-        int diff = building->populationOverload - mBuildingOverload;
-        mBuildingOverload = building->populationOverload;
-        
-        if (diff > 0)
-        {
-            for (int i = 0; i < diff; i++)
-            {
-                spritePopulationOverloadSlot.push_back(CCSprite::create("vacancy slot.png"));
-                spritePopulationOverloadSlot.back()->CCNode::setScale(55.0f / spritePopulationOverloadSlot.back()->boundingBox().size.width);
-                spritePopulationOverloadSlot.back()->setAnchorPoint(CCPointZero);
-                this->addChild(spritePopulationOverloadSlot.back());
-            }
-            isPositionDirty = true;
-        }
-        else
-        {
-            for (int i = 0; i > diff; i--)
-            {
-                this->removeChild(spritePopulationOverloadSlot.back());
-                spritePopulationOverloadSlot.pop_back();
-            }
-        }
-    }*/
+        mBuildingUnitCurrent = building->build_uint_current;
+        mBuildingUnitRequired = building->build_uint_required;
+        ss.str(std::string());
+        ss << building->build_uint_current << "/" << building->build_uint_required;
+        unitLabel->setString(ss.str().c_str());
+        unitBar->setValue((float) building->build_uint_current / (float) building->build_uint_required);
+    }
+    
+    // updating the food storage
+    if(mBuildingFoodStorageCurrent != building->currentStorage || mBuildingFoodStorageMax != building->storageLimit)
+    {
+        mBuildingFoodStorageCurrent = building->currentStorage;
+        mBuildingFoodStorageMax = building->storageLimit;
+        ss.str(std::string());
+        ss << building->currentStorage << "/" << building->storageLimit;
+        foodStorageLabel->setString(ss.str().c_str());
+        foodStorageBar->setValue((float) building->currentStorage / (float) building->storageLimit);
+    }
+    
+    // updating the work unit done in the building
+    if(mBuildingWorkUnitCurrent != building->work_unit_current || mBuildingWorkUnitRequired != building->work_unit_required)
+    {
+        mBuildingWorkUnitCurrent = building->work_unit_current;
+        mBuildingWorkUnitRequired = building->work_unit_required;
+        ss.str(std::string());
+        ss << (int) building->work_unit_current << "/" << (int) building->work_unit_required;
+        workCompleteLabel->setString(ss.str().c_str());
+        workCompleteBar->setValue((float) building->work_unit_current / (float) building->work_unit_required);
+    }
+    
+    
     
     if (mBuildingCurrPopulation != building->getPopulationCount())
     {
@@ -476,19 +632,8 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         }
     }
     
-    /*
-    textInt->setString(GlobalHelper::Convert(building->int_mod).c_str());
-    textLoy->setString(GlobalHelper::Convert(building->loyalty_mod).c_str());
-    textSoc->setString(GlobalHelper::Convert(building->social_mod).c_str());
-    textHap->setString(GlobalHelper::Convert(building->happiness_mod).c_str());
-    */
-    
     if (isPositionDirty)
         reposition();
-    
-    
-    
-    
 }
 
 void BuildingInfoMenu::willChangeOrientation()
@@ -506,3 +651,7 @@ void BuildingInfoMenu::update(float deltaTime)
     refreshAllMenuItemValues();
 }
 
+Building* BuildingInfoMenu::getBuilding()
+{
+    return building;
+}

@@ -121,6 +121,7 @@ public:
     
     // ScrollArea functions
     void addItem(CCNode* node, CCPoint position);
+    void removeI(CCNode* node);
     void setViewSize(CCSize viewSize);
     void setScrollContentSize(CCSize scrollContentSize, bool resetContentOffset = false);
     void setScrollContentOffset(CCPoint scrollContentOffset);
@@ -137,6 +138,9 @@ public:
     virtual void update(float delta);
     virtual void onEnter();
     virtual void onExit();
+    
+    // jerry added
+    CCLayer* getLayer();
 };
 
 #endif

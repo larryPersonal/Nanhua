@@ -30,6 +30,12 @@ enum BuildingCategory {
     BUILDINGCATEGORYMAX = 8
 };
 
+enum FarmState {
+    WAITING,
+    FARM,
+    HARVEST
+};
+
 
 class Building: public CCObject
 {
@@ -52,6 +58,7 @@ public:
     
     CCSprite* buildingRep;
     BuildingCategory buildingType;
+    FarmState farmState;
     int populationLimit;
     int builderLimit;
     
@@ -61,6 +68,12 @@ public:
     
     int build_uint_required;
     int build_uint_current;
+    
+    int work_unit_required;
+    float work_unit_current;
+    
+    int recovery_rate;
+    int food_consumption_rate;
     
     int buildingValue;
     int buildingBuyPrice;
@@ -110,6 +123,10 @@ public:
     float constructionTime;
     float constructionEndTime;
     
+    
+    // jerry added
+    CCArray* memberSpriteList;
+    
     CCPoint getWorldPosition();
     
     /*jobs*/
@@ -122,7 +139,7 @@ public:
     /*called when the sprite arrives in the building.*/
     void ArriveHandler(GameSprite* sp);
     /*called when the sprite hangs around in the building.*/
-    void StickAroundHandler(GameSprite* sp);
+    void StickAroundHandler(GameSprite* sp, float time);
     /*called when the sprite leaves the building it was in*/
     void Leavehandler(GameSprite* sp);
     
@@ -151,7 +168,14 @@ public:
     int getAlienPopulationCount();
     
     int getUnoccupiedCount();
-
+    
+    void leaveHouse(GameSprite*);
+    
+    bool isUnderConstruction();
+    bool hasFood();
+    bool notHavest();
+    
+    void leaveGranuary(GameSprite*);
 };
 
 #endif

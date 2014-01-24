@@ -17,6 +17,7 @@ using namespace cocos2d::extension;
 #include "ProgressBar.h"
 #include "ScrollArea.h"
 #include "Building.h"
+#include "SpriteRow.h"
 
 using namespace std;
 
@@ -24,6 +25,14 @@ class SelectPopulation: public PopupMenu
 {
 
 private:
+    // dirty attributes
+    int mBuildingUnitCurrent;
+    int mBuildingUnitRequired;
+    int mBuildingMemberCurrent;
+    int mBuildingPopulationLimit;
+    int mBuildingBuilderCurrent;
+    int mBuildingBuilderLimit;
+    
     // Background Rect
     Rect* background_rect;
     
@@ -36,13 +45,14 @@ private:
     
     CCSprite* spriteBuilding;
     
-    CCSprite* customSprite;
+    // the array to store all the villagers that are belongs to this building
+    CCArray* memberSpriteRowArray;
+    
+    // the array to store all the villagers that are not belongs to this building
     CCArray* spriteRowArray;
     
     // stats graphics
-    //CCSprite* spInt;
     CCSprite* spLoy;
-    //CCSprite* spSoc;
     CCSprite* spHap;
     
     // labels
@@ -56,12 +66,17 @@ private:
     
     // sprite row header
     CCLabelTTF* labelSRImage;
+    CCLabelTTF* labelSRMember;
     CCLabelTTF* labelSRName;
     
+    ScrollArea* memberScrollArea;
     ScrollArea* scrollArea;
     
     ProgressBar* progressBar;
     CCLabelTTF* progressBarLabel;
+    
+    CCLabelTTF* memberLabel;
+    CCLabelTTF* builderLabel;
     
     CCMenu* menu;
     
@@ -86,7 +101,10 @@ public:
     
     //Public function
     void reposition();
-    //void refreshAllMenuItemValues();
+    void refreshAllMenuItemValues();
+    
+    void addMemberRow(GameSprite*, SpriteRow*);
+    void addVillagerRow(GameSprite*, SpriteRow*);
     
     //Update
     virtual void update(float deltaTime);

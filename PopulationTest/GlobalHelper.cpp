@@ -83,6 +83,59 @@ std::string GlobalHelper::Convert(int number)
     return buffer.str();
 }
 
+std::string GlobalHelper::getActionString(SpriteAction sa)
+{
+    if(sa == IDLE)
+    {
+        return "IDLE";
+    }
+    else if(sa == WALKING)
+    {
+        return "Walking";
+    }
+    else if(sa == CARRYING)
+    {
+        return "Carrying";
+    }
+    else if(sa == FIGHTING)
+    {
+        return "Fighting";
+    }
+    else if(sa == ESCAPING)
+    {
+        return "Escaping";
+    }
+    else if(sa == EATING)
+    {
+        return "Eating";
+    }
+    else if(sa == STORING)
+    {
+        return "Storing";
+    }
+    else if(sa == FARMING)
+    {
+        return "Farming";
+    }
+    else if(sa == BUILD)
+    {
+        return "Build";
+    }
+    else if(sa == RESTING)
+    {
+        return "Resting";
+    }
+    else if(sa == ACTION_END)
+    {
+        return "END";
+    }
+    else
+    {
+        return "IDLE";
+    }
+}
+
+
 
 
 

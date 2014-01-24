@@ -12,6 +12,7 @@
 #include "BuildMenu.h"
 #include "PopulationMenu.h"
 #include "TutorialHandler.h"
+#include "GlobalSettings.h"
 
 GameHUD* GameHUD::SP;
 
@@ -21,14 +22,20 @@ GameHUD::GameHUD()
     GameHUD::SP = this;
     hint_show_time = 200;
     curr_hint_show_time = 0;
+    date = new Date();
+    cumulatedTime = 0.0f;
     
-    init();
+    mGameDay = 0;
+    mGameMonth = 0;
+    mGameWeek = 0;
+    mGameYear = 0;
 }
 
 GameHUD::~GameHUD()
 {
     removeChild(ri);
     delete ri;
+    delete date;
 
     GameHUD::SP = NULL;
 }
@@ -78,15 +85,51 @@ void GameHUD::update(float deltaTime)
             hintInfoBar->setVisible(false);
             TutorialHandler::getThis()->ReportAction("hint", "timeout", "");
         }
+    
+    // process time line
+    cumulatedTime += deltaTime;
+    if(cumulatedTime >= 1.0f * GlobalSettings::time_for_one_day)
+    {
+        date->addDay();
+        cumulatedTime = 0.0f;
+    }
+    
+    // update time label
+    if(mGameDay != date->day || mGameMonth != date->month || mGameWeek != date->week || mGameYear != date->year)
+    {
+        mGameDay = date->day;
+        mGameWeek = date->week;
+        mGameMonth = date->month;
+        mGameYear = date->year;
+        
+        std::stringstream ss;
+        ss << "Year: " << (date->year + 1) << " Month: " << (date->month + 1) << " Week: " << (date->week + 1) << " Day: " << (date->day + 1);
+        timeLabel->setString(ss.str().c_str());
+    }
 }
 
 void GameHUD::createInitialGUI(){
+    
+    mGameDay = date->day;
+    mGameWeek = date->week;
+    mGameMonth = date->month;
+    mGameYear = date->year;
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ri = new ResearchIndicator();
     //ri->createResearchIndicator();
     ri->setPosition(screenSize.width - 350.0f, screenSize.height - 150.0f);
     
-
+    ccColor3B colorWhite = ccc3(255, 255, 255);
+    
+    std::stringstream ss;
+    ss << "Year: " << (date->year + 1) << " Month: " << (date->month + 1) << " Week: " << (date->week + 1) << " Day: " << (date->day + 1);
+    timeLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    timeLabel->setColor(colorWhite);
+    timeLabel->setAnchorPoint(ccp(0, 1));
+    
+    this->addChild(timeLabel, 3);
+    timeLabel->CCNode::setPosition(0.0f, 1000.0f);
     
     createInfoBars();
     //   menuButton = CCMenuItemImage::create("game-menu-mockup-buttons-menu.png", "game-menu-mockup-buttons-menu.png", this, menu_selector(GameHUD::onMenuButtonPressed) );
@@ -267,49 +310,17 @@ void GameHUD::onOrientationChanged(){
 
 void GameHUD::createInfoBars()
 {
-    //Create top info bar
-    topInfoBar = InfoBar::create();
-    topInfoBar->top = 0.0f;
-    topInfoBar->left = 0.0f;
-    topInfoBar->right = 0.0f;
-  
-  //  topInfoBar->createInfoBar(0.0f, 64.0f, "infobar_body.png");
-    topInfoBar->createInfoBar(0.0f, 64.0f, "bar.png");
     
-    topInfoBar->setTag((int)"topInfoBar");
-    this->addChild(topInfoBar, 2);
-    ;
-    
-    //Add background sides for top info bar
-  //  CCSprite* sprite = CCSprite::create("infobar_side_left.png");
-  //  topInfoBar->addItem("bgSideLeft", sprite);
-  //  topInfoBar->anchorItem("bgSideLeft", 0.0f);
- 
- //   sprite = CCSprite::create("infobar_side_right.png");
- //   topInfoBar->addItem("bgSideRight", sprite);
-//    topInfoBar->anchorItem("bgSideRight", 0.0f, ANCHOR_RIGHT);
     
     //Create bottom info bar
     bottomInfoBar = InfoBar::create();
     bottomInfoBar->bottom = 6.0f;
- bottomInfoBar->left = 0.0f;
+    bottomInfoBar->left = 0.0f;
     bottomInfoBar->right = 0.0f;
     
- //   bottomInfoBar->createInfoBar(0.0f, 64.0f, "infobar_body.png");
     bottomInfoBar->createInfoBar(0.0f, 64.0f, "bar.png");
-
     bottomInfoBar->setTag((int)"bottomInfoBar");
     this->addChild(bottomInfoBar, 2);
-    
-    //Add background sides for bottom info bar
- //   sprite = CCSprite::create("infobar_side_left.png");
- //   bottomInfoBar->addItem("bgSideLeft", sprite);
-  //  bottomInfoBar->anchorItem("bgSideLeft", 0.0f);
-    
-//sprite = CCSprite::create("infobar_side_right.png");
- //   bottomInfoBar->addItem("bgSideRight", sprite);
-  //  bottomInfoBar->anchorItem("bgSideRight", 0.0f, ANCHOR_RIGHT);
-    
     
     //create the Hint Info Bar
     hintInfoBar = InfoBar::create();
@@ -340,16 +351,8 @@ void GameHUD::createInfoBars()
     /** Item creation **/
     
     //Create top info bar items
-    std::stringstream ss;
-    ss << "Gold: " << GameManager::getThis()->currentMoney << " G";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 30);
-    topInfoBar->addItem("moneyLabel", moneyLabel);
-    topInfoBar->anchorItem("moneyLabel", 12.0f, ANCHOR_RIGHT);
     
     //Add Timer to scene
-    gameTimer = GameTimer::create();
-    topInfoBar->addItem("gameTimer", gameTimer);
-    topInfoBar->anchorItem("gameTimer", 0.0f, ANCHOR_LEFT);
     
     //Create bottom info bar items
     popTotalLabel = CCLabelTTF::create("Total Pop:", "Droidiga", 20);
@@ -467,7 +470,6 @@ void GameHUD::updateMoneyLabel()
 {
     std::stringstream ss;
     ss << GameManager::getThis()->currentMoney << " G";
-    moneyLabel->setString(ss.str().c_str());
 }
 
 void GameHUD::updateBuildCostLabel(int cost, int dist)
@@ -501,5 +503,7 @@ CCMenuItemImage* GameHUD::getMenuButton()
     return menuButton;
 }
 
-
-
+Date* GameHUD::getDate()
+{
+    return date;
+}

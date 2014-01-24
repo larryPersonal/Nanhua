@@ -172,10 +172,13 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         {
                             
                             CCLog("test");
+                            
                         }
                     }
                     else
+                    {
                         b->buildingName= "No Name";//";  //CCStringMake("PlaceHolder");
+                    }
                     
                     currProperty = properties->valueForKey("description");
                     if (currProperty)
@@ -269,6 +272,28 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         b->storageLimit = 0;
                     }
                     
+                    currProperty = properties->valueForKey("food_consumption_rate");
+                    if(currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("food_consumption_rate")->getCString());
+                        b->food_consumption_rate = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->food_consumption_rate = 0;
+                    }
+                    
+                    currProperty = properties->valueForKey("recovery_rate");
+                    if(currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("recovery_rate")->getCString());
+                        b->recovery_rate = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->recovery_rate = 0;
+                    }
+                    
                     // for build unit limit
                     currProperty = properties->valueForKey("build_uint_required");
                     if(currProperty)
@@ -280,6 +305,18 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                     {
                         b->build_uint_required = 0;
+                    }
+                    
+                    // for work unit limit
+                    currProperty = properties->valueForKey("work_unit_required");
+                    if(currProperty)
+                    {
+                        CCString* cost = CCStringMake(properties->valueForKey("work_unit_required")->getCString());
+                        b->work_unit_required = atoi(cost->getCString());
+                    }
+                    else
+                    {
+                        b->work_unit_required = 0;
                     }
                     
                     // Example format in Tiled: (level_exp_req) 100, 120, 140, 160, 0
@@ -512,6 +549,9 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     // for storage
                     b->currentStorage = 0;
                     b->storageLimit = 0;
+                    
+                    b->recovery_rate = 0;
+                    b->food_consumption_rate = 0;
                     
                     // build unit limit
                     b->build_uint_required = 0;

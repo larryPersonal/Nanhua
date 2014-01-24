@@ -16,6 +16,36 @@
 /*Glue functions. Defined here to avoid double include problem existing in Sprite.h*/
 static GameSprite* sprite = NULL;
 
+/************ Jerry Added *************/
+static int HasEmptyHouse_Glue(lua_State* L)
+{
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+    }
+    else
+    {
+        lua_pushboolean(L, sprite->hasEmptyHouse());
+    }
+    
+    return 1;
+}
+
+static int FindNearestHome_Glue(lua_State* L)
+{
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+    }
+    else
+    {
+        lua_pushboolean(L, sprite->findNearestHome());
+    }
+    
+    return 1;
+}
+/************ Jerry Added *************/
+
 static int IsAtMaxLevel_Glue(lua_State* L)
 {
     if (!sprite)
@@ -995,6 +1025,10 @@ void Behavior::registerFunctions(lua_State* L)
     
     lua_register(L, "GoBuild", GoBuild_Glue);
     lua_register(L, "HasConstructingBuildings", HasBuildingUnderConstruction_Glue);
+    
+    /*jerry added*/
+    lua_register(L, "HasEmptyHouse", HasEmptyHouse_Glue);
+    lua_register(L, "FindNearestHome", FindNearestHome_Glue);
  
 }
 

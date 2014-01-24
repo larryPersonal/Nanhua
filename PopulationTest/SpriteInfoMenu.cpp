@@ -18,13 +18,15 @@ SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
     mGameSpriteEnergy = 0;
     mGameSpriteEnergyMax = 0;
     mGameSpriteCash = 0;
-    mGameSpriteEduLvl = 0;
-    mGameSpriteInt = 0;
     mGameSpriteLoy = 0;
-    mGameSpriteSoc = 0;
     mGameSpriteHap = 0;
-    mGameSpriteExp = 0;
-    mGameSpriteExpMax = 0;
+    mGameSpriteCurrAction = IDLE;
+    mGameSpriteFoodCarriage = 0;
+    mGameSpriteFoodCarriageLimit = 0;
+    mGameSpriteHungry = 0;
+    mGameSpriteHungryMax = 0;
+    mGameSpriteWorkRate = 0;
+    mGameSpriteWorkUnitPerDay = 0.0f;
 }
 
 SpriteInfoMenu::~SpriteInfoMenu()
@@ -46,15 +48,16 @@ void SpriteInfoMenu::createMenuItems()
     
     // Set variables which may become dirty
     mGameSpriteEnergy = gameSprite->getPossessions()->energyRating;
-    mGameSpriteEnergyMax = gameSprite->getPossessions()->defaultEnergy;
-   // mGameSpriteCash = gameSprite->getPossessions()->cashOnHand;
-   // mGameSpriteEduLvl = gameSprite->getPossessions()->educationLevel;
-   // mGameSpriteInt = gameSprite->getPossessions()->intelligenceRating;
+    mGameSpriteEnergyMax = gameSprite->getPossessions()->default_energy_limit;
     mGameSpriteLoy = gameSprite->getPossessions()->loyaltyRating;
-   // mGameSpriteSoc = gameSprite->getPossessions()->socialRating;
     mGameSpriteHap = gameSprite->getPossessions()->happinessRating;
-    mGameSpriteExp = gameSprite->getPossessions()->expRating;
-    mGameSpriteExpMax = gameSprite->getPossessions()->getExpToLevel();
+    mGameSpriteCurrAction = gameSprite->currAction;
+    mGameSpriteFoodCarriage = gameSprite->getFoodCarried();
+    mGameSpriteFoodCarriageLimit = gameSprite->getPossessions()->default_food_carriage_limit;
+    mGameSpriteHungry = gameSprite->getPossessions()->currentHungry;
+    mGameSpriteHungryMax = gameSprite->getPossessions()->default_hungry_limit;
+    mGameSpriteWorkRate = gameSprite->getPossessions()->default_work_rate;
+    mGameSpriteWorkUnitPerDay = gameSprite->getPossessions()->default_work_unit_per_day;
     
     // Create header
     textName = CCLabelTTF::create(GlobalHelper::stringToUpper(gameSprite->spriteDisplayedName).c_str(), "Droidiga", 32, CCSizeMake(gameSprite->spriteDisplayedName.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
@@ -80,17 +83,11 @@ void SpriteInfoMenu::createMenuItems()
     gameSpriteImage->setScale(128.0f / gameSpriteImage->boundingBox().size.width);
     
     // Attribute labels
-   
-    ss.str(std::string());
-    ss << "Skill Level: " << mGameSpriteEduLvl;
-    textEduLvl = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    textEduLvl->setColor(colorBlack);
-    
     spLoy = CCSprite::create("loyalty icon.png");
     spLoy->setScale(0.75);
     
     ss.str(std::string());
-    ss << gameSprite->getPossessions()->loyaltyRating;
+    ss << gameSprite->getPossessions()->loyaltyRating << "/" << gameSprite->getPossessions()->default_loyalty_limit;
     loyaltyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     loyaltyLabel->setColor(colorBlack);
 
@@ -98,31 +95,13 @@ void SpriteInfoMenu::createMenuItems()
     spHap->setScale(0.75);
     
     ss.str(std::string());
-    ss << gameSprite->getPossessions()->happinessRating;
+    ss << gameSprite->getPossessions()->happinessRating << "/" << gameSprite->getPossessions()->default_hapiness_limit;
     happinessLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     happinessLabel->setColor(colorBlack);
     
-    // Exp
-    tempStr = "NEXT LEVEL";
-    labelExp = CCLabelTTF::create(tempStr.c_str(), "Droidiga", 20, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelExp->setColor(colorBlack);
-    ss.str(std::string());
-    ss << mGameSpriteExp << "/" << mGameSpriteExpMax;
-    textExp = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    textExp->setColor(colorBlack);
-    
-    barExp = new ProgressBar();
-    barExp->createProgressBar(CCRectMake(0, 0, 80, 20),
-                              CCRectMake(5, 5, 70, 10),
-                              "loadingbar-empty.png",
-                              "loadingbar-left.png",
-                              "loadingbar-right.png",
-                              "loadingbar-full.png");
-    barExp->setValue(mGameSpriteExp / (float)mGameSpriteExpMax);
-    
     // energty stats
     ss.str(std::string());
-    ss << gameSprite->getPossessions()->energyRating << "/" << gameSprite->getPossessions()->defaultEnergy;
+    ss << gameSprite->getPossessions()->energyRating << "/" << gameSprite->getPossessions()->default_energy_limit;
     energyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     energyLabel->setColor(colorBlack);
     
@@ -179,9 +158,112 @@ void SpriteInfoMenu::createMenuItems()
     movementSpeedTitleLabel->setColor(colorBlack);
     
     ss.str(std::string());
-    ss << gameSprite->getPossessions()->movementSpeed;
+    ss << gameSprite->getPossessions()->default_movement_speed;
     movementSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     movementSpeedLabel->setColor(colorBlack);
+    
+    // hungry
+    ss.str(std::string());
+    ss << "Hungry:";
+    hungryTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    hungryTitleLabel->setColor(colorBlack);
+    
+    barHungry = new ProgressBar();
+    barHungry->createProgressBar(CCRectMake(0, 0, 80, 20),
+                                 CCRectMake(5, 5, 70, 10),
+                                 "loadingbar-empty.png",
+                                 "loadingbar-left.png",
+                                 "loadingbar-right.png",
+                                 "loadingbar-full.png");
+    barHungry->setValue((float)gameSprite->getPossessions()->currentHungry / (float)gameSprite->getPossessions()->default_hungry_limit);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->currentHungry << "/" << gameSprite->getPossessions()->default_hungry_limit;
+    hungryLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    hungryLabel->setColor(colorBlack);
+    
+    // food carriage
+    ss.str(std::string());
+    ss << "Food Carriage:";
+    foodCarriageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodCarriageTitleLabel->setColor(colorBlack);
+    
+    barFoodCarriage = new ProgressBar();
+    barFoodCarriage->createProgressBar(CCRectMake(0, 0, 80, 20),
+                                 CCRectMake(5, 5, 70, 10),
+                                 "loadingbar-empty.png",
+                                 "loadingbar-left.png",
+                                 "loadingbar-right.png",
+                                 "loadingbar-full.png");
+    barFoodCarriage->setValue((float)gameSprite->getFoodCarried() / (float)gameSprite->getPossessions()->default_food_carriage_limit);
+    
+    ss.str(std::string());
+    ss << gameSprite->getFoodCarried() << "/" << gameSprite->getPossessions()->default_food_carriage_limit;
+    foodCarriageLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodCarriageLabel->setColor(colorBlack);
+    
+    // Work Rate
+    ss.str(std::string());
+    ss << "Work Rate:";
+    workRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workRateTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->default_work_rate;
+    workRateLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workRateLabel->setColor(colorBlack);
+    
+    // Work Unit Per Day
+    ss.str(std::string());
+    ss << "WUPD:";
+    workUnitPerDayTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workUnitPerDayTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->default_work_unit_per_day;
+    workUnitPerDayLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workUnitPerDayLabel->setColor(colorBlack);
+    
+    // Movement Range
+    ss.str(std::string());
+    ss << "MR:";
+    movementRangeTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementRangeTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->default_movement_range;
+    movementRangeLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementRangeLabel->setColor(colorBlack);
+    
+    // Animate Speed
+    ss.str(std::string());
+    ss << "AS:";
+    animateSpeedTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    animateSpeedTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << gameSprite->getPossessions()->default_animate_speed;
+    animateSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    animateSpeedLabel->setColor(colorBlack);
+    
+    // Current Action
+    ss.str(std::string());
+    ss << "Current Action:";
+    currentActionTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    currentActionTitleLabel->setColor(colorBlack);
+    
+    ss.str(std::string());
+    ss << GlobalHelper::getActionString(gameSprite->currAction);
+    currentActionLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    currentActionLabel->setColor(colorBlack);
+    
+    // Target Location
+    ss.str(std::string());
+    ss << "Target:";
+    targetLocationTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    targetLocationTitleLabel->setColor(colorBlack);
+    
+    // TODO:
     
     // Menu items
     menuItems = CCArray::create();
@@ -226,11 +308,6 @@ void SpriteInfoMenu::createMenuItems()
     this->addChild(classTitleLabel);
     
     this->addChild(gameSpriteImage);
-    this->addChild(textEduLvl);
-    
-    this->addChild(labelExp);
-    this->addChild(textExp);
-    this->addChild(barExp);
     
     this->addChild(genderLabel);
     this->addChild(genderTitleLabel);
@@ -243,6 +320,30 @@ void SpriteInfoMenu::createMenuItems()
     this->addChild(loyaltyLabel);
     this->addChild(spHap);
     this->addChild(happinessLabel);
+    
+    this->addChild(hungryTitleLabel);
+    this->addChild(barHungry);
+    this->addChild(hungryLabel);
+    
+    this->addChild(foodCarriageTitleLabel);
+    this->addChild(barFoodCarriage);
+    this->addChild(foodCarriageLabel);
+    
+    this->addChild(workRateTitleLabel);
+    this->addChild(workRateLabel);
+    this->addChild(workUnitPerDayTitleLabel);
+    this->addChild(workUnitPerDayLabel);
+    
+    this->addChild(movementRangeTitleLabel);
+    this->addChild(movementRangeLabel);
+    
+    this->addChild(animateSpeedTitleLabel);
+    this->addChild(animateSpeedLabel);
+    
+    this->addChild(currentActionTitleLabel);
+    this->addChild(currentActionLabel);
+    
+    this->addChild(targetLocationTitleLabel);
     
     // Done creation, now position them
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
@@ -264,11 +365,6 @@ void SpriteInfoMenu::createMenuItems()
     classTitleLabel->setAnchorPoint(ccp(0, 1));
     
     gameSpriteImage->setAnchorPoint(ccp(0, 1));
-    textEduLvl->setAnchorPoint(ccp(0, 1));
-    
-    labelExp->setAnchorPoint(ccp(0, 1));
-    textExp->setAnchorPoint(ccp(0, 1));
-    barExp->setAnchorPoint(ccp(0, 1));
     
     genderLabel->setAnchorPoint(ccp(0, 1));
     genderTitleLabel->setAnchorPoint(ccp(0, 1));
@@ -281,6 +377,30 @@ void SpriteInfoMenu::createMenuItems()
     loyaltyLabel->setAnchorPoint(ccp(0, 1));
     spHap->setAnchorPoint(ccp(0, 1));
     happinessLabel->setAnchorPoint(ccp(0, 1));
+    
+    hungryTitleLabel->setAnchorPoint(ccp(0, 1));
+    barHungry->setAnchorPoint(ccp(0, 1));
+    hungryLabel->setAnchorPoint(ccp(0, 1));
+    
+    foodCarriageTitleLabel->setAnchorPoint(ccp(0, 1));
+    barFoodCarriage->setAnchorPoint(ccp(0, 1));
+    foodCarriageLabel->setAnchorPoint(ccp(0, 1));
+    
+    workRateTitleLabel->setAnchorPoint(ccp(0, 1));
+    workRateLabel->setAnchorPoint(ccp(0, 1));
+    workUnitPerDayTitleLabel->setAnchorPoint(ccp(0, 1));
+    workUnitPerDayLabel->setAnchorPoint(ccp(0, 1));
+    
+    movementRangeTitleLabel->setAnchorPoint(ccp(0, 1));
+    movementRangeLabel->setAnchorPoint(ccp(0, 1));
+    
+    animateSpeedTitleLabel->setAnchorPoint(ccp(0, 1));
+    animateSpeedLabel->setAnchorPoint(ccp(0, 1));
+    
+    currentActionTitleLabel->setAnchorPoint(ccp(0, 1));
+    currentActionLabel->setAnchorPoint(ccp(0, 1));
+    
+    targetLocationTitleLabel->setAnchorPoint(ccp(0, 1));
     
     reposition();
     
@@ -357,24 +477,43 @@ void SpriteInfoMenu::reposition()
     classTitleLabel->CCNode::setPosition(60.0f, 156.0f);
     classLabel->CCNode::setPosition(160.0f, 156.0f);
     
-    gameSpriteImage->CCNode::setPosition(-195.0f, 100.0f);
-    textEduLvl->CCNode::setPosition(-210.0f, -20.0f);
+    gameSpriteImage->CCNode::setPosition(-300.0f, 125.0f);
     
-    labelExp->CCNode::setPosition(-200.0f, -50.0f);
-    barExp->CCNode::setPosition(-200.0f, -80.0f);
-    textExp->CCNode::setPosition(-110.0f, -80.0f);
+    foodCarriageTitleLabel->CCNode::setPosition(80.0f, 90.0f);
+    barFoodCarriage->CCNode::setPosition(80.0f, 60.0f);
+    foodCarriageLabel->CCNode::setPosition(220.0f, 60.0f);
     
-    genderTitleLabel->CCNode::setPosition(120.0f, 80.0f);
-    genderLabel->CCNode::setPosition(240.0f, 80.0f);
-    raceTitleLabel->CCNode::setPosition(120.0f, 30.0f);
-    raceLabel->CCNode::setPosition(240.0f, 30.0f);
-    movementSpeedTitleLabel->CCNode::setPosition(120.0f, -10.0f);
-    movementSpeedLabel->CCNode::setPosition(240.0f, -10.0f);
+    genderTitleLabel->CCNode::setPosition(-160.0f, 100.0f);
+    genderLabel->CCNode::setPosition(-60.0f, 100.0f);
+    raceTitleLabel->CCNode::setPosition(-160.0f, 70.0f);
+    raceLabel->CCNode::setPosition(-60.0f, 70.0f);
+    movementSpeedTitleLabel->CCNode::setPosition(-160.0f, 40.0f);
+    movementSpeedLabel->CCNode::setPosition(-60.0f, 40.0f);
     
-    spLoy->CCNode::setPosition(120.0f, -35.0f);
-    loyaltyLabel->CCNode::setPosition(240.0f, -50.0f);
-    spHap->CCNode::setPosition(120.0f, -75.0f);
-    happinessLabel->CCNode::setPosition(240.0f, -90.0f);
+    spLoy->CCNode::setPosition(-280.0f, 20.0f);
+    loyaltyLabel->CCNode::setPosition(-200.0f, 5.0f);
+    spHap->CCNode::setPosition(-120.0f, 20.0f);
+    happinessLabel->CCNode::setPosition(-40.0f, 5.0f);
+    
+    movementRangeTitleLabel->CCNode::setPosition(-280.0f, -35.0f);
+    movementRangeLabel->CCNode::setPosition(-200.0f, -35.0f);
+    animateSpeedTitleLabel->CCNode::setPosition(-120.0f, -35.0f);
+    animateSpeedLabel->CCNode::setPosition(-40.0f, -35.0f);
+    
+    currentActionTitleLabel->CCNode::setPosition(-280.0f, -65.0f);
+    currentActionLabel->CCNode::setPosition(-80.0f, -65.0f);
+    
+    targetLocationTitleLabel->CCNode::setPosition(-280.0f, -100.0f);
+    
+    hungryTitleLabel->CCNode::setPosition(80.0f, 30.0f);
+    barHungry->CCNode::setPosition(80.0f, 0.0f);
+    hungryLabel->CCNode::setPosition(220.0f, 0.0f);
+    
+    workRateTitleLabel->CCNode::setPosition(80.0f, -30.0f);
+    workRateLabel->CCNode::setPosition(220.0f, -30.0f);
+    
+    workUnitPerDayTitleLabel->CCNode::setPosition(80.0f, -60.0f);
+    workUnitPerDayLabel->CCNode::setPosition(220.0f, -60.0f);
     
     
     // Anchored top
@@ -403,73 +542,72 @@ void SpriteInfoMenu::refreshAllMenuItemValues()
         barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
     }
     
-    if (mGameSpriteEnergyMax != gameSprite->getPossessions()->defaultEnergy)
+    if (mGameSpriteEnergyMax != gameSprite->getPossessions()->default_energy_limit)
     {
-        mGameSpriteEnergyMax = gameSprite->getPossessions()->defaultEnergy;
+        mGameSpriteEnergyMax = gameSprite->getPossessions()->default_energy_limit;
         barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
     }
     
     /*
-    if (mGameSpriteCash != gameSprite->getPossessions()->cashOnHand)
-    {
-        mGameSpriteCash = gameSprite->getPossessions()->cashOnHand;
-        ss.str(std::string());
-        ss << mGameSpriteCash << " G";
-        textCash->setString(ss.str().c_str());
-    }
-    
-    if (mGameSpriteEduLvl != gameSprite->getPossessions()->educationLevel)
-    {
-        mGameSpriteEduLvl = gameSprite->getPossessions()->educationLevel;
-        ss.str(std::string());
-        ss << "Skill Level: " << mGameSpriteEduLvl;
-        textEduLvl->setString(ss.str().c_str());
-    }
-    if (mGameSpriteInt != gameSprite->getPossessions()->intelligenceRating)
-    {
-        mGameSpriteInt = gameSprite->getPossessions()->intelligenceRating;
-        ss.str(std::string());
-        ss << mGameSpriteInt/10;
-        textInt->setString(ss.str().c_str());
-    }
-    if (mGameSpriteLoy != gameSprite->getPossessions()->loyaltyRating)
-    {
-        mGameSpriteLoy = gameSprite->getPossessions()->loyaltyRating;
-        ss.str(std::string());
-        ss << mGameSpriteLoy/10;
-        textLoy->setString(ss.str().c_str());
-    }
-    if (mGameSpriteSoc != gameSprite->getPossessions()->socialRating)
-    {
-        mGameSpriteSoc = gameSprite->getPossessions()->socialRating;
-        ss.str(std::string());
-        ss << mGameSpriteSoc/10;
-        textSoc->setString(ss.str().c_str());
-    }*/
     if (mGameSpriteHap != gameSprite->getPossessions()->happinessRating)
     {
         mGameSpriteHap = gameSprite->getPossessions()->happinessRating;
         ss.str(std::string());
-        ss << mGameSpriteHap/10;
-        //textHap->setString(ss.str().c_str());
+        ss << mGameSpriteHap;
+        textHap->setString(ss.str().c_str());
     }
     
-    if (mGameSpriteExp != gameSprite->getPossessions()->expRating)
+    if (mGameSpriteLoy != gameSprite->getPossessions()->loyaltyRating)
     {
-        mGameSpriteExp = gameSprite->getPossessions()->expRating;
-        barExp->setValue(mGameSpriteExp / (float)mGameSpriteExpMax);
+        mGameSpriteLoy = gameSprite->getPossessions()->loyaltyRating;
         ss.str(std::string());
-        ss << mGameSpriteExp << "/" << mGameSpriteExpMax;
-        textExp->setString(ss.str().c_str());
+        ss << mGameSpriteLoy;
+        textLoy->setString(ss.str().c_str());
+    }
+    */
+    
+    if (mGameSpriteCurrAction != gameSprite->currAction)
+    {
+        mGameSpriteCurrAction = gameSprite->currAction;
+        ss.str(std::string());
+        ss << GlobalHelper::getActionString(gameSprite->currAction);
+        currentActionLabel->setString(ss.str().c_str());
     }
     
-    if (mGameSpriteExpMax != gameSprite->getPossessions()->getExpToLevel())
+    if (mGameSpriteFoodCarriage != gameSprite->getFoodCarried() || mGameSpriteFoodCarriageLimit != gameSprite->getPossessions()->default_food_carriage_limit)
     {
-        mGameSpriteExpMax = gameSprite->getPossessions()->getExpToLevel();
-        barExp->setValue(mGameSpriteExp / (float)mGameSpriteExpMax);
+        mGameSpriteFoodCarriage = gameSprite->getFoodCarried();
+        mGameSpriteFoodCarriageLimit = gameSprite->getPossessions()->default_food_carriage_limit;
         ss.str(std::string());
-        ss << mGameSpriteExp << "/" << mGameSpriteExpMax;
-        textExp->setString(ss.str().c_str());
+        ss << mGameSpriteFoodCarriage << "/" << mGameSpriteFoodCarriageLimit;
+        foodCarriageLabel->setString(ss.str().c_str());
+        barFoodCarriage->setValue((float) mGameSpriteFoodCarriage / (float) mGameSpriteFoodCarriageLimit);
+    }
+    
+    if (mGameSpriteHungry != gameSprite->getPossessions()->currentHungry || mGameSpriteHungryMax != gameSprite->getPossessions()->default_hungry_limit);
+    {
+        mGameSpriteHungry = gameSprite->getPossessions()->currentHungry;
+        mGameSpriteHungryMax = gameSprite->getPossessions()->default_hungry_limit;
+        ss.str(std::string());
+        ss << mGameSpriteHungry << "/" << mGameSpriteHungryMax;
+        hungryLabel->setString(ss.str().c_str());
+        barHungry->setValue((float) mGameSpriteHungry / (float) mGameSpriteHungryMax);
+    }
+    
+    if (mGameSpriteWorkRate != gameSprite->getPossessions()->default_work_rate)
+    {
+        mGameSpriteWorkRate = gameSprite->getPossessions()->default_work_rate;
+        ss.str(std::string());
+        ss << mGameSpriteWorkRate;
+        workRateLabel->setString(ss.str().c_str());
+    }
+    
+    if (mGameSpriteWorkUnitPerDay != gameSprite->getPossessions()->default_work_unit_per_day)
+    {
+        mGameSpriteWorkUnitPerDay = gameSprite->getPossessions()->default_work_unit_per_day;
+        ss.str(std::string());
+        ss << mGameSpriteWorkUnitPerDay;
+        workUnitPerDayLabel->setString(ss.str().c_str());
     }
 }
 

@@ -307,7 +307,7 @@ void PolicyHandler::UpdateFrames()
   //  last_frame_week = this_frame_week;
     last_frame_month = this_frame_month;
     
-    this_frame_day = GameTimer::getThis()->getCurrentDay();
+    this_frame_day = 0;
  //   this_frame_week = GameTimer::getThis()->getCurrentWeek();
     this_frame_month = GameTimer::getThis()->getCurrentMonth();
     

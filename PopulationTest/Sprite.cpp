@@ -15,6 +15,7 @@
 #include "GameDefaults.h"
 #include "NameGenerator.h"
 #include "BuildingHandler.h"
+#include "GlobalHelper.h"
 
 #include <sstream>
 
@@ -25,12 +26,18 @@ GameSprite::GameSprite()
     spriteSpeed = 50;
     currAction = IDLE;
     nextAction = IDLE;
+    
+    futureAction1 = IDLE;
+    futureAction2 = IDLE;
+    
     config_doc = "";
     shouldStopNextSquare = false;
     speechBubble = NULL;
     isFollowingMoveInstruction = false;
     currTile = NULL;
     shouldSetVisibleNextFrame = false;
+    
+    cumulativeTime = 0.0f;
  
     spawncost = 0;
     path = NULL;//CCArray::create();
@@ -53,19 +60,66 @@ GameSprite::GameSprite()
     idleDelay = 0.0f;
     fdaysLeft = 0.0f;
     
+    // Jerry added
     jobLocation = NULL;
     job = NONE;
     isDoingJob = false;
+    
+    foodCarried = 0;
     
 }
 
 
 void GameSprite::initAI(bool isUpgrade)
 {
+    // common stats
+    bool parsingSuccessful = false;
+    if(!isUpgrade)
+    {
+        parsingSuccessful = loadSpriteSetup();
+        if (!parsingSuccessful)
+        {
+            std::cout  << "Failed to parse defaults doc\n" << reader.getFormatedErrorMessages() << std::endl;
+        }
+        else
+        {
+            loadSpritePossessions();
+        }
+    }
+    
+    // specific stats
+    parsingSuccessful = loadClassSetup();
+    if (!parsingSuccessful)
+    {
+        std::cout  << "Failed to parse defaults doc\n" << reader.getFormatedErrorMessages() << std::endl;
+    }
+    else
+    {
+        loadClassPossessions();
+    }
+    
+    clearSetup();
+}
+
+bool GameSprite::loadSpriteSetup()
+{
+    if (sprite_doc.length() == 0)
+    {
+        std::cout << "no sprite stats loaded!" << std::endl;
+        return false;
+    }
+    
+    bool parsingSuccessful = reader.parse(sprite_doc, spriteRoot);
+    
+    return parsingSuccessful;
+}
+
+bool GameSprite::loadClassSetup()
+{
     if (config_doc.length() == 0)
     {
         std::cout << "no configuration loaded!" << std::endl;
-        return;
+        return false;
     }
     
     // this is the main method that starts off all the calculations
@@ -82,60 +136,62 @@ void GameSprite::initAI(bool isUpgrade)
     
     
     parsingSuccessful = reader.parse(defaults_doc, defaultsRoot);
-    if (!parsingSuccessful)
-    {
-        std::cout  << "Failed to parse defaults doc\n" << reader.getFormatedErrorMessages() << std::endl;
-        
-    }
-    else
-    {
-        if (!isUpgrade)
-        {
-        std::string encoding = defaultsRoot.get("encoding", "UTF-8" ).asString();
-        
-        possessions->happinessRating = atoi(defaultsRoot["default_happiness"].asString().c_str());
-        possessions->loyaltyRating = atoi(defaultsRoot["default_loyalty"].asString().c_str());
-        possessions->movementRange =atoi( defaultsRoot["default_move_range"].asString().c_str());
-        possessions->movementSpeed = atof( defaultsRoot["default_movement_speed"].asString().c_str());
-        possessions->animateSpeed = atof( defaultsRoot["default_animate_speed"].asString().c_str());
+    
+    return parsingSuccessful;
+}
 
-        possessions->energyRating = atoi(defaultsRoot["default_energy"].asString().c_str());
-        possessions->defaultEnergy = possessions->energyRating;
-        
-        if (defaultsRoot["spawn_cost"] != NULL)
-        {
-            spawncost = atoi(defaultsRoot["spawn_cost"].asString().c_str());
-        }
-        }
-        
-        
-        if (isUpgrade)
-            possessions->expToLevel->removeAllObjects();
-        
-        for (int i = 1; i <= 20; i++)
-        {
-            std::ostringstream s;
-            s << "default_exp_level" << i;
-            if (defaultsRoot[s.str()].isNull())
-                break;
-            
-            CCInteger* intval = CCInteger::create(atoi(defaultsRoot[s.str()].asString().c_str()));
-            
-            possessions->expToLevel->addObject(intval);
-            s.clear();
-        
-        }
+void GameSprite::loadSpritePossessions()
+{
+    std::string encoding = spriteRoot.get("encoding", "UTF-8" ).asString();
+    
+    possessions->default_work_rate = atoi(spriteRoot["default_work_rate"].asString().c_str());
+    
+    possessions->happinessRating = atoi(spriteRoot["default_happiness"].asString().c_str());
+    possessions->loyaltyRating = atoi(spriteRoot["default_loyalty"].asString().c_str());
+    
+    possessions->currentHungry = atoi(spriteRoot["default_current_hungry"].asString().c_str());
+    possessions->energyRating = atoi(spriteRoot["default_current_energy"].asString().c_str());
+    possessions->classLevel = atoi(spriteRoot["default_education_level"].asString().c_str());
+    
+    possessions->default_hapiness_limit = atoi(spriteRoot["default_hapiness_limit"].asString().c_str());
+    possessions->default_loyalty_limit = atoi(spriteRoot["default_loyalty_limit"].asString().c_str());
+    
+    possessions->default_exp_level1 = atoi(spriteRoot["default_exp_level1"].asString().c_str());
+    possessions->default_exp_level2 = atoi(spriteRoot["default_exp_level2"].asString().c_str());
+    possessions->default_exp_level3 = atoi(spriteRoot["default_exp_level3"].asString().c_str());
+    possessions->default_exp_level4 = atoi(spriteRoot["default_exp_level4"].asString().c_str());
+    possessions->default_exp_level5 = atoi(spriteRoot["default_exp_level5"].asString().c_str());
+    
+    if (defaultsRoot["spawn_cost"] != NULL)
+    {
+        spawncost = atoi(spriteRoot["spawn_cost"].asString().c_str());
     }
+}
+
+void GameSprite::loadClassPossessions()
+{
+    possessions->default_work_unit_per_day = atof( defaultsRoot["default_work_unit_per_day"].asString().c_str());
+    possessions->default_movement_range = atoi( defaultsRoot["default_movement_range"].asString().c_str());
+    possessions->default_movement_speed = atof( defaultsRoot["default_movement_speed"].asString().c_str());
+    possessions->default_animate_speed = atof( defaultsRoot["default_animate_speed"].asString().c_str());
+    
+    possessions->default_hungry_limit = atoi(defaultsRoot["default_hungry_limit"].asString().c_str());
+    
+    possessions->default_food_carriage_limit = atoi(defaultsRoot["default_food_carriage_limit"].asString().c_str());
+    possessions->default_energy_limit = atoi(defaultsRoot["default_energy_limit"].asString().c_str()  );
+}
+
+void GameSprite::clearSetup()
+{
     //  std::cout<<"created tree\n\n";
     //always reinitialize the behavior tree to point the current child back to the first left child
     
     behaviorTree->onInitialize();
     
+    spriteRoot.clear();
     defaultsRoot.clear();
     root.clear();
-   
 }
-
 
 
 Behavior* GameSprite::buildTreeWithJsonValue(Json::Value json)
@@ -256,7 +312,7 @@ GameSprite* GameSprite::create()
      setAction(IDLE);
      idleDelay = 0.0f;
      
-     initAI();
+     initAI(false);
      
      changeAnimation("DL");
      currentDir = "DL";
@@ -384,6 +440,31 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
         return true;
  }
 
+int GameSprite::getPathDistance(CCPoint from, CCPoint to)
+{
+    if(from.equals(to))
+    {
+        return 0;
+    }
+    else
+    {
+        PathFinder* p = new PathFinder();
+        CCArray* tempPath = CCArray::create();
+        tempPath->retain();
+        
+        tempPath = p->makePath(&from, &to);
+        
+        int result = tempPath->count();
+        
+        tempPath->removeAllObjects();
+        tempPath->release();
+        
+        return result;
+    }
+}
+
+
+
 
 void GameSprite::followPath()
 {
@@ -499,7 +580,7 @@ void GameSprite::changeAnimation(std::string dir)
         
     }
     
-    animation = CCAnimation::createWithSpriteFrames(animFrames, 50.0f / possessions->animateSpeed * 0.2f);
+    animation = CCAnimation::createWithSpriteFrames(animFrames, 50.0f / possessions->default_animate_speed * 0.2f);
  //   animFrames->removeAllObjects();
  //   animFrames->release();
     animation->setRestoreOriginalFrame(false);
@@ -534,7 +615,7 @@ void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
 
     callback = CCCallFuncN::create(pSender, callfuncN_selector(GameSprite::moveComplete));
     callback->retain();
-    spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f / possessions->movementSpeed, diff), callback);
+    spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f / possessions->default_movement_speed, diff), callback);
     //spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f, diff), callback);
 
     spriteRep->runAction(spriteRunAction);
@@ -600,6 +681,23 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 bool GameSprite::Wander()
 {
     if (isInteractingSocial) return false;
+    
+    if(spriteClass.compare("refugee") == 0 && hasEmptyHouse())
+    {
+        return findNearestHome();
+    }
+    
+    if(futureAction1 == EATING)
+    {
+        goToEat();
+        return false;
+    }
+    
+    if(futureAction1 == RESTING)
+    {
+        goToSleep();
+        return false;
+    }
     
     //Note: the random nature of Wander means there is no need to set isFollowingMoveInstruction to true. Wander should be interruptable at any time.
     wanderFlag = !wanderFlag;
@@ -691,6 +789,14 @@ void GameSprite::updateSprite(float dt)
   
     //After this part, only functions relating to IDLE will be called. This is because WALKING already has its own function calls.
 
+    // check the sprite interacts with the building
+    if(currTile != NULL)
+    {
+        if(currTile->building)
+        {
+            currTile->building->StickAroundHandler(this, dt);
+        }
+    }
     
     
     if (idleDelay > 0.0f)
@@ -703,13 +809,7 @@ void GameSprite::updateSprite(float dt)
     }
     else
     {
-        if(isDoingJob)
-        {
-            if(jobLocation != NULL)
-            {
-                jobLocation->StickAroundHandler(this);
-            }
-        }
+        
         
         if (currAction != IDLE) return;
      
@@ -828,6 +928,11 @@ void GameSprite::setDefaultsConfig(std::string config)
     defaults_doc = config;
 }
 
+void GameSprite::setSpriteConfig(std::string config)
+{
+    sprite_doc = config;
+}
+
 Possessions* GameSprite::getPossessions()
 {
     return possessions;
@@ -835,6 +940,7 @@ Possessions* GameSprite::getPossessions()
 
 void GameSprite::increasePossession(PossessionStats statType, int value)
 {
+    /*
     // Init our vars
     if (possessions == NULL) return;
     
@@ -850,11 +956,10 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
             break;
         case STATS_ENERGY:
             pStat = &possessions->energyRating;
-            statCap = possessions->defaultEnergy;
+            statCap = possessions->default_energy_limit;
             statName = "Energy";
             break;
         case STATS_EXP:
-            pStat = &possessions->expRating;
             statCap = possessions->getExpToLevel();
             statName = "Exp";
             break;
@@ -929,6 +1034,7 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
         default:
             return;
     }
+    */
 }
 
 void GameSprite::saySpeech(const char* text, float timeInSeconds)
@@ -1163,13 +1269,9 @@ bool GameSprite::PathToBuilding(int building_id)
     
 }
 
-/*Paths to a building under construction. Fails if there isn't a building under construction.*/
-bool GameSprite::GoBuild(Building *b)
+/* paths to a target building. */
+bool GameSprite::GoBuilding(Building* b)
 {
-    if (b->build_uint_current >= b->build_uint_required) return false; //already built
-    
-    this->nextAction = BUILD;
-    
     CCPoint startPos = getWorldPosition();
     CCPoint endPos = b->getWorldPosition();
     
@@ -1184,9 +1286,66 @@ bool GameSprite::GoBuild(Building *b)
     }
     
     return hasPath;
-    
 }
 
+/*Paths to a building under construction. Fails if there isn't a building under construction.*/
+bool GameSprite::GoBuild(Building *b)
+{
+    if (b->build_uint_current >= b->build_uint_required) return false; //already built
+    
+    this->nextAction = BUILD;
+    
+    return GoBuilding(b);
+}
+
+// farming
+bool GameSprite::GoFarming(Building *b)
+{
+    this->nextAction = FARMING;
+    
+    return GoBuilding(b);
+}
+
+bool GameSprite::GoRest(Building* b)
+{
+    // if it is not a residential house or the house does not belong to this sprite, return false -> cannot rest.
+    if(b->buildingType != HOUSING || possessions->homeLocation != b)
+    {
+        return false;
+    }
+    
+    this->nextAction = RESTING;
+    
+    return GoBuilding(b);
+}
+
+bool GameSprite::GoEat(Building* b)
+{
+    this->nextAction = EATING;
+    
+    return GoBuilding(b);
+}
+
+bool GameSprite::GoGranary(Building* b)
+{
+    this->nextAction = STORING;
+    
+    return GoBuilding(b);
+}
+
+bool GameSprite::returnFarm(Building* b)
+{
+    this->nextAction = FARMING;
+    
+    return GoBuilding(b);
+}
+
+bool GameSprite::GoHome(Building* b)
+{
+    this->nextAction = GET_HOME;
+    
+    return GoBuilding(b);
+}
 
 bool GameSprite::PathToBuild()
 {
@@ -1271,7 +1430,7 @@ bool GameSprite::isDestinationInRange(int destinationID)
     
     PathFinder *p = new PathFinder();
     CCArray* pathFromHome = p->makePath(&homePos, &to);
-    if (pathFromHome->count() > possessions->movementRange)
+    if (pathFromHome->count() > possessions->default_movement_range)
     {
         delete p;
         return false;
@@ -1296,6 +1455,18 @@ void GameSprite::ChangeSpriteTo(GameSprite *sp)
     
     //Because the class of the character is changed, the class level goes back to 1. 
     possessions->classLevel = 1;
+    
+    bool parsingSuccessful = reader.parse(defaults_doc, defaultsRoot);
+    
+    if (!parsingSuccessful)
+    {
+        std::cout  << "Failed to parse defaults doc\n" << reader.getFormatedErrorMessages() << std::endl;
+    }
+    else
+    {
+        //loadClassPossessions();
+    }
+
     
     ReplaceSpriteRep();
 }
@@ -1449,6 +1620,20 @@ void GameSprite::CallbackPerformingTask()
     
 }
 
+/*
+ * Jerry Added these functions
+ */
+
+Building* GameSprite::getHome()
+{
+    return possessions->homeLocation;
+}
+
+void GameSprite::setHome(Building* home)
+{
+    this->possessions->homeLocation = home;
+}
+
 SpriteJob GameSprite::getJob()
 {
     return job;
@@ -1483,3 +1668,241 @@ void GameSprite::updateIdleDelay(float delay)
 {
     this->idleDelay = delay;
 }
+
+void GameSprite::setIsFollowingMovementInstruction(bool flag)
+{
+    this->isFollowingMoveInstruction = flag;
+}
+
+void GameSprite::changeToCitizen()
+{
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
+    bool isMale = (gender == 'm');
+    for (int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* sprite = (GameSprite*)allSprites->objectAtIndex(i);
+        if(isMale)
+        {
+            if(sprite->type == M_CITIZEN)
+            {
+                ChangeSpriteTo(sprite);
+            }
+        }
+        else
+        {
+            if(sprite->type == F_CITIZEN)
+            {
+                ChangeSpriteTo(sprite);
+            }
+        }
+    }
+}
+
+void GameSprite::setTargetLocation(Building* b)
+{
+    possessions->targetLocation = b;
+}
+
+Building* GameSprite::getTargetLocation()
+{
+    return possessions->targetLocation;
+}
+
+int GameSprite::getTargetHungry()
+{
+    return possessions->targetHungry;
+}
+
+void GameSprite::setTargetHungry(int target)
+{
+    possessions->targetHungry = target;
+}
+
+void GameSprite::setFoodCarried(int food)
+{
+    foodCarried = food;
+}
+
+int GameSprite::getFoodCarried()
+{
+    return foodCarried;
+}
+
+Building* GameSprite::findNearestGranary()
+{
+    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* bui = (Building*) allBuildings->objectAtIndex(i);
+        
+        if(bui->food_consumption_rate > 0)
+        {
+            return bui;
+        }
+    }
+    return NULL;
+}
+
+bool GameSprite::isHungry()
+{
+    return possessions->currentHungry < possessions->default_hungry_limit;
+}
+
+float GameSprite::getCumulativeTime()
+{
+    return cumulativeTime;
+}
+
+void GameSprite::setCumulativeTime(float t)
+{
+    cumulativeTime = t;
+}
+
+void GameSprite::goToEat()
+{
+    Building* bui = findNearestGranary();
+    if(bui != NULL && bui->currentStorage > 0)
+    {
+        if(!bui->isUnderConstruction())
+        {
+            CCPoint startPos = getWorldPosition();
+            CCPoint endPos = bui->getWorldPosition();
+            
+            startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+            endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+            
+            if(startPos.equals(endPos))
+            {
+                CCLog("test1");
+                setTargetLocation(bui);
+                currAction = EATING;
+            }
+            else
+            {
+                CCLog("test2");
+                setTargetLocation(bui);
+                GoEat(bui);
+            }
+            CCLog("test3");
+            isDoingJob = false;
+        }
+    }
+    else if(bui != NULL)
+    {
+        if(getJob() == NONE && getJobLocation() == NULL)
+        {
+            if(futureAction1 == RESTING || futureAction2 == RESTING)
+            {
+                futureAction1 = RESTING;
+                futureAction2 = IDLE;
+            }
+        }
+    }
+}
+
+void GameSprite::goToSleep()
+{
+    if(getHome() == NULL)
+    {
+        return;
+    }
+    else
+    {
+        CCPoint startPos = getWorldPosition();
+        CCPoint endPos = getHome()->getWorldPosition();
+        
+        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        
+        if(startPos.equals(endPos))
+        {
+            setTargetLocation(getHome());
+            currAction = RESTING;
+        }
+        else
+        {
+            setTargetLocation(getHome());
+            GoRest(getHome());
+        }
+        isDoingJob = false;
+    }
+}
+
+void GameSprite::goToOccupyHome(Building* b)
+{
+    if(getHome() != NULL || b == NULL)
+    {
+        return;
+    }
+    else
+    {
+        CCPoint startPos = getWorldPosition();
+        CCPoint endPos = b->getWorldPosition();
+        
+        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        
+        if(startPos.equals(endPos))
+        {
+            setHome(b);
+            changeToCitizen();
+        }
+        else
+        {
+            setTargetLocation(b);
+            GoHome(b);
+        }
+        isDoingJob = false;
+    }
+}
+
+bool GameSprite::hasEmptyHouse()
+{
+    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    for(int i = 0; i < allHousing->count(); i++)
+    {
+        Building* b = (Building*)allHousing->objectAtIndex(i);
+        if(b->memberSpriteList->count() < b->populationLimit)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool GameSprite::findNearestHome()
+{
+    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    Building* nearestHome = NULL;
+    int distance = 999999;
+    
+    for(int i = 0; i < allHousing->count(); i++)
+    {
+        Building* b = (Building*)allHousing->objectAtIndex(i);
+        
+        CCPoint startPos = getWorldPosition();
+        CCPoint endPos = b->getWorldPosition();
+        
+        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        
+        int tempDistance = getPathDistance(startPos, endPos);
+        
+        if(tempDistance < distance && b->memberSpriteList->count() < b->populationLimit)
+        {
+            distance = tempDistance;
+            nearestHome = b;
+        }
+    }
+    
+    CCLog("test012");
+    if(nearestHome != NULL)
+    {
+        CCLog("test123");
+        possessions->targetHomeLocation = nearestHome;
+        goToOccupyHome(nearestHome);
+    }
+    
+    return true;
+}
+

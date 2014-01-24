@@ -12,6 +12,7 @@
 #include <string>
 using namespace std;
 
+#include "Sprite.h"
 #include "cocos2d.h"
 using namespace cocos2d;
 
@@ -35,6 +36,8 @@ public:
     
     static std::string Convert (float number);
     static std::string Convert (int number);
+    
+    static std::string getActionString(SpriteAction);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

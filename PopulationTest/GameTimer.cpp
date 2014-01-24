@@ -97,19 +97,19 @@ void GameTimer::OnOrientationChanged(){
 }
 
 int GameTimer::getCurrentDay(){
-    return currentDay;
+    return 0;
 }
 
 int GameTimer::getCurrentWeek(){
-    return currentWeek;
+    return 0;
 }
 
 int GameTimer::getCurrentMonth(){
-    return currentMonth;
+    return 0;
 }
 
 int GameTimer::getCurrentYear(){
-    return currentYear;
+    return 0;
 }
 
 void GameTimer::setTime(float elapsed, float last)

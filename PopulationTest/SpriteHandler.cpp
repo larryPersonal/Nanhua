@@ -12,18 +12,15 @@
 #include "GameHUD.h"
 
 //Config headers
+#include "GameSpriteCFG.h"
 #include "CitizenCFG.h"
 #include "FarmerCFG.h"
 #include "SoldierCFG.h"
 #include "RefugeeCFG.h"
 #include "BuilderCFG.h"
 #include "BanditCFG.h"
-//#include "ResearcherCFG.h"
-//#include "ChiefCFG.h"
-//#include "MerchantCFG.h"
-//#include "ACitizenCFG.h"
-//#include "AMerchantCFG.h"
-//#include "AChiefCFG.h"
+
+#include "GlobalSettings.h"
 
 #include "NameGenerator.h"
 
@@ -78,6 +75,8 @@ SpriteHandler::~SpriteHandler()
 
 void SpriteHandler::initialize()
 {
+    cumulatedTime = 0.0f;
+    
     NameGenerator::init();
     
     //create and add all spritesheets first.
@@ -107,13 +106,14 @@ void SpriteHandler::initialize()
         std::string configContent;
         std::string defaultContent;
         std::string targetClass;
+        std::string spriteContent;
         char targetGender;
         
         //randomly spawn as male or female.
       
         //it's always a human now.
         char targetRace = 'h';
-        
+        spriteContent = gameSpriteDefaults;
         
         switch (i)
         {
@@ -268,7 +268,6 @@ void SpriteHandler::initialize()
         
       //  CCLog("spritesheet has zorder %i", spriteSheet->getZOrder());
         
-        
         /*1 sprite per char. */
         GameSprite* gs = GameSprite::create();
         gs->gender = targetGender;
@@ -282,6 +281,8 @@ void SpriteHandler::initialize()
         gs->type = SpriteType (i);
         gs->setAIConfig(configContent);
         gs->setDefaultsConfig(defaultContent);
+        gs->setSpriteConfig(spriteContent);
+        
      //   gs->setRequirementsConfig(reqContent);
         //set default animation here.
         
@@ -294,7 +295,6 @@ void SpriteHandler::initialize()
     }
     
     initClassRequirements();
-    
 }
 
 void SpriteHandler::initClass(std::string classConfig)
@@ -408,6 +408,10 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, SpriteType type)
     
     GameSprite* newSprite = (GameSprite*)targetSprite->copy();
     newSprite->retain();
+    
+    newSprite->defaults_doc = targetSprite->defaults_doc;
+    newSprite->sprite_doc = targetSprite->sprite_doc;
+    
     newSprite->makeSprite(&tilePos);
     
     spritesOnMap->addObject(newSprite);
@@ -467,10 +471,9 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
          //   newSprite->getPossessions()->educationLevel = atoi(tokens[3].c_str());
           //  newSprite->getPossessions()->intelligenceRating = atoi(tokens[4].c_str());
            // newSprite->getPossessions()->socialRating = atoi(tokens[5].c_str());
-            newSprite->getPossessions()->movementRange = atoi(tokens[6].c_str());
+            //newSprite->getPossessions()->default_move = atoi(tokens[6].c_str());
             newSprite->getPossessions()->energyRating = atoi(tokens[7].c_str());
             newSprite->getPossessions()->classLevel = atoi(tokens[8].c_str());
-            newSprite->getPossessions()->expRating = atoi(tokens[9].c_str());
             
             //house
             
@@ -594,4 +597,48 @@ int SpriteHandler::getAlienCount()
 
     
     return aliensOnMap->count();
+}
+
+// Artificial Intelligence Included
+void SpriteHandler::update(float dt)
+{
+    // this is the section to detect the global hungry decay
+    cumulatedTime += dt;
+    
+    if(cumulatedTime >= (1.0f / GlobalSettings::hungry_decay))
+    {
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            gs->getPossessions()->currentHungry--;
+            
+            if(gs->getPossessions()->currentHungry < 0)
+            {
+                gs->getPossessions()->currentHungry = 0;
+            }
+        }
+        
+        cumulatedTime = 0.0f;
+    }
+
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+        
+        // check whether a sprite is hungry, if hungry, ask them to eat food
+        if(gs->getPossessions()->currentHungry <= GlobalSettings::find_food_hungry_treshold && gs->currAction != EATING && gs->nextAction != EATING && gs->currAction && gs->getTargetLocation() != gs->getHome())
+        {
+            gs->goToEat();
+        }
+    }
+}
+
+float SpriteHandler::getCumulatedTime()
+{
+    return cumulatedTime;
+}
+
+void SpriteHandler::setCumulatedTime(float time)
+{
+    cumulatedTime = time;
 }
