@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="90" height="60" tilewidth="128" tileheight="64">
+ <tileset firstgid="1" name="testSheet_v2" tilewidth="128" tileheight="128">
+  <image source="testSheet.png" trans="878787" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="17" name="testSheet-2x2" tilewidth="256" tileheight="256">
+  <tileoffset x="-64" y="0"/>
+  <image source="testSheet-2x2.png" trans="878787" width="512" height="512"/>
+ </tileset>
+ <layer name="Ground_0" width="90" height="60">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6H7Zf+NO0dBwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVfPihYk6k=
+  </data>
+ </layer>
+ <layer name="Building_1" width="90" height="60">
+  <data encoding="base64" compression="zlib">
+   eJzt1CEOwCAUREESLPc/b01rMCUUFtGZ5AsceWJLAQAAAABgt3r6Az+hc4bOGTrvUQeO7/qOb2/m6JzxdGz36bzOyCbb67XsRobOGTpn2OMzdM3QOUPnDJ0zdM7QGQAAAAAAAAAAYN4FeAYA0w==
+  </data>
+ </layer>
+ <layer name="Building_2" width="90" height="60">
+  <data encoding="base64" compression="zlib">
+   eJztziEOACAMA8B9YYT/vxVFgq0a4s60oqJVAAAAAAAAAEBiTx8AAAAAeHSYK9jfDgAAAAAAAAAA/O0AxpEA8w==
+  </data>
+ </layer>
+</map>

@@ -43,6 +43,8 @@ public:
     void scaleTo(float scaleFactor);
     void ResetPositionAndScale();
     
+    void centerMap();
+    
     CCArray* mapTiles;
     CCArray* pathTiles; //this array keeps all mapTiles that are marked as Path.
     

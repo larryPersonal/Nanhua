@@ -158,10 +158,7 @@ void MapHandler::initTiles(const char* mapName)
     setupTiles();
     
     scalePanLayer = CCLayer::create();
-    //scalePanLayer->setPosition(mapPtr->getPosition());
     
-  //  scalePanLayer->setPosition((mapScroll_max.x + mapScroll_min.x) / 2,
-   //                            (mapScroll_max.y + mapScroll_min.y) / 2);
     
     currBuildingPreview = NULL;
     previewTileHighlight = NULL;
@@ -194,8 +191,14 @@ void MapHandler::moveMapBy(float moveX, float moveY)
                 mapPtr->getPosition().y + moveY
                              );
     mapPtr->setPosition(forceBoundsConstraints(pos));
-
+    CCLog("%f, %f",mapPtr->getPosition().x, mapPtr->getPosition().y );
   //  scalePanLayer->setPosition(forceBoundsConstraints(pos));
+}
+
+void MapHandler::centerMap()
+{
+    CCPoint pos = CCPointMake(-5736, -1592);
+    mapPtr->setPosition(pos);
 }
 
 void MapHandler::ResetPositionAndScale()
@@ -446,15 +449,16 @@ void MapHandler::Populate(CCArray* layers)
     
     
     //again for paths
-    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_0");
+    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_1");
     
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
         for (int j = 0; j < mapPtr->getMapSize().height; ++j)
         {
             MapTile* tile = this->getTileAt(i,j);
+            if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
-            if (tile->tileGID != 5 && !tile->isOccupied() && !tile->hasBuilding())
+            if (tile->tileGID == 2 && !tile->isOccupied() && !tile->hasBuilding())
             {
                 tile->pathHere();
                 pathTiles->addObject(tile);
@@ -462,7 +466,8 @@ void MapHandler::Populate(CCArray* layers)
         }
     }
     
-    //now for environment
+    //now for environment //WARNING Ground_1 is now the tile layer
+    /*
     pLayer = mapPtr->layerNamed("Ground_1");
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
@@ -479,7 +484,7 @@ void MapHandler::Populate(CCArray* layers)
                 getTileAt(i, j)->setEnvironment(environment);
             }
         }
-    }
+    }*/
     pLayer->setVisible(false);
 }
 

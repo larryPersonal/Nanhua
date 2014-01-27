@@ -170,10 +170,10 @@ void Senario::createGUI(){
 
 void Senario::buttonSelect()
 {
-    if(active)
-    {
+    //if(active)
+    //{
         active = false;
         this->setVisible(false);
         GameScene::getThis()->enableTouch();
-    }
+    //}
 }

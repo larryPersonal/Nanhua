@@ -121,8 +121,8 @@ bool GameScene::init()
     
     setupScene();
     
-    this->schedule(schedule_selector( GameScene::move ), 1/60.0f);
     
+   // this->schedule(schedule_selector( GameScene::move ), 1/60.0f);
     return true;
 }
 
@@ -130,7 +130,7 @@ bool GameScene::init()
 
 void GameScene::setupScene()
 {
-        mapHandler->initTiles("MayanMap.tmx");
+        mapHandler->initTiles("testScene.tmx");
         
         if (mapHandler->getMap())
         {
@@ -167,7 +167,7 @@ void GameScene::setupScene()
 
             mapHandler->originateMapToTile();
             
-           
+            mapHandler->centerMap();
          }
         
         spriteHandler = new SpriteHandler();
@@ -199,6 +199,8 @@ void GameScene::move(float time)
     float xSpeed = 32.0f;
     float ySpeed = 32.0f * (yDiff / xDiff);
     
+    
+    
     // update the position of the screen centre.
     screenCenter->setPosition(xPos + xSpeed, yPos + ySpeed);
     
@@ -216,7 +218,7 @@ void GameScene::move(float time)
 void GameScene::initOrientationChange()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    screenCenter->setPosition(screenSize.width * -3.0f, screenSize.height * 1.2f);
+    //screenCenter->setPosition(screenSize.width * -3.0f, screenSize.height * 1.2f);
     mapHandler->rescaleScrollLimits();
     mapHandler->moveMapBy(0.0f, 0.0f);
 }
@@ -537,7 +539,7 @@ void GameScene::FirstRunPopulate()
     else
     {
         CCLOG("GameManager::getLoadedGame is false!");
-        CCPoint target = CCPointMake(5,18);
+        CCPoint target = CCPointMake(25,18);
         
         spriteHandler->addSpriteToMap(target, M_REFUGEE);
         
