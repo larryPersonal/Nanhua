@@ -23,14 +23,16 @@ public:
     ElementType type;
     
     float width;
-    float height;
     float left;
     float top;
     
     std::string src;
+    std::string name;
     std::string font;
     int fontSize;
     std::string text;
+    
+    std::string dir;
     
 public:
     Element();

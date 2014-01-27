@@ -25,7 +25,7 @@ Senario::~Senario()
     Senario::SP = NULL;
     spriteList.clear();
     menuList.clear();
-    
+    labelList.clear();
 }
 
 Senario* Senario::getThis()
@@ -63,21 +63,24 @@ void Senario::readSenarioFile(const char *senario)
 {
     curSlide = 0;
     SenarioManager* sm = new SenarioManager();
-    sm->parseXMLFile("sessionT_start.xml");
+    sm->parseXMLFile("senario.xml");
     
     slidesList = sm->slidesList;
     
     constructSenarioStage();
 }
 
-void Senario::constructSenarioStage()
+bool Senario::constructSenarioStage()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorBlack = ccc3(0, 0, 0);
+    ccColor3B colorYellow = ccc3(225, 219, 108);
+    ccColor3B colorBlue = ccc3(0, 0, 255);
     clearElements();
     
     if(slidesList->count() <= curSlide)
     {
-        return;
+        return false;
     }
     
     Slide* slide = (Slide*)slidesList->objectAtIndex(curSlide);
@@ -94,40 +97,72 @@ void Senario::constructSenarioStage()
             
             CCSprite* cha = CCSprite::create(ele->src.c_str());
             CCSize spriteSize = cha->getContentSize();
-            cha->setScaleX(screenSize.width / spriteSize.width * ele->width / 100.0f);
-            cha->setScaleY(screenSize.height / spriteSize.height * ele->height / 100.0f);
+            cha->setScale(screenSize.width / spriteSize.width * ele->width / 100.0f);
             
-            cha->setPosition(ccp(screenSize.width * (ele->left / 100.0f + ele->width / 200.0f), screenSize.height * (ele->top / 100.0f + ele->height / 200.0f)));
+            cha->setAnchorPoint(ccp(0, 1));
+            cha->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             this->addChild(cha);
             spriteList.push_back(cha);
         }
         else if(ele->type == Element::dialogue)
         {
-            CCMenuItem* chbox = CCMenuItemImage::create(ele->src.c_str(), ele->src.c_str(), this, menu_selector(Senario::test));
+            CCSprite* chbox = CCSprite::create(ele->src.c_str());
             CCSize boxSize = chbox->getContentSize();
-            chbox->setScaleX(screenSize.width / boxSize.width * ele->width / 100.0f);
-            chbox->setScaleY(screenSize.height / boxSize.height * ele->height / 100.0f);
+            chbox->setScale(screenSize.width / boxSize.width * ele->width / 100.0f);
+            chbox->setAnchorPoint(ccp(0, 1));
+            chbox->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             
-            CCLabelTTF* chboxLabel = CCLabelTTF::create(ele->text.c_str(), "MBBlockType", ele->fontSize, chbox->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-            chboxLabel->setPosition(ccp(chbox->boundingBox().size.width, chbox->boundingBox().size.height));
-            chbox->addChild(chboxLabel);
-            //chboxLabel->setFontName(ele->font.c_str());
+            std::stringstream ss;
+            ss << ele->text;
+            CCLabelTTF* chboxLabel = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+            chboxLabel->setColor(colorBlack);
+            chboxLabel->setAnchorPoint(ccp(0, 1));
+            chboxLabel->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + 30.0f, (chbox->boundingBox().size.height / 2.0f) + (chbox->getPositionY() - chbox->boundingBox().size.height)));
             
-            chbox->setPosition(ccp(screenSize.width * (ele->left / 100.0f + ele->width / 200.0f), screenSize.height * (ele->top / 100.0f + ele->height / 200.0f)));
+            ss.str(std::string());
+            ss << ele->name;
+            CCLabelTTF* chboxName = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+            chboxName->setColor(colorBlue);
+            chboxName->setAnchorPoint(ccp(0.5, 1));
+            if(ele->dir.compare("left") == 0)
+            {
+                chboxName->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + chboxName->boundingBox().size.width / 2.0f + 28.0f, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f));
+            }
+            else
+            {
+                chboxName->setPosition(ccp(chbox->boundingBox().size.width - 16.0f, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f));
+            }
             
-            CCMenu* menu = CCMenu::create(chbox, NULL);
+            CCMenuItemImage* nextButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(Senario::nextButtonPressed));
+            nextButton->setAnchorPoint(ccp(0.5, 0.5));
+            nextButton->setScale(0.3f);
+            
+            this->addChild(chbox);
+            this->addChild(chboxLabel);
+            this->addChild(chboxName);
+            spriteList.push_back(chbox);
+            labelList.push_back(chboxLabel);
+            labelList.push_back(chboxName);
+            
+            CCMenu* menu = CCMenu::create(nextButton, NULL);
+            menu->setPosition(ccp(screenSize.width * 0.84f, screenSize.height * 0.07f));
+            
             this->addChild(menu, 1);
+            
             
             menuList.push_back(menu);
         }
     }
+    return true;
 }
 
-void Senario::test()
+void Senario::nextButtonPressed()
 {
     curSlide++;
     //clearElements();
-    constructSenarioStage();
+    if(!constructSenarioStage()){
+        startGameMenu->setVisible(true);
+    }
 }
 
 void Senario::clearElements()
@@ -142,30 +177,42 @@ void Senario::clearElements()
         this->removeChild(menuList.at(i));
     }
     
+    for(int i = 0; i < labelList.size(); i++)
+    {
+        this->removeChild(labelList.at(i));
+    }
+    
     spriteList.clear();
     menuList.clear();
+    labelList.clear();
 }
 
 void Senario::createGUI(){
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
+    /*
     character = CCSprite::create("exit_pressed.png", CCRectMake(0, 0, 125, 154) );
     character->setPosition( ccp(character->getContentSize().width/2, screenSize.height/2) );
     this->addChild(character);
+    */
     
     chatbox = CCMenuItemImage::create("text_box.jpg", "text_box.jpg", this, menu_selector(Senario::buttonSelect));
-    chatbox->setScale(0.5f);
+    chatbox->setScale(0.2f);
     
-    CCLabelTTF* chatboxLabel = CCLabelTTF::create("Hello World!", "MBBlockType" ,64, chatbox->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // chatboxLabel->setAnchorPoint(ccp(0.5f, 0.5));
-    chatboxLabel->setPosition( ccp(chatbox->boundingBox().size.width, chatbox->boundingBox().size.height));
+    std::stringstream ss;
+    ss << "Start Game!";
+    CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "Arial" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
+
+    chatboxLabel->setAnchorPoint(ccp(0, 0));
+    chatboxLabel->setPosition( ccp(chatbox->boundingBox().size.width / 2.0f, chatbox->boundingBox().size.height));
     chatbox->addChild(chatboxLabel);
     chatboxLabel->setColor(ccc3(255,189,68));
     
-    CCMenu* menu = CCMenu::create(chatbox, NULL);
-    menu->setAnchorPoint(ccp(0.5f, 0.5f));
-    menu->setPosition(screenSize.width * 0.5, screenSize.height * 0.6);
-    this->addChild(menu, 1);
+    startGameMenu = CCMenu::create(chatbox, NULL);
+    startGameMenu->setAnchorPoint(ccp(0.5f, 0.5f));
+    startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
+    startGameMenu->setVisible(false);
+    this->addChild(startGameMenu, 1);
 }
 
 void Senario::buttonSelect()
