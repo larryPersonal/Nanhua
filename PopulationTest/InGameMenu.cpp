@@ -67,20 +67,22 @@ void InGameMenu::createMenuItems()
 */
     
     CCSprite* buildImage =          CCSprite::create("button-side.png");
+    /*
     CCSprite* researchImage =       CCSprite::create("button-side.png");
     CCSprite* populationImage =     CCSprite::create("button-side.png");
     CCSprite* policyImage =         CCSprite::create("button-side.png");
     CCSprite* infoImage =           CCSprite::create("button-side.png");
-    CCSprite* systemImage =         CCSprite::create("button-side.png");
+    CCSprite* systemImage =         CCSprite::create("button-side.png");*/
     CCSprite* exitImage =           CCSprite::create("button-side.png");
 
     
     menuItemsBuild      = CCMenuItemSprite::create(buildImage, buildImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
+    /*
     menuItemsResearch   = CCMenuItemSprite::create(researchImage, researchImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
     menuItemsPopulation = CCMenuItemSprite::create(populationImage, populationImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
     menuItemsPolicy     = CCMenuItemSprite::create(policyImage, policyImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
     menuItemsInfo       = CCMenuItemSprite::create(infoImage, infoImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
-    menuItemsSystem     = CCMenuItemSprite::create(systemImage, systemImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
+    menuItemsSystem     = CCMenuItemSprite::create(systemImage, systemImage, this, menu_selector(InGameMenu::onMenuItemSelected) );*/
     menuItemsExit       = CCMenuItemSprite::create(exitImage, exitImage, this, menu_selector(InGameMenu::onMenuItemSelected) );
     
     
@@ -89,7 +91,7 @@ void InGameMenu::createMenuItems()
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     buildLabel->setPosition( ccp(menuItemsBuild->getPositionX() + menuItemsBuild->boundingBox().size.width * 0.5f, menuItemsBuild->getPositionY() + menuItemsBuild->boundingBox().size.height * 0.55f));
     menuItemsBuild->addChild(buildLabel);
-
+/*
     CCLabelTTF* researchLabel = CCLabelTTF::create("RESEARCH", "Verdana" ,24, menuItemsResearch->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     researchLabel->setPosition( ccp(menuItemsResearch->getPositionX() + menuItemsResearch->boundingBox().size.width * 0.5f, menuItemsResearch->getPositionY() + menuItemsResearch->boundingBox().size.height * 0.55f));
@@ -113,7 +115,7 @@ void InGameMenu::createMenuItems()
     CCLabelTTF* systemLabel = CCLabelTTF::create("SYSTEM", "Verdana" ,24, menuItemsSystem->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     systemLabel->setPosition( ccp(menuItemsInfo->getPositionX() + menuItemsSystem->boundingBox().size.width * 0.5f, menuItemsInfo->getPositionY() + menuItemsSystem->boundingBox().size.height * 0.55f));
-    menuItemsSystem->addChild(systemLabel);
+    menuItemsSystem->addChild(systemLabel);*/
 
     CCLabelTTF* exitLabel = CCLabelTTF::create("EXIT", "Verdana" ,24, menuItemsExit->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
@@ -125,21 +127,22 @@ void InGameMenu::createMenuItems()
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
         menuItemsBuild->        setScale(0.67);
+        /*
         menuItemsResearch->     setScale(0.67);
         menuItemsPopulation->   setScale(0.67);
         menuItemsPolicy->       setScale(0.67);
         menuItemsInfo->         setScale(0.67);
-        menuItemsSystem->       setScale(0.67);
+        menuItemsSystem->       setScale(0.67);*/
         menuItemsExit->         setScale(0.67);
     }
     
     menuItems->addObject(menuItemsBuild);
-    menuItems->addObject(menuItemsResearch);
-    menuItems->addObject(menuItemsPolicy);
+   //menuItems->addObject(menuItemsResearch);
+    //menuItems->addObject(menuItemsPolicy);
     
     
     GameManager* m = GameManager::getThis();
-    
+    /*
     if (!m->isMenuItemUnlocked("menu_policy"))
     {
         menuItemsPolicy->setEnabled(false);
@@ -152,12 +155,12 @@ void InGameMenu::createMenuItems()
         menuItemsResearch->setEnabled(false);
         menuItemsResearch->setColor(ccGRAY);
         
-    }
+    }*/
     
     
-    menuItems->addObject(menuItemsPopulation);
-    menuItems->addObject(menuItemsInfo);
-    menuItems->addObject(menuItemsSystem);
+  //  menuItems->addObject(menuItemsPopulation);
+   // menuItems->addObject(menuItemsInfo);
+   // menuItems->addObject(menuItemsSystem);
     menuItems->addObject(menuItemsExit);
     
     for (int x = 0; x < menuItems->count(); x++) {
@@ -195,7 +198,7 @@ void InGameMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
             GameHUD::getThis()->setMenuMode(2);
         }
         break;
-            
+           /*
         case 1: //Research
         {
             CCLog("Research");
@@ -251,9 +254,9 @@ void InGameMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
             GameHUD::getThis()->miscLabel->setString("Back");
             GameHUD::getThis()->setMenuMode(7);
         }
-        break;
-            
-        case 6: //Exit
+        break;*/
+            //was 6
+        case 1: //Exit
         {
             AlertBox* alert = AlertBox::create();
             alert->useAsTopmostPopupMenu();

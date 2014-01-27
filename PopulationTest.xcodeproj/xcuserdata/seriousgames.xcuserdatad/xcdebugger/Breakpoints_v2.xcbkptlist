@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "412502695.559707"
+            timestampString = "412511012.032899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "MapHandler::ResetPositionAndScale()"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "412502695.559707"
+            timestampString = "412511012.032899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178">
+            startingLineNumber = "181"
+            endingLineNumber = "181">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1070,22 +1070,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameManager.cpp"
-            timestampString = "398340610.045618"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
-            landmarkName = "GameManager::loadGameData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/GameManager.cpp"
             timestampString = "411302887.44998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -1140,22 +1124,6 @@
             startingLineNumber = "395"
             endingLineNumber = "395"
             landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/GameManager.cpp"
-            timestampString = "398340610.045618"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458"
-            landmarkName = "GameManager::loadGameData()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1390,11 +1358,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "412502695.559707"
+            timestampString = "412511012.032899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "694"
-            endingLineNumber = "694"
+            startingLineNumber = "697"
+            endingLineNumber = "697"
             landmarkName = "MapHandler::UnBuild(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1406,11 +1374,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "412502695.559707"
+            timestampString = "412511012.032899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "577"
-            endingLineNumber = "577"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1912,11 +1880,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildMenu.cpp"
-            timestampString = "411359975.726606"
+            timestampString = "412510836.763261"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
             landmarkName = "BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1928,11 +1896,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildMenu.cpp"
-            timestampString = "411359975.726606"
+            timestampString = "412510836.763261"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "475"
-            endingLineNumber = "475"
+            startingLineNumber = "476"
+            endingLineNumber = "476"
             landmarkName = "BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2212,11 +2180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/InGameMenu.cpp"
-            timestampString = "398595672.011676"
+            timestampString = "412510360.76971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "InGameMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2228,11 +2196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/InGameMenu.cpp"
-            timestampString = "398595672.011676"
+            timestampString = "412510360.76971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "InGameMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2244,11 +2212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/InGameMenu.cpp"
-            timestampString = "398595672.011676"
+            timestampString = "412510321.478573"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "InGameMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2276,11 +2244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/InGameMenu.cpp"
-            timestampString = "398595672.011676"
+            timestampString = "412510321.478573"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "InGameMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3106,11 +3074,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "412502695.559707"
+            timestampString = "412511012.032899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3122,11 +3090,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "412502695.559707"
+            timestampString = "412511012.032899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "MapHandler::getTileAt(int X, int Y)"
             landmarkType = "5">
          </BreakpointContent>

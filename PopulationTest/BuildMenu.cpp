@@ -88,7 +88,7 @@ void BuildMenu::createMenuItems()
     float ySocial = 0.0f;
     float yMilitary = 0.0f;
     
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < 2; ++i)
     {
         
         CCArray* mItem = CCArray::create();
@@ -152,7 +152,7 @@ void BuildMenu::createMenuItems()
                 
                 menuItemArray[1]->addObject(menuItem);
                 yAmenity -=(menuImage->boundingBox().size.height + 40);
-                
+             /*
 
                 break;
             case COMMERCE:
@@ -184,7 +184,7 @@ void BuildMenu::createMenuItems()
                 
                 menuItemArray[4]->addObject(menuItem);
                 ySocial -=(menuImage->boundingBox().size.height + 40);
-                
+                */
 
                 break;
             default:
@@ -377,6 +377,7 @@ void BuildMenu::createMenuItems()
             case 1:
                 buildCat = "Amenity";
                 break;
+            /*
             case 2:
                 buildCat = "Commerce";
                 break;
@@ -390,7 +391,7 @@ void BuildMenu::createMenuItems()
                 break;
             case 5:
                 buildCat = "Military";
-
+*/
                 break;
             default:
                 break;

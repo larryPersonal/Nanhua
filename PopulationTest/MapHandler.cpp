@@ -47,11 +47,14 @@ void MapHandler::UnBuildEndGame()
      {
             for (int j = 0; j < mapPtr->getMapSize().height; ++j)
             {
-                    if (getTileAt(i, j)->hasBuilding())
+                    if (getTileAt(i, j) != NULL)
                     {
-     
+                        if (getTileAt(i, j)->hasBuilding())
+                        {
+                            
                             CCPoint p = ccp(i,j);
                             ForceUnbuild(p);
+                        }
                     }
             }
      }
