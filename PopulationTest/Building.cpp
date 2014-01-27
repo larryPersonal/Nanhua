@@ -799,24 +799,26 @@ void Building::ChangeAppearance(Building *b)
 
 void Building::BeginAnim()
 {
-        if (buildingName.compare("Farm") == 0)
+    /*
+    if (buildingName.compare("Farm") == 0)
         {
             GUID_offset = targetGUID;
             CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Building::AnimUpdate), this, 10.0f, false);
             
            
         }
-    
+    */
 }
 
 
 void Building::EndAnim()
 {
-        if (buildingName.compare("Farm") == 0)
+    /*
+    if (buildingName.compare("Farm") == 0)
         {
             CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(Building::AnimUpdate), this);
         }
-
+*/
 }
 
 void Building::AnimUpdate()
