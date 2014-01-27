@@ -20,7 +20,7 @@ class Senario : public CCLayer
 public:
     static Senario* SP;
     
-    CCSprite* character;
+    //CCSprite* character;
     CCMenuItem* chatbox;
     
     char* text;
@@ -31,8 +31,11 @@ public:
     
     vector<CCSprite*> spriteList;
     vector<CCMenu*> menuList;
+    vector<CCLabelTTF*> labelList;
     
     CCArray* slidesList;
+    
+    CCMenu* startGameMenu;
     
 public:
     Senario();
@@ -53,9 +56,9 @@ public:
     
     void updateGameScene();
     
-    void constructSenarioStage();
+    bool constructSenarioStage();
     
-    void test();
+    void nextButtonPressed();
     
     void clearElements();
 };

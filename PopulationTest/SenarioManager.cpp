@@ -125,14 +125,6 @@ void SenarioManager::parseXMLFile(string xml)
                 temp = ::atof(content.c_str());
                 element->width = temp;
             }
-            else if(str.find("<height>") != std::string::npos)
-            {
-                start_pos = str.find("<height>");
-                end_pos = str.find("</height>");
-                content = str.substr(start_pos + 8, end_pos - start_pos - 8);
-                temp = ::atof(content.c_str());
-                element->height = temp;
-            }
             else if(str.find("<left>") != std::string::npos)
             {
                 start_pos = str.find("<left>");
@@ -155,6 +147,20 @@ void SenarioManager::parseXMLFile(string xml)
                 end_pos = str.find("</src>");
                 content = str.substr(start_pos + 5, end_pos - start_pos - 5);
                 element->src = content;
+            }
+            else if(str.find("<dir>") != std::string::npos)
+            {
+                start_pos = str.find("<dir>");
+                end_pos = str.find("</dir>");
+                content = str.substr(start_pos + 5, end_pos - start_pos - 5);
+                element->dir = content;
+            }
+            else if(str.find("<name>") != std::string::npos)
+            {
+                start_pos = str.find("<name>");
+                end_pos = str.find("</name>");
+                content = str.substr(start_pos + 6, end_pos - start_pos - 6);
+                element->name = content;
             }
             else if(str.find("<font>") != std::string::npos)
             {
