@@ -37,6 +37,7 @@ void MapTile::init()
 
 bool MapTile::isOccupied()
 {
+    if (this==NULL) return true;
     bool occupied = false;
     bool b = false;//(building != NULL);
     bool m = false;//(master != NULL);

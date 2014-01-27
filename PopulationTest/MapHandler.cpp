@@ -94,7 +94,6 @@ void MapHandler::setupTiles()
     
     CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
   
-    
     mapTiles = CCArray::create();
       for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
@@ -138,7 +137,8 @@ float MapHandler::getInverseScale()
 MapTile* MapHandler::getTileAt(int X, int Y)
 {
     int targetIndex = mapPtr->getMapSize().width * X + Y;
-    if (targetIndex >= mapTiles->count()) return NULL;
+    if (targetIndex >= mapTiles->count())
+            return NULL;
     
     
     return  (MapTile*)mapTiles->objectAtIndex( targetIndex );
@@ -191,7 +191,7 @@ void MapHandler::moveMapBy(float moveX, float moveY)
                 mapPtr->getPosition().y + moveY
                              );
     mapPtr->setPosition(forceBoundsConstraints(pos));
-    CCLog("%f, %f",mapPtr->getPosition().x, mapPtr->getPosition().y );
+  //  CCLog("%f, %f",mapPtr->getPosition().x, mapPtr->getPosition().y );
   //  scalePanLayer->setPosition(forceBoundsConstraints(pos));
 }
 
@@ -449,7 +449,7 @@ void MapHandler::Populate(CCArray* layers)
     
     
     //again for paths
-    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_1");
+    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_0");
     
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
@@ -458,7 +458,8 @@ void MapHandler::Populate(CCArray* layers)
             MapTile* tile = this->getTileAt(i,j);
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
-            if (tile->tileGID == 2 && !tile->isOccupied() && !tile->hasBuilding())
+            //CCLog("%i",tile->tileGID);
+            if (tile->tileGID != 7 && !tile->isOccupied() && !tile->hasBuilding())
             {
                 tile->pathHere();
                 pathTiles->addObject(tile);
@@ -467,7 +468,7 @@ void MapHandler::Populate(CCArray* layers)
     }
     
     //now for environment //WARNING Ground_1 is now the tile layer
-    /*
+    
     pLayer = mapPtr->layerNamed("Ground_1");
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
@@ -484,7 +485,7 @@ void MapHandler::Populate(CCArray* layers)
                 getTileAt(i, j)->setEnvironment(environment);
             }
         }
-    }*/
+    }
     pLayer->setVisible(false);
 }
 
@@ -508,6 +509,7 @@ CCPoint MapHandler::getRandomPathTile()
         return CCPointMake(-1, -1);
     
     int targetIdx = rand() % pathTiles->count();
+    
     MapTile* tgtTile = (MapTile*)pathTiles->objectAtIndex(targetIdx);
     if (!tgtTile->isPath) return CCPointMake(-1,-1);
     
@@ -749,7 +751,7 @@ void MapHandler::Path(cocos2d::CCPoint &target)
     targetTile->pathHere();
     pathTiles->addObject(targetTile);
     CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
-    groundzero->setTileGID(1, target);
+    groundzero->setTileGID(3, target);
     
 }
 
@@ -873,7 +875,7 @@ void MapHandler::UnPath(cocos2d::CCPoint &target)
     targetTile->unpathHere();
     CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
     
-    groundzero->setTileGID(5, target);
+    groundzero->setTileGID(7, target);
 }
 
 void MapHandler::UnPathPreview()

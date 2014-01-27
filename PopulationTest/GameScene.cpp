@@ -167,7 +167,7 @@ void GameScene::setupScene()
 
             mapHandler->originateMapToTile();
             
-            mapHandler->centerMap();
+           
          }
         
         spriteHandler = new SpriteHandler();
@@ -539,7 +539,7 @@ void GameScene::FirstRunPopulate()
     else
     {
         CCLOG("GameManager::getLoadedGame is false!");
-        CCPoint target = CCPointMake(25,18);
+        CCPoint target = CCPointMake(25,19);
         
         spriteHandler->addSpriteToMap(target, M_REFUGEE);
         
@@ -575,7 +575,7 @@ void GameScene::FirstRunPopulate()
     }
     this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
     
-    
+     mapHandler->centerMap();
 }
 
 void GameScene::update(float time)

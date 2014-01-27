@@ -379,7 +379,7 @@ void GameManager::loadGameData()
                         targetTile->pathHere();
                         GameScene::getThis()->mapHandler->pathTiles->addObject(targetTile);
                         CCTMXLayer* groundzero = GameScene::getThis()->mapHandler->getMap()->layerNamed("Ground_0");
-                        groundzero->setTileGID(1, target);
+                        groundzero->setTileGID(3, target); //exact GID of map tile. Count from L to R, U to Down in TMX tile map, starting from 1.
                     }
                     
                     

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "397990891.709618"
+            timestampString = "412502695.559707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
@@ -90,13 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "397990891.709618"
+            timestampString = "412502695.559707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "178"
-            endingLineNumber = "178"
-            landmarkName = "MapHandler::getMap()"
-            landmarkType = "5">
+            endingLineNumber = "178">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -206,7 +204,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "641"
-            endingLineNumber = "641">
+            endingLineNumber = "641"
+            landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -269,7 +269,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "Building::ModifyStats(GameSprite *sp)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -315,7 +315,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "347"
             endingLineNumber = "347"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -330,9 +330,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "Building::ArriveHandler(GameSprite* sp)"
-            landmarkType = "5">
+            endingLineNumber = "207">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -390,7 +388,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "442"
@@ -443,7 +441,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "538"
             endingLineNumber = "538"
-            landmarkName = "Building::getAlienPopulationCount()"
+            landmarkName = "Building::leaveHouse(GameSprite* sp)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -459,7 +457,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "532"
             endingLineNumber = "532"
-            landmarkName = "Building::getOverpopulateCount()"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -475,7 +473,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "994"
             endingLineNumber = "994"
-            landmarkName = "GameSprite::LeaveHouse()"
+            landmarkName = "GameSprite::increasePossession(PossessionStats statType, int value)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -584,7 +582,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "533"
-            endingLineNumber = "533">
+            endingLineNumber = "533"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -599,7 +599,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "993"
             endingLineNumber = "993"
-            landmarkName = "GameSprite::LeaveHouse()"
+            landmarkName = "GameSprite::increasePossession(PossessionStats statType, int value)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -647,7 +647,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1038"
             endingLineNumber = "1038"
-            landmarkName = "GameSprite::PathToWork()"
+            landmarkName = "GameSprite::increasePossession(PossessionStats statType, int value)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -663,7 +663,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1023"
             endingLineNumber = "1023"
-            landmarkName = "GameSprite::PathToHome()"
+            landmarkName = "GameSprite::increasePossession(PossessionStats statType, int value)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -679,7 +679,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "621"
             endingLineNumber = "621"
-            landmarkName = "GameSprite::Wander()"
+            landmarkName = "GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -695,7 +695,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "606"
             endingLineNumber = "606"
-            landmarkName = "GameSprite::Wander()"
+            landmarkName = "GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -711,7 +711,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "614"
             endingLineNumber = "614"
-            landmarkName = "GameSprite::Wander()"
+            landmarkName = "GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -775,7 +775,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "653"
             endingLineNumber = "653"
-            landmarkName = "GameSprite::getAction()"
+            landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -870,9 +870,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "719"
-            endingLineNumber = "719"
-            landmarkName = "GetAllCommerce_Glue(lua_State *L)"
-            landmarkType = "7">
+            endingLineNumber = "719">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -887,7 +885,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "718"
             endingLineNumber = "718"
-            landmarkName = "GetAllCommerce_Glue(lua_State *L)"
+            landmarkName = "GetLoyalty_Glue(lua_State *L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -903,7 +901,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "722"
             endingLineNumber = "722"
-            landmarkName = "GetAllCommerce_Glue(lua_State *L)"
+            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -919,7 +917,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "734"
             endingLineNumber = "734"
-            landmarkName = "GetBuildingsOfType_Glue(lua_State *L)"
+            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -935,7 +933,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "743"
             endingLineNumber = "743"
-            landmarkName = "GetBuildingsOfType_Glue(lua_State *L)"
+            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -951,7 +949,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "699"
             endingLineNumber = "699"
-            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
+            landmarkName = "GetHappiness_Glue(lua_State * L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -967,7 +965,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "701"
             endingLineNumber = "701"
-            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
+            landmarkName = "GetHappiness_Glue(lua_State * L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -983,7 +981,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "700"
             endingLineNumber = "700"
-            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
+            landmarkName = "GetHappiness_Glue(lua_State * L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -999,7 +997,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "645"
             endingLineNumber = "645"
-            landmarkName = "GetBuildingLevel_Glue(lua_State *L)"
+            landmarkName = "IsDestinationInRange_Glue(lua_State *L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1046,9 +1044,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "271"
-            endingLineNumber = "271"
-            landmarkName = "HasHouse_Glue(lua_State *L)"
-            landmarkType = "7">
+            endingLineNumber = "271">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1138,7 +1134,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "395"
@@ -1367,7 +1363,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "547"
             endingLineNumber = "547"
-            landmarkName = "Building::getUnoccupiedCount()"
+            landmarkName = "Building::leaveHouse(GameSprite* sp)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1383,7 +1379,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "67"
             endingLineNumber = "67"
-            landmarkName = "Building::~Building()"
+            landmarkName = "Building::Building()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1394,11 +1390,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "397993017.075916"
+            timestampString = "412502695.559707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "692"
-            endingLineNumber = "692"
+            startingLineNumber = "694"
+            endingLineNumber = "694"
             landmarkName = "MapHandler::UnBuild(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1410,11 +1406,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "397993017.075916"
+            timestampString = "412502695.559707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1634,13 +1630,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "520"
-            endingLineNumber = "520"
-            landmarkName = "GameScene::FirstRunPopulate()"
-            landmarkType = "5">
+            endingLineNumber = "520">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1650,11 +1644,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapTile.cpp"
-            timestampString = "394598241.52182"
+            timestampString = "412502351.903547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "MapTile::hasBuilding()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1666,7 +1660,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "519"
@@ -1749,7 +1743,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
             endingLineNumber = "52"
-            landmarkName = "GoHome_Glue(lua_State* L)"
+            landmarkName = "IsAtMaxLevel_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1765,7 +1759,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "734"
             endingLineNumber = "734"
-            landmarkName = "GameSprite::updateSprite(float dt)"
+            landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1780,7 +1774,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "932"
-            endingLineNumber = "932">
+            endingLineNumber = "932"
+            landmarkName = "GameSprite::setSpriteConfig(std::string config)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1795,7 +1791,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "938"
             endingLineNumber = "938"
-            landmarkName = "GameSprite::SetHouse(int instanceID)"
+            landmarkName = "GameSprite::getPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1811,7 +1807,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "944"
             endingLineNumber = "944"
-            landmarkName = "GameSprite::SetHouse(int instanceID)"
+            landmarkName = "GameSprite::increasePossession(PossessionStats statType, int value)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1827,7 +1823,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "924"
             endingLineNumber = "924"
-            landmarkName = "GameSprite::saySpeech(const char* text, float timeInSeconds)"
+            landmarkName = "GameSprite::setAIConfig(std::string config)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1842,7 +1838,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "207"
-            endingLineNumber = "207">
+            endingLineNumber = "207"
+            landmarkName = "HasBuildingUnderConstruction_Glue(lua_State *L)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1873,7 +1871,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1282"
             endingLineNumber = "1282"
-            landmarkName = "GameSprite::ChangeSpriteTo(GameSprite *sp)"
+            landmarkName = "GameSprite::GoBuilding(Building* b)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1889,7 +1887,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1297"
             endingLineNumber = "1297"
-            landmarkName = "GameSprite::ReplaceSpriteRep()"
+            landmarkName = "GameSprite::GoBuild(Building *b)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1946,7 +1944,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "334"
@@ -1962,11 +1960,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "330"
-            endingLineNumber = "330">
+            endingLineNumber = "330"
+            landmarkName = "GameScene::postDrag(float time)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1976,7 +1976,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "409831596.264715"
+            timestampString = "412502774.710479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "329"
@@ -2011,7 +2011,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "268"
             endingLineNumber = "268"
-            landmarkName = "GameSprite::makeSprite(CCPoint* tilePos)"
+            landmarkName = "GameSprite::copyWithZone(CCZone *pZone)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2027,7 +2027,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1062"
             endingLineNumber = "1062"
-            landmarkName = "GameSprite::PathToWork()"
+            landmarkName = "GameSprite::SetHouse(int instanceID)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2059,7 +2059,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "315"
             endingLineNumber = "315"
-            landmarkName = "Building::ModifyStats(GameSprite *sp)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2075,7 +2075,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1101"
             endingLineNumber = "1101"
-            landmarkName = "GameSprite::PathToBuildingOverride(int building_id)"
+            landmarkName = "GameSprite::LeaveJob()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2091,7 +2091,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1067"
             endingLineNumber = "1067"
-            landmarkName = "GameSprite::PathToWork()"
+            landmarkName = "GameSprite::SetHouse(int instanceID)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2107,7 +2107,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1026"
             endingLineNumber = "1026"
-            landmarkName = "GameSprite::PathToHome()"
+            landmarkName = "GameSprite::increasePossession(PossessionStats statType, int value)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2123,7 +2123,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1063"
             endingLineNumber = "1063"
-            landmarkName = "GameSprite::PathToWork()"
+            landmarkName = "GameSprite::SetHouse(int instanceID)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2139,7 +2139,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "299"
             endingLineNumber = "299"
-            landmarkName = "Building::initializeJobs()"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2201,7 +2201,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "365"
             endingLineNumber = "365"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2425,7 +2425,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
             endingLineNumber = "149"
-            landmarkName = "GoBuild_Glue(lua_State* L)"
+            landmarkName = "Retreat_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2441,7 +2441,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
             endingLineNumber = "138"
-            landmarkName = "GoBuild_Glue(lua_State* L)"
+            landmarkName = "GoPillage_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2472,7 +2472,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "655"
-            endingLineNumber = "655">
+            endingLineNumber = "655"
+            landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2581,7 +2583,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "151"
             endingLineNumber = "151"
-            landmarkName = "GoBuild_Glue(lua_State* L)"
+            landmarkName = "Retreat_Glue(lua_State* L)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2597,7 +2599,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "352"
             endingLineNumber = "352"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2613,7 +2615,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "349"
             endingLineNumber = "349"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2821,7 +2823,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "353"
             endingLineNumber = "353"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2837,7 +2839,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "354"
             endingLineNumber = "354"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3029,7 +3031,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "196"
             endingLineNumber = "196"
-            landmarkName = "Building::ArriveHandler(GameSprite* sp)"
+            landmarkName = "Building::getWorldPosition()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3094,6 +3096,54 @@
             startingLineNumber = "97"
             endingLineNumber = "97"
             landmarkName = "ProgressBar::setValue(float value)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/MapHandler.cpp"
+            timestampString = "412502695.559707"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
+            landmarkName = "MapHandler::Populate(CCArray* layers)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/MapHandler.cpp"
+            timestampString = "412502695.559707"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "MapHandler::getTileAt(int X, int Y)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/GameManager.cpp"
+            timestampString = "412504172.579869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
+            landmarkName = "GameManager::loadGameData()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
