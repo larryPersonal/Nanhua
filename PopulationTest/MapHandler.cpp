@@ -99,14 +99,14 @@ void MapHandler::setupTiles()
   
     mapTiles = CCArray::create();
     
-      for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+      for (int i = 0; i < mapPtr->getMapSize().height; ++i)
     {
-        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        for (int j = 0; j < mapPtr->getMapSize().width; ++j)
         {
             
             MapTile* tile = new MapTile();
             tile->autorelease();
-            tile->tileGID = groundzero->tileGIDAt(ccp(i,j));
+            tile->tileGID = groundzero->tileGIDAt(ccp(j,i));
             tile->xpos = i;
             tile->ypos = j;
             mapTiles->addObject(tile);
@@ -458,14 +458,6 @@ void MapHandler::Populate(CCArray* layers)
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
             if (tile->tileGID == 3)
             {
-               /*HACK
-                The map positions do NOT match. Something is wrong with the map! For now I'll force set the tile position so wander works.
-                */
-                CCLog("Path at %i, %i", i, j);
-                CCLog("But tile is %i, %i", tile->xpos, tile->ypos);
-                tile->xpos = i;
-                tile->ypos = j;
-                
                 tile->pathHere();
                 pathTiles->addObject(tile);
             }
