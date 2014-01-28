@@ -575,7 +575,7 @@ void GameScene::FirstRunPopulate()
     }
     this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
     
-     mapHandler->centerMap();
+    mapHandler->centerMap();
 }
 
 void GameScene::update(float time)

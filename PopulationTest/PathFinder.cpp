@@ -86,6 +86,9 @@ CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
     openList->addObject(n);
     
     initializeWithLowestCostNode(*toTile);
+    
+    
+    
     CCArray* retrievedPath = CCArray::create();
     //retrievedPath->autorelease();
     n = isOnList(*toTile, closedList);

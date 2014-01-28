@@ -98,6 +98,7 @@ void MapHandler::setupTiles()
     CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
   
     mapTiles = CCArray::create();
+    
       for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
         for (int j = 0; j < mapPtr->getMapSize().height; ++j)
@@ -108,12 +109,6 @@ void MapHandler::setupTiles()
             tile->tileGID = groundzero->tileGIDAt(ccp(i,j));
             tile->xpos = i;
             tile->ypos = j;
-          //  tile->retain();
-            
-            /** Grey out unplayable tiles **/
-          //  if (!playAreaRect.containsPoint(ccp(i,j)))
-          //      groundzero->tileAt(ccp(i, j))->setColor(ccGRAY);
-            
             mapTiles->addObject(tile);
         }
         
@@ -377,7 +372,7 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
     if (!isTilePosWithinBounds(tilePos)) return true;
     
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
-    if (targetTile->isOccupied()) return true;
+   // if (targetTile->isOccupied()) return true;
     if (!targetTile->isPath && !targetTile->hasBuilding()) return true;
     
     //if the first test passes, check if its blocked by the metalayer
@@ -461,15 +456,21 @@ void MapHandler::Populate(CCArray* layers)
             MapTile* tile = this->getTileAt(i,j);
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
-            //CCLog("%i",tile->tileGID);
-            if (tile->tileGID != 7 && !tile->isOccupied() && !tile->hasBuilding())
+            if (tile->tileGID == 3)
             {
+               /*HACK
+                The map positions do NOT match. Something is wrong with the map! For now I'll force set the tile position so wander works.
+                */
+                
+                tile->xpos = i;
+                tile->ypos = j;
+                
                 tile->pathHere();
                 pathTiles->addObject(tile);
             }
         }
     }
-    
+
     //now for environment //WARNING Ground_1 is now the tile layer
     
     pLayer = mapPtr->layerNamed("Ground_1");
@@ -515,7 +516,6 @@ CCPoint MapHandler::getRandomPathTile()
     
     MapTile* tgtTile = (MapTile*)pathTiles->objectAtIndex(targetIdx);
     if (!tgtTile->isPath) return CCPointMake(-1,-1);
-    
     
     
     return CCPointMake(tgtTile->xpos, tgtTile->ypos);

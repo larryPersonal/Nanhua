@@ -423,7 +423,7 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
             }
     
         path = p->makePath(&from, &to);
-    
+       
         if (path->count() == 0)
         {
             

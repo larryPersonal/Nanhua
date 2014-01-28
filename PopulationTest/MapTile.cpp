@@ -39,8 +39,23 @@ bool MapTile::isOccupied()
 {
     if (this==NULL) return true;
     bool occupied = false;
+    
+    
     bool b = false;//(building != NULL);
+    if (building != NULL)
+    {
+        if (building->buildingName.compare("Wall") == 0 || building->buildingName.compare("Gate") == 0)
+            b = true;
+    }
     bool m = false;//(master != NULL);
+    
+    if (master != NULL)
+    {
+        if (master->building->buildingName.compare("Wall") == 0 || master->building->buildingName.compare("Gate") == 0)
+            m = true;
+
+    }
+    
     bool e = (environment != NULL);
     if (b || m || e) {
         occupied = true;

@@ -357,6 +357,7 @@ void GameManager::loadGameData()
                     
                     break;
                 }
+                    
                 case 4:
                 {
                     if (out.length() == 0) break;
