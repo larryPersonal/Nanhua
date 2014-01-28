@@ -432,7 +432,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     currentStorage -= sp->getFoodCarried();
                 }
                 
-                Building* gran = sp->findNearestGranary();
+                Building* gran = sp->findNearestGranary(true);
                 if(gran != NULL)
                 {
                     sp->setTargetLocation(gran);

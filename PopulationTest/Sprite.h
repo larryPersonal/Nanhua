@@ -278,7 +278,7 @@ public:
     void setFoodCarried(int);
     int getFoodCarried();
     
-    Building* findNearestGranary();
+    Building* findNearestGranary(bool);
     
     bool loadSpriteSetup();
     bool loadClassSetup();

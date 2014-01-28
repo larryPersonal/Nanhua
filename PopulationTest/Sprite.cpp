@@ -1728,19 +1728,49 @@ int GameSprite::getFoodCarried()
     return foodCarried;
 }
 
-Building* GameSprite::findNearestGranary()
+Building* GameSprite::findNearestGranary(bool isDeliveringFood)
 {
-    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
-    for(int i = 0; i < allBuildings->count(); i++)
+    CCArray* allAmenity = GameScene::getThis()->buildingHandler->amenityOnMap;
+    Building* nearestGranary = NULL;
+    int distance = 999999;
+    
+    for(int i = 0; i < allAmenity->count(); i++)
     {
-        Building* bui = (Building*) allBuildings->objectAtIndex(i);
+        Building* bui = (Building*) allAmenity->objectAtIndex(i);
         
+        if(bui->food_consumption_rate <= 0)
+        {
+            continue;
+        }
+        else if(bui->currentStorage <= 0 && !isDeliveringFood)
+        {
+            continue;
+        }
+        
+        CCPoint startPos = getWorldPosition();
+        CCPoint endPos = bui->getWorldPosition();
+        
+        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        
+        int tempDistance = getPathDistance(startPos, endPos);
+        
+        if(tempDistance < distance)
+        {
+            distance = tempDistance;
+            nearestGranary = bui;
+        }
+        
+        /*
         if(bui->food_consumption_rate > 0)
         {
             return bui;
         }
+        */
     }
-    return NULL;
+    //return NULL;
+    
+    return nearestGranary;
 }
 
 bool GameSprite::isHungry()
@@ -1760,7 +1790,7 @@ void GameSprite::setCumulativeTime(float t)
 
 void GameSprite::goToEat()
 {
-    Building* bui = findNearestGranary();
+    Building* bui = findNearestGranary(false);
     if(bui != NULL && bui->currentStorage > 0)
     {
         if(!bui->isUnderConstruction())
@@ -1773,17 +1803,14 @@ void GameSprite::goToEat()
             
             if(startPos.equals(endPos))
             {
-                CCLog("test1");
                 setTargetLocation(bui);
                 currAction = EATING;
             }
             else
             {
-                CCLog("test2");
                 setTargetLocation(bui);
                 GoEat(bui);
             }
-            CCLog("test3");
             isDoingJob = false;
         }
     }
@@ -1895,10 +1922,8 @@ bool GameSprite::findNearestHome()
         }
     }
     
-    CCLog("test012");
     if(nearestHome != NULL)
     {
-        CCLog("test123");
         possessions->targetHomeLocation = nearestHome;
         goToOccupyHome(nearestHome);
     }
