@@ -461,7 +461,8 @@ void MapHandler::Populate(CCArray* layers)
                /*HACK
                 The map positions do NOT match. Something is wrong with the map! For now I'll force set the tile position so wander works.
                 */
-                
+                CCLog("Path at %i, %i", i, j);
+                CCLog("But tile is %i, %i", tile->xpos, tile->ypos);
                 tile->xpos = i;
                 tile->ypos = j;
                 
