@@ -206,7 +206,9 @@ void GameHUD::onMenuButtonPressed()
         menuIsOpen = false;
         currMenuMode = None;
         miscLabel->setString("Menu");
+        GameScene::getThis()->setTouchEnabled(true);
     }
+    
     CCLog("menuIsOpen = %i", menuIsOpen);
 }
 
