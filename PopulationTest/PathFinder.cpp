@@ -10,6 +10,12 @@
 #include "GameScene.h"
 #include <cmath>
 
+PathFinder::PathFinder()
+{
+    lowest_h = 9999;
+}
+
+
 PathFinder::~PathFinder()
 {
    openList->removeAllObjects();
@@ -139,6 +145,11 @@ CCArray* PathFinder::getReachableTiles(PathfindingNode *fromTile,
                 
                 int H = manhattanDist(&fromTile->tilepos, toTile);
                 int F = G + H;
+                if (H < lowest_h)
+                {
+                    closest = fromTile->tilepos;
+                    lowest_h = H;
+                }
                 
                 PathfindingNode* existingNode = isOnList( adjacentTile, openList );
                 
@@ -213,9 +224,7 @@ void PathFinder::initializeWithLowestCostNode(CCPoint target)
 		if (openList->count() != 0)
         {
             initializeWithLowestCostNode(target);
-            
-      
-		}
+            		}
 	}
     reachableTiles->removeAllObjects();
     reachableTiles->release();

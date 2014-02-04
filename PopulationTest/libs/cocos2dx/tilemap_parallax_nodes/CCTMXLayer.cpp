@@ -93,7 +93,7 @@ bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerIn
         m_bUseAutomaticVertexZ = false;
         m_nVertexZvalue = 0;
         
-        return true	;
+        return true;
     }
     return false;
 }
@@ -195,7 +195,7 @@ void CCTMXLayer::setupTiles()
     }
 
     CCAssert( m_uMaxGID >= m_pTileSet->m_uFirstGid &&
-       m_uMinGID >= m_pTileSet->m_uFirstGid, "TMX: Only 1 tileset per layer is supported");
+        m_uMinGID >= m_pTileSet->m_uFirstGid, "TMX: Only 1 tileset per layer is supported");    
 }
 
 // CCTMXLayer - Properties
@@ -244,7 +244,7 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
 
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
-    sprite->setFlipX(false);
+    sprite->setFlipY(false);
     sprite->setRotation(0.0f);
     sprite->setAnchorPoint(ccp(0,0));
 
@@ -296,11 +296,9 @@ CCSprite* CCTMXLayer::reusedTileWithRect(CCRect rect)
 {
     if (! m_pReusedTile) 
     {
-        CCLog("creating new reused tile");
         m_pReusedTile = new CCSprite();
         m_pReusedTile->initWithTexture(m_pobTextureAtlas->getTexture(), rect, false);
         m_pReusedTile->setBatchNode(this);
-        
     }
     else
     {
@@ -390,6 +388,7 @@ CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
     CCSprite *tile = reusedTileWithRect(rect);
 
     setupTileSprite(tile, pos, gid);
+
     // get atlas index
     unsigned int indexForZ = atlasIndexForNewZ(z);
 

@@ -33,6 +33,9 @@ THE SOFTWARE.
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
 #include "cocoa/CCArray.h"
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -60,15 +63,33 @@ All features from CCNode are valid, plus the following new features:
 class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
+    /**
+     *  @js ctor
+     */
     CCLayer();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLayer();
     virtual bool init();
     
     /** create one layer */
     static CCLayer *create(void);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnterTransitionDidFinish();
     
     // default implements are used to call script callback if exist
@@ -82,7 +103,10 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
     void registerScriptAccelerateHandler(int nHandler);
     void unregisterScriptAccelerateHandler(void);
@@ -163,6 +187,56 @@ private:
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 };
 
+#ifdef __apple__
+#pragma mark -
+#pragma mark CCLayerRGBA
+#endif
+
+/** CCLayerRGBA is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
+ 
+ All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
+ - opacity
+ - RGB colors
+ @since 2.1
+ */
+class CC_DLL CCLayerRGBA : public CCLayer, public CCRGBAProtocol
+{
+public:
+    CREATE_FUNC(CCLayerRGBA);
+    /**
+     *  @js ctor
+     */
+    CCLayerRGBA();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual ~CCLayerRGBA();
+    
+    virtual bool init();
+    
+    virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const ccColor3B& getColor();
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() { return false; }
+protected:
+	GLubyte		_displayedOpacity, _realOpacity;
+	ccColor3B	_displayedColor, _realColor;
+	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
+};
+
 //
 // CCLayerColor
 //
@@ -172,21 +246,28 @@ All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CC_DLL CCLayerColor : public CCLayerRGBA, public CCBlendProtocol
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 protected:
     ccVertex2F m_pSquareVertices[4];
     ccColor4F  m_pSquareColors[4];
 
 public:
+    /**
+     *  @js ctor
+     */
     CCLayerColor();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLayerColor();
 
     virtual void draw();
     virtual void setContentSize(const CCSize & var);
-
-    //@deprecated: This interface will be deprecated sooner or later.
-    static CCLayerColor* node();
     
     static CCLayerColor* create();
     
@@ -210,15 +291,11 @@ public:
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-    /** Opacity: conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
-    /** Color: conforms to CCRGBAProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
     /** BlendFunction. Conforms to CCBlendProtocol protocol */
     CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
-
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
+   
+    virtual void setColor(const ccColor3B &color);
+    virtual void setOpacity(GLubyte opacity);
 
 protected:
     virtual void updateColor();
@@ -257,10 +334,14 @@ public:
     static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
     virtual bool init();
-    /** Initializes the CCLayer with a gradient between start and end. */
+    /** Initializes the CCLayer with a gradient between start and end. 
+     *  @js init
+     */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
 
-    /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
+    /** Initializes the CCLayer with a gradient between start and end in the direction of v. 
+     *  @js init
+     */
     virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_startColor, StartColor)
@@ -277,9 +358,6 @@ protected:
 public:
     virtual void setCompressedInterpolation(bool bCompressedInterpolation);
     virtual bool isCompressedInterpolation();
-
-    //@deprecated: This interface will be deprecated sooner or later.
-    static CCLayerGradient* node();
     
     static CCLayerGradient* create();
 
@@ -299,10 +377,30 @@ protected:
     unsigned int m_nEnabledLayer;
     CCArray*     m_pLayers;
 public:
+    /**
+     * @js ctor
+     * @lua NA
+     */
     CCLayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCLayerMultiplex();
+    /**
+     * @js NA
+     */
+    static CCLayerMultiplex* create();
+    
+    /** creates a CCMultiplexLayer with an array of layers.
+     * @since v2.1
+     * @js NA
+     */
+    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 
-    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
+    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
+     * @lua NA
+     */
     static CCLayerMultiplex * create(CCLayer* layer, ... );
 
     /**
@@ -313,15 +411,19 @@ public:
 
     void addLayer(CCLayer* layer);
 
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
+     *  @js NA
+     *  @lua NA
+     */
     bool initWithLayers(CCLayer* layer, va_list params);
     /** switches to a certain layer indexed by n. 
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
 
     /** initializes a CCMultiplexLayer with an array of layers
-    @since v2.1
-    */
+     *  @since v2.1
+     *  @lua NA
+     */
     bool initWithArray(CCArray* arrayOfLayers);
 
     void switchTo(unsigned int n);
@@ -329,15 +431,6 @@ public:
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
     void switchToAndReleaseMe(unsigned int n);
-    
-    //@deprecated: This interface will be deprecated sooner or later.
-    static CCLayerMultiplex* node();
-    
-    static CCLayerMultiplex* create();
-    /** creates a CCMultiplexLayer with an array of layers.
-    @since v2.1
-    */
-    static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
 };
 
 

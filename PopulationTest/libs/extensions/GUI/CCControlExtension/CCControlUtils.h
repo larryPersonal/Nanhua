@@ -35,7 +35,7 @@
 #define __CCCONTROL_UTILS_H__
 
 #include "sprite_nodes/CCSprite.h"
-#include "ExtensionMacros.h"
+#include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -61,7 +61,10 @@ typedef struct
  * @{
  */
 
-//helper class to store ccColor3B's in mutable arrays
+/**helper class to store ccColor3B's in mutable arrays
+ * @js NA
+ * @lua NA
+ **/
 class CCColor3bObject : public CCObject
 {
 public:

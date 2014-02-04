@@ -33,6 +33,9 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "cocoa/CCDictionary.h"
 #include <string>
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -76,7 +79,10 @@ struct transformValues_;
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-class CC_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
+class CC_DLL CCSprite : public CCNodeRGBA, public CCTextureProtocol
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 public:
     /// @{
@@ -158,11 +164,14 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     CCSprite(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~CCSprite(void);
     
@@ -235,6 +244,7 @@ public:
      *
      * @param   pszFilename The path to an image file in local file system
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js init
      */
     virtual bool initWithFile(const char *pszFilename);
     
@@ -248,43 +258,20 @@ public:
      * @param   pszFilename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js init
      */
     virtual bool initWithFile(const char *pszFilename, const CCRect& rect);
     
     /// @} end of initializers
-    
-    
-    /// @{
-    /// @name Functions inherited from CCRGBAProtocol
-    inline virtual GLubyte getOpacity() { return m_nOpacity; }
-    /**
-     * Changes the opacity.
-     *
-     * @warning If the sprite's texture has premultiplied alpha then, the R, G and B channels will be modified.
-     *
-     * @param   value   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
-     */
-    virtual void setOpacity(GLubyte value);
-    virtual const ccColor3B& getColor();
-    virtual void setColor(const ccColor3B& value);
-    /**
-     * Changes the premultipliedAlphaOpacity property.
-     *
-     * Textures with premultiplied alpha will have this property by default on true.
-     * Otherwise the default value is false.
-     *
-     * @param   bValue  flase then opacity will be applied as: glColor(R,G,B,opacity);
-     *                  true then opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
-     */
-    virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
-    /// @} end of CCRGBAProtocol Inheritance
     
     /// @{
     /// @name Functions inherited from CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);
     virtual CCTexture2D* getTexture(void);
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
+    /**
+     * @js NA
+     */
     inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
     /// @}
 
@@ -292,6 +279,9 @@ public:
     /// @name Functions inherited from CCNode
     virtual void setScaleX(float fScaleX);
     virtual void setScaleY(float fScaleY);
+    /**
+     * @lua NA
+     */
     virtual void setPosition(const CCPoint& pos);
     virtual void setRotation(float fRotation);
     virtual void setRotationX(float fRotationX);
@@ -311,6 +301,16 @@ public:
     virtual void ignoreAnchorPointForPosition(bool value);
     virtual void setVisible(bool bVisible);
     virtual void draw(void);
+    /// @}
+    
+    /// @{
+    /// @name Functions inherited from CCNodeRGBA
+    virtual void setColor(const ccColor3B& color3);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual void setOpacity(GLubyte opacity);
+    virtual void setOpacityModifyRGB(bool modify);
+    virtual bool isOpacityModifyRGB(void);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     /// @}
 
     
@@ -387,6 +387,7 @@ public:
     
     /**
      * Returns the current displayed frame.
+     * @js NA
      */
     virtual CCSpriteFrame* displayFrame(void);
     
@@ -419,7 +420,8 @@ public:
     inline virtual void setDirty(bool bDirty) { m_bDirty = bDirty; }
     
     /**
-     * Returns the quad (tex coords, vertex coords and color) information. 
+     * Returns the quad (tex coords, vertex coords and color) information.
+     * @js NA
      */
     inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
@@ -469,6 +471,7 @@ public:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
      * @return true if the sprite is flipped horizaontally, false otherwise.
+     * @js isFlippedX
      */
     bool isFlipX(void);
     /**
@@ -487,6 +490,7 @@ public:
      * sprite->setScaleY(sprite->getScaleY() * -1);
      * 
      * @return true if the sprite is flipped vertically, flase otherwise.
+     * @js isFlippedY
      */
     bool isFlipY(void);
     /**
@@ -540,18 +544,11 @@ protected:
     ccV3F_C4B_T2F_Quad m_sQuad;
 
     // opacity and RGB protocol
-    ccColor3B m_sColorUnmodified;
     bool m_bOpacityModifyRGB;
 
     // image is flipped
     bool m_bFlipX;                              /// Whether the sprite is flipped horizaontally or not.
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
-    
-    // opacity
-    GLubyte m_nOpacity;                         /// Goes from 0-255. 0 means fully tranparent and 255 means fully opaque.
-    
-    // Color: conforms with CCRGBAProtocol protocol
-    ccColor3B m_sColor;
 };
 
 

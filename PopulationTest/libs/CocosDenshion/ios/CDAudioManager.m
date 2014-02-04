@@ -405,8 +405,7 @@ static BOOL configured = FALSE;
         
         //Initialise the audio session 
         AVAudioSession* session = [AVAudioSession sharedInstance];
-        [session setActive:YES error:nil];
-//        session.delegate = self;
+        session.delegate = self;
     
         _mode = mode;
         backgroundMusicCompletionSelector = nil;

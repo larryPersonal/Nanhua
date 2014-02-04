@@ -48,7 +48,10 @@ public:
 
     /** initializes an action with duration, grid size, waves and amplitude */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -68,6 +71,10 @@ public:
     /** initializes the action with duration */
     virtual bool initWithDuration(float duration);
     virtual bool initWithSize(const CCSize& gridSize, float duration);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -81,6 +88,10 @@ class CC_DLL CCFlipY3D : public CCFlipX3D
 {
 public:
     virtual void update(float time);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
@@ -96,12 +107,18 @@ public:
     inline float getLensEffect(void) { return m_fLensEffect; }
     /** Set lens center position */
     inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
-    
+    /** Set whether lens is concave */
+    inline void setConcave(bool bConcave) { m_bConcave = bConcave; }
+  
     inline const CCPoint& getPosition(void) { return m_position; }
     void setPosition(const CCPoint& position);
 
     /** initializes the action with center position, radius, a grid size and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -114,6 +131,8 @@ protected:
     float m_fRadius;
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float m_fLensEffect;
+    /** lens is concave. (true = concave, false = convex) default is convex i.e. false */
+    bool m_bConcave;
 
     bool    m_bDirty;
 };
@@ -135,6 +154,10 @@ public:
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -156,6 +179,10 @@ class CC_DLL CCShaky3D : public CCGrid3DAction
 public:
     /** initializes the action with a range, shake Z vertices, a grid and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, int range, bool shakeZ);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -179,6 +206,10 @@ public:
 
     /** initializes the action with amplitude, a grid and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -203,6 +234,10 @@ public:
 
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 
@@ -235,6 +270,10 @@ public:
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual CCObject* copyWithZone(CCZone* pZone);
     virtual void update(float time);
 

@@ -31,7 +31,7 @@ THE SOFTWARE.
 #define __JSB_LOCALSTORAGE_H
 
 #include <stdio.h>
-#include <stdlib>
+#include <stdlib.h>
 
 /** Initializes the database. If path is null, it will create an in-memory DB */
 void localStorageInit( const char *fullpath);

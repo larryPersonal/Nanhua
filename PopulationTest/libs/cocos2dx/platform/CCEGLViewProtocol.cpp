@@ -44,8 +44,8 @@ static void removeUsedIndexBit(int index)
 
 CCEGLViewProtocol::CCEGLViewProtocol()
 : m_pDelegate(NULL)
-, m_fScaleY(1.0f)
 , m_fScaleX(1.0f)
+, m_fScaleY(1.0f)
 , m_eResolutionPolicy(kResolutionUnKnown)
 {
 }
@@ -57,7 +57,7 @@ CCEGLViewProtocol::~CCEGLViewProtocol()
 
 void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
-//    CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
+    CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
     
     if (width == 0.0f || height == 0.0f)
     {
@@ -77,6 +77,16 @@ void CCEGLViewProtocol::setDesignResolutionSize(float width, float height, Resol
     if (resolutionPolicy == kResolutionShowAll)
     {
         m_fScaleX = m_fScaleY = MIN(m_fScaleX, m_fScaleY);
+    }
+
+    if ( resolutionPolicy == kResolutionFixedHeight) {
+    	m_fScaleX = m_fScaleY;
+    	m_obDesignResolutionSize.width = ceilf(m_obScreenSize.width/m_fScaleX);
+    }
+
+    if ( resolutionPolicy == kResolutionFixedWidth) {
+    	m_fScaleY = m_fScaleX;
+    	m_obDesignResolutionSize.height = ceilf(m_obScreenSize.height/m_fScaleY);
     }
 
     // calculate the rect of viewport    
@@ -140,6 +150,7 @@ void CCEGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
 
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
+
     glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
                (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
                (GLsizei)(w * m_fScaleX),
@@ -152,6 +163,22 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
               (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
               (GLsizei)(w * m_fScaleX),
               (GLsizei)(h * m_fScaleY));
+}
+
+bool CCEGLViewProtocol::isScissorEnabled()
+{
+	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
+}
+
+CCRect CCEGLViewProtocol::getScissorRect()
+{
+	GLfloat params[4];
+	glGetFloatv(GL_SCISSOR_BOX, params);
+	float x = (params[0] - m_obViewPortRect.origin.x) / m_fScaleX;
+	float y = (params[1] - m_obViewPortRect.origin.y) / m_fScaleY;
+	float w = params[2] / m_fScaleX;
+	float h = params[3] / m_fScaleY;
+	return CCRectMake(x, y, w, h);
 }
 
 void CCEGLViewProtocol::setViewName(const char* pszViewName)

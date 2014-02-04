@@ -21,7 +21,12 @@ class PathFinder
     CCPoint* destination;
     CCPoint* source;
     
+    
 public:
+    CCPoint closest;
+    int lowest_h;
+    
+    PathFinder();
     ~PathFinder();
     float manhattanDist(CCPoint* from, CCPoint* to);
     

@@ -25,6 +25,7 @@
 #include "CCDictionary.h"
 #include "CCString.h"
 #include "CCInteger.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
@@ -149,23 +150,7 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
     }
     return pArray;
 }
-CCObject* CCDictionary::objectForKeyWithConstChar(const char* key)
-{
-    // if dictionary wasn't initialized, return NULL directly.
-    if (m_eDictType == kCCDictUnknown) return NULL;
-    // CCDictionary only supports one kind of key, string or integer.
-    // This method uses string as key, therefore we should make sure that the key type of this CCDictionary is string.
-    CCAssert(m_eDictType == kCCDictStr, "this dictionary does not use string as key.");
-    
-    CCObject* pRetObject = NULL;
-    CCDictElement *pElement = NULL;
-    HASH_FIND_STR(m_pElements, key, pElement);
-    if (pElement != NULL)
-    {
-        pRetObject = pElement->m_pObject;
-    }
-    return pRetObject;
-}
+
 CCObject* CCDictionary::objectForKey(const std::string& key)
 {
     // if dictionary wasn't initialized, return NULL directly.
@@ -184,7 +169,7 @@ CCObject* CCDictionary::objectForKey(const std::string& key)
     return pRetObject;
 }
 
-CCObject* CCDictionary::objectForKey(int key)
+CCObject* CCDictionary::objectForKey(intptr_t key)
 {
     // if dictionary wasn't initialized, return NULL directly.
     if (m_eDictType == kCCDictUnknown) return NULL;
@@ -194,7 +179,7 @@ CCObject* CCDictionary::objectForKey(int key)
 
     CCObject* pRetObject = NULL;
     CCDictElement *pElement = NULL;
-    HASH_FIND_INT(m_pElements, &key, pElement);
+    HASH_FIND_PTR(m_pElements, &key, pElement);
     if (pElement != NULL)
     {
         pRetObject = pElement->m_pObject;
@@ -212,7 +197,7 @@ const CCString* CCDictionary::valueForKey(const std::string& key)
     return pStr;
 }
 
-const CCString* CCDictionary::valueForKey(int key)
+const CCString* CCDictionary::valueForKey(intptr_t key)
 {
     CCString* pStr = dynamic_cast<CCString*>(objectForKey(key));
     if (pStr == NULL)
@@ -248,7 +233,7 @@ void CCDictionary::setObject(CCObject* pObject, const std::string& key)
     }
 }
 
-void CCDictionary::setObject(CCObject* pObject, int key)
+void CCDictionary::setObject(CCObject* pObject, intptr_t key)
 {
     CCAssert(pObject != NULL, "Invalid Argument!");
     if (m_eDictType == kCCDictUnknown)
@@ -259,7 +244,7 @@ void CCDictionary::setObject(CCObject* pObject, int key)
     CCAssert(m_eDictType == kCCDictInt, "this dictionary doesn't use integer as key.");
 
     CCDictElement *pElement = NULL;
-    HASH_FIND_INT(m_pElements, &key, pElement);
+    HASH_FIND_PTR(m_pElements, &key, pElement);
     if (pElement == NULL)
     {
         setObjectUnSafe(pObject, key);
@@ -289,7 +274,7 @@ void CCDictionary::removeObjectForKey(const std::string& key)
     removeObjectForElememt(pElement);
 }
 
-void CCDictionary::removeObjectForKey(int key)
+void CCDictionary::removeObjectForKey(intptr_t key)
 {
     if (m_eDictType == kCCDictUnknown)
     {
@@ -298,7 +283,7 @@ void CCDictionary::removeObjectForKey(int key)
     
     CCAssert(m_eDictType == kCCDictInt, "this dictionary doesn't use integer as its key");
     CCDictElement *pElement = NULL;
-    HASH_FIND_INT(m_pElements, &key, pElement);
+    HASH_FIND_PTR(m_pElements, &key, pElement);
     removeObjectForElememt(pElement);
 }
 
@@ -309,11 +294,11 @@ void CCDictionary::setObjectUnSafe(CCObject* pObject, const std::string& key)
     HASH_ADD_STR(m_pElements, m_szKey, pElement);
 }
 
-void CCDictionary::setObjectUnSafe(CCObject* pObject, const int key)
+void CCDictionary::setObjectUnSafe(CCObject* pObject, const intptr_t key)
 {
     pObject->retain();
     CCDictElement* pElement = new CCDictElement(key, pObject);
-    HASH_ADD_INT(m_pElements, m_iKey, pElement);
+    HASH_ADD_PTR(m_pElements, m_iKey, pElement);
 }
 
 void CCDictionary::removeObjectsForKeys(CCArray* pKeyArray)
@@ -344,6 +329,7 @@ void CCDictionary::removeAllObjects()
         HASH_DEL(m_pElements, pElement);
         pElement->m_pObject->release();
         CC_SAFE_DELETE(pElement);
+
     }
 }
 
@@ -417,11 +403,14 @@ CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
     return pNewDict;
 }
 
-extern CCDictionary* ccFileUtils_dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
-
 CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
-    return ccFileUtils_dictionaryWithContentsOfFileThreadSafe(pFileName);
+    return CCFileUtils::sharedFileUtils()->createCCDictionaryWithContentsOfFile(pFileName);
+}
+
+void CCDictionary::acceptVisitor(CCDataVisitor &visitor)
+{
+    return visitor.visit(this);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
@@ -430,5 +419,11 @@ CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
     pRet->autorelease();
     return pRet;
 }
+
+bool CCDictionary::writeToFile(const char *fullPath)
+{
+    return CCFileUtils::sharedFileUtils()->writeToFile(this, fullPath);
+}
+
 
 NS_CC_END

@@ -74,6 +74,9 @@ private:
     
     float cumulativeTime;
     
+    //for greedy pathfinding. The sprite must be able to track the last location pathed to before its path was blocked. //
+    Building* lastTarget;
+    
 public:
     std::string config_doc;
     std::string defaults_doc;
@@ -111,7 +114,8 @@ public:
     SpriteJob job;
     bool isDoingJob;
     
-public:
+    //this is due to the greedy logic where the sprite still attempts to go to its destination, even when the destination is unreachable.
+    //the pathing must resume.
     
     /*unused*/
     int fdaysLeft;

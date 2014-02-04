@@ -33,7 +33,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 #include <stdio.h>
-#include <stdlib>
+#include <stdlib.h>
 #include <assert.h>
 #include <string>
 #include "jni.h"

@@ -11,7 +11,7 @@
 
 
 #include "cocos2d.h"
-#include "CCLayerPanZoom.h"
+//#include "CCLayerPanZoom.h"
 #include "MapHandler.h"
 #include "BuildingHandler.h"
 #include "SpriteHandler.h"

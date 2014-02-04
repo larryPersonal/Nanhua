@@ -21,9 +21,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-//UIAccelerometer is deprecated but cocos2d-x still hasn't changed. I'm afraid I don't know how to get rid of these warnings.
-//Thankfully we don't need to use the accelerometer here.
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 #import "AccelerometerDelegateWrapper.h"
 

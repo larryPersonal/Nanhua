@@ -258,18 +258,16 @@ void BuildMenu::createMenuItems()
     CCMenuItemSprite* buildPathItem =  CCMenuItemSprite::create(pathImg, pathSelectedImg, this, menu_selector(BuildMenu::onMenuItemSelected) );
     buildPathItem->setTag(-3);
     
-    
-    
-    buildPathItem->setAnchorPoint(ccp(0, 1));
-    buildPathItem->setContentSize(pathImg->boundingBox().size);
-
     CCLabelTTF* pathLabel =     CCLabelTTF::create("Build Path", "Droidiga", 30);
     CCPoint pathlabelPosition = ccp(buildPathItem->boundingBox().size.width*2.5,
                                     buildPathItem->boundingBox().size.height*0.5);
     pathLabel->setPosition(pathlabelPosition);
-    buildPathItem->addChild(pathLabel);
+    buildPathItem->setAnchorPoint(ccp(0, 1));
+    buildPathItem->setContentSize(pathImg->boundingBox().size);
 
-    buildPathItem->  setPosition(CCPointMake(0, 0));
+    buildPathItem->addChild(pathLabel);
+    
+    buildPathItem->setPosition(CCPointMake(0, 0));
     
     //Demolish & Cancel
     CCSprite* demoNormalImage =     CCSprite::create("demolish.png");
@@ -277,12 +275,9 @@ void BuildMenu::createMenuItems()
     demoNormalImage->               setScale(128 / demoNormalImage->boundingBox().size.width);
     demoSelectedImage->             setScale(demoNormalImage->getScale());
     CCMenuItemSprite* demoItem =    CCMenuItemSprite::create(demoNormalImage, demoSelectedImage, this, menu_selector(BuildMenu::onMenuItemSelected) );
-    
-    
     demoItem->  setTag(-1);
     demoItem->  setAnchorPoint(ccp(0, 1));
     demoItem->  setContentSize(demoNormalImage->boundingBox().size);
-    
     CCLabelTTF* demoLabel =     CCLabelTTF::create("Demolish", "Droidiga", 30);
     
     CCPoint labelPosition = ccp(demoItem->boundingBox().size.width*2.5,
@@ -296,8 +291,8 @@ void BuildMenu::createMenuItems()
     
     CCSprite* demo2NormalImage =     CCSprite::create("path-destroy.png");
     CCSprite* demo2SelectedImage =   CCSprite::create("path-destroy.png");
-    demo2NormalImage->               setScale(128 / demoNormalImage->boundingBox().size.width);
-    demo2SelectedImage->             setScale(demoNormalImage->getScale());
+    demo2NormalImage->               setScale(128 / demo2NormalImage->boundingBox().size.width);
+    demo2SelectedImage->             setScale(demo2NormalImage->getScale());
     CCMenuItemSprite* demoPathItem =    CCMenuItemSprite::create(demo2NormalImage, demo2SelectedImage, this, menu_selector(BuildMenu::onMenuItemSelected) );
     demoPathItem->  setTag(-4);
     CCLabelTTF* demoPathLabel =     CCLabelTTF::create("Destroy Path", "Droidiga", 30);
@@ -494,18 +489,18 @@ void BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
         case -3 : //build path
         {
             
-            if (GameManager::getThis()->currentMoney >= path_cost_per_tile)
-            {
+            //if (GameManager::getThis()->currentMoney >= path_cost_per_tile)
+            //{
                 GameHUD::getThis()->setTapMode(3);
                 GameHUD::getThis()->showBuildLabel("Path");
                 GameScene::getThis()->isThisTapCounted = true;
                 this->closeMenu();
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 //Audio feedback?
                 //Visual feedback? //No money
-            }
+            //}
         }
             break;
         case -4 : //unbuild path

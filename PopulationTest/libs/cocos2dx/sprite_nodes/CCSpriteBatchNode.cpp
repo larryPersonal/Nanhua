@@ -113,6 +113,12 @@ bool CCSpriteBatchNode::initWithFile(const char* fileImage, unsigned int capacit
     return initWithTexture(pTexture2D, capacity);
 }
 
+CCSpriteBatchNode::CCSpriteBatchNode()
+: m_pobTextureAtlas(NULL)
+, m_pobDescendants(NULL)
+{
+}
+
 CCSpriteBatchNode::~CCSpriteBatchNode()
 {
     CC_SAFE_RELEASE(m_pobTextureAtlas);
@@ -168,7 +174,6 @@ void CCSpriteBatchNode::addChild(CCNode *child, int zOrder, int tag)
     CCAssert(dynamic_cast<CCSprite*>(child) != NULL, "CCSpriteBatchNode only supports CCSprites as children");
     CCSprite *pSprite = (CCSprite*)(child);
     // check CCSprite is using the same texture id
-    
     CCAssert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
 
     CCNode::addChild(child, zOrder, tag);

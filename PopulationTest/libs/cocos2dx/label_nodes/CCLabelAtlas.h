@@ -51,9 +51,17 @@ A more flexible class is CCLabelBMFont. It supports variable width characters an
 class CC_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
 {
 public:
+    /**
+     *  @js ctor
+     *  @lua NA
+     */
     CCLabelAtlas()
         :m_sString("")
     {}
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCLabelAtlas()
     { 
         m_sString.clear(); 
@@ -64,6 +72,7 @@ public:
     
     /** creates the CCLabelAtlas with a string and a configuration file
      @since v2.0
+     @js _create
      */
     static CCLabelAtlas* create(const char *string, const char *fntFile);
 
@@ -74,10 +83,15 @@ public:
      @since v2.0
      */
     bool initWithString(const char *string, const char *fntFile);
+    
+    /** initializes the CCLabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
+    bool initWithString(const char* string, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    
     // super methods
     virtual void updateAtlasValues();
     virtual void setString(const char *label);
     virtual const char* getString(void);
+    
 #if CC_LABELATLAS_DEBUG_DRAW
     virtual void draw();
 #endif

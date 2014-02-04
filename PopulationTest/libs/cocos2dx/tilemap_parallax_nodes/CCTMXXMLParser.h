@@ -90,15 +90,15 @@ class CC_DLL CCTMXLayerInfo : public CCObject
 {
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
 public:
-    std::string            m_sName;
-    CCSize                m_tLayerSize;
+    std::string         m_sName;
+    CCSize              m_tLayerSize;
     unsigned int        *m_pTiles;
     bool                m_bVisible;
-    unsigned char        m_cOpacity;
+    unsigned char       m_cOpacity;
     bool                m_bOwnTiles;
     unsigned int        m_uMinGID;
     unsigned int        m_uMaxGID;
-    CCPoint                m_tOffset;
+    CCPoint             m_tOffset;
 public:
     CCTMXLayerInfo();
     virtual ~CCTMXLayerInfo();
@@ -117,15 +117,15 @@ This information is obtained from the TMX file.
 class CC_DLL CCTMXTilesetInfo : public CCObject
 {
 public:
-    std::string        m_sName;
+    std::string     m_sName;
     unsigned int    m_uFirstGid;
-    CCSize            m_tTileSize;
+    CCSize          m_tTileSize;
     unsigned int    m_uSpacing;
     unsigned int    m_uMargin;
     //! filename containing the tiles (should be spritesheet / texture atlas)
-    std::string        m_sSourceImage;
+    std::string     m_sSourceImage;
     //! size in pixels of the image
-    CCSize            m_tImageSize;
+    CCSize          m_tImageSize;
 public:
     CCTMXTilesetInfo();
     virtual ~CCTMXTilesetInfo();
@@ -170,16 +170,28 @@ public:
     CC_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
     /// properties
     CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
-public:    
+public:
+    /**
+     * @js  ctor
+     * @lua NA
+     */
     CCTMXMapInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCTMXMapInfo();
     /** creates a TMX Format with a tmx file */
     static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
     /** creates a TMX Format with an XML string and a TMX resource path */
     static CCTMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath);
-    /** initializes a TMX format with a  tmx file */
+    /** initializes a TMX format with a  tmx file 
+     * @lua NA
+     */
     bool initWithTMXFile(const char *tmxFile);
-    /** initializes a TMX format with an XML string and a TMX resource path */
+    /** initializes a TMX format with an XML string and a TMX resource path 
+     * @lua NA
+     */
     bool initWithXML(const char* tmxString, const char* resourcePath);
     /** initializes parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
     bool parseXMLFile(const char *xmlFilename);
@@ -189,9 +201,17 @@ public:
     CCDictionary* getTileProperties();
     void setTileProperties(CCDictionary* tileProperties);
 
-    // implement pure virtual methods of CCSAXDelegator
+    /** implement pure virtual methods of CCSAXDelegator
+     *  @js NA
+     */
     void startElement(void *ctx, const char *name, const char **atts);
+    /**
+     *  @js NA
+     */
     void endElement(void *ctx, const char *name);
+    /**
+     * @js NA
+     */
     void textHandler(void *ctx, const char *ch, int len);
     
     inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
@@ -209,6 +229,7 @@ protected:
     std::string m_sCurrentString;
     //! tile properties
     CCDictionary* m_pTileProperties;
+    unsigned int m_uCurrentFirstGID;
 };
 
 // end of tilemap_parallax_nodes group

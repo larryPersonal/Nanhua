@@ -82,7 +82,7 @@ static int GoHome_Glue(lua_State* L)
     }
     else
     {
-        bool hasNext =sprite->PathToResources();
+        bool hasNext =sprite->PathToHome();
         if (hasNext)
             sprite->nextAction = RESTING;
         else

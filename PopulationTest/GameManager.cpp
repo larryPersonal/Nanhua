@@ -191,7 +191,7 @@ void GameManager::initGameData()
 
 bool GameManager::checkGameDataExists(){
     
-    std::string test = CCFileUtils::sharedFileUtils()->getWriteablePath();
+    std::string test = CCFileUtils::sharedFileUtils()->getWritablePath();
     test += "mayansave.txt";
     std::ifstream readFile(test.c_str());
     
@@ -208,7 +208,7 @@ void GameManager::loadGameData()
     CCLog("Loading game data");
     
     
-    std::string test = CCFileUtils::sharedFileUtils()->getWriteablePath();
+    std::string test = CCFileUtils::sharedFileUtils()->getWritablePath();
     test += "mayansave.txt";
     std::ifstream readFile;
     std::string out;

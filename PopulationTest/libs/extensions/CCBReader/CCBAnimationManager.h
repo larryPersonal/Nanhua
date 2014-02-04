@@ -6,9 +6,13 @@
 #include "CCBSequence.h"
 #include "CCBValue.h"
 #include "CCBSequenceProperty.h"
+#include "../GUI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBAnimationManagerDelegate
 {
 public:
@@ -24,6 +28,7 @@ private:
     int mAutoPlaySequenceId;
     
     CCNode *mRootNode;
+    
     CCSize mRootContainerSize;
     
     CCBAnimationManagerDelegate *mDelegate;
@@ -33,6 +38,10 @@ private:
     CCArray *mDocumentOutletNodes;
     CCArray *mDocumentCallbackNames;
     CCArray *mDocumentCallbackNodes;
+    CCArray *mDocumentCallbackControlEvents;
+    CCArray *mKeyframeCallbacks;
+    CCDictionary *mKeyframeCallFuncs;
+
     std::string mDocumentControllerName;
     std::string lastCompletedSequenceName;
 
@@ -41,8 +50,18 @@ private:
     
     
 public:
+    bool jsControlled;
+    /**
+     *  @js ctor
+     */
     CCBAnimationManager();
+    /**
+     *  @js NA
+     */
     ~CCBAnimationManager();
+
+
+    CCObject *mOwner;
     
     virtual bool init();
     
@@ -59,6 +78,7 @@ public:
 
     void addDocumentCallbackNode(CCNode *node);
     void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackControlEvents(CCControlEvent eventType);
     void addDocumentOutletNode(CCNode *node);
     void addDocumentOutletName(std::string name);
 
@@ -67,10 +87,12 @@ public:
     std::string getDocumentControllerName();
     CCArray* getDocumentCallbackNames();
     CCArray* getDocumentCallbackNodes();
+    CCArray* getDocumentCallbackControlEvents();
     CCArray* getDocumentOutletNames();
     CCArray* getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
     
+    CCArray* getKeyframeCallbacks();
     
     const CCSize& getRootContainerSize();
     void setRootContainerSize(const CCSize &rootContainerSize);
@@ -96,10 +118,19 @@ public:
     void runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
     void runAnimationsForSequenceNamed(const char *pName);
     void runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton);
-
+    /**
+     *  @lua NA
+     */
     void setAnimationCompletedCallback(CCObject *target, SEL_CallFunc callbackFunc);
 
     void debug();
+    /**
+     *  @js setCallFuncForJSCallbackNamed
+     */
+    void setCallFunc(CCCallFunc *callFunc, const std::string &callbackNamed);
+
+    CCObject* actionForCallbackChannel(CCBSequenceProperty* channel);
+    CCObject* actionForSoundChannel(CCBSequenceProperty* channel);
     
 private:
     CCObject* getBaseValue(CCNode *pNode, const char* pPropName);
@@ -112,7 +143,10 @@ private:
     void runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
 };
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBSetSpriteFrame : public CCActionInstant
 {
 private:
@@ -128,6 +162,30 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
 };
 
+
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class CCBSoundEffect : public CCActionInstant
+{
+private:
+  std::string mSoundFile;
+  float mPitch, mPan, mGain;
+    
+public:
+    ~CCBSoundEffect();
+    
+    static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
+    bool initWithSoundFile(const std::string &file, float pitch, float pan, float gain);
+    virtual void update(float time);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+};
+
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCBRotateTo : public CCActionInterval
 {
 private:
@@ -143,6 +201,42 @@ public:
     virtual void startWithTarget(CCNode *pNode);
 };
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class CCBRotateXTo: public CCActionInterval {
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
+public:
+    static CCBRotateXTo* create(float fDuration, float fAngle);
+    bool initWithDuration(float fDuration, float fAngle);
+    virtual void startWithTarget(CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void update(float time);
+};
+
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class CCBRotateYTo: public CCActionInterval {
+private:
+    float mStartAngle;
+    float mDstAngle;
+    float mDiffAngle;
+    
+public:
+    static CCBRotateYTo* create(float fDuration, float fAngle);
+    bool initWithDuration(float fDuration, float fAngle);
+    virtual void startWithTarget(CCNode *pNode);
+    virtual CCObject* copyWithZone(CCZone *pZone);
+    virtual void update(float time);
+};
+
+
 class CCBEaseInstant : public CCActionEase
 {
 public:
@@ -150,6 +244,7 @@ public:
     
     virtual void update(float dt);
 };
+
 
 NS_CC_EXT_END
 

@@ -85,18 +85,12 @@ typedef unsigned int CCControlState;
  *
  * To use the CCControl you have to subclass it.
  */
-class CCControl : public CCLayer, public CCRGBAProtocol
+class CCControl : public CCLayerRGBA
 {
 
     //CCRGBAProtocol
-    CC_PROPERTY(GLubyte, m_cOpacity, Opacity); 
-    CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
     bool m_bIsOpacityModifyRGB;
-    bool isOpacityModifyRGB();
-    void setOpacityModifyRGB(bool bOpacityModifyRGB);
-
-    /** Changes the priority of the button. The lower the number, the higher the priority. */
-    CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
+    
     /** The current control state constant. */
     CC_SYNTHESIZE_READONLY(CCControlState, m_eState, State);
 
@@ -119,6 +113,9 @@ public:
      * Updates the control layout using its current internal state.
      */
     virtual void needsLayout();
+    
+    virtual bool isOpacityModifyRGB();
+    virtual void setOpacityModifyRGB(bool bOpacityModifyRGB);
 
 protected:
     bool m_bEnabled;
@@ -133,12 +130,26 @@ protected:
     CCDictionary* m_pDispatchTable;
 
 public:
+    /**
+     *  @js ctor
+     */
     CCControl();
     virtual bool init(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual ~CCControl();
 
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onEnter();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit();
     virtual void registerWithTouchDispatcher();
 
@@ -257,7 +268,19 @@ protected:
     void removeTargetWithActionForControlEvent(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
 
     static CCControl* create();
-
+public:
+    /**
+     *  @js NA
+     */
+    void addHandleOfControlEvent(int nFunID,CCControlEvent controlEvent);
+    /**
+     *  @js NA
+     */
+    void removeHandleOfControlEvent(CCControlEvent controlEvent);
+private:
+    int  getHandleOfControlEvent(CCControlEvent controlEvent);
+private:
+    std::map<int,int> m_mapHandleOfControlEvent;
 };
 
 // end of GUI group

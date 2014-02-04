@@ -145,7 +145,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
-- (NSArray *)selectionRectsForRange:(UITextRange *)range;
+
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
 

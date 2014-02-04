@@ -427,10 +427,13 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
         if (path->count() == 0)
         {
             
-            CCLog("Warning! no path from %f, %f to %f, %f", from.x, from.y, to.x, to.y);
-            delete p;
-            path = NULL;
-            return false;
+            CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
+            saySpeech("I Can't Get There!", 2.0f);
+            
+            path = p->makePath(&from, &p->closest);
+            //delete p;
+           // path = NULL;
+           // return false;
         }
         path->retain();
     
@@ -653,6 +656,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
         shouldStopNextSquare = false;
         isFollowingMoveInstruction = false;
         setAction(IDLE);
+        idleDelay = 5.0f;
         changeAnimation(currentDir);
         
         /* trigger the event that should occur when the player arrives at his destination*/
@@ -813,6 +817,7 @@ void GameSprite::updateSprite(float dt)
         
         if (currAction != IDLE) return;
      
+        
         if (isLeavingNextUpdate)
         {
             GameHUD::getThis()->showHint(spriteDisplayedName +" has left the town.");
@@ -834,6 +839,25 @@ void GameSprite::updateSprite(float dt)
             isLeavingNextUpdate = true;
             
         }
+        
+        //restore pathing
+        if (nextAction == BUILD)
+        {
+            GoBuild(lastTarget);
+        }
+        if (nextAction == EATING)
+        {
+            GoEat(lastTarget);
+            
+        }
+        if (nextAction == FARMING)
+        {
+            GoRest(lastTarget);
+        }
+        
+        
+        
+        
         //todo: make sure this is not called every frame the sprite remains idle in the building.
         /*
         if (currTile != NULL)
@@ -845,7 +869,7 @@ void GameSprite::updateSprite(float dt)
         }
         */
         
-      
+        
 
         
         //modify loyalty based on happiness;
@@ -859,8 +883,7 @@ void GameSprite::updateSprite(float dt)
         //I didn't want hasJob to trigger if there is no house.
         if (possessions->homeLocation == NULL && !justSoldHouse)
         {
-            saySpeech("Homeless..", 2.0f);
-            //I need to do this the manual way. Otherwise the 2nd saySpeech overrides the first.
+             //I need to do this the manual way. Otherwise the 2nd saySpeech overrides the first.
              if (possessions->happinessRating > 0) possessions->happinessRating += happiness_mod_homeless;
             //increasePossession(STATS_HAPPINESS, happiness_mod_homeless); //note actually subtracts
             return;
@@ -1041,7 +1064,7 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
 {
     speechBubble->clearContent();
     CCLabelTTF* label = CCLabelTTF::create(text, "Droidiga", 18);
-   
+    
     label->setColor(ccc3(81, 77, 2));
    
     speechBubble->addContent(label, CCPointZero);
@@ -1272,6 +1295,9 @@ bool GameSprite::PathToBuilding(int building_id)
 /* paths to a target building. */
 bool GameSprite::GoBuilding(Building* b)
 {
+    lastTarget = b;
+
+    
     CCPoint startPos = getWorldPosition();
     CCPoint endPos = b->getWorldPosition();
     
@@ -1291,7 +1317,7 @@ bool GameSprite::GoBuilding(Building* b)
 /*Paths to a building under construction. Fails if there isn't a building under construction.*/
 bool GameSprite::GoBuild(Building *b)
 {
-    if (b->build_uint_current >= b->build_uint_required) return false; //already built
+     if (b->build_uint_current >= b->build_uint_required) return false; //already built
     
     this->nextAction = BUILD;
     
@@ -1301,6 +1327,7 @@ bool GameSprite::GoBuild(Building *b)
 // farming
 bool GameSprite::GoFarming(Building *b)
 {
+   
     this->nextAction = FARMING;
     
     return GoBuilding(b);
@@ -1308,6 +1335,7 @@ bool GameSprite::GoFarming(Building *b)
 
 bool GameSprite::GoRest(Building* b)
 {
+   
     // if it is not a residential house or the house does not belong to this sprite, return false -> cannot rest.
     if(b->buildingType != HOUSING || possessions->homeLocation != b)
     {
@@ -1321,6 +1349,7 @@ bool GameSprite::GoRest(Building* b)
 
 bool GameSprite::GoEat(Building* b)
 {
+   
     this->nextAction = EATING;
     
     return GoBuilding(b);

@@ -270,7 +270,6 @@ static EAGLView *view = 0;
     cocos2d::CCDirector::sharedDirector()->drawScene();
 }
 
-
 - (void) swapBuffers
 {
     // IMPORTANT:
@@ -719,6 +718,12 @@ static EAGLView *view = 0;
     return nil;
 }
 
+- (NSArray *)selectionRectsForRange:(UITextRange *)range
+{
+    CCLOG("selectionRectsForRange");
+    return nil;
+}
+
 #pragma mark -
 #pragma mark UIKeyboard notification
 
@@ -906,12 +911,6 @@ static EAGLView *view = 0;
     {
         [[NSNotificationCenter defaultCenter]postNotification:self.keyboardShowNotification];
     }
-}
-
--(NSArray*) selectionRectsForRange:(UITextRange *)range
-{
-    //return [selectionRectsForRange range];
-    return nil;
 }
 
 @end

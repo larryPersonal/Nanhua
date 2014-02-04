@@ -182,12 +182,12 @@ void CCGridBase::set2DProjection()
 
     CCSize    size = director->getWinSizeInPixels();
 
-    glViewport(0, 0, (GLsizei)(size.width * CC_CONTENT_SCALE_FACTOR()), (GLsizei)(size.height * CC_CONTENT_SCALE_FACTOR()) );
+    glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadIdentity();
 
     kmMat4 orthoMatrix;
-    kmMat4OrthographicProjection(&orthoMatrix, 0, size.width * CC_CONTENT_SCALE_FACTOR(), 0, size.height * CC_CONTENT_SCALE_FACTOR(), -1, 1);
+    kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1, 1);
     kmGLMultMatrix( &orthoMatrix );
 
     kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -323,7 +323,21 @@ void CCGrid3D::blit(void)
     //
     // Attributes
     //
+#ifdef EMSCRIPTEN
+    // Size calculations from calculateVertexPoints().
+    unsigned int numOfPoints = (m_sGridSize.width+1) * (m_sGridSize.height+1);
 
+    // position
+    setGLBufferData(m_pVertices, numOfPoints * sizeof(ccVertex3F), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    // texCoords
+    setGLBufferData(m_pTexCoordinates, numOfPoints * sizeof(ccVertex2F), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    setGLIndexData(m_pIndices, n * 12, 0);
+    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, 0);
+#else
     // position
     glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
 
@@ -331,6 +345,7 @@ void CCGrid3D::blit(void)
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, m_pIndices);
+#endif // EMSCRIPTEN
     CC_INCREMENT_GL_DRAWS(1);
 }
 
@@ -412,6 +427,8 @@ void CCGrid3D::calculateVertexPoints(void)
 
 ccVertex3F CCGrid3D::vertex(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    
     int index = (pos.x * (m_sGridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)m_pVertices;
 
@@ -422,6 +439,8 @@ ccVertex3F CCGrid3D::vertex(const CCPoint& pos)
 
 ccVertex3F CCGrid3D::originalVertex(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    
     int index = (pos.x * (m_sGridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)m_pOriginalVertices;
 
@@ -432,6 +451,7 @@ ccVertex3F CCGrid3D::originalVertex(const CCPoint& pos)
 
 void CCGrid3D::setVertex(const CCPoint& pos, const ccVertex3F& vertex)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int index = (pos.x * (m_sGridSize.height + 1) + pos.y) * 3;
     float *vertArray = (float*)m_pVertices;
     vertArray[index] = vertex.x;
@@ -519,6 +539,20 @@ void CCTiledGrid3D::blit(void)
     // Attributes
     //
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+#ifdef EMSCRIPTEN
+    int numQuads = m_sGridSize.width * m_sGridSize.height;
+
+    // position
+    setGLBufferData(m_pVertices, (numQuads*4*sizeof(ccVertex3F)), 0);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+    // texCoords
+    setGLBufferData(m_pTexCoordinates, (numQuads*4*sizeof(ccVertex2F)), 1);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    setGLIndexData(m_pIndices, n * 12, 0);
+    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, 0);
+#else
     // position
     glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, m_pVertices);
 
@@ -526,6 +560,8 @@ void CCTiledGrid3D::blit(void)
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, m_pTexCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
+#endif // EMSCRIPTEN
+
 
     CC_INCREMENT_GL_DRAWS(1);
 }
@@ -611,6 +647,7 @@ void CCTiledGrid3D::calculateVertexPoints(void)
 
 void CCTiledGrid3D::setTile(const CCPoint& pos, const ccQuad3& coords)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pVertices;
     memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
@@ -618,6 +655,7 @@ void CCTiledGrid3D::setTile(const CCPoint& pos, const ccQuad3& coords)
 
 ccQuad3 CCTiledGrid3D::originalTile(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pOriginalVertices;
 
@@ -629,6 +667,7 @@ ccQuad3 CCTiledGrid3D::originalTile(const CCPoint& pos)
 
 ccQuad3 CCTiledGrid3D::tile(const CCPoint& pos)
 {
+    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (m_sGridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)m_pVertices;
 

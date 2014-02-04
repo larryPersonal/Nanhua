@@ -56,7 +56,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
             return false;
         }
 
-        setupIndices();
+        initIndices();
 #if CC_TEXTURE_ATLAS_USE_VAO
         setupVBOandVAO();
 #else
@@ -65,13 +65,15 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
-        
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                       callfuncO_selector(CCParticleSystemQuad::listenBackToForeground),
-                                                                      EVNET_COME_TO_FOREGROUND,
+                                                                      EVENT_COME_TO_FOREGROUND,
                                                                       NULL);
-        
+#endif
+
         return true;
     }
     return false;
@@ -96,10 +98,13 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
         glDeleteBuffers(2, &m_pBuffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
         glDeleteVertexArrays(1, &m_uVAOname);
+        ccGLBindVAO(0);
 #endif
     }
-    
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+#endif
 }
 
 // implementation CCParticleSystemQuad
@@ -221,7 +226,7 @@ void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
     }
 }
 
-void CCParticleSystemQuad::setupIndices()
+void CCParticleSystemQuad::initIndices()
 {
     for(unsigned int i = 0; i < m_uTotalParticles; ++i)
     {
@@ -342,6 +347,12 @@ void CCParticleSystemQuad::postStep()
 // overriding draw method
 void CCParticleSystemQuad::draw()
 {    
+
+	if (NULL == m_pTexture)
+	{
+		return;
+	}
+	
     CCAssert(!m_pBatchNode,"draw should not be called when added to a particleBatchNode");
 
     CC_NODE_DRAW_SETUP();
@@ -420,6 +431,7 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
             m_pIndices = indicesNew;
 
             // Clear the memory
+            // XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
             memset(m_pParticles, 0, particlesSize);
             memset(m_pQuads, 0, quadsSize);
             memset(m_pIndices, 0, indicesSize);
@@ -448,7 +460,7 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
             }
         }
 
-        setupIndices();
+        initIndices();
 #if CC_TEXTURE_ATLAS_USE_VAO
         setupVBOandVAO();
 #else
@@ -459,11 +471,18 @@ void CCParticleSystemQuad::setTotalParticles(unsigned int tp)
     {
         m_uTotalParticles = tp;
     }
+    
+    resetSystem();
 }
 
 #if CC_TEXTURE_ATLAS_USE_VAO
 void CCParticleSystemQuad::setupVBOandVAO()
 {
+    // clean VAO
+    glDeleteBuffers(2, &m_pBuffersVBO[0]);
+    glDeleteVertexArrays(1, &m_uVAOname);
+    ccGLBindVAO(0);
+
     glGenVertexArrays(1, &m_uVAOname);
     ccGLBindVAO(m_uVAOname);
 
@@ -500,6 +519,8 @@ void CCParticleSystemQuad::setupVBOandVAO()
 
 void CCParticleSystemQuad::setupVBO()
 {
+    glDeleteBuffers(2, &m_pBuffersVBO[0]);
+    
     glGenBuffers(2, &m_pBuffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
@@ -562,7 +583,7 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
         if( ! batchNode ) 
         {
             allocMemory();
-            setupIndices();
+            initIndices();
             setTexture(oldBatch->getTexture());
 #if CC_TEXTURE_ATLAS_USE_VAO
             setupVBOandVAO();
@@ -582,8 +603,11 @@ void CCParticleSystemQuad::setBatchNode(CCParticleBatchNode * batchNode)
             CC_SAFE_FREE(m_pIndices);
 
             glDeleteBuffers(2, &m_pBuffersVBO[0]);
+            memset(m_pBuffersVBO, 0, sizeof(m_pBuffersVBO));
 #if CC_TEXTURE_ATLAS_USE_VAO
             glDeleteVertexArrays(1, &m_uVAOname);
+            ccGLBindVAO(0);
+            m_uVAOname = 0;
 #endif
         }
     }

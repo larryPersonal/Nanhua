@@ -71,8 +71,7 @@ bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
     }
     CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
-    
-    CCLog(" %s:", mapInfo->getTileProperties());
+
     return true;
 }
 

@@ -94,7 +94,8 @@ bool CCControlColourPicker::init()
         
         // Add image
         m_background=CCControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, CCPointZero, ccp(0.5f, 0.5f));
-       
+        CC_SAFE_RETAIN(m_background);
+        
         CCPoint backgroundPointZero = ccpSub(m_background->getPosition(), ccp (m_background->getContentSize().width / 2, m_background->getContentSize().height / 2));
         
         // Setup panels
@@ -134,7 +135,8 @@ CCControlColourPicker* CCControlColourPicker::create()
 
 void CCControlColourPicker::setColor(const ccColor3B& color)
 {
-    m_tColor      = color;
+    // XXX fixed me if not correct
+    CCControl::setColor(color);
     
     RGBA rgba;
     rgba.r      = color.r / 255.0f;
@@ -181,7 +183,8 @@ void CCControlColourPicker::hueSliderValueChanged(CCObject * sender, CCControlEv
 
     // Update the value
     RGBA rgb    = CCControlUtils::RGBfromHSV(m_hsv);
-    m_tColor= ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f));
+    // XXX fixed me if not correct
+    CCControl::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send CCControl callback
     sendActionsForControlEvents(CCControlEventValueChanged);
@@ -196,7 +199,8 @@ void CCControlColourPicker::colourSliderValueChanged(CCObject * sender, CCContro
 
      // Update the value
     RGBA rgb    = CCControlUtils::RGBfromHSV(m_hsv);
-    m_tColor=ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f));
+    // XXX fixed me if not correct
+    CCControl::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send CCControl callback
     sendActionsForControlEvents(CCControlEventValueChanged);

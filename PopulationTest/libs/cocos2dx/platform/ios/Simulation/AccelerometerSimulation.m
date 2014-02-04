@@ -105,22 +105,19 @@ static AccelerometerSimulation *sharedAccelerometer = NULL;
         [date release];
     }
     else {
-        //Accelerometer Deprecated. Not using, disabled to suppress warning. - Larry
-        
         // now we are in the main thread
         // Process the notification here;
-//        NSString *data = (NSString*)[notification object];
+        NSString *data = (NSString*)[notification object];
         
         // parse the data, no error handling!
-//        NSArray *components = [data componentsSeparatedByString:@","];
+        NSArray *components = [data componentsSeparatedByString:@","];
         
         // create our own acceleration object
-        /*
         [accObject initWithTimestamp:[[components objectAtIndex:1] doubleValue] 
                                    X:[[components objectAtIndex:2] doubleValue] 
                                    Y:[[components objectAtIndex:3] doubleValue]
                                    Z:[[components objectAtIndex:4] doubleValue]];
-        [accelDelegate accelerometer:self didAccelerate:(UIAcceleration*)accObject];*/
+        [accelDelegate accelerometer:self didAccelerate:(UIAcceleration*)accObject];
     }
 }
 

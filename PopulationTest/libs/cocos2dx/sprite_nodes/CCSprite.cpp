@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
+#include "platform/CCImage.h"
 // external
 #include "kazmath/GL/matrix.h"
 #include <string.h>
@@ -150,49 +151,55 @@ bool CCSprite::init(void)
 // designated initializer
 bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated)
 {
-    m_pobBatchNode = NULL;
-    // shader program
-    setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    if (CCNodeRGBA::init())
+    {
+        m_pobBatchNode = NULL;
+        
+        m_bRecursiveDirty = false;
+        setDirty(false);
+        
+        m_bOpacityModifyRGB = true;
+        
+        m_sBlendFunc.src = CC_BLEND_SRC;
+        m_sBlendFunc.dst = CC_BLEND_DST;
+        
+        m_bFlipX = m_bFlipY = false;
+        
+        // default transform anchor: center
+        setAnchorPoint(ccp(0.5f, 0.5f));
+        
+        // zwoptex default values
+        m_obOffsetPosition = CCPointZero;
+        
+        m_bHasChildren = false;
+        
+        // clean the Quad
+        memset(&m_sQuad, 0, sizeof(m_sQuad));
+        
+        // Atlas: Color
+        ccColor4B tmpColor = { 255, 255, 255, 255 };
+        m_sQuad.bl.colors = tmpColor;
+        m_sQuad.br.colors = tmpColor;
+        m_sQuad.tl.colors = tmpColor;
+        m_sQuad.tr.colors = tmpColor;
 
-    m_bRecursiveDirty = false;
-    setDirty(false);
-
-    m_bOpacityModifyRGB = true;
-    m_nOpacity = 255;
-    m_sColor = m_sColorUnmodified = ccWHITE;
-
-    m_sBlendFunc.src = CC_BLEND_SRC;
-    m_sBlendFunc.dst = CC_BLEND_DST;
-
-    m_bFlipX = m_bFlipY = false;
-
-    // default transform anchor: center
-    setAnchorPoint(ccp(0.5f, 0.5f));
-
-    // zwoptex default values
-    m_obOffsetPosition = CCPointZero;
-
-    m_bHasChildren = false;
-    
-    // clean the Quad
-    memset(&m_sQuad, 0, sizeof(m_sQuad));
-
-    // Atlas: Color
-    ccColor4B tmpColor = { 255, 255, 255, 255 };
-    m_sQuad.bl.colors = tmpColor;
-    m_sQuad.br.colors = tmpColor;
-    m_sQuad.tl.colors = tmpColor;
-    m_sQuad.tr.colors = tmpColor;
-
-    // update texture (calls updateBlendFunc)
-    setTexture(pTexture);
-    setTextureRect(rect, rotated, rect.size);
-
-    // by default use "Self Render".
-    // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-    setBatchNode(NULL);
-
-    return true;
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+        
+        // update texture (calls updateBlendFunc)
+        setTexture(pTexture);
+        setTextureRect(rect, rotated, rect.size);
+        
+        // by default use "Self Render".
+        // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
+        setBatchNode(NULL);
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect)
@@ -289,8 +296,8 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 */
 
 CCSprite::CCSprite(void)
-: m_pobTexture(NULL)
-, m_bShouldBeHidden(false)
+: m_bShouldBeHidden(false),
+m_pobTexture(NULL)
 {
 }
 
@@ -548,23 +555,16 @@ void CCSprite::draw(void)
 
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
-    if (m_pobTexture != NULL)
-    {
-        ccGLBindTexture2D( m_pobTexture->getName() );
-    }
-    else
-    {
-        ccGLBindTexture2D(0);
-    }
-    
-    //
-    // Attributes
-    //
-
+    ccGLBindTexture2D( m_pobTexture->getName() );
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(m_sQuad.bl)
+#ifdef EMSCRIPTEN
+    long offset = 0;
+    setGLBufferData(&m_sQuad, 4 * kQuadSize, 0);
+#else
     long offset = (long)&m_sQuad;
+#endif // EMSCRIPTEN
 
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -887,7 +887,15 @@ bool CCSprite::isFlipY(void)
 
 void CCSprite::updateColor(void)
 {
-    ccColor4B color4 = { m_sColor.r, m_sColor.g, m_sColor.b, m_nOpacity };
+    ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    
+    // special opacity for premultiplied textures
+	if (m_bOpacityModifyRGB)
+    {
+		color4.r *= _displayedOpacity/255.0f;
+		color4.g *= _displayedOpacity/255.0f;
+		color4.b *= _displayedOpacity/255.0f;
+    }
 
     m_sQuad.bl.colors = color4;
     m_sQuad.br.colors = color4;
@@ -915,51 +923,44 @@ void CCSprite::updateColor(void)
 
 void CCSprite::setOpacity(GLubyte opacity)
 {
-    m_nOpacity = opacity;
-
-    // special opacity for premultiplied textures
-    if (m_bOpacityModifyRGB)
-    {
-        setColor(m_sColorUnmodified);
-    }
+    CCNodeRGBA::setOpacity(opacity);
 
     updateColor();
-}
-
-const ccColor3B& CCSprite::getColor(void)
-{
-    if (m_bOpacityModifyRGB)
-    {
-        return m_sColorUnmodified;
-    }
-
-    return m_sColor;
 }
 
 void CCSprite::setColor(const ccColor3B& color3)
 {
-    m_sColor = m_sColorUnmodified = color3;
-
-    if (m_bOpacityModifyRGB)
-    {
-        m_sColor.r = color3.r * m_nOpacity/255.0f;
-        m_sColor.g = color3.g * m_nOpacity/255.0f;
-        m_sColor.b = color3.b * m_nOpacity/255.0f;
-    }
+    CCNodeRGBA::setColor(color3);
 
     updateColor();
 }
 
-void CCSprite::setOpacityModifyRGB(bool bValue)
+void CCSprite::setOpacityModifyRGB(bool modify)
 {
-    ccColor3B oldColor = m_sColor;
-    m_bOpacityModifyRGB = bValue;
-    m_sColor = oldColor;
+    if (m_bOpacityModifyRGB != modify)
+    {
+        m_bOpacityModifyRGB = modify;
+        updateColor();
+    }
 }
 
 bool CCSprite::isOpacityModifyRGB(void)
 {
     return m_bOpacityModifyRGB;
+}
+
+void CCSprite::updateDisplayedColor(const ccColor3B& parentColor)
+{
+    CCNodeRGBA::updateDisplayedColor(parentColor);
+    
+    updateColor();
+}
+
+void CCSprite::updateDisplayedOpacity(GLubyte opacity)
+{
+    CCNodeRGBA::updateDisplayedOpacity(opacity);
+    
+    updateColor();
 }
 
 // Frames
@@ -1067,6 +1068,26 @@ void CCSprite::updateBlendFunc(void)
     }
 }
 
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to NULL.
+ * Supposing codes as follows:
+ *
+ *   CCSprite* sp = new CCSprite();
+ *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
+#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+
 void CCSprite::setTexture(CCTexture2D *texture)
 {
     // If batchnode, then texture id should be the same
@@ -1074,11 +1095,27 @@ void CCSprite::setTexture(CCTexture2D *texture)
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
+    if (NULL == texture)
+    {
+        // Gets the texture by key firstly.
+        texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+
+        // If texture wasn't in cache, create it from RAW data.
+        if (NULL == texture)
+        {
+            CCImage* image = new CCImage();
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
+            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = CCTextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            CC_SAFE_RELEASE(image);
+        }
+    }
+
     if (!m_pobBatchNode && m_pobTexture != texture)
     {
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(m_pobTexture);
-       // delete m_pobTexture;
         m_pobTexture = texture;
         updateBlendFunc();
     }

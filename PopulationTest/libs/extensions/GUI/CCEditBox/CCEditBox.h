@@ -127,7 +127,10 @@ enum EditBoxInputFlag
 class CCEditBox;
 class CCEditBoxImpl;
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class CCEditBoxDelegate 
 {
 public:
@@ -196,10 +199,52 @@ public:
     bool initWithSizeAndBackgroundSprite(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg);
     
     /**
-     * Set the delegate for edit box.
+     * Gets/Sets the delegate for edit box.
+     *  @lua NA
      */
     void setDelegate(CCEditBoxDelegate* pDelegate);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    CCEditBoxDelegate* getDelegate();
+    /**
+     * Registers a script function that will be called for EditBox events.
+     *
+     * This handler will be removed automatically after onExit() called.
+     * @code
+     * -- lua sample
+     * local function editboxEventHandler(eventType)
+     *     if eventType == "began" then
+     *         -- triggered when an edit box gains focus after keyboard is shown
+     *     elseif eventType == "ended" then
+     *         -- triggered when an edit box loses focus after keyboard is hidden.
+     *     elseif eventType == "changed" then
+     *         -- triggered when the edit box text was changed.
+     *     elseif eventType == "return" then
+     *         -- triggered when the return button was pressed or the outside area of keyboard was touched.
+     *     end
+     * end
+     *
+     * local editbox = CCEditBox:create(CCSize(...), CCScale9Sprite:create(...))
+     * editbox = registerScriptEditBoxHandler(editboxEventHandler)
+     * @endcode
+     *
+     * @param handler A number that indicates a lua function.
+     * @js NA
+     */
+    void registerScriptEditBoxHandler(int handler);
     
+    /**
+     * Unregisters a script function that will be called for EditBox events.
+     * @js NA
+     */
+    void unregisterScriptEditBoxHandler(void);
+    /**
+     * get a script Handler
+     * @js NA
+     */
+    int  getScriptEditBoxHandler(void){ return m_nScriptEditBoxHandler ;}
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -211,11 +256,49 @@ public:
      * @return The text entered in the edit box.
      */
     const char* getText(void);
+	
+	/**
+	 * Set the font.
+	 * @param pFontName The font name.
+	 * @param fontSize The font size.
+	 */
+	void setFont(const char* pFontName, int fontSize);
+    
+	/**
+	 * Set the font name.
+	 * @param pFontName The font name.
+	 */
+	void setFontName(const char* pFontName);
+    
+    /**
+	 * Set the font size.
+	 * @param fontSize The font size.
+	 */
+	void setFontSize(int fontSize);
     
     /**
      * Set the font color of the widget's text.
      */
     void setFontColor(const ccColor3B& color);
+    
+	/**
+	 * Set the placeholder's font.
+	 * @param pFontName The font name.
+	 * @param fontSize The font size.
+	 */
+	void setPlaceholderFont(const char* pFontName, int fontSize);
+    
+    /**
+	 * Set the placeholder's font name.
+	 * @param pFontName The font name.
+	 */
+	void setPlaceholderFontName(const char* pFontName);
+    
+    /**
+	 * Set the placeholder's font size.
+	 * @param fontSize The font size.
+	 */
+	void setPlaceholderFontSize(int fontSize);
     
     /**
      * Set the font color of the placeholder text when the edit box is empty.
@@ -272,15 +355,47 @@ public:
     
     /* override functions */
     virtual void setPosition(const CCPoint& pos);
+    virtual void setVisible(bool visible);
     virtual void setContentSize(const CCSize& size);
+	virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    /**
+     *  @js NA
+     */
     virtual void visit(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+	virtual void onEnter(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void onExit(void);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
     
-    /* callback funtions */
+    /** callback funtions 
+     *  @js NA
+     */
     void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
     
 protected:
@@ -294,11 +409,18 @@ protected:
     std::string m_strText;
     std::string m_strPlaceHolder;
     
+    std::string m_strFontName;
+    std::string m_strPlaceholderFontName;
+    
+    int m_nFontSize;
+    int m_nPlaceholderFontSize;
+    
     ccColor3B m_colText;
     ccColor3B m_colPlaceHolder;
     
     int   m_nMaxLength;
     float m_fAdjustHeight;
+    int   m_nScriptEditBoxHandler;
 };
 
 NS_CC_EXT_END

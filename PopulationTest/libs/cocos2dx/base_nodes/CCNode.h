@@ -36,6 +36,7 @@
 #include "shaders/CCGLProgram.h"
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
+#include "CCProtocols.h"
 
 NS_CC_BEGIN
 
@@ -48,6 +49,9 @@ class CCRGBAProtocol;
 class CCLabelProtocol;
 class CCScheduler;
 class CCActionManager;
+class CCComponent;
+class CCDictionary;
+class CCComponentContainer;
 
 /**
  * @addtogroup base_nodes
@@ -124,20 +128,27 @@ enum {
 class CC_DLL CCNode : public CCObject
 {
 public:
-    //////////////////////////////
     /// @{
     /// @name Constructor, Distructor and Initializers
     
     /**
      * Default constructor
+     * @js ctor
      */
     CCNode(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~CCNode(void);
     
+    /**
+     *  Initializes the instance of CCNode
+     *  @return Whether the initialization was successful.
+     */
+    virtual bool init();
 	/**
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
@@ -147,6 +158,7 @@ public:
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
+     * @js NA
      */
     const char* description(void);
     
@@ -154,7 +166,6 @@ public:
     
     
     
-    ///////////////////////////////////////////////////////
     /// @{
     /// @name Setters & Getters for Graphic Peroperties
     
@@ -265,6 +276,17 @@ public:
      */
     virtual float getScale();
     
+
+    /**
+     * Changes both X and Y scale factor of the node.
+     *
+     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     *
+     * @param fScaleX     The scale factor on X axis.
+     * @param fScaleY     The scale factor on Y axis.
+     */
+    virtual void setScale(float fScaleX,float fScaleY);
+
     
     /**
      * Changes the position (x,y) of the node in OpenGL coordinates
@@ -278,6 +300,7 @@ public:
      * @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
+     * @js NA
      */
     virtual void setPosition(const CCPoint &position);
     /**
@@ -303,22 +326,23 @@ public:
      *
      * @param x     X coordinate for position
      * @param y     Y coordinate for position
+     * @js NA
      */
-    void setPosition(float x, float y);
+    virtual void setPosition(float x, float y);
     /**
      * Gets position in a more efficient way, returns two number instead of a CCPoint object
      *
      * @see setPosition(float, float)
      */
-    void getPosition(float* x, float* y);
+    virtual void getPosition(float* x, float* y);
     /**
      * Gets/Sets x or y coordinate individually for position.
      * These methods are used in Lua and Javascript Bindings
      */
-    void  setPositionX(float x);
-    float getPositionX(void);
-    void  setPositionY(float y);
-    float getPositionY(void);
+    virtual void  setPositionX(float x);
+    virtual float getPositionX(void);
+    virtual void  setPositionY(float y);
+    virtual float getPositionY(void);
     
     
     /**
@@ -408,7 +432,7 @@ public:
      *
      * @return The untransformed size of the node.
      */
-    virtual const CCSize& getContentSize();
+    virtual const CCSize& getContentSize() const;
 
     
     /**
@@ -511,12 +535,14 @@ public:
      * Sets the state of OpenGL server side.
      *
      * @param glServerState     The state of OpenGL server side.
+     * @js NA
      */
     virtual void setGLServerState(ccGLServerState glServerState);
     /**
      * Returns the state of OpenGL server side.
      *
      * @return The state of OpenGL server side.
+     * @js NA
      */
     virtual ccGLServerState getGLServerState();
     
@@ -543,7 +569,6 @@ public:
     /// @}  end of Setters & Getters for Graphic Peroperties
     
     
-    ///////////////////////////////////////////////////////
     /// @{
     /// @name Children and Parent
     
@@ -581,7 +606,7 @@ public:
      *
      * @return a CCNode object whose tag equals to the input parameter
      */
-    CCNode * getChildByTag(int tag);
+    virtual CCNode * getChildByTag(int tag);
     /**
      * Return an array of children
      *
@@ -605,7 +630,7 @@ public:
      *
      * @return The amount of children.
      */
-    unsigned int getChildrenCount(void);
+    virtual unsigned int getChildrenCount(void) const;
     
     /**
      * Sets the parent node
@@ -635,6 +660,7 @@ public:
      * Removes this node itself from its parent node. 
      * If the node orphan, then nothing happens.
      * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+     * @js removeFromParent
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
     /** 
@@ -677,6 +703,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
      * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @js removeAllChildren
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     
@@ -699,7 +726,6 @@ public:
     
 
     
-    ////////////////////////////////////
     /// @{
     /// @name Grid object for effects
     
@@ -707,6 +733,7 @@ public:
      * Returns a grid object that is used when applying effects
      * 
      * @return A CCGrid object that is used when applying effects
+     * @js NA
      */
     virtual CCGridBase* getGrid();
     /**
@@ -719,7 +746,6 @@ public:
     /// @} end of Grid
     
     
-    /////////////////////////////////////
     /// @{
     /// @name Tag & User data
     
@@ -756,7 +782,7 @@ public:
      *
      * @return A interger that identifies the node.
      */
-    virtual int getTag();
+    virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *
@@ -772,6 +798,7 @@ public:
      * You can set everything in UserData pointer, a data block, a structure or an object.
      * 
      * @return A custom user data pointer
+     * @js NA
      */
     virtual void* getUserData();
     /**
@@ -782,6 +809,7 @@ public:
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
      * @return A custom user data pointer
+     * @js NA
      */
     virtual void setUserData(void *pUserData);
     
@@ -791,6 +819,7 @@ public:
      * Similar to userData, but instead of holding a void* it holds an object
      *
      * @return A user assigned CCObject
+     * @js NA
      */
     virtual CCObject* getUserObject();
     /**
@@ -808,7 +837,6 @@ public:
     /// @} end of Tag & User Data
     
     
-    ///////////////////////////////
     /// @{
     /// @name Shader Program
     /**
@@ -831,8 +859,6 @@ public:
     virtual void setShaderProgram(CCGLProgram *pShaderProgram);
     /// @} end of Shader Program
     
-    ///////////////////////////////////////
-    ///////////////////////////////////////
     
     /**
      * Returns a camera object that lets you move the node using a gluLookAt
@@ -857,7 +883,6 @@ public:
     virtual bool isRunning();
 
     
-    /////////////////////////////////
     /// @{
     /// @name Script Bindings for lua
 
@@ -900,13 +925,13 @@ public:
     
     /** 
      * Schedules for lua script. 
+     * @js NA
      */
     void scheduleUpdateWithPriorityLua(int nHandler, int priority);
     
     /// @}  end Script Bindings
 
 
-    //////////////////////////
     /// @{
     /// @name Event Callbacks
     
@@ -915,12 +940,16 @@ public:
      * If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., CCNode::onEnter().
+     * @js NA
+     * @lua NA
      */
     virtual void onEnter();
 
     /** Event callback that is invoked when the CCNode enters in the 'stage'.
      * If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
      * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. CCNode::onEnterTransitionDidFinish()
+     * @js NA
+     * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
 
@@ -929,12 +958,16 @@ public:
      * If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., CCNode::onExit().
+     * @js NA
+     * @lua NA
      */
     virtual void onExit();
 
     /** 
      * Event callback that is called every time the CCNode leaves the 'stage'.
      * If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * @js NA
+     * @lua NA
      */
     virtual void onExitTransitionDidStart();
 
@@ -972,10 +1005,10 @@ public:
      * @todo Rename to getBoundingBox() in the future versions.
      * 
      * @return A "local" axis aligned boudning box of the node.
+     * @js getBoundingBox
      */
     CCRect boundingBox(void);
 
-    /////////////////////////////////////////
     /// @{
     /// @name Actions
 
@@ -1047,7 +1080,6 @@ public:
     /// @} end of Actions
     
     
-    //////////////////
     /// @{
     /// @name Scheduler and Timer
 
@@ -1056,6 +1088,7 @@ public:
      *
      * @warning If you set a new CCScheduler, then previously created timers/update are going to be removed.
      * @param scheduler     A CCShdeduler object that is used to schedule all "update" and timers.
+     * @js NA
      */
     virtual void setScheduler(CCScheduler* scheduler);
     /**
@@ -1063,6 +1096,7 @@ public:
      *
      * @see setScheduler(CCScheduler*)
      * @return A CCScheduler object.
+     * @js NA
      */
     virtual CCScheduler* getScheduler();
     
@@ -1071,6 +1105,8 @@ public:
      *
      * @param selector      A function selector
      * @return Whether the funcion selector is scheduled.
+     * @js NA
+     * @lua NA
      */
     bool isScheduled(SEL_SCHEDULE selector);
 
@@ -1080,6 +1116,7 @@ public:
      * It will use the order number 0. This method will be called every frame.
      * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
      * Only one "update" method could be scheduled per node.
+     * @lua NA
      */
     void scheduleUpdate(void);
 
@@ -1089,6 +1126,7 @@ public:
      * This selector will be called every frame.
      * Scheduled methods with a lower priority will be called before the ones that have a higher value.
      * Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
+     * @lua NA
      */
     void scheduleUpdateWithPriority(int priority);
 
@@ -1112,6 +1150,7 @@ public:
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kCCRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
     
@@ -1121,6 +1160,7 @@ public:
      *
      * @param selector      A function wrapped as a selector
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval);
     
@@ -1130,6 +1170,7 @@ public:
      *
      * @param selector      A function wrapped as a selector
      * @param delay         The amount of time that the first tick will wait before execution.
+     * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
     
@@ -1138,6 +1179,7 @@ public:
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
      * @param selector      A function wrapped as a selector
+     * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
     
@@ -1146,6 +1188,7 @@ public:
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
      * @param selector      A function wrapped as a selector
+     * @lua NA
      */
     void unschedule(SEL_SCHEDULE selector);
 
@@ -1158,11 +1201,15 @@ public:
     /** 
      * Resumes all scheduled selectors and actions.
      * This method is called internally by onEnter
+     * @js NA
+     * @lua NA
      */
     void resumeSchedulerAndActions(void);
     /** 
      * Pauses all scheduled selectors and actions.
      * This method is called internally by onExit
+     * @js NA
+     * @lua NA
      */
     void pauseSchedulerAndActions(void);
     
@@ -1170,9 +1217,9 @@ public:
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
      */
     virtual void update(float delta);
-    
 
-    ////////////////////////////
+    /// @} end of Scheduler and Timer
+
     /// @{
     /// @name Transformations
     
@@ -1220,7 +1267,6 @@ public:
     /// @} end of Transformations
     
     
-    ///////////////////
     /// @{
     /// @name Coordinate Converters
     
@@ -1256,7 +1302,80 @@ public:
      */
     CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
     
+	/**
+     *  Sets the additional transform.
+     *
+     *  @note The additional transform will be concatenated at the end of nodeToParentTransform.
+     *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
+     *  @code
+        // create a batchNode
+        CCSpriteBatchNode* batch= CCSpriteBatchNode::create("Icon-114.png");
+        this->addChild(batch);
+     
+        // create two sprites, spriteA will be added to batchNode, they are using different textures.
+        CCSprite* spriteA = CCSprite::createWithTexture(batch->getTexture());
+        CCSprite* spriteB = CCSprite::create("Icon-72.png");
+
+        batch->addChild(spriteA); 
+     
+        // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
+        // But we want to simulate `parent-child` relationship for these two node.
+        this->addChild(spriteB); 
+
+        //position
+        spriteA->setPosition(ccp(200, 200));
+     
+        // Gets the spriteA's transform.
+        CCAffineTransform t = spriteA->nodeToParentTransform();
+     
+        // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
+        spriteB->setAdditionalTransform(t);
+
+        //scale
+        spriteA->setScale(2);
+     
+        // Gets the spriteA's transform.
+        t = spriteA->nodeToParentTransform();
+     
+        // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
+        spriteB->setAdditionalTransform(t);
+
+        //rotation
+        spriteA->setRotation(20);
+     
+        // Gets the spriteA's transform.
+        t = spriteA->nodeToParentTransform();
+     
+        // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
+        spriteB->setAdditionalTransform(t);
+     *  @endcode
+     */
+    void setAdditionalTransform(const CCAffineTransform& additionalTransform);
+    
     /// @} end of Coordinate Converters
+
+      /// @{
+    /// @name component functions
+    /** 
+     *   gets a component by its name
+     */
+    CCComponent* getComponent(const char *pName) const;
+    
+    /** 
+     *   adds a component
+     */
+    virtual bool addComponent(CCComponent *pComponent);
+    
+    /** 
+     *   removes a component by its name      
+     */
+    virtual bool removeComponent(const char *pName);
+    
+    /**
+     *   removes all components
+     */
+    virtual void removeAllComponents();
+    /// @} end of component functions
 
 private:
     /// lazy allocs
@@ -1268,7 +1387,10 @@ private:
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
     void detachChild(CCNode *child, bool doCleanup);
     
-    /// Convert cocos2d coordinates to UI windows coordinate.
+    /** Convert cocos2d coordinates to UI windows coordinate.
+     * @js NA
+     * @lua NA
+     */
     CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 protected:
@@ -1290,6 +1412,8 @@ protected:
     
     CCSize m_obContentSize;             ///< untransformed size of the node
     
+    
+    CCAffineTransform m_sAdditionalTransform; ///< transform
     CCAffineTransform m_sTransform;     ///< transform
     CCAffineTransform m_sInverse;       ///< transform
     
@@ -1321,7 +1445,7 @@ protected:
     
     bool m_bTransformDirty;             ///< transform dirty flag
     bool m_bInverseDirty;               ///< transform dirty flag
-    
+    bool m_bAdditionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     bool m_bVisible;                    ///< is this node visible
     
     bool m_bIgnoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the CCNode, false otherwise.
@@ -1332,6 +1456,67 @@ protected:
     int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
+    
+    CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components
+
+};
+
+//#pragma mark - CCNodeRGBA
+
+/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+ 
+ All features from CCNode are valid, plus the following new features:
+ - opacity
+ - RGB colors
+ 
+ Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ @since v2.1
+ */
+class CC_DLL CCNodeRGBA : public CCNode, public CCRGBAProtocol
+{
+public:
+    /**
+     *  @js ctor
+     */
+    CCNodeRGBA();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual ~CCNodeRGBA();
+    
+    virtual bool init();
+    
+    /**
+     * Allocates and initializes a nodergba.
+     * @return A initialized node which is marked as "autorelease".
+     */
+    static CCNodeRGBA * create(void);
+    
+    virtual GLubyte getOpacity();
+    virtual GLubyte getDisplayedOpacity();
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const ccColor3B& getColor(void);
+    virtual const ccColor3B& getDisplayedColor();
+    virtual void setColor(const ccColor3B& color);
+    virtual void updateDisplayedColor(const ccColor3B& parentColor);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);};
+    virtual bool isOpacityModifyRGB() { return false; };
+
+protected:
+	GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+	ccColor3B	_displayedColor;
+    ccColor3B   _realColor;
+	bool		_cascadeColorEnabled;
+    bool        _cascadeOpacityEnabled;
 };
 
 // end of base_node group

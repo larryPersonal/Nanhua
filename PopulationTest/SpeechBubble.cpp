@@ -22,7 +22,8 @@ void SpeechBubble::createSpeechBubble()
     background->setScaleY(200 / background->getContentSize().width);
     
     orig_sizeX = background->getContentSize().width;
-   // background->setAnchorPoint(ccp(0.5, 0));
+    CCLog("%d", orig_sizeX);
+    background->setAnchorPoint(ccp(0.5, 0));
     
     contentNode = CCNode::create();
     

@@ -50,7 +50,9 @@ static GLuint    s_uCurrentBoundTexture[kCCMaxActiveTexture] =  {(GLuint)-1,(GLu
 static GLenum    s_eBlendingSource = -1;
 static GLenum    s_eBlendingDest = -1;
 static int       s_eGLServerState = 0;
+#if CC_TEXTURE_ATLAS_USE_VAO
 static GLuint    s_uVAO = 0;
+#endif
 #endif // CC_ENABLE_GL_STATE_CACHE
 
 // GL State Cache functions
@@ -74,7 +76,12 @@ void ccGLInvalidateStateCache( void )
     s_eBlendingSource = -1;
     s_eBlendingDest = -1;
     s_eGLServerState = 0;
-#endif
+
+#if CC_TEXTURE_ATLAS_USE_VAO
+    s_uVAO = 0;
+#endif // CC_TEXTURE_ATLAS_USE_VAO
+
+#endif // CC_ENABLE_GL_STATE_CACHE
 }
 
 void ccGLDeleteProgram( GLuint program )
