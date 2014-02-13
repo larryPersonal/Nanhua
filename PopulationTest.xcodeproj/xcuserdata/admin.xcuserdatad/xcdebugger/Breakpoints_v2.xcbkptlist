@@ -268,7 +268,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1657"
-            endingLineNumber = "1657">
+            endingLineNumber = "1657"
+            landmarkName = "GameSprite::getHome()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -378,9 +380,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "684"
-            endingLineNumber = "684"
-            landmarkName = "GameSprite::Wander()"
-            landmarkType = "5">
+            endingLineNumber = "684">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
