@@ -591,7 +591,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
     }
     else
     {
-        GameHUD::getThis()->buyBuilding(cloneBuilding->buildingCost);
+        //GameHUD::getThis()->buyBuilding(cloneBuilding->buildingCost);
         GameScene::getThis()->constructionHandler->addConstructingBuilding(cloneBuilding);
     }
     

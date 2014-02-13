@@ -10,7 +10,7 @@
 #import "cocos2d.h"
 #import "EAGLView.h"
 #import "AppDelegate.h"
-#import "TestFlight.h"
+//#import "TestFlight.h"
 
 #import "RootViewController.h"
 
@@ -27,7 +27,7 @@ static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    [TestFlight takeOff:@"08e86950-0429-42f4-a09f-d5b56469add2"];
+    //[TestFlight takeOff:@"08e86950-0429-42f4-a09f-d5b56469add2"];
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.

@@ -18,6 +18,8 @@ Senario::Senario()
     active = false;
     init();
     curSlide = 0;
+    slidesList = CCArray::create();
+    slidesList->retain();
 }
 
 Senario::~Senario()
@@ -26,6 +28,8 @@ Senario::~Senario()
     spriteList.clear();
     menuList.clear();
     labelList.clear();
+    slidesList->removeAllObjects();
+    slidesList->release();
 }
 
 Senario* Senario::getThis()
@@ -55,19 +59,36 @@ bool Senario::init()
 
 void Senario::playSenario(const char* senario)
 {
-    readSenarioFile(senario);
+    curSlide = 0;
+    readSenarioFile();
+    constructSenarioStage();
+    //onOrientationChanged();
     createGUI();
 }
 
-void Senario::readSenarioFile(const char *senario)
+void Senario::readSenarioFile()
 {
-    curSlide = 0;
+    slidesList->removeAllObjects();
+    slidesList->release();
+    
     SenarioManager* sm = new SenarioManager();
-    sm->parseXMLFile("senario.xml");
+    if(isHorizontal())
+    {
+        sm->parseXMLFile("senario_h.xml");
+    }
+    else
+    {
+        sm->parseXMLFile("senario.xml");
+    }
     
     slidesList = sm->slidesList;
-    
-    constructSenarioStage();
+    delete sm;
+}
+
+bool Senario::isHorizontal()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    return screenSize.width > screenSize.height;
 }
 
 bool Senario::constructSenarioStage()
@@ -91,8 +112,17 @@ bool Senario::constructSenarioStage()
     {
         Element* ele = (Element*)elementArray->objectAtIndex(i);
         
+        /*
+         * In the senario stage, there are two types of elements -> sprite and dialogue, treat these two types of elements differently in order to make this display them correctly!
+         */
+        
         if(ele->type == Element::sprite)
         {
+            /*
+             * Sprite: only has a picture of the sprite shown on the screen
+             * Future: may include animation of the sprite shown on the screen (probably a gif?)
+             */
+            
             //CCSprite* cha = CCSprite::create(ele->src.c_str(), CCRectMake(0, 0, screenSize.width * ele->width / 100.0f, screenSize.height * ele->height / 100.0f));
             
             CCSprite* cha = CCSprite::create(ele->src.c_str());
@@ -106,6 +136,11 @@ bool Senario::constructSenarioStage()
         }
         else if(ele->type == Element::dialogue)
         {
+            /*
+             * Dialogue: contains a picture of the background of that dialogue, a name label, a dialogue text and a proceed button
+             * Future: may include dialogue functionalities like save, load, auto proceed, text jumper, etc....
+             */
+            
             CCSprite* chbox = CCSprite::create(ele->src.c_str());
             CCSize boxSize = chbox->getContentSize();
             chbox->setScale(screenSize.width / boxSize.width * ele->width / 100.0f);
@@ -119,18 +154,32 @@ bool Senario::constructSenarioStage()
             chboxLabel->setAnchorPoint(ccp(0, 1));
             chboxLabel->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + 30.0f, (chbox->boundingBox().size.height / 2.0f) + (chbox->getPositionY() - chbox->boundingBox().size.height)));
             
+            float heightOff = 0.0f;
+            float widthOff = 0.0f;
             ss.str(std::string());
             ss << ele->name;
             CCLabelTTF* chboxName = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
             chboxName->setColor(colorBlue);
             chboxName->setAnchorPoint(ccp(0.5, 1));
+            if(isHorizontal())
+            {
+                heightOff = 25.0f;
+            }
             if(ele->dir.compare("left") == 0)
             {
-                chboxName->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + chboxName->boundingBox().size.width / 2.0f + 28.0f, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f));
+                if(isHorizontal())
+                {
+                    widthOff = 20.0f;
+                }
+                chboxName->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + chboxName->boundingBox().size.width / 2.0f + 28.0f + widthOff, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f - heightOff));
             }
             else
             {
-                chboxName->setPosition(ccp(chbox->boundingBox().size.width - 16.0f, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f));
+                if(isHorizontal())
+                {
+                    widthOff = 10.0f;
+                }
+                chboxName->setPosition(ccp(chbox->boundingBox().size.width - 16.0f - widthOff, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f - heightOff));
             }
             
             CCMenuItemImage* nextButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(Senario::nextButtonPressed));
@@ -223,4 +272,11 @@ void Senario::buttonSelect()
         this->setVisible(false);
         GameScene::getThis()->enableTouch();
     //}
+}
+
+void Senario::onOrientationChanged(){
+    readSenarioFile();
+    constructSenarioStage();
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
 }

@@ -95,16 +95,12 @@ class GameHUD : public CCLayer
     tapMode currTapMode;
     MenuMode currMenuMode;
     
-    // Time label
-    Date* date;
-    CCLabelTTF* timeLabel;
     
     
     //InfoBar and items
     InfoBar* bottomInfoBar;
     InfoBar* hintInfoBar;
     
-    CCLabelTTF* moneyLabel;
     CCLabelTTF* popTotalLabel;
     CCLabelTTF* avgHapLabel;
     CCLabelTTF* buildLabel;
@@ -121,7 +117,44 @@ class GameHUD : public CCLayer
     
     float cumulatedTime;
     
- public:
+public:
+    // stats menu group
+    CCSprite* statsMenu;
+    CCSprite* moneyIcon;
+    CCSprite* foodIcon;
+    CCSprite* populationIcon;
+    CCLabelTTF* moneyLabel;
+    CCLabelTTF* foodLabel;
+    CCLabelTTF* populationLabel;
+    CCLabelTTF* achivementsLabel;
+    
+    // Time label
+    Date* date;
+    CCLabelTTF* timeLabel;
+    CCLabelTTF* timeLabel_1;
+    CCLabelTTF* timeLabel_2;
+    
+    // time menu group
+    CCSprite* timeMenu;
+    CCSprite* firstWeekLabel;
+    CCSprite* secondWeekLabel;
+    CCSprite* thirdWeekLabel;
+    CCSprite* lastWeekLabel;
+    
+    // objective menu group
+    CCSprite* objectiveMenu;
+    CCMenuItemImage* objectiveButton;
+    CCLabelTTF* objectiveTitle;
+    CCArray* menuItems_objective;
+    CCMenu* menu_objective;
+    
+    // build menu group
+    CCMenuItemImage* buildButton;
+    CCArray* menuItems_build;
+    CCMenu* menu_build;
+    
+    
+public:
     ResearchIndicator* ri;
     
     bool menuIsOpen;
@@ -168,6 +201,15 @@ class GameHUD : public CCLayer
     CCMenuItemImage* getMenuButton();
     
     Date* getDate();
+    
+    // jerry added
+    void createStatsMenu();
+    void createTimeMenu();
+    void createObjectiveMenu();
+    void createBuildMenu();
+    
+    void clickObjectiveButton();
+    void clickBuildButton();
     
 };
 

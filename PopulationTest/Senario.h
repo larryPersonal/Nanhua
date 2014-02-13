@@ -48,7 +48,7 @@ public:
     
     void playSenario(const char* senario);
     
-    void readSenarioFile(const char* senario);
+    void readSenarioFile();
     
     void createGUI();
     
@@ -61,6 +61,10 @@ public:
     void nextButtonPressed();
     
     void clearElements();
+    
+    bool isHorizontal();
+    
+    void onOrientationChanged();
 };
 
 #endif

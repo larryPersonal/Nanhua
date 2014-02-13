@@ -11,6 +11,7 @@
 #import "MainMenuScene.h"
 #import "GameHUD.h"
 #import "AppDelegate.h"
+#import "Senario.h"
 
 using namespace cocos2d;
 
@@ -158,6 +159,7 @@ using namespace cocos2d;
     MainMenuScene* menuScript = MainMenuScene::getThis();
     GameScene* gameScene = GameScene::getThis();
     GameHUD* gameHUDScript = GameHUD::getThis();
+    Senario* senarioScript = Senario::getThis();
     
     if (menuScript)
     {
@@ -178,6 +180,11 @@ using namespace cocos2d;
             else if (PopupMenu* derivedPtr = dynamic_cast<PopupMenu*>(objPtr))
                 derivedPtr->onOrientationChanged();
         }
+    }
+    
+    if (senarioScript)
+    {
+        senarioScript->onOrientationChanged();
     }
 }
 

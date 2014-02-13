@@ -17,8 +17,6 @@ SenarioManager::SenarioManager(){
 }
 
 SenarioManager::~SenarioManager(){
-    slidesList->removeAllObjects();
-    slidesList->release();
     delete fr;
 }
 
