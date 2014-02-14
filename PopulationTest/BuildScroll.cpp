@@ -75,23 +75,27 @@ void BuildScroll::createMenuItems()
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.9f, buildMenu->boundingBox().size.height), CCSizeMake(buildMenu->boundingBox().size.width * 2.0f, buildMenu->boundingBox().size.height));
+    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(200.0f * GameScene::getThis()->buildingHandler->allBuildings->count(), buildMenu->boundingBox().size.height * 0.7f));
     scrollArea->enableScrollHorizontal(0, "bar.png", "bar.png");
-    scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
     //scrollArea->hideScroll();
-    scrollArea->setAnchorPoint(ccp(0, 1));
-    
-    
+    scrollArea->setAnchorPoint(ccp(0, 0));
     
     // create all building references for all building categories.
     CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
     // list down all the buildings
+    int index = 0;
     for(int i = 0; i < allBuildings->count(); i++)
     {
-        BuildingCard* bc = BuildingCard::create((Building*) allBuildings->objectAtIndex(i), scrollArea);
+        Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+        if(tempBuilding->buildingType == HOUSING || tempBuilding->buildingType == AMENITY)
+        {
+            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, index);
+            index++;
+        }
         //buildingCards->addObject((CCObject*) bc);
     }
-    scrollArea->setPosition(ccp(0, screenSize.height / 2.0f));
+    scrollArea->setScrollContentSize(CCSizeMake(200.0f * index + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->setPosition(ccp(screenSize.width * 0.125f, buildMenu->boundingBox().size.height * 0.14f));
     scrollArea->updateScrollBars();
     this->addChild(scrollArea, 1);
 }

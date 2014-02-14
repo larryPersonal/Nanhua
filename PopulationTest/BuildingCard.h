@@ -21,7 +21,7 @@ private:
     ScrollArea* scrollArea;
     
     CCLabelTTF* buildingNameLabel;
-    CCSprite* buildingImage;
+    CCMenuItemSprite* buildingImage;
     CCMenuItemImage* buildingInfoButton;
     
     CCSprite* costImage;
@@ -33,17 +33,24 @@ private:
     CCSprite* buildingTimeImage;
     CCLabelTTF* buildingTimeLabel;
     
+    int index;
+    
+    CCMenu* menu;
+    CCArray* menuItemsArray;
+    
 public:
-    BuildingCard(Building*, ScrollArea*);
+    BuildingCard(Building*, ScrollArea*, int);
     ~BuildingCard();
     
-    static BuildingCard* create(Building*, ScrollArea*);
+    static BuildingCard* create(Building*, ScrollArea*, int);
     
     void init();
     
     void refreshAllMenuItems();
     
     void showBuildingInfo();
+    
+    void onMenuItemSelected();
 };
 
 #endif

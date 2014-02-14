@@ -7,22 +7,26 @@
 //
 
 #include "BuildingCard.h"
+#include "GameHUD.h"
+#include "BuildScroll.h"
 
-BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea)
+BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea, int index)
 {
     this->building = building;
     this->scrollArea = scrollArea;
+    this->index = index;
     init();
 }
 
 BuildingCard::~BuildingCard()
 {
-    
+    menuItemsArray->removeAllObjects();
+    menuItemsArray->release();
 }
 
-BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea)
+BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea, int index)
 {
-    BuildingCard *pRet = new BuildingCard(building, scrollArea);
+    BuildingCard *pRet = new BuildingCard(building, scrollArea, index);
     if (pRet)
     {
         pRet->autorelease();
@@ -37,7 +41,6 @@ BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea)
 
 void BuildingCard::init()
 {
-    CCLog("test******************");
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
@@ -46,23 +49,69 @@ void BuildingCard::init()
     
     // display the name of the building
     ss << building->buildingName;
-    CCLog(building->buildingName.c_str());
     buildingNameLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    buildingNameLabel->setAnchorPoint(ccp(0, 1));
+    buildingNameLabel->setColor(colorBlack);
+    buildingNameLabel->setAnchorPoint(ccp(0.5, 1));
     
     // display the building info button
     buildingInfoButton = CCMenuItemImage::create( "build-menu_info.png", "build-menu_info.png", this, menu_selector(BuildingCard::showBuildingInfo) );
-    buildingInfoButton->setScale(24.0f / buildingInfoButton->boundingBox().size.width);
+    buildingInfoButton->setScale(32.0f / buildingInfoButton->boundingBox().size.width);
     buildingInfoButton->setAnchorPoint(ccp(0, 1));
     
     // display the picture of the building
-    buildingImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-    buildingImage->setScale(48.0f / buildingImage->boundingBox().size.width);
+    CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
+    menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
+    buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
     buildingImage->setAnchorPoint(ccp(0, 1));
+    buildingImage->setContentSize(menuImage->boundingBox().size);
     
-    scrollArea->addItem(buildingNameLabel, ccp(-100.0f, 20.0f));
-    scrollArea->addItem(buildingInfoButton, ccp(50.0f, -50.0f));
-    scrollArea->addItem(buildingImage, ccp(30.0f, 0.0f));
+    menuItemsArray = CCArray::create();
+    menuItemsArray->retain();
+    menuItemsArray->addObject(buildingImage);
+    menu = CCMenu::createWithArray(menuItemsArray);
+    
+    // cost
+    costImage = CCSprite::create("build-menu_goldreq.png");
+    costImage->setScale(28.0f / costImage->boundingBox().size.width);
+    costImage->setAnchorPoint(ccp(0, 1));
+    
+    ss.str(std::string());
+    ss << building->buildingCost;
+    costLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    costLabel->setColor(colorBlack);
+    costLabel->setAnchorPoint(ccp(0, 1));
+    
+    // population
+    populationImage = CCSprite::create("build-menu_worker-req.png");
+    populationImage->setScale(28.0f / populationImage->boundingBox().size.width);
+    populationImage->setAnchorPoint(ccp(0, 1));
+    
+    ss.str(std::string());
+    ss << building->populationLimit;
+    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    populationLabel->setColor(colorBlack);
+    populationLabel->setAnchorPoint(ccp(0, 1));
+    
+    // building time
+    buildingTimeImage = CCSprite::create("build-menu_time-req.png");
+    buildingTimeImage->setScale(28.0f / buildingTimeImage->boundingBox().size.width);
+    buildingTimeImage->setAnchorPoint(ccp(0, 1));
+    
+    ss.str(std::string());
+    ss << building->build_uint_required;
+    buildingTimeLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingTimeLabel->setColor(colorBlack);
+    buildingTimeLabel->setAnchorPoint(ccp(0, 1));
+    
+    scrollArea->addItem(buildingNameLabel, ccp(60.0f + 200.0f * index, 15.0f));
+    scrollArea->addItem(buildingInfoButton, ccp(180.0f + 200.0f * index, 10.0f));
+    scrollArea->addItem(menu, ccp(60.0f + 200.0f * index, 40.0f));
+    scrollArea->addItem(costImage, ccp(20.0f + 200.0f * index, 190.0f));
+    scrollArea->addItem(costLabel, ccp(50.0f + 200.0f * index, 195.0f));
+    scrollArea->addItem(populationImage, ccp(100.0f + 200.0f * index, 190.0f));
+    scrollArea->addItem(populationLabel, ccp(130.0f + 200.0f * index, 195.0f));
+    scrollArea->addItem(buildingTimeImage, ccp(150.0f + 200.0f * index, 190.0f));
+    scrollArea->addItem(buildingTimeLabel, ccp(180.0f + 200.0f * index, 195.0f));
 }
 
 void BuildingCard::refreshAllMenuItems()
@@ -72,4 +121,65 @@ void BuildingCard::refreshAllMenuItems()
 void BuildingCard::showBuildingInfo()
 {
     
+}
+
+void BuildingCard::onMenuItemSelected()
+{
+    if(building == NULL)
+    {
+        return;
+    }
+    int tag = building->ID;
+    
+    //    Animate();
+    switch (tag)
+    {
+        case -3 : //build path
+        {
+            
+            //if (GameManager::getThis()->currentMoney >= path_cost_per_tile)
+            //{
+            GameHUD::getThis()->setTapMode(3);
+            GameHUD::getThis()->showBuildLabel("Path");
+            GameScene::getThis()->isThisTapCounted = true;
+            BuildScroll::getThis()->closeMenu();
+            //}
+            //else
+            //{
+            //Audio feedback?
+            //Visual feedback? //No money
+            //}
+        }
+            break;
+        case -4 : //unbuild path
+        {
+            GameHUD::getThis()->setTapMode(4);
+            BuildScroll::getThis()->closeMenu();
+        }
+            break;
+        default:
+        {
+            Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(tag);
+            //If enough money
+            //   if (GameManager::getThis()->currentMoney >= buildingToBuy->buildingCost) {
+            GameHUD::getThis()->setTapMode(1);
+            //GameHUD::getThis()->showBuildLabel(buildingToBuy->buildingName.c_str() );
+            //GameHUD::getThis()->updateBuildCostLabel(buildingToBuy->buildingCost);
+            GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
+            if(GameScene::getThis()->buildingHandler->selectedBuilding  == NULL)
+            {
+                return;
+            }
+            GameScene::getThis()->isThisTapCounted = true;
+            BuildScroll::getThis()->closeMenu();
+            //  }
+            //  else{
+            //Audio feedback?
+            
+            
+            //Visual feedback?
+            //  }
+        }
+            break;
+    }
 }

@@ -474,7 +474,7 @@ void GameHUD::closeAllMenuAndResetTapMode()
         return;
     }
     
-    hideBuildLabel();
+    //hideBuildLabel();
     setTapMode(0);
 }
 
