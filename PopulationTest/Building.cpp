@@ -652,11 +652,6 @@ void Building::gainExp(int expToGain)
             this->currentExp = 0;
             
             // Update GameHUD
-            if (GameHUD::getThis()->getMenuMode() == 6)
-            {
-                if (InfoMenu* menu = dynamic_cast<InfoMenu*>(PopupMenu::getBottommostPopupMenu()))
-                    menu->updateItemLevelLabel(this);
-            }
         
             //increase stats here **
             Building* buildingData = GameScene::getThis()->buildingHandler->getBuildingWithGID(targetGUID);

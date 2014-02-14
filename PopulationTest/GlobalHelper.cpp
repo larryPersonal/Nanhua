@@ -135,6 +135,11 @@ std::string GlobalHelper::getActionString(SpriteAction sa)
     }
 }
 
+bool GlobalHelper::isHorizontal()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    return screenSize.width > screenSize.height;
+}
 
 
 

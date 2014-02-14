@@ -38,6 +38,8 @@ public:
     static std::string Convert (int number);
     
     static std::string getActionString(SpriteAction);
+    
+    static bool isHorizontal();
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

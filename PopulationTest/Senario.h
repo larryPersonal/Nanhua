@@ -62,8 +62,6 @@ public:
     
     void clearElements();
     
-    bool isHorizontal();
-    
     void onOrientationChanged();
 };
 

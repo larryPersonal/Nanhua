@@ -492,7 +492,6 @@ void BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
             //if (GameManager::getThis()->currentMoney >= path_cost_per_tile)
             //{
                 GameHUD::getThis()->setTapMode(3);
-                GameHUD::getThis()->showBuildLabel("Path");
                 GameScene::getThis()->isThisTapCounted = true;
                 this->closeMenu();
             //}
@@ -515,7 +514,6 @@ void BuildMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
             //If enough money
          //   if (GameManager::getThis()->currentMoney >= buildingToBuy->buildingCost) {
                 GameHUD::getThis()->setTapMode(1);
-                GameHUD::getThis()->showBuildLabel(buildingToBuy->buildingName.c_str() );
                 GameHUD::getThis()->updateBuildCostLabel(buildingToBuy->buildingCost);
                 GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
                 GameScene::getThis()->isThisTapCounted = true;

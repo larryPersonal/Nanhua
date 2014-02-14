@@ -140,7 +140,6 @@ void BuildingCard::onMenuItemSelected()
             //if (GameManager::getThis()->currentMoney >= path_cost_per_tile)
             //{
             GameHUD::getThis()->setTapMode(3);
-            GameHUD::getThis()->showBuildLabel("Path");
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
             //}

@@ -165,7 +165,6 @@ void InGameMenu::createMenuItems()
     
     for (int x = 0; x < menuItems->count(); x++) {
         CCMenuItemSprite* thatItem = (CCMenuItemSprite*)menuItems->objectAtIndex(x);
-        thatItem->setPosition(ccp(GameHUD::getThis()->getMenuButton()->getPositionX(), GameHUD::getThis()->getMenuButton()->getPositionY() + menuItemsBuild->boundingBox().size.height *0.8f * (7 -x)));
         thatItem->setTag(x);
     }
     
@@ -194,8 +193,6 @@ void InGameMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
             PopupMenu* buildMenu = new BuildMenu();
             buildMenu->useAsExclusivePopupMenu();
             GameHUD::getThis()->miscLabel->setString("Back");
-            
-            GameHUD::getThis()->setMenuMode(2);
         }
         break;
            /*

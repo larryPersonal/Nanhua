@@ -66,9 +66,6 @@ class GameHUD : public CCLayer
     int mGameMonth;
     int mGameYear;
     
-    CCMenuItemImage* menuButton;
-    CCMenuItemImage* miscButton;
-    
     typedef enum
     {
         Normal = 0,
@@ -79,43 +76,9 @@ class GameHUD : public CCLayer
         BuildPathLine = 5
     }tapMode;
     
-    typedef enum
-    {
-        None,
-        OpenMenu,
-        BuildingsMenu,
-        ResearchMenu,
-        PopulationMenu,
-        PolicyMenu,
-        InfoMenu,
-        SystemMenu,
-        NumberOfMenus
-    }MenuMode;
-    
     tapMode currTapMode;
-    MenuMode currMenuMode;
-    
-    
-    
-    //InfoBar and items
-    InfoBar* bottomInfoBar;
-    InfoBar* hintInfoBar;
-    
-    CCLabelTTF* popTotalLabel;
-    CCLabelTTF* avgHapLabel;
-    CCLabelTTF* buildLabel;
-    CCLabelTTF* buildCostLabel;
-    
-    CCLabelTTF* hintLabel;
-    
-    int hint_show_time;
-    int curr_hint_show_time;
-
-    int default_hint_font_size;
     
     CCMenu* pMenu;
-    
-    float cumulatedTime;
     
 public:
     // stats menu group
@@ -170,21 +133,13 @@ public:
     bool init();
     void createInitialGUI();
     void onMenuButtonPressed();
-    void onMiscButtonPressed();
     void onOrientationChanged();
     void update(float deltaTime);
     
     int getTapMode();
     void setTapMode(int mode);
-    int getMenuMode();
-    void setMenuMode(int newMode);
     
-    void createInfoBars();
     void closeAllMenuAndResetTapMode();
-    void backToInGameMenu();
-    
-    void showBuildLabel(const char* buildingName);
-    void hideBuildLabel();
     
     void buyBuilding(int cost);
     
@@ -197,8 +152,6 @@ public:
     void updateBuildCostLabel(int cost, int dist=-1);
     
     void showHint(std::string hintText);
-    
-    CCMenuItemImage* getMenuButton();
     
     Date* getDate();
     
