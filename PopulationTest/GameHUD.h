@@ -12,10 +12,8 @@
 #include "PopupMenu.h"
 #include "InfoBar.h"
 #include "ProgressBar.h"
-#include "GameTimer.h"
 #include "GameManager.h"
-
-#include "ResearchIndicator.h"
+#include "BuildScroll.h"
 
 using namespace cocos2d;
 
@@ -80,6 +78,10 @@ class GameHUD : public CCLayer
     
     CCMenu* pMenu;
     
+    BuildScroll* buildScroll;
+    
+    float cumulatedTime;
+    
 public:
     // stats menu group
     CCSprite* statsMenu;
@@ -118,10 +120,7 @@ public:
     
     
 public:
-    ResearchIndicator* ri;
-    
     bool menuIsOpen;
-    GameTimer* gameTimer;
     
     GameHUD();
     ~GameHUD();
@@ -132,7 +131,6 @@ public:
     
     bool init();
     void createInitialGUI();
-    void onMenuButtonPressed();
     void onOrientationChanged();
     void update(float deltaTime);
     
@@ -161,9 +159,13 @@ public:
     void createObjectiveMenu();
     void createBuildMenu();
     
+    void rotateStatsMenu();
+    void rotateTimeMenu();
+    void rotateObjectiveMenu();
+    void rotateBuildMenu();
+    
     void clickObjectiveButton();
     void clickBuildButton();
-    
 };
 
 #endif

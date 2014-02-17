@@ -211,8 +211,6 @@ static int HasBuildingUnderConstruction_Glue(lua_State *L)
 
 static int HasStorageSpaceLeft_Glue(lua_State * L)
 {
-
-    lua_pushboolean(L, GameManager::getThis()->hasStorageLeft());
     
     return 1;
 }

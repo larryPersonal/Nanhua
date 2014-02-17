@@ -11,7 +11,6 @@
 #include "GameDefaults.h"
 #include "Possessions.h"
 #include "GlobalHelper.h"
-#include "GameTimer.h"
 #include "GameHUD.h"
 #include <json/json.h> //for the area unlock section
 //#include <sstream>
@@ -286,10 +285,10 @@ void GameManager::loadGameData()
                                     
                     
                     
-                    GameTimer::getThis()->setTime(atof(tokens[2].c_str()), atof(tokens[3].c_str()));
+                    //GameTimer::getThis()->setTime(atof(tokens[2].c_str()), atof(tokens[3].c_str()));
                     
             
-                    
+                    /*
                     //birth rate restore
                     int isImplementingPolicy = atoi(tokens[4].c_str());
                     if (isImplementingPolicy == 1)
@@ -307,6 +306,7 @@ void GameManager::loadGameData()
                     
                     //tutorial restore
                     TutorialHandler::getThis()->setSequenceIndex(atoi(tokens[12].c_str()));
+                    */
                 }
                     break;
                 case 2:
@@ -718,7 +718,7 @@ void GameManager::UpdateUnlocks()
         lockedBuildings->removeObjectsInArray(toRemove);
     }
    
-    if (TutorialHandler::getThis()->IsActive()) return; //do not update unlocks when tutorial is active.
+    //if (TutorialHandler::getThis()->IsActive()) return; //do not update unlocks when tutorial is active.
     
     //menuitem unlocks only run outside of the tutorial.
     for (int i = 0; i < gameMenuUnlocks.size(); ++i)

@@ -44,8 +44,11 @@ SelectPopulation::SelectPopulation(Building* building){
     spriteRowArray = CCArray::create();
     spriteRowArray->retain();
     
-    memberSpriteRowArray = CCArray::create();
-    memberSpriteRowArray->retain();
+    memberArray = CCArray::create();
+    memberArray->retain();
+    
+    emptySpaceArray = CCArray::create();
+    emptySpaceArray->retain();
     
     this->building = building;
     
@@ -73,30 +76,33 @@ SelectPopulation::~SelectPopulation()
      }*/
     spriteRowArray->removeAllObjects();
     CC_SAFE_RELEASE(spriteRowArray);
-    memberSpriteRowArray->removeAllObjects();
-    CC_SAFE_RELEASE(memberSpriteRowArray);
+    
+    memberArray->removeAllObjects();
+    CC_SAFE_RELEASE(memberArray);
+    
+    emptySpaceArray = CCArray::create();
+    CC_SAFE_RELEASE(emptySpaceArray);
 }
 
 void SelectPopulation::createMenuItems()
 {
     mBuildingUnitCurrent = building->build_uint_current;
     mBuildingUnitRequired = building->build_uint_required;
-    mBuildingMemberCurrent = memberSpriteRowArray->count();
     mBuildingPopulationLimit = building->populationLimit;
-    mBuildingBuilderCurrent = memberSpriteRowArray->count();
     mBuildingBuilderLimit = building->builderLimit;
     
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
     ccColor3B colorGreen = ccc3(81, 77, 2);
+    ccColor3B colorWhite = ccc3(255, 255, 255);
     
     // Create constant menu items
-    spriteBackground = CCSprite::create("outerbox.png");
-    spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width);
+    spriteBackground = CCSprite::create("worker_assign_ui_bg_03.png");
+    spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width * 1.4f);
     
     // Sprite
     spriteBuilding = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-    spriteBuilding->setScale(64.0f / spriteBuilding->boundingBox().size.width);
+    spriteBuilding->setScale(256.0f / spriteBuilding->boundingBox().size.width);
     
     // Menu items
     menuItems = CCArray::create();
@@ -108,15 +114,6 @@ void SelectPopulation::createMenuItems()
     buttonClose->setScale(0.4);
     buttonClose->setTag(-1);
     
-    //spInt = CCSprite::create("intelligence icon.png");
-    //spInt->setScale(30.0f / spInt->boundingBox().size.width);
-    spLoy = CCSprite::create("loyalty icon.png");
-    spLoy->setScale(30.0f / spLoy->boundingBox().size.width);
-    //spSoc = CCSprite::create("social icon.png");
-    //spSoc->setScale(30.0f / spSoc->boundingBox().size.width);
-    spHap = CCSprite::create("happiness icon.png");
-    spHap->setScale(30.0f / spHap->boundingBox().size.width);
-    
     menuItems->addObject(buttonClose);
     
     menu = CCMenu::createWithArray(menuItems);
@@ -127,48 +124,7 @@ void SelectPopulation::createMenuItems()
     ss << building->buildingName;
     
     labelBuildingName = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelBuildingName->setColor(colorGreen);
-    
-    ss.str(std::string());
-    ss << "Level: 1";
-    
-    labelBuildingLevel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelBuildingLevel->setColor(colorGreen);
-    
-    // stats labels
-    //ss.str(std::string());
-   // ss << "0";
-    
-    //labelTextInt = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    //labelTextInt->setColor(colorGreen);
-    
-    ss.str(std::string());
-    ss << "0";
-    
-    labelTextLoy = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelTextLoy->setColor(colorGreen);
-    
-    //ss.str(std::string());
-    //ss << "0";
-    
-    //labelTextSoc = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    //labelTextSoc->setColor(colorGreen);
-    
-    ss.str(std::string());
-    ss << "0";
-    
-    labelTextHap = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelTextHap->setColor(colorGreen);
-    
-    // progress bar
-    progressBar = new ProgressBar();
-    progressBar->createProgressBar(CCRectMake(0, 0, 80, 20),
-                                   CCRectMake(5, 5, 70, 10),
-                                   "loadingbar-empty.png",
-                                   "loadingbar-left.png",
-                                   "loadingbar-right.png",
-                                   "loadingbar-full.png");
-    progressBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
+    labelBuildingName->setColor(colorWhite);
 
     ss.str(std::string());
     ss << building->build_uint_current << "/" << building->build_uint_required;
@@ -179,42 +135,6 @@ void SelectPopulation::createMenuItems()
     // sprite row header
     ss.str(std::string());
     ss << "Villager";
-    
-    labelSRImage = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelSRImage->setColor(colorBlack);
-    
-    // member sprite row header
-    ss.str(std::string());
-    if(building->buildingType == HOUSING)
-    {
-        ss << "Resident";
-    }
-    else
-    {
-        ss << "Member";
-    }
-    
-    labelSRMember = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelSRMember->setColor(colorBlack);
-    labelSRMember->setAnchorPoint(ccp(0, 1));
-    
-    ss.str(std::string());
-    ss << building->memberSpriteList->count() << "/" << building->populationLimit;
-    memberLabel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    memberLabel->setColor(colorBlack);
-    memberLabel->setAnchorPoint(ccp(0, 1));
-    
-    ss.str(std::string());
-    ss << building->memberSpriteList->count() << "/" << building->builderLimit;
-    builderLabel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    builderLabel->setColor(colorBlack);
-    builderLabel->setAnchorPoint(ccp(0, 1));
-    
-    // scroll section for members
-    memberScrollArea = new ScrollArea();
-    memberScrollArea->createScrollArea(CCSizeMake(spriteBackground->boundingBox().size.width,spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRMember->boundingBox().size.height - 290.0f), CCSizeMake(spriteBackground->boundingBox().size.width, spriteBackground->boundingBox().size.height - spriteBuilding->boundingBox().size.height - labelSRMember->boundingBox().size.height - 290.0f));
-    memberScrollArea->enableScrollVertical(0, "bar.png", "bar.png");
-    memberScrollArea->hideScroll();
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
@@ -286,8 +206,8 @@ void SelectPopulation::createMenuItems()
     scrollArea->updateScrollBars();
     
     // add children
-    this->addChild(spriteBackground);
-    this->addChild(spriteBuilding, 3);
+    this->addChild(spriteBackground, 3);
+    this->addChild(spriteBuilding, 6);
     this->addChild(menu, 3);
     
     //this->addChild(spInt);
@@ -295,7 +215,7 @@ void SelectPopulation::createMenuItems()
     //this->addChild(spSoc);
     this->addChild(spHap);
     
-    this->addChild(labelBuildingName);
+    this->addChild(labelBuildingName, 4);
     this->addChild(labelBuildingLevel);
     
     //this->addChild(labelTextInt);
@@ -317,7 +237,7 @@ void SelectPopulation::createMenuItems()
     this->addChild(builderLabel);
     
     // done creation
-    spriteBuilding->setAnchorPoint(ccp(0, 1));
+    spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     buttonClose->setAnchorPoint(ccp(1, 1));
     
@@ -326,7 +246,7 @@ void SelectPopulation::createMenuItems()
     //spSoc->setAnchorPoint(ccp(0, 1));
     spHap->setAnchorPoint(ccp(0, 1));
     
-    labelBuildingName->setAnchorPoint(ccp(0, 1));
+    labelBuildingName->setAnchorPoint(ccp(0.5, 0.5));
     labelBuildingLevel->setAnchorPoint(ccp(0, 1));
     
     //labelTextInt->setAnchorPoint(ccp(0, 1));
@@ -385,7 +305,7 @@ void SelectPopulation::reposition(){
     float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
     
-    spriteBuilding->setPosition(ccp(15.0f - halfWidth, halfHeight - 10.0f));
+    spriteBuilding->setPosition(ccp(240, 70));
     
     // Anchored top right
     buttonClose->setPosition(halfWidth - 20.0f, halfHeight - 20.0f);
@@ -395,7 +315,12 @@ void SelectPopulation::reposition(){
     //spSoc->setPosition(ccp(-halfWidth + spriteBuilding->boundingBox().size.width + labelBuildingName->boundingBox().size.width + spInt->boundingBox().size.width +  100.0f, halfHeight - 12.0f));
     spHap->setPosition(ccp(-halfWidth + 480.0f, halfHeight - spLoy->boundingBox().size.height - 15.0f));
     
-    labelBuildingName->CCNode::setPosition(-halfWidth + spriteBuilding->boundingBox().size.width + 25.0f, halfHeight - 12.0f);
+    
+    labelBuildingName->CCNode::setPosition(240, -50);
+    
+    
+    
+    
     labelBuildingLevel->CCNode::setPosition(-halfWidth + spriteBuilding->boundingBox().size.width + 25.0f, halfHeight - labelBuildingName->boundingBox().size.height - 15.0f);
     
     //labelTextInt->CCNode::setPosition(-halfWidth + spriteBuilding->boundingBox().size.width + labelBuildingName->boundingBox().size.width + spInt->boundingBox().size.width + 60.0f, halfHeight - 14.0f);

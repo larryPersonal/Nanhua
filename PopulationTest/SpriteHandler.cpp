@@ -426,18 +426,6 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, SpriteType type)
     
     GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
-    if (TutorialHandler::getThis() == NULL) return;
-    if (TutorialHandler::getThis()->IsActive())
-    {
-        stringstream ss;
-        ss << spritesOnMap->count();
-        TutorialHandler::getThis()->ReportAction("count", "population", ss.str().c_str());
-        if (newSprite->race == 'a')
-            TutorialHandler::getThis()->ReportAction("spawncomplete", "alien", newSprite->spriteClass );
-        else
-            TutorialHandler::getThis()->ReportAction("spawncomplete", "mayan", newSprite->spriteClass );
-
-    }
 }
 
 void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, std::string details)

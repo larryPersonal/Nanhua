@@ -29,7 +29,7 @@ private:
     
     CCSprite* buildMenu;
     
-    CCArray* buildingCards;
+    int numberOfBuildingCards;
     
     ScrollArea* scrollArea;
     

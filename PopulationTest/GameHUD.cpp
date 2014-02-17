@@ -13,7 +13,6 @@
 #include "PopulationMenu.h"
 #include "TutorialHandler.h"
 #include "GlobalSettings.h"
-#include "BuildScroll.h"
 #include "GlobalHelper.h"
 
 GameHUD* GameHUD::SP;
@@ -24,6 +23,9 @@ GameHUD::GameHUD()
     GameHUD::SP = this;
     date = new Date();
     
+    cumulatedTime = 0;
+    buildScroll = NULL;
+    
     mGameDay = 0;
     mGameMonth = 0;
     mGameWeek = 0;
@@ -32,8 +34,6 @@ GameHUD::GameHUD()
 
 GameHUD::~GameHUD()
 {
-    removeChild(ri);
-    delete ri;
     delete date;
 
     GameHUD::SP = NULL;
@@ -73,6 +73,15 @@ bool GameHUD::init()
 
 void GameHUD::update(float deltaTime)
 {
+    // update date
+    cumulatedTime += deltaTime;
+    
+    if(cumulatedTime > 1)
+    {
+        date->addDay();
+        cumulatedTime = 0;
+    }
+    
     // update time group
     // if week has been changed
     if(mGameWeek != date->week)
@@ -154,32 +163,6 @@ void GameHUD::createInitialGUI(){
  
 }
 
-void GameHUD::onMenuButtonPressed()
-{
-    closeAllMenuAndResetTapMode();
-    
-    if (!menuIsOpen)
-    {
-        miscLabel->setString("Cancel");
-        closeAllMenuAndResetTapMode();
-        
-        InGameMenu* inGameMenu = InGameMenu::create();
-        inGameMenu->useAsExclusivePopupMenu();
-    
-        menuIsOpen = true;
-    }
-    //This part instantly destroys all buttons, pls edit to animate out if possible
-    else
-    {
-        PopupMenu::closeAllPopupMenu();
-        menuIsOpen = false;
-        miscLabel->setString("Menu");
-        GameScene::getThis()->setTouchEnabled(true);
-    }
-    
-    CCLog("menuIsOpen = %i", menuIsOpen);
-}
-
 void GameHUD::setTapMode(int mode)
 {
     currTapMode = (tapMode)mode;
@@ -191,21 +174,15 @@ int GameHUD::getTapMode()
 }
 
 void GameHUD::onOrientationChanged(){
-    /*
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    rotateStatsMenu();
+    rotateTimeMenu();
+    rotateObjectiveMenu();
+    rotateBuildMenu();
     
-    CCSize spriteSize = miscButton->boundingBox().size;
-    
-    
-    miscButton->setPosition( ccp(screenSize.width - spriteSize.width*0.5, spriteSize.height*0.5) );
-    
-    if (ri != NULL)
-    ri->setPosition(screenSize.width - 350.0f, screenSize.height - 150.0f);
-
-   
-    //researchIndicator->setPosition(0.0f, 0.0f);
-    */
- 
+    if(buildScroll != NULL)
+    {
+        buildScroll->onOrientationChanged();
+    }
 }
 
 void GameHUD::closeAllMenuAndResetTapMode()
@@ -325,9 +302,6 @@ void GameHUD::createStatsMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the background of the stats menu
@@ -426,9 +400,6 @@ void GameHUD::createTimeMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the time group background
@@ -553,10 +524,6 @@ void GameHUD::createObjectiveMenu()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the objective group background
@@ -625,10 +592,6 @@ void GameHUD::createBuildMenu()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
     
     // create the build button
     // Menu items
@@ -652,11 +615,83 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
-        BuildScroll* buildScroll = BuildScroll::create();
+        buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
     }
     else
     {
         BuildScroll::getThis()->closeMenu(true);
+        buildScroll = NULL;
     }
+}
+
+void GameHUD::rotateStatsMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    statsMenu->setPosition(ccp(0, screenSize.height));
+    moneyIcon->setPosition(ccp(180, screenSize.height - 40));
+    moneyLabel->CCNode::setPosition(240, screenSize.height - 60);
+    foodIcon->setPosition(ccp(315, screenSize.height - 40));
+    foodLabel->CCNode::setPosition(375, screenSize.height - 60);
+    populationIcon->setPosition(ccp(460, screenSize.height - 40));
+    populationLabel->CCNode::setPosition(520, screenSize.height - 60);
+    achivementsLabel->CCNode::setPosition(190, screenSize.height - 105);
+}
+
+void GameHUD::rotateTimeMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    bool isHori = GlobalHelper::isHorizontal();
+    
+    if(isHori)
+    {
+        timeMenu->setAnchorPoint(ccp(1, 1));
+        timeMenu->setPosition(ccp(screenSize.width, screenSize.height - 20.0f));
+        firstWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        secondWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        thirdWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        lastWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        timeLabel_1->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 40.0f);
+        timeLabel_2->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 80.0f);
+    }
+    else
+    {
+        timeMenu->setAnchorPoint(ccp(0, 1));
+        timeMenu->setPosition(ccp(0, screenSize.height - 140.0f));
+        firstWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        secondWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        thirdWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        lastWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        timeLabel_1->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 160.0f);
+        timeLabel_2->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 200.0f);
+    }
+}
+
+void GameHUD::rotateObjectiveMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    bool isHori = GlobalHelper::isHorizontal();
+    
+    if(isHori)
+    {
+        objectiveMenu->setPosition(ccp(40, screenSize.height - 185.0f));
+        menu_objective->setPosition(ccp(40, screenSize.height - 185));
+    }
+    else
+    {
+        objectiveMenu->setPosition(ccp(40, screenSize.height - 305.0f));
+        menu_objective->setPosition(ccp(40, screenSize.height - 305));
+    }
+}
+
+void GameHUD::rotateBuildMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+
+    menu_build->setPosition(ccp(screenSize.width, screenSize.height - 120));
 }

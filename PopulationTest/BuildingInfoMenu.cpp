@@ -81,7 +81,6 @@ void BuildingInfoMenu::createMenuItems()
     mBuildingExp = building->currentExp;
     mBuildingExpMax = building->getExpToLevel();
     mBuildingLevel = building->currentLevel;
-    mBuildingPrice = building->buildingCost * GameScene::getThis()->policyHandler->percentTax * 0.01;
     mBuildingVacancy = building->populationLimit;
     mBuildingCurrPopulation = building->getPopulationCount();
     
@@ -522,6 +521,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         textExp->setString(ss.str().c_str());
     }
     
+    /*
     if (mBuildingPrice != building->buildingCost * GameScene::getThis()->policyHandler->percentTax * 0.01)
     {
         mBuildingPrice = building->buildingCost * GameScene::getThis()->policyHandler->percentTax * 0.01;
@@ -529,6 +529,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         ss << "Yearly: " << mBuildingPrice << " G";
         textPrice->setString(ss.str().c_str());
     }
+    */
     
     if (mBuildingLevel != building->currentLevel)
     {

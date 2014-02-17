@@ -8,16 +8,11 @@
 
 #include "InGameMenu.h"
 #include "GameHUD.H"
-#include "BuildMenu.h"
-#include "ResearchMenu.h"
 
 #include "SystemMenu.h"
 #include "PopulationMenu.h"
 #include "InfoMenu.h"
 #include "AlertBox.h"
-#include "PolicyMenu.h"
-
-#include "TutorialHandler.h"
 
 #include "SoundtrackManager.h"
 
@@ -190,8 +185,6 @@ void InGameMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
         case 0: // Build
         {
             CCLog("Build");
-            PopupMenu* buildMenu = new BuildMenu();
-            buildMenu->useAsExclusivePopupMenu();
             GameHUD::getThis()->miscLabel->setString("Back");
         }
         break;
@@ -295,8 +288,6 @@ void InGameMenu::scrollY(float scrollBy)
 
 void InGameMenu::exitGame(CCObject* pSender)
 {
-    GameManager::getThis()->firstPlay = false;
-    GameManager::getThis()->saveGameData();
     closeAllPopupMenu(true);
     
     SoundtrackManager::PlayBGM("Tikopia.mp3");

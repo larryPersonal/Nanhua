@@ -11,19 +11,12 @@
 
 
 #include "cocos2d.h"
-//#include "CCLayerPanZoom.h"
 #include "MapHandler.h"
 #include "BuildingHandler.h"
 #include "SpriteHandler.h"
-#include "ResearchHandler.h"
 #include "ConstructionHandler.h"
 #include "SimpleAudioEngine.h"
-#include "GameTimer.h"
 #include "JobCollection.h"
-#include "TutorialHandler.h"
-#include "ResearchIndicator.h"
-
-#include "PolicyHandler.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -31,18 +24,19 @@ using namespace CocosDenshion;
 class GameScene : public CCLayer
 {
 public:
-    static GameScene* SP;
-    static CCScene* thisScene;
-    float currScale;
+    static GameScene* SP;               // script pointer (GameScene)
+    static CCScene* thisScene;          // scene pointer  (CCScene)
     
-    CCSprite* gameBG;
+    float currScale;                    // current scale factor -> control the view degree scale
     
-    float _currentTime;
-    float _previousTime;
-    struct cc_timeval now;
+    CCSprite* gameBG;                   // background image of the game, use to decorate the game map
     
-    float _speedX;
-    float _speedY;
+    float _currentTime;                 // register to hold the current system time
+    float _previousTime;                // register to hold the previous system time
+    struct cc_timeval now;              // time interval stucture use to store the time value
+    
+    float _speedX;                      // horizontal (x) speed of the scrolling action
+    float _speedY;                      // vertical (y) speed of the scroll action
     
     float _previous_pos_x;
     float _previous_pos_y;
@@ -50,7 +44,7 @@ public:
     float _current_pos_x;
     float _current_pos_y;
     
-    bool _post_drag_effect;
+    bool _post_drag_effect;             // flag to check the elasticity effect
     
 public:
     
@@ -77,12 +71,7 @@ public:
     SpriteHandler* spriteHandler;
     BuildingHandler* buildingHandler;
     JobCollection* jobCollection;
-    ResearchHandler* researchHandler;
-    PolicyHandler* policyHandler;
     ConstructionHandler* constructionHandler;
-    TutorialHandler* tutorialHandler;
-    
-    //Senario* senlayer;
     
     CCPoint lastTilePosPreview;
     CCPoint firstPathPosPreview;
@@ -98,7 +87,7 @@ public:
     void ccTouchesMoved(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     void ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     // preprocessor macro for "static create()" constructor ( node() deprecated )
-    CREATE_FUNC(GameScene);
+    //CREATE_FUNC(GameScene);
     
     void FirstRunPopulate();
     virtual void update(float time);
@@ -117,6 +106,8 @@ public:
     void enableTouch();
     virtual void move(float time);
     virtual void postDrag(float time);
+    
+    CREATE_FUNC(GameScene);
 };
 
 #endif

@@ -143,10 +143,10 @@ void MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)
 {
     PopupMenu::closeAllPopupMenu();
     
-    GameManager::getThis()->setTutorialMode(true);
+    //GameManager::getThis()->setTutorialMode(true);
     
-    GameManager::getThis()->setLoadedGame(true);
-    GameManager::getThis()->newGameData();
+    //GameManager::getThis()->setLoadedGame(true);
+    //GameManager::getThis()->newGameData();
     
     CCDirector::sharedDirector()->pushScene(GameScene::scene());
 }
@@ -190,10 +190,10 @@ void MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)
 {
     PopupMenu::closeAllPopupMenu();
     
-    GameManager::getThis()->setTutorialMode(true);
-    GameManager::getThis()->setLoadedGame(false);
+    //GameManager::getThis()->setTutorialMode(true);
+    //GameManager::getThis()->setLoadedGame(false);
     
-    GameManager::getThis()->newGameData();
+    //GameManager::getThis()->newGameData();
     
     CCDirector::sharedDirector()->pushScene(GameScene::scene());
     

@@ -30,7 +30,7 @@ public:
     static CCScene* scene();
     virtual void update(float dt);
     
-
+    void onOrientationChanged();
     
     CREATE_FUNC(SplashScene);
 };

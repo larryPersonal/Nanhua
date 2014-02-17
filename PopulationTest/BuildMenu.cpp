@@ -79,7 +79,7 @@ void BuildMenu::createMenuItems()
     menuItemPositions->retain();
     
     /*The rest*/
-    CCArray* arrBuildings = GameManager::getThis()->unlockedBuildings;
+    //CCArray* arrBuildings = GameManager::getThis()->unlockedBuildings;
     float yPosition = 0.0f;
     float yHousing = 0.0f;
     float yAmenity = 0.0f;

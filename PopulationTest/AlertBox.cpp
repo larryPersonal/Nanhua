@@ -7,7 +7,6 @@
 //
 
 #include "AlertBox.h"
-#include "TutorialHandler.h"
 
 AlertBox::AlertBox()
 {
@@ -20,13 +19,6 @@ AlertBox::AlertBox()
 
 AlertBox::~AlertBox()
 {
-    if (!close_called)
-    
-    if (TutorialHandler::getThis() != NULL) {
-        if (TutorialHandler::getThis()->IsActive())
-            TutorialHandler::getThis()->ReportAction("alert", "clicked" , "");
-        
-    }
 }
 
 /*
@@ -116,10 +108,6 @@ void AlertBox::onOrientationChanged()
 void AlertBox::onMenuItemSelected(CCObject* pSender)
 {
     CCMenuItem* item = (CCMenuItem*)pSender;
-    if (TutorialHandler::getThis() != NULL) {
-        TutorialHandler::getThis()->ReportAction("alert", "clicked" , "");
-        close_called = true;
-    }
     
     if (item->getUserData() == NULL)
         this->closeMenu(true);

@@ -716,7 +716,7 @@ void Building::unlockToResearch()
     
     //and the updateUnlocks in game manager will deal with this
     //note: only difference is the unlocked flag. Flipping that puts the building in the BUILD immediately.
-    GameManager::getThis()->UpdateUnlocks();
+    //GameManager::getThis()->UpdateUnlocks();
 }
 
 void Building::unlockToBuild()
@@ -727,7 +727,7 @@ void Building::unlockToBuild()
     prereq = "";
     unlocked = true;
     //and the updateUnlocks in game manager will deal with this
-    GameManager::getThis()->UpdateUnlocks();
+    //GameManager::getThis()->UpdateUnlocks();
 
 }
 
@@ -758,7 +758,7 @@ bool Building::hasMetUnlockCriteria()
     
     if (required_building_count > GameScene::getThis()->buildingHandler->allBuildingsOnMap->count()) return false;
     if (required_population > GameScene::getThis()->spriteHandler->spritesOnMap->count()) return false;
-    if (required_capita > GameManager::getThis()->getCurrentMoney()) return false;
+    //if (required_capita > GameManager::getThis()->getCurrentMoney()) return false;
     
     return true;
 }

@@ -7,7 +7,6 @@
 //
 
 #include "PolicyHandler.h"
-#include "GameTimer.h"
 #include "GameScene.h"
 #include "GameManager.h"
 #include "GameHUD.h"
@@ -309,7 +308,7 @@ void PolicyHandler::UpdateFrames()
     
     this_frame_day = 0;
  //   this_frame_week = GameTimer::getThis()->getCurrentWeek();
-    this_frame_month = GameTimer::getThis()->getCurrentMonth();
+    //this_frame_month = GameTimer::getThis()->getCurrentMonth();
     
     
     if (this_frame_day != last_frame_day)

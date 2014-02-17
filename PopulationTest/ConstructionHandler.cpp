@@ -110,21 +110,6 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     GameScene::getThis()->buildingHandler->addBuildingToMap(building);
     constructingBuildings->removeObject(building);
     
-    
-    if (TutorialHandler::getThis()->IsActive())
-    {
-        std::string bType;
-        if (building->buildingType == HOUSING) bType = "HOUSING";
-        if (building->buildingType == COMMERCE) bType = "COMMERCE";
-        if (building->buildingType == AMENITY) bType = "AMENITY";
-        if (building->buildingType == MILITARY) bType = "MILITARY";
-        if (building->buildingType == EDUCATION) bType = "EDUCATION";
-        if (building->buildingType == SOCIAL) bType = "SOCIAL";
-        
-        TutorialHandler::getThis()->ReportAction("constructioncomplete", "building", bType);
-        
-    }
-    
     //handled in AI
     /*
     if (building->buildingType == HOUSING)

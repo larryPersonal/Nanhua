@@ -42,23 +42,15 @@ GameScene::~GameScene()
     this->unschedule(schedule_selector(GameScene::update));
     this->removeAllChildren();
     
-    
-    
     delete mapHandler;
     delete buildingHandler;
     delete spriteHandler;
-    delete researchHandler;
     delete jobCollection;
-    delete policyHandler;
     delete constructionHandler;
-    delete tutorialHandler;
     
     //delete screenCenter;
     
-    
-    tutorialHandler = NULL;
     GameScene::SP=NULL;
-    
     
     //map = NULL;
 }
@@ -117,7 +109,6 @@ bool GameScene::init()
 
     //this->CCLayer::setTouchEnabled(true);
     currScale = 1.0f;
-    tutorialHandler = new TutorialHandler();
     
     setupScene();
     
@@ -171,11 +162,9 @@ void GameScene::setupScene()
          }
         
         spriteHandler = new SpriteHandler();
-        researchHandler = new ResearchHandler();
         constructionHandler = new ConstructionHandler();
     
     
-    policyHandler = new PolicyHandler();
     initOrientationChange();
 }
 
@@ -564,10 +553,12 @@ void GameScene::FirstRunPopulate()
     //check if tutorial mode is on.
     
     if (GameManager::getThis()->getTutorialMode())
-        tutorialHandler->BeginTutorial();
+    {
+        //tutorialHandler->BeginTutorial();
+    }
     else
     {
-        tutorialHandler->SetActive(false);
+        //tutorialHandler->SetActive(false);
         if (!testMode)
             GameManager::getThis()->UpdateUnlocks();
         else
@@ -588,12 +579,9 @@ void GameScene::update(float time)
         //sp->updateZIndex();
     }
     
-    researchHandler->update(time);
     constructionHandler->update(time);
     GameHUD::getThis()->update(time);
-    policyHandler->Update();
     
-    tutorialHandler->update();
     spriteHandler->update(time);
     
     // check lose game

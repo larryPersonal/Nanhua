@@ -596,7 +596,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
     }
     
     /*update unlocks whenever a building is built*/
-    GameManager::getThis()->UpdateUnlocks();
+    //GameManager::getThis()->UpdateUnlocks();
     
     return true;
 }

@@ -158,7 +158,7 @@ bool Senario::constructSenarioStage()
             chboxName->setAnchorPoint(ccp(0.5, 1));
             if(GlobalHelper::isHorizontal())
             {
-                heightOff = 25.0f;
+                heightOff = -25.0f + screenSize.height * (ele->top / 100.0f) - chbox->boundingBox().size.height;
             }
             if(ele->dir.compare("left") == 0)
             {
@@ -189,7 +189,7 @@ bool Senario::constructSenarioStage()
             labelList.push_back(chboxName);
             
             CCMenu* menu = CCMenu::create(nextButton, NULL);
-            menu->setPosition(ccp(screenSize.width * 0.84f, screenSize.height * 0.07f));
+            menu->setPosition(ccp(screenSize.width * 0.84f, screenSize.height * 0.1f));
             
             this->addChild(menu, 1);
             

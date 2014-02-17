@@ -186,17 +186,18 @@ void SenarioChooseScene::chooseSenario6()
 }
 
 void SenarioChooseScene::onOrientateChange(){
-    CCSize cs1 = CCDirector::sharedDirector()->getWinSize();
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    backgroundImage->setPosition(ccp(cs1.width*0.5, cs1.height*0.5));
+    backgroundImage->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.25));
+    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.86));
+    senarioButtonS1->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.74));
+    senarioButtonS2->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.62));
+    senarioButtonS3->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.50));
+    senarioButtonS4->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.38));
+    senarioButtonS5->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.26));
+    senarioButtonS6->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.14));
     
-    //if (cs.width < cs.height) //i.e portrait
-    //{
-    //}
-    //else
-    //{
-        
-    //}
+    
 }
 
 void SenarioChooseScene::onOrientationChangedToPortrait(){

@@ -45,38 +45,18 @@ private:
     
     CCSprite* spriteBuilding;
     
-    // the array to store all the villagers that are belongs to this building
-    CCArray* memberSpriteRowArray;
-    
     // the array to store all the villagers that are not belongs to this building
     CCArray* spriteRowArray;
     
-    // stats graphics
-    CCSprite* spLoy;
-    CCSprite* spHap;
+    CCArray* emptySpaceArray;
+    CCArray* memberArray;
     
     // labels
     CCLabelTTF* labelBuildingName;
-    CCLabelTTF* labelBuildingLevel;
     
-    //CCLabelTTF* labelTextInt;
-    CCLabelTTF* labelTextLoy;
-    //CCLabelTTF* labelTextSoc;
-    CCLabelTTF* labelTextHap;
-    
-    // sprite row header
-    CCLabelTTF* labelSRImage;
-    CCLabelTTF* labelSRMember;
-    CCLabelTTF* labelSRName;
-    
-    ScrollArea* memberScrollArea;
     ScrollArea* scrollArea;
     
-    ProgressBar* progressBar;
     CCLabelTTF* progressBarLabel;
-    
-    CCLabelTTF* memberLabel;
-    CCLabelTTF* builderLabel;
     
     CCMenu* menu;
     
