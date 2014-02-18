@@ -26,12 +26,6 @@ class SelectPopulation: public PopupMenu
 
 private:
     // dirty attributes
-    int mBuildingUnitCurrent;
-    int mBuildingUnitRequired;
-    int mBuildingMemberCurrent;
-    int mBuildingPopulationLimit;
-    int mBuildingBuilderCurrent;
-    int mBuildingBuilderLimit;
     
     // Background Rect
     Rect* background_rect;
@@ -40,6 +34,7 @@ private:
     Building* building;
     
     CCMenuItemImage* buttonClose;
+    CCMenuItemImage* buttonOk;
     
     CCSprite* spriteBackground;
     
@@ -47,7 +42,6 @@ private:
     
     // the array to store all the villagers that are not belongs to this building
     CCArray* spriteRowArray;
-    
     CCArray* emptySpaceArray;
     CCArray* memberArray;
     
@@ -55,8 +49,6 @@ private:
     CCLabelTTF* labelBuildingName;
     
     ScrollArea* scrollArea;
-    
-    CCLabelTTF* progressBarLabel;
     
     CCMenu* menu;
     

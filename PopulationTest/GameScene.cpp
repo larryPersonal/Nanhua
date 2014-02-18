@@ -11,11 +11,11 @@
 #include "Senario.h"
 #include "PopupMenu.h"
 #include "Sprite.h"
-#include "BuildingInfoMenu.h"
 #include "AlertBox.h"
 #include "SoundtrackManager.h"
 #include "GameDefaults.h"
 #include "SpriteInfoMenu.h"
+#include "SelectPopulation.h"
 
 #include <cmath>
 
@@ -654,8 +654,10 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->building)
         {
             this->setTouchEnabled(false);
-            BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-            buildingInfoMenu->useAsBasePopupMenu();
+            //BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+            //buildingInfoMenu->useAsBasePopupMenu();
+            SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+            selectPopulation->useAsBasePopupMenu();
             return true;
         }
     }
@@ -688,8 +690,10 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc))
                 {
                     this->setTouchEnabled(false);
-                    BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                    buildingInfoMenu->useAsBasePopupMenu();
+                    //BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                    //buildingInfoMenu->useAsBasePopupMenu();
+                    SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                    selectPopulation->useAsBasePopupMenu();
                     return true;
                 }
             }

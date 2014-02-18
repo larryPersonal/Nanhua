@@ -21,40 +21,16 @@ class SpriteRow : CCObject
 private:
     int mSpriteRowEnergyCurrent;
     int mSpriteRowEnergyRequired;
-    int mSpriteRowHungryCurrent;
-    int mSpriteRowHungryRequired;
-    SpriteAction mSpriteRowAction;
-    bool mSpriteRowIsDoingJob;
     std::string mSpriteRowSpriteName;
     
+    CCSprite* spriteRowBackground;
+    
+    
     CCMenuItemImage* villagerImage;
-    CCLabelTTF* villagerNameLabel;
-    CCLabelTTF* villagerGenderLabel;
-    
-    /*
-    CCLabelTTF* villagerLoyLabel;
-    CCLabelTTF* villagerHapLabel;
-    
-    CCLabelTTF* villagerLevelLabel;
-    CCLabelTTF* movementSpeedLabel;
-    */
+    CCMenuItemImage* buttonCollider;
     
     ProgressBar* villagerEnergyBar;
     CCLabelTTF* villagerEnergyLabel;
-    
-    ProgressBar* villagerHungryBar;
-    CCLabelTTF* villagerHungryLabel;
-    
-    CCLabelTTF* actionLabel;
-    CCLabelTTF* isDongingJobLabel;
-    
-    /*
-    CCLabelTTF* jobLabel;
-    */
-    
-    CCMenuItemImage* villagerSelectButton;
-    CCMenuItemImage* villagerCancelButton;
-    CCMenuItemImage* villagerResignButton;
     
     GameSprite* gameSprite;
     ScrollArea* scrollArea;
@@ -65,23 +41,15 @@ private:
     CCPointArray* menuItemPositions;
     CCMenu* menu;
     
-    bool isMember;
-    
 public:
-    SpriteRow(GameSprite*, ScrollArea*, Building*, int, bool);
+    SpriteRow(GameSprite*, ScrollArea*, Building*, int);
     ~SpriteRow();
     
-    static SpriteRow* create(GameSprite*, ScrollArea*, Building*, int, bool);
+    static SpriteRow* create(GameSprite*, ScrollArea*, Building*, int);
     
     void init();
     
     CCSprite* getVillagerImage();
-    CCLabelTTF* getVillagerNameLabel();
-    CCLabelTTF* getVillagerGenderLabel();
-    CCLabelTTF* getVillagerLoyLabel();
-    CCLabelTTF* getVillagerHapLabel();
-    
-    CCMenuItemImage* getVillagerSelectButton();
     
     void construction();
     void recover();
@@ -110,6 +78,8 @@ public:
     void showSprite();
     
     void refreshAllMenuItems();
+    
+    void clickSprite();
 };
 
 #endif
