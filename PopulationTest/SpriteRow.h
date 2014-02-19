@@ -14,17 +14,19 @@
 #include "Building.h"
 #include "ScrollArea.h"
 #include "ProgressBar.h"
+#include "CustomMenu.h"
 using namespace cocos2d;
 
-class SpriteRow : CCObject
+class SpriteRow : CCLayer
 {
 private:
+    
     int mSpriteRowEnergyCurrent;
     int mSpriteRowEnergyRequired;
     std::string mSpriteRowSpriteName;
     
     CCSprite* spriteRowBackground;
-    
+    CCSprite* spriteRowMask;
     
     CCMenuItemImage* villagerImage;
     CCMenuItemImage* buttonCollider;
@@ -37,9 +39,11 @@ private:
     Building* building;
     int index;
     
-    CCArray* menuItems;
     CCPointArray* menuItemPositions;
     CCMenu* menu;
+
+public:
+    CCArray* mi;
     
 public:
     SpriteRow(GameSprite*, ScrollArea*, Building*, int);
@@ -47,7 +51,7 @@ public:
     
     static SpriteRow* create(GameSprite*, ScrollArea*, Building*, int);
     
-    void init();
+    bool init();
     
     CCSprite* getVillagerImage();
     
@@ -80,6 +84,13 @@ public:
     void refreshAllMenuItems();
     
     void clickSprite();
+    
+    virtual void registerWithTouchDispatcher();
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+   
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+   
 };
 
 #endif

@@ -23,6 +23,9 @@ SpriteRow::SpriteRow(GameSprite* gs, ScrollArea* sa, Building* building, int ind
     this->building = building;
     this->index = ind;
     
+    mi = CCArray::create();
+    mi->retain();
+    
     init();
 }
 
@@ -45,7 +48,7 @@ SpriteRow* SpriteRow::create(GameSprite* gs, ScrollArea* sa, Building* building,
     }
 }
 
-void SpriteRow::init()
+bool SpriteRow::init()
 {
     mSpriteRowEnergyCurrent = gameSprite->getPossessions()->energyRating;
     mSpriteRowEnergyRequired = gameSprite->getPossessions()->default_energy_limit;
@@ -74,7 +77,7 @@ void SpriteRow::init()
     villagerEnergyLabel->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(villagerEnergyLabel, ccp(85.0f, 25.0f + 90.0f * index));
     
-    // display the loyalth and hapiness of the sprite
+    // display the energy bar of the sprite
     Possessions* possessions = gameSprite->getPossessions();
     
     // display the energy bar of the sprite
@@ -88,19 +91,26 @@ void SpriteRow::init()
     villagerEnergyBar->setValue((float)possessions->energyRating / (float)possessions->default_energy_limit);
     scrollArea->addItem(villagerEnergyBar, ccp(80.0f, 45.0f + 90.0f * index));
     
+    // display the mask of the sprite row
+    spriteRowMask = CCSprite::create("workers_menu_selectedBG_overlay.png");
+    spriteRowMask->setScale(440.0f / spriteRowMask->boundingBox().size.width);
+    spriteRowMask->setAnchorPoint(ccp(0, 1));
+    scrollArea->addItem(spriteRowMask, ccp(5.0f, 0.0f + 90.0f * index));
+    
     // display the button collider
     buttonCollider = CCMenuItemImage::create( "workers_menu_buttonCollider.png", "workers_menu_buttonCollider.png", this, menu_selector(SpriteRow::clickSprite));
+    //buttonCollider = CCMenuItemImage::create( "workers_menu_selectedBG_overlay.png", "workers_menu_selectedBG_overlay.png", this, menu_selector(SpriteRow::clickSprite));
     buttonCollider->setScale( 440.0f / buttonCollider->boundingBox().size.width );
     buttonCollider->setAnchorPoint(ccp(0, 1));
+  //  scrollArea->addItem(buttonCollider, ccp(5.0f, 0.0f + 90.0f * index));
     
-    menuItems->CCArray::create();
-    menuItems->retain();
-    menuItems->addObject(buttonCollider);
+    mi->addObject(buttonCollider);
     
-    
-    
-    menu = CCMenu::createWithArray(menuItems);
+    menu = CCMenu::createWithArray(mi);
+    menu->setTouchPriority(kCCMenuHandlerPriority -10);
     menu->setPosition(CCPointZero);
+
+    scrollArea->addItem(menu, ccp(5.0f, 0.0f + 90.0f * index));
     
     // register all parts to the scroll area.
     
@@ -448,4 +458,22 @@ void SpriteRow::refreshAllMenuItems()
         villagerImage->setAnchorPoint(ccp(0, 1));
 
     }
+}
+
+
+void SpriteRow::registerWithTouchDispatcher()
+{
+    this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+}
+
+bool SpriteRow::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    CCLog("TEST");
+    return true;
+}
+
+void SpriteRow::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+    return;
 }
