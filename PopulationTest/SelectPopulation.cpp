@@ -9,6 +9,9 @@
 #include "SelectPopulation.h"
 #include "GameScene.h"
 #include "Sprite.h"
+#include "SpriteInfoMenu.h"
+#include "BuildingInfoMenu.h"
+#include "GlobalHelper.h"
 
 SelectPopulation* SelectPopulation::SP;
 
@@ -50,6 +53,15 @@ SelectPopulation::SelectPopulation(Building* building){
     emptySpaceArray = CCArray::create();
     emptySpaceArray->retain();
     
+    memberRowArray = CCArray::create();
+    memberRowArray->retain();
+    
+    memberRowBackgroundArray = CCArray::create();
+    memberRowBackgroundArray->retain();
+    
+    memberMenuArray = CCArray::create();
+    memberMenuArray->retain();
+    
     this->building = building;
     
     // create gui handler
@@ -73,96 +85,111 @@ SelectPopulation::~SelectPopulation()
     memberArray->removeAllObjects();
     CC_SAFE_RELEASE(memberArray);
     
-    emptySpaceArray = CCArray::create();
+    emptySpaceArray->removeAllObjects();
     CC_SAFE_RELEASE(emptySpaceArray);
+    
+    memberRowArray->removeAllObjects();
+    CC_SAFE_RELEASE(memberRowArray);
+    
+    memberRowBackgroundArray->removeAllObjects();
+    CC_SAFE_RELEASE(memberRowBackgroundArray);
+    
+    memberMenuArray->removeAllObjects();
+    CC_SAFE_RELEASE(memberMenuArray);
 }
 
 void SelectPopulation::createMenuItems()
 {
-    
-    ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorGreen = ccc3(81, 77, 2);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
-    
-    // background
-    spriteBackground = CCSprite::create("worker_assign_ui_bg_03.png");
-    spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width * 1.4f);
-    spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
-    this->addChild(spriteBackground, 3);
-    
-    // Sprite
-    spriteBuilding = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-    spriteBuilding->setScale(200.0f / spriteBuilding->boundingBox().size.width);
-    spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
-    this->addChild(spriteBuilding, 4);
-    
-    // Menu items: including ok button and cancel button
-    menuItems = CCArray::create();
-    menuItems->retain();
-    menuItemPositions = CCPointArray::create(menuItems->capacity());
-    menuItemPositions->retain();
-    
-    buttonClose = CCMenuItemImage::create("assign_menu_cancel.png", "assign_menu_cancel.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
-    buttonClose->setScale(0.4);
-    buttonClose->setTag(-1);
-    buttonClose->setAnchorPoint(ccp(1, 1));
-    
-    buttonOk = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
-    buttonOk->setScale(0.4);
-    buttonOk->setTag(-2);
-    buttonOk->setAnchorPoint(ccp(1, 1));
-    
-    menuItems->addObject(buttonOk);
-    menuItems->addObject(buttonClose);
-    
-    menu = CCMenu::createWithArray(menuItems);
-    menu->setPosition(CCPointZero);
-    this->addChild(menu, 3);
-    
-    // building name label
-    std::stringstream ss;
-    ss << building->buildingName;
-    
-    labelBuildingName = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelBuildingName->setColor(colorWhite);
-    labelBuildingName->setAnchorPoint(ccp(0.5, 0.5));
-    this->addChild(labelBuildingName, 4);
-
-    // empty spaces
-    int population = building->populationLimit;
-    
-    for (int i = 0; i < population; i++)
+    if(!building->inProgress)
     {
-        CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
-        eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
-        eSpace->setAnchorPoint(ccp(0, 1));
-        this->addChild(eSpace, 4);
-        emptySpaceArray->addObject(eSpace);
+        ccColor3B colorBlack = ccc3(0, 0, 0);
+        ccColor3B colorYellow = ccc3(225, 219, 108);
+        ccColor3B colorGreen = ccc3(81, 77, 2);
+        ccColor3B colorWhite = ccc3(255, 255, 255);
+        bool isHori = GlobalHelper::isHorizontal();
+        
+        // background
+        spriteBackground = CCSprite::create("worker_assign_ui_bg_03.png");
+        spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width * 1.4f);
+        spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
+        this->addChild(spriteBackground, 3);
+        
+        // Sprite
+        CCSprite* tempSprite = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
+        spriteBuilding = CCMenuItemSprite::create(tempSprite, tempSprite, this, menu_selector(SelectPopulation::onMenuItemSelected));
+        spriteBuilding->setScale(200.0f / spriteBuilding->boundingBox().size.width);
+        spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
+        spriteBuilding->setTag(-3);
+        
+        // Menu items: including ok button and cancel button
+        menuItems = CCArray::create();
+        menuItems->retain();
+        menuItemPositions = CCPointArray::create(menuItems->capacity());
+        menuItemPositions->retain();
+        
+        buttonClose = CCMenuItemImage::create("assign_menu_cancel.png", "assign_menu_cancel.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
+        buttonClose->setScale(0.4);
+        buttonClose->setTag(-1);
+        buttonClose->setAnchorPoint(ccp(1, 1));
+        
+        buttonOk = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
+        buttonOk->setScale(0.4);
+        buttonOk->setTag(-2);
+        buttonOk->setAnchorPoint(ccp(1, 1));
+        
+        menuItems->addObject(buttonOk);
+        menuItems->addObject(buttonClose);
+        menuItems->addObject(spriteBuilding);
+        
+        menu = CCMenu::createWithArray(menuItems);
+        menu->setPosition(CCPointZero);
+        this->addChild(menu, 3);
+        
+        // building name label
+        std::stringstream ss;
+        ss << building->buildingName;
+        
+        labelBuildingName = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        labelBuildingName->setColor(colorWhite);
+        labelBuildingName->setAnchorPoint(ccp(0.5, 0.5));
+        this->addChild(labelBuildingName, 4);
+        
+        // empty spaces
+        int population = building->populationLimit;
+        
+        for (int i = 0; i < population; i++)
+        {
+            CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
+            eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
+            eSpace->setAnchorPoint(ccp(0, 1));
+            this->addChild(eSpace, 4);
+            emptySpaceArray->addObject(eSpace);
+        }
+        
+        // scroll section for other villagers
+        scrollArea = new ScrollArea();
+        scrollArea->createScrollArea(CCSizeMake(450, 360), CCSizeMake(450, 360));
+        scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
+        scrollArea->hideScroll();
+        scrollArea->setAnchorPoint(ccp(0, 0.5));
+        this->addChild(scrollArea, 4);
+        
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            SpriteRow* sp = SpriteRow::create((GameSprite*) spritesOnMap->objectAtIndex(i), scrollArea, building, i);
+            spriteRowArray->addObject((CCObject*) sp);
+        }
+        
+        scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * spritesOnMap->count()));
+        scrollArea->updateScrollBars();
+        
+        // set the position of all the elements
+        reposition();
+        
+        this->schedule(schedule_selector(SelectPopulation::update), 0.25f);
     }
-    
-    // scroll section for other villagers
-    scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(450, 360), CCSizeMake(450, 360));
-    scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
-    scrollArea->hideScroll();
-    scrollArea->setAnchorPoint(ccp(0, 0.5));
-    this->addChild(scrollArea, 4);
-    
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    
-    for(int i = 0; i < spritesOnMap->count(); i++)
-    {
-        SpriteRow* sp = SpriteRow::create((GameSprite*) spritesOnMap->objectAtIndex(i), scrollArea, building, i);
-        spriteRowArray->addObject((CCObject*) sp);
-    }
-    
-    scrollArea->updateScrollBars();
-    
-    // set the position of all the elements
-    reposition();
-    
-    this->schedule(schedule_selector(SelectPopulation::update), 0.25f);
 }
 
 void SelectPopulation::onMenuItemSelected(CCObject* pSender){
@@ -172,12 +199,24 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
     {
         case -1:
             // buttonClose
+        {
             this->closeMenu(true);
             GameScene::getThis()->setTouchEnabled(true);
+        }
             break;
-            
+        case -2:
+            break;
+        case -3:
+        {
+            this->closeMenu(true);
+            BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(building);
+            buildingInfoMenu->useAsBasePopupMenu();
+        }
+            break;
         default:
+        {
             break;
+        }
     }
 }
 
@@ -245,5 +284,91 @@ void SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * sprit
 {
     SpriteRow* sr = SpriteRow::create(gameSprite, scrollArea, building, spriteRowArray->count());
     spriteRowArray->addObject((CCObject*) sr);
+}
+
+void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
+{
+    if(memberArray->count() < building->populationLimit)
+    {
+        spriteRow->getMask()->setVisible(true);
+        
+        CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
+        memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
+        memberSpriteBackground->setAnchorPoint(ccp(0, 1));
+        memberSpriteBackground->setPosition(ccp(30.0f + 70.0f * memberRowArray->count(), -135.0f));
+        this->addChild(memberSpriteBackground, 4);
+        
+        std::string tempStr = gameSprite->spriteName;
+        CCMenuItemImage* memberSprite = CCMenuItemImage::create(tempStr.append("_port.png").c_str(), tempStr.c_str(), this,  menu_selector(SelectPopulation::cancelSprite));
+        memberSprite->setScale( 60.0f / memberSprite->boundingBox().size.width );
+        memberSprite->setAnchorPoint(ccp(0, 1));
+        memberSprite->setPosition(ccp(35.0f + 70.0f * memberRowArray->count(), -137.0f));
+        memberSprite->setTag(memberRowArray->count());
+        
+        CCArray* newMenuItems = CCArray::create();
+        newMenuItems->addObject(memberSprite);
+        CCMenu* newMenu = CCMenu::createWithArray(newMenuItems);
+        newMenu->setPosition(CCPointZero);
+        this->addChild(newMenu, 4);
+        
+        memberMenuArray->addObject(newMenu);
+        memberRowArray->addObject(memberSprite);
+        memberArray->addObject(gameSprite);
+        memberRowBackgroundArray->addObject(memberSpriteBackground);
+    }
+}
+
+void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
+{
+    for(int i = 0; i < memberArray->count(); i++)
+    {
+        if(gameSprite == (GameSprite*) memberArray->objectAtIndex(i))
+        {
+            spriteRow->getMask()->setVisible(false);
+            
+            memberArray->removeObject(gameSprite);
+            
+            CCMenuItemImage* temp = (CCMenuItemImage*) memberRowArray->objectAtIndex(i);
+            memberRowArray->removeObject(temp);
+            
+            CCSprite* tempSprite = (CCSprite*) memberRowBackgroundArray->objectAtIndex(i);
+            this->removeChild(tempSprite);
+            memberRowBackgroundArray->removeObject(tempSprite);
+            
+            CCMenu* tempMenu = (CCMenu*) memberMenuArray->objectAtIndex(i);
+            this->removeChild(tempMenu);
+            memberMenuArray->removeObject(tempMenu);
+            
+            i--;
+            
+            for(int j = 0; j < memberRowArray->count(); j++)
+            {
+                CCMenuItemImage* tempSprite = (CCMenuItemImage*) memberRowArray->objectAtIndex(j);
+                tempSprite->setPosition(ccp(35.0f + 70.0f * j, -137.0f));
+                tempSprite->setTag(j);
+            }
+            
+            for(int j = 0; j < memberRowBackgroundArray->count(); j++)
+            {
+                CCSprite* tempSprite = (CCSprite*) memberRowBackgroundArray->objectAtIndex(j);
+                tempSprite->setPosition(ccp(30.0f + 70.0f * j, -135.0f));
+            }
+        }
+    }
+}
+
+void SelectPopulation::cancelSprite(CCObject *pSender)
+{
+    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
+    int tag = pMenuItem->getTag();
+    
+    GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(tag);
+    
+    this->closeMenu(true);
+    
+    SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
+    spriteInfoMenu->autorelease();
+    spriteInfoMenu->useAsBasePopupMenu();
+    
 }
 

@@ -446,7 +446,6 @@
 		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
 		84509B7F1887B9F100EF8BD8 /* rest.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7E1887B9F100EF8BD8 /* rest.png */; };
 		84509B811887CFFF00EF8BD8 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B801887CFFF00EF8BD8 /* home.png */; };
-		8457784318B45D2F00FD6847 /* CustomMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8457784218B45D2F00FD6847 /* CustomMenu.cpp */; };
 		8458545D1892702F00824F5F /* nanhua tiles 2x2.tps in Resources */ = {isa = PBXBuildFile; fileRef = 845854401892702F00824F5F /* nanhua tiles 2x2.tps */; };
 		8458545E1892702F00824F5F /* nanhua tiles.tps in Resources */ = {isa = PBXBuildFile; fileRef = 845854411892702F00824F5F /* nanhua tiles.tps */; };
 		8458545F1892702F00824F5F /* sprite_0000_Layer-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 845854421892702F00824F5F /* sprite_0000_Layer-25.png */; };
@@ -1300,8 +1299,6 @@
 		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		84509B7E1887B9F100EF8BD8 /* rest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rest.png; sourceTree = "<group>"; };
 		84509B801887CFFF00EF8BD8 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
-		8457784118B45CEA00FD6847 /* CustomMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomMenu.h; sourceTree = "<group>"; };
-		8457784218B45D2F00FD6847 /* CustomMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomMenu.cpp; sourceTree = "<group>"; };
 		845854401892702F00824F5F /* nanhua tiles 2x2.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "nanhua tiles 2x2.tps"; sourceTree = "<group>"; };
 		845854411892702F00824F5F /* nanhua tiles.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "nanhua tiles.tps"; sourceTree = "<group>"; };
 		845854421892702F00824F5F /* sprite_0000_Layer-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite_0000_Layer-25.png"; sourceTree = "<group>"; };
@@ -3051,7 +3048,6 @@
 				36FDC98716FFF9D100AB1A68 /* SpriteHandler.cpp */,
 				36FDC98B170049E800AB1A68 /* Sprite.cpp */,
 				84F4933D1883E3EA00377957 /* SpriteRow.cpp */,
-				8457784218B45D2F00FD6847 /* CustomMenu.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3066,7 +3062,6 @@
 				361FDE02171BA94E00665EDE /* Possessions.h */,
 				3636E0F917460D7900B1B012 /* Requirements.h */,
 				84F4933C1883E32F00377957 /* SpriteRow.h */,
-				8457784118B45CEA00FD6847 /* CustomMenu.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3768,7 +3763,6 @@
 				361DA9A817A8E87C004838A6 /* NameGenerator.cpp in Sources */,
 				36B18A7718A0A6A700A8B515 /* CCSet.cpp in Sources */,
 				36B18A8D18A0A6A700A8B515 /* vec4.c in Sources */,
-				8457784318B45D2F00FD6847 /* CustomMenu.cpp in Sources */,
 				3692450117AF744400F799C4 /* SystemMenu.cpp in Sources */,
 				36B18A6018A0A6A700A8B515 /* CCActionInterval.cpp in Sources */,
 				36B18A7C18A0A6A700A8B515 /* CCDrawNode.cpp in Sources */,
@@ -3786,8 +3780,7 @@
 		365FBC6016E5E31000A57CF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Larry Leow (SY936FX3R9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Larry Leow (SY936FX3R9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3815,8 +3808,8 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-llua";
-				PROVISIONING_PROFILE = "13634504-025F-47C2-804F-395CFD769367";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13634504-025F-47C2-804F-395CFD769367";
+				PROVISIONING_PROFILE = "B8BB17C3-38F0-4A0B-B7A5-3C02E60B6136";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -3826,8 +3819,7 @@
 		365FBC6116E5E31000A57CF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Larry Leow (SY936FX3R9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Larry Leow (SY936FX3R9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -3853,8 +3845,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-llua";
-				PROVISIONING_PROFILE = "13634504-025F-47C2-804F-395CFD769367";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13634504-025F-47C2-804F-395CFD769367";
+				PROVISIONING_PROFILE = "B8BB17C3-38F0-4A0B-B7A5-3C02E60B6136";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -3865,8 +3857,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Larry Leow (97KX8W57R8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Larry Leow (97KX8W57R8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3900,8 +3891,8 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "092395F3-5E98-44EE-998A-495A9D1199D2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "092395F3-5E98-44EE-998A-495A9D1199D2";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -3914,11 +3905,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Larry Leow (97KX8W57R8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Larry Leow (97KX8W57R8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = PopulationTest/Prefix.pch;
+				GCC_PREFIX_HEADER = PopUlationTest/Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				HEADER_SEARCH_PATHS = (
@@ -3948,8 +3938,8 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "092395F3-5E98-44EE-998A-495A9D1199D2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "092395F3-5E98-44EE-998A-495A9D1199D2";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

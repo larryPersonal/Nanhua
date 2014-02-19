@@ -14,7 +14,6 @@
 #include "Building.h"
 #include "ScrollArea.h"
 #include "ProgressBar.h"
-#include "CustomMenu.h"
 using namespace cocos2d;
 
 class SpriteRow : CCLayer
@@ -85,12 +84,8 @@ public:
     
     void clickSprite();
     
-    virtual void registerWithTouchDispatcher();
-    
-    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-   
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-   
+    CCSprite* getMask();
+    int getIndex();
 };
 
 #endif

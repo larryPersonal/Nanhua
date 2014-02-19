@@ -18,6 +18,8 @@ Building::Building()
 {
     farmState = WAITING;
     
+    inProgress = false;
+    
     buildingValue = 0;
     populationLimit = 0;
     

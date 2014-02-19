@@ -46,6 +46,8 @@ public:
     
     bool _post_drag_effect;             // flag to check the elasticity effect
     
+    float cumulatedTime;
+    
 public:
     
     CCNode* screenCenter;

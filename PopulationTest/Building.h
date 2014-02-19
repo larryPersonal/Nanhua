@@ -56,6 +56,8 @@ public:
     
     int ID;
     
+    bool inProgress;
+    
     CCSprite* buildingRep;
     BuildingCategory buildingType;
     FarmState farmState;

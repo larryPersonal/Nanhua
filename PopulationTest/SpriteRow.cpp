@@ -96,13 +96,13 @@ bool SpriteRow::init()
     spriteRowMask->setScale(440.0f / spriteRowMask->boundingBox().size.width);
     spriteRowMask->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(spriteRowMask, ccp(5.0f, 0.0f + 90.0f * index));
+    spriteRowMask->setVisible(false);
     
     // display the button collider
     buttonCollider = CCMenuItemImage::create( "workers_menu_buttonCollider.png", "workers_menu_buttonCollider.png", this, menu_selector(SpriteRow::clickSprite));
     //buttonCollider = CCMenuItemImage::create( "workers_menu_selectedBG_overlay.png", "workers_menu_selectedBG_overlay.png", this, menu_selector(SpriteRow::clickSprite));
     buttonCollider->setScale( 440.0f / buttonCollider->boundingBox().size.width );
     buttonCollider->setAnchorPoint(ccp(0, 1));
-  //  scrollArea->addItem(buttonCollider, ccp(5.0f, 0.0f + 90.0f * index));
     
     mi->addObject(buttonCollider);
     
@@ -112,15 +112,21 @@ bool SpriteRow::init()
 
     scrollArea->addItem(menu, ccp(5.0f, 0.0f + 90.0f * index));
     
-    // register all parts to the scroll area.
-    
-    
+    return true;
 }
 
 void SpriteRow::clickSprite()
 {
-    // TODO: event registered when click a sprite row
-    CCLog("test");
+    if(spriteRowMask->isVisible())
+    {
+        // sprite row mask is visible -> the sprite row has been selected, then unselect it
+        SelectPopulation::getThis()->unselectSprite(gameSprite, this);
+    }
+    else
+    {
+        // sprite row mask is not visible -> the sprite row has not been selected, then select it
+        SelectPopulation::getThis()->selectSprite(gameSprite, this);
+    }
 }
 
 void SpriteRow::construction()
@@ -169,6 +175,7 @@ GameSprite* SpriteRow::getSpriteType(SpriteType mst, SpriteType fst)
             }
         }
     }
+    return NULL;
 }
 
 void SpriteRow::recover()
@@ -460,20 +467,13 @@ void SpriteRow::refreshAllMenuItems()
     }
 }
 
-
-void SpriteRow::registerWithTouchDispatcher()
+CCSprite* SpriteRow::getMask()
 {
-    this->setContentSize(CCDirector::sharedDirector()->getWinSize());
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+    return spriteRowMask;
 }
 
-bool SpriteRow::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+int SpriteRow::getIndex()
 {
-    CCLog("TEST");
-    return true;
+    return index;
 }
 
-void SpriteRow::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
-{
-    return;
-}

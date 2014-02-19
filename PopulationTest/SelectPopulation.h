@@ -38,12 +38,16 @@ private:
     
     CCSprite* spriteBackground;
     
-    CCSprite* spriteBuilding;
+    CCMenuItemSprite* spriteBuilding;
     
     // the array to store all the villagers that are not belongs to this building
     CCArray* spriteRowArray;
     CCArray* emptySpaceArray;
+    
     CCArray* memberArray;
+    CCArray* memberRowArray;
+    CCArray* memberRowBackgroundArray;
+    CCArray* memberMenuArray;
     
     // labels
     CCLabelTTF* labelBuildingName;
@@ -77,6 +81,11 @@ public:
     
     void addMemberRow(GameSprite*, SpriteRow*);
     void addVillagerRow(GameSprite*, SpriteRow*);
+    
+    void selectSprite(GameSprite*, SpriteRow*);
+    void unselectSprite(GameSprite*, SpriteRow*);
+    
+    void cancelSprite(CCObject*);
     
     //Update
     virtual void update(float deltaTime);

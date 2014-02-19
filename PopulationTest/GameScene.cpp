@@ -29,6 +29,8 @@ GameScene::GameScene()
     _currentTime = 0;
     _previousTime = 0;
     
+    cumulatedTime = 0;
+    
     _post_drag_effect = false;
 }
 
@@ -254,10 +256,10 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             //Zoom
             if (touches->count() == 2)
             {
-                for ( it = touches->begin(); it !=touches->end(); it++) {
+                for ( it = touches->begin(); it != touches->end(); it++) {
                     if (it == touches->begin()) {
                         touchOne = (CCTouch*)*it;
-                    }else{
+                    } else {
                         touchTwo = (CCTouch*)*it;
                     }
                 }
@@ -290,8 +292,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             //Map dragging
             else
             {
-                //TODO: select
-                
                 CCTouch* touch = (CCTouch*)*touches->begin();
                 float moveX = touch->getLocation().x - touch->getPreviousLocation().x;
                 float moveY = touch->getLocation().y - touch->getPreviousLocation().y;
@@ -308,8 +308,13 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 void GameScene::postDrag(float time)
 {
     mapHandler->moveMapBy(_speedX * 10, _speedY * 10);
-    _speedX *= 0.9f;
-    _speedY *= 0.9f;
+    if(cumulatedTime > 0.1)
+    {
+        _speedX *= 0.9f;
+        _speedY *= 0.9f;
+        cumulatedTime = 0;
+    }
+    cumulatedTime += time;
     if(fabsf(_speedX) <= 0.001f && fabsf(_speedY) <= 0.001f)
     {
         _speedX = 0;
@@ -330,16 +335,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         _currentTime = (now.tv_sec * 1000 + now.tv_usec / 1000);
         float time_elapse = _currentTime - _previousTime;
         
-        if(time_elapse > 0)
-        {
-            _speedX = (_current_pos_x - _previous_pos_x) / time_elapse;
-            _speedY = (_current_pos_y - _previous_pos_y) / time_elapse;
-        }
-        else
-        {
-            _speedX = 0;
-            _speedY = 0;
-        }
+        _speedX = (_current_pos_x - _previous_pos_x) / time_elapse * 4;
+        _speedY = (_current_pos_y - _previous_pos_y) / time_elapse * 4;
 
         
         // enable post drag effect

@@ -416,6 +416,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
         case 0:
         {
             // buttonClose
+            GameScene::getThis()->setTouchEnabled(true);
             this->closeMenu(false);
         }
             break;
