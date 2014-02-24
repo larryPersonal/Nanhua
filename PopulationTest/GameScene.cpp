@@ -308,7 +308,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 void GameScene::postDrag(float time)
 {
     mapHandler->moveMapBy(_speedX * 10, _speedY * 10);
-    if(cumulatedTime > 0.1)
+    if(cumulatedTime > 0.05f)
     {
         _speedX *= 0.9f;
         _speedY *= 0.9f;
@@ -335,8 +335,31 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         _currentTime = (now.tv_sec * 1000 + now.tv_usec / 1000);
         float time_elapse = _currentTime - _previousTime;
         
-        _speedX = (_current_pos_x - _previous_pos_x) / time_elapse * 4;
-        _speedY = (_current_pos_y - _previous_pos_y) / time_elapse * 4;
+        if(time_elapse < 0.1f)
+        {
+            time_elapse = 0.1f;
+        }
+        
+        _speedX = (_current_pos_x - _previous_pos_x) / time_elapse * 1.5f;
+        _speedY = (_current_pos_y - _previous_pos_y) / time_elapse * 1.5f;
+        
+        if(_speedX > 2)
+        {
+            _speedX = 2;
+        }
+        else if(_speedX < -2)
+        {
+            _speedX = -2;
+        }
+        
+        if(_speedY > 2)
+        {
+            _speedY = 2;
+        }
+        else if(_speedY < -2)
+        {
+            _speedY = -2;
+        }
 
         
         // enable post drag effect

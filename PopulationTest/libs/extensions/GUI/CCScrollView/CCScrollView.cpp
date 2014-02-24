@@ -49,7 +49,7 @@ CCScrollView::CCScrollView()
 , m_bDragging(false)
 , m_pContainer(NULL)
 , m_bTouchMoved(false)
-, m_bBounceable(false)
+, m_bBounceable(true)
 , m_bClippingToBounds(false)
 , m_fTouchLength(0.0f)
 , m_pTouches(NULL)
@@ -402,12 +402,14 @@ void CCScrollView::deaccelerateScrolling(float dt)
     m_tScrollDistance     = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
     this->setContentOffset(ccp(newX,newY));
     
+    float offset = 5.0f;
+    
     if ((fabsf(m_tScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
-         fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY > maxInset.y || newY < minInset.y ||
-        newX > maxInset.x || newX < minInset.x ||
-        newX == maxInset.x || newX == minInset.x ||
-        newY == maxInset.y || newY == minInset.y)
+         fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST)) //||
+        //newY > maxInset.y + offset || newY < minInset.y - offset ||
+        //newX > maxInset.x + offset || newX < minInset.x - offset) //||
+        //newX == maxInset.x || newX == minInset.x ||
+        //newY == maxInset.y || newY == minInset.y)
     {
         this->unschedule(schedule_selector(CCScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
@@ -728,7 +730,7 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
     }
     if (m_pTouches->containsObject(touch))
     {
-        if (m_pTouches->count() == 1 && m_bTouchMoved)
+        if ((m_pTouches->count() == 1 && m_bTouchMoved) || true)
         {
             this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
         }
