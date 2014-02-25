@@ -83,6 +83,12 @@ class GameHUD : public CCLayer
     float cumulatedTime;
     
 public:
+    bool pause;
+    CCMenuItemImage* pauseButton;
+    CCMenuItemImage* resumeButton;
+    CCArray* menuItems_pause;
+    CCMenu* menu_pause;
+    
     // stats menu group
     CCSprite* statsMenu;
     CCSprite* moneyIcon;
@@ -117,7 +123,6 @@ public:
     CCMenuItemImage* buildButton;
     CCArray* menuItems_build;
     CCMenu* menu_build;
-    
     
 public:
     bool menuIsOpen;
@@ -166,6 +171,8 @@ public:
     
     void clickObjectiveButton();
     void clickBuildButton();
+    
+    void pauseGame();
 };
 
 #endif

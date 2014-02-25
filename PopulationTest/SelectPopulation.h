@@ -52,6 +52,9 @@ private:
     // labels
     CCLabelTTF* labelBuildingName;
     
+    CCLabelTTF* workerLabel;
+    CCLabelTTF* taskLabel;
+    
     ScrollArea* scrollArea;
     
     CCMenu* menu;
@@ -86,6 +89,8 @@ public:
     void unselectSprite(GameSprite*, SpriteRow*);
     
     void cancelSprite(CCObject*);
+    
+    void scheduleConstruction();
     
     //Update
     virtual void update(float deltaTime);

@@ -591,18 +591,19 @@ void GameScene::FirstRunPopulate()
 
 void GameScene::update(float time)
 {
-    //CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());
-    for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
+    if(!GameHUD::getThis()->pause)
     {
-        GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
-        sp->updateSprite(time);
-        //sp->updateZIndex();
+        for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
+        {
+            GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
+            sp->updateSprite(time);
+        }
+        
+        constructionHandler->update(time);
+        GameHUD::getThis()->update(time);
+    
+        spriteHandler->update(time);
     }
-    
-    constructionHandler->update(time);
-    GameHUD::getThis()->update(time);
-    
-    spriteHandler->update(time);
     
     // check lose game
     /*
@@ -671,7 +672,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->master)
             selectedTile = selectedTile->master;
         
-        if (selectedTile->building)
+        if (selectedTile->building && (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0))
         {
             this->setTouchEnabled(false);
             //BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
@@ -707,7 +708,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile = selectedTile->master;
                 
                 if (selectedTile->building &&
-                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc))
+                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) &&
+                    (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0))
                 {
                     this->setTouchEnabled(false);
                     //BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);

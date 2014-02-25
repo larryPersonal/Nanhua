@@ -151,18 +151,17 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                 if (properties)
                 {
                     const CCString* currProperty;
-                    /*
+                    
                     currProperty = properties->valueForKey("jobs_available");
                    
                      if (currProperty)
                     {
-                        b->jobs = currProperty->getCString();
-              
-                        
+                        CCString* job = CCStringMake(properties->valueForKey("jobs_available")->getCString());
+                        b->number_of_jobs = atoi(job->getCString());
                     }
-                    else b->jobs = "";
+                    else b->number_of_jobs = 0;
                     //else the jobs array for this building is null or empty.
-                    */
+                    
                     
                     currProperty = properties->valueForKey("name");
                     if (currProperty)

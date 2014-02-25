@@ -102,11 +102,7 @@ void SelectPopulation::createMenuItems()
 {
     if(!building->inProgress)
     {
-        ccColor3B colorBlack = ccc3(0, 0, 0);
-        ccColor3B colorYellow = ccc3(225, 219, 108);
-        ccColor3B colorGreen = ccc3(81, 77, 2);
         ccColor3B colorWhite = ccc3(255, 255, 255);
-        bool isHori = GlobalHelper::isHorizontal();
         
         // background
         spriteBackground = CCSprite::create("worker_assign_ui_bg_03.png");
@@ -154,8 +150,43 @@ void SelectPopulation::createMenuItems()
         labelBuildingName->setAnchorPoint(ccp(0.5, 0.5));
         this->addChild(labelBuildingName, 4);
         
-        // empty spaces
-        int population = building->populationLimit;
+        ss.str(std::string());
+        if(building->isUnderConstruction())
+        {
+            ss << "Builders Available";
+        }
+        else
+        {
+            ss << "Workers Available";
+        }
+        workerLabel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        workerLabel->setColor(colorWhite);
+        workerLabel->setAnchorPoint(ccp(0.5, 0.5));
+        this->addChild(workerLabel, 4);
+        
+        ss.str(std::string());
+        if(building->isUnderConstruction())
+        {
+            ss << "Construction";
+        }
+        else
+        {
+            ss << "Doing Task";
+        }
+        taskLabel = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        taskLabel->setColor(colorWhite);
+        taskLabel->setAnchorPoint(ccp(0.5, 0.5));
+        this->addChild(taskLabel, 4);
+        
+        int population = 0;
+        if(building->isUnderConstruction())
+        {
+            population = building->builderLimit;
+        }
+        else
+        {
+            population = building->number_of_jobs;
+        }
         
         for (int i = 0; i < population; i++)
         {
@@ -205,6 +236,10 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
         }
             break;
         case -2:
+            // button ok -> to construct
+            scheduleConstruction();
+            this->closeMenu(true);
+            GameScene::getThis()->setTouchEnabled(true);
             break;
         case -3:
         {
@@ -218,6 +253,27 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             break;
         }
     }
+}
+
+void SelectPopulation::scheduleConstruction()
+{
+    for (int i = 0; i < memberArray->count(); i++)
+    {
+        GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
+        
+        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_BUILDER, F_BUILDER));
+        
+        gameSprite->setJob(BUILDER);
+        gameSprite->setJobLocation(building);
+        gameSprite->setTargetLocation(building);
+        gameSprite->GoBuild(building);
+        
+        gameSprite->futureAction1 = EATING;
+        gameSprite->futureAction2 = RESTING;
+        
+        building->memberSpriteList->addObject(gameSprite);
+    }
+
 }
 
 
@@ -236,6 +292,9 @@ void SelectPopulation::reposition(){
     buttonOk->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
     
     labelBuildingName->CCNode::setPosition(285.0f, -100.0f);
+    
+    workerLabel->setPosition(ccp(-halfWidth / 2.0f + 40.0f, halfHeight - 40.0f));
+    taskLabel->setPosition(ccp(halfWidth / 2.0f + 40.0f, halfHeight - 40.0f));
     
     // for empty space
     for (int i = 0; i < emptySpaceArray->count(); i++)
@@ -288,7 +347,17 @@ void SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * sprit
 
 void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
 {
-    if(memberArray->count() < building->populationLimit)
+    int limit = 0;
+    if(building->isUnderConstruction())
+    {
+        limit = building->builderLimit;
+    }
+    else
+    {
+        limit = building->number_of_jobs;
+    }
+    
+    if(memberArray->count() < limit)
     {
         spriteRow->getMask()->setVisible(true);
         

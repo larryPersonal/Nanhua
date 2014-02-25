@@ -122,7 +122,6 @@ public:
     int internal_rank;
    
     bool isLeavingNextUpdate;
-    bool isInteractingSocial;
     /* End unused*/
     bool isInBuilding;
     

@@ -15,6 +15,7 @@ BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea, int index
     this->building = building;
     this->scrollArea = scrollArea;
     this->index = index;
+    this->tag = building->ID;
     init();
 }
 
@@ -125,12 +126,6 @@ void BuildingCard::showBuildingInfo()
 
 void BuildingCard::onMenuItemSelected()
 {
-    if(building == NULL)
-    {
-        return;
-    }
-    int tag = building->ID;
-    
     //    Animate();
     switch (tag)
     {

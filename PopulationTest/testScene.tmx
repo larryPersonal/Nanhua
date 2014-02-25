@@ -16,12 +16,12 @@
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="farmer farmer farmer"/>
+    <property name="jobs_available" value="3"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Farm"/>
-    <property name="population_limit" value="3"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
@@ -60,12 +60,12 @@
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="farmer farmer farmer"/>
+    <property name="jobs_available" value="3"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Farm"/>
-    <property name="population_limit" value="3"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
@@ -94,12 +94,12 @@
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="farmer farmer farmer"/>
+    <property name="jobs_available" value="3"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Farm"/>
-    <property name="population_limit" value="3"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
@@ -123,12 +123,12 @@
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="farmer farmer farmer"/>
+    <property name="jobs_available" value="3"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Farm"/>
-    <property name="population_limit" value="3"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
@@ -152,12 +152,12 @@
     <property name="cost" value="100"/>
     <property name="description" value="Granary for storing food!"/>
     <property name="food_consumption_rate" value="1"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Granary"/>
-    <property name="population_limit" value="3"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="10"/>
     <property name="req_building_count" value="0"/>
@@ -181,7 +181,7 @@
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
@@ -210,7 +210,7 @@
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
@@ -239,7 +239,7 @@
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
@@ -273,12 +273,12 @@
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="farmer farmer farmer"/>
+    <property name="jobs_available" value="3"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Farm"/>
-    <property name="population_limit" value="3"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
     <property name="req_building_count" value="15"/>
@@ -311,12 +311,12 @@
     <property name="cost" value="200"/>
     <property name="description" value="Brick city wall"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Wall"/>
-    <property name="population_limit" value="2"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
@@ -340,12 +340,12 @@
     <property name="cost" value="200"/>
     <property name="description" value="brick gate in city wall"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Gate"/>
-    <property name="population_limit" value="2"/>
+    <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
@@ -374,12 +374,12 @@
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value=""/>
+    <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
     <property name="name" value="Brick House"/>
-    <property name="population_limit" value="2"/>
+    <property name="population_limit" value="4"/>
     <property name="prereqs" value="Straw House"/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>

@@ -53,8 +53,6 @@ GameSprite::GameSprite()
     
     shouldUpgrade = false;
     
-    isInteractingSocial = false;
-    
     isInBuilding = false;
     
     idleDelay = 0.0f;
@@ -471,6 +469,11 @@ int GameSprite::getPathDistance(CCPoint from, CCPoint to)
 
 void GameSprite::followPath()
 {
+    if(GameHUD::getThis()->pause)
+    {
+        return;
+    }
+    
     int squares = path->count();
     if (squares > 0)
     {
@@ -684,8 +687,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 
 bool GameSprite::Wander()
 {
-    if (isInteractingSocial) return false;
-    
+    // The very first action for a refugee is alway trying to find a house, he/she will lose happiness continually.
     if(spriteClass.compare("refugee") == 0 && hasEmptyHouse())
     {
         return findNearestHome();
@@ -699,6 +701,7 @@ bool GameSprite::Wander()
     
     if(futureAction1 == RESTING)
     {
+        CCLog("caobi caobi caobi caobi caobi caobi caobi caobi caobi caobi caobi");
         goToSleep();
         return false;
     }
@@ -1074,8 +1077,6 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
 /*transactions*/
 bool GameSprite::SetHouse(int instanceID)
 {
-    if (isInteractingSocial) return false;
-    
     if (isFollowingMoveInstruction)
     {
         CCLog("still moving. Can't obey.");
@@ -1139,12 +1140,6 @@ bool GameSprite::LeaveHouse()
 bool GameSprite::PathToHome()
 {
     
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }
-    
     if (isFollowingMoveInstruction)
     {
         CCLog("still moving. Can't obey.");
@@ -1177,12 +1172,6 @@ bool GameSprite::PathToHome()
 /*paths to an existing workplace, if it does. Ignores range, because it is assumed that in this case the person cannot change where he works.*/
 bool GameSprite::PathToWork()
 {
-    
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }
 
     if (isFollowingMoveInstruction)
     {
@@ -1245,13 +1234,6 @@ bool GameSprite::PathToBuildingOverride(int building_id)
 
 bool GameSprite::PathToBuilding(int building_id)
 {
-    
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }
-
     
     if (isFollowingMoveInstruction)
     {
@@ -1819,7 +1801,10 @@ void GameSprite::setCumulativeTime(float t)
 
 void GameSprite::goToEat()
 {
+    // try to find the nearest granary to the sprite
     Building* bui = findNearestGranary(false);
+    
+    // if the granary has been found and has food, go to eat it!
     if(bui != NULL && bui->currentStorage > 0)
     {
         if(!bui->isUnderConstruction())
@@ -1843,6 +1828,7 @@ void GameSprite::goToEat()
             isDoingJob = false;
         }
     }
+    // if the granary does not have food, do next scheduled action.
     else if(bui != NULL)
     {
         if(getJob() == NONE && getJobLocation() == NULL)
@@ -1852,6 +1838,23 @@ void GameSprite::goToEat()
                 futureAction1 = RESTING;
                 futureAction2 = IDLE;
             }
+            else
+            {
+                futureAction1 = futureAction2 = IDLE;
+            }
+        }
+    }
+    // if there is no granary found, do next scheduled action.
+    else
+    {
+        if(futureAction1 == RESTING || futureAction2 == RESTING)
+        {
+            futureAction1 = RESTING;
+            futureAction2 = IDLE;
+        }
+        else
+        {
+            futureAction1 = futureAction2 = IDLE;
         }
     }
 }
@@ -1882,6 +1885,8 @@ void GameSprite::goToSleep()
         }
         isDoingJob = false;
     }
+    futureAction1 = IDLE;
+    futureAction2 = IDLE;
 }
 
 void GameSprite::goToOccupyHome(Building* b)

@@ -26,6 +26,8 @@ GameHUD::GameHUD()
     cumulatedTime = 0;
     buildScroll = NULL;
     
+    pause = false;
+    
     mGameDay = 0;
     mGameMonth = 0;
     mGameWeek = 0;
@@ -35,6 +37,14 @@ GameHUD::GameHUD()
 GameHUD::~GameHUD()
 {
     delete date;
+    
+    menuItems_build->removeAllObjects();
+    menuItems_objective->removeAllObjects();
+    menuItems_pause->removeAllObjects();
+    
+    menuItems_build->release();
+    menuItems_objective->release();
+    menuItems_pause->release();
 
     GameHUD::SP = NULL;
 }
@@ -73,6 +83,11 @@ bool GameHUD::init()
 
 void GameHUD::update(float deltaTime)
 {
+    if(pause)
+    {
+        return;
+    }
+    
     // update date
     cumulatedTime += deltaTime;
     
@@ -518,6 +533,64 @@ void GameHUD::createTimeMenu()
         timeLabel_2->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 200.0f);
     }
     
+    menuItems_pause = CCArray::create();
+    menuItems_pause->retain();
+    
+    pauseButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::pauseGame));
+    resumeButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::pauseGame));
+    if(isHori)
+    {
+        pauseButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+        resumeButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+
+    }
+    else
+    {
+        pauseButton->setScale(screenSize.height / spriteSize.width * 0.05f);
+        resumeButton->setScale(screenSize.height / spriteSize.width * 0.05f);
+    }
+    resumeButton->setVisible(false);
+    
+    menuItems_pause->addObject(pauseButton);
+    menuItems_pause->addObject(resumeButton);
+    menu_pause = CCMenu::createWithArray(menuItems_pause);
+    menu_pause->setAnchorPoint(ccp(0.5, 0.5));
+    
+    if(isHori)
+    {
+        menu_pause->setAnchorPoint(ccp(1, 1));
+        menu_pause->setPosition(screenSize.width - 280.0f, screenSize.height - 40.0f);
+    }
+    else
+    {
+        menu_pause->setAnchorPoint(ccp(0, 1));
+        menu_pause->setPosition(screenSize.width - 150.0f, screenSize.height - 140.0f);
+    }
+    
+    this->addChild(menu_pause, 5);
+}
+
+void GameHUD::pauseGame()
+{
+    if(pause)
+    {
+        pause = false;
+        pauseButton->setVisible(true);
+        resumeButton->setVisible(false);
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        
+        for (int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+            sp->followPath();
+        }
+    }
+    else
+    {
+        pause = true;
+        pauseButton->setVisible(false);
+        resumeButton->setVisible(true);
+    }
 }
 
 void GameHUD::createObjectiveMenu()

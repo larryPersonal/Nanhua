@@ -132,6 +132,7 @@ public:
     CCPoint getWorldPosition();
     
     /*jobs*/
+    int number_of_jobs;
     std::string jobs;
     void initializeJobs();
     

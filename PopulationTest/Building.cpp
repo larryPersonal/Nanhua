@@ -161,7 +161,9 @@ Building* Building::copyWithZone(CCZone *pZone)
         
         pCopy->buildingRect = this->buildingRect;
         pCopy->populationLimit = this->populationLimit;
+        pCopy->builderLimit = this->builderLimit;
         
+        pCopy->number_of_jobs = this->number_of_jobs;
         pCopy->jobs = this->jobs;
         
         
@@ -219,15 +221,6 @@ void Building::ArriveHandler(GameSprite* sp)
     
     sp->setAction(sp->nextAction);
     
-    if(sp->currAction == RESTING)
-    {
-        
-    }
-    
-    if(sp->currAction == EATING && sp->getTargetLocation() == this)
-    {
-        //sp->setTargetHungry(sp->getPossessions()->energyRating + 15 > sp->getPossessions()->defaultEnergy ? sp->getPossessions()->defaultEnergy : sp->getPossessions()->energyRating + 15);
-    }
     
     if(sp->getJobLocation() == this)
     {
@@ -254,26 +247,11 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             {
                 this->build_uint_current += workval;
                 
-                // update the building infor menu.
-                //if(GameScene::buildingInfoMenu != NULL && GameScene::buildingInfoMenu->getBuilding() == this)
-                //{
-                    //GameScene::buildingInfoMenu->updateConstructionStatus();
-                //}
-                
-                
-                
                 sp->updateIdleDelay(0.2f);
             }
             else
             // workval = 0, means the the villager is out of energy
             {
-                //sp->currAction = IDLE;
-                //sp->nextAction = IDLE;
-                //sp->setTargetLocation(NULL);
-               // sp->setIsFollowingMovementInstruction(false);
-                //
-                ///sp->setTargetLocation(sp->getHome());
-                //sp->GoRest(sp->getHome());
             }
         }
         else
@@ -281,7 +259,6 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         {
             for(int i = 0; i < memberSpriteList->count(); i++)
             {
-                CCLog("test4");
                 GameSprite* gameS = (GameSprite*) memberSpriteList->objectAtIndex(i);
                 
                 gameS->currAction = IDLE;
