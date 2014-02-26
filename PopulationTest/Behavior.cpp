@@ -573,21 +573,6 @@ static int GetBuildingCost_Glue(lua_State *L)
     return 1;
 }
 
-static int GetLevel_Glue(lua_State* L)
-{
-    if (!sprite)
-    {
-        lua_pushinteger(L, -1); //invalid sprite
-
-    }
-    else
-    {
-        lua_pushinteger(L, sprite->getLevel());
-    }
-    return 1;
-}
-
-
 static int GetEnergy_Glue(lua_State* L)
 {
     if (!sprite)
@@ -981,7 +966,6 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "GoHome", GoHome_Glue);
     lua_register(L, "HasHouse", HasHouse_Glue);
     lua_register(L, "GoToWork", GoToWork_Glue);
-    lua_register(L, "GetLevel", GetLevel_Glue);
     lua_register(L, "GoToBuildingWithID", GoToBuilding_Glue);
     
     /*Exposed sprite properties*/

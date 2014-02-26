@@ -10,7 +10,7 @@
   <tile id="1">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="50"/>
+    <property name="build_uint_required" value="500"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
@@ -54,7 +54,7 @@
   <tile id="5">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="50"/>
+    <property name="build_uint_required" value="500"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
@@ -88,7 +88,7 @@
   <tile id="7">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="50"/>
+    <property name="build_uint_required" value="500"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
@@ -117,7 +117,7 @@
   <tile id="8">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="50"/>
+    <property name="build_uint_required" value="500"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
@@ -146,7 +146,7 @@
   <tile id="9">
    <properties>
     <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="200"/>
+    <property name="build_uint_required" value="1000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="100"/>
@@ -175,7 +175,7 @@
   <tile id="10">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
@@ -204,7 +204,7 @@
   <tile id="11">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
@@ -233,7 +233,7 @@
   <tile id="12">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
@@ -267,7 +267,7 @@
   <tile id="14">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="50"/>
+    <property name="build_uint_required" value="500"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
@@ -305,7 +305,7 @@
   <tile id="0">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="3000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
@@ -334,7 +334,7 @@
   <tile id="1">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="5000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
@@ -368,7 +368,7 @@
   <tile id="3">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="10000"/>
     <property name="builder_limit" value="3"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>

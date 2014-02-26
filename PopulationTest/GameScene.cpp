@@ -16,6 +16,8 @@
 #include "GameDefaults.h"
 #include "SpriteInfoMenu.h"
 #include "SelectPopulation.h"
+#include "GameManager.h"
+#include "BuildingInfoMenu.h"
 
 #include <cmath>
 
@@ -32,6 +34,20 @@ GameScene::GameScene()
     cumulatedTime = 0;
     
     _post_drag_effect = false;
+    
+    configSettings = new ConfigSettings();
+    settingsLevel = new SettingsLevel();
+    
+    switch (GameManager::getThis()->getLevel())
+    {
+        case 0:
+            settingsLevel->setLevel0();
+            break;
+        case 1:
+            break;
+        default:
+            break;
+    }
 }
 
 GameScene::~GameScene()
@@ -77,16 +93,6 @@ CCScene* GameScene::scene()
     senlayer->playSenario(filename.c_str());
     scene->addChild(senlayer, 1);
     
-    /*
-    layer->researchIndicator = new ResearchIndicator();
-    layer->researchIndicator->createResearchIndicator();
-    
-    scene->addChild(layer->researchIndicator,2);
-    layer->researchIndicator->setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
-    */
-    
-   // layer->thisScene = scene;
-    // return the scene
     return scene;
 }
 
@@ -672,13 +678,20 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->master)
             selectedTile = selectedTile->master;
         
-        if (selectedTile->building && (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0))
+        if (selectedTile->building)
         {
+            
             this->setTouchEnabled(false);
-            //BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-            //buildingInfoMenu->useAsBasePopupMenu();
-            SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
-            selectPopulation->useAsBasePopupMenu();
+            if (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0)
+            {
+                SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                selectPopulation->useAsBasePopupMenu();
+            }
+            else
+            {
+                BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                buildingInfoMenu->useAsBasePopupMenu();
+            }
             return true;
         }
     }
@@ -708,14 +721,20 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile = selectedTile->master;
                 
                 if (selectedTile->building &&
-                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) &&
-                    (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0))
+                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) )
                 {
                     this->setTouchEnabled(false);
-                    //BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                    //buildingInfoMenu->useAsBasePopupMenu();
-                    SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
-                    selectPopulation->useAsBasePopupMenu();
+                    
+                    if(selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0)
+                    {
+                        SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                        selectPopulation->useAsBasePopupMenu();
+                    }
+                    else
+                    {
+                        BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                        buildingInfoMenu->useAsBasePopupMenu();
+                    }
                     return true;
                 }
             }

@@ -17,6 +17,7 @@
 #include "ConstructionHandler.h"
 #include "SimpleAudioEngine.h"
 #include "JobCollection.h"
+#include "GameConfig.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -47,6 +48,9 @@ public:
     bool _post_drag_effect;             // flag to check the elasticity effect
     
     float cumulatedTime;
+    
+    ConfigSettings* configSettings;
+    SettingsLevel* settingsLevel;
     
 public:
     

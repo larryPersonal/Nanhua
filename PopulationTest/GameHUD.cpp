@@ -12,7 +12,6 @@
 #include "BuildMenu.h"
 #include "PopulationMenu.h"
 #include "TutorialHandler.h"
-#include "GlobalSettings.h"
 #include "GlobalHelper.h"
 
 GameHUD* GameHUD::SP;
@@ -32,6 +31,21 @@ GameHUD::GameHUD()
     mGameMonth = 0;
     mGameWeek = 0;
     mGameYear = 0;
+    
+    mGameReputation = 0;
+    mGameReputationMax = 0;
+    reputation = 0;
+    reputationMax = 0;
+    
+    mAverageHappiness = 0;
+    average_happiness = 0;
+    
+    is_token_drop_cooldown = false;
+    token_drop_cooldown_time = 0;
+    
+    menuItems_token = CCArray::create();
+    menuItems_token->retain();
+    menu_token = NULL;
 }
 
 GameHUD::~GameHUD()
@@ -91,10 +105,21 @@ void GameHUD::update(float deltaTime)
     // update date
     cumulatedTime += deltaTime;
     
-    if(cumulatedTime > 1)
+    if(cumulatedTime > GameScene::getThis()->configSettings->secondToDayRatio)
     {
         date->addDay();
         cumulatedTime = 0;
+        
+        if(date->week == 0 && date->day == 0)
+        {
+            CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+            for(int i = 0; i < spritesOnMap->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+                gs->futureAction1 = EATING;
+                gs->futureAction2 = RESTING;
+            }
+        }
     }
     
     // update time group
@@ -167,9 +192,117 @@ void GameHUD::update(float deltaTime)
         timeLabel_1->setString(ss.str().c_str());
         mGameYear = date->year;
     }
+    
+    // reputation change
+    if(mGameReputation != reputation || mGameReputationMax != reputationMax)
+    {
+        mGameReputation = reputation;
+        mGameReputationMax = reputationMax;
+        
+        std::stringstream ss;
+        ss << mGameReputation << "/" << mGameReputationMax;
+        
+        achivementsLabel->setString(ss.str().c_str());
+    }
+    
+    float totalHappiness = 0;
+    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        totalHappiness += gs->getPossessions()->happinessRating;
+    }
+    average_happiness = totalHappiness / (float) spritesOnMap->count();
+    
+    if(mAverageHappiness != average_happiness)
+    {
+        mAverageHappiness = average_happiness;
+        std::stringstream ss;
+        ss << mAverageHappiness;
+        average_happiness_label->setString(ss.str().c_str());
+    }
+    
+    if(is_token_drop_cooldown)
+    {
+        token_drop_cooldown_time += deltaTime;
+        if(token_drop_cooldown_time >= 10)
+        {
+            is_token_drop_cooldown = false;
+        }
+    }
+    else
+    {
+        token_drop_cooldown_time = 0;
+        is_token_drop_cooldown = true;
+        dropToken();
+    }
+    
+    for(int i = 0; i < menuItems_token->count(); i++)
+    {
+        CCMenuItemImage* temp = (CCMenuItemImage*) menuItems_token->objectAtIndex(i);
+        temp->setPosition(ccp(temp->getPosition().x, temp->getPosition().y - 2.0f));
+    }
+}
+
+void GameHUD::dropToken()
+{
+    float dropRate = 0;
+    if(mAverageHappiness >= 70)
+    {
+        dropRate = mAverageHappiness;
+    }
+    else if(mAverageHappiness >= 40)
+    {
+        dropRate = mAverageHappiness / 2.0f;
+    }
+    else
+    {
+        dropRate = 0;
+    }
+    
+    dropRate = 100;
+    
+    int random_number = rand() % 100 + 1;
+    if(random_number <= dropRate)
+    {
+        CCMenuItemImage* newToken = CCMenuItemImage::create("renToken.png", "renToken.png", this, menu_selector(GameHUD::clickToken));
+        newToken->setAnchorPoint(ccp(0.5, 0.5));
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize spriteSize = newToken->getContentSize();
+        newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
+        menuItems_token->addObject(newToken);
+        
+        if(menu_token == NULL)
+        {
+            menu_token = CCMenu::createWithArray(menuItems_token);
+            this->addChild(menu_token, 10);
+        }
+        else
+        {
+            this->removeChild(menu_token);
+            menu_token = CCMenu::createWithArray(menuItems_token);
+            this->addChild(menu_token, 10);
+        }
+        
+        int x = rand() % (int)screenSize.width + 1;
+        
+        newToken->setPosition(ccp(x - screenSize.width / 2.0f, screenSize.height / 2.0f + 20.0f));
+    }
+
+}
+
+void GameHUD::clickToken()
+{
+    CCLog("test");
 }
 
 void GameHUD::createInitialGUI(){
+    
+    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
+    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
+    
+    mGameReputation = reputation;
+    mGameReputationMax = reputationMax;
     
     createStatsMenu();
     createObjectiveMenu();
@@ -402,12 +535,25 @@ void GameHUD::createStatsMenu()
     
     // create the achievements label for the values
     ss.str(std::string());
-    ss << "1100/2000";
+    ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
     achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(achivementsLabel, 2);
     achivementsLabel->CCNode::setPosition(190, screenSize.height - 105);
+    
+    // showing the average happiness attribute
+    average_happiness = 0;
+    mAverageHappiness = average_happiness;
+    
+    ss.str(std::string());
+    ss << mAverageHappiness;
+    
+    average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    average_happiness_label->setColor(colorBlack);
+    average_happiness_label->setAnchorPoint(ccp(0, 1));
+    this->addChild(average_happiness_label, 2);
+    average_happiness_label->CCNode::setPosition(640, screenSize.height - 60);
 }
 
 void GameHUD::createTimeMenu()

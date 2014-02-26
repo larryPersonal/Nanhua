@@ -19,16 +19,6 @@ std::string builderDefaults =
 "\"default_work_unit_per_day\":\"100\""
 "}";
 
-std::string builderRequirements =
-"{\"name\":\"builder\","
-"\"required_loyalty\":\"50\","
-"\"required_education_level\":\"1\","
-"\"required_intelligence\":\"50\","
-"\"required_social\":\"50\""
-"}";
-
-
-
 std::string builderConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","

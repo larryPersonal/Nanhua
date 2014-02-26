@@ -141,7 +141,7 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy = Building::create();
         pCopy->buildingName = this->buildingName;
         pCopy->buildingDesc = this->buildingDesc;
-         pCopy->targetLayerName = this->targetLayerName;
+        pCopy->targetLayerName = this->targetLayerName;
       
         pCopy->width = this->width;
         pCopy->height = this->height;
@@ -240,7 +240,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         // if the building is under construction, construct the building
         if (isUnderConstruction())
         {
-            int workval = sp->getPossessions()->PerformTask();
+            int workval = sp->getPossessions()->PerformTask(dt, GameScene::getThis()->configSettings->secondToDayRatio, GameScene::getThis()->configSettings->default_work_rate);
             
             // workval > 0 means the construction is successful, so update the construction scale and the energy scale
             if(workval > 0)
@@ -304,15 +304,20 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 
                 if(gainVal > 0)
                 {
-                    this->currentStorage -= food_consumption_rate;
+                    //this->currentStorage -= food_consumption_rate;
                     sp->getPossessions()->currentHungry += gainVal;
-                    sp->updateIdleDelay(0.2f);
+                    if(sp->getPossessions()->currentHungry > sp->getPossessions()->default_hungry_limit + sp->getPossessions()->bonus_hungry_limit)
+                    {
+                        sp->getPossessions()->currentHungry = sp->getPossessions()->default_hungry_limit + sp->getPossessions()->bonus_hungry_limit;
+                    }
+                    sp->updateIdleDelay(0.1f);
                 }
             }
             else
                 // the sprite has finished eating the food, the villagers will leave the building and become idle
             {
                 //sp->getPossessions()->energyRating = sp->getPossessions()->targetHungry;
+                this->currentStorage--;
                 leaveGranuary(sp);
             }
         }
@@ -464,6 +469,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         // if the sprite is resting now and the sprite is not a refugee, update the resting process
         if (sp->currAction == RESTING)
         {
+            CCLog("testing1");
             // if it is the home house of the sprite, recharge energy
             if(sp->getHome() == this)
             {
@@ -494,7 +500,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             {
                 if (sp->getPossessions()->jobLocation == this && sp->getAction() == FARMING)
                 {
-                    int workval = sp->getPossessions()->PerformTask();
+                    int workval = sp->getPossessions()->PerformTask(dt, GameScene::getThis()->configSettings->secondToDayRatio, GameScene::getThis()->configSettings->default_work_rate);
                     if (workval > 0)
                     {
                         

@@ -64,6 +64,11 @@ class GameHUD : public CCLayer
     int mGameMonth;
     int mGameYear;
     
+    int mGameReputation;
+    int mGameReputationMax;
+    
+    float mAverageHappiness;
+    
     typedef enum
     {
         Normal = 0,
@@ -83,6 +88,15 @@ class GameHUD : public CCLayer
     float cumulatedTime;
     
 public:
+    int reputation;
+    int reputationMax;
+    
+    float average_happiness;
+    CCLabelTTF* average_happiness_label;
+    
+    bool is_token_drop_cooldown;
+    float token_drop_cooldown_time;
+    
     bool pause;
     CCMenuItemImage* pauseButton;
     CCMenuItemImage* resumeButton;
@@ -123,6 +137,10 @@ public:
     CCMenuItemImage* buildButton;
     CCArray* menuItems_build;
     CCMenu* menu_build;
+    
+    // tokens
+    CCArray* menuItems_token;
+    CCMenu* menu_token;
     
 public:
     bool menuIsOpen;
@@ -173,6 +191,9 @@ public:
     void clickBuildButton();
     
     void pauseGame();
+    
+    void dropToken();
+    void clickToken();
 };
 
 #endif

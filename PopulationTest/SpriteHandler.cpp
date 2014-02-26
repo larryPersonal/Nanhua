@@ -12,7 +12,6 @@
 #include "GameHUD.h"
 
 //Config headers
-#include "GameSpriteCFG.h"
 #include "CitizenCFG.h"
 #include "FarmerCFG.h"
 #include "SoldierCFG.h"
@@ -20,11 +19,7 @@
 #include "BuilderCFG.h"
 #include "BanditCFG.h"
 
-#include "GlobalSettings.h"
-
 #include "NameGenerator.h"
-
-#include "GameDefaults.h"
 
 #include <json/json.h>
 
@@ -113,7 +108,6 @@ void SpriteHandler::initialize()
       
         //it's always a human now.
         char targetRace = 'h';
-        spriteContent = gameSpriteDefaults;
         
         switch (i)
         {
@@ -167,8 +161,6 @@ void SpriteHandler::initialize()
                 defaultContent = builderDefaults;
             
                 targetClass = "builder";
-            
-                
                 break;
             case 5:
                 targetGender = 'f';
@@ -247,103 +239,35 @@ void SpriteHandler::initialize()
                 configContent = banditConfig;
                 defaultContent = banditDefaults;
                 targetClass = "bandit";
-            
-      
                 break;
-                
         }
         std::string filepath = fileName + ".png";
         std::string plistName = fileName +".plist";
      
-        
         CCSpriteBatchNode* spriteSheet = CCSpriteBatchNode::create(filepath.c_str());
-        /*
-        map->addChild(spriteSheet, map->layerNamed("Ground_1")->getZOrder()); 
-         //basket, zindex is based on batchnode zindex, which means the sprites will always be lower than the buildings! disabled.
-        */
+        
         /*all spritesheets must be a child of the map*/
         AddToCache(NULL, fileName);
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistName.c_str());//  plistName.c_str());
         allSpriteSheets->addObject(spriteSheet);
-        
-      //  CCLog("spritesheet has zorder %i", spriteSheet->getZOrder());
         
         /*1 sprite per char. */
         GameSprite* gs = GameSprite::create();
         gs->gender = targetGender;
         gs->race = targetRace;
         gs->spriteName = fileName;
-      //  gs->spriteName->retain();
         gs->setFrameCount(targetIdleF, targetWalkF);
         gs->batchLayerIndex = i;
         gs->spriteClass = targetClass;
-      //  gs->spriteClass->retain();
         gs->type = SpriteType (i);
         gs->setAIConfig(configContent);
         gs->setDefaultsConfig(defaultContent);
-        gs->setSpriteConfig(spriteContent);
-        
-     //   gs->setRequirementsConfig(reqContent);
-        //set default animation here.
-        
-        
-        
         
         allSprites->addObject(gs);
         configContent = "";
-    
     }
-    
-    initClassRequirements();
-}
 
-void SpriteHandler::initClass(std::string classConfig)
-{
-    Json::Value defaultsRoot;
-    Json::Reader reader;
-    
-    
-    bool parsingSuccessful = reader.parse(classConfig, defaultsRoot);
-    if (!parsingSuccessful)
-    {
-        std::cout  << "Failed to parse requirements doc\n" << reader.getFormatedErrorMessages() << std::endl;
-        
-    }
-    else
-    {
-        Requirements* requirements = new Requirements();
-        requirements->autorelease();
-        std::string encoding = defaultsRoot.get("encoding", "UTF-8" ).asString();
-        requirements->className = defaultsRoot["name"].asString();
-        
-        requirements->required_intelligence = atoi(defaultsRoot["required_int"].asString().c_str());
-        requirements->required_loyalty = atoi(defaultsRoot["required_loyalty"].asString().c_str());
-        requirements->required_social = atoi(defaultsRoot["required_social"].asString().c_str());
-        requirements->required_education_level = atoi(defaultsRoot["required_education_level"].asString().c_str());
-        
-        allClassRequirements->addObject(requirements);
-    }
-    //  std::cout<<"created tree\n\n";
-    //always reinitialize the behavior tree to point the current child back to the first left child
-    
-    defaultsRoot.clear();
-    
 }
-
-void SpriteHandler::initClassRequirements()
-{
-    allClassRequirements = CCArray::create();
-    allClassRequirements->retain();
-    
-    initClass(citizenRequirements);
-    initClass(farmerRequirements);
-    //initClass(banditRequirements);
-    //initClass(refugeeRequirements);
-    //initClass(builderRequirements);
-    //initClass(soldierRequirements);
-    
-}
-
 
 void SpriteHandler::AddToCache(cocos2d::CCSpriteBatchNode *spritesheet, std::string animName)
 {
@@ -410,19 +334,10 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, SpriteType type)
     newSprite->retain();
     
     newSprite->defaults_doc = targetSprite->defaults_doc;
-    newSprite->sprite_doc = targetSprite->sprite_doc;
     
     newSprite->makeSprite(&tilePos);
     
     spritesOnMap->addObject(newSprite);
-    
-    if (newSprite->race == 'a')
-    {
-        newSprite->fdaysLeft = alien_visa_duration_months * 28;
-        aliensOnMap->addObject(newSprite);
-    }
-    else
-        localsOnMap->addObject(newSprite);
     
     GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
@@ -461,7 +376,6 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
            // newSprite->getPossessions()->socialRating = atoi(tokens[5].c_str());
             //newSprite->getPossessions()->default_move = atoi(tokens[6].c_str());
             newSprite->getPossessions()->energyRating = atoi(tokens[7].c_str());
-            newSprite->getPossessions()->classLevel = atoi(tokens[8].c_str());
             
             //house
             
@@ -593,7 +507,7 @@ void SpriteHandler::update(float dt)
     // this is the section to detect the global hungry decay
     cumulatedTime += dt;
     
-    if(cumulatedTime >= (1.0f / GlobalSettings::hungry_decay))
+    if(cumulatedTime >= (1.0f / (GameScene::getThis()->settingsLevel->global_hungry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio * (float) 4))))
     {
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -608,16 +522,35 @@ void SpriteHandler::update(float dt)
         
         cumulatedTime = 0.0f;
     }
+    
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+        // if the gamesprite is in hungry state, update the hungry happiness of each sprite
+        gs->updateHungry(dt);
+    }
+    
+    
+    
 
     for(int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
         
+        /*
         // check whether a sprite is hungry, if hungry, ask them to eat food
         if(gs->getPossessions()->currentHungry <= GlobalSettings::find_food_hungry_treshold && gs->currAction != EATING && gs->nextAction != EATING && gs->currAction && gs->getTargetLocation() != gs->getHome())
         {
             gs->goToEat();
         }
+        */
+    }
+    
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+        
+        gs->scheduleToken(dt);
     }
 }
 

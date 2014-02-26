@@ -44,6 +44,8 @@ GameManager::GameManager()
     loadedGameArea = CCArray::create();
     loadedGameArea->retain();
     
+    level = 0;
+    
     init();
 }
 
@@ -867,10 +869,6 @@ bool GameManager::getLoadedGame()
 bool GameManager::hasLostGame()
 {
     //check lose condition
-    if (getCurrentMoney() <= lose_condition_money ||
-        getAverageHappiness() <= lose_condition_average_happiness)
-        
-        
         
         return true;
     
@@ -907,4 +905,14 @@ void GameManager::storage_consume(int amt)
 bool GameManager::hasStorageLeft()
 {
     return (currStorageVal < maxStorageVal);
+}
+
+void GameManager::setLevel(int level)
+{
+    this->level = level;
+}
+
+int GameManager::getLevel()
+{
+    return level;
 }

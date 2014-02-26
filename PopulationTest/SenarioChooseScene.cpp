@@ -8,6 +8,7 @@
 
 #include "SenarioChooseScene.h"
 #include "GameScene.h"
+#include "GameManager.h"
 
 using namespace cocos2d;
 
@@ -150,6 +151,9 @@ bool SenarioChooseScene::init()
 void SenarioChooseScene::chooseTutorial()
 {
     // need to parse the specific senario file (xml file) and construct the senario manager to play the senario
+    
+    // update the level number in the Game Manager
+    GameManager::getThis()->setLevel(0);
     
     // load the actual game scene
     CCDirector::sharedDirector()->pushScene(GameScene::scene());

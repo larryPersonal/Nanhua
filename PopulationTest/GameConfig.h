@@ -54,26 +54,18 @@ struct ConfigSettings
         default_ini_reputation = 0;
         
         // related to the time
-        secondToDayRatio = 3; // x means x seconds for a day in the game, 7x seconds for a week and 28x seconds for a month;
+        secondToDayRatio = 5; // x means x seconds for a day in the game, 7x seconds for a week and 28x seconds for a month;
     }
-    
-    ~ConfigSettings()
-    {
-    }
-    
 };
 
-struct SettingsLevel0
+struct SettingsLevel
 {
     int default_start_money;
     int default_max_reputation;
     int total_population_growth;
     
     // hungry decay:
-    float resting_hungry_decay;
-    float idle_hungry_decay;
-    float refugee_hungry_decay;
-    float worker_hungry_decay;
+    float global_hungry_decay;
     
     // happiness decay:
     float hungry_happiness_happy_decay;
@@ -82,21 +74,33 @@ struct SettingsLevel0
     float hungry_happiness_angry_decay;
     float quit_happiness;
     
-    SettingsLevel0()
+    SettingsLevel()
+    {
+        default_start_money = 0;
+        default_max_reputation = 0;
+        total_population_growth = 0;
+        
+        global_hungry_decay = 0;
+        
+        hungry_happiness_happy_decay = 0;
+        hungry_happiness_normal_decay = 0;
+        hungry_happiness_unhappy_decay = 0;
+        hungry_happiness_angry_decay = 0;
+        quit_happiness = 0;
+    }
+    
+    void setLevel0()
     {
         default_start_money = 200;
         default_max_reputation = 400;
         total_population_growth = 50;
         
-        resting_hungry_decay = 0.1;
-        idle_hungry_decay = 0.3;
-        refugee_hungry_decay = 0.5;
-        worker_hungry_decay = 1;
+        global_hungry_decay = 60; // decay 60 of the hungry in one month;
         
         hungry_happiness_happy_decay = 5;
         hungry_happiness_normal_decay = 2;
         hungry_happiness_unhappy_decay = 1;
-        hungry_happiness_angry_decay = 0.1;
+        hungry_happiness_angry_decay = 0.5;
         quit_happiness = 0.01;
     }
 };

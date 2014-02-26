@@ -19,16 +19,6 @@ std::string refugeeDefaults =
 "\"default_work_unit_per_day\":\"0\""
 "}";
 
-std::string refugeeRequirements =
-"{\"name\":\"refugee\","
-"\"required_loyalty\":\"50\","
-"\"required_education_level\":\"1\","
-"\"required_intelligence\":\"50\","
-"\"required_social\":\"50\""
-"}";
-
-
-
 std::string refugeeConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","
