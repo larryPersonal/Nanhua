@@ -26,19 +26,17 @@
 
 SpriteHandler::~SpriteHandler()
 {
+    tokensOnMap->removeAllObjects();
+    CC_SAFE_RELEASE(tokensOnMap);
     
     allSpriteSheets->removeAllObjects();
     CC_SAFE_RELEASE(allSpriteSheets);
     
-//    allSpriteSheets->release();
     
     aliensOnMap->removeAllObjects();
-//    aliensOnMap->release();
-    
     CC_SAFE_RELEASE(aliensOnMap);
     
     localsOnMap->removeAllObjects();
-//    localsOnMap->release();
     CC_SAFE_RELEASE(localsOnMap);
     
     for (int i = 0; i < spritesOnMap->count(); ++i)
@@ -50,18 +48,11 @@ SpriteHandler::~SpriteHandler()
     spritesOnMap->removeAllObjects();
     CC_SAFE_RELEASE(spritesOnMap);
     
-    /*
-    for (int i = 0; i < allSprites->count(); ++i)
-    {
-        allSprites->objectAtIndex(i)->release();
-    }*/
     allSprites->removeAllObjects();
-//    allSprites->release();
     CC_SAFE_RELEASE(allSprites);
     
     
     allClassRequirements->removeAllObjects();
-//    allClassRequirements->release();
     CC_SAFE_RELEASE(allClassRequirements);
     
     CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
@@ -73,6 +64,9 @@ void SpriteHandler::initialize()
     cumulatedTime = 0.0f;
     
     NameGenerator::init();
+    
+    tokensOnMap = CCArray::create();
+    tokensOnMap->retain();
     
     //create and add all spritesheets first.
     allSprites = CCArray::create();
@@ -530,21 +524,18 @@ void SpriteHandler::update(float dt)
         gs->updateHungry(dt);
     }
     
-    
-    
-
+    /*
     for(int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
         
-        /*
         // check whether a sprite is hungry, if hungry, ask them to eat food
         if(gs->getPossessions()->currentHungry <= GlobalSettings::find_food_hungry_treshold && gs->currAction != EATING && gs->nextAction != EATING && gs->currAction && gs->getTargetLocation() != gs->getHome())
         {
             gs->goToEat();
         }
-        */
     }
+    */
     
     for(int i = 0; i < spritesOnMap->count(); i++)
     {

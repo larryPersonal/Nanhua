@@ -405,7 +405,6 @@ void GameManager::loadGameData()
                     {
                         int targetID = atoi(tokens[i].c_str());
                         unlockedBuildingIDs.push_back(targetID);
-                        ((Building*)GameScene::getThis()->buildingHandler->allBuildings->objectAtIndex(targetID))->unlockToBuild();
                         
                         
                     }
@@ -431,7 +430,6 @@ void GameManager::loadGameData()
                     {
                         int targetID = atoi(tokens[i].c_str());
                         researchableBuildingIDs.push_back(targetID);
-                        ((Building*)GameScene::getThis()->buildingHandler->allBuildings->objectAtIndex(targetID))->unlockToResearch();
                         
                         
                     }
@@ -676,8 +674,6 @@ bool GameManager::ResearchConditionsMet(Building* b)
         return false;
     }
     
-    return b->hasMetUnlockCriteria();
-    
 }
 
 
@@ -785,12 +781,10 @@ void GameManager::UnlockAll()
         {
             if (b->researchCost > 0)
             {
-                b->unlockToResearch();
                 researchableBuildingIDs.push_back(b->ID);
             }
             else
             {
-                b->unlockToBuild();
                 unlockedBuildingIDs.push_back(b->ID);
             }
         }

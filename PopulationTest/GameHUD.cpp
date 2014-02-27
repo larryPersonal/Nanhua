@@ -43,9 +43,8 @@ GameHUD::GameHUD()
     is_token_drop_cooldown = false;
     token_drop_cooldown_time = 0;
     
-    menuItems_token = CCArray::create();
-    menuItems_token->retain();
-    menu_token = NULL;
+    growthPopulation = 0;
+    mGameTapMode = Normal;
 }
 
 GameHUD::~GameHUD()
@@ -90,9 +89,20 @@ bool GameHUD::init()
     menuIsOpen = false;
     
     this->CCLayer::setTouchEnabled(true);
+    
+    setAllStats();
     createInitialGUI();
     
     return true;
+}
+
+void GameHUD::setAllStats()
+{
+    mGameCurrentFood = 0;
+    mGameCurrentStorage = 0;
+    
+    mGameCurrentCitizenPopulation = 0;
+    mGameCurrentPopulationRoom = 0;
 }
 
 void GameHUD::update(float deltaTime)
@@ -222,78 +232,98 @@ void GameHUD::update(float deltaTime)
         average_happiness_label->setString(ss.str().c_str());
     }
     
-    if(is_token_drop_cooldown)
+    // room and population change;
+    int temp = 0;
+    spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for (int i = 0; i < spritesOnMap->count(); i++)
     {
-        token_drop_cooldown_time += deltaTime;
-        if(token_drop_cooldown_time >= 10)
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        if(gs->getHome() != NULL)
         {
-            is_token_drop_cooldown = false;
+            temp++;
         }
     }
-    else
+    
+    if(mGameCurrentCitizenPopulation != temp)
     {
-        token_drop_cooldown_time = 0;
-        is_token_drop_cooldown = true;
-        dropToken();
+        mGameCurrentCitizenPopulation = temp;
+        std::stringstream ss;
+        ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+        populationLabel->setString(ss.str().c_str());
     }
     
-    for(int i = 0; i < menuItems_token->count(); i++)
+    temp = 0;
+    CCArray* housingOnMap = GameScene::getThis()->buildingHandler->housingOnMap;
+    for (int i = 0; i < housingOnMap->count(); i++)
     {
-        CCMenuItemImage* temp = (CCMenuItemImage*) menuItems_token->objectAtIndex(i);
-        temp->setPosition(ccp(temp->getPosition().x, temp->getPosition().y - 2.0f));
-    }
-}
-
-void GameHUD::dropToken()
-{
-    float dropRate = 0;
-    if(mAverageHappiness >= 70)
-    {
-        dropRate = mAverageHappiness;
-    }
-    else if(mAverageHappiness >= 40)
-    {
-        dropRate = mAverageHappiness / 2.0f;
-    }
-    else
-    {
-        dropRate = 0;
+        Building* building = (Building*) housingOnMap->objectAtIndex(i);
+        temp += building->populationLimit;
     }
     
-    dropRate = 100;
-    
-    int random_number = rand() % 100 + 1;
-    if(random_number <= dropRate)
+    if(mGameCurrentPopulationRoom != temp)
     {
-        CCMenuItemImage* newToken = CCMenuItemImage::create("renToken.png", "renToken.png", this, menu_selector(GameHUD::clickToken));
-        newToken->setAnchorPoint(ccp(0.5, 0.5));
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-        CCSize spriteSize = newToken->getContentSize();
-        newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
-        menuItems_token->addObject(newToken);
-        
-        if(menu_token == NULL)
+        mGameCurrentPopulationRoom = temp;
+        std::stringstream ss;
+        ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+        populationLabel->setString(ss.str().c_str());
+    }
+    
+    // update the tapMode
+    if (mGameTapMode != currTapMode)
+    {
+        mGameTapMode = currTapMode;
+        std::stringstream ss;
+        switch (mGameTapMode)
         {
-            menu_token = CCMenu::createWithArray(menuItems_token);
-            this->addChild(menu_token, 10);
+            case 0:
+                ss << "Normal";
+                break;
+            case 1:
+                ss << "Build";
+                break;
+            case 2:
+                ss << "Deconstruct";
+                break;
+            case 3:
+                ss << "BuildPathPreview";
+                break;
+            case 4:
+                ss << "UnBuildPath";
+                break;
+            case 5:
+                ss << "BuildPathLine";
+                break;
+            default:
+                break;
+
         }
-        else
-        {
-            this->removeChild(menu_token);
-            menu_token = CCMenu::createWithArray(menuItems_token);
-            this->addChild(menu_token, 10);
-        }
-        
-        int x = rand() % (int)screenSize.width + 1;
-        
-        newToken->setPosition(ccp(x - screenSize.width / 2.0f, screenSize.height / 2.0f + 20.0f));
+        tapModeLabel->setString(ss.str().c_str());
     }
-
-}
-
-void GameHUD::clickToken()
-{
-    CCLog("test");
+    
+    // for food and storage change!
+    temp = 0;
+    int temp_storage = 0;
+    CCArray* buildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    for (int i = 0; i < buildingsOnMap->count(); i++)
+    {
+        Building* building = (Building*) buildingsOnMap->objectAtIndex(i);
+        if(building->buildingType == GRANARY)
+        {
+            temp += building->currentStorage;
+            temp_storage += building->storageLimit;
+        }
+    }
+    
+    if (mGameCurrentFood != temp || mGameCurrentStorage != temp_storage)
+    {
+        mGameCurrentFood = temp;
+        mGameCurrentStorage = temp_storage;
+        
+        stringstream ss;
+        ss << mGameCurrentFood << "/" << mGameCurrentStorage;
+        foodLabel->setDimensions(CCSizeMake(ss.str().length() * 20.0f, 5.0f));
+        foodLabel->setString(ss.str().c_str());
+    }
 }
 
 void GameHUD::createInitialGUI(){
@@ -504,12 +534,12 @@ void GameHUD::createStatsMenu()
     this->addChild(foodIcon, 2);
     
     ss.str(std::string());
-    ss << "50/100";
+    ss << mGameCurrentFood << "/" << mGameCurrentStorage;
     foodLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodLabel->setColor(colorBlack);
     foodLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(foodLabel, 2);
-    foodLabel->CCNode::setPosition(375, screenSize.height - 60);
+    foodLabel->CCNode::setPosition(370, screenSize.height - 60);
     
     // create the population indicator
     populationIcon = CCSprite::create("main-menu-resource-icons_population.png");
@@ -526,21 +556,21 @@ void GameHUD::createStatsMenu()
     this->addChild(populationIcon, 2);
     
     ss.str(std::string());
-    ss << "10/15";
+    ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     populationLabel->setColor(colorBlack);
-    populationLabel->setAnchorPoint(ccp(0, 1));
+    populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
-    populationLabel->CCNode::setPosition(520, screenSize.height - 60);
+    populationLabel->CCNode::setPosition(565, screenSize.height - 60);
     
     // create the achievements label for the values
     ss.str(std::string());
     ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
     achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     achivementsLabel->setColor(colorBlack);
-    achivementsLabel->setAnchorPoint(ccp(0, 1));
+    achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(190, screenSize.height - 105);
+    achivementsLabel->CCNode::setPosition(270, screenSize.height - 105);
     
     // showing the average happiness attribute
     average_happiness = 0;
@@ -553,7 +583,38 @@ void GameHUD::createStatsMenu()
     average_happiness_label->setColor(colorBlack);
     average_happiness_label->setAnchorPoint(ccp(0, 1));
     this->addChild(average_happiness_label, 2);
-    average_happiness_label->CCNode::setPosition(640, screenSize.height - 60);
+    average_happiness_label->CCNode::setPosition(620, screenSize.height - 60);
+    
+    // tap mode label
+    ss.str(std::string());
+    switch (currTapMode)
+    {
+        case 0:
+            ss << "Normal";
+            break;
+        case 1:
+            ss << "Build";
+            break;
+        case 2:
+            ss << "Deconstruct";
+            break;
+        case 3:
+            ss << "BuildPathPreview";
+            break;
+        case 4:
+            ss << "UnBuildPath";
+            break;
+        case 5:
+            ss << "BuildPathLine";
+            break;
+        default:
+            break;
+    }
+    tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    tapModeLabel->setColor(colorBlack);
+    tapModeLabel->setAnchorPoint(ccp(0, 1));
+    this->addChild(tapModeLabel, 2);
+    tapModeLabel->CCNode::setPosition(670, screenSize.height - 60);
 }
 
 void GameHUD::createTimeMenu()
@@ -834,6 +895,10 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        currTapMode = Normal;
+        GameScene::getThis()->buildingHandler->selectedBuilding = NULL;
+        GameScene::getThis()->mapHandler->UnBuildPreview();
+        GameScene::getThis()->mapHandler->UnPathPreview();
         buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
     }
@@ -913,4 +978,39 @@ void GameHUD::rotateBuildMenu()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
     menu_build->setPosition(ccp(screenSize.width, screenSize.height - 120));
+}
+
+void GameHUD::addReputation(int incre)
+{
+    reputation += incre;
+    if(reputation >= reputationMax)
+    {
+        reputation = reputationMax;
+    }
+    
+    int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
+    float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
+    
+    int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
+    
+    if(growthPopulation < projectedPopulation)
+    {
+        growthPopulation++;
+        addPopulation();
+    }
+}
+
+void GameHUD::addPopulation(){
+    CCPoint target = CCPointMake(29,33);
+    
+    int isMale = rand() % 2;
+    
+    if(isMale)
+    {
+        GameScene::getThis()->spriteHandler->addSpriteToMap(target, M_REFUGEE);
+    }
+    else
+    {
+        GameScene::getThis()->spriteHandler->addSpriteToMap(target, F_REFUGEE);
+    }
 }

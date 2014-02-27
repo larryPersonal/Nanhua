@@ -518,42 +518,49 @@ CCPoint MapHandler::getRandomPathTile()
 bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails)
 {
     if (!building)
+    {
         return false;
+    }
     
     /*Note: do NOT use the pointer directly! The pointer points to the main instance of the building. */
     Building* cloneBuilding = (Building*) building->copy();
-    if (cloneBuilding->buildingType == BUILDINGCATEGORYMAX) return false;
+    if (cloneBuilding->buildingType == BUILDINGCATEGORYMAX)
+    {
+        return false;
+    }
     
     // Don't build if tiles are occupied
     if (!isBuildableOnTile(target, cloneBuilding))
+    {
         return false;
+    }
 
     cloneBuilding->buildingRep = CCSprite::create();
-  //  cloneBuilding->buildingRep->retain();
     cloneBuilding->buildingRep->initWithTexture(cloneBuilding->buildingTexture, cloneBuilding->buildingRect);
     CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
     cloneBuilding->buildingRep->setPosition(tilePos);
     
-    //layer->insertTileForGID(building->targetGUID, target);
     getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target)); //force buildings to be drawn always on top
-    cloneBuilding->BeginAnim();
     
     MapTile* master = getTileAt(target.x, target.y);
     for (int i = 0; i < cloneBuilding->height; i++)
     {
         for (int j = 0; j < cloneBuilding->width; j++)
+        {
             if (i == 0 && j == 0)
+            {
                 master->Build(cloneBuilding);
+            }
             else
+            {
                 getTileAt(target.x + j, target.y + i)->setMaster(master);
+            }
+        }
     }
     
     if (skipConstruction)
     {
         cloneBuilding->ID = GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
-        
-//        GlobalHelper::Convert(b->happiness_mod) + "|" + GlobalHelper::Convert(b->loyalty_mod) + "|" + GlobalHelper::Convert(b->social_mod) +"|" +GlobalHelper::Convert(b->int_mod) +"|" +GlobalHelper::Convert(b->energy_mod) +"|" +GlobalHelper::Convert(b->cash_mod) + "|" +GlobalHelper::Convert(b->currentExp) +"|" + GlobalHelper::Convert(b->currentLevel) + "\n";
-
         
         if (withDetails.length() > 0)
         {
@@ -574,12 +581,6 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
             {
             
                 cloneBuilding->ID = atoi(tokens[8].c_str());
-               // cloneBuilding->happiness_mod = atoi(tokens[0].c_str());
-               // cloneBuilding->loyalty_mod = atoi(tokens[1].c_str());
-               // cloneBuilding->social_mod = atoi(tokens[2].c_str());
-               // cloneBuilding->int_mod = atoi(tokens[3].c_str());
-               // cloneBuilding->energy_mod = atoi(tokens[4].c_str());
-               // cloneBuilding->cash_mod = atoi(tokens[5].c_str());
                 cloneBuilding->currentExp = atoi(tokens[6].c_str());
                 cloneBuilding->currentLevel = atoi(tokens[7].c_str());
             }
@@ -592,11 +593,9 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
     else
     {
         //GameHUD::getThis()->buyBuilding(cloneBuilding->buildingCost);
+        //GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
         GameScene::getThis()->constructionHandler->addConstructingBuilding(cloneBuilding);
     }
-    
-    /*update unlocks whenever a building is built*/
-    //GameManager::getThis()->UpdateUnlocks();
     
     return true;
 }
@@ -604,7 +603,9 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
 bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
 {
     if (!building)
+    {
         return false;
+    }
     
     // Can only have one building preview at a time.
     if (currBuildingPreview != NULL){
@@ -613,26 +614,25 @@ bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
     
     /*Note: do NOT use the pointer directly! The pointer points to the main instance of the building. */
     currBuildingPreview = (Building*) building->copy();
-    if (currBuildingPreview->buildingType == BUILDINGCATEGORYMAX) return false;
+    if (currBuildingPreview->buildingType == BUILDINGCATEGORYMAX)
+    {
+        return false;
+    }
     
     CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
     
     // Add tile highlight
     previewTileHighlight = createTileHighlight(tilePos);
-    //previewTileHighlight->retain();
     getMap()->addChild(previewTileHighlight, playarea_max.x + playarea_max.y + 1);
     
     // Okay, build.
     currBuildingPreview->retain();
     currBuildingPreview->buildingRep = CCSprite::create();
     currBuildingPreview->buildingRep->initWithTexture(currBuildingPreview->buildingTexture, currBuildingPreview->buildingRect);
-   // currBuildingPreview->buildingRep->retain();
     currBuildingPreview->buildingRep->setPosition(tilePos);
     currBuildingPreview->buildingRep->setOpacity(75);
     
-    //layer->insertTileForGID(building->targetGUID, target);
     getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target)); //force buildings to be drawn always on top
-//    currBuildingPreview = currBuildingPreview;
     
     // Show red-tinted preview and return false if tiles are occupied.
     if (!isBuildableOnTile(target, currBuildingPreview))
@@ -640,7 +640,6 @@ bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
         currBuildingPreview->buildingRep->setColor(ccc3(255, 64, 64));
         return false;
     }
-    
     return true;
 }
 
@@ -653,22 +652,15 @@ void MapHandler::ForceUnbuild(cocos2d::CCPoint &target)
         return;
     }
     
-    
-    targetB->EndAnim();
-    
     // Try remove from constructionHandler
     GameScene::getThis()->constructionHandler->removeConstructingBuilding(targetB);
     
     GameScene::getThis()->mapHandler->getMap()->removeChild(targetB->buildingRep, true);
     GameScene::getThis()->buildingHandler->removeBuildingFromMap(targetB);
-    // targetB->buildingRep->release();
-    
     
     for (int i = 0; i < targetB->height; i++)
         for (int j = 0; j < targetB->width; j++)
             getTileAt(target.x + j, target.y + i)->UnBuild();
-    
-  //  targetB->buildingTexture->release();
 
 }
 
@@ -692,15 +684,11 @@ void MapHandler::UnBuild(cocos2d::CCPoint &target)
         }
     }
     
-    
-    targetB->EndAnim();
-    
     // Try remove from constructionHandler
     GameScene::getThis()->constructionHandler->removeConstructingBuilding(targetB);
     
-      GameScene::getThis()->mapHandler->getMap()->removeChild(targetB->buildingRep, true);
+    GameScene::getThis()->mapHandler->getMap()->removeChild(targetB->buildingRep, true);
     GameScene::getThis()->buildingHandler->removeBuildingFromMap(targetB);
-   // targetB->buildingRep->release();
     
     
     for (int i = 0; i < targetB->height; i++)

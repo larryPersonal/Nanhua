@@ -392,27 +392,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     {
         switch (tapMode)
         {
-            //spawn a foreigner right into a building. Building must NOT be fully occupied. Target MUST be a building.
-            //No longer used. Spawns from high temple.
-                /*
-            case 6:
-            {
-                MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
-                
-                if (selectedTile->building != NULL || selectedTile->master != NULL)
-                {
-                    
-                    spriteHandler->addSpriteToMap(tilePos, policyHandler->getToSpawn());
-
-                    GameHUD::getThis()->closeAllMenuAndResetTapMode();
-                    
-                }
-                
-                
-            }
-                break;
-              */
-                //Buildpath second tap, modify preview path, or confirm buildpath.
+            //Buildpath second tap, modify preview path, or confirm buildpath.
             case 5:
             {
                 if (tilePos.x == lastPathPosPreview.x &&
@@ -511,7 +491,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     mapHandler->UnBuildPreview();
 
                     if (mapHandler->BuildPreview(tilePos, newBuilding))
+                    {
                         lastTilePosPreview = tilePos;
+                    }
                     else
                     {
                         lastTilePosPreview.x = INT_MAX;
@@ -521,11 +503,18 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             }
             break;
         
-                //Check if clicking on building
+            //Check if clicking on building/sprite/tokens
             default:
             {
-                if (!handleTouchSprite(touchLoc))   // if touched sprite, dont check for building
-                    handleTouchBuilding(touchLoc, tilePos);
+                if (!handleTouchTokens(touchLoc))
+                {
+                    // if touched tokens, don't check for sprite and building
+                    if (!handleTouchSprite(touchLoc))
+                    {
+                        // if touched sprite, dont check for building
+                        handleTouchBuilding(touchLoc, tilePos);
+                    }
+                }
             }
                 break;
         }
@@ -637,6 +626,44 @@ void GameScene::lostGame(cocos2d::CCObject *psender)
     GameManager::getThis()->firstPlay = false;
     CCDirector::sharedDirector()->popScene();
     CCLog("here!");
+}
+
+bool GameScene::handleTouchTokens(CCPoint touchLoc)
+{
+    CCArray* allTokens = spriteHandler->tokensOnMap;
+    if(allTokens == NULL)
+    {
+        return false;
+    }
+    
+    if (allTokens->count() == 0)
+    {
+        return false;
+    }
+    
+    for (int i = 0; i < allTokens->count(); i++)
+    {
+        CCSprite* token = (CCSprite*) allTokens->objectAtIndex(i);
+        if (token == NULL)
+        {
+            continue;
+        }
+        
+        if (!token->isVisible())
+        {
+            continue;
+        }
+        
+        if (token->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
+        {
+            mapHandler->getMap()->removeChild(token);
+            allTokens->removeObjectAtIndex(i);
+            
+            GameHUD::getThis()->addReputation(5);
+            return true;
+        }
+    }
+    return false;
 }
 
 bool GameScene::handleTouchSprite(CCPoint touchLoc)

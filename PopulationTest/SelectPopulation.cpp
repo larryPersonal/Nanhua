@@ -42,6 +42,9 @@ SelectPopulation::SelectPopulation(Building* building){
     if(!building){
         CCLog("Warning No Building!");
     }
+    
+    isCurrentlyConstructing = false;
+    
     SelectPopulation::SP = this;
     
     spriteRowArray = CCArray::create();
@@ -153,7 +156,14 @@ void SelectPopulation::createMenuItems()
         ss.str(std::string());
         if(building->isUnderConstruction())
         {
-            ss << "Builders Available";
+            if(isCurrentlyConstructing)
+            {
+                ss << "Builders Working Currently";
+            }
+            else
+            {
+                ss << "Builders Available";
+            }
         }
         else
         {
@@ -167,7 +177,14 @@ void SelectPopulation::createMenuItems()
         ss.str(std::string());
         if(building->isUnderConstruction())
         {
-            ss << "Construction";
+            if(isCurrentlyConstructing)
+            {
+                ss << "Construction in progress";
+            }
+            else
+            {
+                ss << "Construction in prepare";
+            }
         }
         else
         {

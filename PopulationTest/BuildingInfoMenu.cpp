@@ -82,7 +82,6 @@ void BuildingInfoMenu::createMenuItems()
     mBuildingExpMax = building->getExpToLevel();
     mBuildingLevel = building->currentLevel;
     mBuildingVacancy = building->populationLimit;
-    mBuildingCurrPopulation = building->getPopulationCount();
     
     mBuildingUnitCurrent = building->build_uint_current;
     mBuildingUnitRequired = building->build_uint_required;
@@ -598,8 +597,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         workCompleteBar->setValue((float) building->work_unit_current / (float) building->work_unit_required);
     }
     
-    
-    
+    /*
     if (mBuildingCurrPopulation != building->getPopulationCount())
     {
         int diff = building->getPopulationCount() - mBuildingCurrPopulation;
@@ -632,6 +630,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             }
         }
     }
+    */
     
     if (isPositionDirty)
         reposition();

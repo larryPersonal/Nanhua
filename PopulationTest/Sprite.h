@@ -72,6 +72,8 @@ private:
     // token part
     bool is_token_drop_cooldown;
     float token_drop_cooldown_time;
+    float token_drop_cooldown_treshold;
+    float token_drop_rate;
     
 public:
     std::string config_doc;
@@ -194,13 +196,6 @@ public:
     //Wrapped speech bubble to show text
     void saySpeech(const char* text, float timeInSeconds);
     
-    /*transactions*/
-    bool SetHouse(int instanceID); //note: doesnt' take into account population squeeze limit.
-    bool LeaveHouse();
-    
-    bool SetJob(int instanceID);
-    bool LeaveJob();
-    
     /*movement*/
     bool Wander();
     void StopMoving();
@@ -293,7 +288,8 @@ public:
     // token part
     void scheduleToken(float dt);
     void dropToken();
-    //void clickToken();
+    void checkDropTresholdTime();
+    void checkDropRate();
 };
 
 

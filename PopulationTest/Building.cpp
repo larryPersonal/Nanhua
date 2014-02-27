@@ -43,13 +43,6 @@ Building::Building()
     researchCost = 100.0f;
     researchTime = 10.0f;
     
-    jobsInthisBuilding = CCArray::create();
-    jobsInthisBuilding->retain();
-    
-    
-    currVisitors = CCArray::create();
-    currVisitors->retain();
-    
     memberSpriteList = CCArray::create();
     memberSpriteList->retain();
     
@@ -71,9 +64,7 @@ Building::Building()
 }
 Building::~Building()
 {
-    EndAnim();
-    
-      expToLevel->removeAllObjects();
+    expToLevel->removeAllObjects();
     expToLevel->release();
     
     if (levelGainVacancy)
@@ -93,21 +84,13 @@ Building::~Building()
     if (levelGainPrice)
     {
         levelGainPrice->removeAllObjects();
-        levelGainPrice->release();    }
+        levelGainPrice->release();
+    }
     
     currPopulation.clear();
-   
-    
-    jobsInthisBuilding->removeAllObjects();
-    jobsInthisBuilding->release();
-    
     
     memberSpriteList->removeAllObjects();
     memberSpriteList->release();
-    
-    currVisitors->removeAllObjects();
-   
-    currVisitors->release();
 }
 
 Building* Building::create()
@@ -164,8 +147,6 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->builderLimit = this->builderLimit;
         
         pCopy->number_of_jobs = this->number_of_jobs;
-        pCopy->jobs = this->jobs;
-        
         
         // for storage.
         pCopy->currentStorage = this->currentStorage;
@@ -203,22 +184,12 @@ int Building::getExpToLevel()
 {
     return ((CCInteger*)expToLevel->objectAtIndex(currentLevel - 1))->getValue();
 }
-/*
-CCArray* Building::getJobsAvailable()
-{
-    return jobsInthisBuilding;
-}
-*/
-
 
 /*use this to determine what happens when a sprite enters the building.*/
 void Building::ArriveHandler(GameSprite* sp)
 {
     if (!sp) return;
-    
-    currVisitors->addObject(sp);
 
-    
     sp->setAction(sp->nextAction);
     
     
@@ -463,13 +434,12 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             }
         }
     }
-    else if (this->recovery_rate > 0 && this->food_consumption_rate == 0)
+    else if (buildingType == HOUSING)
     // if the house is a place for resting
     {
         // if the sprite is resting now and the sprite is not a refugee, update the resting process
         if (sp->currAction == RESTING)
         {
-            CCLog("testing1");
             // if it is the home house of the sprite, recharge energy
             if(sp->getHome() == this)
             {
@@ -481,7 +451,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 else
                     // if the sprite is not fully recharged, it will recharge energy.
                 {
-                    sp->getPossessions()->Rest();
+                    sp->getPossessions()->energyRating += sp->getPossessions()->Rest();
                 }
             }
             else
@@ -568,57 +538,6 @@ void Building::leaveHouse(GameSprite* sp)
 void Building::Leavehandler(GameSprite *sp)
 {
     CCLog("Leave handler called");
-    currVisitors->removeObject(sp);
-}
-//Doing it in the copy constructor unfortunately fails. Doing this in a separate function instead.
-
-void Building::initializeJobs()
-{
-    if (jobs.length() == 0) return;
- 
-    JobCollection* jc = GameScene::getThis()->jobCollection;
-     std::istringstream ss(jobs);
-     do
-     {
-         std::string substr;
-         ss >> substr;
-     
-     
-         Job* j = jc->getJobWithName(substr.c_str());
-         if (j != NULL)
-         {
-             
-             jobsInthisBuilding->addObject(j);
-         }
-     }
-     while (ss);
-    
-}
-
-
-void Building::ModifyStats(GameSprite *sp)
-{
-    //note: it is possible to supply negatives to this.
-    if (sp == NULL) return;
-    
-    /*
-    if (buildingType == COMMERCE)
-    {
-        GameManager::getThis()->currentMoney += (abs(cash_mod) * currentLevel);
-        GameHUD::getThis()->updateMoneyLabel();
-    }*/
-    
-    /*
-    sp->increasePossession(STATS_ENERGY, energy_mod);
-    sp->increasePossession(STATS_HAPPINESS, happiness_mod);
-    sp->increasePossession(STATS_INTELLIGENCE, int_mod);
-    sp->increasePossession(STATS_SOCIAL, social_mod);
-    sp->increasePossession(STATS_LOYALTY, loyalty_mod);
-    */
-    /*
-    if (sp->race != 'a' && !sp->getPossessions()->isAtAbsoluteMax() && !sp->getPossessions()->isAtMaxLevel()) //aliens don't "learn" unless conversion happens.
-        sp->increasePossession(STATS_EXP, exp_mod);
-    */
 }
 
 void Building::gainExp(int expToGain)
@@ -666,191 +585,6 @@ void Building::gainExp(int expToGain)
     }
 }
 
-void Building::addPopulation(GameSprite* sprite)
-{
-    if (sprite)
-        currPopulation.push_back(sprite);
-}
-
-void Building::removePopulation(GameSprite* sprite)
-{
-    currPopulation.erase(std::remove(currPopulation.begin(), currPopulation.end(), sprite), currPopulation.end());
-}
-
-int Building::getPopulationCount()
-{
-    return currPopulation.size();
-}
-
-GameSprite* Building::getPopulationAt(int index)
-{
-    return currPopulation.at(index);
-}
-
-int Building::getLevel()
-{
-    return currentLevel;
-}
-
-void Building::unlockToResearch()
-{
-    required_building_count = 0;
-    required_capita = 0;
-    required_population = 0;
-    prereq = "";
-    
-    //and the updateUnlocks in game manager will deal with this
-    //note: only difference is the unlocked flag. Flipping that puts the building in the BUILD immediately.
-    //GameManager::getThis()->UpdateUnlocks();
-}
-
-void Building::unlockToBuild()
-{
-    required_building_count = 0;
-    required_capita = 0;
-    required_population = 0;
-    prereq = "";
-    unlocked = true;
-    //and the updateUnlocks in game manager will deal with this
-    //GameManager::getThis()->UpdateUnlocks();
-
-}
-
-bool Building::hasMetUnlockCriteria()
-{
-    if (prereq.length() != 0)
-    {
-        istringstream iss(prereq);
-        vector<std::string> tokens;
-        std::string token;
-        
-        while(std::getline(iss, token, ',')) {
-            tokens.push_back(token);
-        }
-        
-        int truecount = 0;
-        for (int i = 0; i < tokens.size(); ++i)
-        {
-            if (GameScene::getThis()->buildingHandler->getBuildingOnMapWithName(tokens[i]) != NULL)
-            {
-                ++truecount;
-            }
-        }
-    
-        if (truecount != tokens.size()) return false;
-    }
-    //if prereqs.length = 0 assume true at this point.
-    
-    if (required_building_count > GameScene::getThis()->buildingHandler->allBuildingsOnMap->count()) return false;
-    if (required_population > GameScene::getThis()->spriteHandler->spritesOnMap->count()) return false;
-    //if (required_capita > GameManager::getThis()->getCurrentMoney()) return false;
-    
-    return true;
-}
-
-bool Building::isOverpopulated()
-{
-    return (currPopulation.size() > populationLimit);
-}
-
-
-//changes the building's appearance only. The building's current stats must not be changed!
-//ideally, other appearances should be implemented as Dummys on the TMX file, right next to the actual building record. This is
-//so the GIDs can be 
-//currently only used for Farms.
-void Building::ChangeAppearance(Building *b)
-{
-    if (b==NULL) return;
-    CCSprite* newRep = CCSprite::create();
-    newRep->initWithTexture(b->buildingTexture, b->buildingRect);
-  //  newRep->retain();
-    CCPoint tilePos = buildingRep->getPosition();
-    float z = buildingRep->getZOrder();
-    newRep->setPosition(tilePos);
-    
-    GameScene::getThis()->mapHandler->getMap()->removeChild(buildingRep);
-    
-  //  buildingRep->release();
-    
-    buildingRep = newRep;
-    GameScene::getThis()->mapHandler->getMap()->addChild(buildingRep, z);
-    
-}
-
-void Building::BeginAnim()
-{
-    /*
-    if (buildingName.compare("Farm") == 0)
-        {
-            GUID_offset = targetGUID;
-            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Building::AnimUpdate), this, 10.0f, false);
-            
-           
-        }
-    */
-}
-
-
-void Building::EndAnim()
-{
-    /*
-    if (buildingName.compare("Farm") == 0)
-        {
-            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(Building::AnimUpdate), this);
-        }
-*/
-}
-
-void Building::AnimUpdate()
-{
-    if (buildingRep == NULL) return;
-    if (!GameScene::getThis()) return;
-    if (GUID_offset < (targetGUID +3))
-        ++GUID_offset;
-    else
-        GUID_offset = targetGUID;
-    ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(GUID_offset));
-    
-}
-
-int Building::getOverpopulateCount()
-{
-    return (currPopulation.size() - populationLimit);
-}
-
-int Building::getAlienPopulationCount()
-{
-    int count = 0;
-    for (int i = 0; i < currPopulation.size(); ++i)
-    {
-        if (currPopulation[i]->race == 'a') ++count;
-    }
-    return count;
-}
-
-int Building::getUnoccupiedCount()
-{
-    //Only residences count from population
-    //if (buildingType == HOUSING)
-    return (populationLimit - currPopulation.size());
-    /*
-    else
-    {
-        int count = 0;
-     
-        for (int i = 0; i < jobsInthisBuilding->count(); ++i)
-        {
-            if (((Job*) jobsInthisBuilding->objectAtIndex(i))->job_isTaken == false)
-            {
-                ++count;
-            }
-        }
-        return count;
-     
-    }*/
-    
-}
-
 bool Building::isUnderConstruction()
 {
     return build_uint_current < build_uint_required;
@@ -884,7 +618,6 @@ void Building::leaveGranuary(GameSprite* sp)
         
         if(startPos.equals(endPos))
         {
-            currVisitors->addObject(sp);
             sp->currAction = BUILD;
             sp->setTargetLocation(sp->jobLocation);
             sp->isDoingJob = true;

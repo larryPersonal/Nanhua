@@ -93,12 +93,31 @@ void BuildScroll::createMenuItems()
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
-        if(tempBuilding->buildingType == HOUSING || tempBuilding->buildingType == AMENITY)
+        if(tempBuilding->buildingType == HOUSING)
         {
             BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards);
             numberOfBuildingCards++;
         }
-        
+    }
+    
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+        if(tempBuilding->buildingType == AMENITY)
+        {
+            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards);
+            numberOfBuildingCards++;
+        }
+    }
+    
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+        if(tempBuilding->buildingType == GRANARY)
+        {
+            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards);
+            numberOfBuildingCards++;
+        }
     }
     scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
     scrollArea->setPosition(ccp(screenSize.width * 0.125f, buildMenu->boundingBox().size.height * 0.14f));

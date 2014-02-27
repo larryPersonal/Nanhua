@@ -34,7 +34,6 @@ private:
     CCLabelTTF* buildingTimeLabel;
     
     int index;
-    int tag;
     
     CCMenu* menu;
     CCArray* menuItemsArray;
@@ -52,7 +51,7 @@ public:
     void showBuildingInfo();
     
     //General menu callback
-    void onMenuItemSelected();
+    void onMenuItemSelected(CCObject*);
 };
 
 #endif

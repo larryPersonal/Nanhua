@@ -67,7 +67,13 @@ class GameHUD : public CCLayer
     int mGameReputation;
     int mGameReputationMax;
     
+    int mGameCurrentCitizenPopulation;
+    int mGameCurrentPopulationRoom;
+    
     float mAverageHappiness;
+    
+    int mGameCurrentFood;
+    int mGameCurrentStorage;
     
     typedef enum
     {
@@ -80,6 +86,7 @@ class GameHUD : public CCLayer
     }tapMode;
     
     tapMode currTapMode;
+    tapMode mGameTapMode;
     
     CCMenu* pMenu;
     
@@ -90,6 +97,7 @@ class GameHUD : public CCLayer
 public:
     int reputation;
     int reputationMax;
+    int growthPopulation;
     
     float average_happiness;
     CCLabelTTF* average_happiness_label;
@@ -102,6 +110,9 @@ public:
     CCMenuItemImage* resumeButton;
     CCArray* menuItems_pause;
     CCMenu* menu_pause;
+    
+    // tap mode label;
+    CCLabelTTF* tapModeLabel;
     
     // stats menu group
     CCSprite* statsMenu;
@@ -137,10 +148,6 @@ public:
     CCMenuItemImage* buildButton;
     CCArray* menuItems_build;
     CCMenu* menu_build;
-    
-    // tokens
-    CCArray* menuItems_token;
-    CCMenu* menu_token;
     
 public:
     bool menuIsOpen;
@@ -192,8 +199,10 @@ public:
     
     void pauseGame();
     
-    void dropToken();
-    void clickToken();
+    void addReputation(int);
+    void addPopulation();
+    
+    void setAllStats();
 };
 
 #endif

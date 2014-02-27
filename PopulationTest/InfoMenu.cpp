@@ -125,16 +125,6 @@ void InfoMenu::createMenuItems()
         {
             occupancyLabel->setString("N/A");
         }
-        else
-        {
-            occupancyLabel->setString( (GlobalHelper::Convert(currBuilding->getPopulationCount()) +"/" + GlobalHelper::Convert( currBuilding->populationLimit)).c_str());
-            if (currBuilding->isOverpopulated())
-                occupancyLabel->setColor(ccRED);
-            
-            
-        }
-        
-        
         
         switch (currBuilding->buildingType)
         {

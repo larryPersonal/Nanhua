@@ -26,6 +26,7 @@ class SelectPopulation: public PopupMenu
 
 private:
     // dirty attributes
+    bool isCurrentlyConstructing;
     
     // Background Rect
     Rect* background_rect;

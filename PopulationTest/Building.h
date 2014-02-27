@@ -39,12 +39,7 @@ enum FarmState {
 
 class Building: public CCObject
 {
-    CCArray* jobsInthisBuilding;
-    CCArray* currVisitors;
-    
     vector<GameSprite*> currPopulation;
-    
-    void ModifyStats(GameSprite* sp);
     
 public:
     Building();
@@ -133,11 +128,6 @@ public:
     
     /*jobs*/
     int number_of_jobs;
-    std::string jobs;
-    void initializeJobs();
-    
-    
-    CCArray* getJobsAvailable();
     
     /*called when the sprite arrives in the building.*/
     void ArriveHandler(GameSprite* sp);
@@ -146,31 +136,7 @@ public:
     /*called when the sprite leaves the building it was in*/
     void Leavehandler(GameSprite* sp);
     
-    // Population helper funcs
-    void addPopulation(GameSprite* sprite);
-    void removePopulation(GameSprite* sprite);
-    int getPopulationCount();
-    GameSprite* getPopulationAt(int index);
-    
-    
-    int getLevel();
-    
-    void unlockToResearch();
-    void unlockToBuild();
-    
-    bool hasMetUnlockCriteria();
-    bool isOverpopulated();
-    
-    void BeginAnim();
-    void EndAnim();
-    void AnimUpdate();
-    
     void ChangeAppearance(Building* b);
-    
-    int getOverpopulateCount();
-    int getAlienPopulationCount();
-    
-    int getUnoccupiedCount();
     
     void leaveHouse(GameSprite*);
     

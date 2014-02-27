@@ -87,10 +87,6 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     progressBar->setPosition(0, building->buildingRep->boundingBox().size.height);
     
     building->buildingRep->setOpacity(150);
-   
-    /*
-    building->constructionEndTime = GameManager::getThis()->getCurrentTime() + building->constructionTime; //TODO: get building construct time*/
-    
     
     constructingBuildings->addObject(building);
     
@@ -109,19 +105,6 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
 
     GameScene::getThis()->buildingHandler->addBuildingToMap(building);
     constructingBuildings->removeObject(building);
-    
-    //handled in AI
-    /*
-    if (building->buildingType == HOUSING)
-    {
-        GameScene::getThis()->spriteHandler->NewHousingLocationCreated();
-    
-    }
-    else
-    {
-        GameScene::getThis()->spriteHandler->NewJobLocationCreated();
-    }*/
-    
 }
 
 int ConstructionHandler::getConstructingBuildingCount()

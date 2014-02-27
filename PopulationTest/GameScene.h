@@ -99,12 +99,12 @@ public:
     virtual void update(float time);
     
     // internal touch functions
+    bool handleTouchTokens(CCPoint touchLoc);
     bool handleTouchSprite(CCPoint touchLoc);
     bool handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos);
     
     void resetBuildMode();
     void setBuildPathDistance(int dist);
-    
     
     void lostGame(CCObject* psender);
     

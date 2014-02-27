@@ -21,6 +21,8 @@ private:
 public:
     ~SpriteHandler();
     
+    CCArray* tokensOnMap;
+    
     CCArray* allSprites;
     CCArray* allSpriteSheets;
     

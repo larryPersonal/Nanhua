@@ -317,43 +317,24 @@ void GameSprite::unmakeSpriteEndGame()
     behaviorTree = NULL;
 }
 
-
-
- void GameSprite::unmakeSprite()
- {
-     LeaveJob();
-     LeaveHouse();
-     delete possessions;
-     possessions= NULL;
-     delete behaviorTree;
-     behaviorTree = NULL;
-     spriteRep->stopAllActions();
-     
-   //  CC_SAFE_RELEASE(callback);
-     
-     //spriteRep->removeChild(speechBubble, true);
+void GameSprite::unmakeSprite()
+{
+    delete possessions;
+    possessions= NULL;
+    delete behaviorTree;
+    behaviorTree = NULL;
+    spriteRep->stopAllActions();
     
-     // (( CCSpriteBatchNode* ) GameScene::getThis()->spriteHandler->allSpriteSheets->objectAtIndex(this->batchLayerIndex))->removeChild(spriteRep, true);
-     if (GameScene::getThis()->mapHandler->getMap()->getChildren()->containsObject(spriteRep))
-         GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
-     
-     delete speechBubble;
- 
-     //spriteAnimAction->release();
-   //  animation->release();
-   //  spriteAnimAction->release();
-    // spriteRunAction->release();
- //    spriteRep->release();
-     if (path != NULL)
-     {
-         path->removeAllObjects();
-     }
-     //destroy the AI
-
- }
-
-
-
+    if (GameScene::getThis()->mapHandler->getMap()->getChildren()->containsObject(spriteRep))
+        GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    
+    delete speechBubble;
+    
+    if (path != NULL)
+    {
+        path->removeAllObjects();
+    }
+}
 
 bool GameSprite::CreatePath(CCPoint from, CCPoint to)
 {
@@ -973,67 +954,6 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
     speechBubble->show(timeInSeconds);
 }
 
-/*transactions*/
-bool GameSprite::SetHouse(int instanceID)
-{
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("still moving. Can't obey.");
-        return false;
-    }
-
-     
-    Building* b = (Building*)GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(instanceID);
-    if (!b)
-    {
-        CCLog("invalid Instance ID!");
-        return false;
-    }
-    
-    if (b->buildingType != HOUSING)
-    {
-        CCLog("Building isn't a house!");
-        return false;
-    }
-    //looks like I have to do this after all.
-    if (b->getPopulationCount() >= b->populationLimit)
-    {
-        CCLog("Building has reached its population limit!");
-        return false;
-    }
-    
-    bool boughtHouse = possessions->setHome(b);
-    
-    if (boughtHouse)
-        b->addPopulation(this);
-    
-
-    //house successfully bought
-    return boughtHouse;
-}
-
-bool GameSprite::LeaveJob()
-{
-        if (possessions->jobLocation != NULL)
-        {
-            possessions->LeaveJob();
-            
-        }
-    justQuitJob = true;
-    return true;
-}
-
-
-bool GameSprite::LeaveHouse()
-{
-    if (possessions->homeLocation != NULL)
-    {
-        possessions->homeLocation->removePopulation(this);
-        possessions->LeaveHome();
-    }
-    justSoldHouse = true;
-    return true;
-}
 /*pathing*/
 /*paths back home, if possible. Ignores range for obvious reasons.*/
 bool GameSprite::PathToHome()
@@ -1604,19 +1524,15 @@ int GameSprite::getFoodCarried()
 
 Building* GameSprite::findNearestGranary(bool isDeliveringFood)
 {
-    CCArray* allAmenity = GameScene::getThis()->buildingHandler->amenityOnMap;
+    CCArray* buildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
     Building* nearestGranary = NULL;
     int distance = 999999;
     
-    for(int i = 0; i < allAmenity->count(); i++)
+    for(int i = 0; i < buildingsOnMap->count(); i++)
     {
-        Building* bui = (Building*) allAmenity->objectAtIndex(i);
+        Building* bui = (Building*) buildingsOnMap->objectAtIndex(i);
         
-        if(bui->food_consumption_rate <= 0)
-        {
-            continue;
-        }
-        else if(bui->currentStorage <= 0 && !isDeliveringFood)
+        if(bui->buildingType != GRANARY)
         {
             continue;
         }
@@ -1634,15 +1550,7 @@ Building* GameSprite::findNearestGranary(bool isDeliveringFood)
             distance = tempDistance;
             nearestGranary = bui;
         }
-        
-        /*
-        if(bui->food_consumption_rate > 0)
-        {
-            return bui;
-        }
-        */
     }
-    //return NULL;
     
     return nearestGranary;
 }
@@ -1884,71 +1792,89 @@ void GameSprite::scheduleToken(float dt)
 {
     if(is_token_drop_cooldown)
     {
+        checkDropTresholdTime();
         token_drop_cooldown_time += dt;
-        if(token_drop_cooldown_time >= 10)
+        if(token_drop_cooldown_time >= token_drop_cooldown_treshold)
         {
             is_token_drop_cooldown = false;
         }
     }
     else
     {
+        
         token_drop_cooldown_time = 0;
         is_token_drop_cooldown = true;
-        dropToken();
+        
+        if (type != M_REFUGEE && type != F_REFUGEE && type != M_BANDIT && type != F_BANDIT && type != SPRITETYPE_END)
+        {
+            dropToken();
+        }
+    }
+}
+
+void GameSprite::checkDropTresholdTime()
+{
+    float mAverageHappiness = possessions->happinessRating;
+    if(mAverageHappiness >= 70)
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_happy;
+    }
+    else if(mAverageHappiness >= 40)
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_normal;
+    }
+    else if(mAverageHappiness >= 10)
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy;
+    }
+    else
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_angry;
     }
 }
 
 void GameSprite::dropToken()
 {
-    float dropRate = 0;
-    float mAverageHappiness = GameHUD::getThis()->average_happiness;
-    if(mAverageHappiness >= 70)
-    {
-        dropRate = mAverageHappiness;
-    }
-    else if(mAverageHappiness >= 40)
-    {
-        dropRate = mAverageHappiness / 2.0f;
-    }
-    else
-    {
-        dropRate = 0;
-    }
-    
-    dropRate = 100;
+    checkDropRate();
     
     int random_number = rand() % 100 + 1;
-    if(random_number <= dropRate)
+    if(random_number <= token_drop_rate)
     {
-        CCMenuItemImage* newToken = CCMenuItemImage::create("renToken.png", "renToken.png", this, menu_selector(GameHUD::clickToken));
+        CCSprite* newToken = CCSprite::create("renToken.png");
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize spriteSize = newToken->getContentSize();
         
         newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
-        //menuItems_token->addObject(newToken);
         
-        //if(menu_token == NULL)
-        //{
-            //menu_token = CCMenu::createWithArray(menuItems_token);
-            //this->addChild(menu_token, 10);
-        //}
-        //else
-        //{
-            //this->removeChild(menu_token);
-            //menu_token = CCMenu::createWithArray(menuItems_token);
-            //this->addChild(menu_token, 10);
-        //}
+        GameScene::getThis()->spriteHandler->tokensOnMap->addObject(newToken);
         
-        //int x = rand() % (int)screenSize.width + 1;
-        
-        //newToken->setPosition(ccp(x - screenSize.width / 2.0f, screenSize.height / 2.0f + 20.0f));
-        
-        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, 5);
+        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, GameScene::getThis()->mapHandler->calcZIndex(currPos));
         
         CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&currPos);
         
         newToken->setPosition(target);
+    }
+}
+
+void GameSprite::checkDropRate()
+{
+    float mAverageHappiness = GameHUD::getThis()->average_happiness;
+    if(mAverageHappiness >= 70)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_happy;
+    }
+    else if(mAverageHappiness >= 40)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_normal;
+    }
+    else if(mAverageHappiness >= 10)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_unhappy;
+    }
+    else
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_angry;
     }
 }
 

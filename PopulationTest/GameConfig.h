@@ -34,6 +34,17 @@ struct ConfigSettings
     // related to the time
     int secondToDayRatio;
     
+    // token drop
+    int token_drop_treshold_time_happy;
+    int token_drop_treshold_time_normal;
+    int token_drop_treshold_time_unhappy;
+    int token_drop_treshold_time_angry;
+    
+    int token_drop_rate_happy;
+    int token_drop_rate_normal;
+    int token_drop_rate_unhappy;
+    int token_drop_rate_angry;
+    
     ConfigSettings()
     {
         // related to sprite
@@ -55,6 +66,17 @@ struct ConfigSettings
         
         // related to the time
         secondToDayRatio = 5; // x means x seconds for a day in the game, 7x seconds for a week and 28x seconds for a month;
+        
+        // token drop treshold time, x seconds per checking
+        token_drop_treshold_time_happy = 10;
+        token_drop_treshold_time_normal = 15;
+        token_drop_treshold_time_unhappy = 20;
+        token_drop_treshold_time_angry = 30;
+        
+        token_drop_rate_happy = 0;     // 60 by default
+        token_drop_rate_normal = 0;    // 40 by default
+        token_drop_rate_unhappy = 0;   // 20 by default
+        token_drop_rate_angry = 0;
     }
 };
 
@@ -62,7 +84,7 @@ struct SettingsLevel
 {
     int default_start_money;
     int default_max_reputation;
-    int total_population_growth;
+    int projected_population_growth;
     
     // hungry decay:
     float global_hungry_decay;
@@ -78,7 +100,7 @@ struct SettingsLevel
     {
         default_start_money = 0;
         default_max_reputation = 0;
-        total_population_growth = 0;
+        projected_population_growth = 0;
         
         global_hungry_decay = 0;
         
@@ -93,7 +115,7 @@ struct SettingsLevel
     {
         default_start_money = 200;
         default_max_reputation = 400;
-        total_population_growth = 50;
+        projected_population_growth = 20;
         
         global_hungry_decay = 60; // decay 60 of the hungry in one month;
         
