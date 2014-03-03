@@ -26,6 +26,7 @@ GameHUD::GameHUD()
     buildScroll = NULL;
     
     pause = false;
+    getMoney = true;
     
     mGameDay = 0;
     mGameMonth = 0;
@@ -45,6 +46,10 @@ GameHUD::GameHUD()
     
     growthPopulation = 0;
     mGameTapMode = Normal;
+    money = GameScene::getThis()->settingsLevel->default_start_money;
+    
+    originalHappiness = 0;
+    stickHappiness = false;
 }
 
 GameHUD::~GameHUD()
@@ -130,6 +135,28 @@ void GameHUD::update(float deltaTime)
                 gs->futureAction2 = RESTING;
             }
         }
+    }
+    
+    // if it's the first day of the month, update money;
+    if (date->day == 0 && date->week == 0 && getMoney)
+    {
+        money += 100 * GameScene::getThis()->buildingHandler->housingOnMap->count();
+        getMoney = false;
+    }
+    
+    // if it's the last day of the month, change get money to true;
+    if (date->day == 6 && date->week == 3)
+    {
+        getMoney = true;
+    }
+    
+    // if money has change, update in the UI
+    if (mGameMoney != money)
+    {
+        mGameMoney = money;
+        stringstream ss;
+        ss << mGameMoney << "g";
+        moneyLabel->setString(ss.str().c_str());
     }
     
     // update time group
@@ -512,7 +539,7 @@ void GameHUD::createStatsMenu()
     this->addChild(moneyIcon, 2);
     
     std::stringstream ss;
-    ss << "1250g";
+    ss << money << "g";
     moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     moneyLabel->setColor(colorBlack);
     moneyLabel->setAnchorPoint(ccp(0, 1));
@@ -743,8 +770,8 @@ void GameHUD::createTimeMenu()
     menuItems_pause = CCArray::create();
     menuItems_pause->retain();
     
-    pauseButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::pauseGame));
-    resumeButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::pauseGame));
+    pauseButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::stickGameHappiness));
+    resumeButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::stickGameHappiness));
     if(isHori)
     {
         pauseButton->setScale(screenSize.width / spriteSize.width * 0.05f);
@@ -757,6 +784,18 @@ void GameHUD::createTimeMenu()
         resumeButton->setScale(screenSize.height / spriteSize.width * 0.05f);
     }
     resumeButton->setVisible(false);
+    
+    stickHappinessButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::stickGameHappiness));
+    resumeHappinessButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::stickGameHappiness));
+    stickHappinessButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+    resumeHappinessButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+    resumeHappinessButton->setVisible(false);
+    
+    stickHappinessButton->setPosition(ccp(screenSize.width - 300.0f, screenSize.height - 80.0f));
+    resumeHappinessButton->setPosition(ccp(screenSize.width - 300.0f, screenSize.height - 80.0f));
+    
+    menuItems_pause->addObject(stickHappinessButton);
+    menuItems_pause->addObject(resumeHappinessButton);
     
     menuItems_pause->addObject(pauseButton);
     menuItems_pause->addObject(resumeButton);
@@ -797,6 +836,26 @@ void GameHUD::pauseGame()
         pause = true;
         pauseButton->setVisible(false);
         resumeButton->setVisible(true);
+    }
+}
+
+void GameHUD::stickGameHappiness()
+{
+    if(stickHappiness)
+    {
+        stickHappiness = false;
+        pauseButton->setVisible(true);
+        resumeButton->setVisible(false);
+        stickHappinessButton->setVisible(true);
+        resumeHappinessButton->setVisible(false);
+    }
+    else
+    {
+        stickHappiness = true;
+        pauseButton->setVisible(false);
+        resumeButton->setVisible(true);
+        stickHappinessButton->setVisible(false);
+        resumeHappinessButton->setVisible(true);
     }
 }
 

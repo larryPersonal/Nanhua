@@ -517,11 +517,22 @@ void SpriteHandler::update(float dt)
         cumulatedTime = 0.0f;
     }
     
-    for(int i = 0; i < spritesOnMap->count(); i++)
+    if (GameHUD::getThis()->stickHappiness)
     {
-        GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
-        // if the gamesprite is in hungry state, update the hungry happiness of each sprite
-        gs->updateHungry(dt);
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            gs->getPossessions()->happinessRating = 70;
+        }
+    }
+    else
+    {
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            // if the gamesprite is in hungry state, update the hungry happiness of each sprite
+            gs->updateHungry(dt);
+        }
     }
     
     /*

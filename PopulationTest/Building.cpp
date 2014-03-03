@@ -60,6 +60,8 @@ Building::Building()
     
     unlocked = false;
     
+    isCurrentConstructing = false;
+    
     required_building_count = required_capita = required_population = 0;
 }
 Building::~Building()

@@ -26,7 +26,6 @@ class SelectPopulation: public PopupMenu
 
 private:
     // dirty attributes
-    bool isCurrentlyConstructing;
     
     // Background Rect
     Rect* background_rect;
@@ -36,6 +35,7 @@ private:
     
     CCMenuItemImage* buttonClose;
     CCMenuItemImage* buttonOk;
+    CCMenuItemImage* buttonCancel;
     
     CCSprite* spriteBackground;
     
@@ -92,6 +92,8 @@ public:
     void cancelSprite(CCObject*);
     
     void scheduleConstruction();
+    
+    void refreshUI();
     
     //Update
     virtual void update(float deltaTime);

@@ -75,6 +75,8 @@ class GameHUD : public CCLayer
     int mGameCurrentFood;
     int mGameCurrentStorage;
     
+    int mGameMoney;
+    
     typedef enum
     {
         Normal = 0,
@@ -95,6 +97,8 @@ class GameHUD : public CCLayer
     float cumulatedTime;
     
 public:
+    bool getMoney;
+    int money;
     int reputation;
     int reputationMax;
     int growthPopulation;
@@ -108,6 +112,12 @@ public:
     bool pause;
     CCMenuItemImage* pauseButton;
     CCMenuItemImage* resumeButton;
+    
+    int originalHappiness;
+    bool stickHappiness;
+    CCMenuItemImage* stickHappinessButton;
+    CCMenuItemImage* resumeHappinessButton;
+    
     CCArray* menuItems_pause;
     CCMenu* menu_pause;
     
@@ -198,6 +208,7 @@ public:
     void clickBuildButton();
     
     void pauseGame();
+    void stickGameHappiness();
     
     void addReputation(int);
     void addPopulation();

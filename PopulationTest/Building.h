@@ -126,6 +126,8 @@ public:
     
     CCPoint getWorldPosition();
     
+    bool isCurrentConstructing;
+    
     /*jobs*/
     int number_of_jobs;
     

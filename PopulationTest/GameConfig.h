@@ -73,9 +73,9 @@ struct ConfigSettings
         token_drop_treshold_time_unhappy = 20;
         token_drop_treshold_time_angry = 30;
         
-        token_drop_rate_happy = 0;     // 60 by default
-        token_drop_rate_normal = 0;    // 40 by default
-        token_drop_rate_unhappy = 0;   // 20 by default
+        token_drop_rate_happy = 60;     // 60 by default
+        token_drop_rate_normal = 40;    // 40 by default
+        token_drop_rate_unhappy = 20;   // 20 by default
         token_drop_rate_angry = 0;
     }
 };

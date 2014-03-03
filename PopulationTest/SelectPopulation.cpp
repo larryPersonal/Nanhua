@@ -43,8 +43,6 @@ SelectPopulation::SelectPopulation(Building* building){
         CCLog("Warning No Building!");
     }
     
-    isCurrentlyConstructing = false;
-    
     SelectPopulation::SP = this;
     
     spriteRowArray = CCArray::create();
@@ -105,6 +103,7 @@ void SelectPopulation::createMenuItems()
 {
     if(!building->inProgress)
     {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         ccColor3B colorWhite = ccc3(255, 255, 255);
         
         // background
@@ -136,6 +135,23 @@ void SelectPopulation::createMenuItems()
         buttonOk->setTag(-2);
         buttonOk->setAnchorPoint(ccp(1, 1));
         
+        buttonCancel = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
+        buttonCancel->setScale(buttonClose->boundingBox().size.width / buttonCancel->boundingBox().size.width);
+        buttonCancel->setTag(-4);
+        buttonCancel->setAnchorPoint(ccp(1, 1));
+        
+        if (building->isCurrentConstructing)
+        {
+            buttonOk->setVisible(false);
+            buttonCancel->setVisible(true);
+        }
+        else
+        {
+            buttonOk->setVisible(true);
+            buttonCancel->setVisible(false);
+        }
+        
+        menuItems->addObject(buttonCancel);
         menuItems->addObject(buttonOk);
         menuItems->addObject(buttonClose);
         menuItems->addObject(spriteBuilding);
@@ -156,7 +172,7 @@ void SelectPopulation::createMenuItems()
         ss.str(std::string());
         if(building->isUnderConstruction())
         {
-            if(isCurrentlyConstructing)
+            if(building->isCurrentConstructing)
             {
                 ss << "Builders Working Currently";
             }
@@ -177,7 +193,7 @@ void SelectPopulation::createMenuItems()
         ss.str(std::string());
         if(building->isUnderConstruction())
         {
-            if(isCurrentlyConstructing)
+            if(building->isCurrentConstructing)
             {
                 ss << "Construction in progress";
             }
@@ -222,22 +238,77 @@ void SelectPopulation::createMenuItems()
         scrollArea->setAnchorPoint(ccp(0, 0.5));
         this->addChild(scrollArea, 4);
         
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-        
-        for(int i = 0; i < spritesOnMap->count(); i++)
+        // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
+        CCArray* spritesForSelection;
+        if (building->isCurrentConstructing)
         {
-            SpriteRow* sp = SpriteRow::create((GameSprite*) spritesOnMap->objectAtIndex(i), scrollArea, building, i);
-            spriteRowArray->addObject((CCObject*) sp);
+            spritesForSelection = building->memberSpriteList;
+        }
+        else
+        {
+            spritesForSelection = GameScene::getThis()->spriteHandler->spritesOnMap;
         }
         
-        scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * spritesOnMap->count()));
+        int index = 0;
+        for(int i = 0; i < spritesForSelection->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
+            
+            if(building->isCurrentConstructing || (!building->isCurrentConstructing && (gs->type == M_CITIZEN || gs->type == F_CITIZEN)))
+            {
+                SpriteRow* sp = SpriteRow::create((GameSprite*) spritesForSelection->objectAtIndex(i), scrollArea, building, index);
+                spriteRowArray->addObject((CCObject*) sp);
+                index++;
+            }
+        }
+        
+        scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * spritesForSelection->count()));
         scrollArea->updateScrollBars();
         
         // set the position of all the elements
         reposition();
         
         this->schedule(schedule_selector(SelectPopulation::update), 0.25f);
+        
+        // if the building is in construction, set the member icons
+        if (building->isCurrentConstructing)
+        {
+            for (int i = 0; i < spritesForSelection->count(); i++)
+            {
+                GameSprite* gameSprite = (GameSprite*) spritesForSelection->objectAtIndex(i);
+                
+                CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
+                memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
+                memberSpriteBackground->setAnchorPoint(ccp(0, 1));
+                memberSpriteBackground->setPosition(ccp(30.0f + 70.0f * i, -135.0f));
+                this->addChild(memberSpriteBackground, 4);
+                
+                std::string tempStr = gameSprite->spriteName;
+                CCMenuItemImage* memberSprite = CCMenuItemImage::create(tempStr.append("_port.png").c_str(), tempStr.c_str(), this,  menu_selector(SelectPopulation::cancelSprite));
+                memberSprite->setScale( 60.0f / memberSprite->boundingBox().size.width );
+                memberSprite->setAnchorPoint(ccp(0, 1));
+                memberSprite->setPosition(ccp(35.0f + 70.0f * i, -137.0f));
+                memberSprite->setTag(i);
+                
+                CCArray* newMenuItems = CCArray::create();
+                newMenuItems->addObject(memberSprite);
+                CCMenu* newMenu = CCMenu::createWithArray(newMenuItems);
+                newMenu->setPosition(CCPointZero);
+                this->addChild(newMenu, 4);
+                
+                memberMenuArray->addObject(newMenu);
+                memberRowArray->addObject(memberSprite);
+                memberArray->addObject(gameSprite);
+                memberRowBackgroundArray->addObject(memberSpriteBackground);
+            }
+        }
+        
     }
+}
+
+void SelectPopulation::refreshUI()
+{
+    
 }
 
 void SelectPopulation::onMenuItemSelected(CCObject* pSender){
@@ -254,6 +325,7 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             break;
         case -2:
             // button ok -> to construct
+            building->isCurrentConstructing = true;
             scheduleConstruction();
             this->closeMenu(true);
             GameScene::getThis()->setTouchEnabled(true);
@@ -265,6 +337,30 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             buildingInfoMenu->useAsBasePopupMenu();
         }
             break;
+        case -4:
+        {
+            // button cancel -> cancel the construction;
+            CCArray* memberSprites = building->memberSpriteList;
+            for (int i = 0; i < memberSprites->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) memberSprites->objectAtIndex(i);
+                gs->currAction = IDLE;
+                gs->nextAction = IDLE;
+                gs->setIsDoingJob(false);
+                gs->spriteClass = "citizen";
+                gs->setJob(NONE);
+                gs->setJobLocation(NULL);
+                gs->setTargetLocation(NULL);
+                gs->changeToCitizen();
+            }
+            building->memberSpriteList->removeAllObjects();
+            if(building->work_unit_current < building->work_unit_required)
+            {
+                building->work_unit_current = 0;
+            }
+            building->isCurrentConstructing = false;
+            break;
+        }
         default:
         {
             break;
@@ -307,6 +403,7 @@ void SelectPopulation::reposition(){
     // Anchored top right
     buttonClose->setPosition(halfWidth - 25.0f, -halfHeight + 75.0f);
     buttonOk->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
+    buttonCancel->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
     
     labelBuildingName->CCNode::setPosition(285.0f, -100.0f);
     
@@ -364,6 +461,11 @@ void SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * sprit
 
 void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
 {
+    if(building->isCurrentConstructing)
+    {
+        return;
+    }
+    
     int limit = 0;
     if(building->isUnderConstruction())
     {
@@ -445,6 +547,11 @@ void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteR
 
 void SelectPopulation::cancelSprite(CCObject *pSender)
 {
+    if(building->isCurrentConstructing)
+    {
+        return;
+    }
+    
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     int tag = pMenuItem->getTag();
     
