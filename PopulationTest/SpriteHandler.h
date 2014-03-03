@@ -17,13 +17,11 @@ class SpriteHandler
 private:
     void AddToCache(CCSpriteBatchNode* spritesheet, std::string animName);
     
-    void initClassRequirements();
-    void initClass(std::string classConfig);
-  //  void AddToCacheWithPlist(std::string animName);
-    
     float cumulatedTime;
 public:
     ~SpriteHandler();
+    
+    CCArray* tokensOnMap;
     
     CCArray* allSprites;
     CCArray* allSpriteSheets;

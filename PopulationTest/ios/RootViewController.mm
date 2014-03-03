@@ -12,6 +12,8 @@
 #import "GameHUD.h"
 #import "AppDelegate.h"
 #import "Senario.h"
+#import "SplashScene.h"
+#import "SenarioChooseScene.h"
 
 using namespace cocos2d;
 
@@ -143,12 +145,6 @@ using namespace cocos2d;
     
     if (gameHUDScript)
     {
-        for (int i = 1; i < gameHUDScript->getChildrenCount(); ++i)
-        {
-            CCObject* objPtr = gameHUDScript->getChildren()->objectAtIndex(i);
-            if (PopupMenu* derivedPtr = dynamic_cast<PopupMenu*>(objPtr))
-                derivedPtr->willChangeOrientation();
-        }
     }
 }
 
@@ -157,9 +153,16 @@ using namespace cocos2d;
   //  UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
     
     MainMenuScene* menuScript = MainMenuScene::getThis();
+    SplashScene* splashScript = SplashScene::getThis();
     GameScene* gameScene = GameScene::getThis();
     GameHUD* gameHUDScript = GameHUD::getThis();
     Senario* senarioScript = Senario::getThis();
+    SenarioChooseScene* senarioChooseScript = SenarioChooseScene::getThis();
+    
+    if(splashScript)
+    {
+        splashScript->onOrientationChanged();
+    }
     
     if (menuScript)
     {
@@ -167,8 +170,15 @@ using namespace cocos2d;
     }
     
     if (gameScene)
+    {
         gameScene->onOrientationChanged();
-        
+    }
+    
+    if (senarioChooseScript)
+    {
+        senarioChooseScript->onOrientateChange();
+    }
+    
     if (gameHUDScript)
     {
         gameHUDScript->onOrientationChanged();

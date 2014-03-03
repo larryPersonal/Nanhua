@@ -9,6 +9,7 @@
 #include "GlobalHelper.h"
 #include <sstream>
 #include <vector>
+#include "GameScene.h"
 
 string GlobalHelper::stringToUpper(string str)
 {
@@ -133,6 +134,37 @@ std::string GlobalHelper::getActionString(SpriteAction sa)
     {
         return "IDLE";
     }
+}
+
+bool GlobalHelper::isHorizontal()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    return screenSize.width > screenSize.height;
+}
+
+GameSprite* GlobalHelper::getSpriteType(GameSprite* gameSprite, SpriteType mst, SpriteType fst)
+{
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
+    bool isMale = (gameSprite->gender == 'm');
+    for (int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* sprite = (GameSprite*)allSprites->objectAtIndex(i);
+        if(isMale)
+        {
+            if(sprite->type == mst)
+            {
+                return sprite;
+            }
+        }
+        else
+        {
+            if(sprite->type == fst)
+            {
+                return sprite;
+            }
+        }
+    }
+    return NULL;
 }
 
 

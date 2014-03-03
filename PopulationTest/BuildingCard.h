@@ -50,7 +50,8 @@ public:
     
     void showBuildingInfo();
     
-    void onMenuItemSelected();
+    //General menu callback
+    void onMenuItemSelected(CCObject*);
 };
 
 #endif

@@ -35,7 +35,7 @@ void ScrollArea::createScrollArea(CCSize viewSize, CCSize scrollContentSize)
     // Create scroll view
     scrollView = ScrollViewEx::create(viewSize);
     scrollView->setDirection(kCCScrollViewDirectionNone);
-    scrollView->setBounceable(true);
+    scrollView->setBounceable(false);
     scrollView->setContainer(layer);
     scrollView->setContentOffset(ccp(0, viewSize.height - scrollContentSize.height));
     
@@ -297,6 +297,7 @@ void ScrollArea::resizeScrollBars()
 
 void ScrollArea::updateScrollBars()
 {
+    /*
     // Update horizontal scrollbar if enabled and has moved
     if (hScrollIsEnabled &&
         scrollView->getContentOffset().x != hScrollLastOffset)
@@ -310,30 +311,32 @@ void ScrollArea::updateScrollBars()
             if (scrollOffset < 0.0f)
             {
                 // Reached start of scrollbar
-                viewSize += scrollOffset;
+                //viewSize += scrollOffset;
                 if (viewSize < 0.0f)
                     viewSize = 0.0f;
                 scrollOffset = 0.0f;
             }
             float newWidth = hScrollBarTrack->getContentSize().width * (viewSize / layer->getContentSize().width);
-            hScrollBarThumb->setTextureRect(CCRectMake(0, 0, newWidth, hScrollBarThumbTexSize.height));
+            //hScrollBarThumb->setTextureRect(CCRectMake(0, 0, newWidth, hScrollBarThumbTexSize.height));
             
-            hScrollBarThumb->setPositionX((scrollOffsetMax == 0.0f ? 0.0f : (scrollOffset / scrollOffsetMax)) * hScrollDistanceMax);
+            //hScrollBarThumb->setPositionX((scrollOffsetMax == 0.0f ? 0.0f : (scrollOffset / scrollOffsetMax)) * hScrollDistanceMax);
         }
         else
         {
             // Reached end of scrollbar
-            viewSize += scrollOffsetMax - scrollOffset;
+            //viewSize += scrollOffsetMax - scrollOffset;
             if (viewSize < 0.0f)
                 viewSize = 0.0f;
             
             float newWidth = hScrollBarTrack->getContentSize().width * (viewSize / layer->getContentSize().width);
-            hScrollBarThumb->setTextureRect(CCRectMake(0, 0, newWidth, hScrollBarThumbTexSize.height));
+            //hScrollBarThumb->setTextureRect(CCRectMake(0, 0, newWidth, hScrollBarThumbTexSize.height));
             
-            hScrollBarThumb->setPositionX(hScrollBarThumb->getScale() * (hScrollBarTrack->getContentSize().width - newWidth));
+            //hScrollBarThumb->setPositionX(hScrollBarThumb->getScale() * (hScrollBarTrack->getContentSize().width - newWidth));
         }
     }
+    */
     
+    /*
     // Update vertical scrollbar if enabled and has moved
     if (vScrollIsEnabled &&
         scrollView->getContentOffset().y != vScrollLastOffset)
@@ -370,6 +373,7 @@ void ScrollArea::updateScrollBars()
             vScrollBarThumb->setPositionY(vScrollBarThumb->getScale() * (vScrollBarTrack->getContentSize().height - newHeight));
         }
     }
+    */
 }
 
 void ScrollArea::update(float delta)

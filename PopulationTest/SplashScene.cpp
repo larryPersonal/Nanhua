@@ -9,6 +9,7 @@
 #include "SplashScene.h"
 #include "MainMenuScene.h"
 #include "GameManager.h"
+#include "GlobalHelper.h"
 
 SplashScene* SplashScene::SP;
 
@@ -21,6 +22,11 @@ SplashScene::SplashScene()
 SplashScene::~SplashScene()
 {
     SplashScene::SP = NULL;
+}
+
+SplashScene* SplashScene::getThis()
+{
+    return SP;
 }
 
 CCScene* SplashScene::scene()
@@ -48,13 +54,26 @@ bool SplashScene::init()
         return false;
     }
     
+    bool isHori = GlobalHelper::isHorizontal();
+    
     splashImage = CCSprite::create("HelloWorld.png");
     CCSize spriteSize = splashImage->getContentSize();
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    splashImage->setScaleX(screenSize.width / spriteSize.width);
-    splashImage->setScaleY(screenSize.height / spriteSize.height);
+    
+    if(isHori)
+    {
+        splashImage->setScaleX(screenSize.width / spriteSize.width);
+        splashImage->setScaleY(screenSize.height / spriteSize.height);
+    }
+    else
+    {
+        splashImage->cocos2d::CCNode::setScale(screenSize.height / spriteSize.width, screenSize.width / spriteSize.height);
+    }
+    
     CCSize newSize = splashImage->boundingBox().size;
-    splashImage->setPosition(ccp(newSize.width/2, newSize.height/2));
+    
+    splashImage->setAnchorPoint(ccp(0.5, 0.5));
+    splashImage->setPosition(ccp(screenSize.width/2, screenSize.height/2));
     this->addChild(splashImage, -1);
     
     this->initWithColor(ccc4(0, 0, 0, 255), screenSize.width, screenSize.height);
@@ -87,6 +106,12 @@ void SplashScene::update(float dt){
     }
     
     this->setOpacity(alpha);
+}
+
+void SplashScene::onOrientationChanged()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    splashImage->setPosition(ccp(screenSize.width/2, screenSize.height/2));
 }
 
 

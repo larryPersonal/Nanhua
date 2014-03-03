@@ -26,12 +26,6 @@ class SelectPopulation: public PopupMenu
 
 private:
     // dirty attributes
-    int mBuildingUnitCurrent;
-    int mBuildingUnitRequired;
-    int mBuildingMemberCurrent;
-    int mBuildingPopulationLimit;
-    int mBuildingBuilderCurrent;
-    int mBuildingBuilderLimit;
     
     // Background Rect
     Rect* background_rect;
@@ -40,43 +34,29 @@ private:
     Building* building;
     
     CCMenuItemImage* buttonClose;
+    CCMenuItemImage* buttonOk;
+    CCMenuItemImage* buttonCancel;
     
     CCSprite* spriteBackground;
     
-    CCSprite* spriteBuilding;
-    
-    // the array to store all the villagers that are belongs to this building
-    CCArray* memberSpriteRowArray;
+    CCMenuItemSprite* spriteBuilding;
     
     // the array to store all the villagers that are not belongs to this building
     CCArray* spriteRowArray;
+    CCArray* emptySpaceArray;
     
-    // stats graphics
-    CCSprite* spLoy;
-    CCSprite* spHap;
+    CCArray* memberArray;
+    CCArray* memberRowArray;
+    CCArray* memberRowBackgroundArray;
+    CCArray* memberMenuArray;
     
     // labels
     CCLabelTTF* labelBuildingName;
-    CCLabelTTF* labelBuildingLevel;
     
-    //CCLabelTTF* labelTextInt;
-    CCLabelTTF* labelTextLoy;
-    //CCLabelTTF* labelTextSoc;
-    CCLabelTTF* labelTextHap;
+    CCLabelTTF* workerLabel;
+    CCLabelTTF* taskLabel;
     
-    // sprite row header
-    CCLabelTTF* labelSRImage;
-    CCLabelTTF* labelSRMember;
-    CCLabelTTF* labelSRName;
-    
-    ScrollArea* memberScrollArea;
     ScrollArea* scrollArea;
-    
-    ProgressBar* progressBar;
-    CCLabelTTF* progressBarLabel;
-    
-    CCLabelTTF* memberLabel;
-    CCLabelTTF* builderLabel;
     
     CCMenu* menu;
     
@@ -105,6 +85,15 @@ public:
     
     void addMemberRow(GameSprite*, SpriteRow*);
     void addVillagerRow(GameSprite*, SpriteRow*);
+    
+    void selectSprite(GameSprite*, SpriteRow*);
+    void unselectSprite(GameSprite*, SpriteRow*);
+    
+    void cancelSprite(CCObject*);
+    
+    void scheduleConstruction();
+    
+    void refreshUI();
     
     //Update
     virtual void update(float deltaTime);

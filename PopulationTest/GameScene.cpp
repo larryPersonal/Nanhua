@@ -11,11 +11,13 @@
 #include "Senario.h"
 #include "PopupMenu.h"
 #include "Sprite.h"
-#include "BuildingInfoMenu.h"
 #include "AlertBox.h"
 #include "SoundtrackManager.h"
 #include "GameDefaults.h"
 #include "SpriteInfoMenu.h"
+#include "SelectPopulation.h"
+#include "GameManager.h"
+#include "BuildingInfoMenu.h"
 
 #include <cmath>
 
@@ -29,7 +31,23 @@ GameScene::GameScene()
     _currentTime = 0;
     _previousTime = 0;
     
+    cumulatedTime = 0;
+    
     _post_drag_effect = false;
+    
+    configSettings = new ConfigSettings();
+    settingsLevel = new SettingsLevel();
+    
+    switch (GameManager::getThis()->getLevel())
+    {
+        case 0:
+            settingsLevel->setLevel0();
+            break;
+        case 1:
+            break;
+        default:
+            break;
+    }
 }
 
 GameScene::~GameScene()
@@ -42,23 +60,15 @@ GameScene::~GameScene()
     this->unschedule(schedule_selector(GameScene::update));
     this->removeAllChildren();
     
-    
-    
     delete mapHandler;
     delete buildingHandler;
     delete spriteHandler;
-    delete researchHandler;
     delete jobCollection;
-    delete policyHandler;
     delete constructionHandler;
-    delete tutorialHandler;
     
     //delete screenCenter;
     
-    
-    tutorialHandler = NULL;
     GameScene::SP=NULL;
-    
     
     //map = NULL;
 }
@@ -83,16 +93,6 @@ CCScene* GameScene::scene()
     senlayer->playSenario(filename.c_str());
     scene->addChild(senlayer, 1);
     
-    /*
-    layer->researchIndicator = new ResearchIndicator();
-    layer->researchIndicator->createResearchIndicator();
-    
-    scene->addChild(layer->researchIndicator,2);
-    layer->researchIndicator->setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
-    */
-    
-   // layer->thisScene = scene;
-    // return the scene
     return scene;
 }
 
@@ -117,7 +117,6 @@ bool GameScene::init()
 
     //this->CCLayer::setTouchEnabled(true);
     currScale = 1.0f;
-    tutorialHandler = new TutorialHandler();
     
     setupScene();
     
@@ -171,11 +170,9 @@ void GameScene::setupScene()
          }
         
         spriteHandler = new SpriteHandler();
-        researchHandler = new ResearchHandler();
         constructionHandler = new ConstructionHandler();
     
     
-    policyHandler = new PolicyHandler();
     initOrientationChange();
 }
 
@@ -265,10 +262,10 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             //Zoom
             if (touches->count() == 2)
             {
-                for ( it = touches->begin(); it !=touches->end(); it++) {
+                for ( it = touches->begin(); it != touches->end(); it++) {
                     if (it == touches->begin()) {
                         touchOne = (CCTouch*)*it;
-                    }else{
+                    } else {
                         touchTwo = (CCTouch*)*it;
                     }
                 }
@@ -301,8 +298,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             //Map dragging
             else
             {
-                //TODO: select
-                
                 CCTouch* touch = (CCTouch*)*touches->begin();
                 float moveX = touch->getLocation().x - touch->getPreviousLocation().x;
                 float moveY = touch->getLocation().y - touch->getPreviousLocation().y;
@@ -319,8 +314,13 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 void GameScene::postDrag(float time)
 {
     mapHandler->moveMapBy(_speedX * 10, _speedY * 10);
-    _speedX *= 0.9f;
-    _speedY *= 0.9f;
+    if(cumulatedTime > 0.05f)
+    {
+        _speedX *= 0.9f;
+        _speedY *= 0.9f;
+        cumulatedTime = 0;
+    }
+    cumulatedTime += time;
     if(fabsf(_speedX) <= 0.001f && fabsf(_speedY) <= 0.001f)
     {
         _speedX = 0;
@@ -341,15 +341,30 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         _currentTime = (now.tv_sec * 1000 + now.tv_usec / 1000);
         float time_elapse = _currentTime - _previousTime;
         
-        if(time_elapse > 0)
+        if(time_elapse < 0.1f)
         {
-            _speedX = (_current_pos_x - _previous_pos_x) / time_elapse;
-            _speedY = (_current_pos_y - _previous_pos_y) / time_elapse;
+            time_elapse = 0.1f;
         }
-        else
+        
+        _speedX = (_current_pos_x - _previous_pos_x) / time_elapse * 1.5f;
+        _speedY = (_current_pos_y - _previous_pos_y) / time_elapse * 1.5f;
+        
+        if(_speedX > 2)
         {
-            _speedX = 0;
-            _speedY = 0;
+            _speedX = 2;
+        }
+        else if(_speedX < -2)
+        {
+            _speedX = -2;
+        }
+        
+        if(_speedY > 2)
+        {
+            _speedY = 2;
+        }
+        else if(_speedY < -2)
+        {
+            _speedY = -2;
         }
 
         
@@ -377,27 +392,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     {
         switch (tapMode)
         {
-            //spawn a foreigner right into a building. Building must NOT be fully occupied. Target MUST be a building.
-            //No longer used. Spawns from high temple.
-                /*
-            case 6:
-            {
-                MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
-                
-                if (selectedTile->building != NULL || selectedTile->master != NULL)
-                {
-                    
-                    spriteHandler->addSpriteToMap(tilePos, policyHandler->getToSpawn());
-
-                    GameHUD::getThis()->closeAllMenuAndResetTapMode();
-                    
-                }
-                
-                
-            }
-                break;
-              */
-                //Buildpath second tap, modify preview path, or confirm buildpath.
+            //Buildpath second tap, modify preview path, or confirm buildpath.
             case 5:
             {
                 if (tilePos.x == lastPathPosPreview.x &&
@@ -496,7 +491,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     mapHandler->UnBuildPreview();
 
                     if (mapHandler->BuildPreview(tilePos, newBuilding))
+                    {
                         lastTilePosPreview = tilePos;
+                    }
                     else
                     {
                         lastTilePosPreview.x = INT_MAX;
@@ -506,11 +503,18 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             }
             break;
         
-                //Check if clicking on building
+            //Check if clicking on building/sprite/tokens
             default:
             {
-                if (!handleTouchSprite(touchLoc))   // if touched sprite, dont check for building
-                    handleTouchBuilding(touchLoc, tilePos);
+                if (!handleTouchTokens(touchLoc))
+                {
+                    // if touched tokens, don't check for sprite and building
+                    if (!handleTouchSprite(touchLoc))
+                    {
+                        // if touched sprite, dont check for building
+                        handleTouchBuilding(touchLoc, tilePos);
+                    }
+                }
             }
                 break;
         }
@@ -564,10 +568,12 @@ void GameScene::FirstRunPopulate()
     //check if tutorial mode is on.
     
     if (GameManager::getThis()->getTutorialMode())
-        tutorialHandler->BeginTutorial();
+    {
+        //tutorialHandler->BeginTutorial();
+    }
     else
     {
-        tutorialHandler->SetActive(false);
+        //tutorialHandler->SetActive(false);
         if (!testMode)
             GameManager::getThis()->UpdateUnlocks();
         else
@@ -580,21 +586,19 @@ void GameScene::FirstRunPopulate()
 
 void GameScene::update(float time)
 {
-    //CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());
-    for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
+    if(!GameHUD::getThis()->pause)
     {
-        GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
-        sp->updateSprite(time);
-        //sp->updateZIndex();
+        for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
+        {
+            GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
+            sp->updateSprite(time);
+        }
+        
+        constructionHandler->update(time);
+        GameHUD::getThis()->update(time);
+    
+        spriteHandler->update(time);
     }
-    
-    researchHandler->update(time);
-    constructionHandler->update(time);
-    GameHUD::getThis()->update(time);
-    policyHandler->Update();
-    
-    tutorialHandler->update();
-    spriteHandler->update(time);
     
     // check lose game
     /*
@@ -622,6 +626,44 @@ void GameScene::lostGame(cocos2d::CCObject *psender)
     GameManager::getThis()->firstPlay = false;
     CCDirector::sharedDirector()->popScene();
     CCLog("here!");
+}
+
+bool GameScene::handleTouchTokens(CCPoint touchLoc)
+{
+    CCArray* allTokens = spriteHandler->tokensOnMap;
+    if(allTokens == NULL)
+    {
+        return false;
+    }
+    
+    if (allTokens->count() == 0)
+    {
+        return false;
+    }
+    
+    for (int i = 0; i < allTokens->count(); i++)
+    {
+        CCSprite* token = (CCSprite*) allTokens->objectAtIndex(i);
+        if (token == NULL)
+        {
+            continue;
+        }
+        
+        if (!token->isVisible())
+        {
+            continue;
+        }
+        
+        if (token->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
+        {
+            mapHandler->getMap()->removeChild(token);
+            allTokens->removeObjectAtIndex(i);
+            
+            GameHUD::getThis()->addReputation(5);
+            return true;
+        }
+    }
+    return false;
 }
 
 bool GameScene::handleTouchSprite(CCPoint touchLoc)
@@ -665,9 +707,18 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         
         if (selectedTile->building)
         {
+            
             this->setTouchEnabled(false);
-            BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-            buildingInfoMenu->useAsBasePopupMenu();
+            if (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0)
+            {
+                SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                selectPopulation->useAsBasePopupMenu();
+            }
+            else
+            {
+                BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                buildingInfoMenu->useAsBasePopupMenu();
+            }
             return true;
         }
     }
@@ -697,11 +748,20 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile = selectedTile->master;
                 
                 if (selectedTile->building &&
-                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc))
+                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) )
                 {
                     this->setTouchEnabled(false);
-                    BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                    buildingInfoMenu->useAsBasePopupMenu();
+                    
+                    if(selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0)
+                    {
+                        SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                        selectPopulation->useAsBasePopupMenu();
+                    }
+                    else
+                    {
+                        BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                        buildingInfoMenu->useAsBasePopupMenu();
+                    }
                     return true;
                 }
             }

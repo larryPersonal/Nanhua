@@ -12,10 +12,8 @@
 #include "PopupMenu.h"
 #include "InfoBar.h"
 #include "ProgressBar.h"
-#include "GameTimer.h"
 #include "GameManager.h"
-
-#include "ResearchIndicator.h"
+#include "BuildScroll.h"
 
 using namespace cocos2d;
 
@@ -66,8 +64,18 @@ class GameHUD : public CCLayer
     int mGameMonth;
     int mGameYear;
     
-    CCMenuItemImage* menuButton;
-    CCMenuItemImage* miscButton;
+    int mGameReputation;
+    int mGameReputationMax;
+    
+    int mGameCurrentCitizenPopulation;
+    int mGameCurrentPopulationRoom;
+    
+    float mAverageHappiness;
+    
+    int mGameCurrentFood;
+    int mGameCurrentStorage;
+    
+    int mGameMoney;
     
     typedef enum
     {
@@ -79,45 +87,43 @@ class GameHUD : public CCLayer
         BuildPathLine = 5
     }tapMode;
     
-    typedef enum
-    {
-        None,
-        OpenMenu,
-        BuildingsMenu,
-        ResearchMenu,
-        PopulationMenu,
-        PolicyMenu,
-        InfoMenu,
-        SystemMenu,
-        NumberOfMenus
-    }MenuMode;
-    
     tapMode currTapMode;
-    MenuMode currMenuMode;
-    
-    
-    
-    //InfoBar and items
-    InfoBar* bottomInfoBar;
-    InfoBar* hintInfoBar;
-    
-    CCLabelTTF* popTotalLabel;
-    CCLabelTTF* avgHapLabel;
-    CCLabelTTF* buildLabel;
-    CCLabelTTF* buildCostLabel;
-    
-    CCLabelTTF* hintLabel;
-    
-    int hint_show_time;
-    int curr_hint_show_time;
-
-    int default_hint_font_size;
+    tapMode mGameTapMode;
     
     CCMenu* pMenu;
+    
+    BuildScroll* buildScroll;
     
     float cumulatedTime;
     
 public:
+    bool getMoney;
+    int money;
+    int reputation;
+    int reputationMax;
+    int growthPopulation;
+    
+    float average_happiness;
+    CCLabelTTF* average_happiness_label;
+    
+    bool is_token_drop_cooldown;
+    float token_drop_cooldown_time;
+    
+    bool pause;
+    CCMenuItemImage* pauseButton;
+    CCMenuItemImage* resumeButton;
+    
+    int originalHappiness;
+    bool stickHappiness;
+    CCMenuItemImage* stickHappinessButton;
+    CCMenuItemImage* resumeHappinessButton;
+    
+    CCArray* menuItems_pause;
+    CCMenu* menu_pause;
+    
+    // tap mode label;
+    CCLabelTTF* tapModeLabel;
+    
     // stats menu group
     CCSprite* statsMenu;
     CCSprite* moneyIcon;
@@ -153,12 +159,8 @@ public:
     CCArray* menuItems_build;
     CCMenu* menu_build;
     
-    
 public:
-    ResearchIndicator* ri;
-    
     bool menuIsOpen;
-    GameTimer* gameTimer;
     
     GameHUD();
     ~GameHUD();
@@ -169,22 +171,13 @@ public:
     
     bool init();
     void createInitialGUI();
-    void onMenuButtonPressed();
-    void onMiscButtonPressed();
     void onOrientationChanged();
     void update(float deltaTime);
     
     int getTapMode();
     void setTapMode(int mode);
-    int getMenuMode();
-    void setMenuMode(int newMode);
     
-    void createInfoBars();
     void closeAllMenuAndResetTapMode();
-    void backToInGameMenu();
-    
-    void showBuildLabel(const char* buildingName);
-    void hideBuildLabel();
     
     void buyBuilding(int cost);
     
@@ -198,8 +191,6 @@ public:
     
     void showHint(std::string hintText);
     
-    CCMenuItemImage* getMenuButton();
-    
     Date* getDate();
     
     // jerry added
@@ -208,9 +199,21 @@ public:
     void createObjectiveMenu();
     void createBuildMenu();
     
+    void rotateStatsMenu();
+    void rotateTimeMenu();
+    void rotateObjectiveMenu();
+    void rotateBuildMenu();
+    
     void clickObjectiveButton();
     void clickBuildButton();
     
+    void pauseGame();
+    void stickGameHappiness();
+    
+    void addReputation(int);
+    void addPopulation();
+    
+    void setAllStats();
 };
 
 #endif

@@ -160,10 +160,10 @@ class GameManager
     void initMapUnlocks();
     void initMenuUnlocks();
     
+    int level;
+    
 public:
     void UnlockAll();
-    
-    
     
     GameManager();
     ~GameManager();
@@ -230,8 +230,9 @@ public:
     bool getLoadedGame();
     
     bool hasLostGame();
-
-
+    
+    void setLevel(int);
+    int getLevel();
 };
 
 

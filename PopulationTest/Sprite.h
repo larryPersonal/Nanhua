@@ -21,19 +21,9 @@
 #include "Requirements.h"
 
 #include <json/json.h>
-//#include <json/reader.h>
-//#include <json/writer.h>
-//#include <json/value.h>
-//#include <json/config.h>
-//#include <json/features.h>
-//#include <json/autolink.h>
 
 using namespace cocos2d;
 using namespace CocosDenshion;
-
-/*
-enum SpriteType { F_ALIEN_CITIZEN = 0, M_ALIEN_CITIZEN, F_ALIEN_RESEARCHER, M_ALIEN_RESEARCHER, F_MAYAN_CITIZEN, F_MAYAN_FARMER, F_MAYAN_WARRIOR, M_MAYAN_CITIZEN, M_MAYAN_FARMER, M_MAYAN_WARRIOR, ALIEN_CHIEF, MAYAN_CHIEF, M_MAYAN_MERCHANT, F_MAYAN_MERCHANT, M_ALIEN_MERCHANT, F_ALIEN_MERCHANT, SPRITETYPE_END = 16};
-*/
 
 enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
                 M_CITIZEN, F_CITIZEN,
@@ -77,16 +67,22 @@ private:
     //for greedy pathfinding. The sprite must be able to track the last location pathed to before its path was blocked. //
     Building* lastTarget;
     
+    float cumulativeTime_happiness;
+    
+    // token part
+    bool is_token_drop_cooldown;
+    float token_drop_cooldown_time;
+    float token_drop_cooldown_treshold;
+    float token_drop_rate;
+    
 public:
     std::string config_doc;
     std::string defaults_doc;
-    std::string sprite_doc;
     
     Behavior* behaviorTree;
     
     Json::Value root;
     Json::Value defaultsRoot;
-    Json::Value spriteRoot;
     Json::Reader reader;
 
     Behavior* buildTreeWithJsonValue(Json::Value json);
@@ -122,7 +118,6 @@ public:
     int internal_rank;
    
     bool isLeavingNextUpdate;
-    bool isInteractingSocial;
     /* End unused*/
     bool isInBuilding;
     
@@ -131,7 +126,6 @@ public:
     //thanks to there being gender-specitic sprites.
     char gender;
     char race; //human or alien
-    int spawncost; //for spawning via the policy menu. I'm probably using this for aliens only.
     
     std::string spriteName;
     std::string spriteClass;
@@ -193,8 +187,6 @@ public:
     /*setters for the spritehandler constructor*/
     void setAIConfig(std::string config);
     void setDefaultsConfig(std::string config);
-    void setSpriteConfig(std::string config);
-   // void setRequirementsConfig(std::string config);
     
     Possessions* getPossessions();
     void addPossessionsToMap();
@@ -203,13 +195,6 @@ public:
     
     //Wrapped speech bubble to show text
     void saySpeech(const char* text, float timeInSeconds);
-    
-    /*transactions*/
-    bool SetHouse(int instanceID); //note: doesnt' take into account population squeeze limit.
-    bool LeaveHouse();
-    
-    bool SetJob(int instanceID);
-    bool LeaveJob();
     
     /*movement*/
     bool Wander();
@@ -235,12 +220,6 @@ public:
     
     void ChangeSpriteTo(GameSprite* sp);
     
-    int getLevel();
-    
-    //A sprite takes stock of his day whenever he hits home. 
-    void TakeStockOfDay();
-    
-
     void CallbackDayPassed();
     void CallbackPerformingTask();
     
@@ -284,7 +263,6 @@ public:
     
     Building* findNearestGranary(bool);
     
-    bool loadSpriteSetup();
     bool loadClassSetup();
     void loadSpritePossessions();
     void loadClassPossessions();
@@ -304,6 +282,14 @@ public:
     bool findNearestHome();
     
     int getPathDistance(CCPoint, CCPoint);
+    
+    void updateHungry(float);
+    
+    // token part
+    void scheduleToken(float dt);
+    void dropToken();
+    void checkDropTresholdTime();
+    void checkDropRate();
 };
 
 

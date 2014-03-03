@@ -12,8 +12,7 @@
 #include "BuildMenu.h"
 #include "PopulationMenu.h"
 #include "TutorialHandler.h"
-#include "GlobalSettings.h"
-#include "BuildScroll.h"
+#include "GlobalHelper.h"
 
 GameHUD* GameHUD::SP;
 
@@ -21,22 +20,49 @@ GameHUD* GameHUD::SP;
 GameHUD::GameHUD()
 {
     GameHUD::SP = this;
-    hint_show_time = 200;
-    curr_hint_show_time = 0;
     date = new Date();
-    cumulatedTime = 0.0f;
+    
+    cumulatedTime = 0;
+    buildScroll = NULL;
+    
+    pause = false;
+    getMoney = true;
     
     mGameDay = 0;
     mGameMonth = 0;
     mGameWeek = 0;
     mGameYear = 0;
+    
+    mGameReputation = 0;
+    mGameReputationMax = 0;
+    reputation = 0;
+    reputationMax = 0;
+    
+    mAverageHappiness = 0;
+    average_happiness = 0;
+    
+    is_token_drop_cooldown = false;
+    token_drop_cooldown_time = 0;
+    
+    growthPopulation = 0;
+    mGameTapMode = Normal;
+    money = GameScene::getThis()->settingsLevel->default_start_money;
+    
+    originalHappiness = 0;
+    stickHappiness = false;
 }
 
 GameHUD::~GameHUD()
 {
-    removeChild(ri);
-    delete ri;
     delete date;
+    
+    menuItems_build->removeAllObjects();
+    menuItems_objective->removeAllObjects();
+    menuItems_pause->removeAllObjects();
+    
+    menuItems_build->release();
+    menuItems_objective->release();
+    menuItems_pause->release();
 
     GameHUD::SP = NULL;
 }
@@ -65,50 +91,73 @@ GameHUD* GameHUD::create()
 bool GameHUD::init()
 {
     currTapMode = Normal;
-    currMenuMode = None;
     menuIsOpen = false;
     
     this->CCLayer::setTouchEnabled(true);
+    
+    setAllStats();
     createInitialGUI();
     
     return true;
 }
 
+void GameHUD::setAllStats()
+{
+    mGameCurrentFood = 0;
+    mGameCurrentStorage = 0;
+    
+    mGameCurrentCitizenPopulation = 0;
+    mGameCurrentPopulationRoom = 0;
+}
+
 void GameHUD::update(float deltaTime)
 {
-    //gameTimer->updateTimer(deltaTime);
-    
-    if (curr_hint_show_time > 0)
+    if(pause)
     {
-        --curr_hint_show_time;
-    }
-    else
-    {
-        /*
-        if (hintInfoBar->isVisible())
-        {
-            hintInfoBar->setVisible(false);
-            TutorialHandler::getThis()->ReportAction("hint", "timeout", "");
-        }
-        */
+        return;
     }
     
-    // process time line
+    // update date
     cumulatedTime += deltaTime;
-    if(cumulatedTime >= 1.0f * GlobalSettings::time_for_one_day)
+    
+    if(cumulatedTime > GameScene::getThis()->configSettings->secondToDayRatio)
     {
         date->addDay();
-        cumulatedTime = 0.0f;
+        cumulatedTime = 0;
+        
+        if(date->week == 0 && date->day == 0)
+        {
+            CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+            for(int i = 0; i < spritesOnMap->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+                gs->futureAction1 = EATING;
+                gs->futureAction2 = RESTING;
+            }
+        }
     }
     
-    /*
-    if(mGameDay != date->day || mGameMonth != date->month || mGameWeek != date->week || mGameYear != date->year)
+    // if it's the first day of the month, update money;
+    if (date->day == 0 && date->week == 0 && getMoney)
     {
-        std::stringstream ss;
-        ss << "Year: " << (date->year + 1) << " Month: " << (date->month + 1) << " Week: " << (date->week + 1) << " Day: " << (date->day + 1);
-        timeLabel->setString(ss.str().c_str());
+        money += 100 * GameScene::getThis()->buildingHandler->housingOnMap->count();
+        getMoney = false;
     }
-    */
+    
+    // if it's the last day of the month, change get money to true;
+    if (date->day == 6 && date->week == 3)
+    {
+        getMoney = true;
+    }
+    
+    // if money has change, update in the UI
+    if (mGameMoney != money)
+    {
+        mGameMoney = money;
+        stringstream ss;
+        ss << mGameMoney << "g";
+        moneyLabel->setString(ss.str().c_str());
+    }
     
     // update time group
     // if week has been changed
@@ -180,183 +229,143 @@ void GameHUD::update(float deltaTime)
         timeLabel_1->setString(ss.str().c_str());
         mGameYear = date->year;
     }
+    
+    // reputation change
+    if(mGameReputation != reputation || mGameReputationMax != reputationMax)
+    {
+        mGameReputation = reputation;
+        mGameReputationMax = reputationMax;
+        
+        std::stringstream ss;
+        ss << mGameReputation << "/" << mGameReputationMax;
+        
+        achivementsLabel->setString(ss.str().c_str());
+    }
+    
+    float totalHappiness = 0;
+    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        totalHappiness += gs->getPossessions()->happinessRating;
+    }
+    average_happiness = totalHappiness / (float) spritesOnMap->count();
+    
+    if(mAverageHappiness != average_happiness)
+    {
+        mAverageHappiness = average_happiness;
+        std::stringstream ss;
+        ss << mAverageHappiness;
+        average_happiness_label->setString(ss.str().c_str());
+    }
+    
+    // room and population change;
+    int temp = 0;
+    spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for (int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        if(gs->getHome() != NULL)
+        {
+            temp++;
+        }
+    }
+    
+    if(mGameCurrentCitizenPopulation != temp)
+    {
+        mGameCurrentCitizenPopulation = temp;
+        std::stringstream ss;
+        ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+        populationLabel->setString(ss.str().c_str());
+    }
+    
+    temp = 0;
+    CCArray* housingOnMap = GameScene::getThis()->buildingHandler->housingOnMap;
+    for (int i = 0; i < housingOnMap->count(); i++)
+    {
+        Building* building = (Building*) housingOnMap->objectAtIndex(i);
+        temp += building->populationLimit;
+    }
+    
+    if(mGameCurrentPopulationRoom != temp)
+    {
+        mGameCurrentPopulationRoom = temp;
+        std::stringstream ss;
+        ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+        populationLabel->setString(ss.str().c_str());
+    }
+    
+    // update the tapMode
+    if (mGameTapMode != currTapMode)
+    {
+        mGameTapMode = currTapMode;
+        std::stringstream ss;
+        switch (mGameTapMode)
+        {
+            case 0:
+                ss << "Normal";
+                break;
+            case 1:
+                ss << "Build";
+                break;
+            case 2:
+                ss << "Deconstruct";
+                break;
+            case 3:
+                ss << "BuildPathPreview";
+                break;
+            case 4:
+                ss << "UnBuildPath";
+                break;
+            case 5:
+                ss << "BuildPathLine";
+                break;
+            default:
+                break;
+
+        }
+        tapModeLabel->setString(ss.str().c_str());
+    }
+    
+    // for food and storage change!
+    temp = 0;
+    int temp_storage = 0;
+    CCArray* buildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    for (int i = 0; i < buildingsOnMap->count(); i++)
+    {
+        Building* building = (Building*) buildingsOnMap->objectAtIndex(i);
+        if(building->buildingType == GRANARY)
+        {
+            temp += building->currentStorage;
+            temp_storage += building->storageLimit;
+        }
+    }
+    
+    if (mGameCurrentFood != temp || mGameCurrentStorage != temp_storage)
+    {
+        mGameCurrentFood = temp;
+        mGameCurrentStorage = temp_storage;
+        
+        stringstream ss;
+        ss << mGameCurrentFood << "/" << mGameCurrentStorage;
+        foodLabel->setDimensions(CCSizeMake(ss.str().length() * 20.0f, 5.0f));
+        foodLabel->setString(ss.str().c_str());
+    }
 }
 
 void GameHUD::createInitialGUI(){
+    
+    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
+    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
+    
+    mGameReputation = reputation;
+    mGameReputationMax = reputationMax;
     
     createStatsMenu();
     createObjectiveMenu();
     createTimeMenu();
     createBuildMenu();
-    
-    /*
-    ccColor3B colorWhite = ccc3(255, 255, 255);
-    
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    std::stringstream ss;
-    ss << "Year: " << (date->year + 1) << " Month: " << (date->month + 1) << " Week: " << (date->week + 1) << " Day: " << (date->day + 1);
-    timeLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    timeLabel->setColor(colorWhite);
-    timeLabel->setAnchorPoint(ccp(0, 1));
-    
-    this->addChild(timeLabel, 3);
-    timeLabel->CCNode::setPosition(0.0f, screenSize.height);
-    */
-    
-    /*
-     * Old implementation of the GameHUD!
-     *
-    
-    
-    ri = new ResearchIndicator();
-    //ri->createResearchIndicator();
-    ri->setPosition(screenSize.width - 350.0f, screenSize.height - 150.0f);
-    
-    
-    
-    createInfoBars();
-    //   menuButton = CCMenuItemImage::create("game-menu-mockup-buttons-menu.png", "game-menu-mockup-buttons-menu.png", this, menu_selector(GameHUD::onMenuButtonPressed) );
-    
-    //   miscButton = CCMenuItemImage::create("game-menu-mockup-buttons-menu.png", "game-menu-mockup-buttons-menu.png", this, menu_selector(GameHUD::onMiscButtonPressed));
-    
-    menuButton = CCMenuItemImage::create("button-up.png", "button-down.png", this, menu_selector(GameHUD::onMenuButtonPressed) );
-    
-    miscButton = CCMenuItemImage::create("button-up.png", "button-down.png", this, menu_selector(GameHUD::onMiscButtonPressed));
-    
-    //2 is retina, 1 is normal
-    if (CC_CONTENT_SCALE_FACTOR() == 1) {
-        menuButton->setScale(0.67);
-        miscButton->setScale(0.67);
-    }
-    //The main menu will always be the first child.
-
-    
-    
-    CCLabelTTF* menuLabel = CCLabelTTF::create("Menu", "Vinland" ,64, menuButton->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    
-    CCSize spriteSize = menuButton->boundingBox().size;
-    
-    // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
-    // menuLabel->setPosition( ccp(menuButton->getPositionX() + menuButton->boundingBox().size.width * 0.25f, menuButton->getPositionY() + menuButton->boundingBox().size.height * 0.25f));
-    menuButton->setPosition( ccp(spriteSize.width*0.5, spriteSize.height*0.5) );
-    menuButton->addChild(menuLabel);
-    menuLabel->setPosition(ccp(menuButton->boundingBox().size.width * 0.75f, menuButton->boundingBox().size.height * 0.75f));
-    
-    miscLabel = CCLabelTTF::create("Menu", "Vinland" ,64, miscButton->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    spriteSize = miscButton->boundingBox().size;
-    miscButton->setPosition( ccp(screenSize.width - spriteSize.width*0.5, spriteSize.height*0.5) );
-    
-    miscButton->addChild(miscLabel);
-    miscLabel->setPosition(ccp(miscButton->boundingBox().size.width * 0.75, miscButton->boundingBox().size.height * 0.75));
-    
-  
-    
-    //Need to call this once to init the positions and scales
-    onOrientationChanged();
-   
-    // create menu, it's an autorelease object
-    pMenu = CCMenu::create(menuButton, miscButton, NULL);
-    pMenu->setPosition( CCPointZero );
-    pMenu->setTag((int)"pMenu");
-    pMenu->setTouchPriority(kCCMenuHandlerPriority - 999);
-    this->addChild(pMenu, 2);
-    
-    
-    
-    this->addChild(ri, 3);
-    */
  
-}
-
-void GameHUD::onMenuButtonPressed()
-{
-    closeAllMenuAndResetTapMode();
-    
-    if (!menuIsOpen)
-    {
-        miscLabel->setString("Cancel");
-        closeAllMenuAndResetTapMode();
-        
-        InGameMenu* inGameMenu = InGameMenu::create();
-        inGameMenu->useAsExclusivePopupMenu();
-    
-        menuIsOpen = true;
-        currMenuMode = OpenMenu;
-    }
-    //This part instantly destroys all buttons, pls edit to animate out if possible
-    else
-    {
-        PopupMenu::closeAllPopupMenu();
-        menuIsOpen = false;
-        currMenuMode = None;
-        miscLabel->setString("Menu");
-        GameScene::getThis()->setTouchEnabled(true);
-    }
-    
-    CCLog("menuIsOpen = %i", menuIsOpen);
-}
-
-void GameHUD::onMiscButtonPressed(){
-    switch (currMenuMode) {
-        case None:{
-            onMenuButtonPressed();
-            break;
-        }
-            
-        case OpenMenu:{
-            onMenuButtonPressed();
-            break;
-        }
-            
-        case BuildingsMenu:{
-            if (currTapMode != 0)
-            {
-                closeAllMenuAndResetTapMode();
-                return;
-            }
-            backToInGameMenu();
-            miscLabel->setString("Cancel");
-            break;
-        }
-            
-        case ResearchMenu:{
-            backToInGameMenu();
-            miscLabel->setString("Cancel");
-            break;
-        }
-            
-        case PopulationMenu:{
-            backToInGameMenu();
-            miscLabel->setString("Cancel");
-
-            break;
-        }
-            
-        case PolicyMenu:{
-            backToInGameMenu();
-            miscLabel->setString("Cancel");
-
-            break;
-        }
-            
-        case InfoMenu:{
-            backToInGameMenu();
-            miscLabel->setString("Cancel");
-
-            break;
-        }
-            
-        case SystemMenu:{
-            backToInGameMenu();
-            miscLabel->setString("Cancel");
-
-            break;
-        }
-            
-        default:{
-            break;
-        }
-    }
 }
 
 void GameHUD::setTapMode(int mode)
@@ -369,98 +378,16 @@ int GameHUD::getTapMode()
     return currTapMode;
 }
 
-void GameHUD::setMenuMode(int newMode)
-{
-    currMenuMode = (MenuMode)newMode;
-}
-
-int GameHUD::getMenuMode()
-{
-    return currMenuMode;
-}
-
 void GameHUD::onOrientationChanged(){
-    /*
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    rotateStatsMenu();
+    rotateTimeMenu();
+    rotateObjectiveMenu();
+    rotateBuildMenu();
     
-    CCSize spriteSize = miscButton->boundingBox().size;
-    
-    
-    miscButton->setPosition( ccp(screenSize.width - spriteSize.width*0.5, spriteSize.height*0.5) );
-    
-    if (ri != NULL)
-    ri->setPosition(screenSize.width - 350.0f, screenSize.height - 150.0f);
-
-   
-    //researchIndicator->setPosition(0.0f, 0.0f);
-    */
- 
-}
-
-void GameHUD::createInfoBars()
-{
-    
-    
-    //Create bottom info bar
-    bottomInfoBar = InfoBar::create();
-    bottomInfoBar->bottom = 6.0f;
-    bottomInfoBar->left = 0.0f;
-    bottomInfoBar->right = 0.0f;
-    
-    bottomInfoBar->createInfoBar(0.0f, 64.0f, "bar.png");
-    bottomInfoBar->setTag((int)"bottomInfoBar");
-    this->addChild(bottomInfoBar, 2);
-    
-    //create the Hint Info Bar
-    hintInfoBar = InfoBar::create();
-    hintInfoBar->bottom = 70.0f;
-    hintInfoBar->left = 120.0f;
-    hintInfoBar->right = 120.0f;
-    
-    hintInfoBar->createInfoBar(0.0f, 64.0f, "hint box.png");
-    hintInfoBar->setTag((int)"bottomInfoBar");
-    this->addChild(hintInfoBar, 1);
-    
-    //Add background sides for hint bar
-    CCSprite* sprite = CCSprite::create("hint left.png");
-    hintInfoBar->addItem("bgSideLeft", sprite);
-    hintInfoBar->anchorItem("bgSideLeft", 0.0f);
-    
-    sprite = CCSprite::create("hint right.png");
-    hintInfoBar->addItem("bgSideRight", sprite);
-    hintInfoBar->anchorItem("bgSideRight", 0.0f, ANCHOR_RIGHT);
-    
-    hintInfoBar->setVisible(false);
-    
-    default_hint_font_size = 30;
-    hintLabel = CCLabelTTF::create("", "Droidiga", default_hint_font_size);
-    hintInfoBar->addItem("hintLabel", hintLabel);
-    hintInfoBar->anchorItem("hintLabel", 0.0f, ANCHOR_CENTER);
-    
-    /** Item creation **/
-    
-    //Create top info bar items
-    
-    //Add Timer to scene
-    
-    //Create bottom info bar items
-    popTotalLabel = CCLabelTTF::create("Total Pop:", "Droidiga", 20);
-    bottomInfoBar->addItem("popTotalLabel", popTotalLabel);
-    bottomInfoBar->anchorItem("popTotalLabel", 160.0f);
-    avgHapLabel = CCLabelTTF::create("Avg Hap:", "Droidiga", 20);
-    bottomInfoBar->addItem("avgHapLabel", avgHapLabel);
-    bottomInfoBar->anchorItem("avgHapLabel", 160.0f, ANCHOR_RIGHT);
-    
-    buildLabel = CCLabelTTF::create("Building", "Doridiga", 20);
-    bottomInfoBar->addItem("buildLabel", buildLabel);
-    bottomInfoBar->anchorItem("buildLabel", 160.0f);
-    buildCostLabel = CCLabelTTF::create("Cost:", "Droidiga", 20);
-    bottomInfoBar->addItem("buildCostLabel", buildCostLabel);
-    bottomInfoBar->anchorItem("buildCostLabel", 160.0f, ANCHOR_RIGHT);
-    hideBuildLabel();
-
-    
-    
+    if(buildScroll != NULL)
+    {
+        buildScroll->onOrientationChanged();
+    }
 }
 
 void GameHUD::closeAllMenuAndResetTapMode()
@@ -476,38 +403,6 @@ void GameHUD::closeAllMenuAndResetTapMode()
     
     //hideBuildLabel();
     setTapMode(0);
-}
-
-void GameHUD::backToInGameMenu()
-{
-    PopupMenu* inGameMenu = InGameMenu::create();
-    inGameMenu->useAsExclusivePopupMenu();
-    
-    menuIsOpen = true;
-    currMenuMode = OpenMenu;
-}
-
-void GameHUD::showBuildLabel(const char* buildingName)
-{
-    if (!buildLabel->isVisible())
-    {
-        buildLabel->setString(buildingName);
-        buildLabel->setVisible(true);
-        buildCostLabel->setVisible(true);
-        popTotalLabel->setVisible(false);
-        avgHapLabel->setVisible(false);
-    }
-}
-
-void GameHUD::hideBuildLabel()
-{
-    if (buildLabel->isVisible())
-    {
-        popTotalLabel->setVisible(true);
-        avgHapLabel->setVisible(true);
-        buildLabel->setVisible(false);
-        buildCostLabel->setVisible(false);
-    }
 }
 
 void GameHUD::buyBuilding(int cost){
@@ -601,11 +496,6 @@ void GameHUD::showHint(std::string hintText)
     */
 }
 
-CCMenuItemImage* GameHUD::getMenuButton()
-{
-    return menuButton;
-}
-
 Date* GameHUD::getDate()
 {
     return date;
@@ -617,27 +507,39 @@ void GameHUD::createStatsMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
+    bool isHori = GlobalHelper::isHorizontal();
     
     // create the background of the stats menu
     statsMenu = CCSprite::create("main-info-menu-bg_01.png");
     CCSize spriteSize = statsMenu->getContentSize();
-    statsMenu->setScale(screenSize.width / spriteSize.width * 0.6f);
+    if(isHori)
+    {
+        statsMenu->setScale(screenSize.width / spriteSize.width * 0.6f);
+    }
+    else
+    {
+        statsMenu->setScale(screenSize.height / spriteSize.width * 0.6f);
+    }
     statsMenu->setAnchorPoint(ccp(0, 1));
     statsMenu->setPosition(ccp(0, screenSize.height));
     this->addChild(statsMenu, 1);
     
     // create the money indicator
     moneyIcon = CCSprite::create("main-menu-resource-icons_gold.png");
-    moneyIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+    if(isHori)
+    {
+        moneyIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+    }
+    else
+    {
+        moneyIcon->setScale(screenSize.height / spriteSize.width * 0.6f);
+    }
     moneyIcon->setAnchorPoint(ccp(0, 1));
     moneyIcon->setPosition(ccp(180, screenSize.height - 40));
     this->addChild(moneyIcon, 2);
     
     std::stringstream ss;
-    ss << "1250g";
+    ss << money << "g";
     moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     moneyLabel->setColor(colorBlack);
     moneyLabel->setAnchorPoint(ccp(0, 1));
@@ -646,42 +548,100 @@ void GameHUD::createStatsMenu()
     
     // create the food indicator
     foodIcon = CCSprite::create("main-menu-resource-icons_food.png");
-    foodIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+    if(isHori)
+    {
+        foodIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+    }
+    else
+    {
+        foodIcon->setScale(screenSize.height / spriteSize.width * 0.6f);
+    }
     foodIcon->setAnchorPoint(ccp(0, 1));
     foodIcon->setPosition(ccp(315, screenSize.height - 40));
     this->addChild(foodIcon, 2);
     
     ss.str(std::string());
-    ss << "50/100";
+    ss << mGameCurrentFood << "/" << mGameCurrentStorage;
     foodLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodLabel->setColor(colorBlack);
     foodLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(foodLabel, 2);
-    foodLabel->CCNode::setPosition(375, screenSize.height - 60);
+    foodLabel->CCNode::setPosition(370, screenSize.height - 60);
     
     // create the population indicator
     populationIcon = CCSprite::create("main-menu-resource-icons_population.png");
-    populationIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+    if(isHori)
+    {
+        populationIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+    }
+    else
+    {
+        populationIcon->setScale(screenSize.height / spriteSize.width * 0.6f);
+    }
     populationIcon->setAnchorPoint(ccp(0, 1));
     populationIcon->setPosition(ccp(460, screenSize.height - 40));
     this->addChild(populationIcon, 2);
     
     ss.str(std::string());
-    ss << "10/15";
+    ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     populationLabel->setColor(colorBlack);
-    populationLabel->setAnchorPoint(ccp(0, 1));
+    populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
-    populationLabel->CCNode::setPosition(520, screenSize.height - 60);
+    populationLabel->CCNode::setPosition(565, screenSize.height - 60);
     
     // create the achievements label for the values
     ss.str(std::string());
-    ss << "1100/2000";
+    ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
     achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     achivementsLabel->setColor(colorBlack);
-    achivementsLabel->setAnchorPoint(ccp(0, 1));
+    achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(190, screenSize.height - 105);
+    achivementsLabel->CCNode::setPosition(270, screenSize.height - 105);
+    
+    // showing the average happiness attribute
+    average_happiness = 0;
+    mAverageHappiness = average_happiness;
+    
+    ss.str(std::string());
+    ss << mAverageHappiness;
+    
+    average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    average_happiness_label->setColor(colorBlack);
+    average_happiness_label->setAnchorPoint(ccp(0, 1));
+    this->addChild(average_happiness_label, 2);
+    average_happiness_label->CCNode::setPosition(620, screenSize.height - 60);
+    
+    // tap mode label
+    ss.str(std::string());
+    switch (currTapMode)
+    {
+        case 0:
+            ss << "Normal";
+            break;
+        case 1:
+            ss << "Build";
+            break;
+        case 2:
+            ss << "Deconstruct";
+            break;
+        case 3:
+            ss << "BuildPathPreview";
+            break;
+        case 4:
+            ss << "UnBuildPath";
+            break;
+        case 5:
+            ss << "BuildPathLine";
+            break;
+        default:
+            break;
+    }
+    tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    tapModeLabel->setColor(colorBlack);
+    tapModeLabel->setAnchorPoint(ccp(0, 1));
+    this->addChild(tapModeLabel, 2);
+    tapModeLabel->CCNode::setPosition(670, screenSize.height - 60);
 }
 
 void GameHUD::createTimeMenu()
@@ -689,43 +649,81 @@ void GameHUD::createTimeMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
+    bool isHori = GlobalHelper::isHorizontal();
     
     // create the time group background
     string timeBackground = "time_spring-bg.png";
     timeMenu = CCSprite::create(timeBackground.c_str());
     CCSize spriteSize = timeMenu->getContentSize();
-    timeMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
-    
-    timeMenu->setAnchorPoint(ccp(1, 1));
-    timeMenu->setPosition(ccp(screenSize.width, screenSize.height - 20.0f));
+    if(isHori)
+    {
+        timeMenu->setAnchorPoint(ccp(1, 1));
+        timeMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
+        timeMenu->setPosition(ccp(screenSize.width, screenSize.height - 20.0f));
+    }
+    else
+    {
+        timeMenu->setAnchorPoint(ccp(0, 1));
+        timeMenu->setScale(screenSize.height / spriteSize.width * 0.25f);
+        timeMenu->setPosition(ccp(0, screenSize.height - 140.0f));
+    }
     this->addChild(timeMenu, 1);
     
     // create the four weeks labels
     firstWeekLabel = CCSprite::create("time-indicator-week-1.png");
-    firstWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
     firstWeekLabel->setAnchorPoint(ccp(0, 1));
-    firstWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    if(isHori)
+    {
+        firstWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
+        firstWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    }
+    else
+    {
+        firstWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
+        firstWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+    }
     this->addChild(firstWeekLabel, 2);
     
     secondWeekLabel = CCSprite::create("time_indicator-week-2.png");
-    secondWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
     secondWeekLabel->setAnchorPoint(ccp(0, 1));
-    secondWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    if(isHori)
+    {
+        secondWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25);
+        secondWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    }
+    else
+    {
+        secondWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
+        secondWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+    }
     this->addChild(secondWeekLabel, 2);
     
     thirdWeekLabel = CCSprite::create("time_indicator-week-3.png");
-    thirdWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
     thirdWeekLabel->setAnchorPoint(ccp(0, 1));
-    thirdWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    if(isHori)
+    {
+        thirdWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
+        thirdWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    }
+    else
+    {
+        thirdWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
+        thirdWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+    }
     this->addChild(thirdWeekLabel, 2);
     
     lastWeekLabel = CCSprite::create("time_indicator-week-4.png");
-    lastWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
     lastWeekLabel->setAnchorPoint(ccp(0, 1));
-    lastWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    if(isHori)
+    {
+        lastWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
+        lastWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+    }
+    else
+    {
+        lastWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
+        lastWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+    }
     this->addChild(lastWeekLabel, 2);
     
     firstWeekLabel->setVisible(true);
@@ -745,7 +743,14 @@ void GameHUD::createTimeMenu()
     timeLabel_1->setColor(colorBlack);
     timeLabel_1->setAnchorPoint(ccp(0.5, 1));
     this->addChild(timeLabel_1, 2);
-    timeLabel_1->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 40.0f);
+    if(isHori)
+    {
+        timeLabel_1->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 40.0f);
+    }
+    else
+    {
+        timeLabel_1->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 160.0f);
+    }
     
     ss.str(std::string());
     ss << "Month: " << (date->month + 1);
@@ -753,27 +758,129 @@ void GameHUD::createTimeMenu()
     timeLabel_2->setColor(colorBlack);
     timeLabel_2->setAnchorPoint(ccp(0.5, 1));
     this->addChild(timeLabel_2, 2);
-    timeLabel_2->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 80.0f);
+    if(isHori)
+    {
+        timeLabel_2->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 80.0f);
+    }
+    else
+    {
+        timeLabel_2->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 200.0f);
+    }
     
+    menuItems_pause = CCArray::create();
+    menuItems_pause->retain();
+    
+    pauseButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::stickGameHappiness));
+    resumeButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::stickGameHappiness));
+    if(isHori)
+    {
+        pauseButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+        resumeButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+
+    }
+    else
+    {
+        pauseButton->setScale(screenSize.height / spriteSize.width * 0.05f);
+        resumeButton->setScale(screenSize.height / spriteSize.width * 0.05f);
+    }
+    resumeButton->setVisible(false);
+    
+    stickHappinessButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::stickGameHappiness));
+    resumeHappinessButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::stickGameHappiness));
+    stickHappinessButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+    resumeHappinessButton->setScale(screenSize.width / spriteSize.width * 0.05f);
+    resumeHappinessButton->setVisible(false);
+    
+    stickHappinessButton->setPosition(ccp(screenSize.width - 300.0f, screenSize.height - 80.0f));
+    resumeHappinessButton->setPosition(ccp(screenSize.width - 300.0f, screenSize.height - 80.0f));
+    
+    menuItems_pause->addObject(stickHappinessButton);
+    menuItems_pause->addObject(resumeHappinessButton);
+    
+    menuItems_pause->addObject(pauseButton);
+    menuItems_pause->addObject(resumeButton);
+    menu_pause = CCMenu::createWithArray(menuItems_pause);
+    menu_pause->setAnchorPoint(ccp(0.5, 0.5));
+    
+    if(isHori)
+    {
+        menu_pause->setAnchorPoint(ccp(1, 1));
+        menu_pause->setPosition(screenSize.width - 280.0f, screenSize.height - 40.0f);
+    }
+    else
+    {
+        menu_pause->setAnchorPoint(ccp(0, 1));
+        menu_pause->setPosition(screenSize.width - 150.0f, screenSize.height - 140.0f);
+    }
+    
+    this->addChild(menu_pause, 5);
+}
+
+void GameHUD::pauseGame()
+{
+    if(pause)
+    {
+        pause = false;
+        pauseButton->setVisible(true);
+        resumeButton->setVisible(false);
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        
+        for (int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+            sp->followPath();
+        }
+    }
+    else
+    {
+        pause = true;
+        pauseButton->setVisible(false);
+        resumeButton->setVisible(true);
+    }
+}
+
+void GameHUD::stickGameHappiness()
+{
+    if(stickHappiness)
+    {
+        stickHappiness = false;
+        pauseButton->setVisible(true);
+        resumeButton->setVisible(false);
+        stickHappinessButton->setVisible(true);
+        resumeHappinessButton->setVisible(false);
+    }
+    else
+    {
+        stickHappiness = true;
+        pauseButton->setVisible(false);
+        resumeButton->setVisible(true);
+        stickHappinessButton->setVisible(false);
+        resumeHappinessButton->setVisible(true);
+    }
 }
 
 void GameHUD::createObjectiveMenu()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
+    bool isHori = GlobalHelper::isHorizontal();
     
     // create the objective group background
     string objectiveBackground = "objective-menu-bg_07.png";
     objectiveMenu = CCSprite::create(objectiveBackground.c_str());
     CCSize spriteSize = objectiveMenu->getContentSize();
-    objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.55f);
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0, 1));
-    objectiveMenu->setPosition(ccp(40, screenSize.height - 185.0f));
+    if(isHori)
+    {
+        objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.55f);
+        objectiveMenu->setPosition(ccp(40, screenSize.height - 185.0f));
+    }
+    else
+    {
+        objectiveMenu->setScale(screenSize.height / spriteSize.width * 0.55f);
+        objectiveMenu->setPosition(ccp(40, screenSize.height - 305.0f));
+    }
     this->addChild(objectiveMenu, 1);
     
     // create the objective button
@@ -782,14 +889,28 @@ void GameHUD::createObjectiveMenu()
     menuItems_objective->retain();
     
     objectiveButton = CCMenuItemImage::create("objective-menu-button_06.png", "objective-menu-button_06.png", this, menu_selector(GameHUD::clickObjectiveButton));
-    objectiveButton->setScale(screenSize.width / spriteSize.width * 0.55f);
     objectiveButton->setAnchorPoint(ccp(0.3, 0.5));
+    if(isHori)
+    {
+        objectiveButton->setScale(screenSize.width / spriteSize.width * 0.55f);
+    }
+    else
+    {
+        objectiveButton->setScale(screenSize.height / spriteSize.width * 0.55f);
+    }
     objectiveButton->setTag(-1);
     
     menuItems_objective->addObject(objectiveButton);
     menu_objective = CCMenu::createWithArray(menuItems_objective);
     menu_objective->setAnchorPoint(ccp(0.5, 0.5));
-    menu_objective->setPosition(ccp(40, screenSize.height - 185));
+    if(isHori)
+    {
+        menu_objective->setPosition(ccp(40, screenSize.height - 185));
+    }
+    else
+    {
+        menu_objective->setPosition(ccp(40, screenSize.height - 305));
+    }
     
     this->addChild(menu_objective, 2);
 }
@@ -810,12 +931,8 @@ void GameHUD::createBuildMenu()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorBlue = ccc3(0, 0, 255);
-    ccColor3B colorWhite = ccc3(255, 255, 255);
     
-    // create the objective button
+    // create the build button
     // Menu items
     menuItems_build = CCArray::create();
     menuItems_build->retain();
@@ -837,11 +954,122 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
-        BuildScroll* buildScroll = BuildScroll::create();
+        currTapMode = Normal;
+        GameScene::getThis()->buildingHandler->selectedBuilding = NULL;
+        GameScene::getThis()->mapHandler->UnBuildPreview();
+        GameScene::getThis()->mapHandler->UnPathPreview();
+        buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
     }
     else
     {
         BuildScroll::getThis()->closeMenu(true);
+        buildScroll = NULL;
+    }
+}
+
+void GameHUD::rotateStatsMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    statsMenu->setPosition(ccp(0, screenSize.height));
+    moneyIcon->setPosition(ccp(180, screenSize.height - 40));
+    moneyLabel->CCNode::setPosition(240, screenSize.height - 60);
+    foodIcon->setPosition(ccp(315, screenSize.height - 40));
+    foodLabel->CCNode::setPosition(375, screenSize.height - 60);
+    populationIcon->setPosition(ccp(460, screenSize.height - 40));
+    populationLabel->CCNode::setPosition(520, screenSize.height - 60);
+    achivementsLabel->CCNode::setPosition(190, screenSize.height - 105);
+}
+
+void GameHUD::rotateTimeMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    bool isHori = GlobalHelper::isHorizontal();
+    
+    if(isHori)
+    {
+        timeMenu->setAnchorPoint(ccp(1, 1));
+        timeMenu->setPosition(ccp(screenSize.width, screenSize.height - 20.0f));
+        firstWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        secondWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        thirdWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        lastWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        timeLabel_1->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 40.0f);
+        timeLabel_2->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 80.0f);
+    }
+    else
+    {
+        timeMenu->setAnchorPoint(ccp(0, 1));
+        timeMenu->setPosition(ccp(0, screenSize.height - 140.0f));
+        firstWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        secondWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        thirdWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        lastWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        timeLabel_1->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 160.0f);
+        timeLabel_2->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 200.0f);
+    }
+}
+
+void GameHUD::rotateObjectiveMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    bool isHori = GlobalHelper::isHorizontal();
+    
+    if(isHori)
+    {
+        objectiveMenu->setPosition(ccp(40, screenSize.height - 185.0f));
+        menu_objective->setPosition(ccp(40, screenSize.height - 185));
+    }
+    else
+    {
+        objectiveMenu->setPosition(ccp(40, screenSize.height - 305.0f));
+        menu_objective->setPosition(ccp(40, screenSize.height - 305));
+    }
+}
+
+void GameHUD::rotateBuildMenu()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+
+    menu_build->setPosition(ccp(screenSize.width, screenSize.height - 120));
+}
+
+void GameHUD::addReputation(int incre)
+{
+    reputation += incre;
+    if(reputation >= reputationMax)
+    {
+        reputation = reputationMax;
+    }
+    
+    int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
+    float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
+    
+    int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
+    
+    if(growthPopulation < projectedPopulation)
+    {
+        growthPopulation++;
+        addPopulation();
+    }
+}
+
+void GameHUD::addPopulation(){
+    CCPoint target = CCPointMake(29,33);
+    
+    int isMale = rand() % 2;
+    
+    if(isMale)
+    {
+        GameScene::getThis()->spriteHandler->addSpriteToMap(target, M_REFUGEE);
+    }
+    else
+    {
+        GameScene::getThis()->spriteHandler->addSpriteToMap(target, F_REFUGEE);
     }
 }

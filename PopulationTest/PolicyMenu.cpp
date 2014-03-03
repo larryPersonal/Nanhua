@@ -7,7 +7,6 @@
 //
 
 #include "PolicyMenu.h"
-#include "PolicyHandler.h"
 #include "GameScene.h"
 #include "GameHUD.h"
 #include "GameDefaults.h"
@@ -32,10 +31,8 @@ void PolicyMenu::createMenuItems()
     //initialize the default number to import when the import x number of foreigners is clicked
     numberToInstantlyImport = 5;
     
-    currTax = GameScene::getThis()->policyHandler->percentTax;
     deltaTax = 0;
     
-    currPop = GameScene::getThis()->policyHandler->maxAlienPopulation;
     deltaPop = 0;
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();

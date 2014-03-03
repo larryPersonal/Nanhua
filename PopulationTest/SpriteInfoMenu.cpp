@@ -416,6 +416,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
         case 0:
         {
             // buttonClose
+            GameScene::getThis()->setTouchEnabled(true);
             this->closeMenu(false);
         }
             break;
@@ -548,15 +549,15 @@ void SpriteInfoMenu::refreshAllMenuItemValues()
         barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
     }
     
-    /*
     if (mGameSpriteHap != gameSprite->getPossessions()->happinessRating)
     {
         mGameSpriteHap = gameSprite->getPossessions()->happinessRating;
         ss.str(std::string());
         ss << mGameSpriteHap;
-        textHap->setString(ss.str().c_str());
+        happinessLabel->setString(ss.str().c_str());
     }
     
+    /*
     if (mGameSpriteLoy != gameSprite->getPossessions()->loyaltyRating)
     {
         mGameSpriteLoy = gameSprite->getPossessions()->loyaltyRating;

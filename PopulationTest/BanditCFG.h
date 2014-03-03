@@ -20,16 +20,6 @@ std::string banditDefaults =
 "\"default_work_unit_per_day\":\"0\""
 "}";
 
-std::string banditRequirements =
-"{\"name\":\"bandit\","
-"\"required_loyalty\":\"50\","
-"\"required_education_level\":\"1\","
-"\"required_intelligence\":\"50\","
-"\"required_social\":\"50\""
-"}";
-
-
-
 std::string banditConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","

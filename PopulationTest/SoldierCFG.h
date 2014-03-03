@@ -19,16 +19,6 @@ std::string soldierDefaults =
 "\"default_work_unit_per_day\":\"0\""
 "}";
 
-std::string soldierRequirements =
-"{\"name\":\"soldier\","
-"\"required_loyalty\":\"80\","
-"\"required_education_level\":\"1\","
-"\"required_intelligence\":\"25\","
-"\"required_social\":\"50\""
-"}";
-
-
-
 std::string soldierConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","

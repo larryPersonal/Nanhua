@@ -36,24 +36,13 @@ public:
     /*it'd probably be easier on the search and the head if I kept them as separate CCArrays.*/
     /*I'm not sure whether I still need any of these categories, but I'll leave them alone.*/
     CCArray* housingOnMap;
+    CCArray* granaryOnMap;
     CCArray* amenityOnMap;
     CCArray* commerceOnMap;
     CCArray* militaryOnMap;
     CCArray* educationOnMap;
     CCArray* socialOnMap;
-    
-    CCArray* storageOnMap;
     CCArray* specialOnMap;
-    
-    /*Searches for anything that says "onMap"*/
-    /* //I probably don't need these, but we'll see.
-    Building* getHousingOnMapWithID(int withID);
-    Building* getAmenityOnMapWithID(int withID);
-    Building* getCommerceOnMapWithID(int withID);
-    Building* getMilitaryOnMapWithID(int withID);
-    Building* getEducationOnMapWithID(int withID);
-    Building* getSocialOnMapWithID(int withID);
-    */
     
     Building* getBuildingOnMapWithID(int withID);
     Building* getBuildingOnMapWithName(std::string name);
@@ -71,19 +60,10 @@ public:
     
     void init(CCTMXTiledMap* mapPtr, JobCollection* jc);
     
-//    CCArray* getAllBuildingsWithCategory(std::string category);
-//    CCArray* getUnoccupiedResidences();
-//    CCArray* getJobsWithVacancies();
-    
     void removeBuildingFromMap(Building* b);
     void addBuildingToMap(Building* b);
     
     int getHighestBuildingID();
-    
-    
-    
-    
-    
 };
 
 

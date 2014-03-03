@@ -19,16 +19,6 @@ std::string farmerDefaults =
 "\"default_work_unit_per_day\":\"100\""
 "}";
 
-std::string farmerRequirements =
-"{\"name\":\"farmer\","
-"\"required_loyalty\":\"50\","
-"\"required_education_level\":\"1\","
-"\"required_intelligence\":\"50\","
-"\"required_social\":\"50\""
-"}";
-
-
-
 std::string farmerConfig =
 "{\"name\":\"root\","
 "\"type\":\"sequence\","

@@ -29,22 +29,10 @@ struct Possessions
     int default_work_rate;
     int default_hapiness_limit;
     int default_loyalty_limit;
-    int default_exp_level1;
-    int default_exp_level2;
-    int default_exp_level3;
-    int default_exp_level4;
-    int default_exp_level5;
-    int default_spawn_cost;
     
     int bonus_work_rate;
     int bonus_hapiness_limit;
     int bonus_loyalty_limit;
-    int bonus_exp_level1;
-    int bonus_exp_level2;
-    int bonus_exp_level3;
-    int bonus_exp_level4;
-    int bonus_exp_level5;
-    int bonus_spawn_cost;
     
     /* special stats */
     float default_work_unit_per_day;
@@ -63,19 +51,12 @@ struct Possessions
     int bonus_food_carriage_limit;
     int bonus_energy_limit;
     
-    /* variable stats */
-    int current_farmer_exp;
-    int current_sodier_exp;
-    
-    int current_farmer_level;
-    int current_sodier_level;
-    
-    int classLevel;
-    
     Building* homeLocation;
     Building* jobLocation;
     Building* targetLocation;
     Building* targetHomeLocation;
+    
+    float cumulativeTime;
     
     Possessions()
     {
@@ -90,22 +71,10 @@ struct Possessions
         default_work_rate = 0;
         default_hapiness_limit = 0;
         default_loyalty_limit = 0;
-        default_exp_level1 = 0;
-        default_exp_level2 = 0;
-        default_exp_level3 = 0;
-        default_exp_level4 = 0;
-        default_exp_level5 = 0;
-        default_spawn_cost = 0;
         
         bonus_work_rate = 0;
         bonus_hapiness_limit = 0;
         bonus_loyalty_limit = 0;
-        bonus_exp_level1 = 0;
-        bonus_exp_level2 = 0;
-        bonus_exp_level3 = 0;
-        bonus_exp_level4 = 0;
-        bonus_exp_level5 = 0;
-        bonus_spawn_cost = 0;
         
         /* special stats */
         default_work_unit_per_day = 0;
@@ -124,18 +93,11 @@ struct Possessions
         bonus_food_carriage_limit = 0;
         bonus_energy_limit = 0;
         
-        /* variable stats */
-        current_farmer_exp = 0;
-        current_sodier_exp = 0;
-        
-        current_farmer_level = 0;
-        current_sodier_level = 0;
-        
-        classLevel = 0;
-        
         homeLocation = NULL;
         jobLocation = NULL;
         targetLocation = NULL;
+        
+        cumulativeTime = 0.0f;
     }
     
     ~Possessions()
@@ -162,18 +124,20 @@ struct Possessions
     {
     }
    
-    int PerformTask()
+    int PerformTask(float dt, int secToDay, float workRate)
     {
-        --energyRating;
-        if (energyRating < 0)
+        cumulativeTime += dt;
+        if(cumulativeTime >= 1.0f / (2.0f * workRate / 100.0f))
         {
-            energyRating = 0;
-            CCLog("out of energy");
-            return 0;
+            energyRating -= 25.0f / workRate;
+            if(energyRating < 0)
+            {
+                energyRating = 0;
+                return 0;
+            }
+            return 1;
         }
-        //the rate of
-        return 1;
-        
+        return 0;
     }
     
     int EatFood()
@@ -191,7 +155,6 @@ struct Possessions
     
     int Rest()
     {
-        energyRating++;
         if (energyRating > default_energy_limit + bonus_energy_limit)
         {
             energyRating = default_energy_limit + bonus_energy_limit;

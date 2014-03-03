@@ -17,22 +17,20 @@
 BuildingHandler::BuildingHandler()
 {
     allBuildingsOnMap = NULL;
-    
     housingOnMap = NULL;
+    granaryOnMap = NULL;
     amenityOnMap = NULL;
     commerceOnMap = NULL;
     militaryOnMap = NULL;
     educationOnMap = NULL;
     socialOnMap = NULL;
-    
-    storageOnMap = NULL;
+    specialOnMap = NULL;
 }
 
 BuildingHandler::~BuildingHandler()
 {
     housingOnMap->removeAllObjects();
-    
-    
+    granaryOnMap->removeAllObjects();
     amenityOnMap->removeAllObjects();
     commerceOnMap->removeAllObjects();
     militaryOnMap->removeAllObjects();
@@ -41,17 +39,13 @@ BuildingHandler::~BuildingHandler()
     specialOnMap->removeAllObjects();
     
     housingOnMap->release();
-    
-    
     amenityOnMap->release();
+    granaryOnMap->release();
     commerceOnMap->release();
     militaryOnMap->release();
     educationOnMap->release();
     socialOnMap->release();
     specialOnMap->release();
-    
-    storageOnMap->release();
-    
     
     if (allBuildingsOnMap)
     {
@@ -151,18 +145,17 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                 if (properties)
                 {
                     const CCString* currProperty;
-                    /*
+                    
                     currProperty = properties->valueForKey("jobs_available");
                    
                      if (currProperty)
                     {
-                        b->jobs = currProperty->getCString();
-              
-                        
+                        CCString* job = CCStringMake(properties->valueForKey("jobs_available")->getCString());
+                        b->number_of_jobs = atoi(job->getCString());
                     }
-                    else b->jobs = "";
+                    else b->number_of_jobs = 0;
                     //else the jobs array for this building is null or empty.
-                    */
+                    
                     
                     currProperty = properties->valueForKey("name");
                     if (currProperty)
@@ -574,43 +567,46 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     allBuildingsOnMap->retain();
     
     housingOnMap= CCArray::create();
+    granaryOnMap= CCArray::create();
     amenityOnMap= CCArray::create();
     commerceOnMap= CCArray::create();
     militaryOnMap= CCArray::create();
     educationOnMap= CCArray::create();
     socialOnMap= CCArray::create();
-    
     specialOnMap=CCArray::create();
     
-    storageOnMap=CCArray::create();
-    
-    
     housingOnMap->retain();
-     amenityOnMap->retain();
+    granaryOnMap->retain();
+    amenityOnMap->retain();
     commerceOnMap->retain();
     militaryOnMap->retain();
     educationOnMap->retain();
     socialOnMap->retain();
-    
     specialOnMap->retain();
-    
-    
-    //TODO: Populate this!;
-    storageOnMap->retain();
 }
 
 void BuildingHandler::addBuildingToMap(Building *b)
 {
     BuildingCategory cat = b->buildingType;
-    if (b->buildingName.length() == 0) return; //DO NOT ADD NAMELESS BUILDINGS!
-    if (cat == BUILDINGCATEGORYMAX) return; //DO NOT ADD BUILDINGS THAT HAVE NO CATEGORY!
+    
+    if (b->buildingName.length() == 0)
+    {
+        //DO NOT ADD NAMELESS BUILDINGS!
+        return;
+    }
+    
+    if (cat == BUILDINGCATEGORYMAX){
+        //DO NOT ADD BUILDINGS THAT HAVE NO CATEGORY!
+        return;
+    }
+    
     switch (cat)
     {
         case HOUSING:
             housingOnMap->addObject(b);
             break;
         case GRANARY:
-            storageOnMap->addObject(b);
+            granaryOnMap->addObject(b);
             break;
         case AMENITY:
             amenityOnMap->addObject(b);
@@ -627,11 +623,13 @@ void BuildingHandler::addBuildingToMap(Building *b)
         case SOCIAL:
             socialOnMap->addObject(b);
             break;
+        case SPECIAL:
+            specialOnMap->addObject(b);
+            break;
         default:
             specialOnMap->addObject(b);
             break;
     }
-    b->initializeJobs();
     allBuildingsOnMap->addObject(b);
 }
 
@@ -645,7 +643,7 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
             housingOnMap->removeObject(b);
             break;
         case GRANARY:
-            storageOnMap->removeObject(b);
+            granaryOnMap->removeObject(b);
             break;
         case AMENITY:
             amenityOnMap->removeObject(b);
@@ -661,6 +659,9 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
             break;
         case SOCIAL:
             socialOnMap->removeObject(b);
+            break;
+        case SPECIAL:
+            specialOnMap->removeObject(b);
             break;
         default:
             specialOnMap->removeObject(b);
@@ -687,16 +688,16 @@ Building* BuildingHandler::getBuildingWithGID(int GID)
 Building* BuildingHandler::getNearestStorage(GameSprite* sp)
 {
     if (sp == NULL) return NULL;
-    if (storageOnMap->count() == 0) return NULL;
+    if (granaryOnMap->count() == 0) return NULL;
     CCPoint spritePosition = sp->spriteRep->getPosition();
  
     float shortestDist = 9999.0f;
     
     Building* currBuilding;
     Building* shortedstDistBuilding = NULL;
-    for (int i = 0; i < storageOnMap->count(); ++i)
+    for (int i = 0; i < granaryOnMap->count(); ++i)
     {
-        currBuilding = (Building*)storageOnMap->objectAtIndex(i);
+        currBuilding = (Building*)granaryOnMap->objectAtIndex(i);
         CCPoint buildingPos = currBuilding->buildingRep->getPosition();
         
         float dist = ccpDistanceSQ(buildingPos, spritePosition);
@@ -705,7 +706,6 @@ Building* BuildingHandler::getNearestStorage(GameSprite* sp)
             shortestDist = dist;
             shortedstDistBuilding = currBuilding;
         }
-        
     }
     
     return shortedstDistBuilding;
@@ -720,13 +720,6 @@ Building* BuildingHandler::getBuilding(int withID)
     /*binary search fixed, changed*/
     Building* currBuilding = BinarySearch(allBuildings, withID);
     
-    /*
-    for (int i = 0; i < allBuildings->count(); ++i)
-    {
-        currBuilding = (Building*)allBuildings->objectAtIndex(i);
-        if (currBuilding->ID == withID) return currBuilding;
-    }*/
-    //CCLog("Building completely isn't on the map.");
     return currBuilding;
 }
 
@@ -749,7 +742,6 @@ Building* BuildingHandler::getBuilding(std::string& buildingName)
             return currBuilding;
     }
     return NULL;
-    
 }
 
 Building* BuildingHandler::getFirstBuildingOfCategory(BuildingCategory bc)
@@ -828,26 +820,8 @@ void BuildingHandler::EmptyBuildingFirst(Building *b)
         {
             GameSprite *spr = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
             Possessions* p = spr->getPossessions();
-            if (p->homeLocation == b) spr->LeaveHouse();
-            
         }
     }
-    /*
-    else
-    {
-        for (int i = 0; i < sh->spritesOnMap->count(); ++i)
-        {
-            GameSprite *spr = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
-            Possessions* p = spr->getPossessions();
-            if (p->jobLocation == b)
-                spr->QuitJob();
-            
-        }
-        
-    }*/
-    /*
-    for (int i = 0; i < sh->spritesOnmap()
-    */
 }
 
 int BuildingHandler::getHighestBuildingID()

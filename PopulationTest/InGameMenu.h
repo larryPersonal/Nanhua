@@ -10,7 +10,6 @@
 #define __PopulationTest__InGameMenu__
 
 #include "PopupMenu.h"
-#include "ResearchIndicator.h"
 
 class InGameMenu:public PopupMenu
 {
@@ -21,8 +20,6 @@ class InGameMenu:public PopupMenu
     CCMenuItemSprite* menuItemsPolicy;
     CCMenuItemSprite* menuItemsSystem;
     CCMenuItemSprite* menuItemsExit;
-    
-    ResearchIndicator* researchIndicator;
     
 protected:
     

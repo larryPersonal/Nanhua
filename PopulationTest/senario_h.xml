@@ -4,7 +4,7 @@
 		<sprite>
 			<width>20</width>
 			<left>9</left>
-			<top>70</top>
+			<top>75</top>
 			<src>conversation_textbox_zhugeliang.png</src>
 		</sprite>
 		<dialogue>
@@ -12,7 +12,7 @@
             <text>Hello, my name is Zhu Geliang!</text>
 			<width>85</width>
 			<left>7.5</left>
-			<top>32</top>
+			<top>35</top>
 			<src>conversation_textbox_empty_left.png</src>
             <dir>left</dir>
             <font>Arial</font>
@@ -23,7 +23,7 @@
 		<sprite>
 			<width>20</width>
 			<left>70</left>
-			<top>70</top>
+			<top>75</top>
 			<src>conversation_textbox_girl.png</src>
 		</sprite>
 		<dialogue>
@@ -31,7 +31,7 @@
             <text>Hi, my name is Jolie. Nice to meet you!</text>
 			<width>85</width>
 			<left>7.5</left>
-			<top>32</top>
+			<top>35</top>
 			<src>conversation_textbox_empty_right.png</src>
             <dir>right</dir>
 			<font>Arial</font>

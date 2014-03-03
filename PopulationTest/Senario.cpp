@@ -9,6 +9,7 @@
 #include "Senario.h"
 #include "GameScene.h"
 #include "Slide.h"
+#include "GlobalHelper.h"
 
 Senario* Senario::SP;
 
@@ -72,7 +73,7 @@ void Senario::readSenarioFile()
     slidesList->release();
     
     SenarioManager* sm = new SenarioManager();
-    if(isHorizontal())
+    if(GlobalHelper::isHorizontal())
     {
         sm->parseXMLFile("senario_h.xml");
     }
@@ -83,12 +84,6 @@ void Senario::readSenarioFile()
     
     slidesList = sm->slidesList;
     delete sm;
-}
-
-bool Senario::isHorizontal()
-{
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    return screenSize.width > screenSize.height;
 }
 
 bool Senario::constructSenarioStage()
@@ -161,13 +156,13 @@ bool Senario::constructSenarioStage()
             CCLabelTTF* chboxName = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
             chboxName->setColor(colorBlue);
             chboxName->setAnchorPoint(ccp(0.5, 1));
-            if(isHorizontal())
+            if(GlobalHelper::isHorizontal())
             {
-                heightOff = 25.0f;
+                heightOff = -25.0f + screenSize.height * (ele->top / 100.0f) - chbox->boundingBox().size.height;
             }
             if(ele->dir.compare("left") == 0)
             {
-                if(isHorizontal())
+                if(GlobalHelper::isHorizontal())
                 {
                     widthOff = 20.0f;
                 }
@@ -175,7 +170,7 @@ bool Senario::constructSenarioStage()
             }
             else
             {
-                if(isHorizontal())
+                if(GlobalHelper::isHorizontal())
                 {
                     widthOff = 10.0f;
                 }
@@ -194,7 +189,7 @@ bool Senario::constructSenarioStage()
             labelList.push_back(chboxName);
             
             CCMenu* menu = CCMenu::create(nextButton, NULL);
-            menu->setPosition(ccp(screenSize.width * 0.84f, screenSize.height * 0.07f));
+            menu->setPosition(ccp(screenSize.width * 0.84f, screenSize.height * 0.1f));
             
             this->addChild(menu, 1);
             

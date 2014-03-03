@@ -62,6 +62,7 @@ void BuildingCard::init()
     CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
     menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
     buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
+    buildingImage->setTag(building->ID);
     buildingImage->setAnchorPoint(ccp(0, 1));
     buildingImage->setContentSize(menuImage->boundingBox().size);
     
@@ -123,32 +124,17 @@ void BuildingCard::showBuildingInfo()
     
 }
 
-void BuildingCard::onMenuItemSelected()
+void BuildingCard::onMenuItemSelected(CCObject* pSender)
 {
-    if(building == NULL)
-    {
-        return;
-    }
-    int tag = building->ID;
-    
-    //    Animate();
+    CCMenuItemImage* pMenuItemImage = (CCMenuItemImage *)(pSender);
+    int tag =pMenuItemImage->getTag();
     switch (tag)
     {
         case -3 : //build path
         {
-            
-            //if (GameManager::getThis()->currentMoney >= path_cost_per_tile)
-            //{
             GameHUD::getThis()->setTapMode(3);
-            GameHUD::getThis()->showBuildLabel("Path");
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
-            //}
-            //else
-            //{
-            //Audio feedback?
-            //Visual feedback? //No money
-            //}
         }
             break;
         case -4 : //unbuild path
@@ -159,26 +145,17 @@ void BuildingCard::onMenuItemSelected()
             break;
         default:
         {
+            stringstream ss;
             Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(tag);
-            //If enough money
-            //   if (GameManager::getThis()->currentMoney >= buildingToBuy->buildingCost) {
-            GameHUD::getThis()->setTapMode(1);
-            //GameHUD::getThis()->showBuildLabel(buildingToBuy->buildingName.c_str() );
-            //GameHUD::getThis()->updateBuildCostLabel(buildingToBuy->buildingCost);
-            GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
-            if(GameScene::getThis()->buildingHandler->selectedBuilding  == NULL)
+            
+            if(buildingToBuy == NULL)
             {
                 return;
             }
+            GameHUD::getThis()->setTapMode(1);
+            GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
-            //  }
-            //  else{
-            //Audio feedback?
-            
-            
-            //Visual feedback?
-            //  }
         }
             break;
     }

@@ -9,6 +9,7 @@
 #include "BuildScroll.h"
 #include "GameScene.h"
 #include "BuildingCard.h"
+#include "GlobalHelper.h"
 
 BuildScroll* BuildScroll::SP;
 
@@ -38,8 +39,7 @@ void BuildScroll::cleanup(){
 BuildScroll::BuildScroll(){
     BuildScroll::SP = this;
     
-    //buildingCards->CCArray::create();
-    //buildingCards->retain();
+    numberOfBuildingCards = 0;
     
     // create gui handler
     background_rect = new Rect();
@@ -50,8 +50,6 @@ BuildScroll::BuildScroll(){
 
 BuildScroll::~BuildScroll()
 {
-    //buildingCards->removeAllObjects();
-    //buildingCards->release();
     BuildScroll::SP = NULL;
 }
 
@@ -63,13 +61,21 @@ void BuildScroll::createMenuItems()
     ccColor3B colorYellow = ccc3(225, 219, 108);
     ccColor3B colorBlue = ccc3(0, 0, 255);
     ccColor3B colorWhite = ccc3(255, 255, 255);
+    bool isHori = GlobalHelper::isHorizontal();
     
     // create the build group background
     string buildBackground = "build-menu-scroll.png";
     buildMenu = CCSprite::create(buildBackground.c_str());
     CCSize spriteSize = buildMenu->getContentSize();
-    buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
     buildMenu->setAnchorPoint(ccp(1, 0));
+    if(isHori)
+    {
+        buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
+    }
+    else
+    {
+        buildMenu->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.98f, screenSize.height / spriteSize.width * 0.98f);
+    }
     buildMenu->setPosition(ccp(screenSize.width, 0));
     this->addChild(buildMenu, 1);
     
@@ -83,18 +89,37 @@ void BuildScroll::createMenuItems()
     // create all building references for all building categories.
     CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
     // list down all the buildings
-    int index = 0;
+    numberOfBuildingCards = 0;
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
-        if(tempBuilding->buildingType == HOUSING || tempBuilding->buildingType == AMENITY)
+        if(tempBuilding->buildingType == HOUSING)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, index);
-            index++;
+            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards);
+            numberOfBuildingCards++;
         }
-        //buildingCards->addObject((CCObject*) bc);
     }
-    scrollArea->setScrollContentSize(CCSizeMake(200.0f * index + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
+    
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+        if(tempBuilding->buildingType == AMENITY)
+        {
+            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards);
+            numberOfBuildingCards++;
+        }
+    }
+    
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+        if(tempBuilding->buildingType == GRANARY)
+        {
+            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards);
+            numberOfBuildingCards++;
+        }
+    }
+    scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
     scrollArea->setPosition(ccp(screenSize.width * 0.125f, buildMenu->boundingBox().size.height * 0.14f));
     scrollArea->updateScrollBars();
     this->addChild(scrollArea, 1);
@@ -115,7 +140,8 @@ void BuildScroll::onMenuItemSelected(CCObject* pSender){
     }
 }
 
-void BuildScroll::reposition(){
+void BuildScroll::reposition()
+{
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 }
 
@@ -123,15 +149,36 @@ void BuildScroll::refreshAllMenuItemValues()
 {
 }
 
-void BuildScroll::willChangeOrientation(){
+void BuildScroll::willChangeOrientation()
+{
     
 }
 
-void BuildScroll::onOrientationChanged(){
+void BuildScroll::onOrientationChanged()
+{
+    // set common variables
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    bool isHori = GlobalHelper::isHorizontal();
+    CCSize spriteSize = buildMenu->getContentSize();
     
+    if(isHori)
+    {
+        buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
+    }
+    else
+    {
+        buildMenu->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.98f, screenSize.height / spriteSize.width * 0.98f);
+    }
+    buildMenu->setPosition(ccp(screenSize.width, 0));
+    
+    scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->setViewSize(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->setPosition(ccp(screenSize.width * 0.125f, buildMenu->boundingBox().size.height * 0.14f));
+    scrollArea->updateScrollBars();
 }
 
-void BuildScroll::update(float deltaTime){
+void BuildScroll::update(float deltaTime)
+{
     refreshAllMenuItemValues();
 }
 

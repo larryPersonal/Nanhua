@@ -11,7 +11,6 @@
 #include "GameDefaults.h"
 #include "Possessions.h"
 #include "GlobalHelper.h"
-#include "GameTimer.h"
 #include "GameHUD.h"
 #include <json/json.h> //for the area unlock section
 //#include <sstream>
@@ -44,6 +43,8 @@ GameManager::GameManager()
     
     loadedGameArea = CCArray::create();
     loadedGameArea->retain();
+    
+    level = 0;
     
     init();
 }
@@ -286,10 +287,10 @@ void GameManager::loadGameData()
                                     
                     
                     
-                    GameTimer::getThis()->setTime(atof(tokens[2].c_str()), atof(tokens[3].c_str()));
+                    //GameTimer::getThis()->setTime(atof(tokens[2].c_str()), atof(tokens[3].c_str()));
                     
             
-                    
+                    /*
                     //birth rate restore
                     int isImplementingPolicy = atoi(tokens[4].c_str());
                     if (isImplementingPolicy == 1)
@@ -307,6 +308,7 @@ void GameManager::loadGameData()
                     
                     //tutorial restore
                     TutorialHandler::getThis()->setSequenceIndex(atoi(tokens[12].c_str()));
+                    */
                 }
                     break;
                 case 2:
@@ -403,7 +405,6 @@ void GameManager::loadGameData()
                     {
                         int targetID = atoi(tokens[i].c_str());
                         unlockedBuildingIDs.push_back(targetID);
-                        ((Building*)GameScene::getThis()->buildingHandler->allBuildings->objectAtIndex(targetID))->unlockToBuild();
                         
                         
                     }
@@ -429,7 +430,6 @@ void GameManager::loadGameData()
                     {
                         int targetID = atoi(tokens[i].c_str());
                         researchableBuildingIDs.push_back(targetID);
-                        ((Building*)GameScene::getThis()->buildingHandler->allBuildings->objectAtIndex(targetID))->unlockToResearch();
                         
                         
                     }
@@ -674,8 +674,6 @@ bool GameManager::ResearchConditionsMet(Building* b)
         return false;
     }
     
-    return b->hasMetUnlockCriteria();
-    
 }
 
 
@@ -718,7 +716,7 @@ void GameManager::UpdateUnlocks()
         lockedBuildings->removeObjectsInArray(toRemove);
     }
    
-    if (TutorialHandler::getThis()->IsActive()) return; //do not update unlocks when tutorial is active.
+    //if (TutorialHandler::getThis()->IsActive()) return; //do not update unlocks when tutorial is active.
     
     //menuitem unlocks only run outside of the tutorial.
     for (int i = 0; i < gameMenuUnlocks.size(); ++i)
@@ -783,12 +781,10 @@ void GameManager::UnlockAll()
         {
             if (b->researchCost > 0)
             {
-                b->unlockToResearch();
                 researchableBuildingIDs.push_back(b->ID);
             }
             else
             {
-                b->unlockToBuild();
                 unlockedBuildingIDs.push_back(b->ID);
             }
         }
@@ -867,10 +863,6 @@ bool GameManager::getLoadedGame()
 bool GameManager::hasLostGame()
 {
     //check lose condition
-    if (getCurrentMoney() <= lose_condition_money ||
-        getAverageHappiness() <= lose_condition_average_happiness)
-        
-        
         
         return true;
     
@@ -907,4 +899,14 @@ void GameManager::storage_consume(int amt)
 bool GameManager::hasStorageLeft()
 {
     return (currStorageVal < maxStorageVal);
+}
+
+void GameManager::setLevel(int level)
+{
+    this->level = level;
+}
+
+int GameManager::getLevel()
+{
+    return level;
 }

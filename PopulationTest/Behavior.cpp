@@ -211,8 +211,6 @@ static int HasBuildingUnderConstruction_Glue(lua_State *L)
 
 static int HasStorageSpaceLeft_Glue(lua_State * L)
 {
-
-    lua_pushboolean(L, GameManager::getThis()->hasStorageLeft());
     
     return 1;
 }
@@ -306,43 +304,6 @@ static int HasHouse_Glue(lua_State *L)
     return 1;
 }
 
-/*Buys a house. ID to be supplied from the LUA side.*/
-static int SetHouseWithID_Glue(lua_State *L)
-{
-    if (!sprite)
-    {
-        lua_pushboolean(L, false);
-        
-    }
-    else
-    {
-        if (sprite->getPossessions()->homeLocation != NULL)
-        {
-            lua_pushboolean(L, false); //already lives somewhere;
-            
-            return 1;
-        }
-        //  CCLog(sprite->spriteName->getCString());
-        int args = lua_gettop(L);
-        if (args == 0)
-        {
-            lua_pushboolean(L, false); //invalid ID;
-            return 1;
-        }
-        int targetID = lua_tonumber(L, 1);
-        
-        if (targetID < 0)
-        {
-            lua_pushboolean(L, false); //invalidID;
-            return 1;
-        }
-        
-        lua_pushboolean(L, sprite->SetHouse(targetID));
-    
-    }
-    return 1;
-}
-
 /*gets a list of IDs that belong to the buildingType HOUSING, and sends it to Lua*/
 static int GetAllHomes_Glue(lua_State *L)
 {
@@ -412,45 +373,6 @@ static int SetClassLevel_Glue(lua_State *L)
     
     return 1;
 }
-
-/*causes the sprite to sell its house.*/
-static int LeaveHouse_Glue(lua_State* L)
-{
-    if (!sprite)
-        lua_pushboolean(L, false); //no sprite
-    
-    
-    lua_pushboolean(L, sprite->LeaveHouse());
-    
-    
-    return 1;
-    
-}
-
-/*checks if a building is fully populated. This can be used to check for job vacacies as well as residence vacancies.*/
-static int IsBuildingFullyOccupied_Glue(lua_State *L)
-{
-    int args = lua_gettop(L);
-    if (args == 0)
-    {
-        lua_pushboolean(L, false); //invalid ID;
-        return 1;
-    }
-    int targetID = lua_tonumber(L, 1);
-
-    if (targetID < 0)
-    {
-        lua_pushboolean(L, false); //invalidID;
-        return 1;
-    }
-    
-    
-    Building* b = (Building*)GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(targetID);
-    lua_pushboolean(L, b->getPopulationCount() >= b->populationLimit);
-    
-    return 1;
-}
-
 
 /*calls the current sprite set in the global to path to work.*/
 static int GoToWork_Glue(lua_State* L)
@@ -575,21 +497,6 @@ static int GetBuildingCost_Glue(lua_State *L)
     return 1;
 }
 
-static int GetLevel_Glue(lua_State* L)
-{
-    if (!sprite)
-    {
-        lua_pushinteger(L, -1); //invalid sprite
-
-    }
-    else
-    {
-        lua_pushinteger(L, sprite->getLevel());
-    }
-    return 1;
-}
-
-
 static int GetEnergy_Glue(lua_State* L)
 {
     if (!sprite)
@@ -666,32 +573,6 @@ static int IsDestinationInRange_Glue(lua_State *L)
     
     return 1;
     
-}
-
-static int GetBuildingLevel_Glue(lua_State *L)
-{
-    int args = (lua_gettop(L));
-    if (args == 0 || args > 1)
-    {
-        lua_pushinteger(L, -1);
-        return 1;
-    }
-    
-    int targetID = lua_tonumber(L, 1);
-    
-    if (targetID < 0)
-    {
-        lua_pushinteger(L, -1); //invalidID;
-        return 1;
-    }
-    
-    
-    Building *targetBuilding = (Building*) (GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(targetID));
-    
-    lua_pushinteger(L, targetBuilding->getLevel() );
-    
-    /*gets the current level of the building. Assume buildingID is supplied.*/
-    return 1;
 }
 
 static int GetHappiness_Glue(lua_State * L)
@@ -983,7 +864,6 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "GoHome", GoHome_Glue);
     lua_register(L, "HasHouse", HasHouse_Glue);
     lua_register(L, "GoToWork", GoToWork_Glue);
-    lua_register(L, "GetLevel", GetLevel_Glue);
     lua_register(L, "GoToBuildingWithID", GoToBuilding_Glue);
     
     /*Exposed sprite properties*/
@@ -1000,13 +880,7 @@ void Behavior::registerFunctions(lua_State* L)
     lua_register(L, "GoWander", PickRandomDestination_Glue);
     
     lua_register(L, "GetCostOfBuildingWithID", GetBuildingCost_Glue);
-    lua_register(L, "GetBuildingLevelWithID", GetBuildingLevel_Glue);
-    lua_register(L, "IsBuildingWithIDFull", IsBuildingFullyOccupied_Glue);
     lua_register(L, "GetAllHomeIDs", GetAllHomes_Glue);
-    
-    //buy and sell house
-    lua_register(L, "SetHouseWithID", SetHouseWithID_Glue);
-    lua_register(L, "LeaveHouse", LeaveHouse_Glue);
     
     /*finding jobs*/
     lua_register(L, "GetAllJobIDs", GetAllJobs_Glue);

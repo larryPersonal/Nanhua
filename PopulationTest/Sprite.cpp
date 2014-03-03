@@ -38,8 +38,8 @@ GameSprite::GameSprite()
     shouldSetVisibleNextFrame = false;
     
     cumulativeTime = 0.0f;
- 
-    spawncost = 0;
+    cumulativeTime_happiness = 0.0f;
+    
     path = NULL;//CCArray::create();
     //path->retain();
     
@@ -52,8 +52,6 @@ GameSprite::GameSprite()
     isLeavingNextUpdate = false;
     
     shouldUpgrade = false;
-    
-    isInteractingSocial = false;
     
     isInBuilding = false;
     
@@ -74,17 +72,10 @@ void GameSprite::initAI(bool isUpgrade)
 {
     // common stats
     bool parsingSuccessful = false;
+    
     if(!isUpgrade)
     {
-        parsingSuccessful = loadSpriteSetup();
-        if (!parsingSuccessful)
-        {
-            std::cout  << "Failed to parse defaults doc\n" << reader.getFormatedErrorMessages() << std::endl;
-        }
-        else
-        {
-            loadSpritePossessions();
-        }
+        loadSpritePossessions();
     }
     
     // specific stats
@@ -99,19 +90,6 @@ void GameSprite::initAI(bool isUpgrade)
     }
     
     clearSetup();
-}
-
-bool GameSprite::loadSpriteSetup()
-{
-    if (sprite_doc.length() == 0)
-    {
-        std::cout << "no sprite stats loaded!" << std::endl;
-        return false;
-    }
-    
-    bool parsingSuccessful = reader.parse(sprite_doc, spriteRoot);
-    
-    return parsingSuccessful;
 }
 
 bool GameSprite::loadClassSetup()
@@ -142,30 +120,16 @@ bool GameSprite::loadClassSetup()
 
 void GameSprite::loadSpritePossessions()
 {
-    std::string encoding = spriteRoot.get("encoding", "UTF-8" ).asString();
+    possessions->default_work_rate = GameScene::getThis()->configSettings->default_work_rate;
     
-    possessions->default_work_rate = atoi(spriteRoot["default_work_rate"].asString().c_str());
+    possessions->happinessRating = GameScene::getThis()->configSettings->default_hapiness;
+    possessions->loyaltyRating = GameScene::getThis()->configSettings->default_loyalty;
     
-    possessions->happinessRating = atoi(spriteRoot["default_happiness"].asString().c_str());
-    possessions->loyaltyRating = atoi(spriteRoot["default_loyalty"].asString().c_str());
+    possessions->currentHungry = GameScene::getThis()->configSettings->default_current_hungry;
+    possessions->energyRating = GameScene::getThis()->configSettings->default_current_energy;
     
-    possessions->currentHungry = atoi(spriteRoot["default_current_hungry"].asString().c_str());
-    possessions->energyRating = atoi(spriteRoot["default_current_energy"].asString().c_str());
-    possessions->classLevel = atoi(spriteRoot["default_education_level"].asString().c_str());
-    
-    possessions->default_hapiness_limit = atoi(spriteRoot["default_hapiness_limit"].asString().c_str());
-    possessions->default_loyalty_limit = atoi(spriteRoot["default_loyalty_limit"].asString().c_str());
-    
-    possessions->default_exp_level1 = atoi(spriteRoot["default_exp_level1"].asString().c_str());
-    possessions->default_exp_level2 = atoi(spriteRoot["default_exp_level2"].asString().c_str());
-    possessions->default_exp_level3 = atoi(spriteRoot["default_exp_level3"].asString().c_str());
-    possessions->default_exp_level4 = atoi(spriteRoot["default_exp_level4"].asString().c_str());
-    possessions->default_exp_level5 = atoi(spriteRoot["default_exp_level5"].asString().c_str());
-    
-    if (defaultsRoot["spawn_cost"] != NULL)
-    {
-        spawncost = atoi(spriteRoot["spawn_cost"].asString().c_str());
-    }
+    possessions->default_hapiness_limit = GameScene::getThis()->configSettings->default_hapiness_limit;
+    possessions->default_loyalty_limit = GameScene::getThis()->configSettings->default_loyalty_limit;
 }
 
 void GameSprite::loadClassPossessions()
@@ -188,7 +152,6 @@ void GameSprite::clearSetup()
     
     behaviorTree->onInitialize();
     
-    spriteRoot.clear();
     defaultsRoot.clear();
     root.clear();
 }
@@ -231,8 +194,6 @@ Behavior* GameSprite::buildTreeWithJsonValue(Json::Value json)
         //retStatus should be dynamically set in the behaviorTree
 
         return b;
-        
-        
     }
     
 }
@@ -356,43 +317,24 @@ void GameSprite::unmakeSpriteEndGame()
     behaviorTree = NULL;
 }
 
-
-
- void GameSprite::unmakeSprite()
- {
-     LeaveJob();
-     LeaveHouse();
-     delete possessions;
-     possessions= NULL;
-     delete behaviorTree;
-     behaviorTree = NULL;
-     spriteRep->stopAllActions();
-     
-   //  CC_SAFE_RELEASE(callback);
-     
-     //spriteRep->removeChild(speechBubble, true);
+void GameSprite::unmakeSprite()
+{
+    delete possessions;
+    possessions= NULL;
+    delete behaviorTree;
+    behaviorTree = NULL;
+    spriteRep->stopAllActions();
     
-     // (( CCSpriteBatchNode* ) GameScene::getThis()->spriteHandler->allSpriteSheets->objectAtIndex(this->batchLayerIndex))->removeChild(spriteRep, true);
-     if (GameScene::getThis()->mapHandler->getMap()->getChildren()->containsObject(spriteRep))
-         GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
-     
-     delete speechBubble;
- 
-     //spriteAnimAction->release();
-   //  animation->release();
-   //  spriteAnimAction->release();
-    // spriteRunAction->release();
- //    spriteRep->release();
-     if (path != NULL)
-     {
-         path->removeAllObjects();
-     }
-     //destroy the AI
-
- }
-
-
-
+    if (GameScene::getThis()->mapHandler->getMap()->getChildren()->containsObject(spriteRep))
+        GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    
+    delete speechBubble;
+    
+    if (path != NULL)
+    {
+        path->removeAllObjects();
+    }
+}
 
 bool GameSprite::CreatePath(CCPoint from, CCPoint to)
 {
@@ -471,6 +413,11 @@ int GameSprite::getPathDistance(CCPoint from, CCPoint to)
 
 void GameSprite::followPath()
 {
+    if(GameHUD::getThis()->pause)
+    {
+        return;
+    }
+    
     int squares = path->count();
     if (squares > 0)
     {
@@ -684,8 +631,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 
 bool GameSprite::Wander()
 {
-    if (isInteractingSocial) return false;
-    
+    // The very first action for a refugee is alway trying to find a house, he/she will lose happiness continually.
     if(spriteClass.compare("refugee") == 0 && hasEmptyHouse())
     {
         return findNearestHome();
@@ -826,13 +772,6 @@ void GameSprite::updateSprite(float dt)
             return;
         }
         
-        if (possessions->happinessRating < happiness_level_before_loyalty_affected && possessions->loyaltyRating > 0)
-        {
-            //  saySpeech("Patience wearing thin.",2.0f);
-            increasePossession(STATS_LOYALTY, loyalty_mod_if_below_happiness_threshold);
-            
-        }
-        
         if (possessions->loyaltyRating <= 0)
         {
             saySpeech("I'm going elsewhere.", 2.0f);
@@ -855,60 +794,9 @@ void GameSprite::updateSprite(float dt)
             GoRest(lastTarget);
         }
         
-        
-        
-        
-        //todo: make sure this is not called every frame the sprite remains idle in the building.
-        /*
-        if (currTile != NULL)
-        {
-            if (currTile->building)
-            {
-                currTile->building->StickAroundHandler(this);
-            }
-        }
-        */
-        
-        
-
-        
-        //modify loyalty based on happiness;
-        
-        
         /*kick starts the sprite's AI, because idle doesn't do this normally*/
         behaviorTree->onInitialize();
         behaviorTree->update();
-        
-        
-        //I didn't want hasJob to trigger if there is no house.
-        if (possessions->homeLocation == NULL && !justSoldHouse)
-        {
-             //I need to do this the manual way. Otherwise the 2nd saySpeech overrides the first.
-             if (possessions->happinessRating > 0) possessions->happinessRating += happiness_mod_homeless;
-            //increasePossession(STATS_HAPPINESS, happiness_mod_homeless); //note actually subtracts
-            return;
-        }
-        else
-        {
-            justSoldHouse = false;
-            return;
-        }
-        /*
-        if (!possessions->hasJob && !justQuitJob)
-        {
-            saySpeech("Jobless..", 2.0f);
-            if (possessions->happinessRating > 0) possessions->happinessRating += happiness_mod_jobless;
-            
-            //increasePossession(STATS_HAPPINESS, happiness_mod_jobless); //note actually subtracts
-            return;
-        }
-        else
-        {
-            justQuitJob = false;
-            return;
-        }
-        */
-        
     }
     
 }
@@ -949,11 +837,6 @@ void GameSprite::setAIConfig(std::string config)
 void GameSprite::setDefaultsConfig(std::string config)
 {
     defaults_doc = config;
-}
-
-void GameSprite::setSpriteConfig(std::string config)
-{
-    sprite_doc = config;
 }
 
 Possessions* GameSprite::getPossessions()
@@ -1071,79 +954,10 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
     speechBubble->show(timeInSeconds);
 }
 
-/*transactions*/
-bool GameSprite::SetHouse(int instanceID)
-{
-    if (isInteractingSocial) return false;
-    
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("still moving. Can't obey.");
-        return false;
-    }
-
-     
-    Building* b = (Building*)GameScene::getThis()->buildingHandler->getBuildingOnMapWithID(instanceID);
-    if (!b)
-    {
-        CCLog("invalid Instance ID!");
-        return false;
-    }
-    
-    if (b->buildingType != HOUSING)
-    {
-        CCLog("Building isn't a house!");
-        return false;
-    }
-    //looks like I have to do this after all.
-    if (b->getPopulationCount() >= b->populationLimit)
-    {
-        CCLog("Building has reached its population limit!");
-        return false;
-    }
-    
-    bool boughtHouse = possessions->setHome(b);
-    
-    if (boughtHouse)
-        b->addPopulation(this);
-    
-
-    //house successfully bought
-    return boughtHouse;
-}
-
-bool GameSprite::LeaveJob()
-{
-        if (possessions->jobLocation != NULL)
-        {
-            possessions->LeaveJob();
-            
-        }
-    justQuitJob = true;
-    return true;
-}
-
-
-bool GameSprite::LeaveHouse()
-{
-    if (possessions->homeLocation != NULL)
-    {
-        possessions->homeLocation->removePopulation(this);
-        possessions->LeaveHome();
-    }
-    justSoldHouse = true;
-    return true;
-}
 /*pathing*/
 /*paths back home, if possible. Ignores range for obvious reasons.*/
 bool GameSprite::PathToHome()
 {
-    
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }
     
     if (isFollowingMoveInstruction)
     {
@@ -1177,12 +991,6 @@ bool GameSprite::PathToHome()
 /*paths to an existing workplace, if it does. Ignores range, because it is assumed that in this case the person cannot change where he works.*/
 bool GameSprite::PathToWork()
 {
-    
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }
 
     if (isFollowingMoveInstruction)
     {
@@ -1245,13 +1053,6 @@ bool GameSprite::PathToBuildingOverride(int building_id)
 
 bool GameSprite::PathToBuilding(int building_id)
 {
-    
-    if (isInteractingSocial)
-    {
-        CCLog("waiting for godot");
-        return false;
-    }
-
     
     if (isFollowingMoveInstruction)
     {
@@ -1482,9 +1283,6 @@ void GameSprite::ChangeSpriteTo(GameSprite *sp)
     config_doc = sp->config_doc;
     defaults_doc = sp->defaults_doc;
     
-    //Because the class of the character is changed, the class level goes back to 1. 
-    possessions->classLevel = 1;
-    
     bool parsingSuccessful = reader.parse(defaults_doc, defaultsRoot);
     
     if (!parsingSuccessful)
@@ -1496,7 +1294,6 @@ void GameSprite::ChangeSpriteTo(GameSprite *sp)
         //loadClassPossessions();
     }
 
-    
     ReplaceSpriteRep();
 }
 
@@ -1557,44 +1354,12 @@ void GameSprite::ReplaceSpriteRep()
     
     GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
                                                         GameScene::getThis()->mapHandler->calcZIndex(pos));
-    
     behaviorTree->onInitialize();
     behaviorTree->update();
-    
+     
    // updateZIndex();
   
 }
-
-int GameSprite::getLevel()
-{
-    if (!possessions) return -1;
-    
-    return possessions->classLevel;// educationLevel;
-}
-
-void GameSprite::TakeStockOfDay()
-{
-    //I assume that the sprite has a home.
-    if (possessions->homeLocation != NULL)
-    {
-        if (possessions->homeLocation->isOverpopulated())
-        {
-            increasePossession(STATS_HAPPINESS, possessions->homeLocation->getOverpopulateCount() * happiness_mod_overcrowded_conditions);
-        }
-        
-        //mistrust factor
-        //aliens not affected
-        if (race=='h')
-        {
-            increasePossession(STATS_HAPPINESS, possessions->homeLocation->getAlienPopulationCount() * happiness_mod_per_alien_in_same_house);
-        }
-        
-    }
- 
-}
-
-
-
 
 /*will override all current move instructions.*/
 void GameSprite::PathToHighTemple()
@@ -1759,19 +1524,15 @@ int GameSprite::getFoodCarried()
 
 Building* GameSprite::findNearestGranary(bool isDeliveringFood)
 {
-    CCArray* allAmenity = GameScene::getThis()->buildingHandler->amenityOnMap;
+    CCArray* buildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
     Building* nearestGranary = NULL;
     int distance = 999999;
     
-    for(int i = 0; i < allAmenity->count(); i++)
+    for(int i = 0; i < buildingsOnMap->count(); i++)
     {
-        Building* bui = (Building*) allAmenity->objectAtIndex(i);
+        Building* bui = (Building*) buildingsOnMap->objectAtIndex(i);
         
-        if(bui->food_consumption_rate <= 0)
-        {
-            continue;
-        }
-        else if(bui->currentStorage <= 0 && !isDeliveringFood)
+        if(bui->buildingType != GRANARY)
         {
             continue;
         }
@@ -1789,15 +1550,7 @@ Building* GameSprite::findNearestGranary(bool isDeliveringFood)
             distance = tempDistance;
             nearestGranary = bui;
         }
-        
-        /*
-        if(bui->food_consumption_rate > 0)
-        {
-            return bui;
-        }
-        */
     }
-    //return NULL;
     
     return nearestGranary;
 }
@@ -1819,7 +1572,10 @@ void GameSprite::setCumulativeTime(float t)
 
 void GameSprite::goToEat()
 {
+    // try to find the nearest granary to the sprite
     Building* bui = findNearestGranary(false);
+    
+    // if the granary has been found and has food, go to eat it!
     if(bui != NULL && bui->currentStorage > 0)
     {
         if(!bui->isUnderConstruction())
@@ -1843,6 +1599,7 @@ void GameSprite::goToEat()
             isDoingJob = false;
         }
     }
+    // if the granary does not have food, do next scheduled action.
     else if(bui != NULL)
     {
         if(getJob() == NONE && getJobLocation() == NULL)
@@ -1852,6 +1609,23 @@ void GameSprite::goToEat()
                 futureAction1 = RESTING;
                 futureAction2 = IDLE;
             }
+            else
+            {
+                futureAction1 = futureAction2 = IDLE;
+            }
+        }
+    }
+    // if there is no granary found, do next scheduled action.
+    else
+    {
+        if(futureAction1 == RESTING || futureAction2 == RESTING)
+        {
+            futureAction1 = RESTING;
+            futureAction2 = IDLE;
+        }
+        else
+        {
+            futureAction1 = futureAction2 = IDLE;
         }
     }
 }
@@ -1882,6 +1656,8 @@ void GameSprite::goToSleep()
         }
         isDoingJob = false;
     }
+    futureAction1 = IDLE;
+    futureAction2 = IDLE;
 }
 
 void GameSprite::goToOccupyHome(Building* b)
@@ -1958,5 +1734,147 @@ bool GameSprite::findNearestHome()
     }
     
     return true;
+}
+
+void GameSprite::updateHungry(float dt)
+{
+    if(possessions->currentHungry > 0.0)
+    {
+        return;
+    }
+    
+    cumulativeTime_happiness += dt;
+    
+    if(possessions->happinessRating >= 70.0f)
+    {
+        // the sprite is in happy state
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        {
+            possessions->happinessRating--;
+            cumulativeTime_happiness = 0.0f;
+        }
+    }
+    else if(possessions->happinessRating >= 40.0f)
+    {
+        // the sprite is in normal state
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        {
+            possessions->happinessRating--;
+            cumulativeTime_happiness = 0.0f;
+        }
+    }
+    else if(possessions->happinessRating >= 10.0f)
+    {
+        // the sprite is in unhappy state
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        {
+            possessions->happinessRating--;
+            cumulativeTime_happiness = 0.0f;
+        }
+    }
+    else
+    {
+        // the sprite is in angry state
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        {
+            possessions->happinessRating--;
+            cumulativeTime_happiness = 0.0f;
+        }
+    }
+    
+    if(possessions->happinessRating < 0)
+    {
+        possessions->happinessRating = 0;
+    }
+}
+
+void GameSprite::scheduleToken(float dt)
+{
+    if(is_token_drop_cooldown)
+    {
+        checkDropTresholdTime();
+        token_drop_cooldown_time += dt;
+        if(token_drop_cooldown_time >= token_drop_cooldown_treshold)
+        {
+            is_token_drop_cooldown = false;
+        }
+    }
+    else
+    {
+        
+        token_drop_cooldown_time = 0;
+        is_token_drop_cooldown = true;
+        
+        if (type != M_REFUGEE && type != F_REFUGEE && type != M_BANDIT && type != F_BANDIT && type != SPRITETYPE_END)
+        {
+            dropToken();
+        }
+    }
+}
+
+void GameSprite::checkDropTresholdTime()
+{
+    float mAverageHappiness = possessions->happinessRating;
+    if(mAverageHappiness >= 70)
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_happy;
+    }
+    else if(mAverageHappiness >= 40)
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_normal;
+    }
+    else if(mAverageHappiness >= 10)
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy;
+    }
+    else
+    {
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_angry;
+    }
+}
+
+void GameSprite::dropToken()
+{
+    checkDropRate();
+    
+    int random_number = rand() % 100 + 1;
+    if(random_number <= token_drop_rate)
+    {
+        CCSprite* newToken = CCSprite::create("renToken.png");
+        newToken->setAnchorPoint(ccp(0.5, 0.5));
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize spriteSize = newToken->getContentSize();
+        
+        newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
+        
+        GameScene::getThis()->spriteHandler->tokensOnMap->addObject(newToken);
+        
+        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, GameScene::getThis()->mapHandler->calcZIndex(currPos));
+        
+        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&currPos);
+        
+        newToken->setPosition(target);
+    }
+}
+
+void GameSprite::checkDropRate()
+{
+    float mAverageHappiness = GameHUD::getThis()->average_happiness;
+    if(mAverageHappiness >= 70)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_happy;
+    }
+    else if(mAverageHappiness >= 40)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_normal;
+    }
+    else if(mAverageHappiness >= 10)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_unhappy;
+    }
+    else
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_angry;
+    }
 }
 
