@@ -8,6 +8,7 @@
 
 #include "ScrollArea.h"
 
+
 void ScrollArea::cleanup()
 {
     CCNode::cleanup();

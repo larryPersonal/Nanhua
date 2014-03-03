@@ -103,6 +103,8 @@ public:
     int reputationMax;
     int growthPopulation;
     
+    bool isThisTapCounted;
+    
     float average_happiness;
     CCLabelTTF* average_happiness_label;
     

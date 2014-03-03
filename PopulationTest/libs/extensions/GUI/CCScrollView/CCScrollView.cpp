@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
+#include "GameHUD.h"
 
 NS_CC_EXT_BEGIN
 
@@ -56,7 +57,6 @@ CCScrollView::CCScrollView()
 , m_fMinScale(0.0f)
 , m_fMaxScale(0.0f)
 {
-
 }
 
 CCScrollView::~CCScrollView()
@@ -719,6 +719,8 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
                                             m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
             this->setZoomScale(this->getZoomScale()*len/m_fTouchLength);
         }
+        
+        GameHUD::getThis()->isThisTapCounted = false;
     }
 }
 
@@ -728,19 +730,24 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
     {
         return;
     }
-    if (m_pTouches->containsObject(touch))
+    
+    if (!GameHUD::getThis()->isThisTapCounted)
     {
-        if ((m_pTouches->count() == 1 && m_bTouchMoved) || true)
+        GameHUD::getThis()->isThisTapCounted = true;
+        if (m_pTouches->containsObject(touch))
         {
-            this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
+            if ((m_pTouches->count() == 1 && m_bTouchMoved) || true)
+            {
+                this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
+            }
+            m_pTouches->removeObject(touch);
         }
-        m_pTouches->removeObject(touch);
-    } 
-
-    if (m_pTouches->count() == 0)
-    {
-        m_bDragging = false;    
-        m_bTouchMoved = false;
+        
+        if (m_pTouches->count() == 0)
+        {
+            m_bDragging = false;
+            m_bTouchMoved = false;
+        }
     }
 }
 

@@ -50,6 +50,8 @@ GameHUD::GameHUD()
     
     originalHappiness = 0;
     stickHappiness = false;
+    
+    isThisTapCounted = false;
 }
 
 GameHUD::~GameHUD()

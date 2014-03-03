@@ -126,6 +126,11 @@ void BuildingCard::showBuildingInfo()
 
 void BuildingCard::onMenuItemSelected(CCObject* pSender)
 {
+    if (!GameHUD::getThis()->isThisTapCounted)
+    {
+        return;
+    }
+    
     CCMenuItemImage* pMenuItemImage = (CCMenuItemImage *)(pSender);
     int tag =pMenuItemImage->getTag();
     switch (tag)

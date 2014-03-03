@@ -64,6 +64,7 @@ public:
  */
 class CCScrollView : public CCLayer
 {
+    
 public:
     /**
      *  @js ctor

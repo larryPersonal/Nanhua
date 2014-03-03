@@ -225,6 +225,16 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             else
             // workval = 0, means the the villager is out of energy
             {
+                for (int i = 0; i< memberSpriteList->count(); i++)
+                {
+                    GameSprite* gameS = (GameSprite*) memberSpriteList->objectAtIndex(i);
+                    
+                    if(gameS->getPossessions()->energyRating <= 0)
+                    {
+                        gameS->setTargetLocation(gameS->getHome());
+                        gameS->GoRest(gameS->getHome());
+                    }
+                }
             }
         }
         else
@@ -454,6 +464,10 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     // if the sprite is not fully recharged, it will recharge energy.
                 {
                     sp->getPossessions()->energyRating += sp->getPossessions()->Rest();
+                    if(sp->getPossessions()->energyRating >= sp->getPossessions()->default_energy_limit)
+                    {
+                        sp->getPossessions()->energyRating = sp->getPossessions()->default_energy_limit;
+                    }
                 }
             }
             else
@@ -493,7 +507,6 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
 
 void Building::leaveHouse(GameSprite* sp)
 {
-    /*
     if(sp->getJobLocation() != NULL)
     // if the sprite has a job
     {
@@ -527,14 +540,13 @@ void Building::leaveHouse(GameSprite* sp)
     else
     // the sprite does not have a job, just leave the hosue
     {
-    */
         sp->currAction = IDLE;
         sp->nextAction = IDLE;
         sp->setTargetLocation(NULL);
         sp->setIsFollowingMovementInstruction(false);
         sp->futureAction1 = IDLE;
         sp->futureAction2 = IDLE;
-    /*}*/
+    }
 }
 
 void Building::Leavehandler(GameSprite *sp)

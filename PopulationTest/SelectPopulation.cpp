@@ -250,6 +250,7 @@ void SelectPopulation::createMenuItems()
         }
         
         int index = 0;
+        int count = 0;
         for(int i = 0; i < spritesForSelection->count(); i++)
         {
             GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
@@ -259,10 +260,11 @@ void SelectPopulation::createMenuItems()
                 SpriteRow* sp = SpriteRow::create((GameSprite*) spritesForSelection->objectAtIndex(i), scrollArea, building, index);
                 spriteRowArray->addObject((CCObject*) sp);
                 index++;
+                count++;
             }
         }
         
-        scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * spritesForSelection->count()));
+        scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * count));
         scrollArea->updateScrollBars();
         
         // set the position of all the elements
@@ -373,6 +375,9 @@ void SelectPopulation::scheduleConstruction()
     for (int i = 0; i < memberArray->count(); i++)
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
+        
+        gameSprite->currAction = IDLE;
+        gameSprite->nextAction = BUILD;
         
         gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_BUILDER, F_BUILDER));
         

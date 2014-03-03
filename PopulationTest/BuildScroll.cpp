@@ -46,6 +46,8 @@ BuildScroll::BuildScroll(){
     
     // initialize the gui handler
     background_rect->ini(700, 100, 100, 200);
+    
+    this->setTouchEnabled(true);
 }
 
 BuildScroll::~BuildScroll()
@@ -181,6 +183,5 @@ void BuildScroll::update(float deltaTime)
 {
     refreshAllMenuItemValues();
 }
-
 
 

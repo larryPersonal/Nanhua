@@ -59,8 +59,7 @@ using namespace cocos2d::extension;
 class ScrollArea:public cocos2d::CCNode
 {
     
-private:
-    
+public:
     // Extended CCScrollView to override registerWithTouchDispatcher()
     class ScrollViewEx:public cocos2d::extension::CCScrollView
     {
@@ -87,6 +86,8 @@ private:
     
     // ScrollArea variables
     ScrollViewEx* scrollView;   // The scroll view
+    
+private:
     CCLayer* layer;             // The scroll content layer
     bool isUpdateScheduled;
 
