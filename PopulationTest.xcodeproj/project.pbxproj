@@ -3218,7 +3218,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					365FB99A16E5E30B00A57CF0 = {
-						DevelopmentTeam = SY936FX3R9;
+						DevelopmentTeam = QAT7Q4CF37;
 					};
 				};
 			};
@@ -3851,7 +3851,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3899,7 +3899,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PopUlationTest/Prefix.pch;
