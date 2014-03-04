@@ -368,8 +368,8 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
         {
             
             CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
-            saySpeech("I Can't Get There!", 2.0f);
-            
+          //  saySpeech("I Can't Get There!", 2.0f);
+            saySpeech(STUCK, 2.0f);
             path = p->makePath(&from, &p->closest);
             //delete p;
            // path = NULL;
@@ -772,7 +772,7 @@ void GameSprite::updateSprite(float dt)
         
         if (possessions->loyaltyRating <= 0)
         {
-            saySpeech("I'm going elsewhere.", 2.0f);
+            saySpeech(UNHAPPY, 2.0f);
             isLeavingNextUpdate = true;
             
         }
@@ -952,6 +952,44 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
     speechBubble->show(timeInSeconds);
 }
 
+
+void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
+{
+    speechBubble->clearContent();
+    
+    CCSprite* label = NULL;
+    switch (s)
+    {
+        case IDLING:
+            label = CCSprite::create("idle.png");
+            break;
+        case HAPPY:
+            label = CCSprite::create("happy.png");
+
+            break;
+        case HUNGRY:
+            label = CCSprite::create("hungry.png");
+
+            break;
+        case TIRED:
+            label = CCSprite::create("tired.png");
+
+            break;
+        case UNHAPPY:
+            label = CCSprite::create("unhappy.png");
+
+            break;
+        case STUCK:
+            label = CCSprite::create("stuck.png");
+
+            break;
+            
+            
+    }
+    if (label == NULL) return;
+    speechBubble->addContent(label, CCPointZero);
+    speechBubble->show(timeInSeconds);
+}
 /*pathing*/
 /*paths back home, if possible. Ignores range for obvious reasons.*/
 bool GameSprite::PathToHome()
@@ -1817,6 +1855,7 @@ void GameSprite::dropToken()
     int random_number = rand() % 100 + 1;
     if(random_number <= token_drop_rate)
     {
+        saySpeech(HAPPY, 1.0f);
         CCSprite* newToken = CCSprite::create("tokenball_REN.png");
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();

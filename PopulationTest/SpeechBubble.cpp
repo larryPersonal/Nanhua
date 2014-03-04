@@ -18,11 +18,10 @@ SpeechBubble::SpeechBubble()
 
 void SpeechBubble::createSpeechBubble()
 {
-    background = CCSprite::create("info-popup.png");
+    background = CCSprite::create("bubble.png");
     background->setScaleY(200 / background->getContentSize().width);
     
     orig_sizeX = background->getContentSize().width;
-    CCLog("%d", orig_sizeX);
     background->setAnchorPoint(ccp(0.5, 0));
     
     contentNode = CCNode::create();
@@ -38,6 +37,7 @@ void SpeechBubble::createSpeechBubble()
     this->setVisible(false);
 }
 
+//Probably not be using this anymore, but keeping it around.
 void SpeechBubble::addContent(CCNode* node, CCPoint offset)
 {
     node->setPosition(offset);
@@ -45,6 +45,11 @@ void SpeechBubble::addContent(CCNode* node, CCPoint offset)
     contentNode->addChild(node);
     
     rescale();
+}
+
+void SpeechBubble::addContent(SpeechMood s, CCPoint offset)
+{
+    
 }
 
 void SpeechBubble::clearContent()
