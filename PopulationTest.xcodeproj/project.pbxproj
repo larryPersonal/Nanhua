@@ -442,6 +442,7 @@
 		8437DA911889310700B93FEF /* eat.png in Resources */ = {isa = PBXBuildFile; fileRef = 8437DA901889310700B93FEF /* eat.png */; };
 		8437DA9318895D4D00B93FEF /* farm.png in Resources */ = {isa = PBXBuildFile; fileRef = 8437DA9218895D4D00B93FEF /* farm.png */; };
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
+		8448D65018C59A04003AFB3A /* guardtower.png in Resources */ = {isa = PBXBuildFile; fileRef = 8448D64F18C59A04003AFB3A /* guardtower.png */; };
 		844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */ = {isa = PBXBuildFile; fileRef = 844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */; };
 		844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */ = {isa = PBXBuildFile; fileRef = 844D728D18AC750D008E0AD3 /* senario_h.xml */; };
 		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
@@ -1294,6 +1295,7 @@
 		8437DA9218895D4D00B93FEF /* farm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = farm.png; sourceTree = "<group>"; };
 		843AFFB8187FE7DD0053546B /* SelectPopulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPopulation.h; sourceTree = "<group>"; };
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
+		8448D64F18C59A04003AFB3A /* guardtower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guardtower.png; sourceTree = "<group>"; };
 		844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workers_menu_buttonCollider.png; sourceTree = "<group>"; };
 		844D728D18AC750D008E0AD3 /* senario_h.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = senario_h.xml; sourceTree = "<group>"; };
 		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
@@ -2760,6 +2762,7 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				8448D64F18C59A04003AFB3A /* guardtower.png */,
 				8414BF4B18BC4875007626B2 /* worker_assign_ui_bg_03.png */,
 				844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */,
 				84360A3618B22150002EC8C2 /* worker_assign_sample_ui.png */,
@@ -3341,6 +3344,7 @@
 				84EB328518684185003B5CEB /* new slide.png in Resources */,
 				B4999F621752ED64005F04E1 /* building-menu-overload-slot.png in Resources */,
 				844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */,
+				8448D65018C59A04003AFB3A /* guardtower.png in Resources */,
 				361A56371754BF3200854FE1 /* builderbehavior.lua in Resources */,
 				8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */,
 				845854731892702F00824F5F /* sprite-2x2_0001_Layer-2.png in Resources */,
