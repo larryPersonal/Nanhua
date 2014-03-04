@@ -32,8 +32,8 @@ std::string banditConfig =
 "[{"
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
-"\"file_name\":\"citizenbehavior.lua\","
-"\"func_name\":\"Wander\""
+"\"file_name\":\"banditbehavior.lua\","
+"\"func_name\":\"goWander\""
 "}]"
 "}]"
 "}";

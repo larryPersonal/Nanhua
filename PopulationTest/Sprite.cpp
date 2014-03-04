@@ -1817,7 +1817,7 @@ void GameSprite::dropToken()
     int random_number = rand() % 100 + 1;
     if(random_number <= token_drop_rate)
     {
-        CCSprite* newToken = CCSprite::create("renToken.png");
+        CCSprite* newToken = CCSprite::create("tokenball_REN.png");
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize spriteSize = newToken->getContentSize();

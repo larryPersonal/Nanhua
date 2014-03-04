@@ -5,7 +5,7 @@
 			<width>20</width>
 			<left>9</left>
 			<top>75</top>
-			<src>conversation_textbox_zhugeliang.png</src>
+			<src>zhugeliang_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Zhu Geliang</name>
@@ -29,6 +29,101 @@
 		<dialogue>
             <name>Jolie</name>
             <text>Hi, my name is Jolie. Nice to meet you!</text>
+			<width>85</width>
+			<left>7.5</left>
+			<top>35</top>
+			<src>conversation_textbox_empty_right.png</src>
+            <dir>right</dir>
+			<font>Arial</font>
+			<fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+		<sprite>
+			<width>20</width>
+			<left>70</left>
+			<top>75</top>
+			<src>liubei_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>Liu Bei</name>
+            <text>I am Liu Bei. I seek to unify.</text>
+			<width>85</width>
+			<left>7.5</left>
+			<top>35</top>
+			<src>conversation_textbox_empty_right.png</src>
+            <dir>right</dir>
+			<font>Arial</font>
+			<fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+		<sprite>
+			<width>20</width>
+			<left>70</left>
+			<top>75</top>
+			<src>caocao_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>Cao Cao</name>
+            <text>I Am Cao Cao. Bow before me!</text>
+			<width>85</width>
+			<left>7.5</left>
+			<top>35</top>
+			<src>conversation_textbox_empty_right.png</src>
+            <dir>right</dir>
+			<font>Arial</font>
+			<fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+		<sprite>
+			<width>20</width>
+			<left>70</left>
+			<top>75</top>
+			<src>villager_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>A villager</name>
+            <text>I am but a simple farmer.</text>
+			<width>85</width>
+			<left>7.5</left>
+			<top>35</top>
+			<src>conversation_textbox_empty_right.png</src>
+            <dir>right</dir>
+			<font>Arial</font>
+			<fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+		<sprite>
+			<width>20</width>
+			<left>70</left>
+			<top>75</top>
+			<src>refugee_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>A Refugee</name>
+            <text>My city was ravaged by drought and war. I hope to start a new life here.</text>
+			<width>85</width>
+			<left>7.5</left>
+			<top>35</top>
+			<src>conversation_textbox_empty_right.png</src>
+            <dir>right</dir>
+			<font>Arial</font>
+			<fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+		<sprite>
+			<width>20</width>
+			<left>70</left>
+			<top>75</top>
+			<src>bandit_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>A Bandit</name>
+            <text>Your money or your life!</text>
 			<width>85</width>
 			<left>7.5</left>
 			<top>35</top>
