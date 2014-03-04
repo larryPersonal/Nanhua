@@ -178,12 +178,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1422"
-            endingLineNumber = "1422"
-            landmarkName = "GameSprite::getHome()"
+            startingLineNumber = "1399"
+            endingLineNumber = "1399"
+            landmarkName = "GameSprite::loadClassPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -274,12 +274,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "656"
-            endingLineNumber = "656"
-            landmarkName = "GameSprite::Wander()"
+            startingLineNumber = "654"
+            endingLineNumber = "654"
+            landmarkName = "GameSprite::loadClassPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -290,11 +290,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "631"
-            endingLineNumber = "631">
+            startingLineNumber = "629"
+            endingLineNumber = "629"
+            landmarkName = "GameSprite::loadClassPossessions()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -304,12 +306,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "653"
-            endingLineNumber = "653"
-            landmarkName = "GameSprite::Wander()"
+            startingLineNumber = "651"
+            endingLineNumber = "651"
+            landmarkName = "GameSprite::loadClassPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -336,12 +338,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
-            landmarkName = "GameSprite::Wander()"
+            startingLineNumber = "636"
+            endingLineNumber = "636"
+            landmarkName = "GameSprite::loadClassPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -352,12 +354,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "644"
-            endingLineNumber = "644"
-            landmarkName = "GameSprite::Wander()"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
+            landmarkName = "GameSprite::loadClassPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -368,12 +370,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "415189254.832904"
+            timestampString = "415599612.878318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "633"
-            endingLineNumber = "633"
-            landmarkName = "GameSprite::Wander()"
+            startingLineNumber = "631"
+            endingLineNumber = "631"
+            landmarkName = "GameSprite::loadClassPossessions()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -58,6 +58,10 @@ struct Possessions
     
     float cumulativeTime;
     
+    /* This section is only for the bandits */
+    int current_endurance;
+    int max_endurance;
+    
     Possessions()
     {
         /* common stats */

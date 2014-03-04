@@ -98,11 +98,6 @@ public:
     
     void ReplaceSpriteRep();
     
-    //this is to prevent the nohouse and nojob mods from kicking in immediately after the sprite quits/sells house.
-    bool justSoldHouse;
-    bool justQuitJob;
-    bool shouldUpgrade;
-    
     CCCallFuncN* callback;
     
     // jerry added
@@ -112,10 +107,6 @@ public:
     
     //this is due to the greedy logic where the sprite still attempts to go to its destination, even when the destination is unreachable.
     //the pathing must resume.
-    
-    /*unused*/
-    int fdaysLeft;
-    int internal_rank;
    
     bool isLeavingNextUpdate;
     /* End unused*/
@@ -219,9 +210,6 @@ public:
     bool isDestinationInRange(int buildingID);
     
     void ChangeSpriteTo(GameSprite* sp);
-    
-    void CallbackDayPassed();
-    void CallbackPerformingTask();
     
     // jerry added
     Building* getHome();

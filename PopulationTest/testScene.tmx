@@ -395,13 +395,115 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="21" name="guardtower" tilewidth="142" tileheight="128">
+  <image source="../../../guardtower.png" width="512" height="640"/>
+  <tile id="0">
+   <properties>
+    <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="5000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="military"/>
+    <property name="cost" value="300"/>
+    <property name="description" value="guardTower"/>
+    <property name="food_consumption_rate" value=""/>
+    <property name="jobs_available" value="1"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Guard Tower"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="0"/>
+    <property name="req_building_count" value="15"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="15"/>
+    <property name="research_cost" value="300"/>
+    <property name="research_time" value="30"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value="0"/>
+    <property name="work_unit_required" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Ground_0" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1LEKwCAQREEhhf//x+lDwBBiTtYpprBbHnK9tdYBAAAAAJjqWGDDDnTWOYnO87qOVG9McO04eqPzqu7ugs7f932qem8C/1nnJDr/19l9rulevWEHOuucRGedk+gMAAAAAAAAAADw3gn86JK9
+   eJzt1LEKgDAQRMEDi/z/H9uLoIh6YTPFFOmWR7hRVQOC1QQbAAAAAGCbYMMKdNY5ic7fdb3SvTHBsePVG51ndXYXdH6/713dexP4zzon0fm/zu5zT/fuDSvQWeckOuucRGcAAAAAAAAAAIDndsJmkrY=
   </data>
  </layer>
  <layer name="Ground_1" width="90" height="60">
@@ -429,6 +531,15 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJztziEOACAMA8B9YYT/vxVFgq0a4s60oqJVAAAAAAAAAEBiTx8AAAAAeHSYK9jfDgAAAAAAAAAA/O0AxpEA8w==
+  </data>
+ </layer>
+ <layer name="Building_3" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="1"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztwUENAAAIAKFLYf+ovo3gBtQ1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXyyTqQAX
   </data>
  </layer>
 </map>

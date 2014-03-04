@@ -342,7 +342,6 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
     GameSprite* newSprite = (GameSprite*)sp->copy();
     newSprite->retain();
     newSprite->makeSprite(&tilePos);
-    newSprite->internal_rank = getRank(newSprite->spriteClass);
     if (details.length() > 0)
     {
         stringstream ss(details);

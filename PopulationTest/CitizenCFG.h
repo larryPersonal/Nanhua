@@ -16,7 +16,8 @@ std::string citizenDefaults =
 "\"default_hungry_limit\":\"100\","
 "\"default_food_carriage_limit\":\"0\","
 "\"default_energy_limit\":\"100\","
-"\"default_work_unit_per_day\":\"0\""
+"\"default_work_unit_per_day\":\"0\","
+"\"default_starting_endurance\":\"100\""
 "}";
 
 std::string citizenConfig =

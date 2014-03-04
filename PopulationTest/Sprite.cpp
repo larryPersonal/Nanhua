@@ -47,16 +47,11 @@ GameSprite::GameSprite()
     race = 'n';
     
     wanderFlag = false;
-    justSoldHouse = false;
-    justQuitJob = false;
     isLeavingNextUpdate = false;
-    
-    shouldUpgrade = false;
     
     isInBuilding = false;
     
     idleDelay = 0.0f;
-    fdaysLeft = 0.0f;
     
     // Jerry added
     jobLocation = NULL;
@@ -142,7 +137,10 @@ void GameSprite::loadClassPossessions()
     possessions->default_hungry_limit = atoi(defaultsRoot["default_hungry_limit"].asString().c_str());
     
     possessions->default_food_carriage_limit = atoi(defaultsRoot["default_food_carriage_limit"].asString().c_str());
-    possessions->default_energy_limit = atoi(defaultsRoot["default_energy_limit"].asString().c_str()  );
+    possessions->default_energy_limit = atoi(defaultsRoot["default_energy_limit"].asString().c_str());
+    
+    possessions->max_endurance = atoi(defaultsRoot["default_starting_endurance"].asString().c_str());
+    possessions->current_endurance = possessions->max_endurance;
 }
 
 void GameSprite::clearSetup()
@@ -1279,7 +1277,6 @@ void GameSprite::ChangeSpriteTo(GameSprite *sp)
     walkingFrameCount = sp->walkingFrameCount;
     spriteName = sp->spriteName;
     spriteClass = sp->spriteClass;
-    internal_rank = GameScene::getThis()->spriteHandler->getRank(spriteClass);
     config_doc = sp->config_doc;
     defaults_doc = sp->defaults_doc;
     
@@ -1388,30 +1385,10 @@ void GameSprite::PathToHighTemple()
     if (hasPath)
     {
         isFollowingMoveInstruction = true;
-        shouldUpgrade = true;
         followPath();
     }
     return;
 
-}
-
-void GameSprite::CallbackDayPassed()
-{
-    if (race != 'a') return;
-    if (fdaysLeft > 0)
-        --fdaysLeft;
-    else
-    {
-        saySpeech("My contract's up.",2);
-        isLeavingNextUpdate = true;
-    }
-    
-}
-
-//
-void GameSprite::CallbackPerformingTask()
-{
-    
 }
 
 /*
