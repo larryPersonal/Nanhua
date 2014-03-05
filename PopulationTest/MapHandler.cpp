@@ -72,9 +72,9 @@ void MapHandler::updatePlayArea(cocos2d::CCPoint min, cocos2d::CCPoint max)
                                      playarea_max.y - playarea_min.y);
     
     CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
-    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+    for (int i = 0; i < mapPtr->getMapSize().width; i++)
     {
-        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        for (int j = 0; j < mapPtr->getMapSize().height; j++)
         {
             if (!playAreaRect.containsPoint(ccp(i,j)))
             {

@@ -18,7 +18,7 @@ BuildScroll* BuildScroll::create(){
     if (pRet && pRet->init())
     {
         pRet->autorelease();
-        pRet->setTouchEnabled(true);
+        //pRet->setTouchEnabled(true);
         return pRet;
     }
     else
@@ -47,7 +47,7 @@ BuildScroll::BuildScroll(){
     // initialize the gui handler
     background_rect->ini(700, 100, 100, 200);
     
-    this->setTouchEnabled(true);
+    //this->setTouchEnabled(true);
 }
 
 BuildScroll::~BuildScroll()

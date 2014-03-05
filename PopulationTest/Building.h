@@ -124,9 +124,11 @@ public:
     // jerry added
     CCArray* memberSpriteList;
     
-    CCPoint getWorldPosition();
+    CCPoint tilePos();
     
     bool isCurrentConstructing;
+    
+    CCPoint getWorldPosition();
     
     /*jobs*/
     int number_of_jobs;

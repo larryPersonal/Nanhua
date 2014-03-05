@@ -18,6 +18,7 @@
 #include "SelectPopulation.h"
 #include "GameManager.h"
 #include "BuildingInfoMenu.h"
+#include "BuildScroll.h"
 
 #include <cmath>
 
@@ -259,6 +260,14 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         _previous_pos_y = touch->getLocation().y;
     }
     
+    /*
+    // handle the build button
+    if(BuildScroll::getThis() != NULL)
+    {
+        BuildScroll::getThis()->closeMenu(true);
+    }
+    */
+    
             //Zoom
             if (touches->count() == 2)
             {
@@ -332,6 +341,14 @@ void GameScene::postDrag(float time)
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
+    /*
+    // handle the build button
+    if(BuildScroll::getThis() != NULL)
+    {
+        BuildScroll::getThis()->closeMenu(true);
+    }
+    */
+    
     //If dragged screen, don't count it as a tap
     if (!isThisTapCounted) {
         isThisTapCounted = true;

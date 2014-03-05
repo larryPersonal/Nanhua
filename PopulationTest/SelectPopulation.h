@@ -97,6 +97,13 @@ public:
     
     //Update
     virtual void update(float deltaTime);
+    
+    void prepareJob(GameSprite*);
+    
+    void cancelTask();
+    void performTask();
+    void scheduleGuardTower();
+    void scheduleFarming();
 };
 
 

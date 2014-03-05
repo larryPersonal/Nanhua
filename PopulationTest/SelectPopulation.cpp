@@ -327,10 +327,7 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             break;
         case -2:
             // button ok -> to construct
-            building->isCurrentConstructing = true;
-            scheduleConstruction();
-            this->closeMenu(true);
-            GameScene::getThis()->setTouchEnabled(true);
+            performTask();
             break;
         case -3:
         {
@@ -342,25 +339,7 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
         case -4:
         {
             // button cancel -> cancel the construction;
-            CCArray* memberSprites = building->memberSpriteList;
-            for (int i = 0; i < memberSprites->count(); i++)
-            {
-                GameSprite* gs = (GameSprite*) memberSprites->objectAtIndex(i);
-                gs->currAction = IDLE;
-                gs->nextAction = IDLE;
-                gs->setIsDoingJob(false);
-                gs->spriteClass = "citizen";
-                gs->setJob(NONE);
-                gs->setJobLocation(NULL);
-                gs->setTargetLocation(NULL);
-                gs->changeToCitizen();
-            }
-            building->memberSpriteList->removeAllObjects();
-            if(building->work_unit_current < building->work_unit_required)
-            {
-                building->work_unit_current = 0;
-            }
-            building->isCurrentConstructing = false;
+            cancelTask();
             break;
         }
         default:
@@ -370,28 +349,123 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
     }
 }
 
+void SelectPopulation::cancelTask()
+{
+    CCArray* memberSprites = building->memberSpriteList;
+    
+    
+    for (int i = 0; i < memberSprites->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) memberSprites->objectAtIndex(i);
+        gs->currAction = IDLE;
+        gs->nextAction = IDLE;
+        gs->setIsDoingJob(false);
+        gs->spriteClass = "citizen";
+        gs->setJob(NONE);
+        gs->setJobLocation(NULL);
+        gs->setTargetLocation(NULL);
+        gs->changeToCitizen();
+    }
+    building->memberSpriteList->removeAllObjects();
+    
+    if(building->isUnderConstruction())
+    {
+        CCPoint tilePos = building->getWorldPosition();
+        tilePos = GameScene::getThis()->mapHandler->tilePosFromLocation(tilePos);
+        GameScene::getThis()->mapHandler->UnBuild(tilePos);
+        this->closeMenu(true);
+        GameScene::getThis()->setTouchEnabled(true);
+    }
+    building->isCurrentConstructing = false;
+}
+
+void SelectPopulation::performTask()
+{
+    if(building->isUnderConstruction())
+    {
+        // if the building is under construction -> construct the building.
+        building->isCurrentConstructing = true;
+        scheduleConstruction();
+    }
+    else
+    {
+        // if the building is a guard tower -> assign a sprite to become sodier!!!
+        if (building->buildingType == MILITARY)
+        {
+            scheduleGuardTower();
+        }
+        else if(building->buildingType == AMENITY)
+        {
+            scheduleFarming();
+        }
+    }
+    this->closeMenu(true);
+    GameScene::getThis()->setTouchEnabled(true);
+}
+
+void SelectPopulation::prepareJob(GameSprite* gameSprite)
+{
+    gameSprite->currAction = IDLE;
+    gameSprite->setJobLocation(building);
+    gameSprite->setTargetLocation(building);
+    gameSprite->GoBuilding(building);
+    
+    gameSprite->futureAction1 = EATING;
+    gameSprite->futureAction2 = RESTING;
+    
+    building->memberSpriteList->addObject(gameSprite);
+}
+
+void SelectPopulation::scheduleGuardTower()
+{
+    for (int i = 0; i < memberArray->count(); i++)
+    {
+        GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
+        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_SOLDIER, F_SOLDIER));
+        
+        
+        prepareJob(gameSprite);
+        
+        gameSprite->nextAction = GUARD;
+        
+        
+        gameSprite->setJob(SOLDIER);
+    }
+}
+
 void SelectPopulation::scheduleConstruction()
 {
     for (int i = 0; i < memberArray->count(); i++)
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
-        gameSprite->currAction = IDLE;
-        gameSprite->nextAction = BUILD;
-        
         gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_BUILDER, F_BUILDER));
         
+        prepareJob(gameSprite);
+        
+        gameSprite->nextAction = BUILD;
+        
+        
+        
         gameSprite->setJob(BUILDER);
-        gameSprite->setJobLocation(building);
-        gameSprite->setTargetLocation(building);
-        gameSprite->GoBuild(building);
-        
-        gameSprite->futureAction1 = EATING;
-        gameSprite->futureAction2 = RESTING;
-        
-        building->memberSpriteList->addObject(gameSprite);
     }
 
+}
+
+void SelectPopulation::scheduleFarming()
+{
+    for (int i = 0; i < memberArray->count(); i++)
+    {
+        GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
+        
+        prepareJob(gameSprite);
+        
+        gameSprite->nextAction = FARMING;
+        
+        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_FARMER, F_FARMER));
+        
+        gameSprite->setJob(FARMER);
+    }
 }
 
 
