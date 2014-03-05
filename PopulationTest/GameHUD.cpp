@@ -13,6 +13,7 @@
 #include "PopulationMenu.h"
 #include "TutorialHandler.h"
 #include "GlobalHelper.h"
+#include "MainMenuScene.h"
 
 GameHUD* GameHUD::SP;
 
@@ -367,6 +368,7 @@ void GameHUD::createInitialGUI(){
     createObjectiveMenu();
     createTimeMenu();
     createBuildMenu();
+    createSystemMenu();
  
 }
 
@@ -768,97 +770,6 @@ void GameHUD::createTimeMenu()
     {
         timeLabel_2->CCNode::setPosition(timeMenu->boundingBox().size.width - 50.0f, screenSize.height - 200.0f);
     }
-    
-    menuItems_pause = CCArray::create();
-    menuItems_pause->retain();
-    
-    pauseButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::stickGameHappiness));
-    resumeButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::stickGameHappiness));
-    if(isHori)
-    {
-        pauseButton->setScale(screenSize.width / spriteSize.width * 0.05f);
-        resumeButton->setScale(screenSize.width / spriteSize.width * 0.05f);
-
-    }
-    else
-    {
-        pauseButton->setScale(screenSize.height / spriteSize.width * 0.05f);
-        resumeButton->setScale(screenSize.height / spriteSize.width * 0.05f);
-    }
-    resumeButton->setVisible(false);
-    
-    stickHappinessButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::stickGameHappiness));
-    resumeHappinessButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::stickGameHappiness));
-    stickHappinessButton->setScale(screenSize.width / spriteSize.width * 0.05f);
-    resumeHappinessButton->setScale(screenSize.width / spriteSize.width * 0.05f);
-    resumeHappinessButton->setVisible(false);
-    
-    stickHappinessButton->setPosition(ccp(screenSize.width - 300.0f, screenSize.height - 80.0f));
-    resumeHappinessButton->setPosition(ccp(screenSize.width - 300.0f, screenSize.height - 80.0f));
-    
-    menuItems_pause->addObject(stickHappinessButton);
-    menuItems_pause->addObject(resumeHappinessButton);
-    
-    menuItems_pause->addObject(pauseButton);
-    menuItems_pause->addObject(resumeButton);
-    menu_pause = CCMenu::createWithArray(menuItems_pause);
-    menu_pause->setAnchorPoint(ccp(0.5, 0.5));
-    
-    if(isHori)
-    {
-        menu_pause->setAnchorPoint(ccp(1, 1));
-        menu_pause->setPosition(screenSize.width - 280.0f, screenSize.height - 40.0f);
-    }
-    else
-    {
-        menu_pause->setAnchorPoint(ccp(0, 1));
-        menu_pause->setPosition(screenSize.width - 150.0f, screenSize.height - 140.0f);
-    }
-    
-    this->addChild(menu_pause, 5);
-}
-
-void GameHUD::pauseGame()
-{
-    if(pause)
-    {
-        pause = false;
-        pauseButton->setVisible(true);
-        resumeButton->setVisible(false);
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-        
-        for (int i = 0; i < spritesOnMap->count(); i++)
-        {
-            GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-            sp->followPath();
-        }
-    }
-    else
-    {
-        pause = true;
-        pauseButton->setVisible(false);
-        resumeButton->setVisible(true);
-    }
-}
-
-void GameHUD::stickGameHappiness()
-{
-    if(stickHappiness)
-    {
-        stickHappiness = false;
-        pauseButton->setVisible(true);
-        resumeButton->setVisible(false);
-        stickHappinessButton->setVisible(true);
-        resumeHappinessButton->setVisible(false);
-    }
-    else
-    {
-        stickHappiness = true;
-        pauseButton->setVisible(false);
-        resumeButton->setVisible(true);
-        stickHappinessButton->setVisible(false);
-        resumeHappinessButton->setVisible(true);
-    }
 }
 
 void GameHUD::createObjectiveMenu()
@@ -1075,4 +986,97 @@ void GameHUD::addPopulation(){
     {
         GameScene::getThis()->spriteHandler->addSpriteToMap(target, F_REFUGEE);
     }
+}
+
+void GameHUD::createSystemMenu()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    menuItems_pause = CCArray::create();
+    menuItems_pause->retain();
+    
+    pauseButton = CCMenuItemImage::create("pauseIcon.png", "pauseIcon.png", this, menu_selector(GameHUD::pauseGame));
+    resumeButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(GameHUD::pauseGame));
+    systemButton = CCMenuItemImage::create("system.png", "system.png", this, menu_selector(GameHUD::clickSystemButton));
+    stickHappinessButton = CCMenuItemImage::create("happyFace.png", "happyFace.png", this, menu_selector(GameHUD::stickGameHappiness));
+    resumeHappinessButton = CCMenuItemImage::create("normalFace.png", "normalFace.png", this, menu_selector(GameHUD::stickGameHappiness));
+    
+    pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
+    pauseButton->setAnchorPoint(ccp(1, 1));
+    pauseButton->setPosition(ccp(screenSize.width - 50.0f, screenSize.height - 125.0f));
+    
+    resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
+    resumeButton->setAnchorPoint(ccp(1, 1));
+    resumeButton->setPosition(ccp(screenSize.width - 50.0f, screenSize.height - 125.0f));
+    
+    systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
+    systemButton->setAnchorPoint(ccp(1, 1));
+    systemButton->setPosition(ccp(screenSize.width, screenSize.height - 125.0f));
+    
+    stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
+    stickHappinessButton->setAnchorPoint(ccp(1, 1));
+    stickHappinessButton->setPosition(ccp(screenSize.width - 100.0f, screenSize.height - 125.0f));
+    
+    resumeHappinessButton->setScale(screenSize.width / resumeHappinessButton->boundingBox().size.width * 0.05f);
+    resumeHappinessButton->setAnchorPoint(ccp(1, 1));
+    resumeHappinessButton->setPosition(ccp(screenSize.width - 100.0f, screenSize.height - 125.0f));
+    
+    resumeButton->setVisible(false);
+    resumeHappinessButton->setVisible(false);
+    
+    menuItems_pause->addObject(stickHappinessButton);
+    menuItems_pause->addObject(resumeHappinessButton);
+    menuItems_pause->addObject(systemButton);
+    menuItems_pause->addObject(pauseButton);
+    menuItems_pause->addObject(resumeButton);
+    
+    menu_pause = CCMenu::createWithArray(menuItems_pause);
+    menu_pause->setAnchorPoint(ccp(0.5, 0.5));
+    menu_pause->setPosition(CCPointZero);
+    
+    this->addChild(menu_pause, 5);
+}
+
+void GameHUD::pauseGame()
+{
+    if(pause)
+    {
+        pause = false;
+        pauseButton->setVisible(true);
+        resumeButton->setVisible(false);
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        
+        for (int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+            sp->followPath();
+        }
+    }
+    else
+    {
+        pause = true;
+        pauseButton->setVisible(false);
+        resumeButton->setVisible(true);
+    }
+}
+
+void GameHUD::stickGameHappiness()
+{
+    if(stickHappiness)
+    {
+        stickHappiness = false;
+        stickHappinessButton->setVisible(true);
+        resumeHappinessButton->setVisible(false);
+    }
+    else
+    {
+        stickHappiness = true;
+        stickHappinessButton->setVisible(false);
+        resumeHappinessButton->setVisible(true);
+    }
+}
+
+void GameHUD::clickSystemButton()
+{
+    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
 }

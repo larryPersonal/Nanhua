@@ -52,6 +52,8 @@ public:
     
     //General menu callback
     void onMenuItemSelected(CCObject*);
+    
+    void tryToBuild(int);
 };
 
 #endif

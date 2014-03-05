@@ -36,6 +36,22 @@ static int PickRandomDestination_Glue(lua_State *L)
     return 1;
 }
 
+static int BanditsAttack_Glue(lua_State *L)
+{
+    if (!sprite)
+    {
+        lua_pushboolean(L, false);
+    }
+    else
+    {
+        if (sprite->getAction() == IDLE)
+        {
+            lua_pushboolean(L, sprite->attack());
+        }
+    }
+    return 1;
+}
+
 
 /******************************************* behaviour default functions ********************************/
 
@@ -145,6 +161,7 @@ void Behavior::setSprite(GameSprite *ptrSprite)
 void Behavior::registerFunctions(lua_State* L)
 {
     lua_register(L, "GoWander", PickRandomDestination_Glue);
+    lua_register(L, "Attack", BanditsAttack_Glue);
 }
 
 

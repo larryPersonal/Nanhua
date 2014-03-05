@@ -96,6 +96,10 @@ struct SettingsLevel
     float hungry_happiness_angry_decay;
     float quit_happiness;
     
+    // bandit maximum rob amount
+    int max_money_rob;
+    int max_food_rob;
+    
     SettingsLevel()
     {
         default_start_money = 0;
@@ -109,6 +113,9 @@ struct SettingsLevel
         hungry_happiness_unhappy_decay = 0;
         hungry_happiness_angry_decay = 0;
         quit_happiness = 0;
+        
+        max_money_rob = 0;
+        max_food_rob = 0;
     }
     
     void setLevel0()
@@ -124,6 +131,9 @@ struct SettingsLevel
         hungry_happiness_unhappy_decay = 1;
         hungry_happiness_angry_decay = 0.5;
         quit_happiness = 0.01;
+        
+        max_money_rob = 500;
+        max_food_rob = 500;
     }
 };
 

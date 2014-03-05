@@ -59,7 +59,10 @@ GameSprite::GameSprite()
     isDoingJob = false;
     
     foodCarried = 0;
+    current_money_rob = 0;
+    current_food_rob = 0;
     
+    tryEscape = false;
 }
 
 
@@ -276,6 +279,31 @@ GameSprite* GameSprite::create()
      changeAnimation("DL");
      currentDir = "DL";
      
+     // Progressive bar
+     barHP = new ProgressBar();
+     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
+                              CCRectMake(5, 5, 70, 10),
+                              "loadingbar-empty.png",
+                              "loadingbar-left.png",
+                              "loadingbar-right.png",
+                              "loadingbar-full.png");
+     barHP->setAnchorPoint(ccp(0.5, 0.5));
+     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
+     barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f, spriteRep->boundingBox().size.height * 1.0f));
+     spriteRep->addChild(barHP);
+     
+     mGameCurrentEndurance = getPossessions()->current_endurance;
+     mGameMaxEndurance = getPossessions()->max_endurance;
+     
+     if (type != M_BANDIT && type != F_BANDIT)
+     {
+         barHP->setVisible(false);
+     }
+     else
+     {
+         barHP->setVisible(true);
+     }
+     
      //Speech bubble
      speechBubble = new SpeechBubble();
      speechBubble->createSpeechBubble();
@@ -341,7 +369,6 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
     
         if (from.equals(to))
         {
-            CCLog("I'm moving to the same position ma");
             isFollowingMoveInstruction = false;
             return false;
         }
@@ -689,6 +716,50 @@ bool GameSprite::Wander()
    // wanderFlag = !wanderFlag;
 }
 
+bool GameSprite::attack()
+{
+    // check the tryEscape flag, if true, run away    
+    if(tryEscape)
+    {
+        return escape();
+    }
+    
+    // The very first action for a bandit is always trying to robe the nearest granary for food.
+    if (spriteClass.compare("bandit") == 0 && hasValidGranary())
+    {
+        return true;
+    }
+    
+    // if no granary or all granary are empty, attack the town hall for money
+    if(spriteClass.compare("bandit") == 0)
+    {
+        Building* townHall = NULL;
+        CCArray* allSpecial = GameScene::getThis()->buildingHandler->specialOnMap;
+        for (int i = 0; i < allSpecial->count(); i++)
+        {
+            Building* tempBuilding = (Building*) allSpecial->objectAtIndex(i);
+            if(tempBuilding->build_uint_required >= 10000)
+            {
+                townHall = tempBuilding;
+                break;
+            }
+        }
+        
+        if (townHall != NULL && GameHUD::getThis()->money > 0)
+        {
+            nextAction = ROB;
+            setTargetLocation(townHall);
+            GoBuilding(townHall);
+            return true;
+        }
+        else
+        {
+            tryEscape = true;
+        }
+    }
+    return false;
+}
+
 void GameSprite::StopMoving()
 {
     if (currAction == IDLE && shouldStopNextSquare) return;
@@ -772,7 +843,7 @@ void GameSprite::updateSprite(float dt)
         
         if (possessions->loyaltyRating <= 0)
         {
-            saySpeech(UNHAPPY, 2.0f);
+           // saySpeech(UNHAPPY, 2.0f);
             isLeavingNextUpdate = true;
             
         }
@@ -1151,6 +1222,30 @@ bool GameSprite::GoBuilding(Building* b)
     return hasPath;
 }
 
+/* paths to a target location. */
+bool GameSprite::GoLocation(CCPoint endPos)
+{
+    CCPoint startPos = getWorldPosition();
+    
+    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    
+    int tempDistance = getPathDistance(startPos, endPos);
+    
+    if(tempDistance <= 0)
+    {
+        return true;
+    }
+    
+    bool hasPath = CreatePath(startPos, endPos);
+    if(hasPath )//&& !isFollowingMoveInstruction)
+    {
+        isFollowingMoveInstruction = true;
+        followPath();
+    }
+    
+    return false;
+}
+
 /*Paths to a building under construction. Fails if there isn't a building under construction.*/
 bool GameSprite::GoBuild(Building *b)
 {
@@ -1336,36 +1431,19 @@ void GameSprite::ChangeSpriteTo(GameSprite *sp)
 void GameSprite::ReplaceSpriteRep()
 {
     CCPoint pos = spriteRep->getPosition();
-  //  spriteRunAction->stop();
-  //  spriteAnimAction->stop();
-   // spriteRep->stopAction(spriteRunAction);
-   // spriteRep->stopAction(spriteAnimAction);
     spriteRep->stopAllActions();
     
     delete behaviorTree;
     spriteRep->removeChild(speechBubble, true);
     delete speechBubble;
     
-    //destroy the AI
-    // (( CCSpriteBatchNode* ) GameScene::getThis()->spriteHandler->allSpriteSheets->objectAtIndex(this->batchLayerIndex))->removeChild(spriteRep, true);
-    
-    
     GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
-    //spriteRunAction->release();
-    //spriteAnimAction->release();
-    
-   // if (spriteRep != NULL)
-  //  spriteRep->release();
     
     spriteRep = CCSprite::create();
-    
-    //std::string initName = spriteName->getCString();// +"_idle_UL_0";
-    //initName += "_walk_DL_0";
     
     std::string initName = spriteName;
     initName+= "_IDL001.png";
     spriteRep->initWithSpriteFrameName(initName.c_str());
-   // spriteRep->retain();
     
     initAI(true);
     
@@ -1382,9 +1460,11 @@ void GameSprite::ReplaceSpriteRep()
     //Speech bubble
     speechBubble = new SpeechBubble();
     speechBubble->createSpeechBubble();
-   
+    
+    
     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f,
                                   spriteRep->boundingBox().size.height * 1.5f));
+    
     spriteRep->addChild(speechBubble);
     
     GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
@@ -1751,8 +1831,53 @@ bool GameSprite::findNearestHome()
     return true;
 }
 
+bool GameSprite::hasValidGranary()
+{
+    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    Building* nearestGranary = NULL;
+    int distance = 999999;
+    
+    for (int i = 0; i < allGranary->count(); i++)
+    {
+        Building* b = (Building*)allGranary->objectAtIndex(i);
+        
+        CCPoint startPos = getWorldPosition();
+        CCPoint endPos = b->getWorldPosition();
+        
+        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        
+        int tempDistance = getPathDistance(startPos, endPos);
+        
+        if(tempDistance < distance && b->currentStorage > 0)
+        {
+            distance = tempDistance;
+            nearestGranary = b;
+        }
+    }
+    
+    if (nearestGranary != NULL)
+    {
+        possessions->targetLocation = nearestGranary;
+        nextAction = ROB;
+        GoBuilding(nearestGranary);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void GameSprite::updateHungry(float dt)
 {
+    if (mGameCurrentEndurance != possessions->current_endurance || mGameMaxEndurance != possessions->max_endurance)
+    {
+        mGameCurrentEndurance = possessions->current_endurance;
+        mGameMaxEndurance = possessions->max_endurance;
+        barHP->setValue((float) mGameCurrentEndurance / (float) mGameMaxEndurance);
+    }
+    
     if(possessions->currentHungry > 0.0)
     {
         return;
@@ -1894,3 +2019,13 @@ void GameSprite::checkDropRate()
     }
 }
 
+bool GameSprite::escape()
+{
+    CCPoint target = CCPointMake(29,33);
+    if(GoLocation(target))
+    {
+        isLeavingNextUpdate = true;
+        return true;
+    }
+    return false;
+}

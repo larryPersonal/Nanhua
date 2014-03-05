@@ -447,6 +447,35 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             }
         }
     }
+    else if(sp->currAction == ROB && sp->getTargetLocation() == this)
+    {
+        // if the building to be rob is a town hall, rob the money;
+        if(build_uint_required >= 10000 && GameHUD::getThis()->money > 0 && sp->current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob)
+        {
+            GameHUD::getThis()->money--;
+            sp->current_money_rob++;
+            
+            if(GameHUD::getThis()->money < 0)
+            {
+                GameHUD::getThis()->money = 0;
+                sp->current_money_rob--;
+            }
+        }
+        else
+        {
+            // if the building to rob is a granary, rob the food.
+            if(currentStorage > 0)
+            {
+                this->currentStorage--;
+                sp->current_food_rob++;
+            }
+            else
+            {
+                sp->currAction = IDLE;
+                sp->setTargetLocation(NULL);
+            }
+        }
+    }
     else if (buildingType == HOUSING)
     // if the house is a place for resting
     {

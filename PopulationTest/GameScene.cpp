@@ -49,6 +49,8 @@ GameScene::GameScene()
         default:
             break;
     }
+    
+    warMode = true;
 }
 
 GameScene::~GameScene()
@@ -523,14 +525,21 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             //Check if clicking on building/sprite/tokens
             default:
             {
-                if (!handleTouchTokens(touchLoc))
+                if (!warMode)
                 {
-                    // if touched tokens, don't check for sprite and building
-                    if (!handleTouchSprite(touchLoc))
+                    if (!handleTouchTokens(touchLoc))
                     {
-                        // if touched sprite, dont check for building
-                        handleTouchBuilding(touchLoc, tilePos);
+                        // if touched tokens, don't check for sprite and building
+                        if (!handleTouchSprite(touchLoc))
+                        {
+                            // if touched sprite, dont check for building
+                            handleTouchBuilding(touchLoc, tilePos);
+                        }
                     }
+                }
+                else
+                {
+                    handleTouchSprite(touchLoc);
                 }
             }
                 break;
@@ -702,9 +711,25 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
         
         if (gameSprite->spriteRep->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
         {
-            SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
-            spriteInfoMenu->autorelease();
-            spriteInfoMenu->useAsBasePopupMenu();
+            if (!warMode)
+            {
+                SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
+                spriteInfoMenu->autorelease();
+                spriteInfoMenu->useAsBasePopupMenu();
+            }
+            else
+            {
+                if (gameSprite->type == F_BANDIT || gameSprite->type == M_BANDIT)
+                {
+                    gameSprite->getPossessions()->current_endurance -= 50;
+                    if (gameSprite->getPossessions()->current_endurance <= 0)
+                    {
+                        gameSprite->getPossessions()->current_endurance = 0;
+                        gameSprite->tryEscape = true;
+                        gameSprite->escape();
+                    }
+                }
+            }
             return true;
         }
     }

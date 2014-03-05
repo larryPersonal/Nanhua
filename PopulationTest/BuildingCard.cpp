@@ -132,7 +132,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
     }
     
     CCMenuItemImage* pMenuItemImage = (CCMenuItemImage *)(pSender);
-    int tag =pMenuItemImage->getTag();
+    int tag = pMenuItemImage->getTag();
     switch (tag)
     {
         case -3 : //build path
@@ -150,18 +150,26 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             break;
         default:
         {
-            stringstream ss;
-            Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(tag);
-            
-            if(buildingToBuy == NULL)
-            {
-                return;
-            }
-            GameHUD::getThis()->setTapMode(1);
-            GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
-            GameScene::getThis()->isThisTapCounted = true;
-            BuildScroll::getThis()->closeMenu();
+            tryToBuild(tag);
         }
             break;
     }
+}
+
+void BuildingCard::tryToBuild(int tag)
+{
+    Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(tag);
+    if(buildingToBuy == NULL)
+    {
+        return;
+    }
+    
+    if(GameHUD::getThis()->money > buildingToBuy->buildingCost)
+    {
+        GameHUD::getThis()->money -= buildingToBuy->buildingCost;
+        GameHUD::getThis()->setTapMode(1);
+        GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
+    }
+    GameScene::getThis()->isThisTapCounted = true;
+    BuildScroll::getThis()->closeMenu();
 }

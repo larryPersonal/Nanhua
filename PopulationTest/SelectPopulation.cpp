@@ -140,7 +140,7 @@ void SelectPopulation::createMenuItems()
         buttonCancel->setTag(-4);
         buttonCancel->setAnchorPoint(ccp(1, 1));
         
-        if (building->isCurrentConstructing)
+        if (building->isCurrentConstructing || (!building->isCurrentConstructing && memberArray->count() > 0))
         {
             buttonOk->setVisible(false);
             buttonCancel->setVisible(true);
@@ -272,37 +272,44 @@ void SelectPopulation::createMenuItems()
         
         this->schedule(schedule_selector(SelectPopulation::update), 0.25f);
         
+        CCArray* spritesShown = NULL;
         // if the building is in construction, set the member icons
         if (building->isCurrentConstructing)
         {
-            for (int i = 0; i < spritesForSelection->count(); i++)
-            {
-                GameSprite* gameSprite = (GameSprite*) spritesForSelection->objectAtIndex(i);
-                
-                CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
-                memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
-                memberSpriteBackground->setAnchorPoint(ccp(0, 1));
-                memberSpriteBackground->setPosition(ccp(30.0f + 70.0f * i, -135.0f));
-                this->addChild(memberSpriteBackground, 4);
-                
-                std::string tempStr = gameSprite->spriteName;
-                CCMenuItemImage* memberSprite = CCMenuItemImage::create(tempStr.append("_port.png").c_str(), tempStr.c_str(), this,  menu_selector(SelectPopulation::cancelSprite));
-                memberSprite->setScale( 60.0f / memberSprite->boundingBox().size.width );
-                memberSprite->setAnchorPoint(ccp(0, 1));
-                memberSprite->setPosition(ccp(35.0f + 70.0f * i, -137.0f));
-                memberSprite->setTag(i);
-                
-                CCArray* newMenuItems = CCArray::create();
-                newMenuItems->addObject(memberSprite);
-                CCMenu* newMenu = CCMenu::createWithArray(newMenuItems);
-                newMenu->setPosition(CCPointZero);
-                this->addChild(newMenu, 4);
-                
-                memberMenuArray->addObject(newMenu);
-                memberRowArray->addObject(memberSprite);
-                memberArray->addObject(gameSprite);
-                memberRowBackgroundArray->addObject(memberSpriteBackground);
-            }
+            spritesShown = spritesForSelection;
+        }
+        else
+        {
+            spritesShown = building->memberSpriteList;
+        }
+        
+        for (int i = 0; i < spritesShown->count(); i++)
+        {
+            GameSprite* gameSprite = (GameSprite*) spritesShown->objectAtIndex(i);
+            
+            CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
+            memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
+            memberSpriteBackground->setAnchorPoint(ccp(0, 1));
+            memberSpriteBackground->setPosition(ccp(30.0f + 70.0f * i, -135.0f));
+            this->addChild(memberSpriteBackground, 4);
+            
+            std::string tempStr = gameSprite->spriteName;
+            CCMenuItemImage* memberSprite = CCMenuItemImage::create(tempStr.append("_port.png").c_str(), tempStr.c_str(), this,  menu_selector(SelectPopulation::cancelSprite));
+            memberSprite->setScale( 60.0f / memberSprite->boundingBox().size.width );
+            memberSprite->setAnchorPoint(ccp(0, 1));
+            memberSprite->setPosition(ccp(35.0f + 70.0f * i, -137.0f));
+            memberSprite->setTag(i);
+            
+            CCArray* newMenuItems = CCArray::create();
+            newMenuItems->addObject(memberSprite);
+            CCMenu* newMenu = CCMenu::createWithArray(newMenuItems);
+            newMenu->setPosition(CCPointZero);
+            this->addChild(newMenu, 4);
+            
+            memberMenuArray->addObject(newMenu);
+            memberRowArray->addObject(memberSprite);
+            memberArray->addObject(gameSprite);
+            memberRowBackgroundArray->addObject(memberSpriteBackground);
         }
         
     }
@@ -421,13 +428,12 @@ void SelectPopulation::scheduleGuardTower()
     for (int i = 0; i < memberArray->count(); i++)
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
-        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_SOLDIER, F_SOLDIER));
         
+        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_SOLDIER, F_SOLDIER));
         
         prepareJob(gameSprite);
         
         gameSprite->nextAction = GUARD;
-        
         
         gameSprite->setJob(SOLDIER);
     }

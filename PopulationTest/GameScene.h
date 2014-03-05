@@ -52,6 +52,8 @@ public:
     ConfigSettings* configSettings;
     SettingsLevel* settingsLevel;
     
+    bool warMode;
+    
 public:
     
     CCNode* screenCenter;

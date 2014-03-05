@@ -33,7 +33,7 @@ std::string banditConfig =
 "\"name\":\"Walk Around\","
 "\"type\":\"behaviour\","
 "\"file_name\":\"banditbehavior.lua\","
-"\"func_name\":\"goWander\""
+"\"func_name\":\"attack\""
 "}]"
 "}]"
 "}";

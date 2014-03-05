@@ -19,6 +19,7 @@
 #include "Possessions.h"
 #include "SpeechBubble.h"
 #include "Requirements.h"
+#include "ProgressBar.h"
 
 #include <json/json.h>
 
@@ -34,7 +35,7 @@ enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
                 SPRITETYPE_END = 12};
 
 
-enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, GET_HOME, GUARD, ACTION_END = 12};
+enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, GET_HOME, GUARD, ROB, ACTION_END = 13};
 
 enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER = 4 };
 
@@ -79,7 +80,19 @@ private:
     float token_drop_cooldown_treshold;
     float token_drop_rate;
     
+    
+    
 public:
+    // bandit's escape flag
+    bool tryEscape;
+    
+    int mGameCurrentEndurance;
+    int mGameMaxEndurance;
+    
+    // the variables that the bandits stole from the village.
+    int current_money_rob;
+    int current_food_rob;
+    
     std::string config_doc;
     std::string defaults_doc;
     
@@ -126,13 +139,10 @@ public:
     std::string spriteClass;
     std::string spriteDisplayedName;
     
-    
     GameSprite();
     virtual ~GameSprite();
     
-    
     void followPath();
-    
     
     virtual GameSprite* copyWithZone(CCZone *pZone);
 
@@ -149,6 +159,7 @@ public:
     int batchLayerIndex;
     
     CCSprite* spriteRep;
+    ProgressBar* barHP;
     
     /*holds a path. use pathfinding to deal with it*/
     CCArray* path;
@@ -170,8 +181,8 @@ public:
     
     void initAI(bool isUpgrade = false);
     
-     void makeSprite(CCPoint* tilePos);
-     void unmakeSprite();
+    void makeSprite(CCPoint* tilePos);
+    void unmakeSprite();
     void unmakeSpriteEndGame();
     
     void moveSpritePosition(CCPoint targert, CCObject* pSender);
@@ -239,6 +250,7 @@ public:
     void setIsFollowingMovementInstruction(bool);
     
     bool GoBuilding(Building* b);
+    bool GoLocation(CCPoint);
     
     bool GoRest(Building* b);
     bool GoEat(Building* b);
@@ -284,6 +296,11 @@ public:
     void dropToken();
     void checkDropTresholdTime();
     void checkDropRate();
+    
+    bool attack();
+    bool hasValidGranary();
+    bool escape();
+    
 };
 
 
