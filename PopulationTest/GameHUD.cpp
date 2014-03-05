@@ -95,7 +95,7 @@ bool GameHUD::init()
     currTapMode = Normal;
     menuIsOpen = false;
     
-    this->CCLayer::setTouchEnabled(true);
+    //this->CCLayer::setTouchEnabled(true);
     
     setAllStats();
     createInitialGUI();
@@ -941,13 +941,14 @@ void GameHUD::createBuildMenu()
     
     buildButton = CCMenuItemImage::create("main-game-buttons_build.png", "main-game-buttons_build.png", this, menu_selector(GameHUD::clickBuildButton));
     buildButton->setScale(0.3f);
-    buildButton->setAnchorPoint(ccp(1, 1));
+    buildButton->setAnchorPoint(ccp(1, 0));
     buildButton->setTag(-1);
+    buildButton->setPosition(ccp(screenSize.width, 0));
     
     menuItems_build->addObject(buildButton);
     menu_build = CCMenu::createWithArray(menuItems_build);
     menu_build->setAnchorPoint(ccp(1, 1));
-    menu_build->setPosition(ccp(screenSize.width, screenSize.height - 120));
+    menu_build->setPosition(CCPointZero);
     
     this->addChild(menu_build, 2);
 }

@@ -240,6 +240,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         else
         // the building has finished the construction process, the villagers will leave the building and become idle
         {
+            this->isCurrentConstructing = false;
             for(int i = 0; i < memberSpriteList->count(); i++)
             {
                 GameSprite* gameS = (GameSprite*) memberSpriteList->objectAtIndex(i);

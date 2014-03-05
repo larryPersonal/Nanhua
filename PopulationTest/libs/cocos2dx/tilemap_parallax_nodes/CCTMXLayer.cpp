@@ -319,6 +319,10 @@ CCSprite* CCTMXLayer::reusedTileWithRect(CCRect rect)
 // CCTMXLayer - obtaining tiles/gids
 CCSprite * CCTMXLayer::tileAt(const CCPoint& pos)
 {
+    //CCLog("1: %f %f", pos.x, pos.y);
+    //CCLog("2: %f %f", m_tLayerSize.width, m_tLayerSize.height);
+    
+    
     CCAssert(pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCAssert(m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
 

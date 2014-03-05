@@ -267,17 +267,17 @@
   <tile id="14">
    <properties>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="500"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
-    <property name="building_type" value="amenity"/>
+    <property name="building_type" value="military"/>
     <property name="cost" value="300"/>
-    <property name="description" value="Farmland"/>
+    <property name="description" value="Protect Your Town"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="3"/>
+    <property name="jobs_available" value="1"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Farm"/>
+    <property name="name" value="Guard Tower"/>
     <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
@@ -287,10 +287,10 @@
     <property name="research_cost" value="300"/>
     <property name="research_time" value="30"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="2000"/>
+    <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="work_unit" value="0"/>
-    <property name="work_unit_required" value="4000"/>
+    <property name="work_unit_required" value="0"/>
    </properties>
   </tile>
   <tile id="15">
@@ -307,7 +307,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="3000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="military"/>
+    <property name="building_type" value="special"/>
     <property name="cost" value="200"/>
     <property name="description" value="Brick city wall"/>
     <property name="food_consumption_rate" value="0"/>
@@ -336,7 +336,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="5000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="military"/>
+    <property name="building_type" value="special"/>
     <property name="cost" value="200"/>
     <property name="description" value="brick gate in city wall"/>
     <property name="food_consumption_rate" value="0"/>
