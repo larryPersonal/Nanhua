@@ -1058,7 +1058,7 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             
     }
     if (label == NULL) return;
-    speechBubble->addContent(label, CCPointZero);
+    speechBubble->addContent(label, CCPointZero );
     speechBubble->show(timeInSeconds);
 }
 /*pathing*/
