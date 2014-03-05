@@ -447,7 +447,7 @@ void MapHandler::Populate(CCArray* layers)
     
     
     //again for paths
-    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_0");
+    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_Road");
     
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
@@ -456,7 +456,9 @@ void MapHandler::Populate(CCArray* layers)
             MapTile* tile = this->getTileAt(i,j);
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
-            if (tile->tileGID == 3)
+            CCLog("tile %d %d GID %d", i, j, tile->tileGID);
+            //path is from 20 to 31
+            if (tile->tileGID > 19 && tile->tileGID < 32 )
             {
                 tile->pathHere();
                 pathTiles->addObject(tile);
@@ -734,8 +736,8 @@ void MapHandler::Path(cocos2d::CCPoint &target)
     MapTile* targetTile = getTileAt(target.x, target.y);
     targetTile->pathHere();
     pathTiles->addObject(targetTile);
-    CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
-    groundzero->setTileGID(3, target);
+    CCTMXLayer* groundpath = mapPtr->layerNamed("Ground_Road");
+    groundpath->setTileGID(3, target);
     
 }
 
@@ -857,9 +859,9 @@ void MapHandler::UnPath(cocos2d::CCPoint &target)
     MapTile* targetTile = getTileAt(target.x, target.y);
     pathTiles->removeObject(targetTile);
     targetTile->unpathHere();
-    CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
+    CCTMXLayer* groundpath = mapPtr->layerNamed("Ground_Road");
     
-    groundzero->setTileGID(7, target);
+    groundpath->setTileGID(7, target);
 }
 
 void MapHandler::UnPathPreview()
