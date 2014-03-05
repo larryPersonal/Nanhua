@@ -38,6 +38,9 @@ enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STO
 
 enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER = 4 };
 
+
+
+
 class GameSprite: public CCObject
 {
 private:
@@ -55,6 +58,7 @@ private:
     
     float idleDelay;
     Possessions* possessions;
+    
     SpeechBubble* speechBubble;
     
     /*note: clones will always have NULL requirements, only the primary copy inside allSprites has these initialized.*/
@@ -186,6 +190,8 @@ public:
     
     //Wrapped speech bubble to show text
     void saySpeech(const char* text, float timeInSeconds);
+    void saySpeech(SpeechMood s, float timeInSeconds);
+    
     
     /*movement*/
     bool Wander();

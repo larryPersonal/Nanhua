@@ -562,7 +562,7 @@ void GameScene::FirstRunPopulate()
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(25,19);
         
-        spriteHandler->addSpriteToMap(target, M_REFUGEE);
+        spriteHandler->addSpriteToMap(target, M_BANDIT);
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, M_REFUGEE);

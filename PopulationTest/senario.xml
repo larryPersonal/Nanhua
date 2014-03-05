@@ -5,7 +5,7 @@
 			<width>20</width>
 			<left>10</left>
 			<top>40</top>
-			<src>conversation_textbox_zhugeliang.png</src>
+			<src>zhugeliang_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Zhu Geliang</name>

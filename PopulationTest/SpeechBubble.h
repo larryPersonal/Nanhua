@@ -12,6 +12,17 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
+enum SpeechMood
+{
+    IDLING=0,
+    HAPPY,
+    HUNGRY,
+    STUCK,
+    TIRED,
+    UNHAPPY=5
+};
+
+
 class SpeechBubble:public cocos2d::CCNode
 {
     
@@ -28,6 +39,7 @@ public:
     void createSpeechBubble();
     
     void addContent(CCNode* node, CCPoint offset);
+    void addContent(SpeechMood s, CCPoint offset);
     void clearContent();
     
     void show(float time=5.0f);
