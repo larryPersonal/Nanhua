@@ -19,7 +19,6 @@ SpeechBubble::SpeechBubble()
 void SpeechBubble::createSpeechBubble()
 {
     background = CCSprite::create("bubble.png");
-    background->setScaleY(200 / background->getContentSize().width);
     
     orig_sizeX = background->getContentSize().width;
     background->setAnchorPoint(ccp(0.5, 0));
@@ -29,7 +28,7 @@ void SpeechBubble::createSpeechBubble()
   //  float bbWidth = background->boundingBox().getMaxX() - background->boundingBox().getMinX();
     float bbHeight = background->getContentSize().height;
     
-    contentNode->setPositionY(bbHeight * 0.025f);
+    contentNode->setPositionY(bbHeight * 0.55f);
     
     this->addChild(background);
     this->addChild(contentNode);
@@ -45,11 +44,6 @@ void SpeechBubble::addContent(CCNode* node, CCPoint offset)
     contentNode->addChild(node);
     
     rescale();
-}
-
-void SpeechBubble::addContent(SpeechMood s, CCPoint offset)
-{
-    
 }
 
 void SpeechBubble::clearContent()
