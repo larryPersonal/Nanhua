@@ -53,6 +53,8 @@ GameHUD::GameHUD()
     stickHappiness = false;
     
     isThisTapCounted = false;
+    
+    startWar = false;
 }
 
 GameHUD::~GameHUD()
@@ -1000,6 +1002,8 @@ void GameHUD::createSystemMenu()
     systemButton = CCMenuItemImage::create("system.png", "system.png", this, menu_selector(GameHUD::clickSystemButton));
     stickHappinessButton = CCMenuItemImage::create("happyFace.png", "happyFace.png", this, menu_selector(GameHUD::stickGameHappiness));
     resumeHappinessButton = CCMenuItemImage::create("normalFace.png", "normalFace.png", this, menu_selector(GameHUD::stickGameHappiness));
+    warButton = CCMenuItemImage::create("war.png", "war.png", this, menu_selector(GameHUD::banditsAttack));
+    peaceButton = CCMenuItemImage::create("peace.png", "peace.png", this, menu_selector(GameHUD::banditsAttack));
     
     pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
     pauseButton->setAnchorPoint(ccp(1, 1));
@@ -1021,20 +1025,49 @@ void GameHUD::createSystemMenu()
     resumeHappinessButton->setAnchorPoint(ccp(1, 1));
     resumeHappinessButton->setPosition(ccp(screenSize.width - 100.0f, screenSize.height - 125.0f));
     
+    warButton->setScale(screenSize.width / warButton->boundingBox().size.width * 0.05f);
+    warButton->setAnchorPoint(ccp(0, 0));
+    warButton->setPosition(ccp(0, 0));
+    
+    peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
+    peaceButton->setAnchorPoint(ccp(0, 0));
+    peaceButton->setPosition(ccp(0, 0));
+    
     resumeButton->setVisible(false);
     resumeHappinessButton->setVisible(false);
+    peaceButton->setVisible(false);
     
     menuItems_pause->addObject(stickHappinessButton);
     menuItems_pause->addObject(resumeHappinessButton);
     menuItems_pause->addObject(systemButton);
     menuItems_pause->addObject(pauseButton);
     menuItems_pause->addObject(resumeButton);
+    menuItems_pause->addObject(warButton);
+    menuItems_pause->addObject(peaceButton);
     
     menu_pause = CCMenu::createWithArray(menuItems_pause);
     menu_pause->setAnchorPoint(ccp(0.5, 0.5));
     menu_pause->setPosition(CCPointZero);
     
     this->addChild(menu_pause, 5);
+}
+
+void GameHUD::banditsAttack()
+{
+    if(startWar)
+    {
+        startWar = false;
+        peaceButton->setVisible(false);
+        warButton->setVisible(true);
+        GameScene::getThis()->banditsAttackHandler->stopWar();
+    }
+    else
+    {
+        startWar = true;
+        peaceButton->setVisible(true);
+        warButton->setVisible(false);
+        GameScene::getThis()->banditsAttackHandler->startWar();
+    }
 }
 
 void GameHUD::pauseGame()

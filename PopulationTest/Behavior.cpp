@@ -52,7 +52,6 @@ static int BanditsAttack_Glue(lua_State *L)
     return 1;
 }
 
-
 /******************************************* behaviour default functions ********************************/
 
 

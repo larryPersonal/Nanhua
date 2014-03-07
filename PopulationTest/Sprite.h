@@ -80,9 +80,13 @@ private:
     float token_drop_cooldown_treshold;
     float token_drop_rate;
     
+    bool stopAction;
     
+    CCPoint targetLocation;
     
 public:
+    // bool stopAction;
+    
     // bandit's escape flag
     bool tryEscape;
     
@@ -300,7 +304,7 @@ public:
     bool attack();
     bool hasValidGranary();
     bool escape();
-    
+    bool standBy();
 };
 
 

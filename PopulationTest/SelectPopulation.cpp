@@ -412,7 +412,7 @@ void SelectPopulation::performTask()
 
 void SelectPopulation::prepareJob(GameSprite* gameSprite)
 {
-    gameSprite->currAction = IDLE;
+    gameSprite->currAction = WALKING;
     gameSprite->setJobLocation(building);
     gameSprite->setTargetLocation(building);
     gameSprite->GoBuilding(building);

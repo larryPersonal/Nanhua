@@ -161,6 +161,10 @@ public:
     CCMenuItemImage* stickHappinessButton;
     CCMenuItemImage* resumeHappinessButton;
     
+    bool startWar;
+    CCMenuItemImage* peaceButton;
+    CCMenuItemImage* warButton;
+    
     CCArray* menuItems_pause;
     CCMenu* menu_pause;
 public:
@@ -215,6 +219,7 @@ public:
     
     void pauseGame();
     void stickGameHappiness();
+    void banditsAttack();
     
     void addReputation(int);
     void addPopulation();

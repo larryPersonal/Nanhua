@@ -49,8 +49,6 @@ GameScene::GameScene()
         default:
             break;
     }
-    
-    warMode = true;
 }
 
 GameScene::~GameScene()
@@ -170,11 +168,12 @@ void GameScene::setupScene()
             mapHandler->originateMapToTile();
             
            
-         }
+        }
         
         spriteHandler = new SpriteHandler();
         constructionHandler = new ConstructionHandler();
     
+    banditsAttackHandler = new BanditsAttackHandler();
     
     initOrientationChange();
 }
@@ -525,7 +524,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             //Check if clicking on building/sprite/tokens
             default:
             {
-                if (!warMode)
+                if (!banditsAttackHandler->warMode)
                 {
                     if (!handleTouchTokens(touchLoc))
                     {
@@ -571,7 +570,7 @@ void GameScene::FirstRunPopulate()
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(25,19);
         
-        spriteHandler->addSpriteToMap(target, M_BANDIT);
+        spriteHandler->addSpriteToMap(target, M_REFUGEE);
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, M_REFUGEE);
@@ -624,6 +623,7 @@ void GameScene::update(float time)
         GameHUD::getThis()->update(time);
     
         spriteHandler->update(time);
+        banditsAttackHandler->update(time);
     }
     
     // check lose game
@@ -711,7 +711,7 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
         
         if (gameSprite->spriteRep->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
         {
-            if (!warMode)
+            if (!banditsAttackHandler->warMode)
             {
                 SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
                 spriteInfoMenu->autorelease();
@@ -719,9 +719,10 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
             }
             else
             {
-                if (gameSprite->type == F_BANDIT || gameSprite->type == M_BANDIT)
+                // in war mode which means bandits attack the village, disable all the popup windows. The only task for player is to tap the bandits to let bandits lose endrance. When endurance is less than 0, bandits will escape.
+                if ((gameSprite->type == F_BANDIT || gameSprite->type == M_BANDIT))
                 {
-                    gameSprite->getPossessions()->current_endurance -= 50;
+                    gameSprite->getPossessions()->current_endurance -= 200;
                     if (gameSprite->getPossessions()->current_endurance <= 0)
                     {
                         gameSprite->getPossessions()->current_endurance = 0;

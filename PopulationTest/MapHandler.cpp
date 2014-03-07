@@ -456,7 +456,6 @@ void MapHandler::Populate(CCArray* layers)
             MapTile* tile = this->getTileAt(i,j);
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
-            CCLog("tile %d %d GID %d", i, j, tile->tileGID);
             //path is from 20 to 31
             if (tile->tileGID > 19 && tile->tileGID < 32 )
             {
@@ -861,7 +860,7 @@ void MapHandler::UnPath(cocos2d::CCPoint &target)
     targetTile->unpathHere();
     CCTMXLayer* groundpath = mapPtr->layerNamed("Ground_Road");
     
-    groundpath->setTileGID(7, target);
+    groundpath->setTileGID(0, target);
 }
 
 void MapHandler::UnPathPreview()
