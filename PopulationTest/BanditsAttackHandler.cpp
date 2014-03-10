@@ -41,8 +41,8 @@ void BanditsAttackHandler::update(float dt)
         {
             cumulativeTime = 0;
             addBandit();
-            banditsLeft--;
             tresholdTime = ((float) (rand() % banditsLeft + 1)) / 10.0f;
+            banditsLeft--;
         }
     }
 }

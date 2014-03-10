@@ -66,6 +66,7 @@ GameSprite::GameSprite()
     stopAction = false;
     
     targetLocation = CCPointZero;
+    nextTile = CCPointZero;
 }
 
 

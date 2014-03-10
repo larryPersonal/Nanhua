@@ -80,12 +80,12 @@ private:
     float token_drop_cooldown_treshold;
     float token_drop_rate;
     
-    bool stopAction;
-    
+public:
+    CCPoint nextTile;
     CCPoint targetLocation;
     
-public:
     // bool stopAction;
+    bool stopAction;
     
     // bandit's escape flag
     bool tryEscape;
