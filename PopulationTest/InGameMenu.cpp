@@ -136,7 +136,7 @@ void InGameMenu::createMenuItems()
     //menuItems->addObject(menuItemsPolicy);
     
     
-    GameManager* m = GameManager::getThis();
+    //GameManager* m = GameManager::getThis();
     /*
     if (!m->isMenuItemUnlocked("menu_policy"))
     {

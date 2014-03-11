@@ -819,7 +819,7 @@ void BuildingHandler::EmptyBuildingFirst(Building *b)
         for (int i = 0; i < sh->spritesOnMap->count(); ++i)
         {
             GameSprite *spr = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
-            Possessions* p = spr->getPossessions();
+     //       Possessions* p = spr->getPossessions();
         }
     }
 }

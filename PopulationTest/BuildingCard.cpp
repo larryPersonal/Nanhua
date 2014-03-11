@@ -42,10 +42,10 @@ BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea, i
 
 void BuildingCard::init()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+  //  CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorGreen = ccc3(81, 77, 2);
+  //  ccColor3B colorYellow = ccc3(225, 219, 108);
+ //   ccColor3B colorGreen = ccc3(81, 77, 2);
     stringstream ss;
     
     std::string buildingname;

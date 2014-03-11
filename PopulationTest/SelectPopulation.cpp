@@ -103,7 +103,7 @@ void SelectPopulation::createMenuItems()
 {
     if(!building->inProgress)
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+       // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         ccColor3B colorWhite = ccc3(255, 255, 255);
         
         // background
