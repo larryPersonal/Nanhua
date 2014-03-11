@@ -211,7 +211,7 @@ void SpriteHandler::initialize()
                 configContent = soldierConfig;
                 defaultContent = soldierDefaults;
                 targetClass = "soldier";
-
+                break;
             case 10:
                 targetGender = 'm';
                 fileName = "MMW";
@@ -260,7 +260,6 @@ void SpriteHandler::initialize()
         allSprites->addObject(gs);
         configContent = "";
     }
-
 }
 
 void SpriteHandler::AddToCache(cocos2d::CCSpriteBatchNode *spritesheet, std::string animName)

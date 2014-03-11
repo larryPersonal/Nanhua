@@ -111,18 +111,6 @@ public:
     bool is_token_drop_cooldown;
     float token_drop_cooldown_time;
     
-    bool pause;
-    CCMenuItemImage* pauseButton;
-    CCMenuItemImage* resumeButton;
-    
-    int originalHappiness;
-    bool stickHappiness;
-    CCMenuItemImage* stickHappinessButton;
-    CCMenuItemImage* resumeHappinessButton;
-    
-    CCArray* menuItems_pause;
-    CCMenu* menu_pause;
-    
     // tap mode label;
     CCLabelTTF* tapModeLabel;
     
@@ -161,6 +149,24 @@ public:
     CCArray* menuItems_build;
     CCMenu* menu_build;
     
+    // system menu group
+    CCMenuItemImage* systemButton;
+    
+    bool pause;
+    CCMenuItemImage* pauseButton;
+    CCMenuItemImage* resumeButton;
+    
+    int originalHappiness;
+    bool stickHappiness;
+    CCMenuItemImage* stickHappinessButton;
+    CCMenuItemImage* resumeHappinessButton;
+    
+    bool startWar;
+    CCMenuItemImage* peaceButton;
+    CCMenuItemImage* warButton;
+    
+    CCArray* menuItems_pause;
+    CCMenu* menu_pause;
 public:
     bool menuIsOpen;
     
@@ -200,6 +206,7 @@ public:
     void createTimeMenu();
     void createObjectiveMenu();
     void createBuildMenu();
+    void createSystemMenu();
     
     void rotateStatsMenu();
     void rotateTimeMenu();
@@ -208,9 +215,11 @@ public:
     
     void clickObjectiveButton();
     void clickBuildButton();
+    void clickSystemButton();
     
     void pauseGame();
     void stickGameHappiness();
+    void banditsAttack();
     
     void addReputation(int);
     void addPopulation();

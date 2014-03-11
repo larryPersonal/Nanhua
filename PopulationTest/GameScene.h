@@ -18,6 +18,7 @@
 #include "SimpleAudioEngine.h"
 #include "JobCollection.h"
 #include "GameConfig.h"
+#include "BanditsAttackHandler.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -78,6 +79,7 @@ public:
     BuildingHandler* buildingHandler;
     JobCollection* jobCollection;
     ConstructionHandler* constructionHandler;
+    BanditsAttackHandler* banditsAttackHandler;
     
     CCPoint lastTilePosPreview;
     CCPoint firstPathPosPreview;

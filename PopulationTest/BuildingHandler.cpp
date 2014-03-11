@@ -164,7 +164,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         if (b->buildingName.compare("Farm")==0)
                         {
                             
-                            CCLog("test");
+                            //CCLog("test");
                             
                         }
                     }

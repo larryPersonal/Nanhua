@@ -3219,7 +3219,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "778"
             endingLineNumber = "778"
-            landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroy = false)"
+            landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3235,7 +3235,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "782"
             endingLineNumber = "782"
-            landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroy = false)"
+            landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3251,7 +3251,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "808"
             endingLineNumber = "808"
-            landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroy = false)"
+            landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
