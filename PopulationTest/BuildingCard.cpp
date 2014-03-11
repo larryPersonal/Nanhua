@@ -10,11 +10,12 @@
 #include "GameHUD.h"
 #include "BuildScroll.h"
 
-BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea, int index)
+BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea, int index, int type = 0)
 {
     this->building = building;
     this->scrollArea = scrollArea;
     this->index = index;
+    this->type = type;
     init();
 }
 
@@ -24,9 +25,9 @@ BuildingCard::~BuildingCard()
     menuItemsArray->release();
 }
 
-BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea, int index)
+BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea, int index, int type = 0)
 {
-    BuildingCard *pRet = new BuildingCard(building, scrollArea, index);
+    BuildingCard *pRet = new BuildingCard(building, scrollArea, index, type);
     if (pRet)
     {
         pRet->autorelease();
@@ -45,11 +46,22 @@ void BuildingCard::init()
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
     ccColor3B colorGreen = ccc3(81, 77, 2);
-    std::stringstream ss;
+    stringstream ss;
+    
+    std::string buildingname;
+    if (type == 1)
+        buildingname = "Build Path";
+    else if (type == 2)
+       buildingname = "Destroy Path";
+    else if (type == 3)
+       buildingname = "Demolish";
+    else
+       buildingname = building->buildingName;
     
     // display the name of the building
-    ss << building->buildingName;
-    buildingNameLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    //std::stringstream ss;
+    //ss << building->buildingName;
+    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Arial", 20, CCSizeMake(buildingname.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     buildingNameLabel->setColor(colorBlack);
     buildingNameLabel->setAnchorPoint(ccp(0.5, 1));
     
@@ -59,12 +71,38 @@ void BuildingCard::init()
     buildingInfoButton->setAnchorPoint(ccp(0, 1));
     
     // display the picture of the building
-    CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-    menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
-    buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
-    buildingImage->setTag(building->ID);
-    buildingImage->setAnchorPoint(ccp(0, 1));
-    buildingImage->setContentSize(menuImage->boundingBox().size);
+    if (type == 0)
+    {
+        CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
+        menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
+        buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
+        buildingImage->setTag(building->ID);
+        buildingImage->setAnchorPoint(ccp(0, 1));
+        buildingImage->setContentSize(menuImage->boundingBox().size);
+    }
+    else
+    {
+        //building is likely to be NULL here! use hardcoded stuff. sorry.
+        
+     //   CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
+        CCSprite* menuImage;
+        if (type == 1)
+            menuImage = CCSprite::create("path.png");
+        else if (type == 2)
+            menuImage = CCSprite::create("path.png");
+        else
+            menuImage = CCSprite::create("path.png");
+       
+            
+        
+        
+        menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
+        buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
+        buildingImage->setTag(-type); //this should only give -1, -2 and -3.
+        buildingImage->setAnchorPoint(ccp(0, 1));
+        buildingImage->setContentSize(menuImage->boundingBox().size);
+    }
+    
     
     menuItemsArray = CCArray::create();
     menuItemsArray->retain();
@@ -76,9 +114,20 @@ void BuildingCard::init()
     costImage->setScale(28.0f / costImage->boundingBox().size.width);
     costImage->setAnchorPoint(ccp(0, 1));
     
-    ss.str(std::string());
-    ss << building->buildingCost;
-    costLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    std::string buildingcost;
+    if (type == 1)
+        buildingcost = "0";
+    else if (type == 2)
+        buildingcost = "0";
+    else if (type == 3)
+        buildingcost = "0";
+    else
+    {
+         ss.str(std::string());
+        ss << building->buildingCost;
+        buildingcost = ss.str();
+    }
+    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Arial", 20, CCSizeMake(buildingcost.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     costLabel->setColor(colorBlack);
     costLabel->setAnchorPoint(ccp(0, 1));
     
@@ -87,9 +136,15 @@ void BuildingCard::init()
     populationImage->setScale(28.0f / populationImage->boundingBox().size.width);
     populationImage->setAnchorPoint(ccp(0, 1));
     
-    ss.str(std::string());
-    ss << building->populationLimit;
-    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    std::string populationLimit;
+    if (type != 0) populationLimit = "0";
+    else
+    {
+        ss.str(std::string());
+        ss << building->populationLimit;
+        populationLimit = ss.str();
+    }
+    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Arial", 20, CCSizeMake(populationLimit.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     populationLabel->setColor(colorBlack);
     populationLabel->setAnchorPoint(ccp(0, 1));
     
@@ -98,9 +153,15 @@ void BuildingCard::init()
     buildingTimeImage->setScale(28.0f / buildingTimeImage->boundingBox().size.width);
     buildingTimeImage->setAnchorPoint(ccp(0, 1));
     
-    ss.str(std::string());
-    ss << building->build_uint_required;
-    buildingTimeLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    std::string buildTime;
+    if (type != 0) buildTime = "0";
+    else
+    {
+        ss.str(std::string());
+        ss << building->build_uint_required;
+        buildTime = ss.str();
+    }
+    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Arial", 20, CCSizeMake(buildTime.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     buildingTimeLabel->setColor(colorBlack);
     buildingTimeLabel->setAnchorPoint(ccp(0, 1));
     
@@ -135,19 +196,24 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
     int tag =pMenuItemImage->getTag();
     switch (tag)
     {
-        case -3 : //build path
+        case -1 : //build path
         {
             GameHUD::getThis()->setTapMode(3);
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
         }
             break;
-        case -4 : //unbuild path
+        case -2 : //unbuild path
         {
             GameHUD::getThis()->setTapMode(4);
             BuildScroll::getThis()->closeMenu();
         }
             break;
+        case -3: //destory building
+        {
+            //I'll need to set tap mode to demolish.
+            BuildScroll::getThis()->closeMenu();
+        }
         default:
         {
             stringstream ss;

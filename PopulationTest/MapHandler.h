@@ -13,6 +13,25 @@
 #include "MapTile.h"
 #include "SpriteSolidPoly.h"
 
+//this should be tied directly to GID. I hope.
+enum TileType
+{
+    N = 0,
+    NESE = 21,
+    NESESW = 22,
+    SESW = 23,
+    NESENW = 24,
+    NESESWNW = 25,
+    SESWNW = 26,
+    NENW = 27,
+    NESWNW = 28,
+    SWNW = 29,
+    NESW = 30,
+    SENW = 31,
+};
+
+
+
 class MapHandler
 {
     CCTMXTiledMap* mapPtr;
@@ -80,6 +99,7 @@ public:
     
     /*path*/
     void Path(CCPoint &target);
+    TileType PathTileUpdate(CCPoint &target, int propogate, CCTMXLayer* groundpath, bool destroymode);
     void PathLine(CCPoint &startTarget, CCPoint &endTarget);
     void PathPreview(CCPoint &target);
     CCPoint PathPreviewLineExtend(CCPoint &target, int max);

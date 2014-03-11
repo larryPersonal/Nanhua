@@ -34,15 +34,20 @@ private:
     CCLabelTTF* buildingTimeLabel;
     
     int index;
+    int type;
+    //where 0 is normal,
+    //where 1 overrides with Build Path
+    //where 2 overrides with Destroy Path
+    //Where 3 overrides with Demolish
     
     CCMenu* menu;
     CCArray* menuItemsArray;
     
 public:
-    BuildingCard(Building*, ScrollArea*, int);
+    BuildingCard(Building*, ScrollArea*, int, int);
     ~BuildingCard();
     
-    static BuildingCard* create(Building*, ScrollArea*, int);
+    static BuildingCard* create(Building*, ScrollArea*, int, int);
     
     void init();
     
