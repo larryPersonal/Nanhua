@@ -39,8 +39,9 @@ enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STO
 
 enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER = 4 };
 
-
-
+enum SpriteCombatState {
+    C_IDLE = 0, C_COMBAT, C_ESCAPE = 2
+};
 
 class GameSprite: public CCObject
 {
@@ -88,6 +89,7 @@ public:
     
     // bool stopAction;
     bool stopAction;
+    bool isMoving;
     
     // bandit's escape flag
     bool tryEscape;
@@ -129,6 +131,8 @@ public:
     Building* jobLocation;
     SpriteJob job;
     bool isDoingJob;
+    
+    SpriteCombatState combatState;
     
     //this is due to the greedy logic where the sprite still attempts to go to its destination, even when the destination is unreachable.
     //the pathing must resume.
@@ -313,6 +317,12 @@ public:
     bool standBy();
     
     void damaged(int);
+    
+    bool hasBandit(CCArray*, CCPoint);
+    bool hasSoldier(CCArray*, CCPoint);
+    
+    void updatePath(Building*);
+    void updatePath(CCPoint);
 };
 
 
