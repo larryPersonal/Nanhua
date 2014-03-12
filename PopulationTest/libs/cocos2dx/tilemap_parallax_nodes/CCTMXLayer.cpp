@@ -510,6 +510,9 @@ void CCTMXLayer::setTileGID(unsigned int gid, const CCPoint& pos, ccTMXTileFlags
 {
     CCAssert(pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCAssert(m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
+    CCLog("%d", m_pTileSet->m_uFirstGid);
+     
+    
     CCAssert(gid == 0 || gid >= m_pTileSet->m_uFirstGid, "TMXLayer: invalid gid" );
 
     ccTMXTileFlags currentFlags;

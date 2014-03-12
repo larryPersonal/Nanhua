@@ -163,7 +163,11 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->buildingValue = this->buildingValue;
         pCopy->buildingBuyPrice = this->buildingBuyPrice;
         pCopy->ID = -1;  /*IDs will be assigned only after construction completes! *///GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
-        pCopy->targetGUID = this->targetGUID;   // Copy the target GUID too
+        pCopy->baseGID = this->baseGID;   // Copy the target GUID too
+        pCopy->maxGID = this->maxGID;
+        pCopy->currGID = pCopy->baseGID;
+        pCopy->animframe_count = this->animframe_count;
+        
         pCopy->currentExp = this->currentExp;
         pCopy->expToLevel->initWithArray(this->expToLevel);
         
@@ -179,7 +183,6 @@ CCPoint Building::getWorldPosition()
     if (!buildingRep) return CCPointMake(-1, -1);
     return ccpAdd(buildingRep->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
     
-    //return GameScene::getThis()->mapHandler->getMap()->convertToWorldSpace(buildingRep->getPosition());
 }
 
 int Building::getExpToLevel()
@@ -602,7 +605,7 @@ void Building::gainExp(int expToGain)
             // Update GameHUD
         
             //increase stats here **
-            Building* buildingData = GameScene::getThis()->buildingHandler->getBuildingWithGID(targetGUID);
+            Building* buildingData = GameScene::getThis()->buildingHandler->getBuildingWithGID(baseGID);
         
             CCInteger* gain = (CCInteger*)buildingData->levelGainVacancy->objectForKey(currentLevel);
             if (gain != NULL)
@@ -689,3 +692,66 @@ void Building::leaveGranuary(GameSprite* sp)
         sp->nextAction = IDLE;
     }
 }
+
+/*Building Animation Is Here! */
+//changes the building's appearance only. The building's current stats must not be changed!
+//ideally, other appearances should be implemented as ignore_this on the TMX file, right next to the actual building record.
+//(TODO)to completely change the building's anim sequence, throw the should_completely_change_anim flag, supplying the new Building through the first parameter.
+//If the animation sequence is changed the pointer supplies the new default and max frames BUUUUUT nothing else changes.(/TODO)
+void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
+{
+    if (b==NULL) return;
+    CCSprite* newRep = CCSprite::create();
+    newRep->initWithTexture(b->buildingTexture, b->buildingRect);
+    CCPoint tilePos = buildingRep->getPosition();
+    float z = buildingRep->getZOrder();
+    newRep->setPosition(tilePos);
+    
+    //NEED TO REMOVE THE OLD SPRITE BEFORE CREATING THE NEW ONE.
+    
+    
+    
+    GameScene::getThis()->mapHandler->getMap()->removeChild(buildingRep);
+    //Because ::Create was used the old one should garbage collect on its own. TO MONITOR.
+    buildingRep = newRep;
+    
+    
+    GameScene::getThis()->mapHandler->getMap()->addChild(buildingRep, z);
+    
+}
+
+void Building::BeginAnim()
+{
+    if (animframe_count > 1)
+    {
+    
+        currGID = baseGID;
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Building::AnimUpdate), this, 1.0f, false);
+        
+        
+    }
+    
+}
+
+
+void Building::EndAnim()
+{
+   if (animframe_count > 1) //there will only be an animation IF there i more than one frame.
+       CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(Building::AnimUpdate), this);
+    
+}
+
+//Anim is currently automatic with no control. Todo: anim based on progress etc.
+
+void Building::AnimUpdate()
+{
+    if (buildingRep == NULL) return;
+    if (!GameScene::getThis()) return;
+    if (currGID < maxGID)
+        ++currGID;
+    else
+        currGID = baseGID;
+    ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
+    
+}
+

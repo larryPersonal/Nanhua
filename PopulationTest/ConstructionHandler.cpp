@@ -102,7 +102,7 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     building->buildingRep->removeChildByTag(PROGRESSBAR_TAG);
     building->buildingRep->setOpacity(255);
     building->ID = GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
-
+ 
     GameScene::getThis()->buildingHandler->addBuildingToMap(building);
     constructingBuildings->removeObject(building);
 }

@@ -447,6 +447,7 @@ void MapHandler::Populate(CCArray* layers)
     
     
     //again for paths
+    //Path layer is named Ground_Road
     CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_Road");
     
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
@@ -457,7 +458,7 @@ void MapHandler::Populate(CCArray* layers)
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
             //path is from 20 to 31
-            if (tile->tileGID > 19 && tile->tileGID < 32 )
+            if (tile->tileGID > 20 && tile->tileGID < 32 )
             {
                 tile->pathHere();
                 pathTiles->addObject(tile);
@@ -734,11 +735,147 @@ void MapHandler::Path(cocos2d::CCPoint &target)
 {
     MapTile* targetTile = getTileAt(target.x, target.y);
     targetTile->pathHere();
-    pathTiles->addObject(targetTile);
+    pathTiles->addObject(targetTile); //I assume we only need to declare this new tile a path.
     CCTMXLayer* groundpath = mapPtr->layerNamed("Ground_Road");
-    groundpath->setTileGID(3, target);
+    
+    //PathTileUpdate(target, 0);
+    //1. Assume that only adjacent tiles will chance.
+    //2. Assume adjacent tiles already have the correct connections aside from the new tile.
+    //3. Do not change any tile but adjaacent tiles.
+    //4.set start tile to non-zero value first, otherwise, propogate logic won't work.
+    groundpath->setTileGID(SWNW, target);
+    PathTileUpdate(target, 2, groundpath, false);
+    
+    
+    
     
 }
+
+//returns a GID for the tile
+//but sets the tile to the correct GID first.
+//Recursive! Use propogate to limit the number of times called.
+TileType MapHandler::PathTileUpdate(cocos2d::CCPoint &target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)
+{
+     if (!MapHandler::isTilePosWithinBounds(target)) return N; //edge case. You can NOT build beyond the edge.
+
+  //  CCLog("Propogate %d", propogate);
+    
+    int currGID = groundpath->tileGIDAt(target);
+    if (propogate == 0)
+    {
+    //    CCLog("TTILE: %d", (TileType)currGID);
+        
+        return (TileType)currGID; //just return the GID for anything we aren't supposed to change.
+        
+    }
+    if (propogate == 1 && currGID == 0) //probably not supposed to update a 0 value tile.
+    {
+        return N;
+    }
+    --propogate;
+    
+    //Note: isometric! Only 1 dimension should be added to.
+    CCPoint NW = ccp(target.x -1, target.y);
+    CCPoint SW = ccp(target.x, target.y + 1);
+    CCPoint NE = ccp(target.x, target.y - 1);
+    CCPoint SE = ccp(target.x +1, target.y);
+    TileType tiles[4] = {N,N, N, N};
+    tiles[0] = PathTileUpdate(NE, propogate, groundpath);
+    tiles[1] = PathTileUpdate(SE, propogate, groundpath);
+    tiles[2] = PathTileUpdate(SW, propogate, groundpath);
+    tiles[3] = PathTileUpdate(NW, propogate, groundpath);
+    
+    int total = 0;
+    for (int i = 0; i < 4; ++i)
+    {
+        if (tiles[i] != N)
+        {
+            switch (i)
+            {
+                case 0: total += 1;
+                    break;
+                case 1: total += 2;
+                    break;
+                case 2: total += 4;
+                    break;
+                case 3: total += 8;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    //4-way
+   // CCLog("TOTAL %d", total);
+    
+    TileType ttile = NESW;
+    if (destroymode)
+        ttile = N;
+    
+    if (total == 15) //there are exits everywhere.
+    {
+        
+        ttile = NESESWNW;
+    }
+    
+    //straight lines
+    if (total == 1 || total == 4 || total == 5)
+    {
+        ttile = NESW;
+    }
+    
+    if (total == 2 || total == 8 || total == 10)
+    {
+    
+        ttile = SENW;
+    }
+   
+    //corners
+    if (total == 3) //corner
+    {
+        
+        ttile = NESE;
+    }
+    
+    if (total == 6) //another corner
+    {
+        ttile = SESW;
+    }
+    
+    if (total == 9) //third corner
+    {
+        ttile = NENW;
+    }
+    
+    if (total == 12) //last corner
+    {
+        ttile = SWNW;
+    }
+    
+    //3-way
+    if (total == 7)
+    {
+        ttile = NESESW;
+    }
+    if (total == 11)
+    {
+        ttile = NESENW;
+    }
+    if (total == 13)
+    {
+        ttile = NESWNW;
+    }
+    if (total == 14)
+    {
+        ttile = SESWNW;
+    }
+    
+    if (currGID != ttile && !destroymode)
+        groundpath->setTileGID(ttile, target);
+    return ttile;
+}
+
+
 
 void MapHandler::PathLine(CCPoint &startTarget, CCPoint &endTarget)
 {
@@ -861,6 +998,10 @@ void MapHandler::UnPath(cocos2d::CCPoint &target)
     CCTMXLayer* groundpath = mapPtr->layerNamed("Ground_Road");
     
     groundpath->setTileGID(0, target);
+    
+    PathTileUpdate(target, 2, groundpath, true);
+    
+    
 }
 
 void MapHandler::UnPathPreview()

@@ -402,7 +402,7 @@ void CCScrollView::deaccelerateScrolling(float dt)
     m_tScrollDistance     = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
     this->setContentOffset(ccp(newX,newY));
     
-    float offset = 5.0f;
+   // float offset = 5.0f;
     
     if ((fabsf(m_tScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST)) //||

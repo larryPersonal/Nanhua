@@ -216,7 +216,7 @@ void GameScene::move(float time)
 
 void GameScene::initOrientationChange()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+   // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     //screenCenter->setPosition(screenSize.width * -3.0f, screenSize.height * 1.2f);
     mapHandler->rescaleScrollLimits();
     mapHandler->moveMapBy(0.0f, 0.0f);

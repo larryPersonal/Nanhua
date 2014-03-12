@@ -90,7 +90,7 @@ bool Senario::constructSenarioStage()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-    ccColor3B colorYellow = ccc3(225, 219, 108);
+   // ccColor3B colorYellow = ccc3(225, 219, 108);
     ccColor3B colorBlue = ccc3(0, 0, 255);
     clearElements();
     
