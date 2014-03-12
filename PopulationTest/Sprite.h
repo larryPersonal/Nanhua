@@ -74,6 +74,8 @@ private:
     
     float cumulativeTime_happiness;
     
+    float cumulativeTime_attack;
+    
     // token part
     bool is_token_drop_cooldown;
     float token_drop_cooldown_time;
@@ -92,6 +94,8 @@ public:
     
     int mGameCurrentEndurance;
     int mGameMaxEndurance;
+    
+    bool mGameWarMode;
     
     // the variables that the bandits stole from the village.
     int current_money_rob;
@@ -164,6 +168,8 @@ public:
     
     CCSprite* spriteRep;
     ProgressBar* barHP;
+    
+    CCArray* hpLabels;
     
     /*holds a path. use pathfinding to deal with it*/
     CCArray* path;
@@ -305,6 +311,8 @@ public:
     bool hasValidGranary();
     bool escape();
     bool standBy();
+    
+    void damaged(int);
 };
 
 

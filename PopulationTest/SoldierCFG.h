@@ -17,7 +17,10 @@ std::string soldierDefaults =
 "\"default_food_carriage_limit\":\"200\","
 "\"default_energy_limit\":\"100\","
 "\"default_work_unit_per_day\":\"0\","
-"\"default_starting_endurance\":\"100\""
+"\"default_starting_endurance\":\"2000\","
+"\"default_attacking_cooldown_time\":\"1.8\","
+"\"default_attack_power_min\":\"56\","
+"\"default_attack_power_max\":\"88\""
 "}";
 
 std::string soldierConfig =

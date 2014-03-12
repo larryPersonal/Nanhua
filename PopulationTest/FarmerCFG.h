@@ -17,7 +17,10 @@ std::string farmerDefaults =
 "\"default_food_carriage_limit\":\"1000\","
 "\"default_energy_limit\":\"100\","
 "\"default_work_unit_per_day\":\"100\","
-"\"default_starting_endurance\":\"100\""
+"\"default_starting_endurance\":\"100\","
+"\"default_attacking_cooldown_time\":\"3.2\","
+"\"default_attack_power_min\":\"0\","
+"\"default_attack_power_max\":\"0\""
 "}";
 
 std::string farmerConfig =
