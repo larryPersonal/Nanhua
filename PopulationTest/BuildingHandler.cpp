@@ -107,10 +107,6 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     
     int buildingID = 0;
     allBuildings = CCArray::create();
-   // for (int i = 0; i < mapPtr->)
-    
- //   JobCollection *jc = GameScene::getThis()->jobCollection;
-    
     
     
     allBuildingLayers= CCArray::create();
@@ -125,26 +121,39 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
             layer->setVisible(false);
             int startIndex = layer->getTileSet()->m_uFirstGid + atoi(layer->propertyNamed("start_tile_offset")->getCString());
             int endIndex = startIndex +  atoi(layer->propertyNamed("number_of_tiles")->getCString());
-                                              
-            
             
             for (int j = startIndex; j < endIndex ; ++j)
             {
                 Building* b = Building::create();
                 b->targetLayerName = layer->getLayerName();
-                b->targetGUID = j;
+                b->baseGID = j;
                 
                 b->buildingTexture = CCTextureCache::sharedTextureCache()->addImage( layer->getTileSet()->m_sSourceImage.c_str());
                 b->buildingTexture->retain();
-                b->buildingRect = layer->getTileSet()->rectForGID(b->targetGUID);
+                b->buildingRect = layer->getTileSet()->rectForGID(b->baseGID);
                 
                 b->width = b->buildingRect.size.width / 128;
                 b->height = b->buildingRect.size.height / 128; //128 being the standard tile size in the TMX file.
                 
-                CCDictionary* properties = mapPtr->propertiesForGID(b->targetGUID);
+                CCDictionary* properties = mapPtr->propertiesForGID(b->baseGID);
                 if (properties)
                 {
                     const CCString* currProperty;
+                    
+                    
+                    currProperty = properties->valueForKey("anim_frames");
+                    if (currProperty)
+                    {
+                        CCString* animfr = CCStringMake(properties->valueForKey("anim_frames")->getCString());
+                        b->animframe_count = atoi(animfr->getCString());
+                        b->maxGID = b->baseGID + (b->animframe_count - 1);
+                    }
+                    else
+                    {
+                        b->animframe_count = 1;
+                        b->maxGID = b->baseGID;
+                    }
+                    
                     
                     currProperty = properties->valueForKey("jobs_available");
                    
@@ -161,12 +170,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     if (currProperty)
                     {
                         b->buildingName= currProperty->getCString();  //CCStringMake("PlaceHolder");
-                        if (b->buildingName.compare("Farm")==0)
-                        {
-                            
-                            //CCLog("test");
-                            
-                        }
+                    
                     }
                     else
                     {
@@ -631,10 +635,16 @@ void BuildingHandler::addBuildingToMap(Building *b)
             break;
     }
     allBuildingsOnMap->addObject(b);
+    
+    //for animation
+    b->BeginAnim();
+
+    
 }
 
 void BuildingHandler::removeBuildingFromMap(Building *b)
 {
+    b->EndAnim();
     EmptyBuildingFirst(b);
     BuildingCategory cat = b->buildingType;
     switch (cat)
@@ -680,7 +690,7 @@ Building* BuildingHandler::getBuildingWithGID(int GID)
     for (int i = 0; i < allBuildings->count(); ++i)
     {
         currBuilding = (Building*)allBuildings->objectAtIndex(i);
-        if (currBuilding->targetGUID == GID) return currBuilding;
+        if (currBuilding->baseGID == GID) return currBuilding;
     }
     return NULL;
 }
@@ -812,16 +822,17 @@ Building* BuildingHandler::getBuildingOnMapWithName(std::string name)
 
 void BuildingHandler::EmptyBuildingFirst(Building *b)
 {
+    /*
     SpriteHandler* sh = GameScene::getThis()->spriteHandler;
     
     if (b->buildingType == HOUSING)
     {
         for (int i = 0; i < sh->spritesOnMap->count(); ++i)
         {
-            GameSprite *spr = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
+            //GameSprite *spr = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
      //       Possessions* p = spr->getPossessions();
         }
-    }
+    }*/
 }
 
 int BuildingHandler::getHighestBuildingID()

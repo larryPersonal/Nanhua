@@ -11,7 +11,7 @@
 #include "cocos2d.h"
 #include "Sprite.h"
 using namespace cocos2d;
-
+    									
 //Note that a building under construction does NOT actually have a job record.
 class Job: public cocos2d::CCObject
 {

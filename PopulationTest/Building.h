@@ -75,9 +75,12 @@ public:
     int buildingValue;
     int buildingBuyPrice;
     //int buildingRentPrice;
-     
-    int targetGUID;
-    int GUID_offset;
+    
+    /*Animation variables*/
+    int baseGID;
+    int maxGID;
+    int currGID;
+    int animframe_count;
     
     int width;
     int height;
@@ -90,7 +93,6 @@ public:
     bool unlocked;
     /*end unlock requirements*/
     
-   
     //Building exp
     int currentExp;
     int currentLevel;
@@ -120,7 +122,6 @@ public:
     float constructionTime;
     float constructionEndTime;
     
-    
     // jerry added
     CCArray* memberSpriteList;
     
@@ -140,8 +141,6 @@ public:
     /*called when the sprite leaves the building it was in*/
     void Leavehandler(GameSprite* sp);
     
-    void ChangeAppearance(Building* b);
-    
     void leaveHouse(GameSprite*);
     
     bool isUnderConstruction();
@@ -149,6 +148,19 @@ public:
     bool notHavest();
     
     void leaveGranuary(GameSprite*);
+    
+    /*animation functions*/
+    //if should_completely_change_sequence the base GID and the max GID should change
+    void ChangeAppearance(Building *b, bool should_completely_change_sequence = false);
+    
+    void BeginAnim();
+    void EndAnim();
+    
+    void AnimUpdate();
+
+    
+    
+    
 };
 
 #endif
