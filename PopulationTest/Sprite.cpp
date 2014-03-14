@@ -86,6 +86,10 @@ GameSprite::GameSprite()
     combatState = C_IDLE;
     
     isMoving = false;
+    
+    enermy = NULL;
+    
+    currentTile = CCPointZero;
 }
 
 
@@ -340,6 +344,10 @@ GameSprite* GameSprite::create()
      
      spriteDisplayedName = NameGenerator::GenerateName(race, gender);
 
+     currPos = getWorldPosition();
+     currPos = GameScene::getThis()->mapHandler->tilePosFromLocation(currPos);
+     
+     currTile = GameScene::getThis()->mapHandler->getTileAt(currPos.x, currPos.y);
  }
 
 void GameSprite::unmakeSpriteEndGame()
@@ -396,51 +404,81 @@ void GameSprite::unmakeSprite()
 
 bool GameSprite::CreatePath(CCPoint from, CCPoint to)
 {
-    if (currAction != IDLE) setAction(IDLE);
-        
+    if (currAction != IDLE){
+        setAction(IDLE);
+    }
     
-        if (from.equals(to))
+    if (from.equals(to))
+    {
+        isFollowingMoveInstruction = false;
+        return false;
+    }
+    
+    PathFinder *p = new PathFinder();
+    
+    if (path != NULL)
+    {
+        if (path->count() > 0)
         {
-            isFollowingMoveInstruction = false;
-            return false;
+            path->removeAllObjects();
+            path->release();
+            path = NULL;
         }
+    }
     
-        
-        PathFinder *p = new PathFinder();
-        
-        
+    path = p->makePath(&from, &to);
+
+    if (path->count() == 0)
+    {
+        CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
+        saySpeech(STUCK, 2.0f);
+        path = p->makePath(&from, &p->closest);
+    }
+    path->retain();
     
-            if (path != NULL)
-            {
-                if (path->count() > 0)
-                {
-                    path->removeAllObjects();
-                
-                    path->release();
-                    path = NULL;
-                }
-            }
-    
-        path = p->makePath(&from, &to);
-       
-        if (path->count() == 0)
-        {
-            
-            CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
-          //  saySpeech("I Can't Get There!", 2.0f);
-            saySpeech(STUCK, 2.0f);
-            path = p->makePath(&from, &p->closest);
-            //delete p;
-           // path = NULL;
-           // return false;
-        }
-        path->retain();
-    
-      //  followPath();
-    
-        delete p;
-        return true;
+    delete p;
+    return true;
  }
+
+bool GameSprite::CreatePathEscape(CCPoint from, CCPoint to)
+{
+    if (currAction != IDLE)
+    {
+        setAction(IDLE);
+    }
+    
+    if (from.equals(to))
+    {
+        isFollowingMoveInstruction = false;
+        return false;
+    }
+    
+    PathFinder *p = new PathFinder();
+    
+    if (path != NULL)
+    {
+        if (path->count() > 0)
+        {
+            path->removeAllObjects();
+            path->release();
+            path = NULL;
+        }
+    }
+    
+    path = p->makePath(&from, &to);
+    
+    if (path->count() == 0)
+    {
+        CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
+        saySpeech(STUCK, 2.0f);
+        path = p->makePath(&from, &p->closest);
+    }
+    path->retain();
+    
+    delete p;
+    return true;
+
+}
 
 int GameSprite::getPathDistance(CCPoint from, CCPoint to)
 {
@@ -472,12 +510,6 @@ void GameSprite::followPath()
 {
     if(GameHUD::getThis()->pause)
     {
-        return;
-    }
-    
-    if(stopAction)
-    {
-        isMoving = false;
         return;
     }
     
@@ -520,6 +552,7 @@ void GameSprite::followPath()
                 shouldSetVisibleNextFrame = true;
             }
             
+            currentTile = nextTile;
             CCPoint nextPos = GameScene::getThis()->mapHandler->locationFromTilePos(&(node->tilepos));
             this->nextTile = nextPos;
             
@@ -534,7 +567,7 @@ void GameSprite::followPath()
                     
                     if(gs->type == M_BANDIT || gs->type == F_BANDIT){
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
-                            isMoving = false;
+                            nextTile = currentTile;
                             return;
                         }
                     }
@@ -552,9 +585,19 @@ void GameSprite::followPath()
                     
                     if(gs->type == M_SOLDIER || gs->type == F_SOLDIER){
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
-                            isMoving = false;
+                            nextTile = currentTile;
                             return;
                         }
+                    }
+                }
+                
+                MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(nextTile.x, nextTile.y);
+                if(tile != NULL)
+                {
+                    if(tile->isInCombat)
+                    {
+                        nextTile = currentTile;
+                        return;
                     }
                 }
             }
@@ -678,10 +721,6 @@ void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
 
 void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 {
-    if(type == F_SOLDIER || type == M_SOLDIER)
-    {
-    CCLog("test");
-    }
     // Because moveComplete is called instantly after sequential action and
     // updateSprite is called at intervals of approx 16ms,
     // we need to calculate the newest currPos right now.
@@ -689,6 +728,52 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     currPos = GameScene::getThis()->mapHandler->tilePosFromLocation(currPos);
     
     currTile = GameScene::getThis()->mapHandler->getTileAt(currPos.x, currPos.y);
+    
+    // each time after moveComplete has been triggered, the soldier will check the bandit's position again, so that they can adjust their path to the capture the bandit.
+    if (type == M_SOLDIER || type == F_SOLDIER)
+    {
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        
+        CCPoint nearestTarget = CCPointZero;
+        int nearestDistance = 999999;
+        
+        // get the current position of the soldier
+        CCPoint sPos = getWorldPosition();
+        sPos = GameScene::getThis()->mapHandler->tilePosFromLocation(sPos);
+        
+        for (int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+            
+            // check the bandits, get the nearest bandit to the soldier, as well as the distance.
+            if ((gs->type == M_BANDIT || gs->type == F_BANDIT) && gs->possessions->current_endurance > 0)
+            {
+                CCPoint bPos = gs->getWorldPosition();
+                bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
+                
+                int tempDistance = getPathDistance(bPos, sPos);
+                if(tempDistance < nearestDistance)
+                {
+                    nearestTarget = bPos;
+                    nearestDistance = tempDistance;
+                }
+            }
+        }
+        
+        // if the nearest bandit has a distance more than 2 (not in adjacent tile) from the soldier, the soldier will target the position of the nearest bandit and go there.
+        if (nearestDistance < 999999 && nearestDistance > 2)
+        {
+            if(targetLocation.x != nearestTarget.x || targetLocation.y != nearestTarget.y)
+            {
+                targetLocation = nearestTarget;
+                GoLocation(nearestTarget, false);
+                isMoving = true;
+                return;
+            }
+        }
+    }
+
+    
     
     if (path == NULL){
         isMoving = false;
@@ -762,14 +847,13 @@ bool GameSprite::Wander()
     wanderFlag = !wanderFlag;
     if (wanderFlag)
     {
-   
         CCPoint tgt = GameScene::getThis()->mapHandler->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
         if (tgt.x == -1 && tgt.y == -1)
         {
             setAction(IDLE); //no path, can't
             return false;
         }
-    
+        
         CCPoint startPos = getWorldPosition();
         startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
         if (CreatePath(startPos, tgt))
@@ -808,13 +892,7 @@ bool GameSprite::attack()
         return escape();
     }
     
-    // The very first action for a bandit is always trying to standby.
-    if(spriteClass.compare("bandit") == 0 && standBy())
-    {
-        return true;
-    }
-    
-    // The very second action for a bandit is always trying to robe the nearest granary for food.
+    // The very first action for a bandit is always trying to robe the nearest granary for food.
     if (spriteClass.compare("bandit") == 0 && hasValidGranary())
     {
         return true;
@@ -846,23 +924,6 @@ bool GameSprite::attack()
         {
             tryEscape = true;
         }
-    }
-    return false;
-}
-
-bool GameSprite::standBy()
-{
-    CCPoint pos = getWorldPosition();
-    pos = GameScene::getThis()->mapHandler->tilePosFromLocation(pos);
-    
-    if (pos.y > 30)
-    {
-        CCPoint target = CCPointMake(29,30);
-        if (GoLocation(target))
-        {
-            return false;
-        }
-        return true;
     }
     return false;
 }
@@ -906,13 +967,17 @@ bool GameSprite::PathToResources()
 
 void GameSprite::updateSprite(float dt)
 {
-    currPos = getWorldPosition();
-    currPos = GameScene::getThis()->mapHandler->tilePosFromLocation(currPos);
-    
     updateZIndex();
     
     lastFrameAction = currAction;
-  
+    
+    if(type == M_BANDIT || type == F_BANDIT)
+    {
+        if(currAction == IDLE)
+        {
+            attack();
+        }
+    }
     
     /****************************************************
      * This part is only for the combating in the game! *
@@ -979,7 +1044,7 @@ void GameSprite::updateSprite(float dt)
         }
         infront = temp;
         
-        if(type == F_SOLDIER || type == M_SOLDIER)
+        if((type == F_SOLDIER || type == M_SOLDIER) && !tryEscape)
         {
             CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
             
@@ -1044,14 +1109,14 @@ void GameSprite::updateSprite(float dt)
                 }
                 else
                 {
-                    stopAction = true;
+                    isMoving = false;
                     combatState = C_IDLE;
                     return;
                 }
             }
         }
         
-        if (type == F_BANDIT || type == M_BANDIT)
+        if ((type == F_BANDIT || type == M_BANDIT) && !tryEscape)
         {
             CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
             
@@ -1117,6 +1182,7 @@ void GameSprite::updateSprite(float dt)
                 }
                 else
                 {
+                    isMoving = false;
                     stopAction = false;
                     combatState = C_IDLE;
                     return;
@@ -1125,7 +1191,7 @@ void GameSprite::updateSprite(float dt)
         }
         
         // only soldiers and bandits are involved in the combat.
-        if(type == F_SOLDIER || type == M_SOLDIER || type == F_BANDIT || type == M_BANDIT)
+        if((type == F_SOLDIER || type == M_SOLDIER || type == F_BANDIT || type == M_BANDIT) && !tryEscape)
         {
             // only in the war mode, bandits will attack the village, the combat system is enabled.
                 CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
@@ -1234,16 +1300,23 @@ void GameSprite::updateSprite(float dt)
     {
         if(type == M_BANDIT || type == F_BANDIT)
         {
+            if(!isMoving)
+            {
+                isMoving = true;
+                stopAction = false;
+                tryEscape = true;
+                escape();
+            }
             if(stopAction && tryEscape)
             {
                 stopAction = false;
-                followPath();
+                escape();
             }
             else if(stopAction)
             {
                 tryEscape = true;
                 stopAction = false;
-                followPath();
+                escape();
             }
         }
         
@@ -1252,14 +1325,18 @@ void GameSprite::updateSprite(float dt)
     }
     else if(combatState == C_IDLE)
     {
-        
-        // bandits will be stop by soldiers and escape after losing all endrance
+        // bandits will be stop by soldiers and escape after losing all endurance
         if (type == M_BANDIT || type == F_BANDIT)
         {
+            // get the current position of the soldier
+            CCPoint bPos = getWorldPosition();
+            bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
+            
             // check whether the bandits meet the soldiers
             CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
             
             bool stop = false;
+            GameSprite* opponent = NULL;
             // check all the soldiers, if any soldier is adjacent to the bandit and the bandit is not trying to escape, stop moving and prepare to attack the soldier
             for (int i = 0; i < spritesOnMap->count(); i++)
             {
@@ -1273,13 +1350,27 @@ void GameSprite::updateSprite(float dt)
                     if(tempDistance <= 2 && !tryEscape)
                     {
                         stop = true;
+                        opponent = gs;
+                        break;
                     }
                 }
             }
             
             if(stop){
-                stopAction = true;
-                combatState = C_COMBAT;
+                if(opponent != NULL)
+                {
+                    stopAction = true;
+                    enermy = opponent;
+                    combatState = C_COMBAT;
+                }
+            }
+            else
+            {
+                if(!isMoving)
+                {
+                    stopAction = false;
+                    //attack();
+                }
             }
         }
     
@@ -1294,13 +1385,14 @@ void GameSprite::updateSprite(float dt)
             // get the current position of the soldier
             CCPoint sPos = getWorldPosition();
             sPos = GameScene::getThis()->mapHandler->tilePosFromLocation(sPos);
+            GameSprite* opponent = NULL;
             
             for (int i = 0; i < spritesOnMap->count(); i++)
             {
                 GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
                 
                 // check the bandits, get the nearest bandit to the soldier, as well as the distance.
-                if ((gs->type == M_BANDIT || gs->type == F_BANDIT) && gs->possessions->current_endurance > 0)
+                if ((gs->type == M_BANDIT || gs->type == F_BANDIT) && gs->possessions->current_endurance > 0 && !gs->tryEscape)
                 {
                     CCPoint bPos = gs->getWorldPosition();
                     bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
@@ -1310,6 +1402,7 @@ void GameSprite::updateSprite(float dt)
                     {
                         nearestTarget = bPos;
                         nearestDistance = tempDistance;
+                        opponent = gs;
                     }
                 }
             }
@@ -1317,30 +1410,32 @@ void GameSprite::updateSprite(float dt)
             // if the nearest bandit has a distance more than 2 (not in adjacent tile) from the soldier, the soldier will target the position of the nearest bandit and go there.
             if (nearestDistance < 999999 && nearestDistance > 2)
             {
-                stringstream ss;
-                CCLog(ss.str().c_str());
-                if(targetLocation.x != nearestTarget.x || targetLocation.y != nearestTarget.y)
+                targetLocation = nearestTarget;
+                
+                if(!isMoving)
                 {
-                    targetLocation = nearestTarget;
-                    //updatePath(targetLocation);
-                    //if(!isMoving)
-                    //{
-                        GoLocation(nearestTarget);
-                        //isMoving = true;
-                    //}
+                    CCLog("test4");
+                    stopAction = false;
+                    isMoving = true;
+                    GoLocation(nearestTarget, false);
                 }
             }
             // if the nearest bandit is adjacent to the soldier, stop moving further and prepare to attact the bandit.
             else if(nearestDistance <= 2)
             {
-                stopAction = true;
-                combatState = C_COMBAT;
+                if(opponent != NULL)
+                {
+                    stopAction = true;
+                    isMoving = false;
+                    combatState = C_COMBAT;
+                }
             }
             else
             {
                 if(stopAction)
                 {
                     stopAction = false;
+                    isMoving = true;
                     GoBuilding(jobLocation);
                 }
             }
@@ -1744,7 +1839,6 @@ bool GameSprite::GoBuilding(Building* b)
 {
     lastTarget = b;
 
-    
     CCPoint startPos = getWorldPosition();
     CCPoint endPos = b->getWorldPosition();
     
@@ -1762,7 +1856,7 @@ bool GameSprite::GoBuilding(Building* b)
 }
 
 /* paths to a target location. */
-bool GameSprite::GoLocation(CCPoint endPos)
+bool GameSprite::GoLocation(CCPoint endPos, bool tryEscape)
 {
     CCPoint startPos = getWorldPosition();
     
@@ -1775,14 +1869,25 @@ bool GameSprite::GoLocation(CCPoint endPos)
         return true;
     }
     
-    bool hasPath = CreatePath(startPos, endPos);
-    if(hasPath )//&& !isFollowingMoveInstruction)
+    bool hasPath;
+    if(tryEscape)
+    {
+        hasPath = CreatePathEscape(startPos, endPos);
+    }
+    else
+    {
+        hasPath = CreatePath(startPos, endPos);
+    }
+    
+    if(hasPath)//&& !isFollowingMoveInstruction)
     {
         isFollowingMoveInstruction = true;
         followPath();
+        return true;
+    } else {
+        isMoving = false;
+        return false;
     }
-    
-    return false;
 }
 
 /*Paths to a building under construction. Fails if there isn't a building under construction.*/
@@ -2608,11 +2713,12 @@ void GameSprite::checkDropRate()
 bool GameSprite::escape()
 {
     CCPoint target = CCPointMake(29,33);
-    if(GoLocation(target))
+    if(GoLocation(target, true))
     {
         isLeavingNextUpdate = true;
         return true;
     }
+    isMoving = false;
     return false;
 }
 
@@ -2639,6 +2745,7 @@ void GameSprite::damaged(int damage)
     if(possessions->current_endurance < 0)
     {
         possessions->current_endurance = 0;
+        tryEscape = true;
         combatState = C_ESCAPE;
         escape();
     }
@@ -2651,7 +2758,7 @@ bool GameSprite::hasBandit(CCArray* spritesOnMap, CCPoint checkTile)
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
         CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&checkTile);
         
-        if(gs->type == F_BANDIT || gs->type == M_BANDIT)
+        if((gs->type == F_BANDIT || gs->type == M_BANDIT) && gs->possessions->current_endurance > 0)
         {
             if(gsTile.x == gs->spriteRep->getPosition().x && gsTile.y == gs->spriteRep->getPosition().y)
             {

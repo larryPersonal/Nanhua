@@ -30,6 +30,7 @@ public:
     
     bool isPath;
     bool isEnvironment;
+    bool isInCombat;
     
     // 0 - Cannot build anything
     // 1 - Can build anything

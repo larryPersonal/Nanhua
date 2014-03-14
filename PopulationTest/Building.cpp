@@ -197,7 +197,6 @@ void Building::ArriveHandler(GameSprite* sp)
 
     sp->setAction(sp->nextAction);
     
-    
     if(sp->getJobLocation() == this)
     {
         sp->setIsDoingJob(true);
@@ -453,15 +452,27 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
     else if(sp->currAction == ROB && sp->getTargetLocation() == this)
     {
         // if the building to be rob is a town hall, rob the money;
-        if(build_uint_required >= 10000 && GameHUD::getThis()->money > 0 && sp->current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob)
+        if(build_uint_required >= 10000)
         {
-            GameHUD::getThis()->money--;
-            sp->current_money_rob++;
-            
-            if(GameHUD::getThis()->money < 0)
+            if(sp->current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob && GameHUD::getThis()->money > 0)
             {
-                GameHUD::getThis()->money = 0;
-                sp->current_money_rob--;
+                GameHUD::getThis()->money--;
+                sp->current_money_rob++;
+                
+                if(GameHUD::getThis()->money < 0)
+                {
+                    GameHUD::getThis()->money = 0;
+                    sp->current_money_rob--;
+                    sp->currAction = IDLE;
+                    sp->nextAction = IDLE;
+                    sp->setTargetLocation(NULL);
+                }
+            }
+            else
+            {
+                sp->currAction = IDLE;
+                sp->nextAction = IDLE;
+                sp->setTargetLocation(NULL);
             }
         }
         else
@@ -475,6 +486,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             else
             {
                 sp->currAction = IDLE;
+                sp->nextAction = IDLE;
                 sp->setTargetLocation(NULL);
             }
         }

@@ -624,6 +624,8 @@ void GameScene::update(float time)
     
         spriteHandler->update(time);
         banditsAttackHandler->update(time);
+        
+        mapHandler->update(time);
     }
     
     // check lose game

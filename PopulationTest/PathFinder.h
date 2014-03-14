@@ -30,15 +30,16 @@ public:
     ~PathFinder();
     float manhattanDist(CCPoint* from, CCPoint* to);
     
-    CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile);
+    CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile, bool tryEscape);
     
     CCArray* makePath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
+    CCArray* makePathEscape(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     
     PathfindingNode* isOnList(CCPoint tilePos, CCArray* list);
     
-    void initializeWithLowestCostNode(CCPoint target);
+    void initializeWithLowestCostNode(CCPoint target, bool tryEscape);
     
-    bool isReachable(CCPoint* tilePos);
+    bool isReachable(CCPoint* tilePos, bool tryEscape);
 };
 
 #endif /* defined(__PopulationTest__PathFinder__) */

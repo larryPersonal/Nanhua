@@ -84,7 +84,10 @@ private:
     float token_drop_rate;
     
 public:
+    GameSprite* enermy;
+    
     CCPoint nextTile;
+    CCPoint currentTile;
     CCPoint targetLocation;
     
     // bool stopAction;
@@ -192,6 +195,7 @@ public:
     void setFrameCount(int idleFrames, int walkFrames);
     
     bool CreatePath(CCPoint start, CCPoint end);
+    bool CreatePathEscape(CCPoint start, CCPoint end);
     
     void initAI(bool isUpgrade = false);
     
@@ -264,7 +268,7 @@ public:
     void setIsFollowingMovementInstruction(bool);
     
     bool GoBuilding(Building* b);
-    bool GoLocation(CCPoint);
+    bool GoLocation(CCPoint, bool);
     
     bool GoRest(Building* b);
     bool GoEat(Building* b);
@@ -314,7 +318,6 @@ public:
     bool attack();
     bool hasValidGranary();
     bool escape();
-    bool standBy();
     
     void damaged(int);
     
