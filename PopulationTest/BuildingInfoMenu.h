@@ -23,8 +23,6 @@ class BuildingInfoMenu:public PopupMenu
 {
 private:
     // Building variables
-    int mBuildingExp;
-    int mBuildingExpMax;
     int mBuildingLevel;
     int mBuildingPrice;
     int mBuildingVacancy;
@@ -59,18 +57,13 @@ private:
     CCSprite* spCash;
     
     CCLabelTTF* labelLevel;
-    CCLabelTTF* labelExp;
-/*
-    CCLabelTTF* labelPrice;
-*/ 
+
     CCLabelTTF* labelLoy;
     CCLabelTTF* labelHap;
 
     CCLabelTTF* textName;
     CCLabelTTF* textPrice;
-    CCLabelTTF* textExp;
 
-    ProgressBar* barExp;
     ProgressBar* unitBar;
     
     CCLabelTTF* textLoy;
@@ -99,12 +92,49 @@ private:
     
     CCMenu* menu;
     
+    /* for building level up */
+    int mGameLevel;
+    int mGameUpgradeUnit;
+    int mGameHouseNumber;
+    int mGameFarmNumber;
+    int mGameGranaryNumber;
+    int mGameTowerNumber;
+    
+    CCSprite* moneyIcon;
+    CCSprite* foodIcon;
+    
+    CCLabelTTF* moneyLabel;
+    CCLabelTTF* foodLabel;
+    
+    CCMenuItemImage* upgradeButton;
+    CCMenuItemImage* cancelUpgradeButton;
+    
+    ProgressBar* upgradeBar;
+    CCLabelTTF* upgradeBarLabel;
+    
+    CCArray* menuItemsUpgrade;
+    CCMenu* upgradeMenu;
+    
+    CCLabelTTF* houseLimitTitle;
+    CCLabelTTF* houseLimitLabel;
+    
+    CCLabelTTF* granaryLimitTitle;
+    CCLabelTTF* granaryLimitLabel;
+    
+    CCLabelTTF* farmLimitTitle;
+    CCLabelTTF* farmLimitLabel;
+    
+    CCLabelTTF* guardTowerLimitTitle;
+    CCLabelTTF* guardTowerLimitLabel;
+    
 protected:
     
     //General create menu
     virtual void createMenuItems();
     
 public:
+    void upgrade();
+    
     static BuildingInfoMenu* create(Building* building);
     
     virtual void cleanup();

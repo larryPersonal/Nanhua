@@ -326,6 +326,13 @@ public:
     
     void updatePath(Building*);
     void updatePath(CCPoint);
+    
+    bool isFarmer();
+    bool isCitizen();
+    bool isRefugee();
+    bool isBandit();
+    bool isSoldier();
+    bool isBuilder();
 };
 
 

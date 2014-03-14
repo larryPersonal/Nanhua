@@ -41,7 +41,9 @@ Building::Building()
     constructionTime = 10.0f;
    
     researchCost = 100.0f;
-    researchTime = 10.0f;
+    
+    upgrade_unit_max = 0;
+    current_upgrade_unit = 0;
     
     memberSpriteList = CCArray::create();
     memberSpriteList->retain();
@@ -61,6 +63,8 @@ Building::Building()
     unlocked = false;
     
     isCurrentConstructing = false;
+    isCurrentUpgrading = false;
+    isCurrentHarvest = false;
     
     required_building_count = required_capita = required_population = 0;
 }
@@ -135,7 +139,7 @@ Building* Building::copyWithZone(CCZone *pZone)
   
         //pCopy->buildingTexture->retain();
         pCopy->constructionTime = this->constructionTime;
-        pCopy->researchTime = this->researchTime;
+        pCopy->upgrade_unit_max = this->upgrade_unit_max;
         pCopy->researchCost = this->researchCost;
         
         pCopy->build_uint_required = this->build_uint_required;
@@ -314,12 +318,14 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             // add the penalty here!
         }
     }
-    else if(sp->currAction == FARMING && sp->getTargetLocation() == this && sp->getJob() == FARMER)
+    else if(sp->currAction == FARMING && sp->getTargetLocation() == this && sp->isFarmer())
     // farming
     {
+        CCLog("test1");
         // if the farming process not finished!
-        if(notHavest() && farmState == FARM && currentStorage <= 0)
+        if(!isCurrentHarvest && farmState == FARM && currentStorage <= 0)
         {
+            CCLog("test2");
             // a farmer will never quit a farming job naturally
             //int workval = sp->getPossessions()->PerformTask();
             
@@ -338,6 +344,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 {
                     work_unit_current = 0;
                     currentStorage = storageLimit;
+                    isCurrentHarvest = true;
                 }
                 
                 if(sp->getPossessions()->energyRating < 0)
@@ -652,11 +659,6 @@ bool Building::isUnderConstruction()
 bool Building::hasFood()
 {
     return currentStorage > 0;
-}
-
-bool Building::notHavest()
-{
-    return work_unit_current < work_unit_required;
 }
 
 void Building::leaveGranuary(GameSprite* sp)

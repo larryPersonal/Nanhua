@@ -261,6 +261,14 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         _previous_pos_y = touch->getLocation().y;
     }
     
+    // since the touch has been detected, close the build scroll window if any
+    if(GameHUD::getThis()->buildScroll)
+    {
+        GameHUD::getThis()->buildScroll->closeMenu();
+        GameHUD::getThis()->buildScroll = NULL;
+        GameHUD::getThis()->buildButton->setVisible(true);
+    }
+    
     /*
     // handle the build button
     if(BuildScroll::getThis() != NULL)

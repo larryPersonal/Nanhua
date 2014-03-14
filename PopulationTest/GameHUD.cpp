@@ -412,7 +412,6 @@ void GameHUD::closeAllMenuAndResetTapMode()
 }
 
 void GameHUD::buyBuilding(int cost){
-    GameManager::getThis()->currentMoney -= cost;
     updateMoneyLabel();
 }
 
@@ -513,97 +512,98 @@ void GameHUD::createStatsMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
+    ccColor3B colorWhite = ccc3(255, 255, 255);
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the background of the stats menu
-    statsMenu = CCSprite::create("main-info-menu-bg_01.png");
+    statsMenu = CCSprite::create("chargirl_represent.png");
     CCSize spriteSize = statsMenu->getContentSize();
     if(isHori)
     {
-        statsMenu->setScale(screenSize.width / spriteSize.width * 0.6f);
+        statsMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
     }
     else
     {
-        statsMenu->setScale(screenSize.height / spriteSize.width * 0.6f);
+        statsMenu->setScale(screenSize.height / spriteSize.width * 0.25f);
     }
     statsMenu->setAnchorPoint(ccp(0, 1));
     statsMenu->setPosition(ccp(0, screenSize.height));
     this->addChild(statsMenu, 1);
     
     // create the money indicator
-    moneyIcon = CCSprite::create("main-menu-resource-icons_gold.png");
+    moneyIcon = CCSprite::create("yuanbao_amount.png");
     if(isHori)
     {
-        moneyIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+        moneyIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
     }
     else
     {
-        moneyIcon->setScale(screenSize.height / spriteSize.width * 0.6f);
+        moneyIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
     }
     moneyIcon->setAnchorPoint(ccp(0, 1));
-    moneyIcon->setPosition(ccp(180, screenSize.height - 40));
+    moneyIcon->setPosition(ccp(110, screenSize.height - 8));
     this->addChild(moneyIcon, 2);
     
     std::stringstream ss;
-    ss << money << "g";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    moneyLabel->setColor(colorBlack);
-    moneyLabel->setAnchorPoint(ccp(0, 1));
+    ss << money << "G";
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    moneyLabel->setColor(colorWhite);
+    moneyLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(moneyLabel, 2);
-    moneyLabel->CCNode::setPosition(240, screenSize.height - 60);
+    moneyLabel->CCNode::setPosition(250, screenSize.height - 25);
     
     // create the food indicator
-    foodIcon = CCSprite::create("main-menu-resource-icons_food.png");
+    foodIcon = CCSprite::create("rice_amount.png");
     if(isHori)
     {
-        foodIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+        foodIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
     }
     else
     {
-        foodIcon->setScale(screenSize.height / spriteSize.width * 0.6f);
+        foodIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
     }
     foodIcon->setAnchorPoint(ccp(0, 1));
-    foodIcon->setPosition(ccp(315, screenSize.height - 40));
+    foodIcon->setPosition(ccp(340, screenSize.height));
     this->addChild(foodIcon, 2);
     
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodLabel->setColor(colorBlack);
-    foodLabel->setAnchorPoint(ccp(0, 1));
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    foodLabel->setColor(colorWhite);
+    foodLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(foodLabel, 2);
-    foodLabel->CCNode::setPosition(370, screenSize.height - 60);
+    foodLabel->CCNode::setPosition(450, screenSize.height - 25);
     
     // create the population indicator
-    populationIcon = CCSprite::create("main-menu-resource-icons_population.png");
+    populationIcon = CCSprite::create("population_amount.png");
     if(isHori)
     {
-        populationIcon->setScale(screenSize.width / spriteSize.width * 0.6f);
+        populationIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
     }
     else
     {
-        populationIcon->setScale(screenSize.height / spriteSize.width * 0.6f);
+        populationIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
     }
     populationIcon->setAnchorPoint(ccp(0, 1));
-    populationIcon->setPosition(ccp(460, screenSize.height - 40));
+    populationIcon->setPosition(ccp(540, screenSize.height - 2));
     this->addChild(populationIcon, 2);
     
     ss.str(std::string());
     ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
-    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    populationLabel->setColor(colorBlack);
+    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
-    populationLabel->CCNode::setPosition(565, screenSize.height - 60);
+    populationLabel->CCNode::setPosition(650, screenSize.height - 25);
     
     // create the achievements label for the values
     ss.str(std::string());
     ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
-    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(270, screenSize.height - 105);
+    achivementsLabel->CCNode::setPosition(185, screenSize.height - 75);
     
     // showing the average happiness attribute
     average_happiness = 0;
@@ -614,9 +614,9 @@ void GameHUD::createStatsMenu()
     
     average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     average_happiness_label->setColor(colorBlack);
-    average_happiness_label->setAnchorPoint(ccp(0, 1));
+    average_happiness_label->setAnchorPoint(ccp(0, 0));
     this->addChild(average_happiness_label, 2);
-    average_happiness_label->CCNode::setPosition(620, screenSize.height - 60);
+    average_happiness_label->CCNode::setPosition(620, 0);
     
     // tap mode label
     ss.str(std::string());
@@ -645,9 +645,9 @@ void GameHUD::createStatsMenu()
     }
     tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     tapModeLabel->setColor(colorBlack);
-    tapModeLabel->setAnchorPoint(ccp(0, 1));
+    tapModeLabel->setAnchorPoint(ccp(0, 0));
     this->addChild(tapModeLabel, 2);
-    tapModeLabel->CCNode::setPosition(670, screenSize.height - 60);
+    tapModeLabel->CCNode::setPosition(720, 0);
 }
 
 void GameHUD::createTimeMenu()
@@ -870,6 +870,7 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        buildButton->setVisible(false);
         currTapMode = Normal;
         GameScene::getThis()->buildingHandler->selectedBuilding = NULL;
         GameScene::getThis()->mapHandler->UnBuildPreview();

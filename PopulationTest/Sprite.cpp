@@ -2814,3 +2814,57 @@ void GameSprite::updatePath(CCPoint endPos)
         isFollowingMoveInstruction = true;
     }
 }
+
+bool GameSprite::isFarmer()
+{
+    if(type == M_FARMER || type == F_FARMER)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GameSprite::isRefugee()
+{
+    if(type == M_REFUGEE || type == F_REFUGEE)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GameSprite::isCitizen()
+{
+    if(type == M_CITIZEN || type == F_CITIZEN)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GameSprite::isBuilder()
+{
+    if(type == M_BUILDER || type == F_BUILDER)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GameSprite::isSoldier()
+{
+    if(type == M_SOLDIER || type == F_SOLDIER)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool GameSprite::isBandit()
+{
+    if(type == M_BANDIT || type == F_BANDIT)
+    {
+        return true;
+    }
+    return false;
+}
