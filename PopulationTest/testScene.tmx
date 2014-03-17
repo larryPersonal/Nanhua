@@ -527,7 +527,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="10000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="amenity"/>
+    <property name="building_type" value="special"/>
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
@@ -634,7 +634,7 @@
    eJztzgENAAAIA6BHsH9aW9zNQQISGuY6AAAAAAAAAAAAAAAAAAAAAAAAAADASwuEKwAR
   </data>
  </layer>
- <layer name="Building_2" width="90" height="60" visible="0">
+ <layer name="Building_2" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="4"/>
    <property name="start_tile_offset" value="0"/>
@@ -643,7 +643,7 @@
    eJzt2KERADAIA0BWgP2HZQYMXHv/JiYiOhEAAAAAAAAA/CKvBwAAAACwLodZg76/CQAAAAAAAAAA3tA/nQDw
   </data>
  </layer>
- <layer name="Building_3" width="90" height="60" visible="0">
+ <layer name="Building_3" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="3"/>
    <property name="start_tile_offset" value="0"/>
