@@ -105,6 +105,7 @@ private:
     int mGameFarmNumber;
     int mGameGranaryNumber;
     int mGameTowerNumber;
+    bool mGameCurrentlyUpgrading;
     
     CCSprite* moneyIcon;
     CCSprite* foodIcon;

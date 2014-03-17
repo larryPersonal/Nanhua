@@ -120,7 +120,7 @@ struct SettingsLevel
     
     void setLevel0()
     {
-        default_start_money = 200;
+        default_start_money = 1500;
         default_max_reputation = 400;
         projected_population_growth = 20;
         

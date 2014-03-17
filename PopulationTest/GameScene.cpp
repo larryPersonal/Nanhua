@@ -621,10 +621,16 @@ void GameScene::update(float time)
 {
     if(!GameHUD::getThis()->pause)
     {
-        for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
+        for (int i = 0; i < spriteHandler->spritesOnMap->count(); i++)
         {
             GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
             sp->updateSprite(time);
+        }
+        
+        for (int i = 0; i < buildingHandler->specialOnMap->count(); i++)
+        {
+            Building* b = (Building*) buildingHandler->specialOnMap->objectAtIndex(i);
+            b->updateBuilding(time);
         }
         
         constructionHandler->update(time);

@@ -163,6 +163,8 @@ public:
     
     void AnimUpdate();
     
+    float cumulatedTimeUpgrading;
+    void updateBuilding(float);
 };
 
 #endif

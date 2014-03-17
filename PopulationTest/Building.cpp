@@ -67,6 +67,8 @@ Building::Building()
     isCurrentHarvest = false;
     
     required_building_count = required_capita = required_population = 0;
+    
+    cumulatedTimeUpgrading = 0;
 }
 Building::~Building()
 {
@@ -767,3 +769,21 @@ void Building::AnimUpdate()
     
 }
 
+void Building::updateBuilding(float dt)
+{
+    if(isCurrentUpgrading)
+    {
+        cumulatedTimeUpgrading += dt;
+        
+        if(cumulatedTimeUpgrading > 0.12f)
+        {
+            current_upgrade_unit++;
+            if(current_upgrade_unit > upgrade_unit_max)
+            {
+                current_upgrade_unit = 0;
+                GameManager::getThis()->town_hall_level++;
+                isCurrentUpgrading = false;
+            }
+        }
+    }
+}
