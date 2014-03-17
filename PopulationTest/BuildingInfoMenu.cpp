@@ -91,7 +91,6 @@ void BuildingInfoMenu::createMenuItems()
         return;
     }
     
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
@@ -367,7 +366,7 @@ void BuildingInfoMenu::createMenuItems()
     // sprite population label
     ss.str(string());
     ss << "Villages Assigned!";
-    spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     spritePopulationLabel->setColor(colorGreen);
     spritePopulationLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(spritePopulationLabel);
