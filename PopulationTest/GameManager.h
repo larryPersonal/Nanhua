@@ -13,6 +13,7 @@
 #include "GameScene.h"
 #include <map.h>
 #include <iterator>
+#include <vector>
 
 using namespace cocos2d;
 using namespace std;
@@ -138,20 +139,36 @@ struct MenuItemUnlock
     }
 };
 
+struct HousingLimit
+{
+    int maximum_level;
+    vector<int> gold_required;
+    vector<int> food_required;
+    vector<int> housing_limits;
+    vector<int> granary_limits;
+    vector<int> farm_limits;
+    vector<int> guard_tower_limits;
+    
+    HousingLimit()
+    {
+        maximum_level = 0;
+    }
+};
 
 class GameManager
 {
     static GameManager* SP;
-    bool loadedGame;
     
+    /* section that will consider to retain or discard */
+    bool loadedGame;
     bool tutorialMode;
     
     
     bool UnlockConditionsMet(Building* b);
     bool ResearchConditionsMet(Building* b);
     void NewGameUnlocks();
-     std::vector<AreaUnlock> areaUnlocks;
     
+    std::vector<AreaUnlock> areaUnlocks;
     std::vector<MenuItemUnlock> gameMenuUnlocks; //for in game menu only!
     
     int areaUnlockIndex;
@@ -180,14 +197,7 @@ public:
     
     // Game values
     bool firstPlay;
-    int currentMoney;
-    float currentSecsElapsed;
-    int totalHappiness;
     CCArray* loadedGameArea;
-    
-    int getCurrentMoney();
-    float getCurrentTime();
-    int getAverageHappiness();
     
     // Research building list
     list<int> unlockedBuildingIDs;
@@ -197,16 +207,7 @@ public:
     CCArray* unlockedBuildings;
     CCArray* researchableBuildings;
     CCArray* lockedBuildings;
-
-    /*storage value: stores food.*/
-    int maxStorageVal;
-    int currStorageVal;
-
-    void addMaxStorageValue(Building *justbuilt);
-    void subtractMaxStorageValue(Building *justdestroyed);
-    void storage_store(int amt);
-    void storage_consume(int amt);
-    bool hasStorageLeft();
+    
     
    
     void UpdateUnlocks();
@@ -233,6 +234,15 @@ public:
     
     void setLevel(int);
     int getLevel();
+    
+    /* Jerry added */
+    int town_hall_level;
+    
+    Json::Value hl;
+    HousingLimit* housingLimitation;
+    void parseHousingLimitation();
+    bool parseHousingLimit(string);
+    void loadHousingLimit();
 };
 
 

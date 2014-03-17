@@ -12,6 +12,7 @@
 #include "Possessions.h"
 #include "GlobalHelper.h"
 #include "GameHUD.h"
+#include "HousingLimit.h"
 #include <json/json.h> //for the area unlock section
 //#include <sstream>
 //#include <iostream>
@@ -25,9 +26,6 @@ GameManager* GameManager::SP;
 GameManager::GameManager()
 {
     SP = this;
-    currentMoney = 0;
-    currentSecsElapsed = 0;
-    totalHappiness = 0;
     loadedGame = false;
     unlockedBuildings = CCArray::create();
     unlockedBuildings->retain();
@@ -45,6 +43,10 @@ GameManager::GameManager()
     loadedGameArea->retain();
     
     level = 0;
+    town_hall_level = 0;
+    
+    housingLimitation = new HousingLimit();
+    parseHousingLimitation();
     
     init();
 }
@@ -282,33 +284,8 @@ void GameManager::loadGameData()
                         
                     }
                     
-                    currentMoney = atoi(tokens[0].c_str());
-                   areaUnlockIndex = atoi(tokens[1].c_str());
-                                    
+                    areaUnlockIndex = atoi(tokens[1].c_str());
                     
-                    
-                    //GameTimer::getThis()->setTime(atof(tokens[2].c_str()), atof(tokens[3].c_str()));
-                    
-            
-                    /*
-                    //birth rate restore
-                    int isImplementingPolicy = atoi(tokens[4].c_str());
-                    if (isImplementingPolicy == 1)
-                    {
-                        GameScene::getThis()->policyHandler->setBirthRatePolicy(atoi(tokens[6].c_str()) - 1, atoi(tokens[5].c_str()));
-                    }
-                    isImplementingPolicy = atoi(tokens[7].c_str());
-                    if (isImplementingPolicy == 1)
-                    {
-                        GameScene::getThis()->policyHandler->setCulturalExchangePolicy(atoi(tokens[9].c_str())-1, atoi(tokens[8].c_str()));
-                    }
-                    GameScene::getThis()->policyHandler->maxAlienPopulation = atoi(tokens[10].c_str());
-                    
-                    GameScene::getThis()->policyHandler->percentTax = atoi(tokens[11].c_str());
-                    
-                    //tutorial restore
-                    TutorialHandler::getThis()->setSequenceIndex(atoi(tokens[12].c_str()));
-                    */
                 }
                     break;
                 case 2:
@@ -474,7 +451,6 @@ void GameManager::newGameData()
     //playarea_min = ccp(1, 10);
     //playarea_max = ccp(16, 25);
     areaUnlockIndex = 0;
-    currentMoney = starting_capital;
 }
 
 bool GameManager::saveGameData()
@@ -639,22 +615,6 @@ CCPoint GameManager::getMaxArea()
     return areaUnlocks[areaUnlockIndex].max;
 }
 
-
-int GameManager::getCurrentMoney()
-{
-    return currentMoney;
-}
-
-float GameManager::getCurrentTime()
-{
-    return currentSecsElapsed;
-}
-
-int GameManager::getAverageHappiness()
-{
-    return (int)(totalHappiness / (float)GameScene::getThis()->spriteHandler->spritesOnMap->count()) /10;
-}
-
 /*Note: once unlocked, facilities will not be re-locked.*/
 /*facilities will appear in research menu first before being unlocked.*/
 bool GameManager::UnlockConditionsMet(Building *b)
@@ -721,10 +681,12 @@ void GameManager::UpdateUnlocks()
     //menuitem unlocks only run outside of the tutorial.
     for (int i = 0; i < gameMenuUnlocks.size(); ++i)
     {
+        /*
         if (gameMenuUnlocks[i].hasMetCriteria(currentMoney))
         {
             fliplockMenuItem(i, true);
         }
+        */
     }
 
 }
@@ -870,37 +832,6 @@ bool GameManager::hasLostGame()
 
 }
 
-void GameManager::addMaxStorageValue(Building *justbuilt)
-{
-    maxStorageVal += justbuilt->storageLimit;
-}
-
-void GameManager::subtractMaxStorageValue(Building *justdestroyed)
-{
-    maxStorageVal -= justdestroyed->storageLimit;
-    //additional food over limit is wasted.
-    if (currStorageVal > maxStorageVal)
-        currStorageVal = maxStorageVal;
-}
-
-void GameManager::storage_store(int amt)
-{
-    currStorageVal += amt;
-    //additional food over limit is wasted.
-    if (currStorageVal > maxStorageVal)
-        currStorageVal = maxStorageVal;
-}
-
-void GameManager::storage_consume(int amt)
-{
-    currStorageVal -= amt;
-    if (currStorageVal < 0) currStorageVal = 0;
-}
-bool GameManager::hasStorageLeft()
-{
-    return (currStorageVal < maxStorageVal);
-}
-
 void GameManager::setLevel(int level)
 {
     this->level = level;
@@ -909,4 +840,107 @@ void GameManager::setLevel(int level)
 int GameManager::getLevel()
 {
     return level;
+}
+
+void GameManager::parseHousingLimitation()
+{
+    std::string content = contentJson;
+    
+    // specific stats
+    bool parsingSuccessful = parseHousingLimit(content);
+    if (!parsingSuccessful)
+    {
+        std::cout  << "Failed to parse housing limit jason doc\n" << reader.getFormatedErrorMessages() << std::endl;
+    }
+    else
+    {
+        loadHousingLimit();
+    }
+    
+    hl.clear();
+}
+
+bool GameManager::parseHousingLimit(string doc)
+{
+    if (doc.length() == 0)
+    {
+        std::cout << "no housing limit file loaded!" << std::endl;
+        return false;
+    }
+    
+    // this is the main method that starts off all the calculations
+    //initialize behavior tree
+    bool parsingSuccessful = reader.parse( doc, hl );
+    if ( !parsingSuccessful )
+    {
+        std::cout  << "Failed to parse config doc\n" << reader.getFormatedErrorMessages() << std::endl;
+    }
+    std::string encoding = root.get("encoding", "UTF-8" ).asString();
+    
+    return parsingSuccessful;
+}
+
+void GameManager::loadHousingLimit()
+{
+    housingLimitation->maximum_level = atoi(hl["maximum_level"].asString().c_str());
+    
+    for(int i = 1; i <= housingLimitation->maximum_level; i++)
+    {
+        stringstream ss;
+        ss << "level_" << i;
+        
+        if(hl[ss.str().c_str()]["levelup_money"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->gold_required.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->gold_required.push_back(atoi(hl[ss.str().c_str()]["levelup_money"].asString().c_str()));
+        }
+        
+        if(hl[ss.str().c_str()]["levelup_food"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->food_required.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->food_required.push_back(atoi(hl[ss.str().c_str()]["levelup_food"].asString().c_str()));
+        }
+        
+        if(hl[ss.str().c_str()]["housing"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->farm_limits.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->farm_limits.push_back(atoi(hl[ss.str().c_str()]["housing"].asString().c_str()));
+        }
+        
+        if(hl[ss.str().c_str()]["granary"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->granary_limits.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->granary_limits.push_back(atoi(hl[ss.str().c_str()]["granary"].asString().c_str()));
+        }
+        
+        if(hl[ss.str().c_str()]["guard_tower"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->guard_tower_limits.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->guard_tower_limits.push_back(atoi(hl[ss.str().c_str()]["guard_tower"].asString().c_str()));
+        }
+        
+        if(hl[ss.str().c_str()]["housing"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->housing_limits.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->housing_limits.push_back(atoi(hl[ss.str().c_str()]["housing"].asString().c_str()));
+        }
+    }
 }

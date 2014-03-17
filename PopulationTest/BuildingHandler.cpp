@@ -488,20 +488,20 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     
                     
-                    currProperty = properties->valueForKey("research_time");
+                    currProperty = properties->valueForKey("upgrade_unit");
                     if (currProperty)
                     {
-                        CCString* research = CCStringMake(properties->valueForKey("research_time")->getCString());
-                        if (research->length() > 0)
+                        CCString* upgrade_unit = CCStringMake(properties->valueForKey("upgrade_unit")->getCString());
+                        if (upgrade_unit->length() > 0)
                         {
-                            b->researchTime = atof(research->getCString());
+                            b->upgrade_unit_max = atof(upgrade_unit->getCString());
                         }
                         else
-                            b->researchTime = 10.0f;
+                            b->upgrade_unit_max = 10.0f;
                     }
                     else
                     {
-                        b->researchTime = 10.0f;
+                        b->upgrade_unit_max = 10.0f;
                     }
           
                     

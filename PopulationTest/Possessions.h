@@ -58,7 +58,11 @@ struct Possessions
     
     float cumulativeTime;
     
-    /* This section is only for the bandits */
+    /* This section is for the combating part in the game */
+    float attack_cooldown;
+    int attack_power_min;
+    int attack_power_max;
+    
     int current_endurance;
     int max_endurance;
     
@@ -102,6 +106,13 @@ struct Possessions
         targetLocation = NULL;
         
         cumulativeTime = 0.0f;
+        
+        current_endurance = 0;
+        max_endurance = 0;
+        
+        attack_cooldown = 0;
+        attack_power_min = 0;
+        attack_power_max = 0;
     }
     
     ~Possessions()

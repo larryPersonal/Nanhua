@@ -50,6 +50,7 @@ class MapHandler
     SpriteSolidPoly* pathPreviewTileHighlight;
      
 public:
+    MapHandler();
     ~MapHandler();
     void UnBuildEndGame();
     //2D array, where X and Y is position. To get the correct index, supply an index of X * y.
@@ -66,6 +67,7 @@ public:
     
     CCArray* mapTiles;
     CCArray* pathTiles; //this array keeps all mapTiles that are marked as Path.
+    CCArray* combatTiles;
     
     MapTile* getTileAt(int X, int Y);
     CCTMXTiledMap* getMap();
@@ -88,7 +90,7 @@ public:
     CCPoint forceBoundsConstraints(CCPoint &tilePos);
     
     bool isTilePosWithinBounds(CCPoint &tilePos);
-    bool isTileBlocked(CCPoint &tilePos);
+    bool isTileBlocked(CCPoint &tilePos, bool);
     bool isTileBuildable(CCPoint &tilePos);
     bool isBuildableOnTile(CCPoint &target, Building* building);
 
@@ -124,6 +126,8 @@ public:
     
     CCPoint getRandomTileLocation();
     CCPoint getRandomPathTile();
+    
+    void update(float dt);
 };
 
 

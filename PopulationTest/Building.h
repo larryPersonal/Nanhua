@@ -118,16 +118,22 @@ public:
     int researchCost;
     int maintCost;
     //and probably other stuff here.
-    float researchTime;
     float constructionTime;
     float constructionEndTime;
     
     // jerry added
     CCArray* memberSpriteList;
     
+    float upgrade_unit_max;
+    float current_upgrade_unit;
+    
+    bool isCurrentHarvest;
+    
     CCPoint tilePos();
     
     bool isCurrentConstructing;
+    
+    bool isCurrentUpgrading;
     
     CCPoint getWorldPosition();
     
@@ -145,7 +151,6 @@ public:
     
     bool isUnderConstruction();
     bool hasFood();
-    bool notHavest();
     
     void leaveGranuary(GameSprite*);
     
@@ -157,9 +162,6 @@ public:
     void EndAnim();
     
     void AnimUpdate();
-
-    
-    
     
 };
 

@@ -17,6 +17,7 @@ MapTile::MapTile()
     master = NULL;
     isPath = false;
     isEnvironment = false;
+    isInCombat = false;
     buildAllowType = 0;
     walkAllowType = 0;
 }
@@ -24,7 +25,9 @@ MapTile::MapTile()
 MapTile::~MapTile()
 {
     if (environment != NULL)
+    {
         environment->release();
+    }
 }
 
 void MapTile::init()
@@ -37,22 +40,32 @@ void MapTile::init()
 
 bool MapTile::isOccupied()
 {
-    if (this==NULL) return true;
+    if (this==NULL){
+        return true;
+    }
+    
     bool occupied = false;
     
+    if (isInCombat){
+        occupied = true;
+    }
     
     bool b = false;//(building != NULL);
     if (building != NULL)
     {
         if (building->buildingName.compare("Wall") == 0 || building->buildingName.compare("Gate") == 0)
+        {
             b = true;
+        }
     }
     bool m = false;//(master != NULL);
     
     if (master != NULL)
     {
         if (master->building->buildingName.compare("Wall") == 0 || master->building->buildingName.compare("Gate") == 0)
+        {
             m = true;
+        }
 
     }
     
@@ -71,13 +84,18 @@ bool MapTile::hasBuilding()
 
 void MapTile::pathHere()
 {
-    if (isOccupied()) return;
+    if (isOccupied())
+    {
+        return;
+    }
     isPath = true;
 }
 
 void MapTile::unpathHere()
 {
-    if (isOccupied()) return;
+    if (isOccupied()){
+        return;
+    }
     isPath = false;
 }
 
@@ -103,7 +121,6 @@ void MapTile::setEnvironment(CCSprite* sprite)
     environment = sprite;
     isEnvironment = true;
 }
-
 
 
 

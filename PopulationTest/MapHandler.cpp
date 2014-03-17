@@ -11,6 +11,12 @@
 #include "GameHUD.h"
 #include "GlobalHelper.h"
 
+MapHandler::MapHandler()
+{
+    combatTiles = CCArray::create();
+    combatTiles->retain();
+}
+
 MapHandler::~MapHandler()
 {
    // delete mapPtr;
@@ -38,6 +44,9 @@ MapHandler::~MapHandler()
     
     pathTiles->removeAllObjects();
     pathTiles->release();
+    
+    combatTiles->removeAllObjects();
+    combatTiles->release();
 }
 
 void MapHandler::UnBuildEndGame()
@@ -351,13 +360,15 @@ CCPoint MapHandler::pointRelativeToCenterFromLocation(cocos2d::CCPoint &location
 
 bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos)
 {
-    if (!isTilePosWithinBounds(tilePos)){
+    if (!isTilePosWithinBounds(tilePos))
+    {
         CCLog("outofBounds");
         return false;
     }
 
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
-    if (targetTile->hasBuilding() || targetTile->isPath){
+    if (targetTile->hasBuilding() || targetTile->isPath)
+    {
         CCLog("Target tile isOccupied or isPath");
         return false;
     }
@@ -367,17 +378,22 @@ bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos)
 
 
 //Note: ignore this for destination.
-bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
+bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos, bool tryEscape)
 {
-    if (!isTilePosWithinBounds(tilePos)) return true;
+    if (!isTilePosWithinBounds(tilePos)){
+        return true;
+    }
     
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
-   // if (targetTile->isOccupied()) return true;
-    if (!targetTile->isPath && !targetTile->hasBuilding()) return true;
+    if ((!targetTile->isPath && !targetTile->hasBuilding()) || (targetTile->isInCombat && !tryEscape)){
+        return true;
+    }
     
     //if the first test passes, check if its blocked by the metalayer
     CCTMXLayer* meta = mapPtr->layerNamed("Metadata");
-    if (!meta) return false;
+    if (!meta){
+        return false;
+    }
     int metaGID = meta->tileGIDAt(tilePos);
     if (metaGID > 0)
     {
@@ -386,7 +402,9 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
         {
             //has to be const, because return value of vForKey is const
             const CCString* col = properties->valueForKey("impassable");
-            if (strcmp(col->getCString(),"1")) return true;
+            if (strcmp(col->getCString(),"1")){
+                return true;
+            }
         }
     }
    
@@ -502,19 +520,30 @@ CCPoint MapHandler::getRandomTileLocation()
     return tgt;
 }
 
+// get a random path tile for all the wandering villages when they are in idle state
 CCPoint MapHandler::getRandomPathTile()
 {
+    // if no path tile on the map! (how this will happen?)
     if (pathTiles->count() == 0)
+    {
         return CCPointMake(-1, -1);
+    }
     
+    // get a random map tile from all path tiles.
     int targetIdx = rand() % pathTiles->count();
-    
     MapTile* tgtTile = (MapTile*)pathTiles->objectAtIndex(targetIdx);
-    if (!tgtTile->isPath) return CCPointMake(-1,-1);
     
+    // if the tile is not a path, cannot go there.
+    if (!tgtTile->isPath){
+        return CCPointMake(-1,-1);
+    }
+    
+    // if the tile is in combat, avoid to go there.
+    if(tgtTile->isInCombat){
+        return CCPointMake(-1, -1);
+    }
     
     return CCPointMake(tgtTile->xpos, tgtTile->ypos);
-    
 }
 
 bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails)
@@ -1026,7 +1055,29 @@ void MapHandler::UnPathPreviewLineExtend()
     pathPreview->setVertexAt(3, mapPtr->getTileSize().width / 2.0f, -mapPtr->getTileSize().height / 2.0f);
 }
 
-
+void MapHandler::update(float dt)
+{
+    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    
+    for(int i = 0; i < combatTiles->count(); i++)
+    {
+        MapTile* tile = (MapTile*) combatTiles->objectAtIndex(i);
+        tile->isInCombat = false;
+    }
+    
+    combatTiles->removeAllObjects();
+    
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        
+        if(gs->combatState == C_COMBAT)
+        {
+            gs->currTile->isInCombat = true;
+            combatTiles->addObject(gs->currTile);
+        }
+    }
+}
 
 
 

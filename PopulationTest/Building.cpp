@@ -41,7 +41,9 @@ Building::Building()
     constructionTime = 10.0f;
    
     researchCost = 100.0f;
-    researchTime = 10.0f;
+    
+    upgrade_unit_max = 0;
+    current_upgrade_unit = 0;
     
     memberSpriteList = CCArray::create();
     memberSpriteList->retain();
@@ -61,6 +63,8 @@ Building::Building()
     unlocked = false;
     
     isCurrentConstructing = false;
+    isCurrentUpgrading = false;
+    isCurrentHarvest = false;
     
     required_building_count = required_capita = required_population = 0;
 }
@@ -135,7 +139,7 @@ Building* Building::copyWithZone(CCZone *pZone)
   
         //pCopy->buildingTexture->retain();
         pCopy->constructionTime = this->constructionTime;
-        pCopy->researchTime = this->researchTime;
+        pCopy->upgrade_unit_max = this->upgrade_unit_max;
         pCopy->researchCost = this->researchCost;
         
         pCopy->build_uint_required = this->build_uint_required;
@@ -196,7 +200,6 @@ void Building::ArriveHandler(GameSprite* sp)
     if (!sp) return;
 
     sp->setAction(sp->nextAction);
-    
     
     if(sp->getJobLocation() == this)
     {
@@ -315,12 +318,14 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             // add the penalty here!
         }
     }
-    else if(sp->currAction == FARMING && sp->getTargetLocation() == this && sp->getJob() == FARMER)
+    else if(sp->currAction == FARMING && sp->getTargetLocation() == this && sp->isFarmer())
     // farming
     {
+        CCLog("test1");
         // if the farming process not finished!
-        if(notHavest() && farmState == FARM && currentStorage <= 0)
+        if(!isCurrentHarvest && farmState == FARM && currentStorage <= 0)
         {
+            CCLog("test2");
             // a farmer will never quit a farming job naturally
             //int workval = sp->getPossessions()->PerformTask();
             
@@ -339,6 +344,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 {
                     work_unit_current = 0;
                     currentStorage = storageLimit;
+                    isCurrentHarvest = true;
                 }
                 
                 if(sp->getPossessions()->energyRating < 0)
@@ -453,15 +459,27 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
     else if(sp->currAction == ROB && sp->getTargetLocation() == this)
     {
         // if the building to be rob is a town hall, rob the money;
-        if(build_uint_required >= 10000 && GameHUD::getThis()->money > 0 && sp->current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob)
+        if(build_uint_required >= 10000)
         {
-            GameHUD::getThis()->money--;
-            sp->current_money_rob++;
-            
-            if(GameHUD::getThis()->money < 0)
+            if(sp->current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob && GameHUD::getThis()->money > 0)
             {
-                GameHUD::getThis()->money = 0;
-                sp->current_money_rob--;
+                GameHUD::getThis()->money--;
+                sp->current_money_rob++;
+                
+                if(GameHUD::getThis()->money < 0)
+                {
+                    GameHUD::getThis()->money = 0;
+                    sp->current_money_rob--;
+                    sp->currAction = IDLE;
+                    sp->nextAction = IDLE;
+                    sp->setTargetLocation(NULL);
+                }
+            }
+            else
+            {
+                sp->currAction = IDLE;
+                sp->nextAction = IDLE;
+                sp->setTargetLocation(NULL);
             }
         }
         else
@@ -475,6 +493,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             else
             {
                 sp->currAction = IDLE;
+                sp->nextAction = IDLE;
                 sp->setTargetLocation(NULL);
             }
         }
@@ -640,11 +659,6 @@ bool Building::isUnderConstruction()
 bool Building::hasFood()
 {
     return currentStorage > 0;
-}
-
-bool Building::notHavest()
-{
-    return work_unit_current < work_unit_required;
 }
 
 void Building::leaveGranuary(GameSprite* sp)

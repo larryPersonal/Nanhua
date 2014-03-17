@@ -39,8 +39,9 @@ enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STO
 
 enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER = 4 };
 
-
-
+enum SpriteCombatState {
+    C_IDLE = 0, C_COMBAT, C_ESCAPE = 2
+};
 
 class GameSprite: public CCObject
 {
@@ -74,6 +75,8 @@ private:
     
     float cumulativeTime_happiness;
     
+    float cumulativeTime_attack;
+    
     // token part
     bool is_token_drop_cooldown;
     float token_drop_cooldown_time;
@@ -81,17 +84,23 @@ private:
     float token_drop_rate;
     
 public:
+    GameSprite* enermy;
+    
     CCPoint nextTile;
+    CCPoint currentTile;
     CCPoint targetLocation;
     
     // bool stopAction;
     bool stopAction;
+    bool isMoving;
     
     // bandit's escape flag
     bool tryEscape;
     
     int mGameCurrentEndurance;
     int mGameMaxEndurance;
+    
+    bool mGameWarMode;
     
     // the variables that the bandits stole from the village.
     int current_money_rob;
@@ -125,6 +134,8 @@ public:
     Building* jobLocation;
     SpriteJob job;
     bool isDoingJob;
+    
+    SpriteCombatState combatState;
     
     //this is due to the greedy logic where the sprite still attempts to go to its destination, even when the destination is unreachable.
     //the pathing must resume.
@@ -165,6 +176,8 @@ public:
     CCSprite* spriteRep;
     ProgressBar* barHP;
     
+    CCArray* hpLabels;
+    
     /*holds a path. use pathfinding to deal with it*/
     CCArray* path;
     
@@ -182,6 +195,7 @@ public:
     void setFrameCount(int idleFrames, int walkFrames);
     
     bool CreatePath(CCPoint start, CCPoint end);
+    bool CreatePathEscape(CCPoint start, CCPoint end);
     
     void initAI(bool isUpgrade = false);
     
@@ -254,7 +268,7 @@ public:
     void setIsFollowingMovementInstruction(bool);
     
     bool GoBuilding(Building* b);
-    bool GoLocation(CCPoint);
+    bool GoLocation(CCPoint, bool);
     
     bool GoRest(Building* b);
     bool GoEat(Building* b);
@@ -304,7 +318,21 @@ public:
     bool attack();
     bool hasValidGranary();
     bool escape();
-    bool standBy();
+    
+    void damaged(int);
+    
+    bool hasBandit(CCArray*, CCPoint);
+    bool hasSoldier(CCArray*, CCPoint);
+    
+    void updatePath(Building*);
+    void updatePath(CCPoint);
+    
+    bool isFarmer();
+    bool isCitizen();
+    bool isRefugee();
+    bool isBandit();
+    bool isSoldier();
+    bool isBuilder();
 };
 
 

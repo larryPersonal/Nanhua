@@ -238,4 +238,6 @@ void BuildingCard::tryToBuild(int tag)
     }
     GameScene::getThis()->isThisTapCounted = true;
     BuildScroll::getThis()->closeMenu();
+    GameHUD::getThis()->buildButton->setVisible(true);
+    GameHUD::getThis()->buildScroll = NULL;
 }

@@ -51,7 +51,7 @@ BuildingInfoMenu::BuildingInfoMenu(Building* building)
     background_rect->ini(700, 100, 100, 200);
     
     mBuildingVacancy = mBuildingOverload = 0;
-    mBuildingExp = mBuildingExpMax = mBuildingPrice = 0;
+    mBuildingPrice = 0;
 }
 
 BuildingInfoMenu::~BuildingInfoMenu()
@@ -66,6 +66,8 @@ void BuildingInfoMenu::createMenuItems()
         return;
     }
     
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
     ccColor3B colorGreen = ccc3(81, 77, 2);
@@ -78,8 +80,6 @@ void BuildingInfoMenu::createMenuItems()
     spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
-    mBuildingExp = building->currentExp;
-    mBuildingExpMax = building->getExpToLevel();
     mBuildingLevel = building->currentLevel;
     mBuildingVacancy = building->populationLimit;
     
@@ -91,7 +91,7 @@ void BuildingInfoMenu::createMenuItems()
     mBuildingWorkUnitRequired = building->work_unit_required;
     
     // Create header
-    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Droidiga", 32, CCSizeMake(building->buildingName.length() * 25.0f, 5.0f), kCCTextAlignmentLeft);
+    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Droidiga", 32, CCSizeMake(building->buildingName.length() * 25.0f, 5.0f), kCCTextAlignmentCenter);
     textName->setColor(colorYellow);
     
     spLoy = CCSprite::create("loyalty icon.png");
@@ -117,15 +117,8 @@ void BuildingInfoMenu::createMenuItems()
     // Attribute labels
     ss.str(std::string());
     ss << "Level: " << mBuildingLevel;
-    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     labelLevel->setColor(colorGreen);
-    // Exp
-    labelExp = CCLabelTTF::create("NEXT LEVEL", "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelExp->setColor(colorBlack);
-    ss.str(std::string());
-    ss << mBuildingExp << "/" << mBuildingExpMax;
-    textExp = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    textExp->setColor(colorBlack);
     
     ss.str(std::string());
     if(building->build_uint_current < building->build_uint_required)
@@ -143,15 +136,6 @@ void BuildingInfoMenu::createMenuItems()
     ss << building->build_uint_current << "/" << building->build_uint_required;
     unitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     unitLabel->setColor(colorBlack);
-    
-    barExp = new ProgressBar();
-    barExp->createProgressBar(CCRectMake(0, 0, 80, 20),
-                                CCRectMake(5, 5, 70, 10),
-                              "loadingbar-empty.png",
-                              "loadingbar-left.png",
-                              "loadingbar-right.png",
-                              "loadingbar-full.png");
-    barExp->setValue(mBuildingExp / (float)mBuildingExpMax);
     
     unitBar = new ProgressBar();
     unitBar->createProgressBar(
@@ -271,8 +255,6 @@ void BuildingInfoMenu::createMenuItems()
     
     this->addChild(spriteBuilding);
     this->addChild(labelLevel);
-    this->addChild(barExp);
-    this->addChild(textExp);
     
     this->addChild(labelStatus);
     this->addChild(unitBar);
@@ -294,26 +276,6 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(workCompleteBar);
     this->addChild(workCompleteLabel);
     
-    if(building->buildingType == HOUSING)
-    {
-        foodConsumptionRateLabel->setVisible(false);
-        foodConsumptionRateTitleLabel->setVisible(false);
-        
-        foodStorageTitleLabel->setVisible(false);
-        foodStorageBar->setVisible(false);
-        foodStorageLabel->setVisible(false);
-    }
-    else if(building->food_consumption_rate > 0)
-    {
-        foodConsumptionRateLabel->setVisible(false);
-        foodConsumptionRateTitleLabel->setVisible(false);
-    }
-    else
-    {
-        recoveryRateTitleLabel->setVisible(false);
-        recoveryRateLabel->setVisible(false);
-    }
-    
     // Done creation, now position them
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     textName->setAnchorPoint(ccp(0.5, 1));
@@ -322,10 +284,7 @@ void BuildingInfoMenu::createMenuItems()
     buttonClose->setAnchorPoint(ccp(1, 1));
     
     spriteBuilding->setAnchorPoint(ccp(0, 1));
-    labelLevel->setAnchorPoint(ccp(0, 1));
-    labelExp->setAnchorPoint(ccp(0, 1));
-    textExp->setAnchorPoint(ccp(0, 1));
-    barExp->setAnchorPoint(ccp(0, 1));
+    labelLevel->setAnchorPoint(ccp(0.5, 1));
     
     labelStatus->setAnchorPoint(ccp(0, 1));
     unitBar->setAnchorPoint(ccp(0, 1));
@@ -381,28 +340,257 @@ void BuildingInfoMenu::createMenuItems()
         menu->addChild(menuItem);
     }
     
-    /*
-    for (int i = 0; i < mBuildingCurrPopulation; i++)
-    {
-        std::string spriteName = building->getPopulationAt(i)->spriteName + "_port.png";
-        
-        CCMenuItemImage* menuItem = CCMenuItemImage::create(spriteName.c_str(), NULL,
-                                                            this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
-        menuItem->setTag((int)building->getPopulationAt(i));  // Store GameSprite* address in tag
-        spritePopulation.push_back(menuItem);
-        
-        portraitScale = 40.0f / spritePopulation[i]->boundingBox().size.width;
-        
-        spritePopulation.back()->CCNode::setScale(portraitScale);
-        spritePopulation.back()->setAnchorPoint(ccp(-0.20, -0.25));
-        
-        menuItems->addObject(menuItem);
-        menu->addChild(menuItem);
-    }
-    */
-    
     reposition();
     this->schedule(schedule_selector(BuildingInfoMenu::update), 0.25f);
+    
+    /*********************** for building level up *********************/
+    moneyIcon = CCSprite::create("yuanbao_icon.png");
+    moneyIcon->setScale(0.5f);
+    moneyIcon->setAnchorPoint(ccp(0, 1));
+    moneyIcon->setPosition(ccp(-150, -190));
+    this->addChild(moneyIcon);
+    
+    ss.str(string());
+    int level = GameManager::getThis()->town_hall_level;
+    mGameLevel = level;
+    ss << GameManager::getThis()->housingLimitation->gold_required.at(level);
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    moneyLabel->setAnchorPoint(ccp(0, 1));
+    moneyLabel->setPosition(ccp(-30, -205));
+    moneyLabel->setColor(colorGreen);
+    this->addChild(moneyLabel);
+    
+    foodIcon = CCSprite::create("rice_icon.png");
+    foodIcon->setScale(0.5f);
+    foodIcon->setAnchorPoint(ccp(0, 1));
+    foodIcon->setPosition(ccp(50, -180));
+    this->addChild(foodIcon);
+    
+    ss.str(string());
+    ss << GameManager::getThis()->housingLimitation->food_required.at(level);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodLabel->setAnchorPoint(ccp(0, 1));
+    foodLabel->setPosition(ccp(140, -205));
+    foodLabel->setColor(colorGreen);
+    this->addChild(foodLabel);
+    
+    upgradeButton = CCMenuItemImage::create("upgrade.png", "upgrade.png", this, menu_selector(BuildingInfoMenu::upgrade));
+    upgradeButton->setScale(0.5f);
+    upgradeButton->setAnchorPoint(ccp(0, 1));
+    upgradeButton->setPosition(ccp(250, -180));
+    
+    cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
+    cancelUpgradeButton->setScale(upgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, upgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
+    cancelUpgradeButton->setAnchorPoint(ccp(0, 1));
+    cancelUpgradeButton->setPosition(ccp(250, -180));
+    
+    menuItemsUpgrade = CCArray::create();
+    menuItemsUpgrade->retain();
+    
+    menuItemsUpgrade->addObject(upgradeButton);
+    menuItemsUpgrade->addObject(cancelUpgradeButton);
+    
+    upgradeMenu = CCMenu::createWithArray(menuItemsUpgrade);
+    upgradeMenu->setPosition(CCPointZero);
+    
+    this->addChild(upgradeMenu);
+    
+    upgradeBar = new ProgressBar();
+    upgradeBar->createProgressBar(
+                                       CCRectMake(0, 0, 80, 20),
+                                       CCRectMake(5, 5, 70, 10),
+                                       "loadingbar-empty.png",
+                                       "loadingbar-left.png",
+                                       "loadingbar-right.png",
+                                       "loadingbar-full.png"
+                                       );
+    upgradeBar->setValue((float)building->current_upgrade_unit / (float)building->upgrade_unit_max);
+    upgradeBar->setAnchorPoint(ccp(0, 1));
+    upgradeBar->setPosition(ccp(-230, -90));
+    this->addChild(upgradeBar);
+    
+    mGameUpgradeUnit = building->current_upgrade_unit;
+    ss.str(string());
+    ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
+    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    upgradeBarLabel->setAnchorPoint(ccp(0, 1));
+    upgradeBarLabel->setPosition(ccp(-120, -90));
+    upgradeBarLabel->setColor(colorGreen);
+    this->addChild(upgradeBarLabel);
+    
+    ss.str(string());
+    ss << "HOUSE:";
+    houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    houseLimitTitle->setAnchorPoint(ccp(0, 1));
+    houseLimitTitle->setPosition(ccp(60, 100));
+    houseLimitTitle->setColor(colorGreen);
+    this->addChild(houseLimitTitle);
+    
+    CCArray* allHouse = GameScene::getThis()->buildingHandler->housingOnMap;
+    mGameHouseNumber = allHouse->count();
+    
+    ss.str(string());
+    ss << allHouse->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(level);
+    houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    houseLimitLabel->setAnchorPoint(ccp(0, 1));
+    houseLimitLabel->setPosition(ccp(240, 100));
+    houseLimitLabel->setColor(colorGreen);
+    this->addChild(houseLimitLabel);
+    
+    ss.str(string());
+    ss << "GRANARY:";
+    granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    granaryLimitTitle->setAnchorPoint(ccp(0, 1));
+    granaryLimitTitle->setPosition(ccp(60, 70));
+    granaryLimitTitle->setColor(colorGreen);
+    this->addChild(granaryLimitTitle);
+    
+    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    mGameGranaryNumber = allGranary->count();
+    
+    ss.str(string());
+    ss << allGranary->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(level);
+    granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    granaryLimitLabel->setAnchorPoint(ccp(0, 1));
+    granaryLimitLabel->setPosition(ccp(240, 70));
+    granaryLimitLabel->setColor(colorGreen);
+    this->addChild(granaryLimitLabel);
+    
+    ss.str(string());
+    ss << "FARM:";
+    farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    farmLimitTitle->setAnchorPoint(ccp(0, 1));
+    farmLimitTitle->setPosition(ccp(60, 40));
+    farmLimitTitle->setColor(colorGreen);
+    this->addChild(farmLimitTitle);
+    
+    CCArray* allFarm = GameScene::getThis()->buildingHandler->amenityOnMap;
+    mGameFarmNumber = allFarm->count();
+    
+    ss.str(string());
+    ss << allFarm->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(level);
+    farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    farmLimitLabel->setAnchorPoint(ccp(0, 1));
+    farmLimitLabel->setPosition(ccp(240, 40));
+    farmLimitLabel->setColor(colorGreen);
+    this->addChild(farmLimitLabel);
+    
+    ss.str(string());
+    ss << "GUARD TOWER:";
+    guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    guardTowerLimitTitle->setAnchorPoint(ccp(0, 1));
+    guardTowerLimitTitle->setPosition(ccp(60, 10));
+    guardTowerLimitTitle->setColor(colorGreen);
+    this->addChild(guardTowerLimitTitle);
+    
+    CCArray* allTower = GameScene::getThis()->buildingHandler->militaryOnMap;
+    mGameTowerNumber = allTower->count();
+    
+    ss.str(string());
+    ss << allTower->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(level);
+    guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
+    guardTowerLimitLabel->setPosition(ccp(240, 10));
+    guardTowerLimitLabel->setColor(colorGreen);
+    this->addChild(guardTowerLimitLabel);
+    
+    if(building->buildingType == SPECIAL)
+    {
+        // special building means town hall
+        foodConsumptionRateLabel->setVisible(false);
+        foodConsumptionRateTitleLabel->setVisible(false);
+        
+        foodStorageTitleLabel->setVisible(false);
+        foodStorageBar->setVisible(false);
+        foodStorageLabel->setVisible(false);
+        
+        recoveryRateTitleLabel->setVisible(false);
+        recoveryRateLabel->setVisible(false);
+        
+        labelStatus->setVisible(false);
+        unitLabel->setVisible(false);
+        unitBar->setVisible(false);
+        
+        workCompleteTitleLabel->setVisible(false);
+        workCompleteBar->setVisible(false);
+        workCompleteLabel->setVisible(false);
+        
+        spPrice->setVisible(false);
+        spCash->setVisible(false);
+        textPrice->setVisible(false);
+    }
+    else
+    {
+        moneyIcon->setVisible(false);
+        moneyLabel->setVisible(false);
+        
+        foodIcon->setVisible(false);
+        foodLabel->setVisible(false);
+        
+        upgradeButton->setVisible(false);
+        cancelUpgradeButton->setVisible(false);
+        
+        upgradeBar->setVisible(false);
+        upgradeBarLabel->setVisible(false);
+        
+        houseLimitTitle->setVisible(false);
+        houseLimitLabel->setVisible(false);
+        
+        granaryLimitTitle->setVisible(false);
+        granaryLimitLabel->setVisible(false);
+        
+        farmLimitTitle->setVisible(false);
+        farmLimitLabel->setVisible(false);
+        
+        guardTowerLimitTitle->setVisible(false);
+        guardTowerLimitLabel->setVisible(false);
+        
+        labelLevel->setVisible(false);
+        
+        if(building->buildingType == HOUSING)
+        {
+            foodConsumptionRateLabel->setVisible(false);
+            foodConsumptionRateTitleLabel->setVisible(false);
+            
+            foodStorageTitleLabel->setVisible(false);
+            foodStorageBar->setVisible(false);
+            foodStorageLabel->setVisible(false);
+            
+            workCompleteTitleLabel->setVisible(false);
+            workCompleteBar->setVisible(false);
+            workCompleteLabel->setVisible(false);
+        }
+        else if(building->buildingType == AMENITY)
+        {
+            foodConsumptionRateTitleLabel->setVisible(false);
+            foodConsumptionRateLabel->setVisible(false);
+            
+            recoveryRateTitleLabel->setVisible(false);
+            recoveryRateLabel->setVisible(false);
+        }
+        else if(building->buildingType == GRANARY)
+        {
+            workCompleteTitleLabel->setVisible(false);
+            workCompleteBar->setVisible(false);
+            workCompleteLabel->setVisible(false);
+        }
+        else if(building->buildingType == MILITARY)
+        {
+            foodConsumptionRateTitleLabel->setVisible(false);
+            foodConsumptionRateLabel->setVisible(false);
+            
+            recoveryRateTitleLabel->setVisible(false);
+            recoveryRateLabel->setVisible(false);
+            
+            foodStorageTitleLabel->setVisible(false);
+            foodStorageBar->setVisible(false);
+            foodStorageLabel->setVisible(false);
+            
+            workCompleteTitleLabel->setVisible(false);
+            workCompleteBar->setVisible(false);
+            workCompleteLabel->setVisible(false);
+        }
+    }
 }
 
 void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
@@ -448,9 +636,7 @@ void BuildingInfoMenu::reposition()
     
     // Anchored top left
     spriteBuilding->CCNode::setPosition(-195.0f, 100.0f);
-    labelLevel->CCNode::setPosition(-250.0f, -50.0f);
-    barExp->CCNode::setPosition(-250.0f, -80.0f);
-    textExp->CCNode::setPosition(-250.0f + barExp->boundingBox().size.width + 10.0f, -80.0f);
+    labelLevel->CCNode::setPosition(-130.0f, -50.0f);
     
     labelStatus->CCNode::setPosition(60.0f, 100.0f);
     unitBar->CCNode::setPosition(60.0f, 70.0f);
@@ -463,16 +649,16 @@ void BuildingInfoMenu::reposition()
     recoveryRateTitleLabel->CCNode::setPosition(60.0f, 40.0f);
     recoveryRateLabel->CCNode::setPosition(160.0f, 40.0f);
     
-    foodConsumptionRateTitleLabel->CCNode::setPosition(60.0f, 40.0f);
-    foodConsumptionRateLabel->CCNode::setPosition(160.0f, 40.0f);
+    foodConsumptionRateTitleLabel->CCNode::setPosition(60.0f, 10.0f);
+    foodConsumptionRateLabel->CCNode::setPosition(160.0f, 10.0f);
     
-    foodStorageTitleLabel->CCNode::setPosition(60.0f, 10.0f);
-    foodStorageBar->CCNode::setPosition(60.0f, -20.0f);
-    foodStorageLabel->CCNode::setPosition(160.0f, -20.0f);
+    foodStorageTitleLabel->CCNode::setPosition(60.0f, -20.0f);
+    foodStorageBar->CCNode::setPosition(60.0f, -50.0f);
+    foodStorageLabel->CCNode::setPosition(160.0f, -50.0f);
     
-    workCompleteTitleLabel->CCNode::setPosition(60.0f, -50.0f);
-    workCompleteBar->CCNode::setPosition(60.0f, -80.0f);
-    workCompleteLabel->CCNode::setPosition(160.0f, -80.0f);
+    workCompleteTitleLabel->CCNode::setPosition(60.0f, -80.0f);
+    workCompleteBar->CCNode::setPosition(60.0f, -110.0f);
+    workCompleteLabel->CCNode::setPosition(160.0f, -110.0f);
     
     // Anchored top
     textName->CCNode::setPosition(0, halfHeight - 40.0f);
@@ -501,24 +687,6 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
     bool isPositionDirty = false;
     
     std::stringstream ss;
-    
-    if (mBuildingExp != building->currentExp)
-    {
-        mBuildingExp = building->currentExp;
-        barExp->setValue(mBuildingExp / (float)mBuildingExpMax);
-        ss.str(std::string());
-        ss << mBuildingExp << "/" << mBuildingExpMax;
-        textExp->setString(ss.str().c_str());
-    }
-    
-    if (mBuildingExpMax != building->getExpToLevel())
-    {
-        mBuildingExpMax = building->getExpToLevel();
-        barExp->setValue(mBuildingExp / (float)mBuildingExpMax);
-        ss.str(std::string());
-        ss << mBuildingExp << "/" << mBuildingExpMax;
-        textExp->setString(ss.str().c_str());
-    }
     
     /*
     if (mBuildingPrice != building->buildingCost * GameScene::getThis()->policyHandler->percentTax * 0.01)
@@ -632,6 +800,75 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
     }
     */
     
+    /*
+    
+    if (GameManager::getThis()->town_hall_level != mGameLevel)
+    {
+        mGameLevel = GameManager::getThis()->town_hall_level;
+        
+        upgradeBar->setValue((float) building->current_upgrade_unit / (float) building->upgrade_unit_max);
+        ss.str(string());
+        ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
+        upgradeBarLabel->setString(ss.str().c_str());
+        
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
+        houseLimitLabel->setString(ss.str().c_str());
+        
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->granaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel);
+        granaryLimitLabel->setString(ss.str().c_str());
+        
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->amenityOnMap->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel);
+        farmLimitLabel->setString(ss.str().c_str());
+        
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
+        guardTowerLimitLabel->setString(ss.str().c_str());
+    }
+    
+    if (building->current_upgrade_unit != mGameUpgradeUnit)
+    {
+        mGameUpgradeUnit = building->current_upgrade_unit;
+        ss.str(string());
+        ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
+        upgradeBarLabel->setString(ss.str().c_str());
+    }
+    
+    if (GameScene::getThis()->buildingHandler->housingOnMap->count() != mGameHouseNumber)
+    {
+        mGameHouseNumber = GameScene::getThis()->buildingHandler->housingOnMap->count();
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
+        houseLimitLabel->setString(ss.str().c_str());
+    }
+    
+    if (GameScene::getThis()->buildingHandler->granaryOnMap->count() != mGameGranaryNumber)
+    {
+        mGameGranaryNumber = GameScene::getThis()->buildingHandler->granaryOnMap->count();
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->granaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel);
+        granaryLimitLabel->setString(ss.str().c_str());
+    }
+    
+    if (GameScene::getThis()->buildingHandler->amenityOnMap->count() != mGameFarmNumber)
+    {
+        mGameFarmNumber = GameScene::getThis()->buildingHandler->amenityOnMap->count();
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->amenityOnMap->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel);
+        farmLimitLabel->setString(ss.str().c_str());
+    }
+    
+    if (GameScene::getThis()->buildingHandler->militaryOnMap->count() != mGameTowerNumber)
+    {
+        mGameTowerNumber = GameScene::getThis()->buildingHandler->militaryOnMap->count();
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
+        guardTowerLimitLabel->setString(ss.str().c_str());
+    }
+    */
+    
     if (isPositionDirty)
         reposition();
 }
@@ -654,4 +891,8 @@ void BuildingInfoMenu::update(float deltaTime)
 Building* BuildingInfoMenu::getBuilding()
 {
     return building;
+}
+
+void BuildingInfoMenu::upgrade()
+{
 }

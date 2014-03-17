@@ -22,8 +22,6 @@ public:
     int F;
     int G;
     int H;
-    
-    
 };
 
 #endif /* defined(__PopulationTest__PathfindingNode__) */

@@ -92,11 +92,11 @@ class GameHUD : public CCLayer
     
     CCMenu* pMenu;
     
-    BuildScroll* buildScroll;
-    
     float cumulatedTime;
     
 public:
+    BuildScroll* buildScroll;
+    
     bool getMoney;
     int money;
     int reputation;
