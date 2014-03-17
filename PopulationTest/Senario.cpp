@@ -245,7 +245,7 @@ void Senario::createGUI(){
     
     std::stringstream ss;
     ss << "Start Game!";
-    CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "Arial" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
+    CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
 
     chatboxLabel->setAnchorPoint(ccp(0, 0));
     chatboxLabel->setPosition( ccp(chatbox->boundingBox().size.width / 2.0f, chatbox->boundingBox().size.height));

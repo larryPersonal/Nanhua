@@ -30,11 +30,11 @@ private:
     CCMenu* menu;
     
     CCLabelTTF* TitleLabel;
-    CCLabelTTF* NameLabel;// = CCLabelTTF::create("NAME", "Droidiga", 30);
-    CCLabelTTF* ClassLabel;// = CCLabelTTF::create("CLASS", "Droidiga",30 );
-    CCLabelTTF* JobLabel;// = CCLabelTTF::create("JOB", "Droidiga", 30);
-    CCLabelTTF* HomeLabel;// =CCLabelTTF::create("HOME", "Droidiga", 30);
-    CCLabelTTF* CashLabel;// =CCLabelTTF::create("CASH", "Droidiga", 30);
+    CCLabelTTF* NameLabel;// = CCLabelTTF::create("NAME", "Shojumaru-Regular", 30);
+    CCLabelTTF* ClassLabel;// = CCLabelTTF::create("CLASS", "Shojumaru-Regular",30 );
+    CCLabelTTF* JobLabel;// = CCLabelTTF::create("JOB", "Shojumaru-Regular", 30);
+    CCLabelTTF* HomeLabel;// =CCLabelTTF::create("HOME", "Shojumaru-Regular", 30);
+    CCLabelTTF* CashLabel;// =CCLabelTTF::create("CASH", "Shojumaru-Regular", 30);
     
     
 protected:

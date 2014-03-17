@@ -72,7 +72,7 @@ bool SpriteRow::init()
     
     // display the name of the sprite
     ss << "Energy";
-    villagerEnergyLabel = CCLabelTTF::create(ss.str().c_str(), "Arial", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    villagerEnergyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     villagerEnergyLabel->setColor(colorWhite);
     villagerEnergyLabel->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(villagerEnergyLabel, ccp(85.0f, 25.0f + 90.0f * index));

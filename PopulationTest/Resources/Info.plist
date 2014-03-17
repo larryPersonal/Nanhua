@@ -58,10 +58,10 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Droidiga.otf</string>
+		<string>Shojumaru-Regular.ttf</string>
 		<string>MBBlockType.ttf</string>
 		<string>Vinland.ttf</string>
-		<string>Droidiga.ttf</string>
+		<string>Shojumaru-Regular.ttf</string>
 	</array>
 	<key>UILaunchImages~ipad</key>
 	<array>

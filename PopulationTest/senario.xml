@@ -15,7 +15,7 @@
 			<top>20</top>
 			<src>conversation_textbox_empty_left.png</src>
             <dir>left</dir>
-            <font>Arial</font>
+            <font>Shojumaru-Regular</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -34,7 +34,7 @@
 			<top>20</top>
 			<src>conversation_textbox_empty_right.png</src>
             <dir>right</dir>
-			<font>Arial</font>
+			<font>Shojumaru-Regular</font>
 			<fontSize>24</fontSize>
 		</dialogue>
 	</slide>

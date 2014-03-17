@@ -62,29 +62,31 @@ bool MainMenuScene::init()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     
-    backgroundImage = CCSprite::create("main-menu-bg.png");
+    backgroundImage = CCSprite::create("splash0.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
     
-    backgroundDeco = CCSprite::create("mainmenu-decoration.png");
+    backgroundDeco = CCSprite::create("splash1.png");
+    
+    backgroundDeco2 = CCSprite::create("student.png");
 
-    buttonStart = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
-    buttonOptions = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
-    buttonCredits = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
+    buttonStart = CCMenuItemImage::create("start.png", "press-start.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
+    buttonOptions = CCMenuItemImage::create("options.png", "press-options.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
+    buttonCredits = CCMenuItemImage::create("quit.png", "press-quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
     
     
-    CCLabelTTF* startLabel = CCLabelTTF::create("Start", "MBBlockType" ,128, buttonStart->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* startLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonStart->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     startLabel->setPosition( ccp(buttonStart->boundingBox().size.width * 0.5f, buttonStart->boundingBox().size.height * 0.5f));
     buttonStart->addChild(startLabel);
     startLabel->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* optionsLabel = CCLabelTTF::create("Options", "MBBlockType" ,128, buttonOptions->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* optionsLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonOptions->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     optionsLabel->setPosition( ccp(buttonOptions->boundingBox().size.width * 0.5f, buttonOptions->boundingBox().size.height * 0.5f));
     buttonOptions->addChild(optionsLabel);
     optionsLabel->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* creditsLabel = CCLabelTTF::create("Credits", "MBBlockType" ,128, buttonCredits->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* creditsLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonCredits->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     creditsLabel->setPosition( ccp(buttonCredits->boundingBox().size.width * 0.5f, buttonCredits->boundingBox().size.height * 0.5f));
     buttonCredits->addChild(creditsLabel);
@@ -96,6 +98,7 @@ bool MainMenuScene::init()
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
         backgroundImage->setScale(0.5);
         backgroundDeco->setScale(0.5);
+        backgroundDeco2->setScale(0.5);
         buttonStart->setScale(0.5);
         buttonOptions->setScale(0.5);
         buttonCredits->setScale(0.5);
@@ -111,6 +114,7 @@ bool MainMenuScene::init()
     this->addChild(menu, 1);
     this->addChild(backgroundImage, 0);
     this->addChild(backgroundDeco, 0);
+    this->addChild(backgroundDeco2, 0);
     
 
       SoundtrackManager::PlayBGM("Tikopia.mp3");
@@ -224,17 +228,21 @@ void MainMenuScene::onOrientationChanged(){
     if (screenSize.width < screenSize.height) //i.e portrait
     {
     
-        backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.25));
+        backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.1));
+        backgroundDeco2->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.1));
+
         buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.375));
         buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.225));
         buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.075));
     }
     else
     {
-        backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.25));
-        buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.45));
-        buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
-        buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.1));
+        backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.5));
+        backgroundDeco2->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.5));
+
+        buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.65));
+        buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.45));
+        buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
         
     }
 }

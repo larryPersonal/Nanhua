@@ -61,7 +61,7 @@ void BuildingCard::init()
     // display the name of the building
     //std::stringstream ss;
     //ss << building->buildingName;
-    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Arial", 20, CCSizeMake(buildingname.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Shojumaru-Regular", 20, CCSizeMake(buildingname.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     buildingNameLabel->setColor(colorBlack);
     buildingNameLabel->setAnchorPoint(ccp(0.5, 1));
     
@@ -127,7 +127,7 @@ void BuildingCard::init()
         ss << building->buildingCost;
         buildingcost = ss.str();
     }
-    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Arial", 20, CCSizeMake(buildingcost.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 20, CCSizeMake(buildingcost.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     costLabel->setColor(colorBlack);
     costLabel->setAnchorPoint(ccp(0, 1));
     
@@ -144,7 +144,7 @@ void BuildingCard::init()
         ss << building->populationLimit;
         populationLimit = ss.str();
     }
-    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Arial", 20, CCSizeMake(populationLimit.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 20, CCSizeMake(populationLimit.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     populationLabel->setColor(colorBlack);
     populationLabel->setAnchorPoint(ccp(0, 1));
     
@@ -161,7 +161,7 @@ void BuildingCard::init()
         ss << building->build_uint_required;
         buildTime = ss.str();
     }
-    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Arial", 20, CCSizeMake(buildTime.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Shojumaru-Regular", 20, CCSizeMake(buildTime.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     buildingTimeLabel->setColor(colorBlack);
     buildingTimeLabel->setAnchorPoint(ccp(0, 1));
     

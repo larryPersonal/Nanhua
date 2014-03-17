@@ -169,7 +169,7 @@ CCControlButton* CCControlButton::create(string title, const char * fontName, fl
 
 bool CCControlButton::initWithBackgroundSprite(CCScale9Sprite* sprite)
 {
-    CCLabelTTF *label = CCLabelTTF::create("", "Arial", 30);//
+    CCLabelTTF *label = CCLabelTTF::create("", "Shojumaru-Regular", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 

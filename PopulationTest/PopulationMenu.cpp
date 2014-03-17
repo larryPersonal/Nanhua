@@ -94,8 +94,8 @@ void PopulationMenu::createMenuItems()
         
        
         //Tag labels to it
-        CCLabelTTF* nameLabel =         CCLabelTTF::create( currSprite->spriteDisplayedName.c_str(), "Droidiga", 20);
-      //  CCLabelTTF* descriptionLabel =  CCLabelTTF::create( currSprite->spriteClass.c_str(), "Droidiga", 26);
+        CCLabelTTF* nameLabel =         CCLabelTTF::create( currSprite->spriteDisplayedName.c_str(), "Shojumaru-Regular", 20);
+      //  CCLabelTTF* descriptionLabel =  CCLabelTTF::create( currSprite->spriteClass.c_str(), "Shojumaru-Regular", 26);
         
         menuItem->addChild(nameLabel);
     //    menuItem->addChild(descriptionLabel);
@@ -169,11 +169,11 @@ void PopulationMenu::createMenuItems()
     this->addChild(tabbedView);
     TitleLabel = CCLabelTTF::create("Population Information", "Vinland", 64);
     
-    NameLabel = CCLabelTTF::create("NAME", "Droidiga", 25);
-    ClassLabel = CCLabelTTF::create("CLASS", "Droidiga",25 );
-    JobLabel = CCLabelTTF::create("JOB", "Droidiga", 25);
-    HomeLabel =CCLabelTTF::create("HOME", "Droidiga", 25);
-    CashLabel =CCLabelTTF::create("CASH", "Droidiga", 25);
+    NameLabel = CCLabelTTF::create("NAME", "Shojumaru-Regular", 25);
+    ClassLabel = CCLabelTTF::create("CLASS", "Shojumaru-Regular",25 );
+    JobLabel = CCLabelTTF::create("JOB", "Shojumaru-Regular", 25);
+    HomeLabel =CCLabelTTF::create("HOME", "Shojumaru-Regular", 25);
+    CashLabel =CCLabelTTF::create("CASH", "Shojumaru-Regular", 25);
 
     
     if (screenSize.width > screenSize.height) // landscape
@@ -308,7 +308,7 @@ void PopulationMenu::addPopulationToList(GameSprite* sprite)
     menuItem->setContentSize(menuImage->boundingBox().size);
     
     //Tag labels to it
-    CCLabelTTF* nameLabel =         CCLabelTTF::create( sprite->spriteDisplayedName.c_str(), "Droidiga", 20);
+    CCLabelTTF* nameLabel =         CCLabelTTF::create( sprite->spriteDisplayedName.c_str(), "Shojumaru-Regular", 20);
 
     Building* hloc = sprite->getPossessions()->homeLocation;
 

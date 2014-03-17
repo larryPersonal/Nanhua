@@ -133,7 +133,7 @@ void BuildingInfoMenu::createMenuItems()
     mBuildingWorkUnitRequired = building->work_unit_required;
     
     // Create header
-    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Droidiga", 32, CCSizeMake(building->buildingName.length() * 25.0f, 5.0f), kCCTextAlignmentCenter);
+    textName = CCLabelTTF::create(GlobalHelper::stringToUpper(building->buildingName).c_str(), "Shojumaru-Regular", 32, CCSizeMake(building->buildingName.length() * 25.0f, 5.0f), kCCTextAlignmentCenter);
     textName->setColor(colorYellow);
     
     spLoy = CCSprite::create("loyalty icon.png");
@@ -148,7 +148,7 @@ void BuildingInfoMenu::createMenuItems()
     
     std::stringstream ss;
     ss << "Yearly: " << mBuildingPrice << " G";
-    textPrice = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    textPrice = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textPrice->setColor(colorYellow);
     
     // Sprite
@@ -164,7 +164,7 @@ void BuildingInfoMenu::createMenuItems()
     // Attribute labels
     ss.str(std::string());
     ss << "Level: " << mBuildingLevel;
-    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     labelLevel->setColor(colorGreen);
     
     ss.str(std::string());
@@ -176,12 +176,12 @@ void BuildingInfoMenu::createMenuItems()
     {
         ss << "Ready for service";
     }
-    labelStatus = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelStatus = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelStatus->setColor(colorBlack);
     
     ss.str(std::string());
     ss << building->build_uint_current << "/" << building->build_uint_required;
-    unitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    unitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     unitLabel->setColor(colorBlack);
     
     unitBar = new ProgressBar();
@@ -199,43 +199,43 @@ void BuildingInfoMenu::createMenuItems()
     // loyalty
     ss.str(std::string());
     ss << "0";
-    labelLoy = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelLoy = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelLoy->setColor(colorBlack);
     
     // hapiness
     ss.str(std::string());
     ss << "0";
-    labelHap = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelHap = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelHap->setColor(colorBlack);
     */
     
     // recovery rate
     ss.str(std::string());
     ss << "RR:";
-    recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     recoveryRateTitleLabel->setColor(colorBlack);
     
     ss.str(std::string());
     ss << building->recovery_rate;
-    recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     recoveryRateLabel->setColor(colorBlack);
     
     // food consumption rate
     ss.str(std::string());
     ss << "FC:";
-    foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodConsumptionRateTitleLabel->setColor(colorBlack);
     
     ss.str(std::string());
     
     ss << building->food_consumption_rate;
-    foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodConsumptionRateLabel->setColor(colorBlack);
     
     // food storage limit
     ss.str(std::string());
     ss << "Food Storage:";
-    foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodStorageTitleLabel->setColor(colorBlack);
     
     // food storage
@@ -252,13 +252,13 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(std::string());
     ss << building->currentStorage << "/" << building->storageLimit;
-    foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodStorageLabel->setColor(colorBlack);
     
     // work unit done
     ss.str(std::string());
     ss << "Work Unit Done:";
-    workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     workCompleteTitleLabel->setColor(colorBlack);
     
     workCompleteBar = new ProgressBar();
@@ -274,7 +274,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(std::string());
     ss << (int) building->work_unit_current << "/" << (int) building->work_unit_required;
-    workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     workCompleteLabel->setColor(colorBlack);
     
     // Menu items
@@ -421,7 +421,7 @@ void BuildingInfoMenu::createMenuItems()
     int level = GameManager::getThis()->town_hall_level;
     mGameLevel = level;
     ss << GameManager::getThis()->housingLimitation->gold_required.at(level);
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     moneyLabel->setAnchorPoint(ccp(0, 1));
     moneyLabel->setPosition(ccp(-30, -205));
     moneyLabel->setColor(colorGreen);
@@ -435,7 +435,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << GameManager::getThis()->housingLimitation->food_required.at(level);
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodLabel->setAnchorPoint(ccp(0, 1));
     foodLabel->setPosition(ccp(140, -205));
     foodLabel->setColor(colorGreen);
@@ -479,7 +479,7 @@ void BuildingInfoMenu::createMenuItems()
     mGameUpgradeUnit = building->current_upgrade_unit;
     ss.str(string());
     ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
-    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     upgradeBarLabel->setAnchorPoint(ccp(0, 1));
     upgradeBarLabel->setPosition(ccp(-120, -90));
     upgradeBarLabel->setColor(colorGreen);
@@ -487,7 +487,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "HOUSE:";
-    houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     houseLimitTitle->setAnchorPoint(ccp(0, 1));
     houseLimitTitle->setPosition(ccp(60, 100));
     houseLimitTitle->setColor(colorGreen);
@@ -498,7 +498,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allHouse->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(level);
-    houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     houseLimitLabel->setAnchorPoint(ccp(0, 1));
     houseLimitLabel->setPosition(ccp(240, 100));
     houseLimitLabel->setColor(colorGreen);
@@ -506,7 +506,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "GRANARY:";
-    granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     granaryLimitTitle->setAnchorPoint(ccp(0, 1));
     granaryLimitTitle->setPosition(ccp(60, 70));
     granaryLimitTitle->setColor(colorGreen);
@@ -517,7 +517,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allGranary->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(level);
-    granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     granaryLimitLabel->setAnchorPoint(ccp(0, 1));
     granaryLimitLabel->setPosition(ccp(240, 70));
     granaryLimitLabel->setColor(colorGreen);
@@ -525,7 +525,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "FARM:";
-    farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     farmLimitTitle->setAnchorPoint(ccp(0, 1));
     farmLimitTitle->setPosition(ccp(60, 40));
     farmLimitTitle->setColor(colorGreen);
@@ -536,7 +536,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allFarm->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(level);
-    farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     farmLimitLabel->setAnchorPoint(ccp(0, 1));
     farmLimitLabel->setPosition(ccp(240, 40));
     farmLimitLabel->setColor(colorGreen);
@@ -544,7 +544,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "GUARD TOWER:";
-    guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     guardTowerLimitTitle->setAnchorPoint(ccp(0, 1));
     guardTowerLimitTitle->setPosition(ccp(60, 10));
     guardTowerLimitTitle->setColor(colorGreen);
@@ -555,7 +555,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allTower->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(level);
-    guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
     guardTowerLimitLabel->setPosition(ccp(240, 10));
     guardTowerLimitLabel->setColor(colorGreen);
