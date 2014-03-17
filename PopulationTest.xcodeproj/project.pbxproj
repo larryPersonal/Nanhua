@@ -477,6 +477,7 @@
 		8437DA911889310700B93FEF /* eat.png in Resources */ = {isa = PBXBuildFile; fileRef = 8437DA901889310700B93FEF /* eat.png */; };
 		8437DA9318895D4D00B93FEF /* farm.png in Resources */ = {isa = PBXBuildFile; fileRef = 8437DA9218895D4D00B93FEF /* farm.png */; };
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
+		8444E4E918D6DCAD00BD5F63 /* schedule.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444E4E818D6DCAD00BD5F63 /* schedule.png */; };
 		8448D65018C59A04003AFB3A /* guardtower.png in Resources */ = {isa = PBXBuildFile; fileRef = 8448D64F18C59A04003AFB3A /* guardtower.png */; };
 		844AC8E818C81954005166FD /* BanditsAttackHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */; };
 		844AC8EB18C8301F005166FD /* war.png in Resources */ = {isa = PBXBuildFile; fileRef = 844AC8E918C8301F005166FD /* war.png */; };
@@ -1369,6 +1370,7 @@
 		8437DA9218895D4D00B93FEF /* farm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = farm.png; sourceTree = "<group>"; };
 		843AFFB8187FE7DD0053546B /* SelectPopulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPopulation.h; sourceTree = "<group>"; };
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
+		8444E4E818D6DCAD00BD5F63 /* schedule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedule.png; sourceTree = "<group>"; };
 		8448D64F18C59A04003AFB3A /* guardtower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guardtower.png; sourceTree = "<group>"; };
 		844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BanditsAttackHandler.cpp; sourceTree = "<group>"; };
 		844AC8E918C8301F005166FD /* war.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = war.png; sourceTree = "<group>"; };
@@ -3075,6 +3077,7 @@
 		848D2FE61859764C00EB9257 /* gy */ = {
 			isa = PBXGroup;
 			children = (
+				8444E4E818D6DCAD00BD5F63 /* schedule.png */,
 				8421158A18D2F02D00A441D0 /* upgrade.png */,
 				844AC8E918C8301F005166FD /* war.png */,
 				844AC8EA18C8301F005166FD /* peace.png */,
@@ -3642,6 +3645,7 @@
 				3604970D17AB969E00CACE25 /* homebutton.png in Resources */,
 				36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */,
 				3604971017AB96BC00CACE25 /* jobbutton_pressed.png in Resources */,
+				8444E4E918D6DCAD00BD5F63 /* schedule.png in Resources */,
 				8421157818D2C4DD00A441D0 /* info_btn.png in Resources */,
 				8412CA5618AC8D4A00AF4645 /* main-menu-resource-icons_info.png in Resources */,
 				3604971117AB96BC00CACE25 /* jobbutton.png in Resources */,

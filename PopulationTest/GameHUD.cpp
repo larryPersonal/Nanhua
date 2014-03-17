@@ -870,6 +870,10 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
+        {
+            money += GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost;
+        }
         buildButton->setVisible(false);
         currTapMode = Normal;
         GameScene::getThis()->buildingHandler->selectedBuilding = NULL;

@@ -25,9 +25,10 @@ private:
     // Building variables
     int mBuildingLevel;
     int mBuildingPrice;
+    
     int mBuildingVacancy;
-    int mBuildingOverload;
     int mBuildingCurrPopulation;
+    bool mBuildingUnderConstruction;
     
     int mBuildingUnitCurrent;
     int mBuildingUnitRequired;
@@ -47,9 +48,14 @@ private:
     
     CCSprite* spriteBuilding;
     
-    vector<CCSprite*> spritePopulationSlot;
-    vector<CCSprite*> spritePopulationOverloadSlot;
-    vector<CCMenuItemImage*> spritePopulation;
+    /*
+     * section for population and population slot
+     */
+    CCLabelTTF* spritePopulationLabel;
+    CCArray* spritePopulationSlot;
+    CCArray* spritePopulation;
+    CCArray* spritePopulationBackground;
+    CCArray* spritePopulationMenu;
     
     CCSprite* spPrice;
     CCSprite* spLoy;
@@ -127,6 +133,8 @@ private:
     CCLabelTTF* guardTowerLimitTitle;
     CCLabelTTF* guardTowerLimitLabel;
     
+    CCMenuItemImage* selectWorkerButton;
+    
 protected:
     
     //General create menu
@@ -138,6 +146,8 @@ public:
     static BuildingInfoMenu* create(Building* building);
     
     virtual void cleanup();
+    
+    void showSprite(CCObject *pSender);
     
     virtual ~BuildingInfoMenu();
     // Constructor with Building object
@@ -157,6 +167,8 @@ public:
     virtual void update(float deltaTime);
     
     Building* getBuilding();
+    
+    void selectPop();
 };
 
 #endif

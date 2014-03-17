@@ -143,12 +143,10 @@ void SelectPopulation::createMenuItems()
         if (building->isCurrentConstructing || (!building->isCurrentConstructing && memberArray->count() > 0))
         {
             buttonOk->setVisible(false);
-            buttonCancel->setVisible(true);
         }
         else
         {
             buttonOk->setVisible(true);
-            buttonCancel->setVisible(false);
         }
         
         menuItems->addObject(buttonCancel);
@@ -388,6 +386,11 @@ void SelectPopulation::cancelTask()
 
 void SelectPopulation::performTask()
 {
+    if(memberArray->count() <= 0)
+    {
+        return;
+    }
+    
     if(building->isUnderConstruction())
     {
         // if the building is under construction -> construct the building.
@@ -415,6 +418,7 @@ void SelectPopulation::prepareJob(GameSprite* gameSprite)
     gameSprite->currAction = WALKING;
     gameSprite->setJobLocation(building);
     gameSprite->setTargetLocation(building);
+    gameSprite->path->removeAllObjects();
     gameSprite->GoBuilding(building);
     
     gameSprite->futureAction1 = EATING;
@@ -423,19 +427,23 @@ void SelectPopulation::prepareJob(GameSprite* gameSprite)
     building->memberSpriteList->addObject(gameSprite);
 }
 
+/*
+ * all scheduling functions
+ */
 void SelectPopulation::scheduleGuardTower()
 {
     for (int i = 0; i < memberArray->count(); i++)
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
+        // must change sprite first because the information for assigning will be lost if change sprite at last.
         gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_SOLDIER, F_SOLDIER));
-        
-        prepareJob(gameSprite);
         
         gameSprite->nextAction = GUARD;
         
         gameSprite->setJob(SOLDIER);
+        
+        prepareJob(gameSprite);
     }
 }
 
@@ -445,32 +453,33 @@ void SelectPopulation::scheduleConstruction()
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
+        // must change sprite first because the information for assigning will be lost if change sprite at last.
         gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_BUILDER, F_BUILDER));
-        
-        prepareJob(gameSprite);
         
         gameSprite->nextAction = BUILD;
         
-        
-        
         gameSprite->setJob(BUILDER);
+        
+        prepareJob(gameSprite);
     }
 
 }
 
 void SelectPopulation::scheduleFarming()
 {
+    building->farmState = FARM;
     for (int i = 0; i < memberArray->count(); i++)
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
-        prepareJob(gameSprite);
+        // must change sprite first because the information for assigning will be lost if change sprite at last.
+        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_FARMER, F_FARMER));
         
         gameSprite->nextAction = FARMING;
         
-        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_FARMER, F_FARMER));
-        
         gameSprite->setJob(FARMER);
+        
+        prepareJob(gameSprite);
     }
 }
 
@@ -488,7 +497,15 @@ void SelectPopulation::reposition(){
     // Anchored top right
     buttonClose->setPosition(halfWidth - 25.0f, -halfHeight + 75.0f);
     buttonOk->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
-    buttonCancel->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
+    
+    if (building->isCurrentConstructing || (!building->isCurrentConstructing && memberArray->count() > 0))
+    {
+        buttonCancel->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
+    }
+    else
+    {
+        buttonCancel->setPosition(halfWidth - 135.0f, -halfHeight + 75.0f);
+    }
     
     labelBuildingName->CCNode::setPosition(285.0f, -100.0f);
     

@@ -321,11 +321,9 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
     else if(sp->currAction == FARMING && sp->getTargetLocation() == this && sp->isFarmer())
     // farming
     {
-        CCLog("test1");
         // if the farming process not finished!
         if(!isCurrentHarvest && farmState == FARM && currentStorage <= 0)
         {
-            CCLog("test2");
             // a farmer will never quit a farming job naturally
             //int workval = sp->getPossessions()->PerformTask();
             

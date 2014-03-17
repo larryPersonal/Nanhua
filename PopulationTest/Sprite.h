@@ -308,6 +308,7 @@ public:
     int getPathDistance(CCPoint, CCPoint);
     
     void updateHungry(float);
+    void updateEndurance(float);
     
     // token part
     void scheduleToken(float dt);

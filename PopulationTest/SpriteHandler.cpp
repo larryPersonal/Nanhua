@@ -496,7 +496,10 @@ int SpriteHandler::getAlienCount()
 // Artificial Intelligence Included
 void SpriteHandler::update(float dt)
 {
-    // this is the section to detect the global hungry decay
+    /*
+     * the hungry parameter will fade according to time past (fade per second), from 100 (maximun) to 0 (minimum);
+     * when the parameter reaches 0, the sprite is in hungry state -> lose happiness and increase the energy usage.
+     */
     cumulatedTime += dt;
     
     if(cumulatedTime >= (1.0f / (GameScene::getThis()->settingsLevel->global_hungry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio * (float) 4))))
@@ -515,11 +518,14 @@ void SpriteHandler::update(float dt)
         cumulatedTime = 0.0f;
     }
     
+    /*
+     * if the sprites' happiness has been sticked, set the individual happiness of each sprite to 70 (in happy state). Otherwise, the individual happiness will change through the game.
+     */
     if (GameHUD::getThis()->stickHappiness)
     {
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
-            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
             gs->getPossessions()->happinessRating = 70;
         }
     }
@@ -527,10 +533,19 @@ void SpriteHandler::update(float dt)
     {
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
-            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
             // if the gamesprite is in hungry state, update the hungry happiness of each sprite
             gs->updateHungry(dt);
         }
+    }
+    
+    /*
+     * update the sprites' endurance!
+     */
+    for(int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        gs->updateEndurance(dt);
     }
     
     /*
@@ -546,6 +561,9 @@ void SpriteHandler::update(float dt)
     }
     */
     
+    /*
+     * schedule the ren token dropping mechanism. The ren tokens will be dropped by chance.
+     */
     for(int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));

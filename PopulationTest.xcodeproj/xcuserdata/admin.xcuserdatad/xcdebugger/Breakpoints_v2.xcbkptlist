@@ -178,7 +178,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "416403144.750093"
+            timestampString = "416723074.336575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2149"
@@ -192,11 +192,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "416475723.137632"
+            timestampString = "416737697.666085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "BuildingInfoMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -208,11 +208,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Building.cpp"
-            timestampString = "416490549.938735"
+            timestampString = "416718896.604307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "417"
+            endingLineNumber = "417"
             landmarkName = "Building::StickAroundHandler(GameSprite *sp, float dt)"
             landmarkType = "5">
          </BreakpointContent>
@@ -300,7 +300,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "416402748.984717"
+            timestampString = "416723074.336575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "849"
@@ -332,7 +332,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "416402748.984717"
+            timestampString = "416723074.336575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "846"
@@ -380,7 +380,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "416402748.984717"
+            timestampString = "416723074.336575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "837"
@@ -442,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/SelectPopulation.cpp"
-            timestampString = "416314620.967676"
+            timestampString = "416739038.428606"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "545"
-            endingLineNumber = "545"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * spriteRow)"
             landmarkType = "5">
          </BreakpointContent>
@@ -490,7 +490,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "416402748.984717"
+            timestampString = "416723074.336575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "886"
@@ -520,11 +520,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.h"
-            timestampString = "416482263.205579"
+            timestampString = "416736293.301631"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "class BuildingInfoMenu"
             landmarkType = "3">
          </BreakpointContent>
@@ -536,12 +536,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "416482263.205579"
+            timestampString = "416737697.666085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "BuildingInfoMenu::createMenuItems()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/SelectPopulation.cpp"
+            timestampString = "416738917.105457"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
+            landmarkName = "SelectPopulation::scheduleFarming()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/BuildingInfoMenu.cpp"
+            timestampString = "416738530.728326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "994"
+            endingLineNumber = "994"
+            landmarkName = "BuildingInfoMenu::refreshAllMenuItemValues()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
