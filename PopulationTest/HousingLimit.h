@@ -14,7 +14,7 @@ std::string contentJson =
     "\"maximum_level\":    \"3\","
     "\"level_1\": {"
         "\"levelup_money\":\"500\","
-        "\"levelup_food\": \"200\","
+        "\"levelup_food\": \"0\","
         "\"housing\":      \"5\","
         "\"granary\":      \"2\","
         "\"farm\":         \"4\","
