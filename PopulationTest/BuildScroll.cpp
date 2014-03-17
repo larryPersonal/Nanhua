@@ -106,7 +106,7 @@ void BuildScroll::createMenuItems()
     buildPathItem->setAnchorPoint(ccp(0, 1));
     buildPathItem->setContentSize(pathImg->boundingBox().size);
     
-    CCLabelTTF* pathLabel =     CCLabelTTF::create("Build Path", "Droidiga", 30);
+    CCLabelTTF* pathLabel =     CCLabelTTF::create("Build Path", "Shojumaru-Regular", 30);
     CCPoint pathlabelPosition = ccp(buildPathItem->boundingBox().size.width*2.5,
                                     buildPathItem->boundingBox().size.height*0.5);
     pathLabel->setPosition(pathlabelPosition);

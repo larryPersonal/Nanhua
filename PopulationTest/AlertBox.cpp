@@ -80,7 +80,7 @@ void AlertBox::createMenuItems()
     backgroundOverlay->setScale(background->getScale());
     
     
-    displayText = CCLabelTTF::create("", "Droidiga", 26, CCSizeMake(background->boundingBox().size.width - 100.0f, 300.0f),
+    displayText = CCLabelTTF::create("", "Shojumaru-Regular", 26, CCSizeMake(background->boundingBox().size.width - 100.0f, 300.0f),
                                      kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     displayText->setAnchorPoint(ccp(0.5f, 1.0f));
     
@@ -159,7 +159,7 @@ void AlertBox::addButton(int tag, string buttonText, CCObject* pSelectorTarget, 
         
     }
     
-    CCLabelTTF* buttonLabel = CCLabelTTF::create(buttonText.c_str(), "Droidiga", 30.0f);
+    CCLabelTTF* buttonLabel = CCLabelTTF::create(buttonText.c_str(), "Shojumaru-Regular", 30.0f);
     buttonLabel->setColor(ccc3(111, 107, 50));
     buttonLabel->setScale(1.0f / button->getScale());
     buttonLabel->CCNode::setPosition(button->getContentSize().width / 2.0f, button->getContentSize().height / 2.0f);

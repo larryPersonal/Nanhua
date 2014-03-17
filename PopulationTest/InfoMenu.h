@@ -42,8 +42,8 @@ private:
     
     CCLabelTTF* TitleLabel;
     CCLabelTTF* NameLabel;
-    CCLabelTTF* TypeLabel;// = CCLabelTTF::create("NAME", "Droidiga", 30);
-    CCLabelTTF* OccLabel;// = CCLabelTTF::create("JOB", "Droidiga", 30);
+    CCLabelTTF* TypeLabel;// = CCLabelTTF::create("NAME", "Shojumaru-Regular", 30);
+    CCLabelTTF* OccLabel;// = CCLabelTTF::create("JOB", "Shojumaru-Regular", 30);
     
 protected:
     

@@ -107,17 +107,17 @@ void InfoMenu::createMenuItems()
         menuItem->setContentSize(menuImage->boundingBox().size);
         
         //Tag labels to it
-        CCLabelTTF* nameLabel =         CCLabelTTF::create( currBuilding->buildingName.c_str(), "Droidiga", 18);
+        CCLabelTTF* nameLabel =         CCLabelTTF::create( currBuilding->buildingName.c_str(), "Shojumaru-Regular", 18);
         
         menuItem->addChild(nameLabel);
         nameLabel->  setPosition(ccp(menuImage->getPositionX() + menuImage->boundingBox().size.width * 0.5f, menuImage->getPositionY() - menuImage->boundingBox().size.height * 0.15f));
         
         
-        CCLabelTTF* typeLabel =     CCLabelTTF::create("", "Droidiga", 30);
+        CCLabelTTF* typeLabel =     CCLabelTTF::create("", "Shojumaru-Regular", 30);
         menuItem->addChild(typeLabel);
         typeLabel->  setPosition(ccp(buildMenuSize.width * 0.35f + menuImage->boundingBox().size.width * 0.5f, menuImage->getPositionY()));
         
-        CCLabelTTF* occupancyLabel = CCLabelTTF::create("", "Droidiga", 30);
+        CCLabelTTF* occupancyLabel = CCLabelTTF::create("", "Shojumaru-Regular", 30);
         menuItem->addChild(occupancyLabel);
         occupancyLabel->  setPosition(ccp(buildMenuSize.width * 0.75f + menuImage->boundingBox().size.width * 0.5f, menuImage->getPositionY()));
         
@@ -305,7 +305,7 @@ void InfoMenu::createMenuItems()
                 buildCat = "City Limits";
                 break;
         }
-        CCLabelTTF* label = CCLabelTTF::create(buildCat.c_str(), "Droidiga", 20);
+        CCLabelTTF* label = CCLabelTTF::create(buildCat.c_str(), "Shojumaru-Regular", 20);
         
         /*screw layering rules, I'm gonna handle it on my own*/
         tabItem->setEnabled(false);
@@ -351,10 +351,10 @@ void InfoMenu::createMenuItems()
     this->addChild(tabbedView);
     
     TitleLabel = CCLabelTTF::create("Building Information", "Vinland", 64);
-    NameLabel = CCLabelTTF::create("Name", "Droidiga", 30);
+    NameLabel = CCLabelTTF::create("Name", "Shojumaru-Regular", 30);
     
-    TypeLabel = CCLabelTTF::create("Type", "Droidiga", 30);
-    OccLabel = CCLabelTTF::create("Occupancy", "Droidiga", 30);
+    TypeLabel = CCLabelTTF::create("Type", "Shojumaru-Regular", 30);
+    OccLabel = CCLabelTTF::create("Occupancy", "Shojumaru-Regular", 30);
     
     
     if (screenSize.width > screenSize.height) // landscape

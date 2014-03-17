@@ -1649,7 +1649,7 @@ void GameSprite::increasePossession(PossessionStats statType, int value)
 void GameSprite::saySpeech(const char* text, float timeInSeconds)
 {
     speechBubble->clearContent();
-    CCLabelTTF* label = CCLabelTTF::create(text, "Droidiga", 18);
+    CCLabelTTF* label = CCLabelTTF::create(text, "Shojumaru-Regular", 18);
     
     label->setColor(ccc3(81, 77, 2));
    

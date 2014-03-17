@@ -69,9 +69,9 @@ bool MainMenuScene::init()
     
     backgroundDeco2 = CCSprite::create("student.png");
 
-    buttonStart = CCMenuItemImage::create("start.png", "start-pressed.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
-    buttonOptions = CCMenuItemImage::create("options.png", "options-pressed.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
-    buttonCredits = CCMenuItemImage::create("quit.png", "quit-pressed.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
+    buttonStart = CCMenuItemImage::create("start.png", "press-start.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
+    buttonOptions = CCMenuItemImage::create("options.png", "press-options.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
+    buttonCredits = CCMenuItemImage::create("quit.png", "press-quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
     
     
     CCLabelTTF* startLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonStart->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);

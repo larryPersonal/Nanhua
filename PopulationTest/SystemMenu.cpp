@@ -38,7 +38,7 @@ void SystemMenu::createMenuItems()
     demoItem->  setAnchorPoint(ccp(0, 1));
     demoItem->  setContentSize(demoNormalImage->boundingBox().size);
     
-    CCLabelTTF* demoLabel =     CCLabelTTF::create("Demolish", "Arial", 30);
+    CCLabelTTF* demoLabel =     CCLabelTTF::create("Demolish", "Shojumaru-Regular", 30);
     
     CCPoint labelPosition = ccp(demoItem->boundingBox().size.width*2.5,
                                 demoItem->boundingBox().size.height*0.5);
@@ -91,7 +91,7 @@ void SystemMenu::createMenuItems()
    // tabItemSystem->setAnchorPoint(CCPointZero);
     tabItemSystem->setVisible(false);
 //    tabItemSystem->setScale(tabbedViewBg->getScale());
- //   CCLabelTTF* label = CCLabelTTF::create("System", "Droidiga", 32);
+ //   CCLabelTTF* label = CCLabelTTF::create("System", "Shojumaru-Regular", 32);
  //   label->setColor(colorYellow);
   //  label->setScale(1.0f / tabItemSystem->getScale());
    // label->CCNode::setPosition(tabItemSystem->getContentSize().width / 2.0f, tabItemSystem->getContentSize().height / 2.0f);
