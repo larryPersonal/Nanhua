@@ -760,18 +760,11 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         
         if (selectedTile->building)
         {
-            
             this->setTouchEnabled(false);
-            if (selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0)
-            {
-                SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
-                selectPopulation->useAsBasePopupMenu();
-            }
-            else
-            {
-                BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                buildingInfoMenu->useAsBasePopupMenu();
-            }
+
+            BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+            buildingInfoMenu->useAsBasePopupMenu();
+            
             return true;
         }
     }
@@ -805,16 +798,9 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 {
                     this->setTouchEnabled(false);
                     
-                    if(selectedTile->building->isUnderConstruction() || selectedTile->building->number_of_jobs > 0)
-                    {
-                        SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
-                        selectPopulation->useAsBasePopupMenu();
-                    }
-                    else
-                    {
-                        BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                        buildingInfoMenu->useAsBasePopupMenu();
-                    }
+                    BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                    buildingInfoMenu->useAsBasePopupMenu();
+                    
                     return true;
                 }
             }

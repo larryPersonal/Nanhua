@@ -2541,8 +2541,11 @@ bool GameSprite::hasValidGranary()
     }
 }
 
-void GameSprite::updateHungry(float dt)
+void GameSprite::updateEndurance(float dt)
 {
+    /*
+     * when endurance changed, update the new endurance for the sprite
+     */
     if (mGameCurrentEndurance != possessions->current_endurance || mGameMaxEndurance != possessions->max_endurance)
     {
         mGameCurrentEndurance = possessions->current_endurance;
@@ -2568,7 +2571,14 @@ void GameSprite::updateHungry(float dt)
             }
         }
     }
-    
+
+}
+
+void GameSprite::updateHungry(float dt)
+{
+    /*
+     * if the sprite is not hungry (currentHungry > 0), do nothing.
+     */
     if(possessions->currentHungry > 0.0)
     {
         return;
@@ -2576,6 +2586,9 @@ void GameSprite::updateHungry(float dt)
     
     cumulativeTime_happiness += dt;
     
+    /*
+     * if the sprite is hungry (currentHungry <= 0), drop happiness!
+     */
     if(possessions->happinessRating >= 70.0f)
     {
         // the sprite is in happy state
