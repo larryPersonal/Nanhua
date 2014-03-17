@@ -246,8 +246,6 @@
 		36AC558C18D6A16600C165F5 /* building3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558B18D6A16600C165F5 /* building3x3.png */; };
 		36AC558E18D6A21C00C165F5 /* building2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558D18D6A21C00C165F5 /* building2x2.png */; };
 		36AC559018D6A31100C165F5 /* gound.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558F18D6A31100C165F5 /* gound.png */; };
-		36AC559418D6C13B00C165F5 /* Level Select Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC559218D6C13B00C165F5 /* Level Select Screen.png */; };
-		36AC559518D6C13B00C165F5 /* Level Select Screen 02.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC559318D6C13B00C165F5 /* Level Select Screen 02.png */; };
 		36B18A5918A0A6A700A8B515 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE118A0A69B00A8B515 /* CCAction.cpp */; };
 		36B18A5A18A0A6A700A8B515 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE318A0A69B00A8B515 /* CCActionCamera.cpp */; };
 		36B18A5B18A0A6A700A8B515 /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE518A0A69B00A8B515 /* CCActionCatmullRom.cpp */; };
@@ -969,8 +967,6 @@
 		36AC558B18D6A16600C165F5 /* building3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building3x3.png; sourceTree = "<group>"; };
 		36AC558D18D6A21C00C165F5 /* building2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building2x2.png; sourceTree = "<group>"; };
 		36AC558F18D6A31100C165F5 /* gound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gound.png; sourceTree = "<group>"; };
-		36AC559218D6C13B00C165F5 /* Level Select Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen.png"; sourceTree = "<group>"; };
-		36AC559318D6C13B00C165F5 /* Level Select Screen 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen 02.png"; sourceTree = "<group>"; };
 		36B17AE118A0A69B00A8B515 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		36B17AE218A0A69B00A8B515 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		36B17AE318A0A69B00A8B515 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -2183,8 +2179,6 @@
 		36AC559118D6B81800C165F5 /* ScenarioSelect */ = {
 			isa = PBXGroup;
 			children = (
-				36AC559218D6C13B00C165F5 /* Level Select Screen.png */,
-				36AC559318D6C13B00C165F5 /* Level Select Screen 02.png */,
 			);
 			name = ScenarioSelect;
 			sourceTree = "<group>";
@@ -3813,13 +3807,11 @@
 				841845241884FC5A00895275 /* dismiss.jpg in Resources */,
 				8421157F18D2C4DD00A441D0 /* rice_amount.png in Resources */,
 				84360A3518B21FED002EC8C2 /* main-game-buttons_advisor.png in Resources */,
-				36AC559518D6C13B00C165F5 /* Level Select Screen 02.png in Resources */,
 				36AC556E18D6981900C165F5 /* rightgreen_arrowbtn.png in Resources */,
 				36D87CFB18C5BA7800FE8B31 /* tokenball_XUN.png in Resources */,
 				36D87A7417BB3F1D00C41D54 /* AMC_port.png in Resources */,
 				845854651892702F00824F5F /* sprite_0005_Layer-13.png in Resources */,
 				36C16E4B18D0049000C307DB /* farmerman.png in Resources */,
-				36AC559418D6C13B00C165F5 /* Level Select Screen.png in Resources */,
 				36AC555C18D6981900C165F5 /* characterbox.png in Resources */,
 				36D87A7517BB3F1D00C41D54 /* AFC_port.png in Resources */,
 				36AC556518D6981900C165F5 /* leftdisable_arrowbtn.png in Resources */,
