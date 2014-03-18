@@ -96,6 +96,10 @@ struct SettingsLevel
     float hungry_happiness_angry_decay;
     float quit_happiness;
     
+    // energy decay:
+    float energy_decay_rate;
+    float energy_decay_coefficient;
+    
     // bandit maximum rob amount
     int max_money_rob;
     int max_food_rob;
@@ -114,6 +118,9 @@ struct SettingsLevel
         hungry_happiness_angry_decay = 0;
         quit_happiness = 0;
         
+        energy_decay_rate = 0;
+        energy_decay_coefficient = 0;
+        
         max_money_rob = 0;
         max_food_rob = 0;
     }
@@ -131,6 +138,9 @@ struct SettingsLevel
         hungry_happiness_unhappy_decay = 1;
         hungry_happiness_angry_decay = 0.5;
         quit_happiness = 0.01;
+        
+        energy_decay_rate = 0.5; // decay 1 of the energy in one real second.
+        energy_decay_coefficient = 1.0;
         
         max_money_rob = 500;
         max_food_rob = 500;

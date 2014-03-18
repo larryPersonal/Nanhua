@@ -230,6 +230,39 @@ void BuildingCard::tryToBuild(int tag)
         return;
     }
     
+    BuildingCategory type = buildingToBuy->buildingType;
+    int level = GameManager::getThis()->town_hall_level;
+    
+    if(type == HOUSING)
+    {
+        if(GameScene::getThis()->buildingHandler->housingOnMap->count() + GameScene::getThis()->buildingHandler->housingGhostOnMap->count() >= GameManager::getThis()->housingLimitation->housing_limits.at(level))
+        {
+            // alert player that the number of buildings has reached the limitation.
+            return;
+        }
+    }
+    else if(type == GRANARY)
+    {
+        if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
+        {
+            return;
+        }
+    }
+    else if(type == AMENITY)
+    {
+        if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
+        {
+            return;
+        }
+    }
+    else if(type == MILITARY)
+    {
+        if(GameScene::getThis()->buildingHandler->militaryOnMap->count() + GameScene::getThis()->buildingHandler->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
+        {
+            return;
+        }
+    }
+    
     if(GameHUD::getThis()->money > buildingToBuy->buildingCost)
     {
         GameHUD::getThis()->money -= buildingToBuy->buildingCost;

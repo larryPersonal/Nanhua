@@ -36,13 +36,21 @@ public:
     /*it'd probably be easier on the search and the head if I kept them as separate CCArrays.*/
     /*I'm not sure whether I still need any of these categories, but I'll leave them alone.*/
     CCArray* housingOnMap;
+    CCArray* housingGhostOnMap;
     CCArray* granaryOnMap;
+    CCArray* granaryGhostOnMap;
     CCArray* amenityOnMap;
+    CCArray* amenityGhostOnMap;
     CCArray* commerceOnMap;
+    CCArray* commerceGhostOnMap;
     CCArray* militaryOnMap;
+    CCArray* militaryGhostOnMap;
     CCArray* educationOnMap;
+    CCArray* educationGhostOnMap;
     CCArray* socialOnMap;
+    CCArray* socialGhostOnMap;
     CCArray* specialOnMap;
+    CCArray* specialGhostOnMap;
     
     Building* getBuildingOnMapWithID(int withID);
     Building* getBuildingOnMapWithName(std::string name);

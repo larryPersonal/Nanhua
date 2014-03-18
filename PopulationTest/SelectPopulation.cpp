@@ -70,6 +70,9 @@ SelectPopulation::SelectPopulation(Building* building){
     
     // initialize the gui handler
     background_rect->ini(700, 100, 100, 200);
+    
+    population = 0;
+    isPerformingTask = false;
 }
 
 SelectPopulation::~SelectPopulation()
@@ -101,8 +104,6 @@ SelectPopulation::~SelectPopulation()
 
 void SelectPopulation::createMenuItems()
 {
-    if(!building->inProgress)
-    {
        // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         ccColor3B colorWhite = ccc3(255, 255, 255);
         
@@ -139,15 +140,8 @@ void SelectPopulation::createMenuItems()
         buttonCancel->setScale(buttonClose->boundingBox().size.width / buttonCancel->boundingBox().size.width);
         buttonCancel->setTag(-4);
         buttonCancel->setAnchorPoint(ccp(1, 1));
-        
-        if (building->isCurrentConstructing || (!building->isCurrentConstructing && memberArray->count() > 0))
-        {
-            buttonOk->setVisible(false);
-        }
-        else
-        {
-            buttonOk->setVisible(true);
-        }
+    
+        buttonOk->setVisible(false);
         
         menuItems->addObject(buttonCancel);
         menuItems->addObject(buttonOk);
@@ -189,6 +183,8 @@ void SelectPopulation::createMenuItems()
         this->addChild(workerLabel, 4);
         
         ss.str(std::string());
+        
+        isUnderConstruction = building->isUnderConstruction();
         if(building->isUnderConstruction())
         {
             if(building->isCurrentConstructing)
@@ -209,7 +205,7 @@ void SelectPopulation::createMenuItems()
         taskLabel->setAnchorPoint(ccp(0.5, 0.5));
         this->addChild(taskLabel, 4);
         
-        int population = 0;
+        population = 0;
         if(building->isUnderConstruction())
         {
             population = building->builderLimit;
@@ -309,8 +305,6 @@ void SelectPopulation::createMenuItems()
             memberArray->addObject(gameSprite);
             memberRowBackgroundArray->addObject(memberSpriteBackground);
         }
-        
-    }
 }
 
 void SelectPopulation::refreshUI()
@@ -496,16 +490,9 @@ void SelectPopulation::reposition(){
     
     // Anchored top right
     buttonClose->setPosition(halfWidth - 25.0f, -halfHeight + 75.0f);
-    buttonOk->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
+    buttonOk->setPosition(halfWidth - 135.0f, -halfHeight + 75.0f);
     
-    if (building->isCurrentConstructing || (!building->isCurrentConstructing && memberArray->count() > 0))
-    {
-        buttonCancel->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
-    }
-    else
-    {
-        buttonCancel->setPosition(halfWidth - 135.0f, -halfHeight + 75.0f);
-    }
+    buttonCancel->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
     
     labelBuildingName->CCNode::setPosition(285.0f, -100.0f);
     
@@ -530,6 +517,11 @@ void SelectPopulation::refreshAllMenuItemValues()
     {
         ((SpriteRow*) spriteRowArray->objectAtIndex(i))->refreshAllMenuItems();
     }
+    
+    /*
+     * if the number of assigned villages meet the requirement of the job provided by that building, show the confirm (ok) button.
+     */
+    
 }
 
 void SelectPopulation::willChangeOrientation(){
@@ -542,6 +534,36 @@ void SelectPopulation::onOrientationChanged(){
 
 void SelectPopulation::update(float deltaTime){
     refreshAllMenuItemValues();
+    
+    if(isUnderConstruction != building->isUnderConstruction())
+    {
+        isUnderConstruction = building->isUnderConstruction();
+        population = building->number_of_jobs;
+        
+        memberArray->removeAllObjects();
+        memberMenuArray->removeAllObjects();
+        memberRowArray->removeAllObjects();
+        memberRowBackgroundArray->removeAllObjects();
+        emptySpaceArray->removeAllObjects();
+        
+        for (int i = 0; i < population; i++)
+        {
+            CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
+            eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
+            eSpace->setAnchorPoint(ccp(0, 1));
+            this->addChild(eSpace, 4);
+            emptySpaceArray->addObject(eSpace);
+        }
+    }
+    
+    if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->inProgress)
+    {
+        buttonOk->setVisible(true);
+    }
+    else if(memberArray->count() < population && buttonOk->isVisible())
+    {
+        buttonOk->setVisible(false);
+    }
 }
 
 void SelectPopulation::addMemberRow(GameSprite* gameSprite, SpriteRow* spriteRow)
@@ -552,7 +574,6 @@ void SelectPopulation::addMemberRow(GameSprite* gameSprite, SpriteRow* spriteRow
     {
         ((SpriteRow*)(spriteRowArray->objectAtIndex(i)))->rearrange(i);
     }
-    
 }
 
 void SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * spriteRow)

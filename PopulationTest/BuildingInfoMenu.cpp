@@ -106,7 +106,7 @@ void BuildingInfoMenu::createMenuItems()
     spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
-    mBuildingLevel = building->currentLevel;
+    mBuildingLevel = GameManager::getThis()->town_hall_level;
     if(building->isUnderConstruction())
     {
         mBuildingVacancy = building->builderLimit;
@@ -119,7 +119,7 @@ void BuildingInfoMenu::createMenuItems()
         }
         else
         {
-            mBuildingVacancy = building->populationLimit;
+            mBuildingVacancy = building->number_of_jobs;
         }
     }
     mBuildingCurrPopulation = building->memberSpriteList->count();
@@ -164,7 +164,7 @@ void BuildingInfoMenu::createMenuItems()
     
     // Attribute labels
     ss.str(std::string());
-    ss << "Level: " << mBuildingLevel;
+    ss << "Level: " << (mBuildingLevel + 1);
     labelLevel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     labelLevel->setColor(colorGreen);
     
@@ -793,41 +793,13 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
     }
     */
     
-    if (mBuildingLevel != building->currentLevel)
+    if (mBuildingLevel != GameManager::getThis()->town_hall_level)
     {
-        mBuildingLevel = building->currentLevel;
+        mBuildingLevel = GameManager::getThis()->town_hall_level;
         ss.str(std::string());
-        ss << "Level: " << mBuildingLevel;
+        ss << "Level: " << (mBuildingLevel + 1);
         labelLevel->setString(ss.str().c_str());
     }
-    
-    /*
-    if (mBuildingVacancy != building->populationLimit)
-    {
-        int diff = building->populationLimit - mBuildingVacancy;
-        mBuildingVacancy = building->populationLimit;
-        
-        if (diff > 0)
-        {
-            for (int i = 0; i < diff; i++)
-            {
-                spritePopulationSlot.push_back(CCSprite::create("vacancy slot.png"));
-                spritePopulationSlot.back()->CCNode::setScale(55.0f / spritePopulationSlot.back()->boundingBox().size.width);
-                spritePopulationSlot.back()->setAnchorPoint(CCPointZero);
-                this->addChild(spritePopulationSlot.back());
-            }
-            isPositionDirty = true;
-        }
-        else
-        {
-            for (int i = 0; i > diff; i--)
-            {
-                this->removeChild(spritePopulationSlot.back());
-                spritePopulationSlot.pop_back();
-            }
-        }
-    }
-    */
     
     // check whether the building has been completely build or not
     if(mBuildingUnderConstruction != building->isUnderConstruction())
@@ -838,7 +810,14 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             selectWorkerButton->setVisible(false);
         }
         
-        mBuildingVacancy = building->populationLimit;
+        if(building->buildingType == HOUSING)
+        {
+            mBuildingVacancy = building->populationLimit;
+        }
+        else
+        {
+            mBuildingVacancy = building->number_of_jobs;
+        }
         
         for(int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -1102,7 +1081,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         mGameLevel = GameManager::getThis()->town_hall_level;
         
         ss.str(std::string());
-        ss << "LEVEL: " << mGameLevel;
+        ss << "LEVEL: " << (mGameLevel + 1);
         labelLevel->setString(ss.str().c_str());
         
         upgradeBar->setValue((float) building->current_upgrade_unit / (float) building->upgrade_unit_max);
@@ -1125,6 +1104,9 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         ss.str(string());
         ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
         guardTowerLimitLabel->setString(ss.str().c_str());
+        
+        upgradeButton->setVisible(true);
+        cancelUpgradeButton->setVisible(false);
     }
     
     if (building->current_upgrade_unit != mGameUpgradeUnit)
@@ -1200,6 +1182,7 @@ void BuildingInfoMenu::upgrade()
         upgradeButton->setVisible(true);
         cancelUpgradeButton->setVisible(false);
         building->isCurrentUpgrading = false;
+        building->current_upgrade_unit = 0;
     }
     else
     {
