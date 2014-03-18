@@ -25,6 +25,15 @@ BuildingHandler::BuildingHandler()
     educationOnMap = NULL;
     socialOnMap = NULL;
     specialOnMap = NULL;
+    
+    housingGhostOnMap = NULL;
+    granaryGhostOnMap = NULL;
+    amenityGhostOnMap = NULL;
+    commerceGhostOnMap = NULL;
+    militaryGhostOnMap = NULL;
+    educationGhostOnMap = NULL;
+    socialGhostOnMap = NULL;
+    specialGhostOnMap = NULL;
 }
 
 BuildingHandler::~BuildingHandler()
@@ -46,6 +55,24 @@ BuildingHandler::~BuildingHandler()
     educationOnMap->release();
     socialOnMap->release();
     specialOnMap->release();
+    
+    housingGhostOnMap->removeAllObjects();
+    granaryGhostOnMap->removeAllObjects();
+    amenityGhostOnMap->removeAllObjects();
+    commerceGhostOnMap->removeAllObjects();
+    militaryGhostOnMap->removeAllObjects();
+    educationGhostOnMap->removeAllObjects();
+    socialGhostOnMap->removeAllObjects();
+    specialGhostOnMap->removeAllObjects();
+    
+    CC_SAFE_RELEASE(housingGhostOnMap);
+    CC_SAFE_RELEASE(granaryGhostOnMap);
+    CC_SAFE_RELEASE(amenityGhostOnMap);
+    CC_SAFE_RELEASE(commerceGhostOnMap);
+    CC_SAFE_RELEASE(militaryGhostOnMap);
+    CC_SAFE_RELEASE(educationGhostOnMap);
+    CC_SAFE_RELEASE(socialGhostOnMap);
+    CC_SAFE_RELEASE(specialGhostOnMap);
     
     if (allBuildingsOnMap)
     {
@@ -577,7 +604,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     militaryOnMap= CCArray::create();
     educationOnMap= CCArray::create();
     socialOnMap= CCArray::create();
-    specialOnMap=CCArray::create();
+    specialOnMap= CCArray::create();
     
     housingOnMap->retain();
     granaryOnMap->retain();
@@ -587,6 +614,24 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     educationOnMap->retain();
     socialOnMap->retain();
     specialOnMap->retain();
+    
+    housingGhostOnMap = CCArray::create();
+    granaryGhostOnMap = CCArray::create();
+    amenityGhostOnMap = CCArray::create();
+    commerceGhostOnMap = CCArray::create();
+    militaryGhostOnMap = CCArray::create();
+    educationGhostOnMap = CCArray::create();
+    socialGhostOnMap = CCArray::create();
+    specialGhostOnMap = CCArray::create();
+    
+    housingGhostOnMap->retain();
+    granaryGhostOnMap->retain();
+    amenityGhostOnMap->retain();
+    commerceGhostOnMap->retain();
+    militaryGhostOnMap->retain();
+    educationGhostOnMap->retain();
+    socialGhostOnMap->retain();
+    specialGhostOnMap->retain();
 }
 
 void BuildingHandler::addBuildingToMap(Building *b)

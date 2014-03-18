@@ -519,6 +519,27 @@ void SpriteHandler::update(float dt)
     }
     
     /*
+     * The energy of villages will also decay, from 100 to 0.
+     */
+    cumulatedTime_energy += dt;
+    
+    if(cumulatedTime_energy >= 0.1f)
+    {
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            gs->getPossessions()->energyRating -= 0.05f;
+            
+            if(gs->getPossessions()->energyRating < 0)
+            {
+                gs->getPossessions()->energyRating = 0;
+            }
+        }
+        
+        cumulatedTime_energy = 0.0f;
+    }
+    
+    /*
      * if the sprites' happiness has been sticked, set the individual happiness of each sprite to 70 (in happy state). Otherwise, the individual happiness will change through the game.
      */
     if (GameHUD::getThis()->stickHappiness)

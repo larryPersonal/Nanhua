@@ -50,7 +50,7 @@ Building::Building()
     
     ID = 0;
     currentExp = 0;
-    currentLevel = 1;
+    currentLevel = 0;
     maintCost = 0;
     
     levelGainVacancy = NULL;
@@ -785,5 +785,10 @@ void Building::updateBuilding(float dt)
                 isCurrentUpgrading = false;
             }
         }
+    }
+    
+    if(inProgress != (memberSpriteList->count() > 0))
+    {
+        inProgress = (memberSpriteList->count() > 0);
     }
 }

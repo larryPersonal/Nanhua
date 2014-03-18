@@ -18,6 +18,7 @@ private:
     void AddToCache(CCSpriteBatchNode* spritesheet, std::string animName);
     
     float cumulatedTime;
+    float cumulatedTime_energy;
 public:
     ~SpriteHandler();
     
