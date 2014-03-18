@@ -336,7 +336,7 @@ void SpriteRow::unlinkChildren()
     scrollArea->removeI((CCNode*) villagerImage);
     
     scrollArea->removeI((CCNode*) villagerEnergyBar);
-    scrollArea->removeI((CCNode*) villagerEnergyLabel);
+ //   scrollArea->removeI((CCNode*) villagerEnergyLabel);
     
     scrollArea->removeI((CCNode*) menu);
 }
@@ -346,7 +346,7 @@ void SpriteRow::rearrange(int index)
     resetPosition((CCNode*) villagerImage, ccp(10.0f, (5.0f + villagerImage->boundingBox().size.height) * index));
     
     resetPosition((CCNode*) villagerEnergyBar, ccp(150.0f, (5.0f + villagerImage->boundingBox().size.height) * index + villagerImage->boundingBox().size.height / 2.0f - villagerEnergyBar->boundingBox().size.height / 2.0f + 5.0f));
-    resetPosition((CCNode*) villagerEnergyLabel, ccp(235.0f, (5.0f + villagerImage->boundingBox().size.height) * index + villagerImage->boundingBox().size.height / 2.0f - villagerEnergyLabel->boundingBox().size.height / 2.0f + 5.0f));
+ //   resetPosition((CCNode*) villagerEnergyLabel, ccp(235.0f, (5.0f + villagerImage->boundingBox().size.height) * index + villagerImage->boundingBox().size.height / 2.0f - villagerEnergyLabel->boundingBox().size.height / 2.0f + 5.0f));
 
     resetPosition((CCNode*) menu, ccp(580.0f, (5.0f + villagerImage->boundingBox().size.height) * index));
 }
@@ -448,7 +448,7 @@ void SpriteRow::refreshAllMenuItems()
         mSpriteRowEnergyRequired = gameSprite->getPossessions()->default_energy_limit;
         ss.str(std::string());
         ss << mSpriteRowEnergyCurrent << "/" << mSpriteRowEnergyRequired;
-        villagerEnergyLabel->setString(ss.str().c_str());
+      //  villagerEnergyLabel->setString(ss.str().c_str());
         villagerEnergyBar->setValue((float) mSpriteRowEnergyCurrent / (float) mSpriteRowEnergyRequired);
     }
     

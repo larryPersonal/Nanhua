@@ -774,7 +774,7 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
 bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
 {
     MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
-    
+    if (selectedTile == NULL) return false;
     // Firstly, check by tile
     if (selectedTile->hasBuilding())
     {
