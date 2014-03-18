@@ -905,7 +905,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-        float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+    //    float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -984,7 +984,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-        float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+   //     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -1043,7 +1043,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-        float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+ //       float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {

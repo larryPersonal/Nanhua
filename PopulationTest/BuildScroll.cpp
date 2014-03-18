@@ -88,10 +88,10 @@ void BuildScroll::createMenuItems()
     CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
     // list down all the buildings
     numberOfBuildingCards = 0;
-    BuildingCard* bc1 = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
+    BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
     numberOfBuildingCards++;
 
-    BuildingCard* bc2 = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
+    BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
     numberOfBuildingCards++;
     
     
@@ -101,7 +101,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == HOUSING)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -111,7 +111,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == AMENITY)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -121,7 +121,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == GRANARY)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -131,7 +131,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == MILITARY)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -158,7 +158,7 @@ void BuildScroll::onMenuItemSelected(CCObject* pSender){
 
 void BuildScroll::reposition()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    //CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 }
 
 void BuildScroll::refreshAllMenuItemValues()
