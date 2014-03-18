@@ -79,7 +79,7 @@ void BuildScroll::createMenuItems()
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.5f));
+    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.85f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.5f));
     scrollArea->enableScrollHorizontal(0, "bar.png", "bar.png");
     //scrollArea->hideScroll();
     scrollArea->setAnchorPoint(ccp(0, 0));
@@ -135,13 +135,14 @@ void BuildScroll::createMenuItems()
             numberOfBuildingCards++;
         }
     }
-    scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setPosition(ccp(screenSize.width * 0.125f, buildMenu->boundingBox().size.height * 0.14f));
+    scrollArea->setScrollContentSize(CCSizeMake(250.0f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->setPosition(ccp(screenSize.width * 0.105f, buildMenu->boundingBox().size.height * 0.14f));
     scrollArea->updateScrollBars();
     this->addChild(scrollArea, 1);
 }
 
 void BuildScroll::onMenuItemSelected(CCObject* pSender){
+    /*
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     
     switch (pMenuItem->getTag())
@@ -153,7 +154,11 @@ void BuildScroll::onMenuItemSelected(CCObject* pSender){
             
         default:
             break;
-    }
+    }*/ //Menu items handle their own click events!
+    
+    //TODO: Manual exit
+    //TODO: scroll left
+    //TODO: scroll right
 }
 
 void BuildScroll::reposition()

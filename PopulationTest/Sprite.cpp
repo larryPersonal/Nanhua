@@ -75,9 +75,9 @@ GameSprite::GameSprite()
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
                              CCRectMake(5, 5, 70, 10),
                              "loadingbar-empty.png",
-                             "loadingbar-left.png",
-                             "loadingbar-right.png",
-                             "loadingbar-full.png");
+                             "NONE",
+                             "NONE",
+                             "Energybar.png");
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     hpLabels = CCArray::create();
@@ -2117,9 +2117,9 @@ void GameSprite::ReplaceSpriteRep()
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
                              CCRectMake(5, 5, 70, 10),
                              "loadingbar-empty.png",
-                             "loadingbar-left.png",
-                             "loadingbar-right.png",
-                             "loadingbar-full.png");
+                             "NONE",
+                             "NONE",
+                             "Energybar.png");
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);

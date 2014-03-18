@@ -94,7 +94,7 @@ void PopulationMenu::createMenuItems()
         
        
         //Tag labels to it
-        CCLabelTTF* nameLabel =         CCLabelTTF::create( currSprite->spriteDisplayedName.c_str(), "Shojumaru-Regular", 20);
+        CCLabelTTF* nameLabel =         CCLabelTTF::create( currSprite->spriteDisplayedName.c_str(), "Shojumaru-Regular", 18);
       //  CCLabelTTF* descriptionLabel =  CCLabelTTF::create( currSprite->spriteClass.c_str(), "Shojumaru-Regular", 26);
         
         menuItem->addChild(nameLabel);
@@ -308,7 +308,7 @@ void PopulationMenu::addPopulationToList(GameSprite* sprite)
     menuItem->setContentSize(menuImage->boundingBox().size);
     
     //Tag labels to it
-    CCLabelTTF* nameLabel =         CCLabelTTF::create( sprite->spriteDisplayedName.c_str(), "Shojumaru-Regular", 20);
+    CCLabelTTF* nameLabel =         CCLabelTTF::create( sprite->spriteDisplayedName.c_str(), "Shojumaru-Regular", 18);
 
     Building* hloc = sprite->getPossessions()->homeLocation;
 

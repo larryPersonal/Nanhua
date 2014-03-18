@@ -546,7 +546,7 @@ void GameHUD::createStatsMenu()
     
     std::stringstream ss;
     ss << money << "G";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     moneyLabel->setColor(colorWhite);
     moneyLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(moneyLabel, 2);
@@ -568,7 +568,7 @@ void GameHUD::createStatsMenu()
     
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     foodLabel->setColor(colorWhite);
     foodLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(foodLabel, 2);
@@ -590,7 +590,7 @@ void GameHUD::createStatsMenu()
     
     ss.str(std::string());
     ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
-    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
@@ -599,7 +599,7 @@ void GameHUD::createStatsMenu()
     // create the achievements label for the values
     ss.str(std::string());
     ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
-    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
@@ -781,7 +781,7 @@ void GameHUD::createObjectiveMenu()
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the objective group background
-    string objectiveBackground = "objective-menu-bg_07.png";
+    string objectiveBackground = "objective.png";
     objectiveMenu = CCSprite::create(objectiveBackground.c_str());
     CCSize spriteSize = objectiveMenu->getContentSize();
     objectiveMenu->setVisible(false);
@@ -789,14 +789,14 @@ void GameHUD::createObjectiveMenu()
     if(isHori)
     {
         objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.55f);
-        objectiveMenu->setPosition(ccp(40, screenSize.height - 185.0f));
+        objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
     }
     else
     {
         objectiveMenu->setScale(screenSize.height / spriteSize.width * 0.55f);
-        objectiveMenu->setPosition(ccp(40, screenSize.height - 305.0f));
+        objectiveMenu->setPosition(ccp(0, screenSize.height - 240.0f));
     }
-    this->addChild(objectiveMenu, 1);
+    
     
     // create the objective button
     // Menu items
@@ -827,7 +827,8 @@ void GameHUD::createObjectiveMenu()
         menu_objective->setPosition(ccp(40, screenSize.height - 305));
     }
     
-    this->addChild(menu_objective, 2);
+    this->addChild(menu_objective, 1);
+    this->addChild(objectiveMenu, 2);
 }
 
 void GameHUD::clickObjectiveButton()
