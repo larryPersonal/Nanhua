@@ -174,6 +174,7 @@ void GameScene::setupScene()
         constructionHandler = new ConstructionHandler();
     
     banditsAttackHandler = new BanditsAttackHandler();
+    objectiveHandler = new ObjectiveHandler();
     
     initOrientationChange();
 }
