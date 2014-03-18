@@ -201,12 +201,15 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             GameHUD::getThis()->setTapMode(3);
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
+            GameHUD::getThis()->buildButton->setVisible(true);
         }
             break;
         case -2 : //unbuild path
         {
             GameHUD::getThis()->setTapMode(4);
             BuildScroll::getThis()->closeMenu();
+            GameHUD::getThis()->buildButton->setVisible(true);
+            
         }
             break;
         case -3: //destory building
