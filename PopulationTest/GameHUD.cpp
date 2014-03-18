@@ -880,6 +880,7 @@ void GameHUD::clickBuildButton()
         GameScene::getThis()->buildingHandler->selectedBuilding = NULL;
         GameScene::getThis()->mapHandler->UnBuildPreview();
         GameScene::getThis()->mapHandler->UnPathPreview();
+        GameScene::getThis()->isOpenBuildScroll = true;
         buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
     }

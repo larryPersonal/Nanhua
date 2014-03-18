@@ -49,6 +49,8 @@ GameScene::GameScene()
         default:
             break;
     }
+    
+    isOpenBuildScroll = false;
 }
 
 GameScene::~GameScene()
@@ -408,6 +410,21 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         return;
     }
     
+    // since the touch has been detected, close the build scroll window if any
+    if(isOpenBuildScroll)
+    {
+        isOpenBuildScroll = false;
+    }
+    else
+    {
+    if(GameHUD::getThis()->buildScroll)
+    {
+        GameHUD::getThis()->buildScroll->closeMenu();
+        GameHUD::getThis()->buildScroll = NULL;
+        GameHUD::getThis()->buildButton->setVisible(true);
+    }
+    }
+    
     // it's a tap on the screen of the touch device
     int tapMode = GameHUD::getThis()->getTapMode();
     
@@ -453,7 +470,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 if (selectedTile->isPath)
                 {
                     mapHandler->UnPath(tilePos);
-                    GameHUD::getThis()->closeAllMenuAndResetTapMode();
+                    //GameHUD::getThis()->closeAllMenuAndResetTapMode();
                     
                 }
                 

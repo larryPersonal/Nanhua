@@ -54,6 +54,8 @@ public:
     ConfigSettings* configSettings;
     SettingsLevel* settingsLevel;
     
+    bool isOpenBuildScroll;
+    
 public:
     
     CCNode* screenCenter;

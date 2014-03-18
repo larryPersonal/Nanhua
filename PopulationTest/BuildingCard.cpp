@@ -202,6 +202,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
             GameHUD::getThis()->buildButton->setVisible(true);
+            GameHUD::getThis()->buildScroll = NULL;
         }
             break;
         case -2 : //unbuild path
@@ -209,13 +210,15 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             GameHUD::getThis()->setTapMode(4);
             BuildScroll::getThis()->closeMenu();
             GameHUD::getThis()->buildButton->setVisible(true);
-            
+            GameHUD::getThis()->buildScroll = NULL;
         }
             break;
         case -3: //destory building
         {
             //I'll need to set tap mode to demolish.
             BuildScroll::getThis()->closeMenu();
+            GameHUD::getThis()->buildButton->setVisible(true);
+            GameHUD::getThis()->buildScroll = NULL;
         }
         default:
         {
