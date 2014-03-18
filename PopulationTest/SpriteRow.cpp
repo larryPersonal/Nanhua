@@ -55,7 +55,7 @@ bool SpriteRow::init()
     mSpriteRowSpriteName = gameSprite->spriteName;
     
     // display the sprite row background
-    spriteRowBackground = CCSprite::create("workers_menu_unselectedBG.png");
+    spriteRowBackground = CCSprite::create("Energy.png");
     spriteRowBackground->setScale(440.0f / spriteRowBackground->boundingBox().size.width);
     spriteRowBackground->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(spriteRowBackground, ccp(5.0f, 0.0f + 90.0f * index));
@@ -67,27 +67,28 @@ bool SpriteRow::init()
     villagerImage->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(villagerImage, ccp(10.0f, 15.0f + 90.0f * index));
     
-    ccColor3B colorWhite = ccc3(255, 255, 255);
-    std::stringstream ss;
+   // ccColor3B colorBlack = ccc3(0, 0, 0);
+   // std::stringstream ss;
     
     // display the name of the sprite
+    /*
     ss << "Energy";
     villagerEnergyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    villagerEnergyLabel->setColor(colorWhite);
+    villagerEnergyLabel->setColor(colorBlack);
     villagerEnergyLabel->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(villagerEnergyLabel, ccp(85.0f, 25.0f + 90.0f * index));
-    
+    */
     // display the energy bar of the sprite
     Possessions* possessions = gameSprite->getPossessions();
     
     // display the energy bar of the sprite
     villagerEnergyBar = new ProgressBar();
     villagerEnergyBar->createProgressBar(CCRectMake(0, 0, 300, 30),
-                                   CCRectMake(5, 5, 290, 20),
-                                   "loadingbar-empty.png",
-                                   "loadingbar-left.png",
-                                   "loadingbar-right.png",
-                                   "loadingbar-full.png");
+                                   CCRectMake(0, 6, 300, 30),
+                                   "NONE",
+                                   "NONE",
+                                   "NONE",
+                                   "Energybar.png");
     villagerEnergyBar->setValue((float)possessions->energyRating / (float)possessions->default_energy_limit);
     scrollArea->addItem(villagerEnergyBar, ccp(80.0f, 45.0f + 90.0f * index));
     

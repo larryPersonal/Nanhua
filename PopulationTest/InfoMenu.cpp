@@ -305,7 +305,7 @@ void InfoMenu::createMenuItems()
                 buildCat = "City Limits";
                 break;
         }
-        CCLabelTTF* label = CCLabelTTF::create(buildCat.c_str(), "Shojumaru-Regular", 20);
+        CCLabelTTF* label = CCLabelTTF::create(buildCat.c_str(), "Shojumaru-Regular", 18);
         
         /*screw layering rules, I'm gonna handle it on my own*/
         tabItem->setEnabled(false);

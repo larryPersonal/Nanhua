@@ -177,12 +177,12 @@ void BuildingInfoMenu::createMenuItems()
     {
         ss << "Ready for service";
     }
-    labelStatus = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelStatus = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelStatus->setColor(colorBlack);
     
     ss.str(std::string());
     ss << building->build_uint_current << "/" << building->build_uint_required;
-    unitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    unitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     unitLabel->setColor(colorBlack);
     
     unitBar = new ProgressBar();
@@ -190,9 +190,9 @@ void BuildingInfoMenu::createMenuItems()
                                CCRectMake(0, 0, 80, 20),
                                CCRectMake(5, 5, 70, 10),
                                "loadingbar-empty.png",
-                               "loadingbar-left.png",
-                               "loadingbar-right.png",
-                               "loadingbar-full.png"
+                               "NONE",
+                               "NONE",
+                               "Energybar.png"
     );
     unitBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
     
@@ -200,43 +200,43 @@ void BuildingInfoMenu::createMenuItems()
     // loyalty
     ss.str(std::string());
     ss << "0";
-    labelLoy = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelLoy = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelLoy->setColor(colorBlack);
     
     // hapiness
     ss.str(std::string());
     ss << "0";
-    labelHap = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    labelHap = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelHap->setColor(colorBlack);
     */
     
     // recovery rate
     ss.str(std::string());
     ss << "RR:";
-    recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     recoveryRateTitleLabel->setColor(colorBlack);
     
     ss.str(std::string());
     ss << building->recovery_rate;
-    recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     recoveryRateLabel->setColor(colorBlack);
     
     // food consumption rate
     ss.str(std::string());
     ss << "FC:";
-    foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodConsumptionRateTitleLabel->setColor(colorBlack);
     
     ss.str(std::string());
     
     ss << building->food_consumption_rate;
-    foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodConsumptionRateLabel->setColor(colorBlack);
     
     // food storage limit
     ss.str(std::string());
     ss << "Food Storage:";
-    foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodStorageTitleLabel->setColor(colorBlack);
     
     // food storage
@@ -245,21 +245,21 @@ void BuildingInfoMenu::createMenuItems()
                                CCRectMake(0, 0, 80, 20),
                                CCRectMake(5, 5, 70, 10),
                                "loadingbar-empty.png",
-                               "loadingbar-left.png",
-                               "loadingbar-right.png",
-                               "loadingbar-full.png"
+                               "NONE",
+                               "NONE",
+                               "Energybar.png"
                                );
     foodStorageBar->setValue((float)building->currentStorage / (float)building->storageLimit);
     
     ss.str(std::string());
     ss << building->currentStorage << "/" << building->storageLimit;
-    foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     foodStorageLabel->setColor(colorBlack);
     
     // work unit done
     ss.str(std::string());
     ss << "Work Unit Done:";
-    workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     workCompleteTitleLabel->setColor(colorBlack);
     
     workCompleteBar = new ProgressBar();
@@ -267,15 +267,15 @@ void BuildingInfoMenu::createMenuItems()
                                       CCRectMake(0, 0, 80, 20),
                                       CCRectMake(5, 5, 70, 10),
                                       "loadingbar-empty.png",
-                                      "loadingbar-left.png",
-                                      "loadingbar-right.png",
-                                      "loadingbar-full.png"
+                                      "NONE",
+                                      "NONE",
+                                      "Energybar.png"
                                       );
     workCompleteBar->setValue((float)building->work_unit_current / (float)building->work_unit_required);
     
     ss.str(std::string());
     ss << (int) building->work_unit_current << "/" << (int) building->work_unit_required;
-    workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     workCompleteLabel->setColor(colorBlack);
     
     // Menu items
@@ -368,7 +368,7 @@ void BuildingInfoMenu::createMenuItems()
     // sprite population label
     ss.str(string());
     ss << "Villages Assigned!";
-    spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     spritePopulationLabel->setColor(colorGreen);
     spritePopulationLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(spritePopulationLabel);
@@ -465,9 +465,9 @@ void BuildingInfoMenu::createMenuItems()
                                        CCRectMake(0, 0, 80, 20),
                                        CCRectMake(5, 5, 70, 10),
                                        "loadingbar-empty.png",
-                                       "loadingbar-left.png",
-                                       "loadingbar-right.png",
-                                       "loadingbar-full.png"
+                                       "NONE",
+                                       "NONE",
+                                       "Energybar.png"
                                        );
     upgradeBar->setValue((float)building->current_upgrade_unit / (float)building->upgrade_unit_max);
     upgradeBar->setAnchorPoint(ccp(0, 1));
@@ -477,7 +477,7 @@ void BuildingInfoMenu::createMenuItems()
     mGameUpgradeUnit = building->current_upgrade_unit;
     ss.str(string());
     ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
-    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
+    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     upgradeBarLabel->setAnchorPoint(ccp(0, 1));
     upgradeBarLabel->setPosition(ccp(-120, -90));
     upgradeBarLabel->setColor(colorGreen);
@@ -963,7 +963,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-   //     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+      //  float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -1022,7 +1022,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
- //       float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+        //float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
