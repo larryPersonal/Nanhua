@@ -107,7 +107,7 @@ void SpriteHandler::initialize()
         {
             case 0:
                 targetGender = 'm';
-                fileName = "MMC";
+                fileName = "MMR";
                 targetIdleF = 4;
                 targetWalkF = 4;
                 configContent = refugeeConfig;
@@ -117,7 +117,7 @@ void SpriteHandler::initialize()
                 break;
             case 1:
                 targetGender = 'f';
-                fileName = "FMC";
+                fileName = "FMR";
                 targetIdleF = 4;
                 targetWalkF = 4;
             
@@ -214,7 +214,7 @@ void SpriteHandler::initialize()
                 break;
             case 10:
                 targetGender = 'm';
-                fileName = "MMW";
+                fileName = "MMB";
             
                 targetIdleF = 3;
                 targetWalkF = 4;
@@ -226,7 +226,7 @@ void SpriteHandler::initialize()
                 break;
             case 11:
                 targetGender = 'f';
-                fileName = "FMW";
+                fileName = "FMB";
                 targetIdleF = 3;
                 targetWalkF = 4;
             

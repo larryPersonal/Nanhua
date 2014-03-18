@@ -62,7 +62,7 @@ void BuildScroll::createMenuItems()
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the build group background
-    string buildBackground = "build-menu-scroll.png";
+    string buildBackground = "scroller.png";
     buildMenu = CCSprite::create(buildBackground.c_str());
     CCSize spriteSize = buildMenu->getContentSize();
     buildMenu->setAnchorPoint(ccp(1, 0));
@@ -79,7 +79,7 @@ void BuildScroll::createMenuItems()
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(200.0f * GameScene::getThis()->buildingHandler->allBuildings->count(), buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.5f));
     scrollArea->enableScrollHorizontal(0, "bar.png", "bar.png");
     //scrollArea->hideScroll();
     scrollArea->setAnchorPoint(ccp(0, 0));
@@ -88,32 +88,10 @@ void BuildScroll::createMenuItems()
     CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
     // list down all the buildings
     numberOfBuildingCards = 0;
-    //Path
-    /*
-    CCSprite* pathImg =   CCSprite::create("path.png");
-    CCSprite* pathSelectedImg = CCSprite::create("path.png");
-    pathImg->             setScale(128 / pathImg->boundingBox().size.width);
-    pathSelectedImg->           setScale(pathImg->getScale());
-    CCMenuItemSprite* buildPathItem =  CCMenuItemSprite::create(pathImg, pathSelectedImg, this, menu_selector(BuildMenu::onMenuItemSelected) );
-    buildPathItem->setTag(-3);
-    
-    
-    
-    buildPathItem->setAnchorPoint(ccp(0, 1));
-    buildPathItem->setContentSize(pathImg->boundingBox().size);
-    
-    CCLabelTTF* pathLabel =     CCLabelTTF::create("Build Path", "Shojumaru-Regular", 30);
-    CCPoint pathlabelPosition = ccp(buildPathItem->boundingBox().size.width*2.5,
-                                    buildPathItem->boundingBox().size.height*0.5);
-    pathLabel->setPosition(pathlabelPosition);
-    buildPathItem->addChild(pathLabel);
-    
-    buildPathItem->  setPosition(CCPointMake(0, 0));
-    */
-    BuildingCard* bc1 = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
+    BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
     numberOfBuildingCards++;
 
-    BuildingCard* bc2 = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
+    BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
     numberOfBuildingCards++;
     
     
@@ -123,7 +101,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == HOUSING)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -133,7 +111,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == AMENITY)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -143,7 +121,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == GRANARY)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -153,7 +131,7 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == MILITARY)
         {
-            BuildingCard* bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
         }
     }
@@ -180,7 +158,7 @@ void BuildScroll::onMenuItemSelected(CCObject* pSender){
 
 void BuildScroll::reposition()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    //CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 }
 
 void BuildScroll::refreshAllMenuItemValues()
@@ -209,9 +187,9 @@ void BuildScroll::onOrientationChanged()
     }
     buildMenu->setPosition(ccp(screenSize.width, 0));
     
-    scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setViewSize(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f + screenSize.width * 0.02f, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setPosition(ccp(screenSize.width * 0.125f, buildMenu->boundingBox().size.height * 0.14f));
+    scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->setViewSize(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f, buildMenu->boundingBox().size.height * 0.7f));
+    scrollArea->setPosition(0, buildMenu->boundingBox().size.height);
     scrollArea->updateScrollBars();
 }
 

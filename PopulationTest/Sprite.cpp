@@ -2561,12 +2561,12 @@ void GameSprite::updateEndurance(float dt)
             if(mGameWarMode){
                 stringstream ss;
                 ss << possessions->current_endurance;
-                CCLog(ss.str().c_str());
+             //   CCLog(ss.str().c_str());
                 barHP->setVisible(true);
             } else {
                 stringstream ss;
                 ss << possessions->current_endurance;
-                CCLog(ss.str().c_str());
+              //  CCLog(ss.str().c_str());
                 //barHP->setVisible(false);
             }
         }

@@ -52,7 +52,7 @@ FileReader::FileReader( string pFileName, char pMode ) {
     
     // For testing purposes
     CCLog("[ NOTICE ] Finished opening file: " );
-    CCLog( pFileName.c_str() );
+    //CCLog( pFileName.c_str() );
     CCLog(" \n");
     cout << "[ NOTICE ] Finished opening file: " << pFileName.c_str( ) << endl;
 }
