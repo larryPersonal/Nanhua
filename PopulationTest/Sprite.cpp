@@ -847,6 +847,8 @@ bool GameSprite::Wander()
     wanderFlag = !wanderFlag;
     if (wanderFlag)
     {
+        saySpeech("I am wandering!", 5.0f);
+        
         CCPoint tgt = GameScene::getThis()->mapHandler->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
         if (tgt.x == -1 && tgt.y == -1)
         {
@@ -1695,6 +1697,9 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     speechBubble->addContent(label, CCPointZero );
     speechBubble->show(timeInSeconds);
 }
+
+
+
 /*pathing*/
 /*paths back home, if possible. Ignores range for obvious reasons.*/
 bool GameSprite::PathToHome()
@@ -2355,11 +2360,13 @@ void GameSprite::goToEat()
             
             if(startPos.equals(endPos))
             {
+                saySpeech("Eating food aiya!", 5.0f);
                 setTargetLocation(bui);
                 currAction = EATING;
             }
             else
             {
+                saySpeech("Food, I am coming!", 5.0f);
                 setTargetLocation(bui);
                 GoEat(bui);
             }
@@ -2369,6 +2376,7 @@ void GameSprite::goToEat()
     // if the granary does not have food, do next scheduled action.
     else if(bui != NULL)
     {
+        saySpeech("No food store with food!", 5.0f);
         if(getJob() == NONE && getJobLocation() == NULL)
         {
             if(futureAction1 == RESTING || futureAction2 == RESTING)
@@ -2385,6 +2393,7 @@ void GameSprite::goToEat()
     // if there is no granary found, do next scheduled action.
     else
     {
+        saySpeech("No food store!", 5.0f);
         if(futureAction1 == RESTING || futureAction2 == RESTING)
         {
             futureAction1 = RESTING;
@@ -2413,11 +2422,13 @@ void GameSprite::goToSleep()
         
         if(startPos.equals(endPos))
         {
+            saySpeech("Sleep loh!", 5.0f);
             setTargetLocation(getHome());
             currAction = RESTING;
         }
         else
         {
+            saySpeech("My home! My Home!", 5.0f);
             setTargetLocation(getHome());
             GoRest(getHome());
         }
@@ -2443,11 +2454,13 @@ void GameSprite::goToOccupyHome(Building* b)
         
         if(startPos.equals(endPos))
         {
+            saySpeech("Yeh! I have a home!", 5.0f);
             setHome(b);
             changeToCitizen();
         }
         else
         {
+            saySpeech("I want to find a home!", 5.0f);
             setTargetLocation(b);
             GoHome(b);
         }

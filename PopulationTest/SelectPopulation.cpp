@@ -160,7 +160,10 @@ void SelectPopulation::createMenuItems()
         labelBuildingName->setColor(colorWhite);
         labelBuildingName->setAnchorPoint(ccp(0.5, 0.5));
         this->addChild(labelBuildingName, 4);
-        
+    
+        isCurrentlyUnderConstruction = building->isCurrentConstructing;
+        isPerformingTask = building->isCurrentWorking;
+    
         ss.str(std::string());
         if(building->isUnderConstruction())
         {
@@ -264,7 +267,7 @@ void SelectPopulation::createMenuItems()
         // set the position of all the elements
         reposition();
         
-        this->schedule(schedule_selector(SelectPopulation::update), 0.25f);
+        this->schedule(schedule_selector(SelectPopulation::update), 0.06f);
         
         CCArray* spritesShown = NULL;
         // if the building is in construction, set the member icons
@@ -376,6 +379,7 @@ void SelectPopulation::cancelTask()
         GameScene::getThis()->setTouchEnabled(true);
     }
     building->isCurrentConstructing = false;
+    building->isCurrentWorking = false;
 }
 
 void SelectPopulation::performTask()
@@ -437,7 +441,11 @@ void SelectPopulation::scheduleGuardTower()
         
         gameSprite->setJob(SOLDIER);
         
+        building->isCurrentWorking = true;
+        
         prepareJob(gameSprite);
+        
+        gameSprite->saySpeech("I will protect you!", 5.0f);
     }
 }
 
@@ -454,7 +462,11 @@ void SelectPopulation::scheduleConstruction()
         
         gameSprite->setJob(BUILDER);
         
+        building->isCurrentConstructing = true;
+        
         prepareJob(gameSprite);
+        
+        gameSprite->saySpeech("Rome wasn't built in a day!", 5.0f);
     }
 
 }
@@ -473,7 +485,11 @@ void SelectPopulation::scheduleFarming()
         
         gameSprite->setJob(FARMER);
         
+        building->isCurrentWorking = true;
+        
         prepareJob(gameSprite);
+        
+        gameSprite->saySpeech("Food is an apple of my eyes!", 5.0f);
     }
 }
 
@@ -554,9 +570,74 @@ void SelectPopulation::update(float deltaTime){
             this->addChild(eSpace, 4);
             emptySpaceArray->addObject(eSpace);
         }
+        
+        stringstream ss;
+        if(building->isUnderConstruction())
+        {
+            if(building->isCurrentConstructing)
+            {
+                ss << "Builders Working Currently";
+            }
+            else
+            {
+                ss << "Builders Available";
+            }
+        }
+        else
+        {
+            ss << "Workers Available";
+        }
+        workerLabel->setString(ss.str().c_str());
+        
+        ss.str(std::string());
+        
+        if(building->isUnderConstruction())
+        {
+            if(building->isCurrentConstructing)
+            {
+                ss << "Construction in progress";
+            }
+            else
+            {
+                ss << "Construction in prepare";
+            }
+        }
+        else
+        {
+            ss << "Doing Task";
+        }
+        taskLabel->setString(ss.str().c_str());
     }
     
-    if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->inProgress)
+    if(isCurrentlyUnderConstruction != building->isCurrentConstructing)
+    {
+        stringstream ss;
+        if(building->isCurrentConstructing)
+        {
+            ss << "Builders Working Currently";
+        }
+        else
+        {
+            ss << "Builders Available";
+        }
+        workerLabel->setString(ss.str().c_str());
+        
+        ss.str(std::string());
+        if(building->isCurrentConstructing)
+        {
+            ss << "Construction in progress";
+        }
+        else
+        {
+            ss << "Construction in prepare";
+        }
+        taskLabel->setString(ss.str().c_str());
+        
+        this->closeMenu();
+    }
+    
+    
+    if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->isCurrentConstructing && !building->isCurrentWorking)
     {
         buttonOk->setVisible(true);
     }
@@ -564,6 +645,7 @@ void SelectPopulation::update(float deltaTime){
     {
         buttonOk->setVisible(false);
     }
+    
 }
 
 void SelectPopulation::addMemberRow(GameSprite* gameSprite, SpriteRow* spriteRow)

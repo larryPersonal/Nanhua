@@ -460,6 +460,10 @@
 		841845211884DF9000895275 /* job.png in Resources */ = {isa = PBXBuildFile; fileRef = 8418451F1884DF9000895275 /* job.png */; };
 		841845221884DF9000895275 /* construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 841845201884DF9000895275 /* construction.png */; };
 		841845241884FC5A00895275 /* dismiss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841845231884FC5A00895275 /* dismiss.jpg */; };
+		8418C39118D836CE00C8C9B9 /* ObjectiveHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39018D836CE00C8C9B9 /* ObjectiveHandler.cpp */; };
+		8418C39618D8399D00C8C9B9 /* objective.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8418C39518D8399D00C8C9B9 /* objective.xml */; };
+		8418C39A18D83E1A00C8C9B9 /* Objective.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39918D83E1A00C8C9B9 /* Objective.cpp */; };
+		8418C39D18D8474500C8C9B9 /* ObjectiveManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */; };
 		8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155618D2C4DD00A441D0 /* dialogbox.png */; };
 		8421157818D2C4DD00A441D0 /* info_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155B18D2C4DD00A441D0 /* info_btn.png */; };
 		8421157A18D2C4DD00A441D0 /* leftgreen_arrowbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155D18D2C4DD00A441D0 /* leftgreen_arrowbtn.png */; };
@@ -1346,6 +1350,13 @@
 		8418451F1884DF9000895275 /* job.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = job.png; sourceTree = "<group>"; };
 		841845201884DF9000895275 /* construction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = construction.png; sourceTree = "<group>"; };
 		841845231884FC5A00895275 /* dismiss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dismiss.jpg; sourceTree = "<group>"; };
+		8418C38F18D82EE500C8C9B9 /* ObjectiveHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveHandler.h; sourceTree = "<group>"; };
+		8418C39018D836CE00C8C9B9 /* ObjectiveHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectiveHandler.cpp; sourceTree = "<group>"; };
+		8418C39518D8399D00C8C9B9 /* objective.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = objective.xml; sourceTree = "<group>"; };
+		8418C39818D83D8200C8C9B9 /* Objective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objective.h; sourceTree = "<group>"; };
+		8418C39918D83E1A00C8C9B9 /* Objective.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Objective.cpp; sourceTree = "<group>"; };
+		8418C39B18D8467900C8C9B9 /* ObjectiveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveManager.h; sourceTree = "<group>"; };
+		8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectiveManager.cpp; sourceTree = "<group>"; };
 		8421154E18D2B9A100A441D0 /* HousingLimit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HousingLimit.h; sourceTree = "<group>"; };
 		8421155018D2C4DD00A441D0 /* allocatebtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allocatebtn.png; sourceTree = "<group>"; };
 		8421155118D2C4DD00A441D0 /* allocatepressbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allocatepressbtn.png; sourceTree = "<group>"; };
@@ -1574,6 +1585,7 @@
 		3615BCB116E8727100AB7077 /* GameSystem */ = {
 			isa = PBXGroup;
 			children = (
+				8418C38C18D82E9F00C8C9B9 /* Objectives */,
 				848D2FEA1859AF5600EB9257 /* Senario */,
 				848883DD172F79D200D7E197 /* System */,
 				848883DC172F79C100D7E197 /* AI */,
@@ -1679,11 +1691,11 @@
 		365FB9AF16E5E30B00A57CF0 /* PopulationTest */ = {
 			isa = PBXGroup;
 			children = (
+				365FBC5716E5E31000A57CF0 /* Supporting Files */,
 				365FB9B016E5E30B00A57CF0 /* Resources */,
 				365FB9C816E5E30B00A57CF0 /* ios */,
 				365FB9D116E5E30C00A57CF0 /* libs */,
 				365FBC5916E5E31000A57CF0 /* Classes */,
-				365FBC5716E5E31000A57CF0 /* Supporting Files */,
 			);
 			path = PopulationTest;
 			sourceTree = "<group>";
@@ -1915,6 +1927,7 @@
 		365FBC5716E5E31000A57CF0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8418C39318D8396D00C8C9B9 /* Objective */,
 				8421154B18D29FA100A441D0 /* settings */,
 				84360A2118B2170D002EC8C2 /* GameConfig.h */,
 				84EB327F1867FB6E003B5CEB /* xml */,
@@ -2930,6 +2943,43 @@
 			name = newUI;
 			sourceTree = "<group>";
 		};
+		8418C38C18D82E9F00C8C9B9 /* Objectives */ = {
+			isa = PBXGroup;
+			children = (
+				8418C38E18D82EB800C8C9B9 /* Source */,
+				8418C38D18D82EAA00C8C9B9 /* Header */,
+			);
+			name = Objectives;
+			sourceTree = "<group>";
+		};
+		8418C38D18D82EAA00C8C9B9 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				8418C38F18D82EE500C8C9B9 /* ObjectiveHandler.h */,
+				8418C39818D83D8200C8C9B9 /* Objective.h */,
+				8418C39B18D8467900C8C9B9 /* ObjectiveManager.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		8418C38E18D82EB800C8C9B9 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8418C39018D836CE00C8C9B9 /* ObjectiveHandler.cpp */,
+				8418C39918D83E1A00C8C9B9 /* Objective.cpp */,
+				8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		8418C39318D8396D00C8C9B9 /* Objective */ = {
+			isa = PBXGroup;
+			children = (
+				8418C39518D8399D00C8C9B9 /* objective.xml */,
+			);
+			name = Objective;
+			sourceTree = "<group>";
+		};
 		8421154B18D29FA100A441D0 /* settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3515,6 +3565,7 @@
 				36C16E4718D0049000C307DB /* char8.png in Resources */,
 				366F6CA0171CFD5700CDCC6F /* citizenbehavior.lua in Resources */,
 				36D87CFD18C5BA7800FE8B31 /* tokenball_AI.png in Resources */,
+				8418C39618D8399D00C8C9B9 /* objective.xml in Resources */,
 				B497C34F1726474F00993475 /* building-menu-bg.png in Resources */,
 				84EDD26D18C6EF0C003BAF5E /* happyFace.png in Resources */,
 				36D87CFA18C5BA7800FE8B31 /* tokenball_REN.png in Resources */,
@@ -3743,6 +3794,7 @@
 				365FBBE216E5E31000A57CF0 /* CCMenuItemImageLoader.cpp in Sources */,
 				365FBBE516E5E31000A57CF0 /* CCMenuItemLoader.cpp in Sources */,
 				365FBBE916E5E31000A57CF0 /* CCNode+CCBRelativePositioning.cpp in Sources */,
+				8418C39D18D8474500C8C9B9 /* ObjectiveManager.cpp in Sources */,
 				36B18ADD18A0A6A800A8B515 /* CCCommon.mm in Sources */,
 				36B190E818A0A6AD00A8B515 /* CCTMXTiledMap.cpp in Sources */,
 				365FBBEC16E5E31000A57CF0 /* CCNodeLoader.cpp in Sources */,
@@ -3860,6 +3912,7 @@
 				36B18A8E18A0A6A700A8B515 /* CCKeypadDelegate.cpp in Sources */,
 				36B190F818A0A6AD00A8B515 /* SimpleAudioEngine_objc.m in Sources */,
 				36B190E418A0A6AD00A8B515 /* CCParallaxNode.cpp in Sources */,
+				8418C39118D836CE00C8C9B9 /* ObjectiveHandler.cpp in Sources */,
 				36B18ADC18A0A6A800A8B515 /* CCApplication.mm in Sources */,
 				36041A331713AB7C00A14BE6 /* lauxlib.c in Sources */,
 				36B190D918A0A6AD00A8B515 /* CCUserDefaultAndroid.cpp in Sources */,
@@ -3913,6 +3966,7 @@
 				36B18A9118A0A6A700A8B515 /* CCLabelBMFont.cpp in Sources */,
 				36B18A7318A0A6A700A8B515 /* CCDictionary.cpp in Sources */,
 				36041A4D1713AB7C00A14BE6 /* luac.c in Sources */,
+				8418C39A18D83E1A00C8C9B9 /* Objective.cpp in Sources */,
 				36B190E118A0A6AD00A8B515 /* CCTextureCache.cpp in Sources */,
 				36041A4E1713AB7C00A14BE6 /* lundump.c in Sources */,
 				36B190CB18A0A6AD00A8B515 /* CCNotificationCenter.cpp in Sources */,
