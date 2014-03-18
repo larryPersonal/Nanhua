@@ -366,7 +366,7 @@ std::string SpriteRow::getJobString(SpriteJob sj)
     {
         return "Builder";
     }
-    else if(sj == GUARD)
+    else if(sj == SOLDIER)
     {
         return "Guard";
     }

@@ -437,7 +437,6 @@ void GameManager::loadGameData()
             }
             
             
-            CCLog(out.c_str());
         }
     }
     
@@ -633,6 +632,7 @@ bool GameManager::ResearchConditionsMet(Building* b)
     {
         return false;
     }
+    return true;
     
 }
 

@@ -514,10 +514,10 @@
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
-    <property name="research_time" value="20"/>
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="100"/>
     <property name="work_unit" value=""/>
     <property name="work_unit_required" value=""/>
    </properties>
@@ -543,10 +543,10 @@
     <property name="req_capita" value="0"/>
     <property name="req_population" value="10"/>
     <property name="research_cost" value="150"/>
-    <property name="research_time" value="20"/>
     <property name="storage" value="0"/>
     <property name="storage_limit" value="0"/>
     <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="100"/>
     <property name="work_unit" value=""/>
     <property name="work_unit_required" value=""/>
    </properties>

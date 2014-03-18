@@ -66,6 +66,8 @@ BuildingInfoMenu::BuildingInfoMenu(Building* building)
     
     spritePopulationMenu = CCArray::create();
     spritePopulationMenu->retain();
+    
+    mGameCurrentlyUpgrading = false;
 }
 
 BuildingInfoMenu::~BuildingInfoMenu()
@@ -91,7 +93,6 @@ void BuildingInfoMenu::createMenuItems()
         return;
     }
     
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
@@ -164,7 +165,7 @@ void BuildingInfoMenu::createMenuItems()
     // Attribute labels
     ss.str(std::string());
     ss << "Level: " << mBuildingLevel;
-    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    labelLevel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     labelLevel->setColor(colorGreen);
     
     ss.str(std::string());
@@ -367,7 +368,7 @@ void BuildingInfoMenu::createMenuItems()
     // sprite population label
     ss.str(string());
     ss << "Villages Assigned!";
-    spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Droidiga", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     spritePopulationLabel->setColor(colorGreen);
     spritePopulationLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(spritePopulationLabel);
@@ -407,37 +408,34 @@ void BuildingInfoMenu::createMenuItems()
         spritePopulationMenu->addObject(newMenu);
     }
     
-    reposition();
-    this->schedule(schedule_selector(BuildingInfoMenu::update), 0.25f);
-    
     /*********************** for building level up *********************/
     moneyIcon = CCSprite::create("yuanbao_icon.png");
     moneyIcon->setScale(0.5f);
     moneyIcon->setAnchorPoint(ccp(0, 1));
-    moneyIcon->setPosition(ccp(-150, -190));
+    moneyIcon->setPosition(ccp(-200, -190));
     this->addChild(moneyIcon);
     
     ss.str(string());
     int level = GameManager::getThis()->town_hall_level;
     mGameLevel = level;
-    ss << GameManager::getThis()->housingLimitation->gold_required.at(level);
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    ss << GameManager::getThis()->housingLimitation->gold_required.at(level) << "G";
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     moneyLabel->setAnchorPoint(ccp(0, 1));
-    moneyLabel->setPosition(ccp(-30, -205));
+    moneyLabel->setPosition(ccp(-90, -205));
     moneyLabel->setColor(colorGreen);
     this->addChild(moneyLabel);
     
     foodIcon = CCSprite::create("rice_icon.png");
     foodIcon->setScale(0.5f);
     foodIcon->setAnchorPoint(ccp(0, 1));
-    foodIcon->setPosition(ccp(50, -180));
+    foodIcon->setPosition(ccp(30, -180));
     this->addChild(foodIcon);
     
     ss.str(string());
     ss << GameManager::getThis()->housingLimitation->food_required.at(level);
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     foodLabel->setAnchorPoint(ccp(0, 1));
-    foodLabel->setPosition(ccp(140, -205));
+    foodLabel->setPosition(ccp(110, -205));
     foodLabel->setColor(colorGreen);
     this->addChild(foodLabel);
     
@@ -479,7 +477,7 @@ void BuildingInfoMenu::createMenuItems()
     mGameUpgradeUnit = building->current_upgrade_unit;
     ss.str(string());
     ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
-    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     upgradeBarLabel->setAnchorPoint(ccp(0, 1));
     upgradeBarLabel->setPosition(ccp(-120, -90));
     upgradeBarLabel->setColor(colorGreen);
@@ -487,7 +485,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "HOUSE:";
-    houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     houseLimitTitle->setAnchorPoint(ccp(0, 1));
     houseLimitTitle->setPosition(ccp(60, 100));
     houseLimitTitle->setColor(colorGreen);
@@ -498,7 +496,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allHouse->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(level);
-    houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     houseLimitLabel->setAnchorPoint(ccp(0, 1));
     houseLimitLabel->setPosition(ccp(240, 100));
     houseLimitLabel->setColor(colorGreen);
@@ -506,7 +504,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "GRANARY:";
-    granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     granaryLimitTitle->setAnchorPoint(ccp(0, 1));
     granaryLimitTitle->setPosition(ccp(60, 70));
     granaryLimitTitle->setColor(colorGreen);
@@ -517,7 +515,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allGranary->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(level);
-    granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     granaryLimitLabel->setAnchorPoint(ccp(0, 1));
     granaryLimitLabel->setPosition(ccp(240, 70));
     granaryLimitLabel->setColor(colorGreen);
@@ -525,7 +523,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "FARM:";
-    farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     farmLimitTitle->setAnchorPoint(ccp(0, 1));
     farmLimitTitle->setPosition(ccp(60, 40));
     farmLimitTitle->setColor(colorGreen);
@@ -536,7 +534,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allFarm->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(level);
-    farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     farmLimitLabel->setAnchorPoint(ccp(0, 1));
     farmLimitLabel->setPosition(ccp(240, 40));
     farmLimitLabel->setColor(colorGreen);
@@ -544,7 +542,7 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << "GUARD TOWER:";
-    guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     guardTowerLimitTitle->setAnchorPoint(ccp(0, 1));
     guardTowerLimitTitle->setPosition(ccp(60, 10));
     guardTowerLimitTitle->setColor(colorGreen);
@@ -555,11 +553,13 @@ void BuildingInfoMenu::createMenuItems()
     
     ss.str(string());
     ss << allTower->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(level);
-    guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
     guardTowerLimitLabel->setPosition(ccp(240, 10));
     guardTowerLimitLabel->setColor(colorGreen);
     this->addChild(guardTowerLimitLabel);
+    
+    mGameCurrentlyUpgrading = building->isCurrentUpgrading;
     
     if(building->buildingType == SPECIAL)
     {
@@ -585,6 +585,19 @@ void BuildingInfoMenu::createMenuItems()
         spPrice->setVisible(false);
         spCash->setVisible(false);
         textPrice->setVisible(false);
+        
+        spritePopulationLabel->setVisible(false);
+        
+        if(mGameCurrentlyUpgrading)
+        {
+            cancelUpgradeButton->setVisible(true);
+            upgradeButton->setVisible(false);
+        }
+        else
+        {
+            cancelUpgradeButton->setVisible(false);
+            upgradeButton->setVisible(true);
+        }
     }
     else
     {
@@ -658,6 +671,9 @@ void BuildingInfoMenu::createMenuItems()
             workCompleteLabel->setVisible(false);
         }
     }
+    
+    reposition();
+    this->schedule(schedule_selector(BuildingInfoMenu::update), 0.06f);
 }
 
 void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
@@ -844,6 +860,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         
         for(int i = 0; i < spritePopulation->count(); i++)
         {
+            
             this->removeChild((CCNode*) spritePopulation->objectAtIndex(i));
         }
         spritePopulation->removeAllObjects();
@@ -888,7 +905,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-        float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+    //    float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -967,7 +984,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-        float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+   //     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -1026,7 +1043,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
         
         float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
-        float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
+ //       float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
         
         for (int i = 0; i < spritePopulationSlot->count(); i++)
         {
@@ -1080,46 +1097,13 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         workCompleteBar->setValue((float) building->work_unit_current / (float) building->work_unit_required);
     }
     
-    /*
-    if (mBuildingCurrPopulation != building->getPopulationCount())
-    {
-        int diff = building->getPopulationCount() - mBuildingCurrPopulation;
-        mBuildingCurrPopulation = building->getPopulationCount();
-        
-        if (diff > 0)
-        {
-            for (int i = 0; i < diff; i++)
-            {
-                std::string spriteName = building->getPopulationAt(i)->spriteName + "_port.png";
-                
-                CCMenuItemImage* menuItem = CCMenuItemImage::create(spriteName.c_str(), NULL,
-                                                                    this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
-                menuItem->setTag((int)building->getPopulationAt(i));  // Store GameSprite* address in tag
-                spritePopulation.push_back(menuItem);
-                spritePopulation.back()->CCNode::setScale(portraitScale);
-                spritePopulation.back()->setAnchorPoint(ccp(-0.20, -0.25));
-                
-                menuItems->addObject(menuItem);
-                menu->addChild(menuItem);
-            }
-            isPositionDirty = true;
-        }
-        else
-        {
-            for (int i = 0; i > diff; i--)
-            {
-                this->removeChild(spritePopulation.back());
-                spritePopulation.pop_back();
-            }
-        }
-    }
-    */
-    
-    /*
-    
     if (GameManager::getThis()->town_hall_level != mGameLevel)
     {
         mGameLevel = GameManager::getThis()->town_hall_level;
+        
+        ss.str(std::string());
+        ss << "LEVEL: " << mGameLevel;
+        labelLevel->setString(ss.str().c_str());
         
         upgradeBar->setValue((float) building->current_upgrade_unit / (float) building->upgrade_unit_max);
         ss.str(string());
@@ -1149,14 +1133,16 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         ss.str(string());
         ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
         upgradeBarLabel->setString(ss.str().c_str());
+        
+        upgradeBar->setValue((float) building->current_upgrade_unit / (float) building->upgrade_unit_max);
     }
     
     if (GameScene::getThis()->buildingHandler->housingOnMap->count() != mGameHouseNumber)
     {
         mGameHouseNumber = GameScene::getThis()->buildingHandler->housingOnMap->count();
-        ss.str(string());
+        ss.str(std::string());
         ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
-        houseLimitLabel->setString(ss.str().c_str());
+        houseLimitLabel->setOpacity(255);
     }
     
     if (GameScene::getThis()->buildingHandler->granaryOnMap->count() != mGameGranaryNumber)
@@ -1182,7 +1168,6 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
         guardTowerLimitLabel->setString(ss.str().c_str());
     }
-    */
     
     if (isPositionDirty)
         reposition();
@@ -1210,6 +1195,44 @@ Building* BuildingInfoMenu::getBuilding()
 
 void BuildingInfoMenu::upgrade()
 {
+    if(building->isCurrentUpgrading)
+    {
+        upgradeButton->setVisible(true);
+        cancelUpgradeButton->setVisible(false);
+        building->isCurrentUpgrading = false;
+    }
+    else
+    {
+        int level = GameManager::getThis()->town_hall_level;
+        int food = 0;
+        CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+        for (int i = 0; i < allGranary->count(); i++)
+        {
+            Building* b = (Building*) allGranary->objectAtIndex(i);
+            food += b->currentStorage;
+        }
+
+        if(GameHUD::getThis()->money < GameManager::getThis()->housingLimitation->gold_required.at(level) || food < GameManager::getThis()->housingLimitation->food_required.at(level))
+        {
+            return;
+        }
+        
+        upgradeButton->setVisible(false);
+        cancelUpgradeButton->setVisible(true);
+        building->isCurrentUpgrading = true;
+        GameHUD::getThis()->money -= GameManager::getThis()->housingLimitation->gold_required.at(level);
+        for (int i = 0; i < allGranary->count(); i++)
+        {
+            Building* b = (Building*) allGranary->objectAtIndex(i);
+            if(food <= 0)
+            {
+                break;
+            }
+            food -= b->currentStorage;
+            b->currentStorage = 0;
+        }
+
+    }
 }
 
 void BuildingInfoMenu::showSprite(CCObject *pSender)
