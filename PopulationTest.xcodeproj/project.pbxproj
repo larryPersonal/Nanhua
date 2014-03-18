@@ -3504,11 +3504,8 @@
 				36C16E4718D0049000C307DB /* FMR_port.png in Resources */,
 				366F6CA0171CFD5700CDCC6F /* citizenbehavior.lua in Resources */,
 				36D87CFD18C5BA7800FE8B31 /* tokenball_AI.png in Resources */,
-<<<<<<< HEAD
 				8418C39618D8399D00C8C9B9 /* objective.xml in Resources */,
 				B497C34F1726474F00993475 /* building-menu-bg.png in Resources */,
-=======
->>>>>>> 90b08de2d7d86a259353057ab5dab3333b7bd3c2
 				84EDD26D18C6EF0C003BAF5E /* happyFace.png in Resources */,
 				36D87CFA18C5BA7800FE8B31 /* tokenball_REN.png in Resources */,
 				B4B0148517389F540071E59F /* demolish.png in Resources */,
