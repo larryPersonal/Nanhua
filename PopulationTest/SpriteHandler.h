@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "Sprite.h"
+#include <vector.h>
 
 class SpriteHandler
 {
@@ -20,6 +21,8 @@ private:
     float cumulatedTime;
     float cumulatedTime_energy;
 public:
+    CCArray* allSpriteClass;
+    
     ~SpriteHandler();
     
     CCArray* tokensOnMap;
@@ -39,10 +42,11 @@ public:
     CCArray* localsOnMap;
     
     
-    GameSprite* getSpriteByType(SpriteType type);
+    GameSprite* getSpriteByVillagerClass(VillagerClass villagerClass);
+    SpriteClass* getSpriteClassByVillagerClass(VillagerClass);
     
     GameSprite* getSpriteTemplate(const char* classname, char gender, char race);
-    void addSpriteToMap(CCPoint &tilePos, SpriteType type);
+    void addSpriteToMap(CCPoint &tilePos, VillagerClass);
     void loadSpriteToMap(CCPoint &tilePos, GameSprite* sp, std::string details);
     
     void removeSpriteFromMap(GameSprite *sprite);

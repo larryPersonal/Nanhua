@@ -252,7 +252,7 @@ void SelectPopulation::createMenuItems()
         {
             GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
             
-            if(building->isCurrentConstructing || (!building->isCurrentConstructing && (gs->type == M_CITIZEN || gs->type == F_CITIZEN)))
+            if(building->isCurrentConstructing || (!building->isCurrentConstructing && gs->villagerClass == V_CITIZEN))
             {
                 SpriteRow* sp = SpriteRow::create((GameSprite*) spritesForSelection->objectAtIndex(i), scrollArea, building, index);
                 spriteRowArray->addObject((CCObject*) sp);
@@ -435,7 +435,7 @@ void SelectPopulation::scheduleGuardTower()
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
         // must change sprite first because the information for assigning will be lost if change sprite at last.
-        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_SOLDIER, F_SOLDIER));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
         
         gameSprite->nextAction = GUARD;
         
@@ -456,7 +456,7 @@ void SelectPopulation::scheduleConstruction()
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
         // must change sprite first because the information for assigning will be lost if change sprite at last.
-        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_BUILDER, F_BUILDER));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_BUILDER));
         
         gameSprite->nextAction = BUILD;
         
@@ -479,7 +479,7 @@ void SelectPopulation::scheduleFarming()
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
         // must change sprite first because the information for assigning will be lost if change sprite at last.
-        gameSprite->ChangeSpriteTo(GlobalHelper::getSpriteType(gameSprite, M_FARMER, F_FARMER));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_FARMER));
         
         gameSprite->nextAction = FARMING;
         

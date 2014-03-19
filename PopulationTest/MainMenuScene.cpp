@@ -117,7 +117,7 @@ bool MainMenuScene::init()
     this->addChild(backgroundDeco2, 0);
     
 
-      SoundtrackManager::PlayBGM("Tikopia.mp3");
+    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
     
     return true;
 }

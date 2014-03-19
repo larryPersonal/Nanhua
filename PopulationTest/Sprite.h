@@ -26,13 +26,9 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
-enum SpriteType { M_REFUGEE = 0, F_REFUGEE,
-                M_CITIZEN, F_CITIZEN,
-                M_BUILDER, F_BUILDER,
-                M_FARMER, F_FARMER,
-                M_SOLDIER, F_SOLDIER,
-                M_BANDIT, F_BANDIT,
-                SPRITETYPE_END = 12};
+enum SpriteAppearanceType {
+    M_A_VILLAGER = 0, F_A_VILLAGER, M_A_YOUNG_VILLAGER, F_A_YOUNG_GIRL, F_A_GIRL, F_A_FARMER, M_A_FARMER, M_A_OLDMAN, M_A_SOLDIER, F_A_SOLDIER, M_A_BANDIT, F_A_BANDIT, SPRITE_APPEARANCE_TYPE_END = 12
+};
 
 
 enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, GET_HOME, GUARD, ROB, ACTION_END = 13};
@@ -41,6 +37,27 @@ enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER = 4 };
 
 enum SpriteCombatState {
     C_IDLE = 0, C_COMBAT, C_ESCAPE = 2
+};
+
+enum VillagerClass {
+    V_REFUGEE = 0, V_CITIZEN, V_FARMER, V_BUILDER, V_SOLDIER, V_BANDIT, V_CLASS_END = 6
+};
+
+class SpriteClass : public CCObject
+{
+public:
+    std::string configContent;
+    std::string defaultContent;
+    std::string targetClass;
+    VillagerClass villagerClass;
+    
+    SpriteClass()
+    {
+        configContent = "";
+        defaultContent = "";
+        targetClass = "";
+        villagerClass = V_REFUGEE;
+    }
 };
 
 class GameSprite: public CCObject
@@ -84,6 +101,9 @@ private:
     float token_drop_rate;
     
 public:
+    SpriteAppearanceType appearanceType;
+    VillagerClass villagerClass;
+    
     GameSprite* enermy;
     
     CCPoint nextTile;
@@ -161,7 +181,6 @@ public:
     
     virtual GameSprite* copyWithZone(CCZone *pZone);
 
-    SpriteType type;
     SpriteAction lastFrameAction;
     SpriteAction currAction;
     SpriteAction nextAction;
@@ -244,7 +263,8 @@ public:
     //destinations shold always be buildings.
     bool isDestinationInRange(int buildingID);
     
-    void ChangeSpriteTo(GameSprite* sp);
+    void changeSpriteTo(GameSprite*);
+    void changeClassTo(SpriteClass*);
     
     // jerry added
     Building* getHome();
