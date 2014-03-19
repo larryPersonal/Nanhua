@@ -20,6 +20,7 @@
 #include "BanditCFG.h"
 
 #include "NameGenerator.h"
+#include "GlobalHelper.h"
 
 #include <json/json.h>
 
@@ -33,13 +34,6 @@ SpriteHandler::~SpriteHandler()
     
     allSpriteSheets->removeAllObjects();
     CC_SAFE_RELEASE(allSpriteSheets);
-    
-    
-    aliensOnMap->removeAllObjects();
-    CC_SAFE_RELEASE(aliensOnMap);
-    
-    localsOnMap->removeAllObjects();
-    CC_SAFE_RELEASE(localsOnMap);
     
     for (int i = 0; i < spritesOnMap->count(); ++i)
     {
@@ -58,7 +52,6 @@ SpriteHandler::~SpriteHandler()
     CC_SAFE_RELEASE(allClassRequirements);
     
     CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
-    
 }
 
 void SpriteHandler::initialize()
@@ -79,13 +72,6 @@ void SpriteHandler::initialize()
     
     spritesOnMap = CCArray::create();
     spritesOnMap->retain();
-    
-    
-    aliensOnMap = CCArray::create();
-    aliensOnMap->retain();
-    
-    localsOnMap = CCArray::create();
-    localsOnMap->retain();
     
     allSpriteClass = CCArray::create();
     allSpriteClass->retain();
@@ -210,13 +196,6 @@ void SpriteHandler::initialize()
                 break;
         }
         
-        /*
-        if(i == 7)
-        {
-            continue;
-        }
-        */
-        
         configContent = refugeeConfig;
         defaultContent = refugeeDefaults;
         targetClass = "refugee";
@@ -309,10 +288,11 @@ void SpriteHandler::initialize()
 void SpriteHandler::AddToCache(cocos2d::CCSpriteBatchNode *spritesheet, std::string animName)
 {
     std::string plistName = animName + ".plist";
-   
-    
 }
 
+/*
+ * Only refugee and bandits can be added to the game without having a house.
+ */
 GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
 {
     //return NULL;
@@ -327,11 +307,17 @@ GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
     }
     
     vector<int> idList = vector<int>();
+    VillagerClass searchClass = V_REFUGEE;
+    
+    if(villagerClass == V_BANDIT)
+    {
+        searchClass = V_BANDIT;
+    }
     
     for(int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-        if(gs->villagerClass == villagerClass)
+        if(gs->villagerClass == searchClass)
         {
             idList.push_back(i);
         }
@@ -346,67 +332,10 @@ GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
     return (GameSprite*) allSprites->objectAtIndex(idList.at(temp));
 }
 
-SpriteClass* SpriteHandler::getSpriteClassByVillagerClass(VillagerClass villagerClass)
-{
-    if (!allSpriteClass)
-    {
-        return NULL;
-    }
-    
-    if(allSpriteClass->count() == 0)
-    {
-        return NULL;
-    }
-    
-    for (int i = 0; i < allSpriteClass->count(); i++)
-    {
-        SpriteClass* sc = (SpriteClass*) allSpriteClass->objectAtIndex(i);
-        if(sc->villagerClass == villagerClass)
-        {
-            return sc;
-        }
-    }
-    return NULL;
-}
-
-GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender, char race)
-{
-    if (!allSprites) return NULL;
-    if (allSprites->count() == 0) return NULL;
-    
-    /*
-    if (strcmp(classname, "chief") == 0)
-    {
-        if (race == 'a')
-            return getSpriteByType(ALIEN_CHIEF);
-        else
-            return getSpriteByType(MAYAN_CHIEF);
-    }
-    else
-    {
-        GameSprite* currsprite;
-
-        for (int i = 0; i < allSprites->count(); ++i)
-        {
-            currsprite = (GameSprite*)allSprites->objectAtIndex(i);
-            if (currsprite->spriteClass.compare(classname) == 0 &&
-                currsprite->gender == gender &&
-                currsprite->race == race)
-                return currsprite;
-        }
-        
-        return NULL;
-    }*/
-    
-    return NULL;
-}
-
-
-
 void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass villagerClass)
 {
     GameSprite* targetSprite = getSpriteByVillagerClass(villagerClass);
-    SpriteClass* spriteClass = getSpriteClassByVillagerClass(villagerClass);
+    SpriteClass* spriteClass = GlobalHelper::getSpriteClassByVillagerClass(villagerClass);
     
     if (!targetSprite) return;
     
@@ -488,14 +417,8 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
                // ((Job*)newSprite->getPossessions()->jobLocation->getJobsAvailable()->objectAtIndex(newSprite->getPossessions()->jobIndex))->signUpJob();
                 
             }*/
-            
-            
         }
-        
-        
-        
     }
-    
     
     spritesOnMap->addObject(newSprite);
     
@@ -504,83 +427,12 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
 
 void SpriteHandler::removeSpriteFromMap(GameSprite* sprite)
 {
-    if (sprite->race == 'a')
-        aliensOnMap->removeObject(sprite);
-    else
-        localsOnMap->removeObject(sprite);
-    
     spritesOnMap->removeObject(sprite);
-    
-    
-    
     
     //Order of execution! 
     GameHUD::getThis()->onSpriteRemovedFromMap(sprite);
     sprite->unmakeSprite();
     sprite->release();
-    
-}
-
-/*When a new job location is created, all sprites with an unsuitable job quits and tries to find a new job.*/
-//disabled, handled in AI
-void SpriteHandler::NewJobLocationCreated()
-{
-   /*
-    GameSprite* sp = NULL;
-    for (int i = 0; i < spritesOnMap->count(); ++i)
-    {
-        sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-        if (sp->getPossessions()->hasJob)
-        {
-        
-            if (sp->getPossessions()->jobClass.compare(sp->spriteClass) != 0)
-                sp->QuitJob();
-        }
-    }*/
-}
-
-/*when a new house is created, all sprites with an overpopulated house tries to buy a new house.*/
-//disabled, handled in AI
-
-void SpriteHandler::NewHousingLocationCreated()
-{
-/*
-    GameSprite* sp = NULL;
-    for (int i = 0; i < spritesOnMap->count(); ++i)
-    {
-        sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-        
-        if (sp->getPossessions()->hasHouse)
-        {
-            sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-            if (sp->getPossessions()->homeLocation->isOverpopulated())
-                sp->SellHouse();
-            
-        }
-    }*/
-    
-}
-
-int SpriteHandler::getRank(std::string spriteclass)
-{
-    /*
-    if (spriteclass.compare("farmer") ==0|| spriteclass.compare("citizen") == 0) return 0;
-    if (spriteclass.compare("merchant")==0 || spriteclass.compare("researcher") == 0) return 1;
-    if (spriteclass.compare("warrior") ==0) return 2;
-    if (spriteclass.compare("chief")==0) return 3;
-    */
-    
-    //Rank doesn't matter anymore.
-    return 0;
-}
-
-
-
-int SpriteHandler::getAlienCount()
-{
-
-    
-    return aliensOnMap->count();
 }
 
 // Artificial Intelligence Included

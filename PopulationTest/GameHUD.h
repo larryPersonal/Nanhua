@@ -140,9 +140,11 @@ public:
     // objective menu group
     CCSprite* objectiveMenu;
     CCMenuItemImage* objectiveButton;
-    CCLabelTTF* objectiveTitle;
     CCArray* menuItems_objective;
     CCMenu* menu_objective;
+    
+    CCLabelTTF* objectiveTitle;
+    CCArray* objectiveStrs;
     
     // build menu group
     CCMenuItemImage* buildButton;

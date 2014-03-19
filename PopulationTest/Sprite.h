@@ -263,7 +263,7 @@ public:
     //destinations shold always be buildings.
     bool isDestinationInRange(int buildingID);
     
-    void changeSpriteTo(GameSprite*);
+    void changeSpriteTo(GameSprite*, SpriteClass*);
     void changeClassTo(SpriteClass*);
     
     // jerry added

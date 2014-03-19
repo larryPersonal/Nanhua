@@ -12,6 +12,7 @@
 #include "GameHUD.h"
 #include "InfoMenu.h"
 #include "BuildingInfoMenu.h"
+#include "GlobalHelper.h"
 #include <iterator>
 
 Building::Building()
@@ -327,10 +328,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         // if the farming process not finished!
         if(!isCurrentHarvest && farmState == FARM && currentStorage <= 0)
         {
-            // a farmer will never quit a farming job naturally
-            //int workval = sp->getPossessions()->PerformTask();
-            
-            // workval > 0 means the farming process is successful, so update the farming scale and the energy scale
+            // if the sprite still has energy to do farming task
             if(sp->getPossessions()->energyRating >= 0)
             {
                 sp->setCumulativeTime(sp->getCumulativeTime() + dt);
@@ -530,6 +528,13 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 // TODO::because the house is not sprite's home, so the spirte still does not have been recharged, to have enough energy to do other tasks, it needs to be recharged first, so try to find his home in other place, if no home, just wander around....
                 leaveHouse(sp);
             }
+        }
+    }
+    else if (buildingType == MILITARY && sp->currAction == GUARD)
+    {
+        if(sp->villagerClass == V_CITIZEN)
+        {
+            sp->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(sp, V_SOLDIER), GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
         }
     }
     else

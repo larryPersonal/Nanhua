@@ -156,6 +156,21 @@ SpriteClass* GlobalHelper::getSpriteClassByVillagerClass(VillagerClass villagerC
     return NULL;
 }
 
+GameSprite* GlobalHelper::getSpriteByVillagerClass(GameSprite* gameSprite, VillagerClass villagerClass)
+{
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
+    bool isMale = (gameSprite->gender == 'm');
+    for (int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+        if (gs->villagerClass == villagerClass && (isMale == (gs->gender == 'm')))
+        {
+            return gs;
+        }
+    }
+    return NULL;
+}
+
 
 
 

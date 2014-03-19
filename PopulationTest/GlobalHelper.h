@@ -42,6 +42,7 @@ public:
     static bool isHorizontal();
     
     static SpriteClass* getSpriteClassByVillagerClass(VillagerClass villagerClass);
+    static GameSprite* getSpriteByVillagerClass(GameSprite*, VillagerClass);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

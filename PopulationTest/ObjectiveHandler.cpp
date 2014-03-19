@@ -26,9 +26,7 @@ void ObjectiveHandler::loadObjective()
     objectives->removeAllObjects();
     objectives->release();
     
-    ObjectiveManager* om = new ObjectiveManager();
-    om->parseXMLFile("objective.xml");
+    //objectiveManager->parseXMLFile("objective.xml");
     
-    objectives = om->objectives;
-    delete om;
+    //objectives = objectiveManager->objectives;
 }

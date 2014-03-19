@@ -1415,7 +1415,6 @@ void GameSprite::updateSprite(float dt)
                 
                 if(!isMoving)
                 {
-                    CCLog("test4");
                     stopAction = false;
                     isMoving = true;
                     GoLocation(nearestTarget, false);
@@ -2050,16 +2049,16 @@ bool GameSprite::isDestinationInRange(int destinationID)
 
 /*changes the gamesprite's appearance.*/
 /*does not change stats.*/
-void GameSprite::changeSpriteTo(GameSprite *sp)
+void GameSprite::changeSpriteTo(GameSprite *sp, SpriteClass* sc)
 {
-    villagerClass = sp->villagerClass;
+    villagerClass = sc->villagerClass;
     batchLayerIndex = sp->batchLayerIndex;
     idleFrameCount = sp->idleFrameCount;
     walkingFrameCount = sp->walkingFrameCount;
     spriteName = sp->spriteName;
-    spriteClass = sp->spriteClass;
-    config_doc = sp->config_doc;
-    defaults_doc = sp->defaults_doc;
+    spriteClass = sc->targetClass;
+    config_doc = sc->configContent;
+    defaults_doc = sc->defaultContent;
     
     bool parsingSuccessful = reader.parse(defaults_doc, defaultsRoot);
     
@@ -2077,7 +2076,21 @@ void GameSprite::changeSpriteTo(GameSprite *sp)
 
 void GameSprite::changeClassTo(SpriteClass* sc)
 {
+    config_doc = sc->configContent;
+    defaults_doc = sc->defaultContent;
+    spriteClass = sc->targetClass;
+    villagerClass = sc->villagerClass;
     
+    bool parsingSuccessful = reader.parse(defaults_doc, defaultsRoot);
+    
+    if (!parsingSuccessful)
+    {
+        std::cout  << "Failed to parse defaults doc\n" << reader.getFormatedErrorMessages() << std::endl;
+    }
+    else
+    {
+        loadClassPossessions();
+    }
 }
 
 void GameSprite::ReplaceSpriteRep()
@@ -2245,13 +2258,7 @@ void GameSprite::setIsFollowingMovementInstruction(bool flag)
 
 void GameSprite::changeToCitizen()
 {
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
-    bool isMale = (gender == 'm');
-    for (int i = 0; i < allSprites->count(); i++)
-    {
-        GameSprite* sprite = (GameSprite*)allSprites->objectAtIndex(i);
-        changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
-    }
+    changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
 }
 
 void GameSprite::setTargetLocation(Building* b)
