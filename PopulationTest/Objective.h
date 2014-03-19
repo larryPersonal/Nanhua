@@ -32,6 +32,7 @@ public:
     int reputationReward;
     
     bool active;
+    bool complete;
     
     vector<int> preConditions;
     
@@ -40,6 +41,8 @@ public:
     
     Objective();
     ~Objective();
+    
+    std::string getObjectiveString();
 };
 
 #endif

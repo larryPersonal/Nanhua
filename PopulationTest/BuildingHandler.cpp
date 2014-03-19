@@ -25,6 +25,7 @@ BuildingHandler::BuildingHandler()
     educationOnMap = NULL;
     socialOnMap = NULL;
     specialOnMap = NULL;
+    decorationOnMap = NULL;
     
     housingGhostOnMap = NULL;
     granaryGhostOnMap = NULL;
@@ -34,6 +35,7 @@ BuildingHandler::BuildingHandler()
     educationGhostOnMap = NULL;
     socialGhostOnMap = NULL;
     specialGhostOnMap = NULL;
+    decorationGhostOnMap = NULL;
 }
 
 BuildingHandler::~BuildingHandler()
@@ -46,6 +48,7 @@ BuildingHandler::~BuildingHandler()
     educationOnMap->removeAllObjects();
     socialOnMap->removeAllObjects();
     specialOnMap->removeAllObjects();
+    decorationOnMap->removeAllObjects();
     
     housingOnMap->release();
     amenityOnMap->release();
@@ -55,6 +58,7 @@ BuildingHandler::~BuildingHandler()
     educationOnMap->release();
     socialOnMap->release();
     specialOnMap->release();
+    CC_SAFE_RELEASE(decorationOnMap);
     
     housingGhostOnMap->removeAllObjects();
     granaryGhostOnMap->removeAllObjects();
@@ -64,6 +68,7 @@ BuildingHandler::~BuildingHandler()
     educationGhostOnMap->removeAllObjects();
     socialGhostOnMap->removeAllObjects();
     specialGhostOnMap->removeAllObjects();
+    decorationGhostOnMap->removeAllObjects();
     
     CC_SAFE_RELEASE(housingGhostOnMap);
     CC_SAFE_RELEASE(granaryGhostOnMap);
@@ -73,6 +78,7 @@ BuildingHandler::~BuildingHandler()
     CC_SAFE_RELEASE(educationGhostOnMap);
     CC_SAFE_RELEASE(socialGhostOnMap);
     CC_SAFE_RELEASE(specialGhostOnMap);
+    CC_SAFE_RELEASE(decorationGhostOnMap);
     
     if (allBuildingsOnMap)
     {
@@ -474,6 +480,10 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                             {
                                 b->buildingType = SPECIAL;
                             }
+                            if (type == "decoration")
+                            {
+                                b->buildingType = DECORATION;
+                            }
                             if (type == "")
                                 b->buildingType = BUILDINGCATEGORYMAX;
                         
@@ -605,6 +615,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     educationOnMap= CCArray::create();
     socialOnMap= CCArray::create();
     specialOnMap= CCArray::create();
+    decorationOnMap = CCArray::create();
     
     housingOnMap->retain();
     granaryOnMap->retain();
@@ -614,6 +625,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     educationOnMap->retain();
     socialOnMap->retain();
     specialOnMap->retain();
+    decorationOnMap->retain();
     
     housingGhostOnMap = CCArray::create();
     granaryGhostOnMap = CCArray::create();
@@ -623,6 +635,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     educationGhostOnMap = CCArray::create();
     socialGhostOnMap = CCArray::create();
     specialGhostOnMap = CCArray::create();
+    decorationGhostOnMap = CCArray::create();
     
     housingGhostOnMap->retain();
     granaryGhostOnMap->retain();
@@ -632,6 +645,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     educationGhostOnMap->retain();
     socialGhostOnMap->retain();
     specialGhostOnMap->retain();
+    decorationGhostOnMap->retain();
 }
 
 void BuildingHandler::addBuildingToMap(Building *b)
@@ -675,8 +689,10 @@ void BuildingHandler::addBuildingToMap(Building *b)
         case SPECIAL:
             specialOnMap->addObject(b);
             break;
+        case DECORATION:
+            decorationOnMap->addObject(b);
         default:
-            specialOnMap->addObject(b);
+            decorationOnMap->addObject(b);
             break;
     }
     allBuildingsOnMap->addObject(b);
@@ -718,8 +734,10 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
         case SPECIAL:
             specialOnMap->removeObject(b);
             break;
+        case DECORATION:
+            decorationOnMap->removeObject(b);
         default:
-            specialOnMap->removeObject(b);
+            decorationOnMap->removeObject(b);
             break;
     }
     allBuildingsOnMap->removeObject(b);

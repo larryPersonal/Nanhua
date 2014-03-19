@@ -435,7 +435,7 @@ void SelectPopulation::scheduleGuardTower()
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
         
         // must change sprite first because the information for assigning will be lost if change sprite at last.
-        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
+        //gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
         
         gameSprite->nextAction = GUARD;
         

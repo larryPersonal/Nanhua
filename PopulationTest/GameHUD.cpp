@@ -14,6 +14,7 @@
 #include "TutorialHandler.h"
 #include "GlobalHelper.h"
 #include "MainMenuScene.h"
+#include "Objective.h"
 
 GameHUD* GameHUD::SP;
 
@@ -55,6 +56,9 @@ GameHUD::GameHUD()
     isThisTapCounted = false;
     
     startWar = false;
+    
+    objectiveStrs = CCArray::create();
+    objectiveStrs->retain();
 }
 
 GameHUD::~GameHUD()
@@ -68,6 +72,9 @@ GameHUD::~GameHUD()
     menuItems_build->release();
     menuItems_objective->release();
     menuItems_pause->release();
+    
+    objectiveStrs->removeAllObjects();
+    CC_SAFE_RELEASE(objectiveStrs);
 
     GameHUD::SP = NULL;
 }
@@ -827,8 +834,33 @@ void GameHUD::createObjectiveMenu()
         menu_objective->setPosition(ccp(40, screenSize.height - 305));
     }
     
+    // create the objective title and objective strings!
+    stringstream ss;
+    ss << "Objective";
+    objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    objectiveTitle->setAnchorPoint(ccp(0.5, 0));
+    objectiveTitle->setPosition(ccp(objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 220));
+    
+    /*
+    CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectiveManager->objectives;
+    ss.str(string());
+    ss << allObjectives->count() << " ******************";
+    CCLog(ss.str().c_str());
+    for (int i = 0; i < allObjectives->count(); i++)
+    {
+        Objective* objective = (Objective*) allObjectives->objectAtIndex(i);
+        std::string objectiveStr = objective->getObjectiveString();
+        CCLabelTTF* tempLabel = CCLabelTTF::create(objectiveStr.c_str(), "Shojumaru-Regular", 16, CCSizeMake(objectiveStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        tempLabel->setAnchorPoint(ccp(0, 0));
+        tempLabel->setPosition(ccp(20.0f, screenSize.height - 240 - 20.0f * i));
+        objectiveStrs->addObject(tempLabel);
+        this->addChild(tempLabel);
+    }
+    */
+    
     this->addChild(menu_objective, 1);
     this->addChild(objectiveMenu, 2);
+    this->addChild(objectiveTitle, 3);
 }
 
 void GameHUD::clickObjectiveButton()

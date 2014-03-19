@@ -27,7 +27,8 @@ enum BuildingCategory {
     EDUCATION,
     SOCIAL,
     SPECIAL,
-    BUILDINGCATEGORYMAX = 8
+    DECORATION,
+    BUILDINGCATEGORYMAX = 9
 };
 
 enum FarmState {

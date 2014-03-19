@@ -28,6 +28,12 @@ GameScene::GameScene()
 {
     screenCenter = CCNode::create();
     mapHandler = new MapHandler();
+    objectiveHandler = new ObjectiveHandler();
+    objectiveHandler->loadObjective();
+    
+    stringstream ss;
+    ss << "***************" << objectiveHandler->objectives->count() << "****************";
+    CCLog(ss.str().c_str());
     
     _currentTime = 0;
     _previousTime = 0;
@@ -176,7 +182,6 @@ void GameScene::setupScene()
         constructionHandler = new ConstructionHandler();
     
     banditsAttackHandler = new BanditsAttackHandler();
-    objectiveHandler = new ObjectiveHandler();
     
     initOrientationChange();
 }

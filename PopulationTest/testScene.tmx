@@ -29,7 +29,7 @@
     <property name="req_population" value="15"/>
     <property name="research_cost" value="300"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="2000"/>
+    <property name="storage_limit" value="50"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value="0"/>
@@ -73,7 +73,7 @@
     <property name="req_population" value="15"/>
     <property name="research_cost" value="300"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="2000"/>
+    <property name="storage_limit" value="50"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value="0"/>
@@ -107,7 +107,7 @@
     <property name="req_population" value="15"/>
     <property name="research_cost" value="300"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="2000"/>
+    <property name="storage_limit" value="50"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value="0"/>
@@ -136,7 +136,7 @@
     <property name="req_population" value="15"/>
     <property name="research_cost" value="300"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="2000"/>
+    <property name="storage_limit" value="50"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value="0"/>
@@ -211,7 +211,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="3000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="special"/>
+    <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
     <property name="description" value="Brick city wall"/>
     <property name="food_consumption_rate" value="0"/>
@@ -240,7 +240,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="5000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="special"/>
+    <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
     <property name="description" value="brick gate in city wall"/>
     <property name="food_consumption_rate" value="0"/>
@@ -286,7 +286,7 @@
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="storage" value="50"/>
-    <property name="storage_limit" value="200"/>
+    <property name="storage_limit" value="500"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value=""/>

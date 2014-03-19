@@ -122,6 +122,10 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     {
         GameScene::getThis()->buildingHandler->specialGhostOnMap->addObject(building);
     }
+    else if(building->buildingType == DECORATION)
+    {
+        GameScene::getThis()->buildingHandler->decorationGhostOnMap->addObject(building);
+    }
 }
 
 void ConstructionHandler::removeConstructingBuilding(Building *building)
@@ -160,7 +164,10 @@ void ConstructionHandler::removeConstructingBuilding(Building *building)
     {
         GameScene::getThis()->buildingHandler->specialGhostOnMap->removeObject(building);
     }
-
+    else if(building->buildingType == DECORATION)
+    {
+        GameScene::getThis()->buildingHandler->decorationGhostOnMap->removeObject(building);
+    }
 }
 
 void ConstructionHandler::completeConstructingBuilding(Building* building)
@@ -211,6 +218,11 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     {
         GameScene::getThis()->buildingHandler->specialGhostOnMap->removeObject(building);
         GameScene::getThis()->buildingHandler->specialOnMap->addObject(building);
+    }
+    else if(building->buildingType == DECORATION)
+    {
+        GameScene::getThis()->buildingHandler->decorationGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->decorationOnMap->addObject(building);
     }
 
 }

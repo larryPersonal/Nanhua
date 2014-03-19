@@ -300,12 +300,12 @@ void GameManager::loadGameData()
                         buffer = "";
                       
                     }
-                    GameSprite* sp = GameScene::getThis()->spriteHandler->getSpriteTemplate(tokens[0].c_str(), tokens[1].c_str()[0], tokens[2].c_str()[0]);
-                    if (sp != NULL)
-                    {
-                        CCPoint target = ccp(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
-                        GameScene::getThis()->spriteHandler->loadSpriteToMap(target, sp, tokens[5]);
-                    }
+                    //GameSprite* sp = GameScene::getThis()->spriteHandler->getSpriteTemplate(tokens[0].c_str(), tokens[1].c_str()[0], tokens[2].c_str()[0]);
+                    //if (sp != NULL)
+                    //{
+                        //CCPoint target = ccp(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
+                        //GameScene::getThis()->spriteHandler->loadSpriteToMap(target, sp, tokens[5]);
+                    //}
                     
                     
                 }
