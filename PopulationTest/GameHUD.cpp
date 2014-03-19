@@ -658,7 +658,7 @@ void GameHUD::createTimeMenu()
     bool isHori = GlobalHelper::isHorizontal();
     
     // create the time group background
-    string timeBackground = "time_spring-bg.png";
+    string timeBackground = "timeclock.png";
     timeMenu = CCSprite::create(timeBackground.c_str());
     CCSize spriteSize = timeMenu->getContentSize();
     if(isHori)
@@ -745,7 +745,7 @@ void GameHUD::createTimeMenu()
     // display the date in the time menu
     std::stringstream ss;
     ss << "Year: " << (date->year + 1);
-    timeLabel_1 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    timeLabel_1 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     timeLabel_1->setColor(colorBlack);
     timeLabel_1->setAnchorPoint(ccp(0.5, 1));
     this->addChild(timeLabel_1, 2);
@@ -760,7 +760,7 @@ void GameHUD::createTimeMenu()
     
     ss.str(std::string());
     ss << "Month: " << (date->month + 1);
-    timeLabel_2 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    timeLabel_2 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     timeLabel_2->setColor(colorBlack);
     timeLabel_2->setAnchorPoint(ccp(0.5, 1));
     this->addChild(timeLabel_2, 2);
