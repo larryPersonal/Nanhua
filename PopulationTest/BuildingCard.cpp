@@ -61,7 +61,7 @@ void BuildingCard::init()
     // display the name of the building
     //std::stringstream ss;
     //ss << building->buildingName;
-    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Shojumaru-Regular", 20, CCSizeMake(buildingname.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Shojumaru-Regular", 16, CCSizeMake(buildingname.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     buildingNameLabel->setColor(colorBlack);
     buildingNameLabel->setAnchorPoint(ccp(0.5, 1));
     
@@ -127,7 +127,7 @@ void BuildingCard::init()
         ss << building->buildingCost;
         buildingcost = ss.str();
     }
-    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 20, CCSizeMake(buildingcost.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 12, CCSizeMake(buildingcost.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     costLabel->setColor(colorBlack);
     costLabel->setAnchorPoint(ccp(0, 1));
     
@@ -144,7 +144,7 @@ void BuildingCard::init()
         ss << building->populationLimit;
         populationLimit = ss.str();
     }
-    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 20, CCSizeMake(populationLimit.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 12, CCSizeMake(populationLimit.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     populationLabel->setColor(colorBlack);
     populationLabel->setAnchorPoint(ccp(0, 1));
     
@@ -161,19 +161,32 @@ void BuildingCard::init()
         ss << building->build_uint_required;
         buildTime = ss.str();
     }
-    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Shojumaru-Regular", 20, CCSizeMake(buildTime.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Shojumaru-Regular", 12, CCSizeMake(buildTime.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     buildingTimeLabel->setColor(colorBlack);
     buildingTimeLabel->setAnchorPoint(ccp(0, 1));
     
-    scrollArea->addItem(buildingNameLabel, ccp(60.0f + 200.0f * index, 15.0f));
-    scrollArea->addItem(buildingInfoButton, ccp(180.0f + 200.0f * index, 10.0f));
-    scrollArea->addItem(menu, ccp(60.0f + 200.0f * index, 40.0f));
-    scrollArea->addItem(costImage, ccp(20.0f + 200.0f * index, 190.0f));
-    scrollArea->addItem(costLabel, ccp(50.0f + 200.0f * index, 195.0f));
-    scrollArea->addItem(populationImage, ccp(100.0f + 200.0f * index, 190.0f));
-    scrollArea->addItem(populationLabel, ccp(130.0f + 200.0f * index, 195.0f));
-    scrollArea->addItem(buildingTimeImage, ccp(150.0f + 200.0f * index, 190.0f));
-    scrollArea->addItem(buildingTimeLabel, ccp(180.0f + 200.0f * index, 195.0f));
+    
+    cardBG = CCSprite::create("house_btn.png");
+    cardBG->setScaleY(18.0f / buildingInfoButton->boundingBox().size.width);
+    cardBG->setScaleX(22.0f / buildingInfoButton->boundingBox().size.width);
+    
+    cardDetailBG = CCSprite::create("housedetail.png");
+    cardDetailBG->setScaleY(20.0f / buildingInfoButton->boundingBox().size.width);
+    cardDetailBG->setScaleX(22.0f / buildingInfoButton->boundingBox().size.width);
+    
+    
+    scrollArea->addItem(cardBG, ccp(200.0f * index, 0.0f));
+    scrollArea->addItem(cardDetailBG, ccp(3.f + 200.0f * index, 145.0f));
+
+    scrollArea->addItem(buildingNameLabel, ccp(20.0f + 200.0f * index, 5.0f));
+    scrollArea->addItem(buildingInfoButton, ccp(160.0f + 200.0f * index, 0.0f));
+    scrollArea->addItem(menu, ccp(40.0f + 200.0f * index, 10.0f));
+    scrollArea->addItem(costImage, ccp(10.0f + 200.0f * index, 145.0f));
+    scrollArea->addItem(costLabel, ccp(40.0f + 200.0f * index, 150.0f));
+    scrollArea->addItem(populationImage, ccp(80.0f + 200.0f * index, 145.0f));
+    scrollArea->addItem(populationLabel, ccp(110.0f + 200.0f * index, 150.0f));
+    scrollArea->addItem(buildingTimeImage, ccp(130.0f + 200.0f * index, 145.0f));
+    scrollArea->addItem(buildingTimeLabel, ccp(160.0f + 200.0f * index, 150.0f));
 }
 
 void BuildingCard::refreshAllMenuItems()
@@ -201,18 +214,24 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             GameHUD::getThis()->setTapMode(3);
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu();
+            GameHUD::getThis()->buildButton->setVisible(true);
+            GameHUD::getThis()->buildScroll = NULL;
         }
             break;
         case -2 : //unbuild path
         {
             GameHUD::getThis()->setTapMode(4);
             BuildScroll::getThis()->closeMenu();
+            GameHUD::getThis()->buildButton->setVisible(true);
+            GameHUD::getThis()->buildScroll = NULL;
         }
             break;
         case -3: //destory building
         {
             //I'll need to set tap mode to demolish.
             BuildScroll::getThis()->closeMenu();
+            GameHUD::getThis()->buildButton->setVisible(true);
+            GameHUD::getThis()->buildScroll = NULL;
         }
         default:
         {
@@ -228,6 +247,39 @@ void BuildingCard::tryToBuild(int tag)
     if(buildingToBuy == NULL)
     {
         return;
+    }
+    
+    BuildingCategory type = buildingToBuy->buildingType;
+    int level = GameManager::getThis()->town_hall_level;
+    
+    if(type == HOUSING)
+    {
+        if(GameScene::getThis()->buildingHandler->housingOnMap->count() + GameScene::getThis()->buildingHandler->housingGhostOnMap->count() >= GameManager::getThis()->housingLimitation->housing_limits.at(level))
+        {
+            // alert player that the number of buildings has reached the limitation.
+            return;
+        }
+    }
+    else if(type == GRANARY)
+    {
+        if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
+        {
+            return;
+        }
+    }
+    else if(type == AMENITY)
+    {
+        if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
+        {
+            return;
+        }
+    }
+    else if(type == MILITARY)
+    {
+        if(GameScene::getThis()->buildingHandler->militaryOnMap->count() + GameScene::getThis()->buildingHandler->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
+        {
+            return;
+        }
     }
     
     if(GameHUD::getThis()->money > buildingToBuy->buildingCost)

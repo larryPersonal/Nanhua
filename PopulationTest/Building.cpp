@@ -50,7 +50,7 @@ Building::Building()
     
     ID = 0;
     currentExp = 0;
-    currentLevel = 1;
+    currentLevel = 0;
     maintCost = 0;
     
     levelGainVacancy = NULL;
@@ -65,6 +65,7 @@ Building::Building()
     isCurrentConstructing = false;
     isCurrentUpgrading = false;
     isCurrentHarvest = false;
+    isCurrentWorking = false;
     
     required_building_count = required_capita = required_population = 0;
     
@@ -445,14 +446,15 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             else
             // no more food already, job has been completed, quit the job.
             {
-                    sp->currAction = IDLE;
-                    sp->nextAction = IDLE;
-                    sp->setIsDoingJob(false);
-                    sp->spriteClass = "citizen";
-                    sp->setJob(NONE);
-                    sp->setJobLocation(NULL);
-                    sp->setTargetLocation(NULL);
-                    sp->changeToCitizen();
+                isCurrentWorking = false;
+                sp->currAction = IDLE;
+                sp->nextAction = IDLE;
+                sp->setIsDoingJob(false);
+                sp->spriteClass = "citizen";
+                sp->setJob(NONE);
+                sp->setJobLocation(NULL);
+                sp->setTargetLocation(NULL);
+                sp->changeToCitizen();
             }
         }
     }
@@ -785,5 +787,10 @@ void Building::updateBuilding(float dt)
                 isCurrentUpgrading = false;
             }
         }
+    }
+    
+    if(inProgress != (memberSpriteList->count() > 0))
+    {
+        inProgress = (memberSpriteList->count() > 0);
     }
 }

@@ -20,6 +20,9 @@ private:
     Building* building;
     ScrollArea* scrollArea;
     
+    CCSprite* cardBG;
+    CCSprite* cardDetailBG;
+    
     CCLabelTTF* buildingNameLabel;
     CCMenuItemSprite* buildingImage;
     CCMenuItemImage* buildingInfoButton;

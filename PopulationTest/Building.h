@@ -132,6 +132,7 @@ public:
     CCPoint tilePos();
     
     bool isCurrentConstructing;
+    bool isCurrentWorking;
     
     bool isCurrentUpgrading;
     

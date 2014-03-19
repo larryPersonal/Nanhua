@@ -50,6 +50,9 @@ void BanditsAttackHandler::update(float dt)
 void BanditsAttackHandler::addBandit(){
     CCPoint target = CCPointMake(29,33);
     
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_BANDIT);
+
+    /*
     int isMale = rand() % 2;
     
     if(isMale)
@@ -60,6 +63,7 @@ void BanditsAttackHandler::addBandit(){
     {
         GameScene::getThis()->spriteHandler->addSpriteToMap(target, F_BANDIT);
     }
+    */
 }
 
 void BanditsAttackHandler::startWar()
@@ -81,7 +85,7 @@ void BanditsAttackHandler::stopWar()
     for (int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-        if(gs->type == M_BANDIT || gs->type == F_BANDIT)
+        if(gs->villagerClass == V_BANDIT)
         {
             gs->tryEscape = true;
             //gs->escape();

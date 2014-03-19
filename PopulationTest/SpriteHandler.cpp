@@ -23,9 +23,11 @@
 
 #include <json/json.h>
 
-
 SpriteHandler::~SpriteHandler()
 {
+    allSpriteClass->removeAllObjects();
+    CC_SAFE_RELEASE(allSpriteClass);
+    
     tokensOnMap->removeAllObjects();
     CC_SAFE_RELEASE(tokensOnMap);
     
@@ -85,11 +87,14 @@ void SpriteHandler::initialize()
     localsOnMap = CCArray::create();
     localsOnMap->retain();
     
-     int targetIdleF = 0;
+    allSpriteClass = CCArray::create();
+    allSpriteClass->retain();
+    
+    int targetIdleF = 0;
     int targetWalkF = 0;
     
     //here I assume there are 10 enums.
-    for (int i = 0; i < SPRITETYPE_END; ++i )
+    for (int i = 0; i < SPRITE_APPEARANCE_TYPE_END; i++)
     {
         std::string fileName;
         std::string configContent;
@@ -97,6 +102,8 @@ void SpriteHandler::initialize()
         std::string targetClass;
         std::string spriteContent;
         char targetGender;
+        VillagerClass villagerClass;
+        SpriteAppearanceType sat;
         
         //randomly spawn as male or female.
       
@@ -107,134 +114,113 @@ void SpriteHandler::initialize()
         {
             case 0:
                 targetGender = 'm';
-                fileName = "MMR";
-                targetIdleF = 4;
+                fileName = "MaleVillager";
+                targetIdleF = 3;
                 targetWalkF = 4;
-                configContent = refugeeConfig;
-                defaultContent = refugeeDefaults;
-                targetClass = "refugee";
-
+                villagerClass = V_REFUGEE;
+                sat = M_A_VILLAGER;
                 break;
             case 1:
                 targetGender = 'f';
-                fileName = "FMR";
-                targetIdleF = 4;
+                fileName = "FemaleVillager";
+                targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = refugeeConfig;
-                defaultContent = refugeeDefaults;
-                targetClass = "refugee";
+                villagerClass = V_REFUGEE;
+                sat = F_A_VILLAGER;
                 break;
             case 2:
                 targetGender = 'm';
-                fileName = "MMC";
-                targetIdleF = 4;
+                fileName = "MaleYoungVillager";
+                targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = citizenConfig;
-                defaultContent = citizenDefaults;
-                targetClass = "citizen";
+                villagerClass = V_REFUGEE;
+                sat = M_A_YOUNG_VILLAGER;
                 break;
             case 3:
                 targetGender = 'f';
-                fileName = "FMC";
-                targetIdleF = 4;
+                fileName = "YoungGirl";
+                targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = citizenConfig;
-                defaultContent = citizenDefaults;
-                targetClass = "citizen";
+                villagerClass = V_REFUGEE;
+                sat = F_A_YOUNG_GIRL;
                 break;
             case 4:
-                targetGender = 'm';
-                fileName = "MMC";
-                targetIdleF = 4;
+                targetGender = 'f';
+                fileName = "Girl";
+                targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = builderConfig;
-                defaultContent = builderDefaults;
-            
-                targetClass = "builder";
+                villagerClass = V_REFUGEE;
+                sat = F_A_GIRL;
                 break;
             case 5:
                 targetGender = 'f';
-                fileName = "FMC";
-                targetIdleF = 4;
+                fileName = "FemaleFarmer";
+                targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = builderConfig;
-                defaultContent = builderDefaults;
-            
-                targetClass = "builder";
-            
+                villagerClass = V_REFUGEE;
+                sat = F_A_FARMER;
                 break;
-            
             case 6:
                 targetGender = 'm';
-                fileName = "MMF";
+                fileName = "MaleFarmer";
                 targetIdleF = 3;
                 targetWalkF = 4;
-                configContent = farmerConfig;
-                defaultContent = farmerDefaults;
-                targetClass = "farmer";
-            
+                villagerClass = V_REFUGEE;
+                sat = M_A_FARMER;
                 break;
-            
             case 7:
-                targetGender = 'f';
-                fileName = "FMF";
+                targetGender = 'm';
+                fileName = "MaleOldMan";
                 targetIdleF = 3;
                 targetWalkF = 4;
-                configContent = farmerConfig;
-                defaultContent = farmerDefaults;
-                targetClass = "farmer";
-            
+                villagerClass = V_REFUGEE;
+                sat = M_A_OLDMAN;
                 break;
             case 8:
                 targetGender = 'm';
-                fileName = "MMW";
-          
+                fileName = "Soldier";
                 targetIdleF = 3;
                 targetWalkF = 4;
-                
-                configContent = soldierConfig;
-                defaultContent = soldierDefaults;
-                targetClass = "soldier";
-
+                villagerClass = V_SOLDIER;
+                sat = M_A_SOLDIER;
                 break;
             case 9:
                 targetGender = 'f';
                 fileName = "FMW";
                 targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = soldierConfig;
-                defaultContent = soldierDefaults;
-                targetClass = "soldier";
+                villagerClass = V_SOLDIER;
+                sat = F_A_SOLDIER;
                 break;
             case 10:
                 targetGender = 'm';
-                fileName = "MMB";
-            
+                fileName = "MaleBandit";
                 targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = banditConfig;
-                defaultContent = banditDefaults;
-                targetClass = "bandit";
-            
+                villagerClass = V_BANDIT;
+                sat = M_A_BANDIT;
                 break;
             case 11:
                 targetGender = 'f';
-                fileName = "FMB";
+                fileName = "FemaleBandit";
                 targetIdleF = 3;
                 targetWalkF = 4;
-            
-                configContent = banditConfig;
-                defaultContent = banditDefaults;
-                targetClass = "bandit";
+                villagerClass = V_BANDIT;
+                sat = F_A_BANDIT;
                 break;
         }
+        
+        /*
+        if(i == 7)
+        {
+            continue;
+        }
+        */
+        
+        configContent = refugeeConfig;
+        defaultContent = refugeeDefaults;
+        targetClass = "refugee";
+        
         std::string filepath = fileName + ".png";
         std::string plistName = fileName +".plist";
      
@@ -253,12 +239,70 @@ void SpriteHandler::initialize()
         gs->setFrameCount(targetIdleF, targetWalkF);
         gs->batchLayerIndex = i;
         gs->spriteClass = targetClass;
-        gs->type = SpriteType (i);
         gs->setAIConfig(configContent);
         gs->setDefaultsConfig(defaultContent);
+        gs->villagerClass = villagerClass;
+        gs->appearanceType = sat;
         
         allSprites->addObject(gs);
         configContent = "";
+    }
+    
+    for(int i = 0; i < V_CLASS_END; i++)
+    {
+        std::string configContent;
+        std::string defaultContent;
+        std::string targetClass;
+        VillagerClass villagerClass;
+        
+        switch (i)
+        {
+            case 0:
+                configContent = refugeeConfig;
+                defaultContent = refugeeDefaults;
+                targetClass = "refugee";
+                villagerClass = V_REFUGEE;
+                break;
+            case 1:
+                configContent = citizenConfig;
+                defaultContent = citizenDefaults;
+                targetClass = "citizen";
+                villagerClass = V_CITIZEN;
+                break;
+            case 2:
+                configContent = farmerConfig;
+                defaultContent = farmerDefaults;
+                targetClass = "farmer";
+                villagerClass = V_FARMER;
+                break;
+            case 3:
+                configContent = builderConfig;
+                defaultContent = builderDefaults;
+                targetClass = "builder";
+                villagerClass = V_BUILDER;
+                break;
+            case 4:
+                configContent = soldierConfig;
+                defaultContent = soldierDefaults;
+                targetClass = "soldier";
+                villagerClass = V_SOLDIER;
+                break;
+            case 5:
+                configContent = banditConfig;
+                defaultContent = banditDefaults;
+                targetClass = "bandit";
+                villagerClass = V_BANDIT;
+                break;
+            default:
+                break;
+        }
+        
+        SpriteClass* spriteClass = new SpriteClass();
+        spriteClass->configContent = configContent;
+        spriteClass->defaultContent = defaultContent;
+        spriteClass->targetClass = targetClass;
+        spriteClass->villagerClass = villagerClass;
+        allSpriteClass->addObject(spriteClass);
     }
 }
 
@@ -268,19 +312,61 @@ void SpriteHandler::AddToCache(cocos2d::CCSpriteBatchNode *spritesheet, std::str
    
     
 }
-GameSprite* SpriteHandler::getSpriteByType(SpriteType type)
+
+GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
 {
     //return NULL;
-    if (!allSprites) return NULL;
-    if (allSprites->count() == 0) return NULL;
-    
-    for (int i = 0; i < allSprites->count(); ++i)
+    if (!allSprites)
     {
-        GameSprite* tgt = (GameSprite*) allSprites->objectAtIndex(i);
-        if (tgt->type == type) return tgt;
+        return NULL;
+    }
+    
+    if (allSprites->count() == 0)
+    {
+        return NULL;
+    }
+    
+    vector<int> idList = vector<int>();
+    
+    for(int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+        if(gs->villagerClass == villagerClass)
+        {
+            idList.push_back(i);
+        }
+    }
+    
+    if(idList.size() <= 0)
+    {
+        return NULL;
+    }
+    
+    int temp = rand() % idList.size();
+    return (GameSprite*) allSprites->objectAtIndex(idList.at(temp));
+}
+
+SpriteClass* SpriteHandler::getSpriteClassByVillagerClass(VillagerClass villagerClass)
+{
+    if (!allSpriteClass)
+    {
+        return NULL;
+    }
+    
+    if(allSpriteClass->count() == 0)
+    {
+        return NULL;
+    }
+    
+    for (int i = 0; i < allSpriteClass->count(); i++)
+    {
+        SpriteClass* sc = (SpriteClass*) allSpriteClass->objectAtIndex(i);
+        if(sc->villagerClass == villagerClass)
+        {
+            return sc;
+        }
     }
     return NULL;
-    
 }
 
 GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender, char race)
@@ -317,16 +403,20 @@ GameSprite* SpriteHandler::getSpriteTemplate(const char *classname, char gender,
 
 
 
-void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, SpriteType type)
+void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass villagerClass)
 {
-    GameSprite* targetSprite = getSpriteByType(type);
+    GameSprite* targetSprite = getSpriteByVillagerClass(villagerClass);
+    SpriteClass* spriteClass = getSpriteClassByVillagerClass(villagerClass);
     
     if (!targetSprite) return;
     
     GameSprite* newSprite = (GameSprite*)targetSprite->copy();
     newSprite->retain();
     
-    newSprite->defaults_doc = targetSprite->defaults_doc;
+    newSprite->defaults_doc = spriteClass->defaultContent;
+    newSprite->config_doc = spriteClass->configContent;
+    newSprite->spriteClass = spriteClass->targetClass;
+    newSprite->villagerClass = villagerClass;
     
     newSprite->makeSprite(&tilePos);
     
@@ -516,6 +606,27 @@ void SpriteHandler::update(float dt)
         }
         
         cumulatedTime = 0.0f;
+    }
+    
+    /*
+     * The energy of villages will also decay, from 100 to 0.
+     */
+    cumulatedTime_energy += dt;
+    
+    if(cumulatedTime_energy >= 0.1f)
+    {
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            gs->getPossessions()->energyRating -= 0.05f;
+            
+            if(gs->getPossessions()->energyRating < 0)
+            {
+                gs->getPossessions()->energyRating = 0;
+            }
+        }
+        
+        cumulatedTime_energy = 0.0f;
     }
     
     /*

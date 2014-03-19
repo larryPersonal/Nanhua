@@ -79,9 +79,9 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     progressBar->createProgressBar(CCRectMake(0, 0, building->buildingRep->boundingBox().size.width, 20),
                                    CCRectMake(5, 5, building->buildingRep->boundingBox().size.width-10, 10),
                                    "loadingbar-empty.png",
-                                   "loadingbar-left.png",
-                                   "loadingbar-right.png",
-                                   "loadingbar-full.png");
+                                   "NONE",
+                                   "NONE",
+                                   "Energybar.png");
     progressBar->setTag(PROGRESSBAR_TAG);
     building->buildingRep->addChild(progressBar);
     progressBar->setPosition(0, building->buildingRep->boundingBox().size.height);
@@ -90,11 +90,77 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     
     constructingBuildings->addObject(building);
     
+    if(building->buildingType == HOUSING)
+    {
+        GameScene::getThis()->buildingHandler->housingGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == GRANARY)
+    {
+        GameScene::getThis()->buildingHandler->granaryGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == AMENITY)
+    {
+        GameScene::getThis()->buildingHandler->amenityGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == MILITARY)
+    {
+        GameScene::getThis()->buildingHandler->militaryGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == COMMERCE)
+    {
+        GameScene::getThis()->buildingHandler->commerceGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == EDUCATION)
+    {
+        GameScene::getThis()->buildingHandler->educationGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == SOCIAL)
+    {
+        GameScene::getThis()->buildingHandler->socialGhostOnMap->addObject(building);
+    }
+    else if(building->buildingType == SPECIAL)
+    {
+        GameScene::getThis()->buildingHandler->specialGhostOnMap->addObject(building);
+    }
 }
 
 void ConstructionHandler::removeConstructingBuilding(Building *building)
 {
     constructingBuildings->removeObject(building);
+    
+    if(building->buildingType == HOUSING)
+    {
+        GameScene::getThis()->buildingHandler->housingGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == GRANARY)
+    {
+        GameScene::getThis()->buildingHandler->granaryGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == AMENITY)
+    {
+        GameScene::getThis()->buildingHandler->amenityGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == MILITARY)
+    {
+        GameScene::getThis()->buildingHandler->militaryGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == COMMERCE)
+    {
+        GameScene::getThis()->buildingHandler->commerceGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == EDUCATION)
+    {
+        GameScene::getThis()->buildingHandler->educationGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == SOCIAL)
+    {
+        GameScene::getThis()->buildingHandler->socialGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == SPECIAL)
+    {
+        GameScene::getThis()->buildingHandler->specialGhostOnMap->removeObject(building);
+    }
+
 }
 
 void ConstructionHandler::completeConstructingBuilding(Building* building)
@@ -105,6 +171,48 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
  
     GameScene::getThis()->buildingHandler->addBuildingToMap(building);
     constructingBuildings->removeObject(building);
+    
+    if(building->buildingType == HOUSING)
+    {
+        GameScene::getThis()->buildingHandler->housingGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->housingOnMap->addObject(building);
+    }
+    else if(building->buildingType == GRANARY)
+    {
+        GameScene::getThis()->buildingHandler->granaryGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->granaryOnMap->addObject(building);
+    }
+    else if(building->buildingType == AMENITY)
+    {
+        GameScene::getThis()->buildingHandler->amenityGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->amenityOnMap->addObject(building);
+    }
+    else if(building->buildingType == MILITARY)
+    {
+        GameScene::getThis()->buildingHandler->militaryGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->militaryOnMap->addObject(building);
+    }
+    else if(building->buildingType == COMMERCE)
+    {
+        GameScene::getThis()->buildingHandler->commerceGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->commerceOnMap->addObject(building);
+    }
+    else if(building->buildingType == EDUCATION)
+    {
+        GameScene::getThis()->buildingHandler->educationGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->educationOnMap->addObject(building);
+    }
+    else if(building->buildingType == SOCIAL)
+    {
+        GameScene::getThis()->buildingHandler->socialGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->socialOnMap->addObject(building);
+    }
+    else if(building->buildingType == SPECIAL)
+    {
+        GameScene::getThis()->buildingHandler->specialGhostOnMap->removeObject(building);
+        GameScene::getThis()->buildingHandler->specialOnMap->addObject(building);
+    }
+
 }
 
 int ConstructionHandler::getConstructingBuildingCount()

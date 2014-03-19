@@ -49,6 +49,8 @@ GameScene::GameScene()
         default:
             break;
     }
+    
+    isOpenBuildScroll = false;
 }
 
 GameScene::~GameScene()
@@ -174,6 +176,7 @@ void GameScene::setupScene()
         constructionHandler = new ConstructionHandler();
     
     banditsAttackHandler = new BanditsAttackHandler();
+    objectiveHandler = new ObjectiveHandler();
     
     initOrientationChange();
 }
@@ -407,6 +410,21 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         return;
     }
     
+    // since the touch has been detected, close the build scroll window if any
+    if(isOpenBuildScroll)
+    {
+        isOpenBuildScroll = false;
+    }
+    else
+    {
+        if(GameHUD::getThis()->buildScroll)
+        {
+            GameHUD::getThis()->buildScroll->closeMenu();
+            GameHUD::getThis()->buildScroll = NULL;
+            GameHUD::getThis()->buildButton->setVisible(true);
+        }
+    }
+    
     // it's a tap on the screen of the touch device
     int tapMode = GameHUD::getThis()->getTapMode();
     
@@ -452,7 +470,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 if (selectedTile->isPath)
                 {
                     mapHandler->UnPath(tilePos);
-                    GameHUD::getThis()->closeAllMenuAndResetTapMode();
+                    //GameHUD::getThis()->closeAllMenuAndResetTapMode();
                     
                 }
                 
@@ -578,13 +596,13 @@ void GameScene::FirstRunPopulate()
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(25,19);
         
-        spriteHandler->addSpriteToMap(target, M_REFUGEE);
+        spriteHandler->addSpriteToMap(target, V_REFUGEE);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, M_REFUGEE);
+        spriteHandler->addSpriteToMap(target, V_REFUGEE);
         
         target.x += 1;
-        spriteHandler->addSpriteToMap(target, F_REFUGEE);
+        spriteHandler->addSpriteToMap(target, V_REFUGEE);
 
         
     }
@@ -736,7 +754,7 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
             else
             {
                 // in war mode which means bandits attack the village, disable all the popup windows. The only task for player is to tap the bandits to let bandits lose endrance. When endurance is less than 0, bandits will escape.
-                if ((gameSprite->type == F_BANDIT || gameSprite->type == M_BANDIT))
+                if (gameSprite->villagerClass == V_BANDIT)
                 {
                     gameSprite->getPossessions()->current_endurance -= 200;
                     if (gameSprite->getPossessions()->current_endurance <= 0)
@@ -756,7 +774,7 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
 bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
 {
     MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
-    
+    if (selectedTile == NULL) return false;
     // Firstly, check by tile
     if (selectedTile->hasBuilding())
     {

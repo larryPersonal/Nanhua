@@ -12,7 +12,7 @@
 #include <string>
 using namespace std;
 
-#include "Sprite.h"
+#include "SpriteHandler.h"
 #include "cocos2d.h"
 using namespace cocos2d;
 
@@ -41,7 +41,7 @@ public:
     
     static bool isHorizontal();
     
-    static GameSprite* getSpriteType(GameSprite*, SpriteType, SpriteType);
+    static SpriteClass* getSpriteClassByVillagerClass(VillagerClass villagerClass);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

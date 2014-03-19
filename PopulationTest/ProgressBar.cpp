@@ -24,44 +24,62 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     barFillOffsetRect = barOffsetRect;
     
     // GL_TEX_PARAMS for repeating textures
-    ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-    
+   // ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+    CCTexture2D* texture;
+    if (strncmp(bgBodyFileName, "NONE", 4) != 0)
+    {
     // Create bgBody sprite, which is repeated and scaled
-    CCTexture2D* texture = CCTextureCache::sharedTextureCache()->addImage(bgBodyFileName);
-    texture->setTexParameters(&params);
-    bgBody = CCSprite::createWithTexture(texture);
-    bgBody->setAnchorPoint(CCPointZero);
-    bgBody->setContentSize(bgBodyRect.size);
-    bgBody->setTextureRect(CCRectMake(0, 0,
+        texture = CCTextureCache::sharedTextureCache()->addImage(bgBodyFileName);
+        //texture->setTexParameters(&params);
+        bgBody = CCSprite::createWithTexture(texture);
+        bgBody->setAnchorPoint(CCPointZero);
+        bgBody->setContentSize(bgBodyRect.size);
+        bgBody->setTextureRect(CCRectMake(0, 0,
                                       bgBodyRect.size.width * (texture->getPixelsHigh() / bgBodyRect.size.height),
                                       texture->getPixelsHigh()));
-    bgBody->setScale(bgBodyRect.size.height / texture->getPixelsHigh());
+        bgBody->setScale(bgBodyRect.size.height / texture->getPixelsHigh());
+    }
+    else bgBody = NULL;
+    
     
     // Create bgLeft, which is stretched and scaled
+    if (strncmp(bgLeftFileName, "NONE", 4) != 0)
+    {
+        
+    
     bgLeft = CCSprite::create(bgLeftFileName);
     bgLeft->setAnchorPoint(CCPointZero);
     bgLeft->setScale(bgBodyRect.size.height / bgLeft->boundingBox().size.height);
-    
+    }
+    else
+        bgLeft = NULL;
     // Create bgRight, which is stretched and scaled
+    if (strncmp(bgRightFileName, "NONE", 4) != 0)
+    {
+        
     bgRight = CCSprite::create(bgRightFileName);
     bgRight->setAnchorPoint(CCPointZero);
     bgRight->setScale(bgBodyRect.size.height / bgRight->boundingBox().size.height);
-    
+    }
+    else bgRight = NULL;
     // Create barFill, which is repeated and scaled
     texture = CCTextureCache::sharedTextureCache()->addImage(barFileName);
-    texture->setTexParameters(&params);
+   // texture->setTexParameters(&params);
     barFill = CCSprite::createWithTexture(texture);
     barFill->setAnchorPoint(CCPointZero);
-    barFill->setContentSize(barFillOffsetRect.size);
+    
+     barFill->setContentSize(barFillOffsetRect.size);
     barFillTexSize = texture->getContentSizeInPixels();
-    barFill->setScale(barFillOffsetRect.size.height / barFillTexSize.height);
-    barFillScale = barFillTexSize.height / barOffsetRect.size.height;
+   barFill->setScale(barFillOffsetRect.size.height / barFillTexSize.height);
+   barFillScale = barFillTexSize.height / barOffsetRect.size.height;
     
     // Add them to this object
-    this->addChild(bgBody);
-    
-    this->addChild(bgLeft);
-    this->addChild(bgRight);
+    if (bgBody)
+        this->addChild(bgBody);
+    if (bgLeft)
+        this->addChild(bgLeft);
+    if (bgRight)
+        this->addChild(bgRight);
     this->addChild(barFill);
     
     // Initialize
@@ -72,8 +90,11 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
 void ProgressBar::reposition()
 {
     // Set positions relative to this object
+    if (bgBody)
     bgBody->setPosition(this->getPosition());
+    if (bgLeft)
     bgLeft->setPosition(this->getPosition());
+    if (bgRight)
     bgRight->CCNode::setPosition(this->getContentSize().width - bgRight->boundingBox().size.width,
                                  this->getPositionY());
     

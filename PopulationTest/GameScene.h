@@ -19,6 +19,7 @@
 #include "JobCollection.h"
 #include "GameConfig.h"
 #include "BanditsAttackHandler.h"
+#include "ObjectiveHandler.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -53,6 +54,8 @@ public:
     ConfigSettings* configSettings;
     SettingsLevel* settingsLevel;
     
+    bool isOpenBuildScroll;
+    
 public:
     
     CCNode* screenCenter;
@@ -80,6 +83,7 @@ public:
     JobCollection* jobCollection;
     ConstructionHandler* constructionHandler;
     BanditsAttackHandler* banditsAttackHandler;
+    ObjectiveHandler* objectiveHandler;
     
     CCPoint lastTilePosPreview;
     CCPoint firstPathPosPreview;

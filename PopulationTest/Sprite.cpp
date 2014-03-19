@@ -75,9 +75,9 @@ GameSprite::GameSprite()
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
                              CCRectMake(5, 5, 70, 10),
                              "loadingbar-empty.png",
-                             "loadingbar-left.png",
-                             "loadingbar-right.png",
-                             "loadingbar-full.png");
+                             "NONE",
+                             "NONE",
+                             "Energybar.png");
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     hpLabels = CCArray::create();
@@ -243,35 +243,34 @@ GameSprite::~GameSprite()
 
 GameSprite* GameSprite::copyWithZone(CCZone *pZone)
 {
-     CCZone* pNewZone = NULL;
-     GameSprite* pCopy = NULL;
- 
-     if(pZone && pZone->m_pCopyObject)
-     {
-         //in case of being called at sub class
-         pCopy = (GameSprite*)(pZone->m_pCopyObject);
-     }
-     else
-     {
-            pCopy = GameSprite::create();
-            pCopy->type = this->type;
-            pCopy->batchLayerIndex = this->batchLayerIndex;
-            pCopy->idleFrameCount = this->idleFrameCount;
-            pCopy->walkingFrameCount = this->walkingFrameCount;
-            pCopy->spriteName = this->spriteName;
-            pCopy->spriteClass = this->spriteClass;
-            pCopy->currAction = IDLE;
-            pCopy->config_doc = this->config_doc;
-            pCopy->defaults_doc = this->defaults_doc;
-            pCopy->gender = this->gender;
-            pCopy->race = this->race;
-            pNewZone = new CCZone(pCopy);
-         
-     }
- 
-     CC_SAFE_DELETE(pNewZone);
-     return pCopy;
- }
+    CCZone* pNewZone = NULL;
+    GameSprite* pCopy = NULL;
+    
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (GameSprite*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = GameSprite::create();
+        pCopy->batchLayerIndex = this->batchLayerIndex;
+        pCopy->idleFrameCount = this->idleFrameCount;
+        pCopy->walkingFrameCount = this->walkingFrameCount;
+        pCopy->spriteName = this->spriteName;
+        pCopy->spriteClass = this->spriteClass;
+        pCopy->currAction = IDLE;
+        pCopy->config_doc = this->config_doc;
+        pCopy->defaults_doc = this->defaults_doc;
+        pCopy->gender = this->gender;
+        pCopy->race = this->race;
+        pCopy->villagerClass = this->villagerClass;
+        pNewZone = new CCZone(pCopy);
+    }
+    
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
 
 GameSprite* GameSprite::create()
 {
@@ -317,7 +316,7 @@ GameSprite* GameSprite::create()
      mGameCurrentEndurance = getPossessions()->current_endurance;
      mGameMaxEndurance = getPossessions()->max_endurance;
      
-     if (type != M_BANDIT && type != F_BANDIT && type != M_SOLDIER && type != F_SOLDIER)
+     if (villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
      {
          barHP->setVisible(false);
      }
@@ -557,7 +556,7 @@ void GameSprite::followPath()
             this->nextTile = nextPos;
             
             // if the soldier's next target tile is already taken by the bandits, stop moving and prepare to attack the bandit
-            if(type == M_SOLDIER || type == F_SOLDIER){
+            if(villagerClass == V_SOLDIER){
                 CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
                 
                 for(int i = 0; i < allSprites->count(); i++){
@@ -565,7 +564,7 @@ void GameSprite::followPath()
                     
                     CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(gs->currPos));
                     
-                    if(gs->type == M_BANDIT || gs->type == F_BANDIT){
+                    if(villagerClass == V_BANDIT){
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
                             nextTile = currentTile;
                             return;
@@ -575,7 +574,7 @@ void GameSprite::followPath()
             }
             
             // if the bandit's next target tile is already taken by the soldiers, stop moving and prepare to attack the soldier
-            if(type == M_BANDIT || type == F_BANDIT){
+            if(villagerClass == V_BANDIT){
                 CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
                 
                 for(int i = 0; i < allSprites->count(); i++){
@@ -583,7 +582,7 @@ void GameSprite::followPath()
                     
                     CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(gs->currPos));
                     
-                    if(gs->type == M_SOLDIER || gs->type == F_SOLDIER){
+                    if(villagerClass == V_SOLDIER){
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
                             nextTile = currentTile;
                             return;
@@ -730,7 +729,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     currTile = GameScene::getThis()->mapHandler->getTileAt(currPos.x, currPos.y);
     
     // each time after moveComplete has been triggered, the soldier will check the bandit's position again, so that they can adjust their path to the capture the bandit.
-    if (type == M_SOLDIER || type == F_SOLDIER)
+    if (villagerClass == V_SOLDIER)
     {
         CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
         
@@ -746,7 +745,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
             GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
             
             // check the bandits, get the nearest bandit to the soldier, as well as the distance.
-            if ((gs->type == M_BANDIT || gs->type == F_BANDIT) && gs->possessions->current_endurance > 0)
+            if ((villagerClass == V_BANDIT) && gs->possessions->current_endurance > 0)
             {
                 CCPoint bPos = gs->getWorldPosition();
                 bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
@@ -847,6 +846,8 @@ bool GameSprite::Wander()
     wanderFlag = !wanderFlag;
     if (wanderFlag)
     {
+        saySpeech("I am wandering!", 5.0f);
+        
         CCPoint tgt = GameScene::getThis()->mapHandler->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
         if (tgt.x == -1 && tgt.y == -1)
         {
@@ -971,7 +972,7 @@ void GameSprite::updateSprite(float dt)
     
     lastFrameAction = currAction;
     
-    if(type == M_BANDIT || type == F_BANDIT)
+    if(villagerClass == V_BANDIT)
     {
         if(currAction == IDLE)
         {
@@ -1044,7 +1045,7 @@ void GameSprite::updateSprite(float dt)
         }
         infront = temp;
         
-        if((type == F_SOLDIER || type == M_SOLDIER) && !tryEscape)
+        if((villagerClass == V_SOLDIER) && !tryEscape)
         {
             CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
             
@@ -1116,7 +1117,7 @@ void GameSprite::updateSprite(float dt)
             }
         }
         
-        if ((type == F_BANDIT || type == M_BANDIT) && !tryEscape)
+        if ((villagerClass == V_BANDIT) && !tryEscape)
         {
             CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
             
@@ -1191,20 +1192,20 @@ void GameSprite::updateSprite(float dt)
         }
         
         // only soldiers and bandits are involved in the combat.
-        if((type == F_SOLDIER || type == M_SOLDIER || type == F_BANDIT || type == M_BANDIT) && !tryEscape)
+        if((villagerClass == V_SOLDIER || villagerClass == V_BANDIT) && !tryEscape)
         {
             // only in the war mode, bandits will attack the village, the combat system is enabled.
                 CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
                 
                 // soldier will always check whether there is bandit in their attacking area, if yes, attack the bandit.
-                if(type == F_SOLDIER || type == M_SOLDIER)
+                if(villagerClass == V_SOLDIER)
                 {
                     bool hasBandit = false;
                     for(int i = 0; i < allSpritesOnMap->count(); i++){
                         GameSprite* gs = (GameSprite*) allSpritesOnMap->objectAtIndex(i);
                         CCPoint gsTile = gs->currPos;
                         
-                        if((gs->type == F_BANDIT || gs->type == M_BANDIT) && temp.x == gsTile.x && temp.y == gsTile.y){
+                        if((gs->villagerClass == V_BANDIT) && temp.x == gsTile.x && temp.y == gsTile.y){
                             hasBandit = true;
                             break;
                         }
@@ -1225,7 +1226,7 @@ void GameSprite::updateSprite(float dt)
                         for(int i = 0; i < allSpritesOnMap->count(); i++){
                             GameSprite* gs = (GameSprite*) allSpritesOnMap->objectAtIndex(i);
                             
-                            if((gs->type == F_BANDIT || gs->type == M_BANDIT) && temp.x == gs->currPos.x && temp.y == gs->currPos.y){
+                            if((gs->villagerClass == V_BANDIT) && temp.x == gs->currPos.x && temp.y == gs->currPos.y){
                                 int random_number = rand() % diff;
                                 int damage = possessions->attack_power_min + random_number;
                                 gs->damaged(damage);
@@ -1235,7 +1236,7 @@ void GameSprite::updateSprite(float dt)
                     }
                 }
             
-                if(type == F_BANDIT || type == M_BANDIT)
+                if(villagerClass == V_BANDIT)
                 {
                     bool hasSoldier = false;
                     for(int i = 0; i < allSpritesOnMap->count(); i++)
@@ -1243,7 +1244,7 @@ void GameSprite::updateSprite(float dt)
                         GameSprite* gs = (GameSprite*) allSpritesOnMap->objectAtIndex(i);
                         CCPoint gsTile = gs->currPos;
                         
-                        if((gs->type == F_SOLDIER || gs->type == M_SOLDIER) && temp.x == gsTile.x && temp.y == gsTile.y)
+                        if((gs->villagerClass == V_SOLDIER) && temp.x == gsTile.x && temp.y == gsTile.y)
                         {
                             hasSoldier = true;
                             break;
@@ -1263,7 +1264,7 @@ void GameSprite::updateSprite(float dt)
                         for(int i = 0; i < allSpritesOnMap->count(); i++){
                             GameSprite* gs = (GameSprite*) allSpritesOnMap->objectAtIndex(i);
                             
-                            if((gs->type == F_SOLDIER || gs->type == M_SOLDIER) && temp.x == gs->currPos.x && temp.y == gs->currPos.y){
+                            if((gs->villagerClass == V_SOLDIER) && temp.x == gs->currPos.x && temp.y == gs->currPos.y){
                                 int random_number = rand() % diff;
                                 int damage = possessions->attack_power_min + random_number;
                                 gs->damaged(damage);
@@ -1298,7 +1299,7 @@ void GameSprite::updateSprite(float dt)
     // the sate is used for the bandits and soldiers when they either get enough resources and try to run out or they lose all endurance so that they cannot do task and combat any more.
     if(combatState == C_ESCAPE)
     {
-        if(type == M_BANDIT || type == F_BANDIT)
+        if(villagerClass == V_BANDIT)
         {
             if(!isMoving)
             {
@@ -1326,7 +1327,7 @@ void GameSprite::updateSprite(float dt)
     else if(combatState == C_IDLE)
     {
         // bandits will be stop by soldiers and escape after losing all endurance
-        if (type == M_BANDIT || type == F_BANDIT)
+        if (villagerClass == V_BANDIT)
         {
             // get the current position of the soldier
             CCPoint bPos = getWorldPosition();
@@ -1342,7 +1343,7 @@ void GameSprite::updateSprite(float dt)
             {
                 GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
                 
-                if (gs->type == M_SOLDIER || gs->type == F_SOLDIER)
+                if (gs->villagerClass == V_SOLDIER)
                 {
                     CCPoint sPos = gs->getWorldPosition();
                     sPos = GameScene::getThis()->mapHandler->tilePosFromLocation(sPos);
@@ -1375,7 +1376,7 @@ void GameSprite::updateSprite(float dt)
         }
     
         // solders will actively to block bandits!
-        if (type == M_SOLDIER || type == F_SOLDIER)
+        if (villagerClass == V_SOLDIER)
         {
             CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
             
@@ -1392,7 +1393,7 @@ void GameSprite::updateSprite(float dt)
                 GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
                 
                 // check the bandits, get the nearest bandit to the soldier, as well as the distance.
-                if ((gs->type == M_BANDIT || gs->type == F_BANDIT) && gs->possessions->current_endurance > 0 && !gs->tryEscape)
+                if ((gs->villagerClass == V_BANDIT) && gs->possessions->current_endurance > 0 && !gs->tryEscape)
                 {
                     CCPoint bPos = gs->getWorldPosition();
                     bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
@@ -1695,6 +1696,9 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     speechBubble->addContent(label, CCPointZero );
     speechBubble->show(timeInSeconds);
 }
+
+
+
 /*pathing*/
 /*paths back home, if possible. Ignores range for obvious reasons.*/
 bool GameSprite::PathToHome()
@@ -2046,9 +2050,9 @@ bool GameSprite::isDestinationInRange(int destinationID)
 
 /*changes the gamesprite's appearance.*/
 /*does not change stats.*/
-void GameSprite::ChangeSpriteTo(GameSprite *sp)
+void GameSprite::changeSpriteTo(GameSprite *sp)
 {
-    type = sp->type;
+    villagerClass = sp->villagerClass;
     batchLayerIndex = sp->batchLayerIndex;
     idleFrameCount = sp->idleFrameCount;
     walkingFrameCount = sp->walkingFrameCount;
@@ -2071,6 +2075,10 @@ void GameSprite::ChangeSpriteTo(GameSprite *sp)
     ReplaceSpriteRep();
 }
 
+void GameSprite::changeClassTo(SpriteClass* sc)
+{
+    
+}
 
 void GameSprite::ReplaceSpriteRep()
 {
@@ -2117,9 +2125,9 @@ void GameSprite::ReplaceSpriteRep()
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
                              CCRectMake(5, 5, 70, 10),
                              "loadingbar-empty.png",
-                             "loadingbar-left.png",
-                             "loadingbar-right.png",
-                             "loadingbar-full.png");
+                             "NONE",
+                             "NONE",
+                             "Energybar.png");
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
@@ -2129,7 +2137,7 @@ void GameSprite::ReplaceSpriteRep()
     mGameCurrentEndurance = getPossessions()->current_endurance;
     mGameMaxEndurance = getPossessions()->max_endurance;
     
-    if (type != M_BANDIT && type != F_BANDIT && type != M_SOLDIER && type != F_SOLDIER)
+    if (villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
     {
         barHP->setVisible(false);
     }
@@ -2242,20 +2250,7 @@ void GameSprite::changeToCitizen()
     for (int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* sprite = (GameSprite*)allSprites->objectAtIndex(i);
-        if(isMale)
-        {
-            if(sprite->type == M_CITIZEN)
-            {
-                ChangeSpriteTo(sprite);
-            }
-        }
-        else
-        {
-            if(sprite->type == F_CITIZEN)
-            {
-                ChangeSpriteTo(sprite);
-            }
-        }
+        changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
     }
 }
 
@@ -2355,11 +2350,13 @@ void GameSprite::goToEat()
             
             if(startPos.equals(endPos))
             {
+                saySpeech("Eating food aiya!", 5.0f);
                 setTargetLocation(bui);
                 currAction = EATING;
             }
             else
             {
+                saySpeech("Food, I am coming!", 5.0f);
                 setTargetLocation(bui);
                 GoEat(bui);
             }
@@ -2369,6 +2366,7 @@ void GameSprite::goToEat()
     // if the granary does not have food, do next scheduled action.
     else if(bui != NULL)
     {
+        saySpeech("No food store with food!", 5.0f);
         if(getJob() == NONE && getJobLocation() == NULL)
         {
             if(futureAction1 == RESTING || futureAction2 == RESTING)
@@ -2385,6 +2383,7 @@ void GameSprite::goToEat()
     // if there is no granary found, do next scheduled action.
     else
     {
+        saySpeech("No food store!", 5.0f);
         if(futureAction1 == RESTING || futureAction2 == RESTING)
         {
             futureAction1 = RESTING;
@@ -2413,11 +2412,13 @@ void GameSprite::goToSleep()
         
         if(startPos.equals(endPos))
         {
+            saySpeech("Sleep loh!", 5.0f);
             setTargetLocation(getHome());
             currAction = RESTING;
         }
         else
         {
+            saySpeech("My home! My Home!", 5.0f);
             setTargetLocation(getHome());
             GoRest(getHome());
         }
@@ -2443,11 +2444,13 @@ void GameSprite::goToOccupyHome(Building* b)
         
         if(startPos.equals(endPos))
         {
+            saySpeech("Yeh! I have a home!", 5.0f);
             setHome(b);
             changeToCitizen();
         }
         else
         {
+            saySpeech("I want to find a home!", 5.0f);
             setTargetLocation(b);
             GoHome(b);
         }
@@ -2556,7 +2559,7 @@ void GameSprite::updateEndurance(float dt)
     if (mGameWarMode != GameScene::getThis()->banditsAttackHandler->warMode)
     {
         mGameWarMode = GameScene::getThis()->banditsAttackHandler->warMode;
-        if(type == F_SOLDIER || type == M_SOLDIER)
+        if(villagerClass == V_SOLDIER)
         {
             if(mGameWarMode){
                 stringstream ss;
@@ -2649,7 +2652,7 @@ void GameSprite::scheduleToken(float dt)
         token_drop_cooldown_time = 0;
         is_token_drop_cooldown = true;
         
-        if (type != M_REFUGEE && type != F_REFUGEE && type != M_BANDIT && type != F_BANDIT && type != SPRITETYPE_END)
+        if (villagerClass != V_BANDIT && villagerClass != V_SOLDIER && villagerClass != V_CLASS_END)
         {
             dropToken();
         }
@@ -2771,7 +2774,7 @@ bool GameSprite::hasBandit(CCArray* spritesOnMap, CCPoint checkTile)
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
         CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&checkTile);
         
-        if((gs->type == F_BANDIT || gs->type == M_BANDIT) && gs->possessions->current_endurance > 0)
+        if((gs->villagerClass == V_BANDIT) && gs->possessions->current_endurance > 0)
         {
             if(gsTile.x == gs->spriteRep->getPosition().x && gsTile.y == gs->spriteRep->getPosition().y)
             {
@@ -2789,7 +2792,7 @@ bool GameSprite::hasSoldier(CCArray* spritesOnMap, CCPoint checkTile)
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
         CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&checkTile);
         
-        if(gs->type == F_SOLDIER || gs->type == M_SOLDIER)
+        if(gs->villagerClass == V_SOLDIER)
         {
             if(gsTile.x == gs->spriteRep->getPosition().x && gsTile.y == gs->spriteRep->getPosition().y)
             {
@@ -2830,7 +2833,7 @@ void GameSprite::updatePath(CCPoint endPos)
 
 bool GameSprite::isFarmer()
 {
-    if(type == M_FARMER || type == F_FARMER)
+    if(villagerClass == V_FARMER)
     {
         return true;
     }
@@ -2839,7 +2842,7 @@ bool GameSprite::isFarmer()
 
 bool GameSprite::isRefugee()
 {
-    if(type == M_REFUGEE || type == F_REFUGEE)
+    if(villagerClass == V_REFUGEE)
     {
         return true;
     }
@@ -2848,7 +2851,7 @@ bool GameSprite::isRefugee()
 
 bool GameSprite::isCitizen()
 {
-    if(type == M_CITIZEN || type == F_CITIZEN)
+    if(villagerClass == V_CITIZEN)
     {
         return true;
     }
@@ -2857,7 +2860,7 @@ bool GameSprite::isCitizen()
 
 bool GameSprite::isBuilder()
 {
-    if(type == M_BUILDER || type == F_BUILDER)
+    if(villagerClass == V_BUILDER)
     {
         return true;
     }
@@ -2866,7 +2869,7 @@ bool GameSprite::isBuilder()
 
 bool GameSprite::isSoldier()
 {
-    if(type == M_SOLDIER || type == F_SOLDIER)
+    if(villagerClass == V_SOLDIER)
     {
         return true;
     }
@@ -2875,7 +2878,7 @@ bool GameSprite::isSoldier()
 
 bool GameSprite::isBandit()
 {
-    if(type == M_BANDIT || type == F_BANDIT)
+    if(villagerClass == V_BANDIT)
     {
         return true;
     }

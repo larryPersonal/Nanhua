@@ -142,26 +142,15 @@ bool GlobalHelper::isHorizontal()
     return screenSize.width > screenSize.height;
 }
 
-GameSprite* GlobalHelper::getSpriteType(GameSprite* gameSprite, SpriteType mst, SpriteType fst)
+SpriteClass* GlobalHelper::getSpriteClassByVillagerClass(VillagerClass villagerClass)
 {
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
-    bool isMale = (gameSprite->gender == 'm');
-    for (int i = 0; i < allSprites->count(); i++)
+    CCArray* allSpriteClass = GameScene::getThis()->spriteHandler->allSpriteClass;
+    for (int i = 0; i < allSpriteClass->count(); i++)
     {
-        GameSprite* sprite = (GameSprite*)allSprites->objectAtIndex(i);
-        if(isMale)
+        SpriteClass* sc = (SpriteClass*) allSpriteClass->objectAtIndex(i);
+        if(sc->villagerClass == villagerClass)
         {
-            if(sprite->type == mst)
-            {
-                return sprite;
-            }
-        }
-        else
-        {
-            if(sprite->type == fst)
-            {
-                return sprite;
-            }
+            return sc;
         }
     }
     return NULL;

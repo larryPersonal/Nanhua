@@ -22,7 +22,7 @@ std::string contentJson =
     "},"
     "\"level_2\": {"
         "\"levelup_money\":\"1000\","
-        "\"levelup_food\": \"500\","
+        "\"levelup_food\": \"0\","
         "\"housing\":      \"10\","
         "\"granary\":      \"4\","
         "\"farm\":         \"8\","
