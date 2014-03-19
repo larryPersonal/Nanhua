@@ -379,6 +379,11 @@
 		36B190F618A0A6AD00A8B515 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B189D218A0A6A700A8B515 /* CocosDenshion.m */; };
 		36B190F718A0A6AD00A8B515 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36B189D318A0A6A700A8B515 /* SimpleAudioEngine.mm */; };
 		36B190F818A0A6AD00A8B515 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B189D518A0A6A700A8B515 /* SimpleAudioEngine_objc.m */; };
+		36B411E318D9AAEB005967EC /* DemoScene.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E218D9AAEB005967EC /* DemoScene.tmx */; };
+		36B411E518D9AC5D005967EC /* border map_bush_bottomalign.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E418D9AC5D005967EC /* border map_bush_bottomalign.png */; };
+		36B411E718D9AC94005967EC /* river_anim_bottomalign.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E618D9AC94005967EC /* river_anim_bottomalign.png */; };
+		36B411E918D9ACFF005967EC /* greatwall2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E818D9ACFF005967EC /* greatwall2x2.png */; };
+		36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411EA18D9AD69005967EC /* plant-1x1.png */; };
 		36C16E4618D0049000C307DB /* MMB_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E3C18D0049000C307DB /* MMB_port.png */; };
 		36C16E4718D0049000C307DB /* FMR_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E3D18D0049000C307DB /* FMR_port.png */; };
 		36C16E4918D0049000C307DB /* unidentified_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E3F18D0049000C307DB /* unidentified_port.png */; };
@@ -1239,6 +1244,11 @@
 		36B189D318A0A6A700A8B515 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		36B189D418A0A6A700A8B515 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		36B189D518A0A6A700A8B515 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		36B411E218D9AAEB005967EC /* DemoScene.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DemoScene.tmx; sourceTree = "<group>"; };
+		36B411E418D9AC5D005967EC /* border map_bush_bottomalign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border map_bush_bottomalign.png"; sourceTree = "<group>"; };
+		36B411E618D9AC94005967EC /* river_anim_bottomalign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = river_anim_bottomalign.png; sourceTree = "<group>"; };
+		36B411E818D9ACFF005967EC /* greatwall2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greatwall2x2.png; sourceTree = "<group>"; };
+		36B411EA18D9AD69005967EC /* plant-1x1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plant-1x1.png"; sourceTree = "<group>"; };
 		36C16E3C18D0049000C307DB /* MMB_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MMB_port.png; sourceTree = "<group>"; };
 		36C16E3D18D0049000C307DB /* FMR_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FMR_port.png; sourceTree = "<group>"; };
 		36C16E3F18D0049000C307DB /* unidentified_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unidentified_port.png; sourceTree = "<group>"; };
@@ -1669,6 +1679,11 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				36B411EA18D9AD69005967EC /* plant-1x1.png */,
+				36B411E818D9ACFF005967EC /* greatwall2x2.png */,
+				36B411E618D9AC94005967EC /* river_anim_bottomalign.png */,
+				36B411E418D9AC5D005967EC /* border map_bush_bottomalign.png */,
+				36B411E218D9AAEB005967EC /* DemoScene.tmx */,
 				36AC559118D6B81800C165F5 /* ScenarioSelect */,
 				36AC557618D6996600C165F5 /* MainMenu */,
 				3632864218CEC503002C58D3 /* houses.png */,
@@ -3456,6 +3471,7 @@
 				36325C1A18D7FAC20008227D /* closebutton-down.png in Resources */,
 				3608CB001704343E00AB65A3 /* FemaleFarmer.plist in Resources */,
 				8412CA5D18AC8D4A00AF4645 /* time_indicator-week-4.png in Resources */,
+				36B411E918D9ACFF005967EC /* greatwall2x2.png in Resources */,
 				3608CB021704343E00AB65A3 /* FMW.plist in Resources */,
 				36D87D0718C5BBAD00FE8B31 /* idle.png in Resources */,
 				36AC558418D69A0100C165F5 /* splash0.png in Resources */,
@@ -3531,12 +3547,14 @@
 				3619CAE317A6599400B59924 /* button-up.png in Resources */,
 				3619CAE417A6599400B59924 /* button-down.png in Resources */,
 				36D87CF518C5BA5200FE8B31 /* villager_c.png in Resources */,
+				36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */,
 				36AC553B18D696D600C165F5 /* Shojumaru-Regular.ttf in Resources */,
 				8421158B18D2F02D00A441D0 /* upgrade.png in Resources */,
 				3619CAE517A6599400B59924 /* bar.png in Resources */,
 				84EDD26C18C6EF0C003BAF5E /* normalFace.png in Resources */,
 				8421158118D2C4DD00A441D0 /* rightdisable_arrowbtn.png in Resources */,
 				8412CA5918AC8D4A00AF4645 /* main-menu-resource-icons_gold.png in Resources */,
+				36B411E318D9AAEB005967EC /* DemoScene.tmx in Resources */,
 				84509B7F1887B9F100EF8BD8 /* rest.png in Resources */,
 				36D87D0A18C5BBAD00FE8B31 /* unhappy.png in Resources */,
 				36D87D1018C5BF3900FE8B31 /* MaleOldMan.png in Resources */,
@@ -3621,6 +3639,7 @@
 				36AC558E18D6A21C00C165F5 /* building2x2.png in Resources */,
 				8421157A18D2C4DD00A441D0 /* leftgreen_arrowbtn.png in Resources */,
 				3604970917AB942700CACE25 /* arrow-up2.png in Resources */,
+				36B411E518D9AC5D005967EC /* border map_bush_bottomalign.png in Resources */,
 				36AC557318D6981900C165F5 /* yuanbao_amount.png in Resources */,
 				36325C1B18D7FAC20008227D /* closebutton-up.png in Resources */,
 				84360A2D18B21FED002EC8C2 /* workers_menu_selectedBG_overlay.png in Resources */,
@@ -3653,6 +3672,7 @@
 				36AC558C18D6A16600C165F5 /* building3x3.png in Resources */,
 				36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */,
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,
+				36B411E718D9AC94005967EC /* river_anim_bottomalign.png in Resources */,
 				36AC558118D69A0100C165F5 /* student.png in Resources */,
 				36AC559018D6A31100C165F5 /* gound.png in Resources */,
 				36AC558318D69A0100C165F5 /* splash1.png in Resources */,

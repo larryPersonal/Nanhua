@@ -298,6 +298,11 @@
     <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
+  <tile id="7">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="25" name="roads" tilewidth="128" tileheight="128">
   <image source="roads.png" width="512" height="512"/>
@@ -629,7 +634,7 @@
  </layer>
  <layer name="Wall" width="90" height="60">
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAAAIBXA1RgAAE=
+   eJztwQEJAAAAAqBu974dgdoAAAAAAAAAAAAAAAAAAAAAAAAAAACvBjgYAHo=
   </data>
  </layer>
  <layer name="Ground_1" width="90" height="60">
@@ -665,7 +670,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAAAIBXA1RgAAE=
+   eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
   </data>
  </layer>
  <layer name="Building_2" width="90" height="60">
@@ -674,7 +679,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAAAIBXA1RgAAE=
+   eJztwQEJAAAAAqBm9H9pOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg092AAZ
   </data>
  </layer>
  <layer name="Building_3" width="90" height="60">

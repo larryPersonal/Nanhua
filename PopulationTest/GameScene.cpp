@@ -132,7 +132,7 @@ bool GameScene::init()
 
 void GameScene::setupScene()
 {
-        mapHandler->initTiles("testScene.tmx");
+        mapHandler->initTiles("DemoScene.tmx");
         
         if (mapHandler->getMap())
         {
