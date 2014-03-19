@@ -985,6 +985,9 @@ void GameHUD::addReputation(int incre)
 void GameHUD::addPopulation(){
     CCPoint target = CCPointMake(29,33);
     
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);
+    
+    /*
     int isMale = rand() % 2;
     
     if(isMale)
@@ -995,6 +998,7 @@ void GameHUD::addPopulation(){
     {
         GameScene::getThis()->spriteHandler->addSpriteToMap(target, F_REFUGEE);
     }
+    */
 }
 
 void GameHUD::createSystemMenu()
@@ -1118,5 +1122,6 @@ void GameHUD::stickGameHappiness()
 
 void GameHUD::clickSystemButton()
 {
+    GameScene::getThis()->mapHandler->UnBuildEndGame();
     CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
 }

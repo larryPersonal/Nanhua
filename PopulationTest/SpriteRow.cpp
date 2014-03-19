@@ -11,6 +11,7 @@
 #include "SelectPopulation.h"
 #include "GameScene.h"
 #include "SpriteInfoMenu.h"
+#include "GlobalHelper.h"
 
 SpriteRow::SpriteRow(GameSprite* gs, ScrollArea* sa, Building* building, int ind)
 {
@@ -136,7 +137,7 @@ void SpriteRow::construction()
     // get all sprite type
     if(gameSprite != NULL && building != NULL)
     {
-        gameSprite->ChangeSpriteTo(getSpriteType(M_BUILDER, F_BUILDER));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_BUILDER));
         
         gameSprite->setJob(BUILDER);
         gameSprite->setJobLocation(building);
@@ -154,36 +155,11 @@ void SpriteRow::construction()
     }
 }
 
-GameSprite* SpriteRow::getSpriteType(SpriteType mst, SpriteType fst)
-{
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
-    bool isMale = (gameSprite->gender == 'm');
-    for (int i = 0; i < allSprites->count(); i++)
-    {
-        GameSprite* sprite = (GameSprite*)allSprites->objectAtIndex(i);
-        if(isMale)
-        {
-            if(sprite->type == mst)
-            {
-                return sprite;
-            }
-        }
-        else
-        {
-            if(sprite->type == fst)
-            {
-                return sprite;
-            }
-        }
-    }
-    return NULL;
-}
-
 void SpriteRow::recover()
 {
     if(gameSprite != NULL && building != NULL)
     {
-        if(gameSprite->type == M_REFUGEE || gameSprite->type == F_REFUGEE)
+        if(gameSprite->villagerClass == V_REFUGEE)
         {
             return;
         }
@@ -212,7 +188,7 @@ void SpriteRow::farming()
     if(gameSprite != NULL && building != NULL)
     {
         
-        gameSprite->ChangeSpriteTo(getSpriteType(M_FARMER, F_FARMER));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_FARMER));
         
         gameSprite->setJob(FARMER);
         gameSprite->setJobLocation(building);
@@ -244,7 +220,7 @@ void SpriteRow::assignHome()
         }
         gameSprite->setHome(building);
         
-        gameSprite->ChangeSpriteTo(getSpriteType(M_CITIZEN, F_CITIZEN));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
         
         unlinkChildren();
         
@@ -261,7 +237,7 @@ void SpriteRow::resignHome()
         quitHome();
         quitJob();
         
-        gameSprite->ChangeSpriteTo(getSpriteType(M_REFUGEE, F_REFUGEE));
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
         
         gameSprite->setTargetLocation(NULL);
         
@@ -287,7 +263,7 @@ void SpriteRow::cancelJob()
             gameSprite->setTargetLocation(NULL);
         } else {
             quitJob();
-            gameSprite->ChangeSpriteTo(getSpriteType(M_CITIZEN, F_CITIZEN));
+            gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
             
             gameSprite->setTargetLocation(NULL);
             

@@ -70,7 +70,6 @@ public:
     void rearrange(int);
     void resetPosition(CCNode*, CCPoint);
     
-    GameSprite* getSpriteType(SpriteType, SpriteType);
     bool hasVacancy();
     
     void unlinkChildren();
