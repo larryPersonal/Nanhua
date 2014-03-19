@@ -135,30 +135,56 @@ void BuildScroll::createMenuItems()
             numberOfBuildingCards++;
         }
     }
+    /*
+    CCMenuItemImage* leftBtn = CCMenuItemImage::create("leftgreen_arrowbtn.png", "leftgreen_arrowbtn.png", this, menu_selector(BuildScroll::onMenuItemSelected));
+    leftBtn->setTag(-3);      //set Tag as address of the GameSprite object
+    leftBtn->setPosition(ccp(screenSize.width * 0.07f, buildMenu->boundingBox().size.height * 0.5f));
+    
+    CCMenuItemImage* rightBtn = CCMenuItemImage::create("leftgreen_arrowbtn.png", "leftgreen_arrowbtn.png", this, menu_selector(BuildScroll::onMenuItemSelected));
+    rightBtn->setTag(-4);      //set Tag as address of the GameSprite object
+    rightBtn->setPosition(ccp(screenSize.width * 0.97f, buildMenu->boundingBox().size.height * 0.5f));
+    */
     scrollArea->setScrollContentSize(CCSizeMake(250.0f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.7f));
     scrollArea->setPosition(ccp(screenSize.width * 0.105f, buildMenu->boundingBox().size.height * 0.14f));
     scrollArea->updateScrollBars();
     this->addChild(scrollArea, 1);
+   // this->addChild(leftBtn, 2);
+   // this->addChild(rightBtn, 2);
+
 }
 
 void BuildScroll::onMenuItemSelected(CCObject* pSender){
-    /*
-    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     
+   // CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
+     //Menu items handle their own click events!
+    //Otherwise, only these items will be recognized!
+    
+    //-3 to scroll left
+    //-4 to scroll right
+    //-5 to close the scroll and do nothing else
+    /*
     switch (pMenuItem->getTag())
     {
-        case -1:
+        case -3:
+            //buttonleft
+            CCLog("LEFT CLICKED");
+            break;
+
+        case -4:
+            //buttonright
+            break;
+
+        //I shouldn't need to do this anymore.
+        case -5:
             // buttonClose
             this->closeMenu(true);
             break;
-            
         default:
+            //its handled elsewhere
             break;
-    }*/ //Menu items handle their own click events!
+    }
+    */
     
-    //TODO: Manual exit
-    //TODO: scroll left
-    //TODO: scroll right
 }
 
 void BuildScroll::reposition()
