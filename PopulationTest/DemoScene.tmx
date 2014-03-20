@@ -157,31 +157,31 @@
   <image source="building2x2.png" width="1024" height="512"/>
   <tile id="0">
    <properties>
-       <property name="build_time" value="10"/>
-       <property name="build_uint_required" value="1000"/>
-       <property name="builder_limit" value="3"/>
-       <property name="building_type" value="granary"/>
-       <property name="cost" value="100"/>
-       <property name="description" value="Granary for storing food!"/>
-       <property name="food_consumption_rate" value="1"/>
-       <property name="jobs_available" value="0"/>
-       <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-       <property name="level_gain_cost" value="2:50, 4:50"/>
-       <property name="level_gain_population_limit" value="3:1, 5:1"/>
-       <property name="name" value="Granary"/>
-       <property name="population_limit" value="0"/>
-       <property name="prereqs" value=""/>
-       <property name="recovery_rate" value="10"/>
-       <property name="req_building_count" value="0"/>
-       <property name="req_capita" value="0"/>
-       <property name="req_population" value="0"/>
-       <property name="research_cost" value=""/>
-       <property name="storage" value="50"/>
-       <property name="storage_limit" value="200"/>
-       <property name="unlocked_at_start" value="yes"/>
-       <property name="upgrade_unit" value="0"/>
-       <property name="work_unit" value=""/>
-       <property name="work_unit_required" value=""/>
+    <property name="build_time" value="10"/>
+    <property name="build_uint_required" value="1000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="granary"/>
+    <property name="cost" value="100"/>
+    <property name="description" value="Granary for storing food!"/>
+    <property name="food_consumption_rate" value="1"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Granary"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="10"/>
+    <property name="req_building_count" value="0"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="0"/>
+    <property name="research_cost" value=""/>
+    <property name="storage" value="50"/>
+    <property name="storage_limit" value="200"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="1">
@@ -257,7 +257,7 @@
   <image source="roads.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="45" name="Houses" tilewidth="128" tileheight="128">
-  <image source="houses.png" width="512" height="640"/>
+  <image source="houses.png" width="512" height="512"/>
   <tile id="0">
    <properties>
     <property name="anim_frames" value="4"/>
@@ -439,7 +439,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="65" name="buildings3x3" tilewidth="384" tileheight="384">
+ <tileset firstgid="61" name="buildings3x3" tilewidth="384" tileheight="384">
   <tileoffset x="-128" y="128"/>
   <image source="building3x3.png" width="768" height="768"/>
   <tile id="0">
@@ -530,15 +530,15 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="69" name="border map_bush_bottomalign" tilewidth="2048" tileheight="2048">
-  <tileoffset x="-1024" y="1024"/>
+ <tileset firstgid="65" name="border map_bush_bottomalign" tilewidth="2048" tileheight="2048">
+  <tileoffset x="-960" y="960"/>
   <image source="border map_bush_bottomalign.png" width="2048" height="2048"/>
  </tileset>
- <tileset firstgid="70" name="river_anim_bottomalign" tilewidth="2048" tileheight="2048">
-  <tileoffset x="-1024" y="1024"/>
+ <tileset firstgid="66" name="river_anim_bottomalign" tilewidth="2048" tileheight="2048">
+  <tileoffset x="-960" y="960"/>
   <image source="river_anim_bottomalign.png" width="4096" height="4096"/>
  </tileset>
- <tileset firstgid="74" name="greatwall2x2" tilewidth="256" tileheight="256">
+ <tileset firstgid="70" name="greatwall2x2" tilewidth="256" tileheight="256">
   <tileoffset x="-64" y="64"/>
   <image source="greatwall2x2.png" width="1024" height="512"/>
  </tileset>
@@ -557,7 +557,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztyyEBAAAMAjDK0b8SIS5uNr/kpj4AAAAAAAAAAAAAAAAAAAAAAAAAALwZDZ8BWg==
+   eJzt2DERAAAIxLC3hn9TeIBjItlroMlO6QEAAAAAYMxnBgAAAADggv8MAAAAAAAAAADwSwOlHQHI
   </data>
  </layer>
  <layer name="River" width="90" height="60">
@@ -566,16 +566,16 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2DENAAAIwDDU4V8SJiAE0irYvQwAAAAAAOiX2wEAAAAAALzkPwMAAAAAMMF/BgAAAK4rtpkBGQ==
+   eJzt2DENAAAIwDC04V8UJiAE0irYvQwAAAAAAOiX2wEAAAAAALzkPwMAAAAAMMF/BgAAAK4rjGwBCQ==
   </data>
  </layer>
- <layer name="Wall" width="90" height="60">
+ <layer name="Wall" width="90" height="60" visible="0">
   <properties>
    <property name="number_of_tiles" value="8"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwQEJAAAAAqAu9v9MOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg0IVQBS
+   eJztwQEJAAAAAqAO9v9OOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg22twBO
   </data>
  </layer>
  <layer name="Ground_1" width="90" height="60">
@@ -629,7 +629,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7BZw78pTCzhoFXQBAAAAAAAAACAT+Y6AAAAAAAAAAAAAAAAQNUCE1MAQg==
+   eJztzjENAAAIA7AZw78tTCzhoFXQBAAAAAAAAACAT+Y6AAAAAAAAAAAAAAAAQNUCSoQAPg==
   </data>
  </layer>
 </map>
