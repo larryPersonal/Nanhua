@@ -623,16 +623,28 @@
   </data>
  </layer>
  <layer name="Border" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="1"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJztyyEBAAAMAjAq0r8MIS5uNr/kpj4AAAAAAAAAAAAAAAAAAAAAAAAAALwZqDwBlg==
   </data>
  </layer>
  <layer name="River" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="4"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJzt2DENAAAIwDA04l8MJiAE0irYvQwAAAAAAOiX2wEAAAAAALzkPwMAAAAAMMF/BgAAAK4rNS8BSQ==
   </data>
  </layer>
  <layer name="Wall" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="8"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJztwQEJAAAAAqBu974dgdoAAAAAAAAAAAAAAAAAAAAAAAAAAACvBjgYAHo=
   </data>
