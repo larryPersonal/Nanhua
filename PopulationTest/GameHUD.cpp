@@ -212,19 +212,27 @@ void GameHUD::update(float deltaTime)
     {
         if(date->month < 3)
         {
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
+            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            
         }
         else if(date->month < 6)
         {
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
+            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            
         }
         else if(date->month < 9)
         {
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
+           //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            
         }
         else
         {
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
+            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            
         }
         
         std::stringstream ss;
@@ -671,13 +679,13 @@ void GameHUD::createTimeMenu()
     if(isHori)
     {
         timeMenu->setAnchorPoint(ccp(1, 1));
-        timeMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
+        timeMenu->setScale(screenSize.width / spriteSize.width * 0.275f);
         timeMenu->setPosition(ccp(screenSize.width, screenSize.height - 20.0f));
     }
     else
     {
         timeMenu->setAnchorPoint(ccp(0, 1));
-        timeMenu->setScale(screenSize.height / spriteSize.width * 0.25f);
+        timeMenu->setScale(screenSize.height / spriteSize.width * 0.275f);
         timeMenu->setPosition(ccp(0, screenSize.height - 140.0f));
     }
     this->addChild(timeMenu, 1);
@@ -688,12 +696,12 @@ void GameHUD::createTimeMenu()
     if(isHori)
     {
         firstWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
-        firstWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        firstWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
     }
     else
     {
         firstWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
-        firstWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        firstWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 295.0f, screenSize.height - 140.0f));
     }
     this->addChild(firstWeekLabel, 2);
     
@@ -702,12 +710,12 @@ void GameHUD::createTimeMenu()
     if(isHori)
     {
         secondWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25);
-        secondWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        secondWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
     }
     else
     {
         secondWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
-        secondWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        secondWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 295.0f, screenSize.height - 140.0f));
     }
     this->addChild(secondWeekLabel, 2);
     
@@ -716,12 +724,12 @@ void GameHUD::createTimeMenu()
     if(isHori)
     {
         thirdWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
-        thirdWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        thirdWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
     }
     else
     {
         thirdWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
-        thirdWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        thirdWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 295.0f, screenSize.height - 140.0f));
     }
     this->addChild(thirdWeekLabel, 2);
     
@@ -730,12 +738,12 @@ void GameHUD::createTimeMenu()
     if(isHori)
     {
         lastWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
-        lastWeekLabel->setPosition(ccp(screenSize.width - 256.0f, screenSize.height - 20.0f));
+        lastWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
     }
     else
     {
         lastWeekLabel->setScale(screenSize.height / spriteSize.width * 0.25f);
-        lastWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 256.0f, screenSize.height - 140.0f));
+        lastWeekLabel->setPosition(ccp(timeMenu->boundingBox().size.width - 295.0f, screenSize.height - 140.0f));
     }
     this->addChild(lastWeekLabel, 2);
     

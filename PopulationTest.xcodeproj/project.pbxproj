@@ -195,6 +195,10 @@
 		36682A3618DAC12100BC4214 /* Level Select Screen 02.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3418DAC12100BC4214 /* Level Select Screen 02.png */; };
 		36682A3718DAC12100BC4214 /* Level Select Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3518DAC12100BC4214 /* Level Select Screen.png */; };
 		36682A3918DAC68400BC4214 /* Energy_brown bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3818DAC68400BC4214 /* Energy_brown bar.png */; };
+		36682A3B18DAE77400BC4214 /* BuildingInfoUI.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3A18DAE77400BC4214 /* BuildingInfoUI.png */; };
+		36682A3F18DAEFCF00BC4214 /* Closebtn_Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3C18DAEFCF00BC4214 /* Closebtn_Circle.png */; };
+		36682A4018DAEFCF00BC4214 /* Closebtn_Sq.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3D18DAEFCF00BC4214 /* Closebtn_Sq.png */; };
+		36682A4118DAEFCF00BC4214 /* Energy_brown dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3E18DAEFCF00BC4214 /* Energy_brown dialog.png */; };
 		366F6CA0171CFD5700CDCC6F /* citizenbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */; };
 		36761242170E67FE00CD354B /* Behavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36761240170E67FE00CD354B /* Behavior.cpp */; };
 		36761245170E680800CD354B /* Composite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36761243170E680800CD354B /* Composite.cpp */; };
@@ -846,6 +850,10 @@
 		36682A3418DAC12100BC4214 /* Level Select Screen 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen 02.png"; sourceTree = "<group>"; };
 		36682A3518DAC12100BC4214 /* Level Select Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen.png"; sourceTree = "<group>"; };
 		36682A3818DAC68400BC4214 /* Energy_brown bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Energy_brown bar.png"; sourceTree = "<group>"; };
+		36682A3A18DAE77400BC4214 /* BuildingInfoUI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuildingInfoUI.png; sourceTree = "<group>"; };
+		36682A3C18DAEFCF00BC4214 /* Closebtn_Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Closebtn_Circle.png; sourceTree = "<group>"; };
+		36682A3D18DAEFCF00BC4214 /* Closebtn_Sq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Closebtn_Sq.png; sourceTree = "<group>"; };
+		36682A3E18DAEFCF00BC4214 /* Energy_brown dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Energy_brown dialog.png"; sourceTree = "<group>"; };
 		366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citizenbehavior.lua; sourceTree = "<group>"; };
 		36761240170E67FE00CD354B /* Behavior.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Behavior.cpp; sourceTree = "<group>"; };
 		36761241170E67FE00CD354B /* Behavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Behavior.h; sourceTree = "<group>"; };
@@ -3312,6 +3320,10 @@
 		B497C34D1726473900993475 /* BuildingInfoMenu */ = {
 			isa = PBXGroup;
 			children = (
+				36682A3C18DAEFCF00BC4214 /* Closebtn_Circle.png */,
+				36682A3D18DAEFCF00BC4214 /* Closebtn_Sq.png */,
+				36682A3E18DAEFCF00BC4214 /* Energy_brown dialog.png */,
+				36682A3A18DAE77400BC4214 /* BuildingInfoUI.png */,
 				843E972E18DA95AC00DBB48D /* MaleBandit_port.png */,
 				843E972218DA94F100DBB48D /* FemaleBandit_port.png */,
 				843E972318DA94F100DBB48D /* FemaleVillager_port.png */,
@@ -3509,6 +3521,7 @@
 				367613E91712AEF400CD354B /* json_internalmap.inl in Resources */,
 				8412CA5B18AC8D4A00AF4645 /* objective-menu-button_06.png in Resources */,
 				84EB32811867FB7A003B5CEB /* sessionT_start.xml in Resources */,
+				36682A3F18DAEFCF00BC4214 /* Closebtn_Circle.png in Resources */,
 				367613EC1712AEF400CD354B /* json_valueiterator.inl in Resources */,
 				36AC558818D69A0100C165F5 /* press_options.png in Resources */,
 				36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */,
@@ -3558,6 +3571,7 @@
 				8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */,
 				36C38C7C176ED60B00CE0F8D /* tutorial.txt in Resources */,
 				8412CA5C18AC8D4A00AF4645 /* main-info-menu-bg_01.png in Resources */,
+				36682A4118DAEFCF00BC4214 /* Energy_brown dialog.png in Resources */,
 				8421158518D2C4DD00A441D0 /* ticksign.png in Resources */,
 				3619CADF17A6596600B59924 /* button-side.png in Resources */,
 				84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */,
@@ -3584,6 +3598,7 @@
 				36D87D0C18C5BD0E00FE8B31 /* bubble.png in Resources */,
 				84F9B76718D9415200579060 /* Ishikari Lore.mp3 in Resources */,
 				3617292E17AA543B00D2558E /* loadingbar-right.png in Resources */,
+				36682A4018DAEFCF00BC4214 /* Closebtn_Sq.png in Resources */,
 				8421158618D2C4DD00A441D0 /* timeclock.png in Resources */,
 				3617293117AA596900D2558E /* nav button.png in Resources */,
 				8412CA6818AC8D4A00AF4645 /* build-menu_info.png in Resources */,
@@ -3692,6 +3707,7 @@
 				36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */,
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,
 				36B411E718D9AC94005967EC /* river_anim_bottomalign.png in Resources */,
+				36682A3B18DAE77400BC4214 /* BuildingInfoUI.png in Resources */,
 				36AC558118D69A0100C165F5 /* student.png in Resources */,
 				36AC559018D6A31100C165F5 /* gound.png in Resources */,
 				36AC558318D69A0100C165F5 /* splash1.png in Resources */,

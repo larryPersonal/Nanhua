@@ -99,11 +99,11 @@ void BuildingInfoMenu::createMenuItems()
     ccColor3B colorGreen = ccc3(81, 77, 2);
     
     // Create constant menu items
-    spriteBackground = CCSprite::create("outerbox.png");
+    spriteBackground = CCSprite::create("BuildingInfoUI.png");
     spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width);
     
-    spriteBackgroundInner = CCSprite::create("innerbox-info.png");
-    spriteBackgroundInner->setScale(spriteBackground->getScale());
+   // spriteBackgroundInner = CCSprite::create("innerbox-info.png");
+   // spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
     mBuildingLevel = GameManager::getThis()->town_hall_level;
@@ -306,7 +306,7 @@ void BuildingInfoMenu::createMenuItems()
     
     // Add children
     this->addChild(spriteBackground);
-    this->addChild(spriteBackgroundInner);
+  //  this->addChild(spriteBackgroundInner);
     this->addChild(spPrice);
     this->addChild(textName);
     this->addChild(textPrice);

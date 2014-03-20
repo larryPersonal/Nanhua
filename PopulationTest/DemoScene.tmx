@@ -157,31 +157,31 @@
   <image source="building2x2.png" width="1024" height="512"/>
   <tile id="0">
    <properties>
-    <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="3000"/>
-    <property name="builder_limit" value="0"/>
-    <property name="building_type" value="special"/>
-    <property name="cost" value="200"/>
-    <property name="description" value="Brick city wall"/>
-    <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value="0"/>
-    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-    <property name="level_gain_cost" value="2:50, 4:50"/>
-    <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Wall"/>
-    <property name="population_limit" value="0"/>
-    <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="1"/>
-    <property name="req_building_count" value="6"/>
-    <property name="req_capita" value="0"/>
-    <property name="req_population" value="10"/>
-    <property name="research_cost" value="150"/>
-    <property name="storage" value="0"/>
-    <property name="storage_limit" value="0"/>
-    <property name="unlocked_at_start" value="yes"/>
-    <property name="upgrade_unit" value="0"/>
-    <property name="work_unit" value=""/>
-    <property name="work_unit_required" value=""/>
+       <property name="build_time" value="10"/>
+       <property name="build_uint_required" value="1000"/>
+       <property name="builder_limit" value="3"/>
+       <property name="building_type" value="granary"/>
+       <property name="cost" value="100"/>
+       <property name="description" value="Granary for storing food!"/>
+       <property name="food_consumption_rate" value="1"/>
+       <property name="jobs_available" value="0"/>
+       <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+       <property name="level_gain_cost" value="2:50, 4:50"/>
+       <property name="level_gain_population_limit" value="3:1, 5:1"/>
+       <property name="name" value="Granary"/>
+       <property name="population_limit" value="0"/>
+       <property name="prereqs" value=""/>
+       <property name="recovery_rate" value="10"/>
+       <property name="req_building_count" value="0"/>
+       <property name="req_capita" value="0"/>
+       <property name="req_population" value="0"/>
+       <property name="research_cost" value=""/>
+       <property name="storage" value="50"/>
+       <property name="storage_limit" value="200"/>
+       <property name="unlocked_at_start" value="yes"/>
+       <property name="upgrade_unit" value="0"/>
+       <property name="work_unit" value=""/>
+       <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="1">
