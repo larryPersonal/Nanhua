@@ -30,6 +30,8 @@ public:
     
     // interact with the xml file;
     void parseXMLFile(string);
+    
+    void releaseSlides();
 };
 
 
