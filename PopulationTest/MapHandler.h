@@ -13,21 +13,21 @@
 #include "MapTile.h"
 #include "SpriteSolidPoly.h"
 
-//this should be tied directly to GID. I hope.
+//this should be tied directly to GID. You will have to change this if any layer is added *below* the road layer
 enum TileType
 {
     N = 0,
-    NESE = 25,
-    NESESW = 26,
-    SESW = 27,
-    NESENW = 28,
-    NESESWNW = 29,
-    SESWNW = 30,
-    NENW = 31,
-    NESWNW = 32,
-    SWNW = 33,
-    NESW = 34,
-    SENW = 35,
+    NESE = 29,
+    NESESW = 30,
+    SESW = 31,
+    NESENW = 32,
+    NESESWNW = 33,
+    SESWNW = 34,
+    NENW = 35,
+    NESWNW = 36,
+    SWNW = 37,
+    NESW = 38,
+    SENW = 39,
 };
 
 

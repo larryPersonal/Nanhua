@@ -278,11 +278,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249">
+            startingLineNumber = "248"
+            endingLineNumber = "248">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -866,27 +866,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "719"
-            endingLineNumber = "719">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "718"
-            endingLineNumber = "718"
-            landmarkName = "GetLoyalty_Glue(lua_State *L)"
-            landmarkType = "7">
+            endingLineNumber = "718">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -896,13 +880,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "722"
-            endingLineNumber = "722"
-            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "717"
+            endingLineNumber = "717">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -912,13 +894,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "734"
-            endingLineNumber = "734"
-            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "721"
+            endingLineNumber = "721">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -928,13 +908,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "743"
-            endingLineNumber = "743"
-            landmarkName = "ModifyHappiness_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "733"
+            endingLineNumber = "733">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -944,13 +922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "699"
-            endingLineNumber = "699"
-            landmarkName = "GetHappiness_Glue(lua_State * L)"
-            landmarkType = "7">
+            startingLineNumber = "742"
+            endingLineNumber = "742">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -960,13 +936,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "701"
-            endingLineNumber = "701"
-            landmarkName = "GetHappiness_Glue(lua_State * L)"
-            landmarkType = "7">
+            startingLineNumber = "698"
+            endingLineNumber = "698">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -976,13 +950,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "700"
-            endingLineNumber = "700"
-            landmarkName = "GetHappiness_Glue(lua_State * L)"
-            landmarkType = "7">
+            endingLineNumber = "700">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -992,13 +964,25 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "645"
-            endingLineNumber = "645"
-            landmarkName = "IsDestinationInRange_Glue(lua_State *L)"
-            landmarkType = "7">
+            startingLineNumber = "699"
+            endingLineNumber = "699">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/Behavior.cpp"
+            timestampString = "416983753.016716"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "644"
+            endingLineNumber = "644">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1040,11 +1024,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271">
+            startingLineNumber = "270"
+            endingLineNumber = "270">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1356,11 +1340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "696"
-            endingLineNumber = "696"
+            startingLineNumber = "691"
+            endingLineNumber = "691"
             landmarkName = "MapHandler::ForceUnbuild(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1372,11 +1356,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "574"
+            endingLineNumber = "574"
             landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1708,13 +1692,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "410066576.830416"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "IsAtMaxLevel_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "51"
+            endingLineNumber = "51">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1804,13 +1786,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "411272231.333489"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "HasBuildingUnderConstruction_Glue(lua_State *L)"
-            landmarkType = "7">
+            startingLineNumber = "206"
+            endingLineNumber = "206">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2388,13 +2368,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "410439426.630729"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "Retreat_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "148"
+            endingLineNumber = "148">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2404,13 +2382,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "410439426.630729"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "GoPillage_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "137"
+            endingLineNumber = "137">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2546,13 +2522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Behavior.cpp"
-            timestampString = "410439426.630729"
+            timestampString = "416983753.016716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "Retreat_Glue(lua_State* L)"
-            landmarkType = "7">
+            startingLineNumber = "150"
+            endingLineNumber = "150">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3192,11 +3166,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "877"
-            endingLineNumber = "877"
+            startingLineNumber = "870"
+            endingLineNumber = "870"
             landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3208,11 +3182,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "782"
-            endingLineNumber = "782"
+            startingLineNumber = "777"
+            endingLineNumber = "777"
             landmarkName = "MapHandler::Path(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3224,11 +3198,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "786"
-            endingLineNumber = "786">
+            startingLineNumber = "781"
+            endingLineNumber = "781">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3238,11 +3212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "812"
-            endingLineNumber = "812"
+            startingLineNumber = "805"
+            endingLineNumber = "805"
             landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3366,27 +3340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416973277.376797"
+            timestampString = "416984176.504911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "482"
-            endingLineNumber = "482"
-            landmarkName = "MapHandler::Populate(CCArray* layers)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "416975234.758802"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "486"
-            endingLineNumber = "486"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
          </BreakpointContent>
