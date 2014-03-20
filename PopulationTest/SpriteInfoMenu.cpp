@@ -35,15 +35,14 @@ SpriteInfoMenu::~SpriteInfoMenu()
 
 void SpriteInfoMenu::createMenuItems()
 {
-    ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
   //  ccColor3B colorGreen = ccc3(81, 77, 2);
     
     // Create constant menu items
-    spriteBackground = CCSprite::create("outerbox.png");
+    spriteBackground = CCSprite::create("BuildingInfoUI.png");
     spriteBackground->setScale(700 / spriteBackground->boundingBox().size.width);
     
-    spriteBackgroundInner = CCSprite::create("innerbox-info.png");
+    spriteBackgroundInner = CCSprite::create("blackscreen.png");
     spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
@@ -64,16 +63,16 @@ void SpriteInfoMenu::createMenuItems()
     textName->setColor(colorYellow);
     
     // Cash
-    spCash = CCSprite::create("money icon.png");
+    spCash = CCSprite::create("yuanbao.png");
     spCash->setScale(0.75);
     
-    std::string tempStr = "CASH";
-    labelCash = CCLabelTTF::create(tempStr.c_str(), "Shojumaru-Regular", 26, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelCash->setColor(colorYellow);
+  //  std::string tempStr = "CASH";
+   // labelCash = CCLabelTTF::create(tempStr.c_str(), "Shojumaru-Regular", 20, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    //labelCash->setColor(colorYellow);
     
     std::stringstream ss;
-    ss << mGameSpriteCash << " G";
-    textCash = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    ss << mGameSpriteCash << "Y";
+    textCash = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textCash->setColor(colorYellow);
     
     // Sprite
@@ -88,34 +87,34 @@ void SpriteInfoMenu::createMenuItems()
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->loyaltyRating << "/" << gameSprite->getPossessions()->default_loyalty_limit;
-    loyaltyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    loyaltyLabel->setColor(colorBlack);
+    loyaltyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    loyaltyLabel->setColor(colorYellow);
 
     spHap = CCSprite::create("happiness icon.png");
     spHap->setScale(0.75);
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->happinessRating << "/" << gameSprite->getPossessions()->default_hapiness_limit;
-    happinessLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    happinessLabel->setColor(colorBlack);
+    happinessLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    happinessLabel->setColor(colorYellow);
     
     // energty stats
     ss.str(std::string());
     ss << gameSprite->getPossessions()->energyRating << "/" << gameSprite->getPossessions()->default_energy_limit;
-    energyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    energyLabel->setColor(colorBlack);
+    energyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    energyLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << "Energy:";
     energyTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 30.0f, 5.0f), kCCTextAlignmentLeft);
-    energyTitleLabel->setColor(colorBlack);
+    energyTitleLabel->setColor(colorYellow);
     
     
     // Energy Bar
     barEnergy = new ProgressBar();
-    barEnergy->createProgressBar(CCRectMake(0, 0, 160, 20),
-                                 CCRectMake(5, 5, 150, 10),
-                                 "Energy_brown bar.png",
+    barEnergy->createProgressBar(CCRectMake(0, 0, 125, 20),
+                                 CCRectMake(5, 5, 125, 10),
+                                 "Energy_brown dialog.png",
                                  "NONE",
                                  "NONE",
                                  "Energybar.png");
@@ -124,54 +123,54 @@ void SpriteInfoMenu::createMenuItems()
     ss.str(std::string());
     ss << "Class:";
     classTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 30.0f, 5.0f), kCCTextAlignmentLeft);
-    classTitleLabel->setColor(colorBlack);
+    classTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->spriteClass;
     classLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28, CCSizeMake(ss.str().length() * 30.0f, 5.0f), kCCTextAlignmentLeft);
-    classLabel->setColor(colorBlack);
+    classLabel->setColor(colorYellow);
     
     // stats
     ss.str(std::string());
     ss << "Gender:";
-    genderTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    genderTitleLabel->setColor(colorBlack);
+    genderTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    genderTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->gender;
-    genderLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    genderLabel->setColor(colorBlack);
+    genderLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    genderLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << "Race:";
-    raceTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    raceTitleLabel->setColor(colorBlack);
+    raceTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    raceTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->race;
-    raceLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    raceLabel->setColor(colorBlack);
+    raceLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    raceLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << "MS:";
-    movementSpeedTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    movementSpeedTitleLabel->setColor(colorBlack);
+    movementSpeedTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementSpeedTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->default_movement_speed;
-    movementSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    movementSpeedLabel->setColor(colorBlack);
+    movementSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementSpeedLabel->setColor(colorYellow);
     
     // hungry
     ss.str(std::string());
     ss << "Hungry:";
-    hungryTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    hungryTitleLabel->setColor(colorBlack);
+    hungryTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    hungryTitleLabel->setColor(colorYellow);
     
     barHungry = new ProgressBar();
     barHungry->createProgressBar(CCRectMake(0, 0, 80, 20),
                                  CCRectMake(5, 5, 70, 10),
-                                 "Energy_brown bar.png",
+                                 "Energy_brown dialog.png",
                                  "NONE",
                                  "NONE",
                                  "Energybar.png");
@@ -179,19 +178,19 @@ void SpriteInfoMenu::createMenuItems()
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->currentHungry << "/" << gameSprite->getPossessions()->default_hungry_limit;
-    hungryLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    hungryLabel->setColor(colorBlack);
+    hungryLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    hungryLabel->setColor(colorYellow);
     
     // food carriage
     ss.str(std::string());
     ss << "Food Carriage:";
-    foodCarriageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodCarriageTitleLabel->setColor(colorBlack);
+    foodCarriageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodCarriageTitleLabel->setColor(colorYellow);
     
     barFoodCarriage = new ProgressBar();
     barFoodCarriage->createProgressBar(CCRectMake(0, 0, 80, 20),
                                  CCRectMake(5, 5, 70, 10),
-                                 "Energy_brown bar.png",
+                                 "Energy_brown dialog.png",
                                  "NONE",
                                  "NONE",
                                  "Energybar.png");
@@ -199,69 +198,69 @@ void SpriteInfoMenu::createMenuItems()
     
     ss.str(std::string());
     ss << gameSprite->getFoodCarried() << "/" << gameSprite->getPossessions()->default_food_carriage_limit;
-    foodCarriageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodCarriageLabel->setColor(colorBlack);
+    foodCarriageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    foodCarriageLabel->setColor(colorYellow);
     
     // Work Rate
     ss.str(std::string());
     ss << "Work Rate:";
-    workRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    workRateTitleLabel->setColor(colorBlack);
+    workRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workRateTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->default_work_rate;
-    workRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    workRateLabel->setColor(colorBlack);
+    workRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workRateLabel->setColor(colorYellow);
     
     // Work Unit Per Day
     ss.str(std::string());
     ss << "WUPD:";
-    workUnitPerDayTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    workUnitPerDayTitleLabel->setColor(colorBlack);
+    workUnitPerDayTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workUnitPerDayTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->default_work_unit_per_day;
-    workUnitPerDayLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    workUnitPerDayLabel->setColor(colorBlack);
+    workUnitPerDayLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    workUnitPerDayLabel->setColor(colorYellow);
     
     // Movement Range
     ss.str(std::string());
     ss << "MR:";
-    movementRangeTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    movementRangeTitleLabel->setColor(colorBlack);
+    movementRangeTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementRangeTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->default_movement_range;
-    movementRangeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    movementRangeLabel->setColor(colorBlack);
+    movementRangeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    movementRangeLabel->setColor(colorYellow);
     
     // Animate Speed
     ss.str(std::string());
     ss << "AS:";
-    animateSpeedTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    animateSpeedTitleLabel->setColor(colorBlack);
+    animateSpeedTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    animateSpeedTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << gameSprite->getPossessions()->default_animate_speed;
-    animateSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    animateSpeedLabel->setColor(colorBlack);
+    animateSpeedLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    animateSpeedLabel->setColor(colorYellow);
     
     // Current Action
     ss.str(std::string());
     ss << "Current Action:";
-    currentActionTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    currentActionTitleLabel->setColor(colorBlack);
+    currentActionTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    currentActionTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << GlobalHelper::getActionString(gameSprite->currAction);
-    currentActionLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    currentActionLabel->setColor(colorBlack);
+    currentActionLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    currentActionLabel->setColor(colorYellow);
     
     // Target Location
     ss.str(std::string());
     ss << "Target:";
-    targetLocationTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    targetLocationTitleLabel->setColor(colorBlack);
+    targetLocationTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    targetLocationTitleLabel->setColor(colorYellow);
     
     // TODO:
     
@@ -271,8 +270,7 @@ void SpriteInfoMenu::createMenuItems()
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
     
-    buttonClose = CCMenuItemImage::create("closebutton-up.png", "closebutton-down.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
-    buttonClose->setScale(0.4);
+    buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
     buttonClose->setTag(0);
 
     buttonHome = CCMenuItemImage::create("homebutton.png", "homebutton_pressed.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
@@ -295,7 +293,7 @@ void SpriteInfoMenu::createMenuItems()
     this->addChild(spriteBackground);
     this->addChild(spriteBackgroundInner);
     this->addChild(spCash);
-    this->addChild(labelCash);
+   // this->addChild(labelCash);
     this->addChild(textName);
     this->addChild(textCash);
     this->addChild(menu);
@@ -349,7 +347,7 @@ void SpriteInfoMenu::createMenuItems()
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     textName->setAnchorPoint(ccp(0.5, 1));
     spCash->setAnchorPoint(ccp(1, 0));
-    labelCash->setAnchorPoint(ccp(1, 0));
+   // labelCash->setAnchorPoint(ccp(1, 0));
     textCash->setAnchorPoint(ccp(1, 0));
     buttonClose->setAnchorPoint(ccp(1, 1));
     
@@ -475,14 +473,14 @@ void SpriteInfoMenu::reposition()
     energyLabel->CCNode::setPosition(-140.0f, 160.0f);
     energyTitleLabel->CCNode::setPosition(-280.0f, 156.0f);
     
-    classTitleLabel->CCNode::setPosition(60.0f, 156.0f);
+    classTitleLabel->CCNode::setPosition(20.0f, 156.0f);
     classLabel->CCNode::setPosition(160.0f, 156.0f);
     
     gameSpriteImage->CCNode::setPosition(-300.0f, 125.0f);
     
-    foodCarriageTitleLabel->CCNode::setPosition(80.0f, 90.0f);
-    barFoodCarriage->CCNode::setPosition(80.0f, 60.0f);
-    foodCarriageLabel->CCNode::setPosition(220.0f, 60.0f);
+    foodCarriageTitleLabel->CCNode::setPosition(40.0f, 90.0f);
+    barFoodCarriage->CCNode::setPosition(40.0f, 60.0f);
+    foodCarriageLabel->CCNode::setPosition(180.0f, 60.0f);
     
     genderTitleLabel->CCNode::setPosition(-160.0f, 100.0f);
     genderLabel->CCNode::setPosition(-60.0f, 100.0f);
@@ -492,9 +490,9 @@ void SpriteInfoMenu::reposition()
     movementSpeedLabel->CCNode::setPosition(-60.0f, 40.0f);
     
     spLoy->CCNode::setPosition(-280.0f, 20.0f);
-    loyaltyLabel->CCNode::setPosition(-200.0f, 5.0f);
-    spHap->CCNode::setPosition(-120.0f, 20.0f);
-    happinessLabel->CCNode::setPosition(-40.0f, 5.0f);
+    loyaltyLabel->CCNode::setPosition(-220.0f, 5.0f);
+    spHap->CCNode::setPosition(-140.0f, 20.0f);
+    happinessLabel->CCNode::setPosition(-80.0f, 5.0f);
     
     movementRangeTitleLabel->CCNode::setPosition(-280.0f, -35.0f);
     movementRangeLabel->CCNode::setPosition(-200.0f, -35.0f);
@@ -502,34 +500,34 @@ void SpriteInfoMenu::reposition()
     animateSpeedLabel->CCNode::setPosition(-40.0f, -35.0f);
     
     currentActionTitleLabel->CCNode::setPosition(-280.0f, -65.0f);
-    currentActionLabel->CCNode::setPosition(-80.0f, -65.0f);
+    currentActionLabel->CCNode::setPosition(-100.0f, -65.0f);
     
     targetLocationTitleLabel->CCNode::setPosition(-280.0f, -100.0f);
     
-    hungryTitleLabel->CCNode::setPosition(80.0f, 30.0f);
-    barHungry->CCNode::setPosition(80.0f, 0.0f);
-    hungryLabel->CCNode::setPosition(220.0f, 0.0f);
+    hungryTitleLabel->CCNode::setPosition(40.0f, 30.0f);
+    barHungry->CCNode::setPosition(40.0f, 0.0f);
+    hungryLabel->CCNode::setPosition(180.0f, 0.0f);
     
-    workRateTitleLabel->CCNode::setPosition(80.0f, -30.0f);
-    workRateLabel->CCNode::setPosition(220.0f, -30.0f);
+    workRateTitleLabel->CCNode::setPosition(40.0f, -30.0f);
+    workRateLabel->CCNode::setPosition(180.0f, -30.0f);
     
-    workUnitPerDayTitleLabel->CCNode::setPosition(80.0f, -60.0f);
-    workUnitPerDayLabel->CCNode::setPosition(220.0f, -60.0f);
+    workUnitPerDayTitleLabel->CCNode::setPosition(40.0f, -60.0f);
+    workUnitPerDayLabel->CCNode::setPosition(180.0f, -60.0f);
     
     
     // Anchored top
-    textName->CCNode::setPosition(0, halfHeight - 40.0f);
+    textName->CCNode::setPosition(0, halfHeight - 20.0f);
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 20.0f, halfHeight - 20.0f);
+    buttonClose->setPosition(halfWidth - 60.0f, halfHeight - 20.0f);
     buttonHome->setPosition(-halfWidth + 140.0f,  -halfHeight + 80.0f);
     buttonWorkPlace->setPosition(-halfWidth + 80.0f, -halfHeight + 80.0f);
     
     
     // Anchored bottom right
-    textCash->CCNode::setPosition(halfWidth - 25.0f, -halfHeight + 40.0f);
-    labelCash->CCNode::setPosition(halfWidth - 120.0f, -halfHeight + 40.0f);
-    spCash->CCNode::setPosition(halfWidth - 200.0f, -halfHeight + 40.0f);
+//    labelCash->CCNode::setPosition(halfWidth -380.0f, -halfHeight + 40.0f);
+    spCash->CCNode::setPosition(halfWidth - 430.0f, -halfHeight + 40.0f);
+    textCash->CCNode::setPosition(halfWidth - 330.0f, -halfHeight + 40.0f);
 }
 
 void SpriteInfoMenu::refreshAllMenuItemValues()

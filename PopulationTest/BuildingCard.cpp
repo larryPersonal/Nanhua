@@ -89,13 +89,10 @@ void BuildingCard::init()
         if (type == 1)
             menuImage = CCSprite::create("path.png");
         else if (type == 2)
-            menuImage = CCSprite::create("path.png");
+            menuImage = CCSprite::create("path-destroy.png");
         else
             menuImage = CCSprite::create("path.png");
        
-            
-        
-        
         menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
         buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
         buildingImage->setTag(-type); //this should only give -1, -2 and -3.
