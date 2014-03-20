@@ -507,8 +507,17 @@ int GameSprite::getPathDistance(CCPoint from, CCPoint to)
 
 void GameSprite::followPath()
 {
+    isMoving = true;
+    
     if(GameHUD::getThis()->pause)
     {
+        isMoving = false;
+        return;
+    }
+    
+    if(stopAction)
+    {
+        isMoving = false;
         return;
     }
     
@@ -526,8 +535,8 @@ void GameSprite::followPath()
             MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(node->tilepos.x, node->tilepos.y);
             if (tile->hasBuilding())
             {
-                if (spriteRep != NULL)
-                    spriteRep->setVisible(false);
+                //if (spriteRep != NULL)
+                    //spriteRep->setVisible(false);
             }
             else
             {
@@ -567,6 +576,7 @@ void GameSprite::followPath()
                     if(villagerClass == V_BANDIT){
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
                             nextTile = currentTile;
+                            isMoving = false;
                             return;
                         }
                     }
@@ -585,6 +595,7 @@ void GameSprite::followPath()
                         // if next tile has been pre-assigned by a soldier or the next tile has a soldier
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
                             nextTile = currentTile;
+                            isMoving = false;
                             return;
                         }
                     }
@@ -597,6 +608,7 @@ void GameSprite::followPath()
                     if(tile->isInCombat)
                     {
                         nextTile = currentTile;
+                        isMoving = false;
                         return;
                     }
                 }
@@ -683,7 +695,10 @@ void GameSprite::changeAnimation(std::string dir)
 
 void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
 {
-    if (spriteRep == NULL) return;
+    if (spriteRep == NULL){
+        isMoving = false;
+        return;
+    }
     
     CCPoint diff = ccpSub(target, spriteRep->getPosition());
     
@@ -767,7 +782,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
             {
                 targetLocation = nearestTarget;
                 GoLocation(nearestTarget, false);
-                isMoving = true;
+                isMoving = false;
                 return;
             }
         }
@@ -793,12 +808,12 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     }
     else
     {
-        isMoving = false;
         shouldStopNextSquare = false;
         isFollowingMoveInstruction = false;
         setAction(IDLE);
         idleDelay = 5.0f;
         changeAnimation(currentDir);
+        isMoving = false;
         
         /* trigger the event that should occur when the player arrives at his destination*/
         /* but only if a building is present.*/
@@ -1088,7 +1103,6 @@ void GameSprite::updateSprite(float dt)
                 }
                 else
                 {
-                    isMoving = false;
                     combatState = C_IDLE;
                     return;
                 }
@@ -1161,7 +1175,6 @@ void GameSprite::updateSprite(float dt)
                 }
                 else
                 {
-                    isMoving = false;
                     stopAction = false;
                     combatState = C_IDLE;
                     return;
@@ -1281,26 +1294,11 @@ void GameSprite::updateSprite(float dt)
         {
             if(!isMoving)
             {
-                isMoving = true;
-                stopAction = false;
                 tryEscape = true;
                 escape();
-            }
-            if(stopAction && tryEscape)
-            {
                 stopAction = false;
-                escape();
-            }
-            else if(stopAction)
-            {
-                tryEscape = true;
-                stopAction = false;
-                escape();
             }
         }
-        
-        // TODO: the soldiers will run back to defence tower to recover the endurance when they lose all the endurance
-        
     }
     else if(combatState == C_IDLE)
     {
@@ -1341,6 +1339,7 @@ void GameSprite::updateSprite(float dt)
                     stopAction = true;
                     enermy = opponent;
                     combatState = C_COMBAT;
+                    currAction = FIGHTING;
                 }
             }
             else
@@ -1394,7 +1393,6 @@ void GameSprite::updateSprite(float dt)
                 if(!isMoving)
                 {
                     stopAction = false;
-                    isMoving = true;
                     GoLocation(nearestTarget, false);
                 }
             }
@@ -1404,7 +1402,6 @@ void GameSprite::updateSprite(float dt)
                 if(opponent != NULL)
                 {
                     stopAction = true;
-                    isMoving = false;
                     combatState = C_COMBAT;
                 }
             }
@@ -1413,7 +1410,6 @@ void GameSprite::updateSprite(float dt)
                 if(stopAction)
                 {
                     stopAction = false;
-                    isMoving = true;
                     GoBuilding(jobLocation);
                 }
             }
@@ -1866,7 +1862,6 @@ bool GameSprite::GoLocation(CCPoint endPos, bool tryEscape)
         followPath();
         return true;
     } else {
-        isMoving = false;
         return false;
     }
 }
@@ -2798,7 +2793,6 @@ bool GameSprite::escape()
         isLeavingNextUpdate = true;
         return true;
     }
-    isMoving = false;
     return false;
 }
 
@@ -2827,7 +2821,6 @@ void GameSprite::damaged(int damage)
         possessions->current_endurance = 0;
         tryEscape = true;
         combatState = C_ESCAPE;
-        escape();
     }
 }
 
