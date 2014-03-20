@@ -26,7 +26,18 @@ void ObjectiveHandler::loadObjective()
     objectives->removeAllObjects();
     objectives->release();
     
-    //objectiveManager->parseXMLFile("objective.xml");
-    
-    //objectives = objectiveManager->objectives;
+    objectives = ObjectiveManager::parseXMLFile("objective.xml");
+}
+
+CCObject* ObjectiveHandler::getObjective(int index)
+{
+    for (int i = 0; i < objectives->count(); i++)
+    {
+        Objective* objective = (Objective*) objectives->objectAtIndex(i);
+        if(objective->oid == index)
+        {
+            return objective;
+        }
+    }
+    return NULL;
 }

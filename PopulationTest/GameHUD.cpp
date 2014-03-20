@@ -786,6 +786,10 @@ void GameHUD::createObjectiveMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     bool isHori = GlobalHelper::isHorizontal();
+    ccColor3B colorBlack = ccc3(0, 0, 0);
+    ccColor3B colorWhite = ccc3(255, 255, 255);
+    ccColor3B colorGreen = ccc3(0, 255, 0);
+    ccColor3B colorRed = ccc3(255, 0, 0);
     
     // create the objective group background
     string objectiveBackground = "objective.png";
@@ -839,28 +843,34 @@ void GameHUD::createObjectiveMenu()
     ss << "Objective";
     objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
-    objectiveTitle->setPosition(ccp(objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 220));
+    objectiveTitle->setPosition(ccp((objectiveMenu->boundingBox().size.width - 60) / 2.0f + 60, screenSize.height - 240));
     
-    /*
-    CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectiveManager->objectives;
-    ss.str(string());
-    ss << allObjectives->count() << " ******************";
-    CCLog(ss.str().c_str());
+    CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectives;
     for (int i = 0; i < allObjectives->count(); i++)
     {
         Objective* objective = (Objective*) allObjectives->objectAtIndex(i);
         std::string objectiveStr = objective->getObjectiveString();
         CCLabelTTF* tempLabel = CCLabelTTF::create(objectiveStr.c_str(), "Shojumaru-Regular", 16, CCSizeMake(objectiveStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
         tempLabel->setAnchorPoint(ccp(0, 0));
-        tempLabel->setPosition(ccp(20.0f, screenSize.height - 240 - 20.0f * i));
+        tempLabel->setPosition(ccp(75.0f, screenSize.height - 280 - 20.0f * i));
         objectiveStrs->addObject(tempLabel);
-        this->addChild(tempLabel);
+        this->addChild(tempLabel, 3);
+        if(objective->complete)
+        {
+            tempLabel->setColor(colorGreen);
+        }
     }
-    */
     
     this->addChild(menu_objective, 1);
     this->addChild(objectiveMenu, 2);
     this->addChild(objectiveTitle, 3);
+    
+    objectiveTitle->setVisible(false);
+    for (int i = 0; i < objectiveStrs->count(); i++)
+    {
+        CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+        objectiveStr->setVisible(false);
+    }
 }
 
 void GameHUD::clickObjectiveButton()
@@ -868,10 +878,22 @@ void GameHUD::clickObjectiveButton()
     if(objectiveMenu->isVisible())
     {
         objectiveMenu->setVisible(false);
+        objectiveTitle->setVisible(false);
+        for (int i = 0; i < objectiveStrs->count(); i++)
+        {
+            CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+            objectiveStr->setVisible(false);
+        }
     }
     else
     {
         objectiveMenu->setVisible(true);
+        objectiveTitle->setVisible(true);
+        for (int i = 0; i < objectiveStrs->count(); i++)
+        {
+            CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+            objectiveStr->setVisible(true);
+        }
     }
 }
 

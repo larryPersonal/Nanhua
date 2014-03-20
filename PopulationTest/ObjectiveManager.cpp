@@ -11,43 +11,20 @@
 
 ObjectiveManager::ObjectiveManager()
 {
-    objectives = CCArray::create();
-    objectives->retain();
 }
 
 ObjectiveManager::~ObjectiveManager()
 {
-    objectives->removeAllObjects();
-    CC_SAFE_RELEASE(objectives);
 }
 
-void ObjectiveManager::addObjective(Objective* objective)
-{
-    objectives->addObject(objective);
-}
 
-CCObject* ObjectiveManager::getObjective(int index)
-{
-    for (int i = 0; i < objectives->count(); i++)
-    {
-        Objective* objective = (Objective*) objectives->objectAtIndex(i);
-        if(objective->oid == index)
-        {
-            return objective;
-        }
-    }
-    return NULL;
-}
 
-void ObjectiveManager::parseXMLFile(string xml)
+CCArray* ObjectiveManager::parseXMLFile(string xml)
 {
-    objectives->removeAllObjects();
-    CC_SAFE_RELEASE(objectives);
-    
-    objectives = CCArray::create();
+    CCArray* objectives = CCArray::create();
     objectives->retain();
     
-    fr = new FileReader(xml);
+    FileReader* fr = new FileReader(xml);
     
     Objective* objective;
     
@@ -231,4 +208,6 @@ void ObjectiveManager::parseXMLFile(string xml)
             }
         }
     }
+    
+    return objectives;
 }

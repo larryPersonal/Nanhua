@@ -17,18 +17,13 @@ using namespace cocos2d;
 
 class ObjectiveManager {
 public:
-    CCArray* objectives;
-    FileReader* fr;
     
 public:
     ObjectiveManager();
     ~ObjectiveManager();
     
-    void addObjective(Objective*);
-    CCObject* getObjective(int index);
-    
     // interact with the xml file;
-    void parseXMLFile(string);
+    static CCArray* parseXMLFile(string);
 };
 
 #endif
