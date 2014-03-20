@@ -599,7 +599,7 @@ void GameScene::FirstRunPopulate()
     else
     {
         CCLOG("GameManager::getLoadedGame is false!");
-        CCPoint target = CCPointMake(25,19);
+        CCPoint target = CCPointMake(25,23);
         
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
         

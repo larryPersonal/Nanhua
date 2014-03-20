@@ -50,7 +50,7 @@ std::string Objective::getObjectiveString()
     std::stringstream ss;
     if(oType == DefaultGoal)
     {
-        return "No goals currently!";
+        ss << "No goals currently!";
     }
     else if(oType == PopulationGoal)
     {
@@ -72,4 +72,10 @@ std::string Objective::getObjectiveString()
     {
         ss << "Manage to obtain food of " << value << "!";
     }
+    else
+    {
+        ss << "unknow reason!";
+    }
+    
+    return ss.str();
 }

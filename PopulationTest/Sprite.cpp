@@ -429,7 +429,7 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
 
     if (path->count() == 0)
     {
-        CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
+        //CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
         saySpeech(STUCK, 2.0f);
         path = p->makePath(&from, &p->closest);
     }
@@ -468,7 +468,7 @@ bool GameSprite::CreatePathEscape(CCPoint from, CCPoint to)
     
     if (path->count() == 0)
     {
-        CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
+        //CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
         saySpeech(STUCK, 2.0f);
         path = p->makePath(&from, &p->closest);
     }

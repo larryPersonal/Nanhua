@@ -21,6 +21,8 @@ public:
     ~ObjectiveHandler();
     
     void loadObjective();
+    
+    CCObject* getObjective(int index);
 };
 
 
