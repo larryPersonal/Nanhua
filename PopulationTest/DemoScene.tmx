@@ -438,11 +438,6 @@
     <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
-  <tile id="16">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
  </tileset>
  <tileset firstgid="65" name="buildings3x3" tilewidth="384" tileheight="384">
   <tileoffset x="-128" y="128"/>

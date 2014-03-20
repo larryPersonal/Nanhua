@@ -37,7 +37,9 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
         bgBody->setTextureRect(CCRectMake(0, 0,
                                       bgBodyRect.size.width * (texture->getPixelsHigh() / bgBodyRect.size.height),
                                       texture->getPixelsHigh()));
-        bgBody->setScale(bgBodyRect.size.height / texture->getPixelsHigh());
+        bgBody->setScaleY(bgBodyRect.size.height / texture->getPixelsHigh());
+        bgBody->setScaleX(bgBodyRect.size.width / texture->getPixelsWide());
+        
     }
     else bgBody = NULL;
     
