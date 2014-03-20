@@ -578,11 +578,11 @@ void GameSprite::followPath()
                 CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
                 
                 for(int i = 0; i < allSprites->count(); i++){
+                    // get the location of that
                     GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-                    
-                    CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(gs->currPos));
-                    
                     if(villagerClass == V_SOLDIER){
+                        CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(gs->currPos));
+                        // if next tile has been pre-assigned by a soldier or the next tile has a soldier
                         if((gs->nextTile.x == this->nextTile.x && gs->nextTile.y == this->nextTile.y) || (this->nextTile.x == gsTile.x && this->nextTile.y == gsTile.y)){
                             nextTile = currentTile;
                             return;
@@ -590,6 +590,7 @@ void GameSprite::followPath()
                     }
                 }
                 
+                // if next tile is a battle tile, stop moving to the next tile.
                 MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(nextTile.x, nextTile.y);
                 if(tile != NULL)
                 {
@@ -893,40 +894,17 @@ bool GameSprite::attack()
         return escape();
     }
     
-    // The very first action for a bandit is always trying to robe the nearest granary for food.
-    if (spriteClass.compare("bandit") == 0 && hasValidGranary())
+    // The very first action for a bandit is always trying to robe the nearest granary for food or town hall for money.
+    if (spriteClass.compare("bandit") == 0 && hasValidTarget())
     {
         return true;
     }
-    
-    // if no granary or all granary are empty, attack the town hall for money
-    if(spriteClass.compare("bandit") == 0)
+    else
     {
-        Building* townHall = NULL;
-        CCArray* allSpecial = GameScene::getThis()->buildingHandler->specialOnMap;
-        for (int i = 0; i < allSpecial->count(); i++)
-        {
-            Building* tempBuilding = (Building*) allSpecial->objectAtIndex(i);
-            if(tempBuilding->build_uint_required >= 10000)
-            {
-                townHall = tempBuilding;
-                break;
-            }
-        }
-        
-        if (townHall != NULL && GameHUD::getThis()->money > 0)
-        {
-            nextAction = ROB;
-            setTargetLocation(townHall);
-            GoBuilding(townHall);
-            return true;
-        }
-        else
-        {
-            tryEscape = true;
-        }
+        saySpeech("Enough already, go back loh!", 5.0f);
+        tryEscape = true;
+        return false;
     }
-    return false;
 }
 
 void GameSprite::StopMoving()
@@ -1882,7 +1860,7 @@ bool GameSprite::GoLocation(CCPoint endPos, bool tryEscape)
         hasPath = CreatePath(startPos, endPos);
     }
     
-    if(hasPath)//&& !isFollowingMoveInstruction)
+    if(hasPath)
     {
         isFollowingMoveInstruction = true;
         followPath();
@@ -2513,36 +2491,35 @@ bool GameSprite::findNearestHome()
     return true;
 }
 
-bool GameSprite::hasValidGranary()
+bool GameSprite::hasValidTarget()
 {
-    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
-    Building* nearestGranary = NULL;
-    int distance = 999999;
-    
-    for (int i = 0; i < allGranary->count(); i++)
+    Building* nearestTarget;
+    if(current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob && current_food_rob < GameScene::getThis()->settingsLevel->max_food_rob)
     {
-        Building* b = (Building*)allGranary->objectAtIndex(i);
-        
-        CCPoint startPos = getWorldPosition();
-        CCPoint endPos = b->getWorldPosition();
-        
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-        
-        int tempDistance = getPathDistance(startPos, endPos);
-        
-        if(tempDistance < distance && b->currentStorage > 0)
-        {
-            distance = tempDistance;
-            nearestGranary = b;
-        }
+        nearestTarget = checkTarget(1);
+    }
+    else if(current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob)
+    {
+        nearestTarget = checkTarget(3);
+    }
+    else
+    {
+        nearestTarget = checkTarget(2);
     }
     
-    if (nearestGranary != NULL)
+    if (nearestTarget != NULL)
     {
-        possessions->targetLocation = nearestGranary;
+        possessions->targetLocation = nearestTarget;
         nextAction = ROB;
-        GoBuilding(nearestGranary);
+        if(nearestTarget->buildingType == SPECIAL)
+        {
+            saySpeech("Your money is mine!", 5.0f);
+        }
+        else
+        {
+            saySpeech("I want to get food free!", 5.0f);
+        }
+        GoBuilding(nearestTarget);
         return true;
     }
     else
@@ -2550,6 +2527,86 @@ bool GameSprite::hasValidGranary()
         return false;
     }
 }
+
+Building* GameSprite::checkTarget(int mode)
+{
+    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    CCArray* allSpecial = GameScene::getThis()->buildingHandler->specialOnMap;
+    
+    Building* nearestTarget = NULL;
+    int distance = 999999;
+    
+    // mode 1: check all
+    if(mode == 1)
+    {
+        for (int i = 0; i < (allGranary->count() + allSpecial->count()); i++)
+        {
+            Building* b;
+            if(i < allGranary->count())
+            {
+                b = (Building*) allGranary->objectAtIndex(i);
+            }
+            else
+            {
+                b = (Building*) allSpecial->objectAtIndex(i - allGranary->count());
+            }
+            
+            int tempDistance = getDistance(b);
+            
+            if(tempDistance < distance && ((b->currentStorage > 0 && b->buildingType == GRANARY) || (b->buildingType == SPECIAL && GameHUD::getThis()->money > 0)))
+            {
+                distance = tempDistance;
+                nearestTarget = b;
+            }
+        }
+    }
+    else if(mode == 2)
+    // mode 2: check the granary;
+    {
+        for (int i = 0; i < allGranary->count(); i++)
+        {
+            Building* b = (Building*) allGranary->objectAtIndex(i);
+            
+            int tempDistance = getDistance(b);
+            
+            if(tempDistance < distance && b->currentStorage > 0)
+            {
+                distance = tempDistance;
+                nearestTarget = b;
+            }
+        }
+    }
+    else
+    // in other cases: check the town hall
+    {
+        for (int i = 0; i < allSpecial->count(); i++)
+        {
+            Building* b = (Building*) allSpecial->objectAtIndex(i);
+            
+            int tempDistance = getDistance(b);
+            
+            if(tempDistance < distance && GameHUD::getThis()->money > 0)
+            {
+                distance = tempDistance;
+                nearestTarget = b;
+            }
+        }
+    }
+    
+    return nearestTarget;
+}
+
+int GameSprite::getDistance(Building* b)
+{
+    CCPoint startPos = getWorldPosition();
+    CCPoint endPos = b->getWorldPosition();
+    
+    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+    
+    return getPathDistance(startPos, endPos);
+}
+
 
 void GameSprite::updateEndurance(float dt)
 {

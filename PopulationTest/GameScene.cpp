@@ -31,10 +31,6 @@ GameScene::GameScene()
     objectiveHandler = new ObjectiveHandler();
     objectiveHandler->loadObjective();
     
-    stringstream ss;
-    ss << "***************" << objectiveHandler->objectives->count() << "****************";
-    CCLog(ss.str().c_str());
-    
     _currentTime = 0;
     _previousTime = 0;
     
