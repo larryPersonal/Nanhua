@@ -337,7 +337,9 @@ public:
     void checkDropRate();
     
     bool attack();
-    bool hasValidGranary();
+    bool hasValidTarget();
+    Building* checkTarget(int mode);
+    int getDistance(Building*);
     bool escape();
     
     void damaged(int);

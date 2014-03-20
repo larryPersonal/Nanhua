@@ -142,8 +142,8 @@ struct SettingsLevel
         energy_decay_rate = 0.5; // decay 1 of the energy in one real second.
         energy_decay_coefficient = 1.0;
         
-        max_money_rob = 500;
-        max_food_rob = 500;
+        max_money_rob = 200;
+        max_food_rob = 200;
     }
 };
 
