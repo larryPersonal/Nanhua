@@ -475,9 +475,14 @@ void MapHandler::Populate(CCArray* layers)
             MapTile* tile = this->getTileAt(i,j);
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
-            //path is from 20 to 31
-            if (tile->tileGID > 20 && tile->tileGID < 32 )
+            if (tile->tileGID > 0)
+                //test: I should have NOTHING ELSE in that layer
+                
+            
+            //path is from 25 to 35
+            //if (tile->tileGID > 27 && tile->tileGID < 39 )
             {
+                CCLog("%d",tile->tileGID);
                 tile->pathHere();
                 pathTiles->addObject(tile);
             }

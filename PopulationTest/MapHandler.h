@@ -17,17 +17,17 @@
 enum TileType
 {
     N = 0,
-    NESE = 21,
-    NESESW = 22,
-    SESW = 23,
-    NESENW = 24,
-    NESESWNW = 25,
-    SESWNW = 26,
-    NENW = 27,
-    NESWNW = 28,
-    SWNW = 29,
-    NESW = 30,
-    SENW = 31,
+    NESE = 25,
+    NESESW = 26,
+    SESW = 27,
+    NESENW = 28,
+    NESESWNW = 29,
+    SESWNW = 30,
+    NENW = 31,
+    NESWNW = 32,
+    SWNW = 33,
+    NESW = 34,
+    SENW = 35,
 };
 
 
