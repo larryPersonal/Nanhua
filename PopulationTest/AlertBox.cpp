@@ -73,10 +73,10 @@ void AlertBox::createMenuItems()
     menuItemPositions = CCPointArray::create(0);
     menuItemPositions->retain();
     
-    background = CCSprite::create("outerbox.png");
+    background = CCSprite::create("dialogbox.png");
     background->setScale(500.0f / background->getContentSize().height);
     
-    backgroundOverlay = CCSprite::create("board-alert.png");
+    backgroundOverlay = CCSprite::create("blackscreen.png");
     backgroundOverlay->setScale(background->getScale());
     
     

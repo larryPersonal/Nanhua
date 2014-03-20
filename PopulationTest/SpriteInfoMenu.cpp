@@ -66,12 +66,12 @@ void SpriteInfoMenu::createMenuItems()
     spCash = CCSprite::create("yuanbao.png");
     spCash->setScale(0.75);
     
-    std::string tempStr = "CASH";
-    labelCash = CCLabelTTF::create(tempStr.c_str(), "Shojumaru-Regular", 20, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelCash->setColor(colorYellow);
+  //  std::string tempStr = "CASH";
+   // labelCash = CCLabelTTF::create(tempStr.c_str(), "Shojumaru-Regular", 20, CCSizeMake(tempStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    //labelCash->setColor(colorYellow);
     
     std::stringstream ss;
-    ss << mGameSpriteCash << " Y";
+    ss << mGameSpriteCash << "Y";
     textCash = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textCash->setColor(colorYellow);
     
@@ -270,7 +270,7 @@ void SpriteInfoMenu::createMenuItems()
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
     
-    buttonClose = CCMenuItemImage::create("Closebtn_Circle.png", "Closebtn_Circle.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
+    buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
     buttonClose->setTag(0);
 
     buttonHome = CCMenuItemImage::create("homebutton.png", "homebutton_pressed.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
@@ -293,7 +293,7 @@ void SpriteInfoMenu::createMenuItems()
     this->addChild(spriteBackground);
     this->addChild(spriteBackgroundInner);
     this->addChild(spCash);
-    this->addChild(labelCash);
+   // this->addChild(labelCash);
     this->addChild(textName);
     this->addChild(textCash);
     this->addChild(menu);
@@ -347,7 +347,7 @@ void SpriteInfoMenu::createMenuItems()
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     textName->setAnchorPoint(ccp(0.5, 1));
     spCash->setAnchorPoint(ccp(1, 0));
-    labelCash->setAnchorPoint(ccp(1, 0));
+   // labelCash->setAnchorPoint(ccp(1, 0));
     textCash->setAnchorPoint(ccp(1, 0));
     buttonClose->setAnchorPoint(ccp(1, 1));
     
@@ -519,15 +519,15 @@ void SpriteInfoMenu::reposition()
     textName->CCNode::setPosition(0, halfHeight - 20.0f);
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 50.0f, -halfHeight + 80.0f);
+    buttonClose->setPosition(halfWidth - 60.0f, halfHeight - 20.0f);
     buttonHome->setPosition(-halfWidth + 140.0f,  -halfHeight + 80.0f);
     buttonWorkPlace->setPosition(-halfWidth + 80.0f, -halfHeight + 80.0f);
     
     
     // Anchored bottom right
-    textCash->CCNode::setPosition(halfWidth - 125.0f, -halfHeight + 40.0f);
-    labelCash->CCNode::setPosition(halfWidth - 220.0f, -halfHeight + 40.0f);
-    spCash->CCNode::setPosition(halfWidth - 300.0f, -halfHeight + 40.0f);
+//    labelCash->CCNode::setPosition(halfWidth -380.0f, -halfHeight + 40.0f);
+    spCash->CCNode::setPosition(halfWidth - 430.0f, -halfHeight + 40.0f);
+    textCash->CCNode::setPosition(halfWidth - 330.0f, -halfHeight + 40.0f);
 }
 
 void SpriteInfoMenu::refreshAllMenuItemValues()

@@ -94,16 +94,16 @@ void BuildingInfoMenu::createMenuItems()
     }
     
     
-    ccColor3B colorBlack = ccc3(0, 0, 0);
+   // ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
-    ccColor3B colorGreen = ccc3(81, 77, 2);
+   // ccColor3B colorGreen = ccc3(81, 77, 2);
     
     // Create constant menu items
     spriteBackground = CCSprite::create("BuildingInfoUI.png");
     spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width);
     
-   // spriteBackgroundInner = CCSprite::create("innerbox-info.png");
-   // spriteBackgroundInner->setScale(spriteBackground->getScale());
+    spriteBackgroundInner = CCSprite::create("blackscreen.png");
+    spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
     mBuildingLevel = GameManager::getThis()->town_hall_level;
@@ -141,21 +141,22 @@ void BuildingInfoMenu::createMenuItems()
     spLoy->setScale(0.75);
     spHap = CCSprite::create("happiness icon.png");
     spHap->setScale(0.75);
-    spPrice = CCSprite::create("money icon.png");
+    spPrice = CCSprite::create("yuanbao.png");
     spPrice->setScale(0.75);
-    spCash = CCSprite::create("money icon.png");
+    spCash = CCSprite::create("yuanbao.png");
     //spCash = CCSprite::create("happiness icon.png");
     spCash->setScale(0.75);
     
     std::stringstream ss;
-    ss << "Yearly: " << mBuildingPrice << " G";
-    textPrice = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 26, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    ss << "Yearly: " << mBuildingPrice << "Y";
+    textPrice = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     textPrice->setColor(colorYellow);
     
     // Sprite
     spriteBuilding = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-    spriteBuilding->setScale(128.0f / spriteBuilding->boundingBox().size.width);
     spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
+    
+    spriteBuilding->setScale(256.0f / spriteBuilding->boundingBox().size.width);
     
     if(building->isUnderConstruction())
     {
@@ -166,7 +167,7 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(std::string());
     ss << "Level: " << (mBuildingLevel + 1);
     labelLevel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
-    labelLevel->setColor(colorGreen);
+    labelLevel->setColor(colorYellow);
     
     ss.str(std::string());
     if(building->build_uint_current < building->build_uint_required)
@@ -178,18 +179,18 @@ void BuildingInfoMenu::createMenuItems()
         ss << "Ready for service";
     }
     labelStatus = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelStatus->setColor(colorBlack);
+    labelStatus->setColor(colorYellow);
     
     ss.str(std::string());
     ss << building->build_uint_current << "/" << building->build_uint_required;
     unitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    unitLabel->setColor(colorBlack);
+    unitLabel->setColor(colorYellow);
     
     unitBar = new ProgressBar();
     unitBar->createProgressBar(
                                CCRectMake(0, 0, 80, 20),
-                               CCRectMake(5, 5, 70, 15),
-                               "Energy_brown bar.png",
+                               CCRectMake(5, 5, 70, 10),
+                               "Energy_brown dialog.png",
                                "NONE",
                                "NONE",
                                "Energybar.png"
@@ -201,50 +202,50 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(std::string());
     ss << "0";
     labelLoy = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelLoy->setColor(colorBlack);
+    labelLoy->setColor(colorYellow);
     
     // hapiness
     ss.str(std::string());
     ss << "0";
     labelHap = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelHap->setColor(colorBlack);
+    labelHap->setColor(colorYellow);
     */
     
     // recovery rate
     ss.str(std::string());
     ss << "RR:";
     recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    recoveryRateTitleLabel->setColor(colorBlack);
+    recoveryRateTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     ss << building->recovery_rate;
     recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    recoveryRateLabel->setColor(colorBlack);
+    recoveryRateLabel->setColor(colorYellow);
     
     // food consumption rate
     ss.str(std::string());
     ss << "FC:";
     foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodConsumptionRateTitleLabel->setColor(colorBlack);
+    foodConsumptionRateTitleLabel->setColor(colorYellow);
     
     ss.str(std::string());
     
     ss << building->food_consumption_rate;
     foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodConsumptionRateLabel->setColor(colorBlack);
+    foodConsumptionRateLabel->setColor(colorYellow);
     
     // food storage limit
     ss.str(std::string());
     ss << "Food Storage:";
     foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodStorageTitleLabel->setColor(colorBlack);
+    foodStorageTitleLabel->setColor(colorYellow);
     
     // food storage
     foodStorageBar = new ProgressBar();
     foodStorageBar->createProgressBar(
                                CCRectMake(0, 0, 80, 20),
                                CCRectMake(5, 5, 70, 10),
-                               "Energy_brown bar.png",
+                               "Energy_brown dialog.png",
                                "NONE",
                                "NONE",
                                "Energybar.png"
@@ -254,19 +255,19 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(std::string());
     ss << building->currentStorage << "/" << building->storageLimit;
     foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    foodStorageLabel->setColor(colorBlack);
+    foodStorageLabel->setColor(colorYellow);
     
     // work unit done
     ss.str(std::string());
     ss << "Work Unit Done:";
     workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    workCompleteTitleLabel->setColor(colorBlack);
+    workCompleteTitleLabel->setColor(colorYellow);
     
     workCompleteBar = new ProgressBar();
     workCompleteBar->createProgressBar(
                                       CCRectMake(0, 0, 80, 20),
                                       CCRectMake(5, 5, 70, 10),
-                                      "Energy_brown bar.png",
+                                      "Energy_brown dialog.png",
                                       "NONE",
                                       "NONE",
                                       "Energybar.png"
@@ -276,7 +277,7 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(std::string());
     ss << (int) building->work_unit_current << "/" << (int) building->work_unit_required;
     workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    workCompleteLabel->setColor(colorBlack);
+    workCompleteLabel->setColor(colorYellow);
     
     // Menu items
     menuItems = CCArray::create();
@@ -284,14 +285,13 @@ void BuildingInfoMenu::createMenuItems()
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
     
-    buttonClose = CCMenuItemImage::create("closebutton-up.png", "closebutton-down.png", this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
-    buttonClose->setScale(0.4);
-    buttonClose->setTag(-1);
+    buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
+     buttonClose->setTag(-1);
     
     menuItems->addObject(buttonClose);
     
     selectWorkerButton = CCMenuItemImage::create("schedule.png", "schedule.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton->setScale( 60.0f / selectWorkerButton->boundingBox().size.width );
+    selectWorkerButton->setScale( 80.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
     if(!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY)
@@ -369,7 +369,7 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(string());
     ss << "Villages Assigned!";
     spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    spritePopulationLabel->setColor(colorGreen);
+    spritePopulationLabel->setColor(colorYellow);
     spritePopulationLabel->setAnchorPoint(ccp(0, 1));
     this->addChild(spritePopulationLabel);
     
@@ -410,7 +410,7 @@ void BuildingInfoMenu::createMenuItems()
     
     /*********************** for building level up *********************/
     moneyIcon = CCSprite::create("yuanbao_icon.png");
-    moneyIcon->setScale(0.5f);
+    moneyIcon->setScale(0.4f);
     moneyIcon->setAnchorPoint(ccp(0, 1));
     moneyIcon->setPosition(ccp(-200, -190));
     this->addChild(moneyIcon);
@@ -418,36 +418,36 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(string());
     int level = GameManager::getThis()->town_hall_level;
     mGameLevel = level;
-    ss << GameManager::getThis()->housingLimitation->gold_required.at(level) << "G";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
+    ss << GameManager::getThis()->housingLimitation->gold_required.at(level) << "Y";
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     moneyLabel->setAnchorPoint(ccp(0, 1));
     moneyLabel->setPosition(ccp(-90, -205));
-    moneyLabel->setColor(colorGreen);
+    moneyLabel->setColor(colorYellow);
     this->addChild(moneyLabel);
     
     foodIcon = CCSprite::create("rice_icon.png");
-    foodIcon->setScale(0.5f);
+    foodIcon->setScale(0.4f);
     foodIcon->setAnchorPoint(ccp(0, 1));
-    foodIcon->setPosition(ccp(30, -180));
+    foodIcon->setPosition(ccp(0, -180));
     this->addChild(foodIcon);
     
     ss.str(string());
     ss << GameManager::getThis()->housingLimitation->food_required.at(level);
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     foodLabel->setAnchorPoint(ccp(0, 1));
-    foodLabel->setPosition(ccp(110, -205));
-    foodLabel->setColor(colorGreen);
+    foodLabel->setPosition(ccp(80, -205));
+    foodLabel->setColor(colorYellow);
     this->addChild(foodLabel);
     
     upgradeButton = CCMenuItemImage::create("upgrade.png", "upgrade.png", this, menu_selector(BuildingInfoMenu::upgrade));
-    upgradeButton->setScale(0.5f);
+    upgradeButton->setScale(0.4f);
     upgradeButton->setAnchorPoint(ccp(0, 1));
-    upgradeButton->setPosition(ccp(250, -180));
+    upgradeButton->setPosition(ccp(150, -180));
     
     cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
     cancelUpgradeButton->setScale(upgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, upgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
     cancelUpgradeButton->setAnchorPoint(ccp(0, 1));
-    cancelUpgradeButton->setPosition(ccp(250, -180));
+    cancelUpgradeButton->setPosition(ccp(150, -180));
     
     menuItemsUpgrade = CCArray::create();
     menuItemsUpgrade->retain();
@@ -464,7 +464,7 @@ void BuildingInfoMenu::createMenuItems()
     upgradeBar->createProgressBar(
                                        CCRectMake(0, 0, 80, 20),
                                        CCRectMake(5, 5, 70, 10),
-                                       "Energy_brown bar.png",
+                                       "Energy_brown dialog.png",
                                        "NONE",
                                        "NONE",
                                        "Energybar.png"
@@ -480,7 +480,7 @@ void BuildingInfoMenu::createMenuItems()
     upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 24.0f, 5.0f), kCCTextAlignmentLeft);
     upgradeBarLabel->setAnchorPoint(ccp(0, 1));
     upgradeBarLabel->setPosition(ccp(-120, -90));
-    upgradeBarLabel->setColor(colorGreen);
+    upgradeBarLabel->setColor(colorYellow);
     this->addChild(upgradeBarLabel);
     
     ss.str(string());
@@ -488,7 +488,7 @@ void BuildingInfoMenu::createMenuItems()
     houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     houseLimitTitle->setAnchorPoint(ccp(0, 1));
     houseLimitTitle->setPosition(ccp(60, 100));
-    houseLimitTitle->setColor(colorGreen);
+    houseLimitTitle->setColor(colorYellow);
     this->addChild(houseLimitTitle);
     
     CCArray* allHouse = GameScene::getThis()->buildingHandler->housingOnMap;
@@ -499,7 +499,7 @@ void BuildingInfoMenu::createMenuItems()
     houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     houseLimitLabel->setAnchorPoint(ccp(0, 1));
     houseLimitLabel->setPosition(ccp(240, 100));
-    houseLimitLabel->setColor(colorGreen);
+    houseLimitLabel->setColor(colorYellow);
     this->addChild(houseLimitLabel);
     
     ss.str(string());
@@ -507,7 +507,7 @@ void BuildingInfoMenu::createMenuItems()
     granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     granaryLimitTitle->setAnchorPoint(ccp(0, 1));
     granaryLimitTitle->setPosition(ccp(60, 70));
-    granaryLimitTitle->setColor(colorGreen);
+    granaryLimitTitle->setColor(colorYellow);
     this->addChild(granaryLimitTitle);
     
     CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
@@ -518,7 +518,7 @@ void BuildingInfoMenu::createMenuItems()
     granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     granaryLimitLabel->setAnchorPoint(ccp(0, 1));
     granaryLimitLabel->setPosition(ccp(240, 70));
-    granaryLimitLabel->setColor(colorGreen);
+    granaryLimitLabel->setColor(colorYellow);
     this->addChild(granaryLimitLabel);
     
     ss.str(string());
@@ -526,7 +526,7 @@ void BuildingInfoMenu::createMenuItems()
     farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     farmLimitTitle->setAnchorPoint(ccp(0, 1));
     farmLimitTitle->setPosition(ccp(60, 40));
-    farmLimitTitle->setColor(colorGreen);
+    farmLimitTitle->setColor(colorYellow);
     this->addChild(farmLimitTitle);
     
     CCArray* allFarm = GameScene::getThis()->buildingHandler->amenityOnMap;
@@ -537,7 +537,7 @@ void BuildingInfoMenu::createMenuItems()
     farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     farmLimitLabel->setAnchorPoint(ccp(0, 1));
     farmLimitLabel->setPosition(ccp(240, 40));
-    farmLimitLabel->setColor(colorGreen);
+    farmLimitLabel->setColor(colorYellow);
     this->addChild(farmLimitLabel);
     
     ss.str(string());
@@ -545,7 +545,7 @@ void BuildingInfoMenu::createMenuItems()
     guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     guardTowerLimitTitle->setAnchorPoint(ccp(0, 1));
     guardTowerLimitTitle->setPosition(ccp(60, 10));
-    guardTowerLimitTitle->setColor(colorGreen);
+    guardTowerLimitTitle->setColor(colorYellow);
     this->addChild(guardTowerLimitTitle);
     
     CCArray* allTower = GameScene::getThis()->buildingHandler->militaryOnMap;
@@ -556,7 +556,7 @@ void BuildingInfoMenu::createMenuItems()
     guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
     guardTowerLimitLabel->setPosition(ccp(240, 10));
-    guardTowerLimitLabel->setColor(colorGreen);
+    guardTowerLimitLabel->setColor(colorYellow);
     this->addChild(guardTowerLimitLabel);
     
     mGameCurrentlyUpgrading = building->isCurrentUpgrading;
@@ -718,8 +718,8 @@ void BuildingInfoMenu::reposition()
     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
     
     // Anchored top left
-    spriteBuilding->CCNode::setPosition(-195.0f, 100.0f);
-    labelLevel->CCNode::setPosition(-130.0f, -50.0f);
+    spriteBuilding->CCNode::setPosition(-290.0f, 220.0f);
+    labelLevel->CCNode::setPosition(-150.0f, -50.0f);
     
     labelStatus->CCNode::setPosition(60.0f, 100.0f);
     unitBar->CCNode::setPosition(60.0f, 70.0f);
@@ -729,29 +729,29 @@ void BuildingInfoMenu::reposition()
     //labelLoy->CCNode::setPosition(160.0f, 50.0f - spLoy->boundingBox().size.height / 2.0f + labelLoy->boundingBox().size.height / 2.0f);
     //labelHap->CCNode::setPosition(160.0f, 0.0f - spHap->boundingBox().size.height / 2.0f + labelHap->boundingBox().size.height / 2.0f);
     
-    recoveryRateTitleLabel->CCNode::setPosition(60.0f, 40.0f);
-    recoveryRateLabel->CCNode::setPosition(160.0f, 40.0f);
+    recoveryRateTitleLabel->CCNode::setPosition(50.0f, 40.0f);
+    recoveryRateLabel->CCNode::setPosition(150.0f, 40.0f);
     
-    foodConsumptionRateTitleLabel->CCNode::setPosition(60.0f, 10.0f);
-    foodConsumptionRateLabel->CCNode::setPosition(160.0f, 10.0f);
+    foodConsumptionRateTitleLabel->CCNode::setPosition(50.0f, 10.0f);
+    foodConsumptionRateLabel->CCNode::setPosition(150.0f, 10.0f);
     
-    foodStorageTitleLabel->CCNode::setPosition(60.0f, -20.0f);
-    foodStorageBar->CCNode::setPosition(60.0f, -50.0f);
-    foodStorageLabel->CCNode::setPosition(160.0f, -50.0f);
+    foodStorageTitleLabel->CCNode::setPosition(50.0f, -20.0f);
+    foodStorageBar->CCNode::setPosition(50.0f, -50.0f);
+    foodStorageLabel->CCNode::setPosition(150.0f, -50.0f);
     
-    workCompleteTitleLabel->CCNode::setPosition(60.0f, -80.0f);
-    workCompleteBar->CCNode::setPosition(60.0f, -110.0f);
-    workCompleteLabel->CCNode::setPosition(160.0f, -110.0f);
+    workCompleteTitleLabel->CCNode::setPosition(50.0f, -80.0f);
+    workCompleteBar->CCNode::setPosition(50.0f, -110.0f);
+    workCompleteLabel->CCNode::setPosition(150.0f, -110.0f);
     
     // Anchored top
-    textName->CCNode::setPosition(0, halfHeight - 40.0f);
+    textName->CCNode::setPosition(0, halfHeight - 20.0f);
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 20.0f, halfHeight - 20.0f);
+    buttonClose->setPosition(halfWidth - 60.0f, halfHeight - 20.0f);
     
     // Anchored bottom right
-    textPrice->CCNode::setPosition(halfWidth, -halfHeight + 40.0f);
-    spPrice->CCNode::setPosition(halfWidth - 250.0f, -halfHeight + 40.0f);
+    textPrice->CCNode::setPosition(halfWidth -200.0f, -halfHeight + 40.0f);
+    spPrice->CCNode::setPosition(halfWidth - 430.0f, -halfHeight + 40.0f);
     
     // Anchored top left
     spritePopulationLabel->setPosition(ccp(-halfWidth * 3.0f / 4.0f, -35.0));
