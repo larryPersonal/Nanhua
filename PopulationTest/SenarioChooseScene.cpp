@@ -53,10 +53,16 @@ bool SenarioChooseScene::init()
     {
         return false;
     }
-    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    backgroundImage = CCSprite::create("bkg.png");
+   //; CCRect boxrect
+    CCRect exitrect = CCRectMake(0,0, screenSize.width * 0.1f, screenSize.width * 0.1f);
+    
+    //bgBody->setContentSize(bgBodyRect.size);
+    
+    
+    
+    backgroundImage = CCSprite::create("Level Select Screen.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
     
     senarioButtonTutorial = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(SenarioChooseScene::chooseTutorial));
@@ -65,7 +71,7 @@ bool SenarioChooseScene::init()
     senarioButtonS3 = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(SenarioChooseScene::chooseSenario3));
     senarioButtonS4 = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(SenarioChooseScene::chooseSenario4));
     senarioButtonS5 = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(SenarioChooseScene::chooseSenario5));
-    senarioButtonS6 = CCMenuItemImage::create("mainmenu-button.png", "mainmenu-button-pressed.png", this, menu_selector(SenarioChooseScene::chooseSenario6));
+    senarioButtonS6 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario6));
     
     CCLabelTTF* tutorialLabel = CCLabelTTF::create("Tutorial", "Shojumaru-Regular" ,96, senarioButtonTutorial->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // tutorialLabel->setAnchorPoint(ccp(0.5f, 0.5));
@@ -103,9 +109,10 @@ bool SenarioChooseScene::init()
     senarioButtonS5->addChild(senarioLabel5);
     senarioLabel5->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel6 = CCLabelTTF::create("Senario 6", "Shojumaru-Regular" ,96, senarioButtonS6->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* senarioLabel6 = CCLabelTTF::create("Back", "Shojumaru-Regular" ,96, senarioButtonS6->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel6->setAnchorPoint(ccp(0.5f, 0.5));
     senarioLabel6->setPosition( ccp(senarioButtonS6->boundingBox().size.width * 0.5f, senarioButtonS6->boundingBox().size.height * 0.5f));
+    senarioButtonS6->setContentSize(exitrect.size);
     senarioButtonS6->addChild(senarioLabel6);
     senarioLabel6->setColor(ccc3(255,189,68));
 
@@ -131,14 +138,14 @@ bool SenarioChooseScene::init()
     }
     //onOrientateChange();
     
-    backgroundImage->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.25));
-    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.86));
-    senarioButtonS1->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.74));
-    senarioButtonS2->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.62));
-    senarioButtonS3->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.50));
-    senarioButtonS4->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.38));
-    senarioButtonS5->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.26));
-    senarioButtonS6->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.14));
+    backgroundImage->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.5));
+    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.6));
+    senarioButtonS1->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.4));
+    senarioButtonS2->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.2));
+    senarioButtonS3->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.6));
+    senarioButtonS4->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.4));
+    senarioButtonS5->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.2));
+    senarioButtonS6->setPosition(ccp(screenSize.width * 0.85, screenSize.height * 0.1));
     
     CCMenu* menu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, NULL);
     menu->setPosition( CCPointZero );
@@ -192,14 +199,13 @@ void SenarioChooseScene::chooseSenario6()
 void SenarioChooseScene::onOrientateChange(){
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    backgroundImage->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.25));
-    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.86));
-    senarioButtonS1->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.74));
-    senarioButtonS2->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.62));
-    senarioButtonS3->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.50));
-    senarioButtonS4->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.38));
-    senarioButtonS5->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.26));
-    senarioButtonS6->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.14));
+    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.6));
+    senarioButtonS1->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.4));
+    senarioButtonS2->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.2));
+    senarioButtonS3->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.6));
+    senarioButtonS4->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.4));
+    senarioButtonS5->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.2));
+    senarioButtonS6->setPosition(ccp(screenSize.width * 0.85, screenSize.height * 0.1));
     
     
 }

@@ -193,6 +193,9 @@
 		365FBC4416E5E31000A57CF0 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365FBC4316E5E31000A57CF0 /* LocalStorageAndroid.cpp */; };
 		365FBC4716E5E31000A57CF0 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365FBC4616E5E31000A57CF0 /* HttpClient.cpp */; };
 		365FBC5C16E5E31000A57CF0 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365FBC5B16E5E31000A57CF0 /* AppDelegate.cpp */; };
+		36682A3618DAC12100BC4214 /* Level Select Screen 02.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3418DAC12100BC4214 /* Level Select Screen 02.png */; };
+		36682A3718DAC12100BC4214 /* Level Select Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3518DAC12100BC4214 /* Level Select Screen.png */; };
+		36682A3918DAC68400BC4214 /* Energy_brown bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3818DAC68400BC4214 /* Energy_brown bar.png */; };
 		366F6CA0171CFD5700CDCC6F /* citizenbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */; };
 		36761242170E67FE00CD354B /* Behavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36761240170E67FE00CD354B /* Behavior.cpp */; };
 		36761245170E680800CD354B /* Composite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36761243170E680800CD354B /* Composite.cpp */; };
@@ -839,6 +842,9 @@
 		365FBC5816E5E31000A57CF0 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		365FBC5A16E5E31000A57CF0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		365FBC5B16E5E31000A57CF0 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
+		36682A3418DAC12100BC4214 /* Level Select Screen 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen 02.png"; sourceTree = "<group>"; };
+		36682A3518DAC12100BC4214 /* Level Select Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen.png"; sourceTree = "<group>"; };
+		36682A3818DAC68400BC4214 /* Energy_brown bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Energy_brown bar.png"; sourceTree = "<group>"; };
 		366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citizenbehavior.lua; sourceTree = "<group>"; };
 		36761240170E67FE00CD354B /* Behavior.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Behavior.cpp; sourceTree = "<group>"; };
 		36761241170E67FE00CD354B /* Behavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Behavior.h; sourceTree = "<group>"; };
@@ -2075,6 +2081,8 @@
 		36AC559118D6B81800C165F5 /* ScenarioSelect */ = {
 			isa = PBXGroup;
 			children = (
+				36682A3418DAC12100BC4214 /* Level Select Screen 02.png */,
+				36682A3518DAC12100BC4214 /* Level Select Screen.png */,
 			);
 			name = ScenarioSelect;
 			sourceTree = "<group>";
@@ -3369,6 +3377,7 @@
 				36AC554018D6981900C165F5 /* charboy_represent.png */,
 				36AC554118D6981900C165F5 /* chargirl_represent.png */,
 				36AC554218D6981900C165F5 /* dialogbox.png */,
+				36682A3818DAC68400BC4214 /* Energy_brown bar.png */,
 				36AC554318D6981900C165F5 /* Energy.png */,
 				36AC554418D6981900C165F5 /* Energybar.png */,
 				36AC554518D6981900C165F5 /* house_btn.png */,
@@ -3516,6 +3525,7 @@
 				36D87D1218C5C3F500FE8B31 /* zhugeliang_c.png in Resources */,
 				84360A2F18B21FED002EC8C2 /* assign_menu_unfilled.png in Resources */,
 				3658DD7718D6F1430056B895 /* FemaleVillager.png in Resources */,
+				36682A3718DAC12100BC4214 /* Level Select Screen.png in Resources */,
 				36041A7F1714093C00A14BE6 /* background.jpg in Resources */,
 				36AC556318D6981900C165F5 /* housedetail.png in Resources */,
 				845854751892702F00824F5F /* testScene.tmx in Resources */,
@@ -3533,6 +3543,7 @@
 				36D87CFA18C5BA7800FE8B31 /* tokenball_REN.png in Resources */,
 				B4B0148517389F540071E59F /* demolish.png in Resources */,
 				84EB328518684185003B5CEB /* new slide.png in Resources */,
+				36682A3918DAC68400BC4214 /* Energy_brown bar.png in Resources */,
 				844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */,
 				8448D65018C59A04003AFB3A /* guardtower.png in Resources */,
 				361A56371754BF3200854FE1 /* builderbehavior.lua in Resources */,
@@ -3648,6 +3659,7 @@
 				84360A2E18B21FED002EC8C2 /* workers_assign_ui_girl_portrait.png in Resources */,
 				3658DD7918D6F1430056B895 /* char6MMCVillager Wave Sprite.png in Resources */,
 				3604970C17AB969E00CACE25 /* homebutton_pressed.png in Resources */,
+				36682A3618DAC12100BC4214 /* Level Select Screen 02.png in Resources */,
 				3604970D17AB969E00CACE25 /* homebutton.png in Resources */,
 				36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */,
 				36AC555A18D6981900C165F5 /* allocatebtn-press.png in Resources */,

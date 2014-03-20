@@ -2138,7 +2138,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
-            endingLineNumber = "198">
+            endingLineNumber = "198"
+            landmarkName = "CCArray::initWithArray(CCArray* otherArray)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3030,11 +3032,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/ProgressBar.cpp"
-            timestampString = "416817114.244204"
+            timestampString = "416993121.783307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "ProgressBar::setValue(float value)"
             landmarkType = "5">
          </BreakpointContent>

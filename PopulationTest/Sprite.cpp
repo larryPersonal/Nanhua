@@ -74,7 +74,7 @@ GameSprite::GameSprite()
     barHP = new ProgressBar();
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
                              CCRectMake(5, 5, 70, 10),
-                             "loadingbar-empty.png",
+                             "Energy_brown bar.png",
                              "NONE",
                              "NONE",
                              "Energybar.png");
@@ -2137,7 +2137,7 @@ void GameSprite::ReplaceSpriteRep()
     barHP = new ProgressBar();
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
                              CCRectMake(5, 5, 70, 10),
-                             "loadingbar-empty.png",
+                             "Energy_brown bar.png",
                              "NONE",
                              "NONE",
                              "Energybar.png");
