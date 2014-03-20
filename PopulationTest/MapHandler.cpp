@@ -482,7 +482,6 @@ void MapHandler::Populate(CCArray* layers)
             //path is from 25 to 35
             //if (tile->tileGID > 27 && tile->tileGID < 39 )
             {
-                CCLog("%d",tile->tileGID);
                 tile->pathHere();
                 pathTiles->addObject(tile);
             }
