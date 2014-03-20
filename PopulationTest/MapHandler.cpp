@@ -476,11 +476,6 @@ void MapHandler::Populate(CCArray* layers)
             if (tile == NULL) continue;
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
             if (tile->tileGID > 0)
-                //test: I should have NOTHING ELSE in that layer
-                
-            
-            //path is from 25 to 35
-            //if (tile->tileGID > 27 && tile->tileGID < 39 )
             {
                 tile->pathHere();
                 pathTiles->addObject(tile);
@@ -790,13 +785,11 @@ void MapHandler::Path(cocos2d::CCPoint &target)
 TileType MapHandler::PathTileUpdate(cocos2d::CCPoint &target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)
 {
      if (!MapHandler::isTilePosWithinBounds(target)) return N; //edge case. You can NOT build beyond the edge.
-
-  //  CCLog("Propogate %d", propogate);
     
     int currGID = groundpath->tileGIDAt(target);
     if (propogate == 0)
     {
-    //    CCLog("TTILE: %d", (TileType)currGID);
+ 
         
         return (TileType)currGID; //just return the GID for anything we aren't supposed to change.
         

@@ -78,7 +78,7 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     ProgressBar* progressBar = ProgressBar::create();
     progressBar->createProgressBar(CCRectMake(0, 0, building->buildingRep->boundingBox().size.width, 20),
                                    CCRectMake(5, 5, building->buildingRep->boundingBox().size.width-10, 10),
-                                   "loadingbar-empty.png",
+                                   "Energy_brown bar.png",
                                    "NONE",
                                    "NONE",
                                    "Energybar.png");

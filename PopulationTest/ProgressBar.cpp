@@ -61,7 +61,8 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     bgRight->setAnchorPoint(CCPointZero);
     bgRight->setScale(bgBodyRect.size.height / bgRight->boundingBox().size.height);
     }
-    else bgRight = NULL;
+    else
+        bgRight = NULL;
     // Create barFill, which is repeated and scaled
     texture = CCTextureCache::sharedTextureCache()->addImage(barFileName);
    // texture->setTexParameters(&params);

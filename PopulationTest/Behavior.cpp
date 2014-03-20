@@ -27,8 +27,7 @@ static int PickRandomDestination_Glue(lua_State *L)
     }
     else
     {
-       // CCLog(sprite->spriteName->getCString());
-        if(sprite->getAction() == IDLE)
+          if(sprite->getAction() == IDLE)
         {
             lua_pushboolean(L, sprite->Wander());
         }

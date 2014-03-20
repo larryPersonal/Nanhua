@@ -188,8 +188,8 @@ void BuildingInfoMenu::createMenuItems()
     unitBar = new ProgressBar();
     unitBar->createProgressBar(
                                CCRectMake(0, 0, 80, 20),
-                               CCRectMake(5, 5, 70, 10),
-                               "loadingbar-empty.png",
+                               CCRectMake(5, 5, 70, 15),
+                               "Energy_brown bar.png",
                                "NONE",
                                "NONE",
                                "Energybar.png"
@@ -244,7 +244,7 @@ void BuildingInfoMenu::createMenuItems()
     foodStorageBar->createProgressBar(
                                CCRectMake(0, 0, 80, 20),
                                CCRectMake(5, 5, 70, 10),
-                               "loadingbar-empty.png",
+                               "Energy_brown bar.png",
                                "NONE",
                                "NONE",
                                "Energybar.png"
@@ -266,7 +266,7 @@ void BuildingInfoMenu::createMenuItems()
     workCompleteBar->createProgressBar(
                                       CCRectMake(0, 0, 80, 20),
                                       CCRectMake(5, 5, 70, 10),
-                                      "loadingbar-empty.png",
+                                      "Energy_brown bar.png",
                                       "NONE",
                                       "NONE",
                                       "Energybar.png"
@@ -464,7 +464,7 @@ void BuildingInfoMenu::createMenuItems()
     upgradeBar->createProgressBar(
                                        CCRectMake(0, 0, 80, 20),
                                        CCRectMake(5, 5, 70, 10),
-                                       "loadingbar-empty.png",
+                                       "Energy_brown bar.png",
                                        "NONE",
                                        "NONE",
                                        "Energybar.png"

@@ -115,7 +115,7 @@ void SpriteInfoMenu::createMenuItems()
     barEnergy = new ProgressBar();
     barEnergy->createProgressBar(CCRectMake(0, 0, 160, 20),
                                  CCRectMake(5, 5, 150, 10),
-                                 "loadingbar-empty.png",
+                                 "Energy_brown bar.png",
                                  "NONE",
                                  "NONE",
                                  "Energybar.png");
@@ -171,7 +171,7 @@ void SpriteInfoMenu::createMenuItems()
     barHungry = new ProgressBar();
     barHungry->createProgressBar(CCRectMake(0, 0, 80, 20),
                                  CCRectMake(5, 5, 70, 10),
-                                 "loadingbar-empty.png",
+                                 "Energy_brown bar.png",
                                  "NONE",
                                  "NONE",
                                  "Energybar.png");
@@ -191,7 +191,7 @@ void SpriteInfoMenu::createMenuItems()
     barFoodCarriage = new ProgressBar();
     barFoodCarriage->createProgressBar(CCRectMake(0, 0, 80, 20),
                                  CCRectMake(5, 5, 70, 10),
-                                 "loadingbar-empty.png",
+                                 "Energy_brown bar.png",
                                  "NONE",
                                  "NONE",
                                  "Energybar.png");
