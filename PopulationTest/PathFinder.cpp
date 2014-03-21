@@ -28,6 +28,17 @@ float PathFinder::manhattanDist(CCPoint* from, CCPoint* to)
     return ( abs(from->x - to->x) + abs(from->y - to->y));
 }
 
+//IMPORTANT NOTE: source and destination may likely change on the fly. Therefore DO NOT USE REFERENCES, I cannot guarantee thread safety. 
+void PathFinder::setSource(cocos2d::CCPoint src)
+{
+    source = src;
+}
+
+void PathFinder::setDestination(cocos2d::CCPoint dest)
+{
+    destination = dest;
+}
+
 PathfindingNode* PathFinder::isOnList(CCPoint tilePos, CCArray* list)
 {
     if (!list || list->count() == 0){
@@ -51,19 +62,20 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool tryEscape)
     MapHandler* handler = GameScene::getThis()->mapHandler;
     if (handler->isTilePosWithinBounds(*tilePos))
     {
-        if (destination->x == tilePos->x &&
-            destination->y == tilePos->y)
+        if (destination.x == tilePos->x &&
+            destination.y == tilePos->y)
         {
             //the destination must always be reachable, in case someone wants to enter a building. 
             return true;
         }
         
-        if (source->x == tilePos->x &&
-            source->y == tilePos->y)
+        if (source.x == tilePos->x &&
+            source.y == tilePos->y)
         {
             //The source must always be reachable, in case someone wants to move from a building.
             return true;
         }
+        CCLog("Destination %f %f, Source %f %f", destination.x, destination.y, source.x, source.y);
         
         if (!handler->isTileBlocked(*tilePos, tryEscape))
         {
@@ -76,9 +88,6 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool tryEscape)
 
 CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
 {
-    destination = toTile;
-    source = fromTile;
-    
     openList = CCArray::create();
     closedList = CCArray::create();
     
@@ -115,9 +124,7 @@ CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
 
 CCArray* PathFinder::makePathEscape(CCPoint* fromTile, CCPoint* toTile)
 {
-    destination = toTile;
-    source = fromTile;
-    
+   
     openList = CCArray::create();
     closedList = CCArray::create();
     

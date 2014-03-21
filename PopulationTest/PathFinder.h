@@ -18,17 +18,21 @@ class PathFinder
     CCArray* openList;
     CCArray* closedList;
     
-    CCPoint* destination;
-    CCPoint* source;
+    CCPoint destination;
+    CCPoint source;
     
     
 public:
     CCPoint closest;
     int lowest_h;
     
+    
+    
     PathFinder();
     ~PathFinder();
     float manhattanDist(CCPoint* from, CCPoint* to);
+    void setDestination(CCPoint dest);
+    void setSource(CCPoint src);
     
     CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile, bool tryEscape);
     

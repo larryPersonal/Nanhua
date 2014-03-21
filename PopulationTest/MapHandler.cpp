@@ -384,8 +384,9 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos, bool tryEscape)
         return true;
     }
     
+    
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
-    if ((!targetTile->isPath && !targetTile->hasBuilding()) || (targetTile->isInCombat && !tryEscape)){
+    if (!targetTile->isPath  || (targetTile->isInCombat && !tryEscape)){
         return true;
     }
     
