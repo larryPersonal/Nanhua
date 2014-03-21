@@ -353,15 +353,18 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->updateIdleDelay(0.2f);
             }
             else
-                // workval = 0, means the the villager is out of energy
+            // workval = 0, means the the villager is out of energy
             {
-                //sp->currAction = IDLE;
-                //sp->nextAction = IDLE;
-                //sp->setTargetLocation(NULL);
-                //sp->setIsFollowingMovementInstruction(false);
-                
-                //sp->setTargetLocation(sp->getHome());
-                //sp->GoRest(sp->getHome());
+                for (int i = 0; i< memberSpriteList->count(); i++)
+                {
+                    GameSprite* gameS = (GameSprite*) memberSpriteList->objectAtIndex(i);
+                    
+                    if(gameS->getPossessions()->energyRating <= 0)
+                    {
+                        gameS->setTargetLocation(gameS->getHome());
+                        gameS->GoRest(gameS->getHome());
+                    }
+                }
             }
         }
         else
@@ -401,6 +404,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                             gameS->changeToCitizen();
                         }
                     }
+                    memberSpriteList->removeAllObjects();
                 }
                 else
                 {
@@ -410,9 +414,24 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 
                 Building* gran = sp->findNearestGranary(true);
                 if(gran != NULL)
+                // if has valid granary, deliver food to there
                 {
                     sp->setTargetLocation(gran);
                     sp->GoGranary(gran);
+                }
+                else
+                // if no valid granary available, discard all food and unjob
+                {
+                    sp->setFoodCarried(0);
+                    isCurrentWorking = false;
+                    sp->currAction = IDLE;
+                    sp->nextAction = IDLE;
+                    sp->setIsDoingJob(false);
+                    sp->spriteClass = "citizen";
+                    sp->setJob(NONE);
+                    sp->setJobLocation(NULL);
+                    sp->setTargetLocation(NULL);
+                    sp->changeToCitizen();
                 }
             }
         }
@@ -427,9 +446,30 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             currentStorage = storageLimit;
             sp->setFoodCarried(currentStorage + sp->getFoodCarried() - storageLimit);
             // TODO: go next granary
+            Building* gran = sp->findNearestGranary(true);
+            if(gran != NULL)
+            // if still got other granary with storage capacity, go there
+            {
+                sp->setTargetLocation(gran);
+                sp->GoGranary(gran);
+            }
+            else
+            // if no valid granary is available, discard all the food and unjob.
+            {
+                sp->setFoodCarried(0);
+                isCurrentWorking = false;
+                sp->currAction = IDLE;
+                sp->nextAction = IDLE;
+                sp->setIsDoingJob(false);
+                sp->spriteClass = "citizen";
+                sp->setJob(NONE);
+                sp->setJobLocation(NULL);
+                sp->setTargetLocation(NULL);
+                sp->changeToCitizen();
+            }
         }
         else
-        // all food has been stored into the granary, go back to the farm
+        // all food has been stored into the granary, if still has job, means the delivering process is not finished, go back to the farm, otherwise, the delivering process has been finished, unjob.
         {
             currentStorage += sp->getFoodCarried();
             sp->setFoodCarried(0);
