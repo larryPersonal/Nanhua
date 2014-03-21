@@ -4155,7 +4155,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0E90BF45-0803-49E5-8889-21FCE6120DA0";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4202,7 +4202,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0E90BF45-0803-49E5-8889-21FCE6120DA0";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

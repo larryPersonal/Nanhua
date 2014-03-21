@@ -414,7 +414,8 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
     }
     
     PathFinder *p = new PathFinder();
-    
+    p->setDestination(to);
+    p->setSource(from);
     if (path != NULL)
     {
         if (path->count() > 0)
@@ -488,6 +489,8 @@ int GameSprite::getPathDistance(CCPoint from, CCPoint to)
     else
     {
         PathFinder* p = new PathFinder();
+        p->setDestination(to);
+        p->setSource(from);
         CCArray* tempPath = CCArray::create();
         tempPath->retain();
         
@@ -2011,6 +2014,8 @@ bool GameSprite::isDestinationInRange(int destinationID)
     
     PathFinder *p = new PathFinder();
     CCArray* pathFromHome = p->makePath(&homePos, &to);
+    p->setDestination(to);
+    p->setSource(homePos);
     if (pathFromHome->count() > possessions->default_movement_range)
     {
         delete p;
