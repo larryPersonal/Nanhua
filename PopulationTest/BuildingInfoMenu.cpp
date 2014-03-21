@@ -287,12 +287,12 @@ void BuildingInfoMenu::createMenuItems()
     menuItemPositions->retain();
     
     buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
-     buttonClose->setTag(-1);
+    buttonClose->setTag(-1);
     
     menuItems->addObject(buttonClose);
     
-    selectWorkerButton = CCMenuItemImage::create("schedule.png", "schedule.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton->setScale( 80.0f / selectWorkerButton->boundingBox().size.width );
+    selectWorkerButton = CCMenuItemImage::create("assigntaskicon.png", "assigntaskicon.png", this, menu_selector(BuildingInfoMenu::selectPop));
+    selectWorkerButton->setScale( 60.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
     if(!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY)
