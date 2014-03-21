@@ -57,7 +57,7 @@
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="100"/>
     <property name="builder_limit" value="3"/>
-    <property name="building_type" value="military"/>
+    <property name="building_type" value=""/>
     <property name="cost" value="300"/>
     <property name="description" value="Protect Your Town"/>
     <property name="food_consumption_rate" value=""/>
@@ -65,7 +65,7 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Guard Tower"/>
+    <property name="name" value="Guard Tower lalala"/>
     <property name="population_limit" value="0"/>
     <property name="prereqs" value=""/>
     <property name="recovery_rate" value="0"/>
@@ -542,6 +542,38 @@
   <tileoffset x="-64" y="64"/>
   <image source="greatwall2x2.png" width="1024" height="512"/>
  </tileset>
+ <tileset firstgid="78" name="GuardTower" tilewidth="136" tileheight="128">
+  <image source="guardtower.png" width="512" height="640"/>
+  <tile id="0">
+   <properties>
+    <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="military"/>
+    <property name="cost" value="300"/>
+    <property name="description" value="Protect Your Town"/>
+    <property name="food_consumption_rate" value=""/>
+    <property name="jobs_available" value="1"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Guard Tower"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="0"/>
+    <property name="req_building_count" value="15"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="15"/>
+    <property name="research_cost" value="300"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value="0"/>
+    <property name="work_unit_required" value="0"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Ground_0" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
@@ -629,7 +661,16 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7AZw78tTCzhoFXQBAAAAAAAAACAT+Y6AAAAAAAAAAAAAAAAQNUCSoQAPg==
+   eJztzjENAAAIA7Apw78sTCzhoFXQBAAAAAAAAACAT+Y6AAAAAAAAAAAAAAAAQNUCfLQAPw==
+  </data>
+ </layer>
+ <layer name="Building_GuardTower" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="1"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt0qENAEAIBEEqpP9yXoNCfEJIZszaExcBAAAAAAAAAABVbg+Aj/yZK7IVAAAAAAAAAAAAAGDqASD3ATk=
   </data>
  </layer>
 </map>

@@ -535,8 +535,8 @@ void GameSprite::followPath()
             MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(node->tilepos.x, node->tilepos.y);
             if (tile->hasBuilding())
             {
-                //if (spriteRep != NULL)
-                    //spriteRep->setVisible(false);
+                if (spriteRep != NULL)
+                    spriteRep->setVisible(false);
             }
             else
             {

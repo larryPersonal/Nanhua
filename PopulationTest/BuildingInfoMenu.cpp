@@ -68,6 +68,8 @@ BuildingInfoMenu::BuildingInfoMenu(Building* building)
     spritePopulationMenu->retain();
     
     mGameCurrentlyUpgrading = false;
+    
+    GameScene::getThis()->setTouchEnabled(false);
 }
 
 BuildingInfoMenu::~BuildingInfoMenu()

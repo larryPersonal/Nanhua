@@ -174,6 +174,7 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->baseGID = this->baseGID;   // Copy the target GUID too
         pCopy->maxGID = this->maxGID;
         pCopy->currGID = pCopy->baseGID;
+        pCopy->lastGID = pCopy->lastGID;
         pCopy->animframe_count = this->animframe_count;
         
         pCopy->currentExp = this->currentExp;
@@ -783,7 +784,7 @@ void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
 
 void Building::BeginAnim()
 {
-    if (animframe_count > 1)
+    if (animframe_count > 1 && buildingType != AMENITY)
     {
     
         currGID = baseGID;
@@ -797,7 +798,7 @@ void Building::BeginAnim()
 
 void Building::EndAnim()
 {
-   if (animframe_count > 1) //there will only be an animation IF there i more than one frame.
+   if (animframe_count > 1 && buildingType != AMENITY) //there will only be an animation IF there i more than one frame.
        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(Building::AnimUpdate), this);
     
 }
@@ -818,6 +819,17 @@ void Building::AnimUpdate()
 
 void Building::updateBuilding(float dt)
 {
+    if(buildingType == AMENITY)
+    {
+        int number_of_phase = maxGID - baseGID + 1;
+        currGID = ((int)((int)(work_unit_current * 4)) / work_unit_required) + baseGID;
+        if(lastGID != currGID)
+        {
+            lastGID = currGID;
+            ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID));
+        }
+    }
+    
     if(isCurrentUpgrading)
     {
         cumulatedTimeUpgrading += dt;

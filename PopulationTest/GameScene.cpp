@@ -47,6 +47,7 @@ GameScene::GameScene()
             settingsLevel->setLevel0();
             break;
         case 1:
+            settingsLevel->setLevel0();
             break;
         default:
             break;
@@ -134,7 +135,15 @@ bool GameScene::init()
 
 void GameScene::setupScene()
 {
+    int level = GameManager::getThis()->getLevel();
+    if(level == 0)
+    {
         mapHandler->initTiles("DemoScene.tmx");
+    }
+    else
+    {
+        mapHandler->initTiles("Full_Scene.tmx");
+    }
         
         if (mapHandler->getMap())
         {
@@ -653,6 +662,12 @@ void GameScene::update(float time)
             b->updateBuilding(time);
         }
         
+        for (int i = 0; i < buildingHandler->amenityOnMap->count(); i++)
+        {
+            Building* b = (Building*) buildingHandler->amenityOnMap->objectAtIndex(i);
+            b->updateBuilding(time);
+        }
+        
         constructionHandler->update(time);
         GameHUD::getThis()->update(time);
     
@@ -786,7 +801,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         
         if (selectedTile->building)
         {
-            this->setTouchEnabled(false);
+            //this->setTouchEnabled(false);
 
             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
             buildingInfoMenu->useAsBasePopupMenu();
@@ -822,7 +837,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 if (selectedTile->building &&
                     selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) )
                 {
-                    this->setTouchEnabled(false);
+                    //this->setTouchEnabled(false);
                     
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                     buildingInfoMenu->useAsBasePopupMenu();

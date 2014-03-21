@@ -81,6 +81,7 @@ public:
     int baseGID;
     int maxGID;
     int currGID;
+    int lastGID;
     int animframe_count;
     
     int width;
