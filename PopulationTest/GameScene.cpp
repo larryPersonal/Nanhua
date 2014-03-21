@@ -240,7 +240,7 @@ void GameScene::enableTouch()
     GameHUD* hudlayer = GameHUD::create();
     this->addChild(hudlayer, 1);
     this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
-    SoundtrackManager::PlayBGM("Rite of Passage.mp3");
+    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
 }
 
 void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
@@ -547,7 +547,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             break;
-        
+            
+            /* touch sprite function has been disabled! */
             //Check if clicking on building/sprite/tokens
             default:
             {
@@ -556,16 +557,16 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     if (!handleTouchTokens(touchLoc))
                     {
                         // if touched tokens, don't check for sprite and building
-                        if (!handleTouchSprite(touchLoc))
-                        {
+                        //if (!handleTouchSprite(touchLoc))
+                        //{
                             // if touched sprite, dont check for building
                             handleTouchBuilding(touchLoc, tilePos);
-                        }
+                        //}
                     }
                 }
                 else
                 {
-                    handleTouchSprite(touchLoc);
+                    //handleTouchSprite(touchLoc);
                 }
             }
                 break;

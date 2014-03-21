@@ -93,7 +93,6 @@ void BuildingInfoMenu::createMenuItems()
         return;
     }
     
-    
    // ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
    // ccColor3B colorGreen = ccc3(81, 77, 2);
