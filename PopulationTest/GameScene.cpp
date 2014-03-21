@@ -799,7 +799,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->master)
             selectedTile = selectedTile->master;
         
-        if (selectedTile->building && selectedTile->building->buildingType != DECORATION)
+        if (selectedTile->building)// && selectedTile->building->buildingType != DECORATION)
         {
             //this->setTouchEnabled(false);
 
@@ -835,8 +835,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile = selectedTile->master;
                 
                 if (selectedTile->building &&
-                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) &&
-                    selectedTile->building->buildingType != DECORATION)
+                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) )//&&
+                    //selectedTile->building->buildingType != DECORATION)
                 {
                     //this->setTouchEnabled(false);
                     

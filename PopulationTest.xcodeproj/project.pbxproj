@@ -515,6 +515,7 @@
 		84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */ = {isa = PBXBuildFile; fileRef = 84589CDF1896655500AA9E1C /* conversation_textbox_girl.png */; };
 		84589CE41896655500AA9E1C /* conversation_textbox_zhugeliang.png in Resources */ = {isa = PBXBuildFile; fileRef = 84589CE01896655500AA9E1C /* conversation_textbox_zhugeliang.png */; };
 		84589CE61896758900AA9E1C /* nextButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84589CE51896758900AA9E1C /* nextButton.png */; };
+		84714C6B18DC4C2E00F149BC /* AnimatedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */; };
 		847309C918DC09AC001869C6 /* assigntaskicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309C718DC09AC001869C6 /* assigntaskicon.png */; };
 		847309CA18DC09AC001869C6 /* Building Info UI placeholdercircleclose.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309C818DC09AC001869C6 /* Building Info UI placeholdercircleclose.png */; };
 		847309CC18DC09E7001869C6 /* banditicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309CB18DC09E7001869C6 /* banditicon.png */; };
@@ -1432,6 +1433,8 @@
 		84589CDF1896655500AA9E1C /* conversation_textbox_girl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conversation_textbox_girl.png; sourceTree = "<group>"; };
 		84589CE01896655500AA9E1C /* conversation_textbox_zhugeliang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conversation_textbox_zhugeliang.png; sourceTree = "<group>"; };
 		84589CE51896758900AA9E1C /* nextButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextButton.png; sourceTree = "<group>"; };
+		84714C6918DC4C1900F149BC /* AnimatedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedString.h; sourceTree = "<group>"; };
+		84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedString.cpp; sourceTree = "<group>"; };
 		847309C718DC09AC001869C6 /* assigntaskicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = assigntaskicon.png; sourceTree = "<group>"; };
 		847309C818DC09AC001869C6 /* Building Info UI placeholdercircleclose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Building Info UI placeholdercircleclose.png"; sourceTree = "<group>"; };
 		847309CB18DC09E7001869C6 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = banditicon.png; path = "../../../../../../Volumes/Projects_Folder/Nanhua_Values_Education Game/Working Files/Sprite/Archives/11-03-2014/cropimage/banditicon.png"; sourceTree = "<group>"; };
@@ -3196,6 +3199,7 @@
 				84EB32761867D568003B5CEB /* Slide.h */,
 				84EB32791867EB81003B5CEB /* SenarioManager.h */,
 				84EB327C1867EF47003B5CEB /* FileReader.h */,
+				84714C6918DC4C1900F149BC /* AnimatedString.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3208,6 +3212,7 @@
 				84EB32771867D717003B5CEB /* Slide.cpp */,
 				84EB327A1867EC8A003B5CEB /* SenarioManager.cpp */,
 				84EB327D1867EFBF003B5CEB /* FileReader.cpp */,
+				84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3837,6 +3842,7 @@
 				36B18B0818A0A6A800A8B515 /* platform.cpp in Sources */,
 				36B18AE018A0A6A800A8B515 /* CCEGLView.mm in Sources */,
 				36B18A5C18A0A6A700A8B515 /* CCActionEase.cpp in Sources */,
+				84714C6B18DC4C2E00F149BC /* AnimatedString.cpp in Sources */,
 				36B18AE618A0A6A800A8B515 /* EAGLView.mm in Sources */,
 				365FBC0316E5E31000A57CF0 /* CCControl.cpp in Sources */,
 				36B190DE18A0A6AD00A8B515 /* CCTextFieldTTF.cpp in Sources */,

@@ -34,6 +34,7 @@ public:
     vector<CCLabelTTF*> labelList;
     
     CCArray* slidesList;
+    CCArray* animatedStringList;
     
     CCMenu* startGameMenu;
     
@@ -66,7 +67,9 @@ public:
     
     void selectButtonPressed(CCObject* pSender);
     
-    void createTexts(std::string, float, float, string, float, ccColor3B);
+    void displayTexts(std::string, float, float, string, float, ccColor3B);
+    
+    void update(float time);
     
     vector<std::string> split(std::string, char);
 };

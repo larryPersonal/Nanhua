@@ -10,6 +10,7 @@
 #include "GameScene.h"
 #include "Slide.h"
 #include "GlobalHelper.h"
+#include "AnimatedString.h"
 
 Senario* Senario::SP;
 
@@ -21,6 +22,9 @@ Senario::Senario()
     curSlide = 0;
     slidesList = CCArray::create();
     slidesList->retain();
+    
+    animatedStringList = CCArray::create();
+    animatedStringList->retain();
 }
 
 Senario::~Senario()
@@ -30,7 +34,10 @@ Senario::~Senario()
     menuList.clear();
     labelList.clear();
     slidesList->removeAllObjects();
-    slidesList->release();
+    CC_SAFE_RELEASE(slidesList);
+    
+    animatedStringList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedStringList);
 }
 
 Senario* Senario::getThis()
@@ -145,13 +152,7 @@ bool Senario::constructSenarioStage()
             std::stringstream ss;
             ss << ele->text;
             
-            createTexts(ss.str().c_str(), 100, 200, ele->font.c_str(), (float)ele->fontSize, colorBlack);
-            /*
-            CCLabelTTF* chboxLabel = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-            chboxLabel->setColor(colorBlack);
-            chboxLabel->setAnchorPoint(ccp(0, 1));
-            chboxLabel->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + 30.0f, (chbox->boundingBox().size.height / 2.0f) + (chbox->getPositionY() - chbox->boundingBox().size.height)));
-            */
+            displayTexts(ss.str().c_str(), 100, 200, ele->font.c_str(), (float)ele->fontSize, colorBlack);
             
             float heightOff = 0.0f;
             float widthOff = 0.0f;
@@ -222,8 +223,13 @@ bool Senario::constructSenarioStage()
             menuList.push_back(menu);
         }
     }
+    
+    this->schedule(schedule_selector(Senario::update), 1.0f/60.0f);
+    
     return true;
 }
+
+
 
 void Senario::selectButtonPressed(CCObject* pSender)
 {
@@ -250,28 +256,32 @@ void Senario::selectButtonPressed(CCObject* pSender)
     }
 }
 
-void Senario::createTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color)
+void Senario::displayTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color)
 {
-    vector<std::string> tokens = split(str, ' ');
+    //vector<std::string> tokens = split(str, ' ');
     float offX = 0;
     float offY = 0;
+    float flashTimeGap = 0.05f;
     
-    for (int i = 0; i < tokens.size(); i++)
+    for (int i = 0; i < str.length(); i++)
     {
-        string tempStr = tokens.at(i);
-        CCLabelTTF* tempLabel = CCLabelTTF::create(tempStr.c_str(), font.c_str(), fontSize);
-        tempLabel->setColor(color);
-        tempLabel->setAnchorPoint(ccp(0, 1));
+        stringstream ss;
+        ss << str.at(i);
+        string tempStr = ss.str();
+        AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * i, font, fontSize, 80.0f);
+        as->getLabel()->setColor(color);
+        as->getLabel()->setAnchorPoint(ccp(0, 1));
         
-        if(startX + offX + tempLabel->boundingBox().size.width > 900.0f)
+        if(startX + offX + as->getLabel()->boundingBox().size.width > 900.0f)
         {
             offY = offY + 20.0f;
             offX = 0;
         }
-        tempLabel->setPosition(ccp(startX + offX, startY - offY));
-        offX += tempLabel->boundingBox().size.width + 5.0f;
-        this->addChild(tempLabel, 20);
-        labelList.push_back(tempLabel);
+        as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
+        offX += as->label->boundingBox().size.width;
+        
+        this->addChild(as->getLabel(), 20);
+        animatedStringList->addObject(as);
     }
 }
 
@@ -337,6 +347,7 @@ vector<std::string> Senario::split(std::string text, char delimiter)
 void Senario::nextButtonPressed()
 {
     curSlide++;
+    this->unschedule(schedule_selector(Senario::update));
     if(!constructSenarioStage()){
         startGameMenu->setVisible(true);
     }
@@ -362,6 +373,18 @@ void Senario::clearElements()
     spriteList.clear();
     menuList.clear();
     labelList.clear();
+    
+    for(int i = 0; i < animatedStringList->count(); i++)
+    {
+        AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+        this->removeChild(as->getLabel());
+    }
+    
+    animatedStringList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedStringList);
+    
+    animatedStringList = CCArray::create();
+    animatedStringList->retain();
 }
 
 void Senario::createGUI(){
@@ -407,4 +430,16 @@ void Senario::onOrientationChanged(){
     constructSenarioStage();
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
+}
+
+void Senario::update(float time)
+{
+    if(animatedStringList != NULL)
+    {
+        for (int i = 0; i < animatedStringList->count(); i++)
+        {
+            AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+            as->update(time);
+        }
+    }
 }
