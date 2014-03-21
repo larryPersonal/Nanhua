@@ -2274,7 +2274,7 @@ Building* GameSprite::findNearestGranary(bool isDeliveringFood)
     {
         Building* bui = (Building*) buildingsOnMap->objectAtIndex(i);
         
-        if(bui->buildingType != GRANARY)
+        if(bui->buildingType != GRANARY || bui->currentStorage >= bui->storageLimit)
         {
             continue;
         }
