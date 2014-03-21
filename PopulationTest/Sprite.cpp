@@ -538,8 +538,8 @@ void GameSprite::followPath()
             MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(node->tilepos.x, node->tilepos.y);
             if (tile->hasBuilding())
             {
-                //if (spriteRep != NULL)
-                    //spriteRep->setVisible(false);
+                if (spriteRep != NULL)
+                    spriteRep->setVisible(false);
             }
             else
             {
@@ -2279,7 +2279,7 @@ Building* GameSprite::findNearestGranary(bool isDeliveringFood)
     {
         Building* bui = (Building*) buildingsOnMap->objectAtIndex(i);
         
-        if(bui->buildingType != GRANARY)
+        if(bui->buildingType != GRANARY || bui->currentStorage >= bui->storageLimit)
         {
             continue;
         }

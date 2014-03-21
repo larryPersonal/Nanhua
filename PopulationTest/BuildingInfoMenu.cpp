@@ -68,6 +68,8 @@ BuildingInfoMenu::BuildingInfoMenu(Building* building)
     spritePopulationMenu->retain();
     
     mGameCurrentlyUpgrading = false;
+    
+    GameScene::getThis()->setTouchEnabled(false);
 }
 
 BuildingInfoMenu::~BuildingInfoMenu()
@@ -92,7 +94,6 @@ void BuildingInfoMenu::createMenuItems()
         this->closeMenu();
         return;
     }
-    
     
    // ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(225, 219, 108);
@@ -286,12 +287,12 @@ void BuildingInfoMenu::createMenuItems()
     menuItemPositions->retain();
     
     buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
-     buttonClose->setTag(-1);
+    buttonClose->setTag(-1);
     
     menuItems->addObject(buttonClose);
     
-    selectWorkerButton = CCMenuItemImage::create("schedule.png", "schedule.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton->setScale( 80.0f / selectWorkerButton->boundingBox().size.width );
+    selectWorkerButton = CCMenuItemImage::create("assigntaskicon.png", "assigntaskicon.png", this, menu_selector(BuildingInfoMenu::selectPop));
+    selectWorkerButton->setScale( 60.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
     if(!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY)
@@ -824,25 +825,43 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             this->removeChild((CCNode*) spritePopulationSlot->objectAtIndex(i));
         }
         spritePopulationSlot->removeAllObjects();
+        CC_SAFE_RELEASE(spritePopulationSlot);
         
         for(int i = 0; i < spritePopulationBackground->count(); i++)
         {
             this->removeChild((CCNode*) spritePopulationBackground->objectAtIndex(i));
         }
         spritePopulationBackground->removeAllObjects();
+        CC_SAFE_RELEASE(spritePopulationBackground);
         
         for(int i = 0; i < spritePopulationMenu->count(); i++)
         {
             this->removeChild((CCNode*) spritePopulationMenu->objectAtIndex(i));
         }
         spritePopulationMenu->removeAllObjects();
+        CC_SAFE_RELEASE(spritePopulationMenu);
         
+        /*
         for(int i = 0; i < spritePopulation->count(); i++)
         {
             
             this->removeChild((CCNode*) spritePopulation->objectAtIndex(i));
         }
+        */
         spritePopulation->removeAllObjects();
+        CC_SAFE_RELEASE(spritePopulation);
+        
+        spritePopulationSlot = CCArray::create();
+        spritePopulationSlot->retain();
+        
+        spritePopulationBackground = CCArray::create();
+        spritePopulationBackground->retain();
+        
+        spritePopulationMenu = CCArray::create();
+        spritePopulationMenu->retain();
+        
+        spritePopulation = CCArray::create();
+        spritePopulation->retain();
         
         // Create population icons
         for (int i = 0; i < mBuildingVacancy; i++)
@@ -854,6 +873,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             spritePopulationSlot->addObject(vacancySlot);
         }
         
+        /*
         for (int i = 0; i < building->memberSpriteList->count(); i++)
         {
             GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(i);
@@ -903,6 +923,12 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             CCMenuItemImage* spp = (CCMenuItemImage*) spritePopulation->objectAtIndex(i);
             spp->setPosition(ccp(-halfWidth * 3.0f / 4.0f + 5.0f + (((CCSprite*)spritePopulationSlot->objectAtIndex(0))->boundingBox().size.width + 5.0f) * i, -62.0f));
         }
+        */
+        /*
+        spritePopulationBackground->removeAllObjects();
+        spritePopulation->removeAllObjects();
+        */
+        
         spriteBuilding->setOpacity(255);
         stringstream ss;
         ss << "Ready for services!";

@@ -177,7 +177,9 @@ void SenarioChooseScene::chooseTutorial()
 
 void SenarioChooseScene::chooseSenario1()
 {
-    CCLog("scenario 1 clicked");
+    GameManager::getThis()->setLevel(1);
+    
+    CCDirector::sharedDirector()->pushScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario2()

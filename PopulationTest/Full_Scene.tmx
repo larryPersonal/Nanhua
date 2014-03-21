@@ -569,15 +569,6 @@
    eJzt2DENAAAIwDC04V8UJiAE0irYvQwAAAAAAOiX2wEAAAAAALzkPwMAAAAAMMF/BgAAAK4rjGwBCQ==
   </data>
  </layer>
- <layer name="Wall" width="90" height="60">
-  <properties>
-   <property name="number_of_tiles" value="8"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJzt1MEJwCAURMFUZ0Bi/+3YgxqE/TMXT8IiD8cDAAAAAAC1vbcHFOGdSaJnkuiZJHomybg9AA7yP5NEzyTRM0mq9twWz75479sZCwAAAAAAAAAA/G4ClG4HPg==
-  </data>
- </layer>
  <layer name="Ground_1" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
@@ -594,6 +585,15 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJzt1VEKwjAQBcBcRI1V6/1vqIKlpWxomo8gdgZCwmqFPtZNSgAAAAAAwFFd3usZrGG1t5wfHd/j140b9TGotZyPTs59nFM8N67fPad5FtSc74vflvNsq5/3nvVzTM59lLJYzpNphnxmQ96omxuxPf28/u6eu/LoSvdg1Jc1OUf/g2kdmX7uo2Y+59U+FOrmc1lNP7d+JueZnPs4pfgezIV6dL+Vnrt1e4v/pE/7kHMfcgYAAAAAAAAAAGj3AqfhGpg=
+  </data>
+ </layer>
+ <layer name="Wall" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="8"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJwCAURMFUZ0Bi/+3YgxqE/TMXT8IiD8cDAAAAAAC1vbcHFOGdSaJnkuiZJHomybg9AA7yP5NEzyTRM0mq9twWz75479sZCwAAAAAAAAAA/G4ClG4HPg==
   </data>
  </layer>
  <layer name="Building_House" width="90" height="60">

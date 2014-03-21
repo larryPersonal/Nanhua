@@ -1075,8 +1075,8 @@ void GameHUD::createSystemMenu()
     systemButton = CCMenuItemImage::create("system.png", "system.png", this, menu_selector(GameHUD::clickSystemButton));
     stickHappinessButton = CCMenuItemImage::create("happyFace.png", "happyFace.png", this, menu_selector(GameHUD::stickGameHappiness));
     resumeHappinessButton = CCMenuItemImage::create("normalFace.png", "normalFace.png", this, menu_selector(GameHUD::stickGameHappiness));
-    warButton = CCMenuItemImage::create("war.png", "war.png", this, menu_selector(GameHUD::banditsAttack));
-    peaceButton = CCMenuItemImage::create("peace.png", "peace.png", this, menu_selector(GameHUD::banditsAttack));
+    warButton = CCMenuItemImage::create("banditicon.png", "banditicon.png", this, menu_selector(GameHUD::banditsAttack));
+    peaceButton = CCMenuItemImage::create("peaceicon.png", "peaceicon.png", this, menu_selector(GameHUD::banditsAttack));
     
     pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
     pauseButton->setAnchorPoint(ccp(1, 1));

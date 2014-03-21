@@ -9,7 +9,7 @@
 #include "Element.h"
 
 Element::Element(){
-    
+    isBackground = false;
 }
 
 Element::~Element(){
@@ -24,6 +24,11 @@ void Element::updateSpriteType()
 void Element::updateDialogueType()
 {
     type = dialogue;
+}
+
+void Element::updateOptionType()
+{
+    type = option;
 }
 
 

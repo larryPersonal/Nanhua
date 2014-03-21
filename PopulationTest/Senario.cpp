@@ -73,14 +73,7 @@ void Senario::readSenarioFile()
     slidesList->release();
     
     SenarioManager* sm = new SenarioManager();
-    if(GlobalHelper::isHorizontal())
-    {
-        sm->parseXMLFile("senario_h.xml");
-    }
-    else
-    {
-        sm->parseXMLFile("senario.xml");
-    }
+    sm->parseXMLFile("senario_h.xml");
     
     slidesList = sm->slidesList;
     delete sm;
@@ -142,12 +135,23 @@ bool Senario::constructSenarioStage()
             chbox->setAnchorPoint(ccp(0, 1));
             chbox->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             
+            if(ele->isBackground)
+            {
+                this->addChild(chbox);
+                spriteList.push_back(chbox);
+                continue;
+            }
+            
             std::stringstream ss;
             ss << ele->text;
+            
+            createTexts(ss.str().c_str(), 100, 200, ele->font.c_str(), (float)ele->fontSize, colorBlack);
+            /*
             CCLabelTTF* chboxLabel = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
             chboxLabel->setColor(colorBlack);
             chboxLabel->setAnchorPoint(ccp(0, 1));
             chboxLabel->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + 30.0f, (chbox->boundingBox().size.height / 2.0f) + (chbox->getPositionY() - chbox->boundingBox().size.height)));
+            */
             
             float heightOff = 0.0f;
             float widthOff = 0.0f;
@@ -182,28 +186,157 @@ bool Senario::constructSenarioStage()
             nextButton->setScale(0.3f);
             
             this->addChild(chbox);
-            this->addChild(chboxLabel);
+            //this->addChild(chboxLabel);
             this->addChild(chboxName);
             spriteList.push_back(chbox);
-            labelList.push_back(chboxLabel);
+            //labelList.push_back(chboxLabel);
             labelList.push_back(chboxName);
             
             CCMenu* menu = CCMenu::create(nextButton, NULL);
-            menu->setPosition(ccp(screenSize.width * 0.84f, screenSize.height * 0.1f));
+            menu->setPosition(ccp(screenSize.width * 0.86f, screenSize.height * 0.08f));
             
             this->addChild(menu, 1);
             
             
             menuList.push_back(menu);
         }
+        else if(ele->type == Element::option)
+        {
+            stringstream ss;
+            ss << ele->text;
+            CCLabelTTF* optionLabel = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize);
+            optionLabel->setColor(colorBlack);
+            optionLabel->setAnchorPoint(ccp(0, 1));
+            optionLabel->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
+            labelList.push_back(optionLabel);
+            this->addChild(optionLabel);
+            
+            CCMenuItemImage* selectButton = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(Senario::selectButtonPressed));
+            selectButton->setTag(i);
+            selectButton->setAnchorPoint(ccp(0, 1));
+            selectButton->setScale(0.3f);
+            
+            CCMenu* menu = CCMenu::create(selectButton, NULL);
+            menu->setPosition(ccp(screenSize.width * (ele->left / 100.0f) + optionLabel->boundingBox().size.width + 20.0f, screenSize.height * (ele->top / 100.0f)));
+            this->addChild(menu, 1);
+            menuList.push_back(menu);
+        }
     }
     return true;
+}
+
+void Senario::selectButtonPressed(CCObject* pSender)
+{
+    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
+    int index = pMenuItem->getTag();
+    
+    Slide* slide = (Slide*)slidesList->objectAtIndex(curSlide);
+    CCArray* elementArray = slide->elementList;
+    Element* ele = (Element*)elementArray->objectAtIndex(index);
+    
+    string fileName = ele->nextFile;
+    slidesList->removeAllObjects();
+    CC_SAFE_RELEASE(slidesList);
+    
+    SenarioManager* sm = new SenarioManager();
+    sm->parseXMLFile(fileName.c_str());
+    
+    slidesList = sm->slidesList;
+    delete sm;
+
+    curSlide = 0;
+    if(!constructSenarioStage()){
+        startGameMenu->setVisible(true);
+    }
+}
+
+void Senario::createTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color)
+{
+    vector<std::string> tokens = split(str, ' ');
+    float offX = 0;
+    float offY = 0;
+    
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        string tempStr = tokens.at(i);
+        CCLabelTTF* tempLabel = CCLabelTTF::create(tempStr.c_str(), font.c_str(), fontSize);
+        tempLabel->setColor(color);
+        tempLabel->setAnchorPoint(ccp(0, 1));
+        
+        if(startX + offX + tempLabel->boundingBox().size.width > 900.0f)
+        {
+            offY = offY + 20.0f;
+            offX = 0;
+        }
+        tempLabel->setPosition(ccp(startX + offX, startY - offY));
+        offX += tempLabel->boundingBox().size.width + 5.0f;
+        this->addChild(tempLabel, 20);
+        labelList.push_back(tempLabel);
+    }
+}
+
+vector<std::string> Senario::split(std::string text, char delimiter)
+{
+    int startIndex = -1;
+    int endIndex = -1;
+    vector<std::string> tokens;
+    stringstream ss;
+    
+    for (int i = 0; i < text.length(); i++)
+    {
+        if(text[i] == delimiter)
+        {
+            if(startIndex < 0)
+            {
+            }
+            else if(startIndex == endIndex)
+            {
+                ss.str(string());
+                ss << text[startIndex];
+                tokens.push_back(ss.str());
+            }
+            else
+            {
+                ss.str(string());
+                for (int j = startIndex; j <= endIndex; j++)
+                {
+                    ss << text[j];
+                }
+                tokens.push_back(ss.str());
+            }
+            startIndex = -1;
+            endIndex = -1;
+        }
+        else
+        {
+            if(startIndex < 0)
+            {
+                startIndex = i;
+                endIndex = i;
+            }
+            else
+            {
+                endIndex = i;
+            }
+        }
+    }
+    
+    if(startIndex >= 0 && endIndex >= startIndex)
+    {
+        ss.str(string());
+        for(int i = startIndex; i <= endIndex; i++)
+        {
+            ss << text[i];
+        }
+        tokens.push_back(ss.str());
+    }
+    
+    return tokens;
 }
 
 void Senario::nextButtonPressed()
 {
     curSlide++;
-    //clearElements();
     if(!constructSenarioStage()){
         startGameMenu->setVisible(true);
     }

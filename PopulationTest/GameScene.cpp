@@ -47,6 +47,7 @@ GameScene::GameScene()
             settingsLevel->setLevel0();
             break;
         case 1:
+            settingsLevel->setLevel0();
             break;
         default:
             break;
@@ -134,7 +135,15 @@ bool GameScene::init()
 
 void GameScene::setupScene()
 {
+    int level = GameManager::getThis()->getLevel();
+    if(level == 0)
+    {
         mapHandler->initTiles("DemoScene.tmx");
+    }
+    else
+    {
+        mapHandler->initTiles("Full_Scene.tmx");
+    }
         
         if (mapHandler->getMap())
         {
@@ -240,7 +249,7 @@ void GameScene::enableTouch()
     GameHUD* hudlayer = GameHUD::create();
     this->addChild(hudlayer, 1);
     this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
-    SoundtrackManager::PlayBGM("Rite of Passage.mp3");
+    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
 }
 
 void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
@@ -547,7 +556,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             break;
-        
+            
+            /* touch sprite function has been disabled! */
             //Check if clicking on building/sprite/tokens
             default:
             {
@@ -556,16 +566,16 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     if (!handleTouchTokens(touchLoc))
                     {
                         // if touched tokens, don't check for sprite and building
-                        if (!handleTouchSprite(touchLoc))
-                        {
+                        //if (!handleTouchSprite(touchLoc))
+                        //{
                             // if touched sprite, dont check for building
                             handleTouchBuilding(touchLoc, tilePos);
-                        }
+                        //}
                     }
                 }
                 else
                 {
-                    handleTouchSprite(touchLoc);
+                    //handleTouchSprite(touchLoc);
                 }
             }
                 break;
@@ -649,6 +659,12 @@ void GameScene::update(float time)
         for (int i = 0; i < buildingHandler->specialOnMap->count(); i++)
         {
             Building* b = (Building*) buildingHandler->specialOnMap->objectAtIndex(i);
+            b->updateBuilding(time);
+        }
+        
+        for (int i = 0; i < buildingHandler->amenityOnMap->count(); i++)
+        {
+            Building* b = (Building*) buildingHandler->amenityOnMap->objectAtIndex(i);
             b->updateBuilding(time);
         }
         
@@ -783,9 +799,9 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->master)
             selectedTile = selectedTile->master;
         
-        if (selectedTile->building)
+        if (selectedTile->building && selectedTile->building->buildingType != DECORATION)
         {
-            this->setTouchEnabled(false);
+            //this->setTouchEnabled(false);
 
             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
             buildingInfoMenu->useAsBasePopupMenu();
@@ -819,9 +835,10 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile = selectedTile->master;
                 
                 if (selectedTile->building &&
-                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) )
+                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) &&
+                    selectedTile->building->buildingType != DECORATION)
                 {
-                    this->setTouchEnabled(false);
+                    //this->setTouchEnabled(false);
                     
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                     buildingInfoMenu->useAsBasePopupMenu();

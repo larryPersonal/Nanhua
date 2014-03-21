@@ -30,6 +30,11 @@ CCObject* SenarioManager::getSlide(int index){
     return slidesList->objectAtIndex(index);
 }
 
+void SenarioManager::releaseSlides()
+{
+    slidesList->removeAllObjects();
+}
+
 void SenarioManager::parseXMLFile(string xml)
 {
     slidesList->removeAllObjects();
@@ -43,6 +48,7 @@ void SenarioManager::parseXMLFile(string xml)
     
     bool inSprite = false;
     bool inDialogue = false;
+    bool inOption = false;
     
     Slide* slide;
     Element* element;
@@ -88,7 +94,7 @@ void SenarioManager::parseXMLFile(string xml)
                 inProject = false;
             }
         }
-        else if(!inSprite && !inDialogue)
+        else if(!inSprite && !inDialogue && !inOption)
         {
             if(str.find("<sprite>") != std::string::npos)
             {
@@ -101,6 +107,12 @@ void SenarioManager::parseXMLFile(string xml)
                 element = new Element();
                 element->updateDialogueType();
                 inDialogue = true;
+            }
+            else if(str.find("<option>") != std::string::npos)
+            {
+                element = new Element();
+                element->updateOptionType();
+                inOption = true;
             }
             else if(str.find("</slide>") != std::string::npos)
             {
@@ -182,6 +194,27 @@ void SenarioManager::parseXMLFile(string xml)
                 content = str.substr(start_pos + 6, end_pos - start_pos - 6);
                 element->text = content;
             }
+            else if(str.find("<file>") != std::string::npos)
+            {
+                start_pos = str.find("<file>");
+                end_pos = str.find("</file>");
+                content = str.substr(start_pos + 6, end_pos - start_pos - 6);
+                element->nextFile = content;
+            }
+            else if(str.find("<background>") != std::string::npos)
+            {
+                start_pos = str.find("<background>");
+                end_pos = str.find("</background>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                if(content.compare("yes"))
+                {
+                    element->isBackground = true;
+                }
+                else
+                {
+                    element->isBackground = false;
+                }
+            }
             else if(str.find("</dialogue>") != std::string::npos)
             {
                 slide->addElement(element);
@@ -191,6 +224,11 @@ void SenarioManager::parseXMLFile(string xml)
             {
                 slide->addElement(element);
                 inSprite = false;
+            }
+            else if(str.find("</option>") != std::string::npos)
+            {
+                slide->addElement(element);
+                inOption = false;
             }
         }
     }

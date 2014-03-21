@@ -594,6 +594,8 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                 }
                 
                 b->ID = buildingID;
+                b->currGID = b->baseGID;
+                b->lastGID = b->baseGID;
                 allBuildings->addObject(b);
                 ++buildingID;
             }

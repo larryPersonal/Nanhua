@@ -17,7 +17,7 @@ class Element: public CCObject {
 public:
     
     enum ElementType {
-        sprite, dialogue
+        sprite, dialogue, option
     };
     
     ElementType type;
@@ -34,12 +34,17 @@ public:
     
     std::string dir;
     
+    std::string nextFile;
+    
+    bool isBackground;
+    
 public:
     Element();
     ~Element();
     
     void updateSpriteType();
     void updateDialogueType();
+    void updateOptionType();
     
 };
 

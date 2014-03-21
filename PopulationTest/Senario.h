@@ -63,6 +63,12 @@ public:
     void clearElements();
     
     void onOrientationChanged();
+    
+    void selectButtonPressed(CCObject* pSender);
+    
+    void createTexts(std::string, float, float, string, float, ccColor3B);
+    
+    vector<std::string> split(std::string, char);
 };
 
 #endif
