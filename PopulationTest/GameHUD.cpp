@@ -916,7 +916,7 @@ void GameHUD::createBuildMenu()
     menuItems_build->retain();
     
     buildButton = CCMenuItemImage::create("main-game-buttons_build.png", "main-game-buttons_build.png", this, menu_selector(GameHUD::clickBuildButton));
-    buildButton->setScale(0.3f);
+    buildButton->setScale(0.5f);
     buildButton->setAnchorPoint(ccp(1, 0));
     buildButton->setTag(-1);
     buildButton->setPosition(ccp(screenSize.width, 0));

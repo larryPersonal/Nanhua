@@ -3236,9 +3236,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "706"
-            endingLineNumber = "706"
-            landmarkName = "Building::leaveGranuary(GameSprite* sp)"
-            landmarkType = "5">
+            endingLineNumber = "706">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

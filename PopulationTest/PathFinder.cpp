@@ -75,7 +75,7 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool tryEscape)
             //The source must always be reachable, in case someone wants to move from a building.
             return true;
         }
-        CCLog("Destination %f %f, Source %f %f", destination.x, destination.y, source.x, source.y);
+      //  CCLog("Destination %f %f, Source %f %f", destination.x, destination.y, source.x, source.y);
         
         if (!handler->isTileBlocked(*tilePos, tryEscape))
         {
