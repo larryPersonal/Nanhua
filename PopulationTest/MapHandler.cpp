@@ -486,7 +486,7 @@ void MapHandler::Populate(CCArray* layers)
 
     //now for environment //WARNING Ground_1 is now the tile layer
     
-    pLayer = mapPtr->layerNamed("Ground_1");
+    pLayer = mapPtr->layerNamed("Ground_0");
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
         for (int j = 0; j < mapPtr->getMapSize().height; ++j)
@@ -507,7 +507,7 @@ void MapHandler::Populate(CCArray* layers)
 }
 
 
-float MapHandler::calcZIndex(CCPoint &point)
+float MapHandler::calcZIndex(CCPoint &point, int offset)
 {
     float lowestZ = 0;// mapPtr->getMapSize().width + mapPtr->getMapSize().height;
     float currZ = point.x + point.y;

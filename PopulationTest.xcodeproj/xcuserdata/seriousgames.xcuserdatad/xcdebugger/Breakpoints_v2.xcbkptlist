@@ -410,9 +410,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)"
-            landmarkType = "5">
+            endingLineNumber = "133">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -843,7 +841,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
             endingLineNumber = "31"
-            landmarkName = "BuildingHandler::~BuildingHandler()"
+            landmarkName = "BuildingHandler::BuildingHandler()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
