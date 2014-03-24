@@ -1459,6 +1459,10 @@
 		8491B41316F6A942008FC9C2 /* OptionsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsScene.cpp; sourceTree = "<group>"; };
 		8491B41416F6A942008FC9C2 /* OptionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsScene.h; sourceTree = "<group>"; };
 		8499931518645BD8004C706A /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuScene.cpp; sourceTree = "<group>"; };
+		84C97AF718DFD52100640CE8 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
+		84C97AF818DFD52C00640CE8 /* checked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checked.h; sourceTree = "<group>"; };
+		84C97AF918DFD52C00640CE8 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		84C97AFA18DFD52C00640CE8 /* unchecked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unchecked.h; sourceTree = "<group>"; };
 		84DF3ECD175349DB00B19557 /* SystemMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SystemMenu.cpp; sourceTree = "<group>"; };
 		84DF3ECE175349DB00B19557 /* SystemMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemMenu.h; sourceTree = "<group>"; };
 		84EB32731867D2D0003B5CEB /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
@@ -1782,6 +1786,7 @@
 		365FBBB016E5E31000A57CF0 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				84C97AF618DFD50F00640CE8 /* UTF8 */,
 				365FBBFE16E5E31000A57CF0 /* cocos-ext.h */,
 				365FBBFF16E5E31000A57CF0 /* ExtensionMacros.h */,
 				365FBBB116E5E31000A57CF0 /* CCBReader */,
@@ -3308,6 +3313,17 @@
 				84EDD27018C729D3003BAF5E /* BanditsAttackHandler.h */,
 			);
 			name = Header;
+			sourceTree = "<group>";
+		};
+		84C97AF618DFD50F00640CE8 /* UTF8 */ = {
+			isa = PBXGroup;
+			children = (
+				84C97AF818DFD52C00640CE8 /* checked.h */,
+				84C97AF918DFD52C00640CE8 /* core.h */,
+				84C97AFA18DFD52C00640CE8 /* unchecked.h */,
+				84C97AF718DFD52100640CE8 /* utf8.h */,
+			);
+			name = UTF8;
 			sourceTree = "<group>";
 		};
 		84EB327F1867FB6E003B5CEB /* xml */ = {
