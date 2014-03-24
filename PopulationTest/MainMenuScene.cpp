@@ -71,7 +71,7 @@ bool MainMenuScene::init()
 
     buttonStart = CCMenuItemImage::create("start.png", "press_start.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
     buttonOptions = CCMenuItemImage::create("options.png", "press_options.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
-    buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
+   // buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
     
     
     CCLabelTTF* startLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonStart->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
@@ -85,13 +85,13 @@ bool MainMenuScene::init()
     optionsLabel->setPosition( ccp(buttonOptions->boundingBox().size.width * 0.5f, buttonOptions->boundingBox().size.height * 0.5f));
     buttonOptions->addChild(optionsLabel);
     optionsLabel->setColor(ccc3(255,189,68));
-    
+    /*
     CCLabelTTF* creditsLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonCredits->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
     creditsLabel->setPosition( ccp(buttonCredits->boundingBox().size.width * 0.5f, buttonCredits->boundingBox().size.height * 0.5f));
     buttonCredits->addChild(creditsLabel);
     creditsLabel->setColor(ccc3(255,189,68));
-    
+    */
     
     
     //2 is retina, 1 is normal
@@ -101,7 +101,7 @@ bool MainMenuScene::init()
         backgroundDeco2->setScale(0.5);
         buttonStart->setScale(0.5);
         buttonOptions->setScale(0.5);
-        buttonCredits->setScale(0.5);
+    //    buttonCredits->setScale(0.5);
     }
     onOrientationChanged();
 
@@ -109,7 +109,7 @@ bool MainMenuScene::init()
     //Need to call this once to init the positions and scales
     
     //Create menu, it's an autorelease object
-    CCMenu* menu = CCMenu::create(buttonStart, buttonOptions, buttonCredits, NULL);
+    CCMenu* menu = CCMenu::create(buttonStart, buttonOptions, NULL);
     menu->setPosition( CCPointZero );
     this->addChild(menu, 1);
     this->addChild(backgroundImage, 0);
@@ -233,7 +233,7 @@ void MainMenuScene::onOrientationChanged(){
 
         buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.375));
         buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.225));
-        buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.075));
+      //  buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.075));
     }
     else
     {
@@ -242,7 +242,7 @@ void MainMenuScene::onOrientationChanged(){
 
         buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.65));
         buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.45));
-        buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
+       // buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
         
     }
 }
