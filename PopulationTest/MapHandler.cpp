@@ -485,8 +485,8 @@ void MapHandler::Populate(CCArray* layers)
     }
 
     //now for environment //WARNING Ground_1 is now the tile layer
-    
-    pLayer = mapPtr->layerNamed("Ground_0");
+    //putting stuff back in Ground_0 for now
+    pLayer = mapPtr->layerNamed("Ground_1");
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
         for (int j = 0; j < mapPtr->getMapSize().height; ++j)
@@ -510,7 +510,7 @@ void MapHandler::Populate(CCArray* layers)
 float MapHandler::calcZIndex(CCPoint &point, int offset)
 {
     float lowestZ = 0;// mapPtr->getMapSize().width + mapPtr->getMapSize().height;
-    float currZ = point.x + point.y;
+    float currZ = point.x + point.y + offset;
     return (lowestZ + currZ) + mapPtr->layerNamed("Ground_1")->getZOrder();
 }
 
@@ -571,7 +571,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
     CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
     cloneBuilding->buildingRep->setPosition(tilePos);
     
-    getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target)); //force buildings to be drawn always on top
+    getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width)); //force buildings to be drawn always on top
     
     MapTile* master = getTileAt(target.x, target.y);
     for (int i = 0; i < cloneBuilding->height; i++)
@@ -663,7 +663,8 @@ bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
     currBuildingPreview->buildingRep->setPosition(tilePos);
     currBuildingPreview->buildingRep->setOpacity(75);
     
-    getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target)); //force buildings to be drawn always on top
+    //I assume buildings are SQUARE.
+    getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target, currBuildingPreview->width)); //force buildings to be drawn always on top
     
     // Show red-tinted preview and return false if tiles are occupied.
     if (!isBuildableOnTile(target, currBuildingPreview))
