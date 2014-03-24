@@ -1438,6 +1438,7 @@
 		84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedString.cpp; sourceTree = "<group>"; };
 		847309C718DC09AC001869C6 /* assigntaskicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = assigntaskicon.png; sourceTree = "<group>"; };
 		847309C818DC09AC001869C6 /* Building Info UI placeholdercircleclose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Building Info UI placeholdercircleclose.png"; sourceTree = "<group>"; };
+		847309CB18DC09E7001869C6 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = banditicon.png; path = "banditicon.png"; sourceTree = "<group>"; };
 		847309CD18DC0A22001869C6 /* peaceicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = peaceicon.png; sourceTree = "<group>"; };
 		8489ADA9175C96C1004CCB84 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		848BD5B11754A58F00D5346A /* PopulationMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopulationMenu.cpp; sourceTree = "<group>"; };

@@ -121,7 +121,7 @@ public:
     CCPoint pointOnMapFromTouchLocation(CCPoint &location);
     CCPoint pointRelativeToCenterFromLocation(CCPoint &location);
     
-    float calcZIndex(CCPoint &tilePos);
+    float calcZIndex(CCPoint &tilePos, int offset = 0); //I ASSUME BUILDING CAN BE PLACED.
     
     
     CCPoint getRandomTileLocation();
