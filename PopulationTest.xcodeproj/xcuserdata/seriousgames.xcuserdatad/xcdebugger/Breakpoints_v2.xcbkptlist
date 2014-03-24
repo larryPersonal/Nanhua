@@ -395,7 +395,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "442"
             endingLineNumber = "442"
-            landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
+            landmarkName = "GameScene::postDrag(float time)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -745,7 +745,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "449"
             endingLineNumber = "449"
-            landmarkName = "GameHUD::onSpriteRemovedFromMap(GameSprite* sprite)"
+            landmarkName = "GameHUD::updatePopTotalLabel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1107,7 +1107,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "395"
             endingLineNumber = "395"
-            landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
+            landmarkName = "GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

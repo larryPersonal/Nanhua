@@ -443,8 +443,8 @@ void GameScene::postDrag(float time)
     mapHandler->moveMapBy(_speedX * 10, _speedY * 10);
     if(cumulatedTime > 0.05f)
     {
-        _speedX *= 0.9f;
-        _speedY *= 0.9f;
+        _speedX *= 0.1f;
+        _speedY *= 0.1f;
         cumulatedTime = 0;
     }
     cumulatedTime += time;
