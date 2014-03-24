@@ -14,7 +14,7 @@
 #include "ScrollArea.h"
 using namespace cocos2d;
 
-class BuildingCard: CCObject
+class BuildingCard : public CCObject
 {
 private:
     Building* building;
@@ -62,6 +62,8 @@ public:
     void onMenuItemSelected(CCObject*);
     
     void tryToBuild(int);
+    
+    void setOpacity(GLubyte);
 };
 
 #endif

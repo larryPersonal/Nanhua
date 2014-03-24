@@ -52,8 +52,6 @@ GameScene::GameScene()
         default:
             break;
     }
-    
-    isOpenBuildScroll = false;
 }
 
 GameScene::~GameScene()
@@ -253,9 +251,115 @@ void GameScene::enableTouch()
 }
 
 void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
-            CCSetIterator it;
-            CCTouch* touchOne;
-            CCTouch* touchTwo;
+    
+    CCTouch* touch = (CCTouch*)*touches->begin();
+    CCPoint touchLoc = touch->getLocation();
+    
+    // the first priority for dragging on the screen is to check whether it is for the senario stage
+    if(Senario::getThis()->active)
+    {
+        return;
+    }
+    // the second priority for dragging on the screen is to check whether it is for the GameHUD layer
+    else
+    {
+        // check whether the dragging is on the buttons (GameHUD)
+        if(GameHUD::getThis()->objectiveButton != NULL)
+        {
+            if(GameHUD::getThis()->objectiveButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->objectiveMenu != NULL)
+        {
+            if(GameHUD::getThis()->objectiveMenu->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->peaceButton != NULL)
+        {
+            if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->warButton != NULL)
+        {
+            if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->stickHappinessButton != NULL)
+        {
+            if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->resumeHappinessButton != NULL)
+        {
+            if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->pauseButton != NULL)
+        {
+            if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->resumeButton != NULL)
+        {
+            if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->systemButton != NULL)
+        {
+            if(GameHUD::getThis()->systemButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->buildButton != NULL)
+        {
+            if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL)
+        {
+            if(GameHUD::getThis()->buildScroll->buildMenu->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                GameHUD::getThis()->buildScroll->scheduleScrollOut();
+            }
+        }
+    }
+    
+    CCSetIterator it;
+    CCTouch* touchOne;
+    CCTouch* touchTwo;
     
     // store the starting time of dragging;
     if(_previousTime == 0)
@@ -272,14 +376,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         CCTouch* touch = (CCTouch*)*touches->begin();
         _previous_pos_x = touch->getLocation().x;
         _previous_pos_y = touch->getLocation().y;
-    }
-    
-    // since the touch has been detected, close the build scroll window if any
-    if(GameHUD::getThis()->buildScroll)
-    {
-        GameHUD::getThis()->buildScroll->closeMenu();
-        GameHUD::getThis()->buildScroll = NULL;
-        GameHUD::getThis()->buildButton->setVisible(true);
     }
     
     /*
@@ -363,13 +459,136 @@ void GameScene::postDrag(float time)
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
-    /*
-    // handle the build button
-    if(BuildScroll::getThis() != NULL)
+    CCTouch* touch = (CCTouch*)*touches->begin();
+    CCPoint touchLoc = touch->getLocation();
+    // the first priority for clicking on the screen is to check whether it is for the senario stage
+    if(Senario::getThis()->active)
     {
-        BuildScroll::getThis()->closeMenu(true);
+        if(Senario::getThis()->inOption)
+        {
+            return;
+        }
+        
+        if(Senario::getThis()->skipButton != NULL)
+        {
+            if(Senario::getThis()->skipButton->boundingBox().containsPoint(touchLoc))
+            {
+                Senario::getThis()->nextButtonPressed(true);
+            }
+            else
+            {
+                Senario::getThis()->nextButtonPressed(false);
+            }
+        }
+        
+        return;
     }
-    */
+    else
+    // the second priority for clicking on the screen is to check whether it is for the GameHUD layer;
+    {
+        // check whether the clicking is on the objective button (GameHUD)
+        if(GameHUD::getThis()->objectiveButton != NULL)
+        {
+            if(GameHUD::getThis()->objectiveButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->clickObjectiveButton();
+                return;
+            }
+        }
+        
+        // check whether the clicking is on the objective menu (GameHUD)
+        if(GameHUD::getThis()->objectiveMenu != NULL)
+        {
+            if(GameHUD::getThis()->objectiveMenu->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->peaceButton != NULL)
+        {
+            if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->banditsAttack();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->warButton != NULL)
+        {
+            if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->banditsAttack();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->stickHappinessButton != NULL)
+        {
+            if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->stickGameHappiness();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->resumeHappinessButton != NULL)
+        {
+            if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->stickGameHappiness();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->pauseButton != NULL)
+        {
+            if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->pauseGame();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->resumeButton != NULL)
+        {
+            if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->pauseGame();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->systemButton != NULL)
+        {
+            if(GameHUD::getThis()->systemButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->clickSystemButton();
+                return;
+            }
+        }
+
+        if(GameHUD::getThis()->buildButton != NULL)
+        {
+            if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->clickBuildButton();
+                return;
+            }
+        }
+        
+        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL)
+        {
+            if(GameHUD::getThis()->buildScroll->buildMenu->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                GameHUD::getThis()->buildScroll->scheduleScrollOut();
+            }
+        }
+    }
     
     //If dragged screen, don't count it as a tap
     if (!isThisTapCounted) {
@@ -420,26 +639,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         return;
     }
     
-    // since the touch has been detected, close the build scroll window if any
-    if(isOpenBuildScroll)
-    {
-        isOpenBuildScroll = false;
-    }
-    else
-    {
-        if(GameHUD::getThis()->buildScroll)
-        {
-            GameHUD::getThis()->buildScroll->closeMenu();
-            GameHUD::getThis()->buildScroll = NULL;
-            GameHUD::getThis()->buildButton->setVisible(true);
-        }
-    }
-    
     // it's a tap on the screen of the touch device
     int tapMode = GameHUD::getThis()->getTapMode();
     
-    CCTouch* touch = (CCTouch*)*touches->begin();
-    CCPoint touchLoc = touch->getLocation();
     CCPoint tilePos = mapHandler->tilePosFromTouchLocation(touchLoc);
     
     if (mapHandler->isTilePosWithinBounds(tilePos))

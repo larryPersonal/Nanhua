@@ -531,6 +531,7 @@
 		8491B41516F6A942008FC9C2 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8491B41316F6A942008FC9C2 /* OptionsScene.cpp */; };
 		8499931618645BD8004C706A /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8499931518645BD8004C706A /* MainMenuScene.cpp */; };
 		84C97AFE18DFD87D00640CE8 /* banditicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C97AFD18DFD87D00640CE8 /* banditicon.png */; };
+		84C97B0018DFF2B100640CE8 /* skip_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C97AFF18DFF2B100640CE8 /* skip_button.png */; };
 		84EB32751867D4F5003B5CEB /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84EB32741867D4F5003B5CEB /* Element.cpp */; };
 		84EB32781867D717003B5CEB /* Slide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84EB32771867D717003B5CEB /* Slide.cpp */; };
 		84EB327B1867EC8A003B5CEB /* SenarioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84EB327A1867EC8A003B5CEB /* SenarioManager.cpp */; };
@@ -1463,6 +1464,7 @@
 		84C97AF918DFD52C00640CE8 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		84C97AFA18DFD52C00640CE8 /* unchecked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unchecked.h; sourceTree = "<group>"; };
 		84C97AFD18DFD87D00640CE8 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditicon.png; sourceTree = "<group>"; };
+		84C97AFF18DFF2B100640CE8 /* skip_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skip_button.png; sourceTree = "<group>"; };
 		84DF3ECD175349DB00B19557 /* SystemMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SystemMenu.cpp; sourceTree = "<group>"; };
 		84DF3ECE175349DB00B19557 /* SystemMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemMenu.h; sourceTree = "<group>"; };
 		84EB32731867D2D0003B5CEB /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
@@ -1717,6 +1719,7 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84C97AFF18DFF2B100640CE8 /* skip_button.png */,
 				84C97AFD18DFD87D00640CE8 /* banditicon.png */,
 				847309CD18DC0A22001869C6 /* peaceicon.png */,
 				847309C718DC09AC001869C6 /* assigntaskicon.png */,
@@ -3696,6 +3699,7 @@
 				36AC558218D69A0100C165F5 /* start.png in Resources */,
 				360496F617AB5EE700CACE25 /* innerbox.png in Resources */,
 				360496F717AB5EE700CACE25 /* outerbox.png in Resources */,
+				84C97B0018DFF2B100640CE8 /* skip_button.png in Resources */,
 				84360A3318B21FED002EC8C2 /* workers_menu_unselectedBG.png in Resources */,
 				8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */,
 				360496F917AB5EF100CACE25 /* buildbox.png in Resources */,

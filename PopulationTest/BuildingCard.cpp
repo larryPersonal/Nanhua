@@ -290,3 +290,18 @@ void BuildingCard::tryToBuild(int tag)
     GameHUD::getThis()->buildButton->setVisible(true);
     GameHUD::getThis()->buildScroll = NULL;
 }
+
+void BuildingCard::setOpacity(GLubyte opacity)
+{
+    cardBG->setOpacity(opacity);
+    cardDetailBG->setOpacity(opacity);
+    buildingNameLabel->setOpacity(opacity);
+    buildingImage->setOpacity(opacity);
+    buildingInfoButton->setOpacity(opacity);
+    costImage->setOpacity(opacity);
+    costLabel->setOpacity(opacity);
+    populationImage->setOpacity(opacity);
+    populationLabel->setOpacity(opacity);
+    buildingTimeImage->setOpacity(opacity);
+    buildingTimeLabel->setOpacity(opacity);
+}

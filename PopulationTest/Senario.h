@@ -20,18 +20,20 @@ class Senario : public CCLayer
 public:
     static Senario* SP;
     
-    //CCSprite* character;
     CCMenuItem* chatbox;
     
     char* text;
     
     bool active;
+    bool inOption;
     
     int curSlide;
     
     vector<CCSprite*> spriteList;
     vector<CCMenu*> menuList;
     vector<CCLabelTTF*> labelList;
+    
+    CCSprite* skipButton;
     
     CCArray* slidesList;
     CCArray* animatedStringList;
@@ -59,7 +61,7 @@ public:
     
     bool constructSenarioStage();
     
-    void nextButtonPressed();
+    void nextButtonPressed(bool);
     
     void clearElements();
     

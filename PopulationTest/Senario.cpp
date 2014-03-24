@@ -18,6 +18,7 @@ Senario::Senario()
 {
     Senario::SP = this;
     active = false;
+    inOption = false;
     init();
     curSlide = 0;
     slidesList = CCArray::create();
@@ -25,6 +26,8 @@ Senario::Senario()
     
     animatedStringList = CCArray::create();
     animatedStringList->retain();
+    
+    skipButton = NULL;
 }
 
 Senario::~Senario()
@@ -68,6 +71,8 @@ bool Senario::init()
 void Senario::playSenario(const char* senario)
 {
     curSlide = 0;
+    active = true;
+    GameScene::getThis()->setTouchEnabled(true);
     readSenarioFile();
     constructSenarioStage();
     //onOrientationChanged();
@@ -103,6 +108,20 @@ bool Senario::constructSenarioStage()
     
     CCArray* elementArray = slide->elementList;
     
+    CCSprite* blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen->setAnchorPoint(ccp(0.5, 0.5));
+    blackScreen->setPosition(ccp(0, 0));
+    this->addChild(blackScreen, 1);
+    spriteList.push_back(blackScreen);
+    
+    skipButton = CCSprite::create("skip_button.png");
+    skipButton->retain();
+    skipButton->setScale(1.0f);
+    skipButton->setAnchorPoint(ccp(1, 1));
+    skipButton->setPosition(ccp(screenSize.width, screenSize.height));
+    this->addChild(skipButton, 2);
+    spriteList.push_back(skipButton);
+    
     for(int i = 0; i < elementArray->count(); i++)
     {
         Element* ele = (Element*)elementArray->objectAtIndex(i);
@@ -124,9 +143,9 @@ bool Senario::constructSenarioStage()
             CCSize spriteSize = cha->getContentSize();
             cha->setScale(screenSize.width / spriteSize.width * ele->width / 100.0f);
             
-            cha->setAnchorPoint(ccp(0, 1));
+            cha->setAnchorPoint(ccp(0, 2));
             cha->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
-            this->addChild(cha);
+            this->addChild(cha, 2);
             spriteList.push_back(cha);
         }
         else if(ele->type == Element::dialogue)
@@ -144,65 +163,37 @@ bool Senario::constructSenarioStage()
             
             if(ele->isBackground)
             {
-                this->addChild(chbox);
+                this->addChild(chbox, 3);
                 spriteList.push_back(chbox);
                 continue;
             }
             
+            float heightOff = 60.0f;
+            float widthOff = 80.0f;
+            
+            displayTexts(ele->text, screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff, ele->font.c_str(), (float)ele->fontSize, colorBlack);
+            
             std::stringstream ss;
             ss << ele->text;
             
-            displayTexts(ss.str().c_str(), 100, 200, ele->font.c_str(), (float)ele->fontSize, colorBlack);
+            heightOff = 30.0f;
+            widthOff = 80.0f;
             
-            float heightOff = 0.0f;
-            float widthOff = 0.0f;
             ss.str(std::string());
             ss << ele->name;
             CCLabelTTF* chboxName = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
             chboxName->setColor(colorBlue);
-            chboxName->setAnchorPoint(ccp(0.5, 1));
-            if(GlobalHelper::isHorizontal())
-            {
-                heightOff = -25.0f + screenSize.height * (ele->top / 100.0f) - chbox->boundingBox().size.height;
-            }
-            if(ele->dir.compare("left") == 0)
-            {
-                if(GlobalHelper::isHorizontal())
-                {
-                    widthOff = 20.0f;
-                }
-                chboxName->setPosition(ccp((screenSize.width - chbox->boundingBox().size.width) / 2.0f + chboxName->boundingBox().size.width / 2.0f + 28.0f + widthOff, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f - heightOff));
-            }
-            else
-            {
-                if(GlobalHelper::isHorizontal())
-                {
-                    widthOff = 10.0f;
-                }
-                chboxName->setPosition(ccp(chbox->boundingBox().size.width - 16.0f - widthOff, chbox->boundingBox().size.height + chboxName->boundingBox().size.height / 2.0f - heightOff));
-            }
+            chboxName->setAnchorPoint(ccp(0, 1));
+            chboxName->setPosition(ccp(screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff));
             
-            CCMenuItemImage* nextButton = CCMenuItemImage::create("nextButton.png", "nextButton.png", this, menu_selector(Senario::nextButtonPressed));
-            nextButton->setAnchorPoint(ccp(0.5, 0.5));
-            nextButton->setScale(0.3f);
-            
-            this->addChild(chbox);
-            //this->addChild(chboxLabel);
-            this->addChild(chboxName);
+            this->addChild(chbox, 3);
+            this->addChild(chboxName, 4);
             spriteList.push_back(chbox);
-            //labelList.push_back(chboxLabel);
             labelList.push_back(chboxName);
-            
-            CCMenu* menu = CCMenu::create(nextButton, NULL);
-            menu->setPosition(ccp(screenSize.width * 0.86f, screenSize.height * 0.08f));
-            
-            this->addChild(menu, 1);
-            
-            
-            menuList.push_back(menu);
         }
         else if(ele->type == Element::option)
         {
+            inOption = true;
             stringstream ss;
             ss << ele->text;
             CCLabelTTF* optionLabel = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize);
@@ -210,7 +201,7 @@ bool Senario::constructSenarioStage()
             optionLabel->setAnchorPoint(ccp(0, 1));
             optionLabel->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             labelList.push_back(optionLabel);
-            this->addChild(optionLabel);
+            this->addChild(optionLabel, 4);
             
             CCMenuItemImage* selectButton = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(Senario::selectButtonPressed));
             selectButton->setTag(i);
@@ -219,7 +210,7 @@ bool Senario::constructSenarioStage()
             
             CCMenu* menu = CCMenu::create(selectButton, NULL);
             menu->setPosition(ccp(screenSize.width * (ele->left / 100.0f) + optionLabel->boundingBox().size.width + 20.0f, screenSize.height * (ele->top / 100.0f)));
-            this->addChild(menu, 1);
+            this->addChild(menu, 4);
             menuList.push_back(menu);
         }
     }
@@ -249,6 +240,8 @@ void Senario::selectButtonPressed(CCObject* pSender)
     
     slidesList = sm->slidesList;
     delete sm;
+    
+    inOption = false;
 
     curSlide = 0;
     if(!constructSenarioStage()){
@@ -258,30 +251,42 @@ void Senario::selectButtonPressed(CCObject* pSender)
 
 void Senario::displayTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color)
 {
-    //vector<std::string> tokens = split(str, ' ');
+    vector<std::string> tokens = split(str, ' ');
     float offX = 0;
     float offY = 0;
     float flashTimeGap = 0.05f;
+    int flashGapCount = 0;
     
-    for (int i = 0; i < str.length(); i++)
+    for (int i = 0; i < tokens.size(); i++)
     {
-        stringstream ss;
-        ss << str.at(i);
-        string tempStr = ss.str();
-        AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * i, font, fontSize, 80.0f);
-        as->getLabel()->setColor(color);
-        as->getLabel()->setAnchorPoint(ccp(0, 1));
+        std::string tokenStr = tokens.at(i);
+        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
+        tempLabel->retain();
         
-        if(startX + offX + as->getLabel()->boundingBox().size.width > 900.0f)
+        if (startX + offX + tempLabel->boundingBox().size.width > 900.0f)
         {
-            offY = offY + 20.0f;
+            offY = offY + 30.0f;
             offX = 0;
         }
-        as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
-        offX += as->label->boundingBox().size.width;
         
-        this->addChild(as->getLabel(), 20);
-        animatedStringList->addObject(as);
+        CC_SAFE_RELEASE(tempLabel);
+        
+        for (int j = 0; j < tokenStr.length(); j++)
+        {
+            string tempStr = tokenStr.substr(j, 1);
+            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
+            as->getLabel()->setColor(color);
+            as->getLabel()->setAnchorPoint(ccp(0, 1));
+            
+            as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
+            offX += as->label->boundingBox().size.width;
+            
+            this->addChild(as->getLabel(), 20);
+            animatedStringList->addObject(as);
+        }
+        
+        flashGapCount += tokenStr.size();
+        offX += 10;
     }
 }
 
@@ -344,12 +349,23 @@ vector<std::string> Senario::split(std::string text, char delimiter)
     return tokens;
 }
 
-void Senario::nextButtonPressed()
+void Senario::nextButtonPressed(bool skip)
 {
-    curSlide++;
-    this->unschedule(schedule_selector(Senario::update));
-    if(!constructSenarioStage()){
-        startGameMenu->setVisible(true);
+    if(!skip)
+    {
+        curSlide++;
+        this->unschedule(schedule_selector(Senario::update));
+        if(!constructSenarioStage()){
+            startGameMenu->setVisible(true);
+        }
+    }
+    else
+    {
+        curSlide = slidesList->count() - 1;
+        this->unschedule(schedule_selector(Senario::update));
+        if(!constructSenarioStage()){
+            startGameMenu->setVisible(true);
+        }
     }
 }
 
@@ -385,6 +401,12 @@ void Senario::clearElements()
     
     animatedStringList = CCArray::create();
     animatedStringList->retain();
+    
+    if(skipButton != NULL)
+    {
+        CC_SAFE_RELEASE(skipButton);
+        skipButton = NULL;
+    }
 }
 
 void Senario::createGUI(){

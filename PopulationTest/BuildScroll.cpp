@@ -10,6 +10,7 @@
 #include "GameScene.h"
 #include "BuildingCard.h"
 #include "GlobalHelper.h"
+#include "GameHUD.h"
 
 BuildScroll* BuildScroll::SP;
 
@@ -47,34 +48,36 @@ BuildScroll::BuildScroll(){
     // initialize the gui handler
     background_rect->ini(700, 100, 100, 200);
     
-    //this->setTouchEnabled(true);
+    leftPos = 0;
+    maxPos = 0.98f;
+    
+    buildingCards = CCArray::create();
+    buildingCards->retain();
+    
+    scroll_in = false;
+    scroll_out = false;
 }
 
 BuildScroll::~BuildScroll()
 {
     BuildScroll::SP = NULL;
+    
+    buildingCards->removeAllObjects();
+    CC_SAFE_RELEASE(buildingCards);
 }
 
 void BuildScroll::createMenuItems()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    bool isHori = GlobalHelper::isHorizontal();
     
     // create the build group background
     string buildBackground = "scroller.png";
     buildMenu = CCSprite::create(buildBackground.c_str());
     CCSize spriteSize = buildMenu->getContentSize();
-    buildMenu->setAnchorPoint(ccp(1, 0));
-    if(isHori)
-    {
-        buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
-    }
-    else
-    {
-        buildMenu->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.98f, screenSize.height / spriteSize.width * 0.98f);
-    }
-    buildMenu->setPosition(ccp(screenSize.width, 0));
+    buildMenu->setAnchorPoint(ccp(0, 0));
+    buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
+    buildMenu->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));
     this->addChild(buildMenu, 1);
     
     // scroll section for other villagers
@@ -88,21 +91,22 @@ void BuildScroll::createMenuItems()
     CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
     // list down all the buildings
     numberOfBuildingCards = 0;
-    BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
+    BuildingCard* bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
     numberOfBuildingCards++;
+    buildingCards->addObject(bc);
 
-    BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
+    bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
     numberOfBuildingCards++;
-    
-    
+    buildingCards->addObject(bc);
     
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == HOUSING)
         {
-            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
+            buildingCards->addObject(bc);
         }
     }
     
@@ -111,8 +115,9 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == AMENITY)
         {
-            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
+            buildingCards->addObject(bc);
         }
     }
     
@@ -121,8 +126,9 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == GRANARY)
         {
-            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
+            buildingCards->addObject(bc);
         }
     }
     
@@ -131,65 +137,52 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == MILITARY)
         {
-            BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
+            buildingCards->addObject(bc);
         }
     }
-    /*
-    CCMenuItemImage* leftBtn = CCMenuItemImage::create("leftgreen_arrowbtn.png", "leftgreen_arrowbtn.png", this, menu_selector(BuildScroll::onMenuItemSelected));
-    leftBtn->setTag(-3);      //set Tag as address of the GameSprite object
-    leftBtn->setPosition(ccp(screenSize.width * 0.07f, buildMenu->boundingBox().size.height * 0.5f));
     
-    CCMenuItemImage* rightBtn = CCMenuItemImage::create("leftgreen_arrowbtn.png", "leftgreen_arrowbtn.png", this, menu_selector(BuildScroll::onMenuItemSelected));
-    rightBtn->setTag(-4);      //set Tag as address of the GameSprite object
-    rightBtn->setPosition(ccp(screenSize.width * 0.97f, buildMenu->boundingBox().size.height * 0.5f));
-    */
     scrollArea->setScrollContentSize(CCSizeMake(250.0f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setPosition(ccp(screenSize.width * 0.105f, buildMenu->boundingBox().size.height * 0.14f));
+    scrollArea->setPosition(ccp(screenSize.width * 0.105f + screenSize.width * (maxPos - leftPos), buildMenu->boundingBox().size.height * 0.14f));
     scrollArea->updateScrollBars();
     this->addChild(scrollArea, 1);
-   // this->addChild(leftBtn, 2);
-   // this->addChild(rightBtn, 2);
-
+    
+    scroll_in = true;
+    this->schedule(schedule_selector( BuildScroll::scrollIn ), 1/120.0f);
 }
 
 void BuildScroll::onMenuItemSelected(CCObject* pSender){
-    
-   // CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
-     //Menu items handle their own click events!
-    //Otherwise, only these items will be recognized!
-    
-    //-3 to scroll left
-    //-4 to scroll right
-    //-5 to close the scroll and do nothing else
-    /*
-    switch (pMenuItem->getTag())
-    {
-        case -3:
-            //buttonleft
-            CCLog("LEFT CLICKED");
-            break;
-
-        case -4:
-            //buttonright
-            break;
-
-        //I shouldn't need to do this anymore.
-        case -5:
-            // buttonClose
-            this->closeMenu(true);
-            break;
-        default:
-            //its handled elsewhere
-            break;
-    }
-    */
     
 }
 
 void BuildScroll::reposition()
 {
-    //CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    float temp = (leftPos / maxPos) * 255;
+    
+    if(temp < 0)
+    {
+        temp = 0;
+    }
+    else if(temp > 255)
+    {
+        temp = 255;
+    }
+    
+    GLubyte opacity = temp;
+    
+    buildMenu->setOpacity(opacity);
+    buildMenu->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));
+    
+    scrollArea->setPosition(ccp(screenSize.width * 0.105f + screenSize.width * (maxPos - leftPos), buildMenu->boundingBox().size.height * 0.14f));
+    
+    for(int i = 0; i < buildingCards->count(); i++)
+    {
+        BuildingCard* bc = (BuildingCard*) buildingCards->objectAtIndex(i);
+        bc->setOpacity(opacity);
+    }
 }
 
 void BuildScroll::refreshAllMenuItemValues()
@@ -198,7 +191,6 @@ void BuildScroll::refreshAllMenuItemValues()
 
 void BuildScroll::willChangeOrientation()
 {
-    
 }
 
 void BuildScroll::onOrientationChanged()
@@ -229,4 +221,54 @@ void BuildScroll::update(float deltaTime)
     refreshAllMenuItemValues();
 }
 
+void BuildScroll::scrollIn(float dt)
+{
+    if(scroll_in)
+    {
+        float speed = 0.05f;
+        
+        leftPos = leftPos + speed;
+        
+        if(leftPos >= maxPos)
+        {
+            leftPos = maxPos;
+            this->unschedule(schedule_selector( BuildScroll::scrollIn ));
+            scroll_in = false;
+        }
+        reposition();
+    }
+}
+
+void BuildScroll::scrollOut(float dt)
+{
+    if(scroll_out)
+    {
+        float speed = 0.05f;
+        
+        leftPos = leftPos - speed;
+        if(leftPos <= 0)
+        {
+            leftPos = 0;
+            this->unschedule(schedule_selector( BuildScroll::scrollOut ));
+            scroll_out = false;
+            
+            GameHUD::getThis()->buildScroll->closeMenu();
+            GameHUD::getThis()->buildScroll = NULL;
+            GameHUD::getThis()->buildButton->setVisible(true);
+        }
+        else
+        {
+            reposition();
+        }
+    }
+}
+
+void BuildScroll::scheduleScrollOut()
+{
+    if(!scroll_out && !scroll_in)
+    {
+        scroll_out = true;
+        this->schedule(schedule_selector( BuildScroll::scrollOut ), 1/120.0f);
+    }
+}
 

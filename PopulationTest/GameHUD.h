@@ -139,36 +139,30 @@ public:
     
     // objective menu group
     CCSprite* objectiveMenu;
-    CCMenuItemImage* objectiveButton;
-    CCArray* menuItems_objective;
-    CCMenu* menu_objective;
+    CCSprite* objectiveButton;
     
     CCLabelTTF* objectiveTitle;
     CCArray* objectiveStrs;
     
     // build menu group
-    CCMenuItemImage* buildButton;
-    CCArray* menuItems_build;
-    CCMenu* menu_build;
+    CCSprite* buildButton;
     
     // system menu group
-    CCMenuItemImage* systemButton;
+    CCSprite* systemButton;
     
     bool pause;
-    CCMenuItemImage* pauseButton;
-    CCMenuItemImage* resumeButton;
+    CCSprite* pauseButton;
+    CCSprite* resumeButton;
     
     int originalHappiness;
     bool stickHappiness;
-    CCMenuItemImage* stickHappinessButton;
-    CCMenuItemImage* resumeHappinessButton;
+    CCSprite* stickHappinessButton;
+    CCSprite* resumeHappinessButton;
     
     bool startWar;
-    CCMenuItemImage* peaceButton;
-    CCMenuItemImage* warButton;
+    CCSprite* peaceButton;
+    CCSprite* warButton;
     
-    CCArray* menuItems_pause;
-    CCMenu* menu_pause;
 public:
     bool menuIsOpen;
     
@@ -209,11 +203,6 @@ public:
     void createObjectiveMenu();
     void createBuildMenu();
     void createSystemMenu();
-    
-    void rotateStatsMenu();
-    void rotateTimeMenu();
-    void rotateObjectiveMenu();
-    void rotateBuildMenu();
     
     void clickObjectiveButton();
     void clickBuildButton();

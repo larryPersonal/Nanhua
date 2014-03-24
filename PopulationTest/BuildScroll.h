@@ -21,7 +21,7 @@ using namespace std;
 
 class BuildScroll: public PopupMenu
 {
-private:
+public:
     // Background Rect
     Rect* background_rect;
     
@@ -32,6 +32,14 @@ private:
     int numberOfBuildingCards;
     
     ScrollArea* scrollArea;
+    
+    CCArray* buildingCards;
+    
+    float leftPos;
+    float maxPos;
+    
+    bool scroll_in;
+    bool scroll_out;
     
 protected:
     virtual void createMenuItems();
@@ -58,6 +66,11 @@ public:
     
     //Update
     virtual void update(float deltaTime);
+    
+    void scrollIn(float);
+    void scrollOut(float);
+    
+    void scheduleScrollOut();
 };
 
 #endif
