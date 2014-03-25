@@ -74,7 +74,7 @@ void Senario::playSenario(const char* senario)
     active = true;
     GameScene::getThis()->setTouchEnabled(true);
     readSenarioFile();
-    constructSenarioStage();
+    constructSenarioStage(false);
     //onOrientationChanged();
     createGUI();
 }
@@ -91,7 +91,7 @@ void Senario::readSenarioFile()
     delete sm;
 }
 
-bool Senario::constructSenarioStage()
+bool Senario::constructSenarioStage(bool skip)
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
@@ -122,6 +122,7 @@ bool Senario::constructSenarioStage()
     this->addChild(skipButton, 2);
     spriteList.push_back(skipButton);
     
+    bool isChoosingOption = false;
     for(int i = 0; i < elementArray->count(); i++)
     {
         Element* ele = (Element*)elementArray->objectAtIndex(i);
@@ -143,7 +144,7 @@ bool Senario::constructSenarioStage()
             CCSize spriteSize = cha->getContentSize();
             cha->setScale(screenSize.width / spriteSize.width * ele->width / 100.0f);
             
-            cha->setAnchorPoint(ccp(0, 2));
+            cha->setAnchorPoint(ccp(0, 1));
             cha->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             this->addChild(cha, 2);
             spriteList.push_back(cha);
@@ -193,6 +194,7 @@ bool Senario::constructSenarioStage()
         }
         else if(ele->type == Element::option)
         {
+            isChoosingOption = true;
             inOption = true;
             stringstream ss;
             ss << ele->text;
@@ -213,6 +215,11 @@ bool Senario::constructSenarioStage()
             this->addChild(menu, 4);
             menuList.push_back(menu);
         }
+    }
+    
+    if(!isChoosingOption && skip)
+    {
+        return false;
     }
     
     this->schedule(schedule_selector(Senario::update), 1.0f/60.0f);
@@ -244,8 +251,8 @@ void Senario::selectButtonPressed(CCObject* pSender)
     inOption = false;
 
     curSlide = 0;
-    if(!constructSenarioStage()){
-        startGameMenu->setVisible(true);
+    if(!constructSenarioStage(false)){
+        buttonSelect();
     }
 }
 
@@ -355,16 +362,16 @@ void Senario::nextButtonPressed(bool skip)
     {
         curSlide++;
         this->unschedule(schedule_selector(Senario::update));
-        if(!constructSenarioStage()){
-            startGameMenu->setVisible(true);
+        if(!constructSenarioStage(skip)){
+            buttonSelect();
         }
     }
     else
     {
         curSlide = slidesList->count() - 1;
         this->unschedule(schedule_selector(Senario::update));
-        if(!constructSenarioStage()){
-            startGameMenu->setVisible(true);
+        if(!constructSenarioStage(skip)){
+            buttonSelect();
         }
     }
 }
@@ -449,7 +456,7 @@ void Senario::buttonSelect()
 
 void Senario::onOrientationChanged(){
     readSenarioFile();
-    constructSenarioStage();
+    constructSenarioStage(false);
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
 }

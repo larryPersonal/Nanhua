@@ -16,7 +16,6 @@
 
 class PopulationMenu:public PopupMenu
 {
-    
 private:
     
     TabbedView* tabbedView;

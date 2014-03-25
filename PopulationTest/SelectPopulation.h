@@ -23,8 +23,7 @@ using namespace std;
 
 class SelectPopulation: public PopupMenu
 {
-
-private:
+public:
     // dirty attributes
     int population;
     bool isUnderConstruction;

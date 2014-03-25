@@ -5,202 +5,202 @@
             <name>Narrator</name>
             <text>Option 1: Xiao Hua decides that he would build new house to accommodate the refuges.</text>
             <width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
     </slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We should not turn a blind eye to people in need. But what can we do? (Thinking)</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I got an idea! We could cut rations for everyone in the village for the time being until your house is built.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>70</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>refugee_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
             <text>Would the villagers really agree to it?</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_right.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>right</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I believe that they would agree to it.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>All of us have survived the war and knew how life could be hopeless if no one is willing to lend a helping hand.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I am sure that they could empathize with your plight.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>70</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>refugee_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
             <text>Really?! That is the best piece of news that we have heard since we left our hometown a few years ago.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_right.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>right</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>But in order to fund the building of your houses and cope with the rationing of food, you would need to farm and harvest crops for us.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>70</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>refugee_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
             <text>Sure, this is the least that we could do to support the development of the village.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_right.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>right</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>70</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>refugee_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
             <text>Thank you! We will never forget your kindness.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_right.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>right</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>

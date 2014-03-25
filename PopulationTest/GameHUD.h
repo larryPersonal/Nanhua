@@ -95,6 +95,12 @@ class GameHUD : public CCLayer
     float cumulatedTime;
     
 public:
+    float leftPos;
+    float maxPos;
+    
+    bool scroll_in;
+    bool scroll_out;
+    
     BuildScroll* buildScroll;
     
     bool getMoney;
@@ -132,6 +138,7 @@ public:
     
     // time menu group
     CCSprite* timeMenu;
+    CCSprite* timeBackground;
     CCSprite* firstWeekLabel;
     CCSprite* secondWeekLabel;
     CCSprite* thirdWeekLabel;
@@ -216,6 +223,12 @@ public:
     void addPopulation();
     
     void setAllStats();
+    
+    void timeGroupReposition();
+    void scrollIn(float);
+    void scrollOut(float);
+    void scheduleScrollIn();
+    void scheduleScrollOut();
 };
 
 #endif

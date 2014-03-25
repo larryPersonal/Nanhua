@@ -5,126 +5,126 @@
             <name>Narrator</name>
             <text>Option 2: Xiao Hua decides that he would not build new house to accommodate the refuges.</text>
             <width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
     </slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I know you have come a long way to reach our village and we really wanted to help you.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>But the war left us with limited resources. Building more houses to accommodate all of you requires money and manpower, which we are now lacking in.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>The village has enough problems of its own and simply cannot afford to help you right now. Please try to understand our situation. </text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>Here are some food and water for you to continue your journey and hope that you would find shelter soon. I am sorry.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>70</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>refugee_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
             <text>What? No! Not again! It can’t be!</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_right.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>right</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>20</width>
-			<left>9</left>
-			<top>75</top>
+			<width>40</width>
+			<left>0</left>
+			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I am really sorry.</text>
 			<width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -133,11 +133,11 @@
             <name>Narrator</name>
             <text>The refuges left the village and soon became bandits who would occasionally raid your village, resulting in loss of resources.</text>
             <width>85</width>
-			<left>7.5</left>
-			<top>35</top>
-			<src>conversation_textbox_empty_left.png</src>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
             <dir>left</dir>
-            <font>Shojumaru-Regular</font>
+            <font>BRITANIC</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
