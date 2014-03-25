@@ -21,7 +21,9 @@ using namespace std;
 
 class BuildingInfoMenu:public PopupMenu
 {
-private:
+    static BuildingInfoMenu* SP;
+    
+public:
     // Building variables
     int mBuildingLevel;
     int mBuildingPrice;
@@ -142,6 +144,8 @@ protected:
     virtual void createMenuItems();
     
 public:
+    static BuildingInfoMenu* getThis();
+    
     void upgrade();
     
     static BuildingInfoMenu* create(Building* building);

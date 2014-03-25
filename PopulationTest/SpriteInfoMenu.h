@@ -21,7 +21,7 @@ using namespace std;
 class SpriteInfoMenu:public PopupMenu
 {
     
-private:
+public:
     
     // GameSprite variables
     int mGameSpriteEnergy;
@@ -112,6 +112,10 @@ protected:
     virtual void createMenuItems();
     
 public:
+    static SpriteInfoMenu* SP;
+    
+    static SpriteInfoMenu* getThis();
+    
     virtual ~SpriteInfoMenu();
     
     // Constructor with Building object

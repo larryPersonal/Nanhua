@@ -11,6 +11,8 @@
 #include "GlobalHelper.h"
 #include "BuildingInfoMenu.h"
 
+SpriteInfoMenu* SpriteInfoMenu::SP;
+
 SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
 {
     if (!gameSprite) CCLog("Warning NO SPRITE!!!");
@@ -27,16 +29,23 @@ SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
     mGameSpriteHungryMax = 0;
     mGameSpriteWorkRate = 0;
     mGameSpriteWorkUnitPerDay = 0.0f;
+    
+    SpriteInfoMenu::SP = this;
 }
 
 SpriteInfoMenu::~SpriteInfoMenu()
 {
+    SpriteInfoMenu::SP = NULL;
+}
+
+SpriteInfoMenu* SpriteInfoMenu::getThis()
+{
+    return SP;
 }
 
 void SpriteInfoMenu::createMenuItems()
 {
     ccColor3B colorYellow = ccc3(225, 219, 108);
-  //  ccColor3B colorGreen = ccc3(81, 77, 2);
     
     // Create constant menu items
     spriteBackground = CCSprite::create("BuildingInfoUI.png");

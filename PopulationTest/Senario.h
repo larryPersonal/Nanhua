@@ -59,7 +59,7 @@ public:
     
     void updateGameScene();
     
-    bool constructSenarioStage();
+    bool constructSenarioStage(bool);
     
     void nextButtonPressed(bool);
     

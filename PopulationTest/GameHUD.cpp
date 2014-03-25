@@ -59,6 +59,12 @@ GameHUD::GameHUD()
     
     objectiveStrs = CCArray::create();
     objectiveStrs->retain();
+    
+    leftPos = 0;
+    maxPos = 100.0f;
+    
+    scroll_in = false;
+    scroll_out = false;
 }
 
 GameHUD::~GameHUD()
@@ -169,28 +175,28 @@ void GameHUD::update(float deltaTime)
     {
         switch (date->week) {
             case 0:
-                firstWeekLabel->setVisible(true);
-                secondWeekLabel->setVisible(false);
-                thirdWeekLabel->setVisible(false);
-                lastWeekLabel->setVisible(false);
+                firstWeekLabel->setOpacity(255);
+                secondWeekLabel->setOpacity(120);
+                thirdWeekLabel->setOpacity(120);
+                lastWeekLabel->setOpacity(120);
                 break;
             case 1:
-                firstWeekLabel->setVisible(false);
-                secondWeekLabel->setVisible(true);
-                thirdWeekLabel->setVisible(false);
-                lastWeekLabel->setVisible(false);
+                firstWeekLabel->setOpacity(120);
+                secondWeekLabel->setOpacity(255);
+                thirdWeekLabel->setOpacity(120);
+                lastWeekLabel->setOpacity(120);
                 break;
             case 2:
-                firstWeekLabel->setVisible(false);
-                secondWeekLabel->setVisible(false);
-                thirdWeekLabel->setVisible(true);
-                lastWeekLabel->setVisible(false);
+                firstWeekLabel->setOpacity(120);
+                secondWeekLabel->setOpacity(120);
+                thirdWeekLabel->setOpacity(255);
+                lastWeekLabel->setOpacity(120);
                 break;
             case 3:
-                firstWeekLabel->setVisible(false);
-                secondWeekLabel->setVisible(false);
-                thirdWeekLabel->setVisible(false);
-                lastWeekLabel->setVisible(true);
+                firstWeekLabel->setOpacity(120);
+                secondWeekLabel->setOpacity(120);
+                thirdWeekLabel->setOpacity(120);
+                lastWeekLabel->setOpacity(255);
                 break;
                 
             default:
@@ -205,25 +211,25 @@ void GameHUD::update(float deltaTime)
         if(date->month < 3)
         {
             //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
             
         }
         else if(date->month < 6)
         {
             //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
             
         }
         else if(date->month < 9)
         {
            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
             
         }
         else
         {
             //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock.png"));
+            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
             
         }
         
@@ -655,48 +661,56 @@ void GameHUD::createTimeMenu()
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the time group background
-    string timeBackground = "timeclock.png";
-    timeMenu = CCSprite::create(timeBackground.c_str());
+    string timeBG = "timeclock0.png";
+    timeMenu = CCSprite::create(timeBG.c_str());
     CCSize spriteSize = timeMenu->getContentSize();
     timeMenu->setAnchorPoint(ccp(1, 1));
-    timeMenu->setScale(screenSize.width / spriteSize.width * 0.275f);
-    timeMenu->setPosition(ccp(screenSize.width, screenSize.height - 20.0f));
+    timeMenu->setScale(screenSize.width / spriteSize.width * 0.125f);
+    timeMenu->setPosition(ccp(screenSize.width - leftPos, screenSize.height - 2.0f));
     
-    this->addChild(timeMenu, 1);
+    this->addChild(timeMenu, 2);
+    
+    timeBackground = CCSprite::create("timeclock1.png");
+    spriteSize = timeBackground->getContentSize();
+    timeBackground->setAnchorPoint(ccp(1, 1));
+    timeBackground->setScale(screenSize.width / spriteSize.width * 0.18f);
+    timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height));
+    
+    this->addChild(timeBackground, 1);
     
     // create the four weeks labels
-    firstWeekLabel = CCSprite::create("time-indicator-week-1.png");
+    firstWeekLabel = CCSprite::create("timeclockgreen.png");
     firstWeekLabel->setAnchorPoint(ccp(0, 1));
-    firstWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
-    firstWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
+    firstWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
+    firstWeekLabel->setPosition(ccp(screenSize.width - 63.0f - leftPos, screenSize.height - 75.0f));
 
-    this->addChild(firstWeekLabel, 2);
+    this->addChild(firstWeekLabel, 3);
     
-    secondWeekLabel = CCSprite::create("time_indicator-week-2.png");
+    secondWeekLabel = CCSprite::create("timeclockbrown.png");
     secondWeekLabel->setAnchorPoint(ccp(0, 1));
-    secondWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25);
-    secondWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
+    secondWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
+    secondWeekLabel->setPosition(ccp(screenSize.width - 36.0f - leftPos, screenSize.height - 55.0f));
 
-    this->addChild(secondWeekLabel, 2);
+    this->addChild(secondWeekLabel, 3);
     
-    thirdWeekLabel = CCSprite::create("time_indicator-week-3.png");
+    thirdWeekLabel = CCSprite::create("timeclockred.png");
     thirdWeekLabel->setAnchorPoint(ccp(0, 1));
-    thirdWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
-    thirdWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
+    thirdWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.125f);
+    thirdWeekLabel->setPosition(ccp(screenSize.width - 35.5f - leftPos, screenSize.height - 35.0f));
 
-    this->addChild(thirdWeekLabel, 2);
+    this->addChild(thirdWeekLabel, 3);
     
-    lastWeekLabel = CCSprite::create("time_indicator-week-4.png");
+    lastWeekLabel = CCSprite::create("timeclockyellow.png");
     lastWeekLabel->setAnchorPoint(ccp(0, 1));
-    lastWeekLabel->setScale(screenSize.width / spriteSize.width * 0.25f);
-    lastWeekLabel->setPosition(ccp(screenSize.width - 295.0f, screenSize.height - 20.0f));
+    lastWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.125f);
+    lastWeekLabel->setPosition(ccp(screenSize.width - 49.0f - leftPos, screenSize.height - 15.0f));
 
-    this->addChild(lastWeekLabel, 2);
+    this->addChild(lastWeekLabel, 3);
     
-    firstWeekLabel->setVisible(true);
-    secondWeekLabel->setVisible(false);
-    thirdWeekLabel->setVisible(false);
-    lastWeekLabel->setVisible(false);
+    firstWeekLabel->setOpacity(255);
+    secondWeekLabel->setOpacity(120);
+    thirdWeekLabel->setOpacity(120);
+    lastWeekLabel->setOpacity(120);
     
     // save the current date
     mGameWeek = date->week;
@@ -706,19 +720,118 @@ void GameHUD::createTimeMenu()
     // display the date in the time menu
     std::stringstream ss;
     ss << "Year: " << (date->year + 1);
-    timeLabel_1 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    timeLabel_1 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     timeLabel_1->setColor(colorBlack);
     timeLabel_1->setAnchorPoint(ccp(0.5, 1));
-    this->addChild(timeLabel_1, 2);
-    timeLabel_1->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 40.0f);
+    this->addChild(timeLabel_1, 3);
+    timeLabel_1->CCNode::setPosition(screenSize.width - 30.0f + maxPos - leftPos, screenSize.height - 25.0f);
 
     ss.str(std::string());
     ss << "Month: " << (date->month + 1);
-    timeLabel_2 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    timeLabel_2 = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     timeLabel_2->setColor(colorBlack);
     timeLabel_2->setAnchorPoint(ccp(0.5, 1));
-    this->addChild(timeLabel_2, 2);
-    timeLabel_2->CCNode::setPosition(screenSize.width - 50.0f, screenSize.height - 80.0f);
+    this->addChild(timeLabel_2, 3);
+    timeLabel_2->CCNode::setPosition(screenSize.width - 28.0f + maxPos - leftPos, screenSize.height - 55.0f);
+    
+    timeBackground->setVisible(false);
+    timeLabel_1->setVisible(false);
+    timeLabel_2->setVisible(false);
+}
+
+void GameHUD::timeGroupReposition()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    timeMenu->setPosition(ccp(screenSize.width - leftPos, screenSize.height - 2.0f));
+    timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height));
+    firstWeekLabel->setPosition(ccp(screenSize.width - 63.0f - leftPos, screenSize.height - 75.0f));
+    secondWeekLabel->setPosition(ccp(screenSize.width - 36.0f - leftPos, screenSize.height - 55.0f));
+    thirdWeekLabel->setPosition(ccp(screenSize.width - 35.5f - leftPos, screenSize.height - 35.0f));
+    lastWeekLabel->setPosition(ccp(screenSize.width - 49.0f - leftPos, screenSize.height - 15.0f));
+    timeLabel_1->CCNode::setPosition(screenSize.width - 30.0f + maxPos - leftPos, screenSize.height - 25.0f);
+    timeLabel_2->CCNode::setPosition(screenSize.width - 28.0f + maxPos - leftPos, screenSize.height - 55.0f);
+    
+    int temp = leftPos / maxPos * 255;
+    if(temp < 0)
+    {
+        temp = 0;
+    }
+    else if(temp > 255)
+    {
+        temp = 255;
+    }
+    
+    GLubyte opacity = temp;
+    
+    timeBackground->setOpacity(opacity);
+    timeLabel_1->setOpacity(opacity);
+    timeLabel_2->setOpacity(opacity);
+}
+
+void GameHUD::scrollIn(float dt)
+{
+    if(scroll_in)
+    {
+        float speed = 5;
+        
+        leftPos += speed;
+        
+        if(leftPos >= maxPos)
+        {
+            leftPos = maxPos;
+            this->unschedule(schedule_selector( GameHUD::scrollIn ));
+            scroll_in = false;
+        }
+        
+        timeGroupReposition();
+    }
+}
+
+void GameHUD::scrollOut(float dt)
+{
+    if(scroll_out)
+    {
+        float speed = 5;
+        
+        leftPos -= speed;
+        
+        if(leftPos <= 0)
+        {
+            leftPos = 0;
+            this->unschedule(schedule_selector( GameHUD::scrollOut ));
+            scroll_out = false;
+            timeBackground->setVisible(false);
+            timeLabel_1->setVisible(false);
+            timeLabel_2->setVisible(false);
+        }
+        
+        timeGroupReposition();
+    }
+}
+
+void GameHUD::scheduleScrollIn()
+{
+    if(!scroll_in && !scroll_out && leftPos <= 0)
+    {
+        scroll_in = true;
+        timeBackground->setVisible(true);
+        timeBackground->setOpacity(0);
+        timeLabel_1->setVisible(true);
+        timeLabel_1->setOpacity(0);
+        timeLabel_2->setVisible(true);
+        timeLabel_2->setOpacity(0);
+        this->schedule(schedule_selector( GameHUD::scrollIn ), 1.0f / 120.0f);
+    }
+}
+
+void GameHUD::scheduleScrollOut()
+{
+    if(!scroll_in && !scroll_out)
+    {
+        scroll_out = true;
+        this->schedule(schedule_selector( GameHUD::scrollOut ), 1.0f / 120.0f);
+    }
 }
 
 void GameHUD::createObjectiveMenu()
@@ -734,7 +847,7 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0, 1));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.55f);
-    objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
+    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
@@ -779,10 +892,12 @@ void GameHUD::createObjectiveMenu()
 
 void GameHUD::clickObjectiveButton()
 {
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     if(objectiveMenu->isVisible())
     {
         objectiveMenu->setVisible(false);
         objectiveTitle->setVisible(false);
+        objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
         for (int i = 0; i < objectiveStrs->count(); i++)
         {
             CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
@@ -793,6 +908,7 @@ void GameHUD::clickObjectiveButton()
     {
         objectiveMenu->setVisible(true);
         objectiveTitle->setVisible(true);
+        objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
         for (int i = 0; i < objectiveStrs->count(); i++)
         {
             CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);

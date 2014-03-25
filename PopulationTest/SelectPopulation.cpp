@@ -20,7 +20,7 @@ SelectPopulation* SelectPopulation::create(Building* building){
     if (pRet && pRet->init())
     {
         pRet->autorelease();
-        pRet->setTouchEnabled(true);
+        //pRet->setTouchEnabled(true);
         return pRet;
     }
     else
@@ -497,32 +497,35 @@ void SelectPopulation::scheduleFarming()
 void SelectPopulation::reposition(){
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
-    
     float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
     
-    spriteBuilding->setPosition(ccp(240.0f, 40.0f));
+    float hw = screenSize.width / 2.0f;
+    float hh = screenSize.height / 2.0f;
+    
+    spriteBackground->setPosition(ccp(hw, hh));
+    
+    spriteBuilding->setPosition(ccp(240.0f + hw, 40.0f + hh));
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 25.0f, -halfHeight + 75.0f);
-    buttonOk->setPosition(halfWidth - 135.0f, -halfHeight + 75.0f);
+    buttonClose->setPosition(halfWidth - 25.0f + hw, -halfHeight + 75.0f + hh);
+    buttonOk->setPosition(halfWidth - 135.0f + hw, -halfHeight + 75.0f + hh);
     
-    buttonCancel->setPosition(halfWidth - 80.0f, -halfHeight + 75.0f);
+    buttonCancel->setPosition(halfWidth - 80.0f + hw, -halfHeight + 75.0f + hh);
     
-    labelBuildingName->CCNode::setPosition(285.0f, -100.0f);
+    labelBuildingName->CCNode::setPosition(285.0f + hw, -100.0f + hh);
     
-    workerLabel->setPosition(ccp(-halfWidth / 2.0f + 40.0f, halfHeight - 40.0f));
-    taskLabel->setPosition(ccp(halfWidth / 2.0f + 40.0f, halfHeight - 40.0f));
+    workerLabel->setPosition(ccp(-halfWidth / 2.0f + 40.0f + hw, halfHeight - 40.0f + hh));
+    taskLabel->setPosition(ccp(halfWidth / 2.0f + 40.0f + hw, halfHeight - 40.0f + hh));
     
     // for empty space
     for (int i = 0; i < emptySpaceArray->count(); i++)
     {
-        ((CCSprite*) emptySpaceArray->objectAtIndex(i))->setPosition(ccp(30.0f + 70.0f * i, -135.0f));
+        ((CCSprite*) emptySpaceArray->objectAtIndex(i))->setPosition(ccp(30.0f + 70.0f * i + hw, -135.0f + hh));
     }
     
     // Scroll area in center
-    scrollArea->CCNode::setPosition(-halfWidth + 20.0f, -halfHeight / 2.0f - 95.0f);
+    scrollArea->CCNode::setPosition(-halfWidth + 20.0f + hw, -halfHeight / 2.0f - 95.0f + hh);
     scrollArea->reposition();
 }
 
@@ -681,6 +684,10 @@ void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow
         limit = building->number_of_jobs;
     }
     
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    float hw = screenSize.width / 2.0f;
+    float hh = screenSize.height / 2.0f;
+    
     if(memberArray->count() < limit)
     {
         spriteRow->getMask()->setVisible(true);
@@ -688,14 +695,14 @@ void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow
         CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
         memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
         memberSpriteBackground->setAnchorPoint(ccp(0, 1));
-        memberSpriteBackground->setPosition(ccp(30.0f + 70.0f * memberRowArray->count(), -135.0f));
+        memberSpriteBackground->setPosition(ccp(30.0f + 70.0f * memberRowArray->count() + hw, -135.0f + hh));
         this->addChild(memberSpriteBackground, 4);
         
         std::string tempStr = gameSprite->spriteName;
         CCMenuItemImage* memberSprite = CCMenuItemImage::create(tempStr.append("_port.png").c_str(), tempStr.c_str(), this,  menu_selector(SelectPopulation::cancelSprite));
         memberSprite->setScale( 60.0f / memberSprite->boundingBox().size.width );
         memberSprite->setAnchorPoint(ccp(0, 1));
-        memberSprite->setPosition(ccp(35.0f + 70.0f * memberRowArray->count(), -137.0f));
+        memberSprite->setPosition(ccp(35.0f + 70.0f * memberRowArray->count() + hw, -137.0f + hh));
         memberSprite->setTag(memberRowArray->count());
         
         CCArray* newMenuItems = CCArray::create();
@@ -713,6 +720,10 @@ void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow
 
 void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
 {
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    float hw = screenSize.width / 2.0f;
+    float hh = screenSize.height / 2.0f;
+    
     for(int i = 0; i < memberArray->count(); i++)
     {
         if(gameSprite == (GameSprite*) memberArray->objectAtIndex(i))
@@ -737,14 +748,14 @@ void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteR
             for(int j = 0; j < memberRowArray->count(); j++)
             {
                 CCMenuItemImage* tempSprite = (CCMenuItemImage*) memberRowArray->objectAtIndex(j);
-                tempSprite->setPosition(ccp(35.0f + 70.0f * j, -137.0f));
+                tempSprite->setPosition(ccp(35.0f + 70.0f * j + hw, -137.0f + hh));
                 tempSprite->setTag(j);
             }
             
             for(int j = 0; j < memberRowBackgroundArray->count(); j++)
             {
                 CCSprite* tempSprite = (CCSprite*) memberRowBackgroundArray->objectAtIndex(j);
-                tempSprite->setPosition(ccp(30.0f + 70.0f * j, -135.0f));
+                tempSprite->setPosition(ccp(30.0f + 70.0f * j + hw, -135.0f + hh));
             }
         }
     }

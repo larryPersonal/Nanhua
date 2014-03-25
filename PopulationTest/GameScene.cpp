@@ -124,7 +124,7 @@ bool GameScene::init()
     
     setupScene();
     
-    
+    mapHandler->centerMap();
    // this->schedule(schedule_selector( GameScene::move ), 1/60.0f);
     return true;
 }
@@ -355,6 +355,56 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
                 GameHUD::getThis()->buildScroll->scheduleScrollOut();
             }
         }
+        
+        if(GameHUD::getThis()->timeMenu != NULL)
+        {
+            if(GameHUD::getThis()->timeMenu->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                GameHUD::getThis()->scheduleScrollOut();
+            }
+        }
+        
+        // building info menu
+        if(BuildingInfoMenu::getThis() != NULL && BuildingInfoMenu::getThis()->spriteBackground != NULL)
+        {
+            if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                BuildingInfoMenu::getThis()->closeMenu();
+            }
+        }
+        
+        if(SelectPopulation::getThis() != NULL && SelectPopulation::getThis()->spriteBackground != NULL)
+        {
+            if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                SelectPopulation::getThis()->closeMenu();
+            }
+        }
+        
+        if(SpriteInfoMenu::getThis() != NULL && SpriteInfoMenu::getThis()->spriteBackground != NULL)
+        {
+            if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                SpriteInfoMenu::getThis()->closeMenu();
+            }
+        }
+        
     }
     
     CCSetIterator it;
@@ -586,6 +636,57 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             else
             {
                 GameHUD::getThis()->buildScroll->scheduleScrollOut();
+            }
+        }
+        
+        if(GameHUD::getThis()->timeMenu != NULL)
+        {
+            if(GameHUD::getThis()->timeMenu->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->scheduleScrollIn();
+            }
+            else
+            {
+                GameHUD::getThis()->scheduleScrollOut();
+            }
+        }
+        
+        if(BuildingInfoMenu::getThis() != NULL && BuildingInfoMenu::getThis()->spriteBackground != NULL)
+        {
+            CCLog("test1");
+            if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
+            {
+                CCLog("test2");
+                return;
+            }
+            else
+            {
+                CCLog("test3");
+                BuildingInfoMenu::getThis()->closeMenu();
+            }
+        }
+        
+        if(SelectPopulation::getThis() != NULL && SelectPopulation::getThis()->spriteBackground != NULL)
+        {
+            if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                SelectPopulation::getThis()->closeMenu();
+            }
+        }
+        
+        if(SpriteInfoMenu::getThis() != NULL && SpriteInfoMenu::getThis()->spriteBackground != NULL)
+        {
+            if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
+            {
+                return;
+            }
+            else
+            {
+                SpriteInfoMenu::getThis()->closeMenu();
             }
         }
     }
