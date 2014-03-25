@@ -367,6 +367,7 @@ bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos)
     }
 
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
+    if (targetTile == NULL) return false;
     if (targetTile->hasBuilding() || targetTile->isPath)
     {
         CCLog("Target tile isOccupied or isPath");
@@ -504,6 +505,57 @@ void MapHandler::Populate(CCArray* layers)
         }
     }
     pLayer->setVisible(false);
+    /*
+    pLayer = mapPtr->layerNamed("Ground_River");
+    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+    {
+        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        {
+            CCPoint tilePos = ccp(i, j);
+            CCSprite* environment = pLayer->tileAt(tilePos);
+            if (environment != NULL)
+            {
+                // Remove environment tile from TMXLayer, and add to map instead
+                environment->retain();
+                environment->removeFromParent();
+                
+                //FUKKIN OFFSET FOR LARGE TILES
+                //I ASSUME 2048x2048. anything else CHANGE.
+                CCPoint worldPos = MapHandler::locationFromTilePos(&tilePos);
+                worldPos.x -= 960;
+                worldPos.y += 960;
+                environment->setPosition(worldPos);
+                
+                getMap()->addChild(environment, calcZIndex(tilePos));
+                getTileAt(i, j)->setEnvironment(environment);
+            }
+        }
+    }
+    
+    */
+  //  pLayer->setVisible(false);
+    /*
+    pLayer = mapPtr->layerNamed("Ground_Border");
+    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+    {
+        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        {
+            CCPoint tilePos = ccp(i, j);
+            CCSprite* environment = pLayer->tileAt(tilePos);
+            if (environment != NULL)
+            {
+                // Remove environment tile from TMXLayer, and add to map instead
+                environment->retain();
+                environment->removeFromParent();
+                getMap()->addChild(environment, calcZIndex(tilePos));
+                getTileAt(i, j)->setEnvironment(environment);
+            }
+        }
+    }
+    pLayer->setVisible(false);
+    */
+    
+    
 }
 
 

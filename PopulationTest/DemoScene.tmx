@@ -531,12 +531,20 @@
   </tile>
  </tileset>
  <tileset firstgid="65" name="border map_bush_bottomalign" tilewidth="2048" tileheight="2048">
-  <tileoffset x="-960" y="960"/>
   <image source="border map_bush_bottomalign.png" width="2048" height="2048"/>
+  <tile id="0">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="66" name="river_anim_bottomalign" tilewidth="2048" tileheight="2048">
-  <tileoffset x="-960" y="960"/>
   <image source="river_anim_bottomalign.png" width="4096" height="4096"/>
+  <tile id="1">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="70" name="greatwall2x2" tilewidth="256" tileheight="256">
   <tileoffset x="-64" y="64"/>
@@ -629,33 +637,33 @@
    </properties>
   </tile>
   <tile id="3">
-      <properties>
-          <property name="build_time" value="20"/>
-          <property name="build_uint_required" value="10000"/>
-          <property name="builder_limit" value="0"/>
-          <property name="building_type" value="decoration"/>
-          <property name="cost" value="200"/>
-          <property name="description" value="A house of brick"/>
-          <property name="food_consumption_rate" value="0"/>
-          <property name="jobs_available" value="0"/>
-          <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-          <property name="level_gain_cost" value="2:50, 4:50"/>
-          <property name="level_gain_population_limit" value="3:1, 5:1"/>
-          <property name="name" value="Brick House"/>
-          <property name="population_limit" value="0"/>
-          <property name="prereqs" value="Straw House"/>
-          <property name="recovery_rate" value="1"/>
-          <property name="req_building_count" value="6"/>
-          <property name="req_capita" value="0"/>
-          <property name="req_population" value="10"/>
-          <property name="research_cost" value="150"/>
-          <property name="research_time" value="20"/>
-          <property name="storage" value="0"/>
-          <property name="storage_limit" value="0"/>
-          <property name="unlocked_at_start" value="yes"/>
-          <property name="work_unit" value=""/>
-          <property name="work_unit_required" value=""/>
-      </properties>
+   <properties>
+    <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="10000"/>
+    <property name="builder_limit" value="0"/>
+    <property name="building_type" value="decoration"/>
+    <property name="cost" value="200"/>
+    <property name="description" value="A house of brick"/>
+    <property name="food_consumption_rate" value="0"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Brick House"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value="Straw House"/>
+    <property name="recovery_rate" value="1"/>
+    <property name="req_building_count" value="6"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="10"/>
+    <property name="research_cost" value="150"/>
+    <property name="research_time" value="20"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
+   </properties>
   </tile>
   <tile id="4">
    <properties>
@@ -745,33 +753,33 @@
    </properties>
   </tile>
   <tile id="7">
-      <properties>
-          <property name="build_time" value="20"/>
-          <property name="build_uint_required" value="10000"/>
-          <property name="builder_limit" value="0"/>
-          <property name="building_type" value="decoration"/>
-          <property name="cost" value="200"/>
-          <property name="description" value="A house of brick"/>
-          <property name="food_consumption_rate" value="0"/>
-          <property name="jobs_available" value="0"/>
-          <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-          <property name="level_gain_cost" value="2:50, 4:50"/>
-          <property name="level_gain_population_limit" value="3:1, 5:1"/>
-          <property name="name" value="Brick House"/>
-          <property name="population_limit" value="0"/>
-          <property name="prereqs" value="Straw House"/>
-          <property name="recovery_rate" value="1"/>
-          <property name="req_building_count" value="6"/>
-          <property name="req_capita" value="0"/>
-          <property name="req_population" value="10"/>
-          <property name="research_cost" value="150"/>
-          <property name="research_time" value="20"/>
-          <property name="storage" value="0"/>
-          <property name="storage_limit" value="0"/>
-          <property name="unlocked_at_start" value="yes"/>
-          <property name="work_unit" value=""/>
-          <property name="work_unit_required" value=""/>
-      </properties>
+   <properties>
+    <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="10000"/>
+    <property name="builder_limit" value="0"/>
+    <property name="building_type" value="decoration"/>
+    <property name="cost" value="200"/>
+    <property name="description" value="A house of brick"/>
+    <property name="food_consumption_rate" value="0"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Brick House"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value="Straw House"/>
+    <property name="recovery_rate" value="1"/>
+    <property name="req_building_count" value="6"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="10"/>
+    <property name="research_cost" value="150"/>
+    <property name="research_time" value="20"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
+   </properties>
   </tile>
  </tileset>
  <tileset firstgid="78" name="GuardTower" tilewidth="136" tileheight="128">
@@ -815,24 +823,6 @@
    eJztwwEJAAAMBKH7/qWXY6Dgqqmqqqqqqqqqqqqqqqqqqqqqqqqqqi8flzYVGQ==
   </data>
  </layer>
- <layer name="Border" width="90" height="60">
-  <properties>
-   <property name="number_of_tiles" value="1"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJzt2DERAAAIxLC3hn9TeIBjItlroMlO6QEAAAAAYMxnBgAAAADggv8MAAAAAAAAAADwSwOlHQHI
-  </data>
- </layer>
- <layer name="River" width="90" height="60">
-  <properties>
-   <property name="number_of_tiles" value="4"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJzt2DENAAAIwDC04V8UJiAE0irYvQwAAAAAAOiX2wEAAAAAALzkPwMAAAAAMMF/BgAAAK4rjGwBCQ==
-  </data>
- </layer>
  <layer name="Ground_1" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
@@ -840,6 +830,24 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
+  </data>
+ </layer>
+ <layer name="Ground_River" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="4"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2EENAAAIxDC0nX9RmICQkFbB3ksBAAAAF3IdAAAAAADAS/4zAAAAAAAb/GcAAAAAADb4z3MaPOYBSw==
+  </data>
+ </layer>
+ <layer name="Ground_Border" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="1"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2KERAAAIAzFWY/+lmIBDYSDxtRUfAQAAAAAAAADAZfl8D9DxLwAAAAAAbNCfAQAAAADYMPXnAju8Acg=
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">
@@ -851,7 +859,7 @@
    eJzt1FEKwjAQBcC9iBq11vvfUIsKVaPYIhsIM7Ak7Fd4PBIBAAAAAAAA8D+765wrc6jcT43e2IPxh/1Y2bGMnHNs4/2fmGY/25f7fWjzxC586mptr8/rLcn50f3a8J0+59jErY8lnv/p8nJOc2zxwE7pbA4555BzDjnnkHMOOQMAAAAAAAAAAKx3AbirCk4=
   </data>
  </layer>
- <layer name="Wall" width="90" height="60">
+ <layer name="Building_Wall" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="8"/>
    <property name="start_tile_offset" value="0"/>
