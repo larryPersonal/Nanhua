@@ -151,19 +151,19 @@ void GameScene::setupScene()
             buildingHandler->init(mapHandler->getMap(), jobCollection);
     
             
-            gameBG = CCSprite::create("background.jpg");
-            gameBG->setAnchorPoint(ccp(0.5,0.5));
-            CCSize spriteSize = gameBG->getContentSize();
-            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        //    gameBG = CCSprite::create("background.jpg");
+         //   gameBG->setAnchorPoint(ccp(0,0));
+           // CCSize spriteSize = gameBG->getContentSize();
+           // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-            gameBG->setScaleX(screenSize.width / spriteSize.width * 10) ;
-            gameBG->setScaleY(screenSize.height / spriteSize.height * 10) ;
-            CCSize newSize = gameBG->boundingBox().size;
+          //  gameBG->setScaleX(screenSize.width / spriteSize.width * 10) ;
+          //  gameBG->setScaleY(screenSize.height / spriteSize.height * 10) ;
+           // CCSize newSize = gameBG->boundingBox().size;
             
-            gameBG->setPosition(ccp(mapHandler->getMap()->getPositionX() +spriteSize.width +screenSize.width,
-                                    mapHandler->getMap()->getPositionY() +spriteSize.height/2));
+       ///     gameBG->setPosition(ccp(mapHandler->getMap()->getPositionX() +spriteSize.width +screenSize.width,
+          //                          mapHandler->getMap()->getPositionY() +spriteSize.height/2));
             
-            mapHandler->getMap()->addChild(gameBG, -3);
+         //   mapHandler->getMap()->addChild(gameBG, -3);
             
             screenCenter = CCNode::create();
             
@@ -844,8 +844,7 @@ void GameScene::FirstRunPopulate()
             GameManager::getThis()->UnlockAll();
     }
     this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
-    
-    mapHandler->centerMap();
+    mapHandler->rescaleScrollLimits();
 }
 
 void GameScene::update(float time)

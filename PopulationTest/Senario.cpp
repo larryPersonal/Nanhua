@@ -77,6 +77,7 @@ void Senario::playSenario(const char* senario)
     constructSenarioStage();
     //onOrientationChanged();
     createGUI();
+    GameScene::getThis()->mapHandler->centerMap();
 }
 
 void Senario::readSenarioFile()
