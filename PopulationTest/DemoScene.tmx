@@ -838,7 +838,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2EENAAAIxDC0nX9RmICQkFbB3ksBAAAAF3IdAAAAAADAS/4zAAAAAAAb/GcAAAAAADb4z3MaPOYBSw==
+   eJzt2EENAAAIxDC04V8UJriQkFbB3qsCAAAALvR1AAAAAAAAL/nPAAAAAAAk+M8AAAAAACT4z3sGetwBCQ==
   </data>
  </layer>
  <layer name="Ground_Border" width="90" height="60">
@@ -847,7 +847,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2KERAAAIAzFWY/+lmIBDYSDxtRUfAQAAAAAAAADAZfl8D9DxLwAAAAAAbNCfAQAAAADYMPXnAju8Acg=
+   eJzt2NEJACAIBcBWa/+lmiAkSki8+xQCNfDjjQEAANDDPKz/qFKvr3WeHf8fsR8AAAAgcpsfVH8PsOO+AAAAAACQQf4MAAAAAECGKH9eI/YDTg==
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">

@@ -205,7 +205,7 @@ void MapHandler::moveMapBy(float moveX, float moveY)
 void MapHandler::centerMap()
 {
     CCPoint pos = CCPointMake(-5736, -1592);
-    mapPtr->setPosition(pos);
+    mapPtr->setPosition(pos.x, pos.y);
 }
 
 void MapHandler::ResetPositionAndScale()
@@ -291,7 +291,7 @@ void MapHandler::rescaleScrollLimits()
 {
     // Some complex instructions here...
     if (mapPtr == NULL) return;
-
+    
     //The next person who decides to ngeh ngeh lai and cannot explain his code will get it from me mmmmkay? - Larry
     /*
      
@@ -310,23 +310,18 @@ void MapHandler::rescaleScrollLimits()
     mapScroll_max = CCPointMake(halfW - offsetW - qScreenW, maxH - qScreenH);
     mapScroll_min = CCPointMake(-halfW - offsetW + qScreenW, minH + qScreenH);
     */
+    //center map first! Or it will take the wrong position values.
+    int centerW = mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
+    int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
     
     CCPoint mapPos = mapPtr->getPosition();
-    
-    int playAreaW = (playarea_max.x - playarea_min.x) * mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
-    int playAreaH = (playarea_max.y - playarea_min.y) * mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
-    
-    
+    //Note: 30 and 5 are offsets in tile amounts. A scroll position based on tiles will mean the maximum places a tile at the edge of a screen.
+    //offsetting tries to solve the issue by putting a limit at X tiles before the edge. 
+    int playAreaW = ((playarea_max.x - playarea_min.x) - 30) * mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
+    int playAreaH = ((playarea_max.y - playarea_min.y) - 5) * mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
+    //HARDCODE ALERT -5736, -1592, based on the stuff in centerMap
     mapScroll_max = ccp(mapPos.x + playAreaW, mapPos.y + playAreaH);
     mapScroll_min = ccp(mapPos.x - playAreaW, mapPos.y - playAreaH);
-    
-   /*
-    if (scalePanLayer->getScale() != 1.0f)
-    {
-        CCPoint scaledAnchorOffset = ccpMult(scalePanLayer->getAnchorPointInPoints(), (getInverseScale() - 1.0f) / 2.0f);
-        mapScroll_max = ccpSub(mapScroll_max, scaledAnchorOffset);
-        mapScroll_min = ccpSub(mapScroll_min, scaledAnchorOffset);
-    }*/
     
 }
 
