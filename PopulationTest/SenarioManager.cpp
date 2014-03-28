@@ -206,13 +206,37 @@ void SenarioManager::parseXMLFile(string xml)
                 start_pos = str.find("<background>");
                 end_pos = str.find("</background>");
                 content = str.substr(start_pos + 12, end_pos - start_pos - 12);
-                if(content.compare("yes"))
+                if(content.compare("yes") == 0)
                 {
                     element->isBackground = true;
                 }
                 else
                 {
                     element->isBackground = false;
+                }
+            }
+            else if(str.find("<fade_in>") != std::string::npos)
+            {
+                start_pos = str.find("<fade_in>");
+                end_pos = str.find("</fade_in>");
+                content = str.substr(start_pos + 9, end_pos - start_pos - 9);
+                if(content.compare("yes") == 0)
+                {
+                    element->fadeIn = true;
+                } else {
+                    element->fadeIn = false;
+                }
+            }
+            else if(str.find("<fade_out>") != std::string::npos)
+            {
+                start_pos = str.find("<fade_out>");
+                end_pos = str.find("</fade_out>");
+                content = str.substr(start_pos + 10, end_pos - start_pos - 10);
+                if(content.compare("yes") == 0)
+                {
+                    element->fadeOut = true;
+                } else {
+                    element->fadeOut = false;
                 }
             }
             else if(str.find("</dialogue>") != std::string::npos)

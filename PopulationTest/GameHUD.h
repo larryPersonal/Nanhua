@@ -101,6 +101,8 @@ public:
     bool scroll_in;
     bool scroll_out;
     
+    bool scrolled_in;
+    
     BuildScroll* buildScroll;
     
     bool getMoney;

@@ -65,6 +65,8 @@ GameHUD::GameHUD()
     
     scroll_in = false;
     scroll_out = false;
+    
+    scrolled_in = false;
 }
 
 GameHUD::~GameHUD()
@@ -517,97 +519,72 @@ void GameHUD::createStatsMenu()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorWhite = ccc3(255, 255, 255);
-    bool isHori = GlobalHelper::isHorizontal();
     
     // create the background of the stats menu
     statsMenu = CCSprite::create("chargirl_represent.png");
     CCSize spriteSize = statsMenu->getContentSize();
-    if(isHori)
-    {
-        statsMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        statsMenu->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    statsMenu->setScale(screenSize.width / spriteSize.width * 0.28f);
+
     statsMenu->setAnchorPoint(ccp(0, 1));
     statsMenu->setPosition(ccp(0, screenSize.height));
     this->addChild(statsMenu, 1);
     
     // create the money indicator
     moneyIcon = CCSprite::create("yuanbao_amount.png");
-    if(isHori)
-    {
-        moneyIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        moneyIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    moneyIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.28f, screenSize.width / spriteSize.width * 0.25f);
+
     moneyIcon->setAnchorPoint(ccp(0, 1));
-    moneyIcon->setPosition(ccp(110, screenSize.height - 8));
+    moneyIcon->setPosition(ccp(120, screenSize.height - 8));
     this->addChild(moneyIcon, 2);
     
     std::stringstream ss;
     ss << money << "G";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     moneyLabel->setColor(colorWhite);
     moneyLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(moneyLabel, 2);
-    moneyLabel->CCNode::setPosition(255, screenSize.height - 25);
+    moneyLabel->CCNode::setPosition(285, screenSize.height - 26);
     
     // create the food indicator
     foodIcon = CCSprite::create("rice_amount.png");
-    if(isHori)
-    {
-        foodIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        foodIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    foodIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.32f, screenSize.width / spriteSize.width * 0.25f);
+
     foodIcon->setAnchorPoint(ccp(0, 1));
-    foodIcon->setPosition(ccp(340, screenSize.height));
+    foodIcon->setPosition(ccp(350, screenSize.height));
     this->addChild(foodIcon, 2);
     
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     foodLabel->setColor(colorWhite);
     foodLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(foodLabel, 2);
-    foodLabel->CCNode::setPosition(450, screenSize.height - 25);
+    foodLabel->CCNode::setPosition(495, screenSize.height - 28);
     
     // create the population indicator
     populationIcon = CCSprite::create("population_amount.png");
-    if(isHori)
-    {
-        populationIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        populationIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    populationIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.28f, screenSize.width / spriteSize.width * 0.25f);
+
     populationIcon->setAnchorPoint(ccp(0, 1));
-    populationIcon->setPosition(ccp(540, screenSize.height - 2));
+    populationIcon->setPosition(ccp(580, screenSize.height - 2));
     this->addChild(populationIcon, 2);
     
     ss.str(std::string());
     ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
-    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
-    populationLabel->CCNode::setPosition(650, screenSize.height - 25);
+    populationLabel->CCNode::setPosition(700, screenSize.height - 28);
     
     // create the achievements label for the values
     ss.str(std::string());
     ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
-    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(185, screenSize.height - 75);
+    achivementsLabel->CCNode::setPosition(200, screenSize.height - 87);
     
     // showing the average happiness attribute
     average_happiness = 0;
@@ -782,6 +759,7 @@ void GameHUD::scrollIn(float dt)
             leftPos = maxPos;
             this->unschedule(schedule_selector( GameHUD::scrollIn ));
             scroll_in = false;
+            scrolled_in = true;
         }
         
         timeGroupReposition();
@@ -804,6 +782,7 @@ void GameHUD::scrollOut(float dt)
             timeBackground->setVisible(false);
             timeLabel_1->setVisible(false);
             timeLabel_2->setVisible(false);
+            scrolled_in = false;
         }
         
         timeGroupReposition();

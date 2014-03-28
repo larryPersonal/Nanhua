@@ -62,6 +62,7 @@
 			<left>0</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
+            <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
@@ -195,6 +196,7 @@
 			<left>0</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
+            <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
@@ -228,6 +230,8 @@
 			<left>0</left>
 			<top>90</top>
 			<src>dragon_c.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
             <name>Mini dragons</name>
@@ -261,6 +265,7 @@
 			<left>0</left>
 			<top>90</top>
 			<src>refugee_c.png</src>
+            <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
@@ -299,6 +304,7 @@
 			<left>0</left>
 			<top>90</top>
 			<src>refugee_c.png</src>
+            <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
@@ -315,7 +321,21 @@
     <slide>
         <dialogue>
             <name>Narrator</name>
-            <text>Xiao Hua would decide if he wants to build new house to accommodate the refuges. (Outcome: Build the houses to house the refuges. If there are not enough houses to house the refuges, they will become bandit and rob the village unless they are given accommodation within a certain period of time.)</text>
+            <text>Xiao Hua would decide if he wants to build new house to accommodate the refuges.</text>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>BRITANIC</font>
+            <fontSize>24</fontSize>
+            <color>white</color>
+        </dialogue>
+    </slide>
+    <slide>
+        <dialogue>
+            <name>Narrator</name>
+            <text>(Outcome: Build the houses to house the refuges. If there are not enough houses to house the refuges, they will become bandit and rob the village unless they are given accommodation within a certain period of time.)</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>

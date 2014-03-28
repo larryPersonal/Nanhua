@@ -360,7 +360,12 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         {
             if(GameHUD::getThis()->timeMenu->boundingBox().containsPoint(touchLoc))
             {
-                return;
+                if(GameHUD::getThis()->scrolled_in)
+                {
+                    GameHUD::getThis()->scheduleScrollOut();
+                } else {
+                    GameHUD::getThis()->scheduleScrollIn();
+                }
             }
             else
             {
@@ -643,7 +648,12 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         {
             if(GameHUD::getThis()->timeMenu->boundingBox().containsPoint(touchLoc))
             {
-                GameHUD::getThis()->scheduleScrollIn();
+                if(GameHUD::getThis()->scrolled_in)
+                {
+                    GameHUD::getThis()->scheduleScrollOut();
+                } else {
+                    GameHUD::getThis()->scheduleScrollIn();
+                }
             }
             else
             {

@@ -519,6 +519,7 @@
 		847309C918DC09AC001869C6 /* assigntaskicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309C718DC09AC001869C6 /* assigntaskicon.png */; };
 		847309CA18DC09AC001869C6 /* Building Info UI placeholdercircleclose.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309C818DC09AC001869C6 /* Building Info UI placeholdercircleclose.png */; };
 		847309CE18DC0A23001869C6 /* peaceicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309CD18DC0A22001869C6 /* peaceicon.png */; };
+		8483260818E441E500EDCB59 /* AnimatedSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8483260718E441E500EDCB59 /* AnimatedSprite.cpp */; };
 		8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8489ADA9175C96C1004CCB84 /* GameData.plist */; };
 		848BD5B31754A59000D5346A /* PopulationMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848BD5B11754A58F00D5346A /* PopulationMenu.cpp */; };
 		848BD5B61754A65000D5346A /* InfoMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848BD5B41754A65000D5346A /* InfoMenu.cpp */; };
@@ -1445,6 +1446,8 @@
 		847309C718DC09AC001869C6 /* assigntaskicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = assigntaskicon.png; sourceTree = "<group>"; };
 		847309C818DC09AC001869C6 /* Building Info UI placeholdercircleclose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Building Info UI placeholdercircleclose.png"; sourceTree = "<group>"; };
 		847309CD18DC0A22001869C6 /* peaceicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = peaceicon.png; sourceTree = "<group>"; };
+		8483260618E4412F00EDCB59 /* AnimatedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedSprite.h; sourceTree = "<group>"; };
+		8483260718E441E500EDCB59 /* AnimatedSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedSprite.cpp; sourceTree = "<group>"; };
 		8489ADA9175C96C1004CCB84 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		848BD5B11754A58F00D5346A /* PopulationMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopulationMenu.cpp; sourceTree = "<group>"; };
 		848BD5B21754A58F00D5346A /* PopulationMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopulationMenu.h; sourceTree = "<group>"; };
@@ -3221,6 +3224,7 @@
 				84EB32791867EB81003B5CEB /* SenarioManager.h */,
 				84EB327C1867EF47003B5CEB /* FileReader.h */,
 				84714C6918DC4C1900F149BC /* AnimatedString.h */,
+				8483260618E4412F00EDCB59 /* AnimatedSprite.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3234,6 +3238,7 @@
 				84EB327A1867EC8A003B5CEB /* SenarioManager.cpp */,
 				84EB327D1867EFBF003B5CEB /* FileReader.cpp */,
 				84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */,
+				8483260718E441E500EDCB59 /* AnimatedSprite.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3933,6 +3938,7 @@
 				36B18A9818A0A6A700A8B515 /* CCMenu.cpp in Sources */,
 				365FBC3716E5E31000A57CF0 /* CCSorting.cpp in Sources */,
 				365FBC3A16E5E31000A57CF0 /* CCTableView.cpp in Sources */,
+				8483260818E441E500EDCB59 /* AnimatedSprite.cpp in Sources */,
 				36B190CF18A0A6AD00A8B515 /* ccUtils.cpp in Sources */,
 				36B18ACF18A0A6A800A8B515 /* CCEGLViewProtocol.cpp in Sources */,
 				36B190E618A0A6AD00A8B515 /* CCTMXLayer.cpp in Sources */,

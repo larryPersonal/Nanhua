@@ -38,6 +38,9 @@ public:
     
     bool isBackground;
     
+    bool fadeIn;
+    bool fadeOut;
+    
 public:
     Element();
     ~Element();

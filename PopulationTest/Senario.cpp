@@ -11,6 +11,7 @@
 #include "Slide.h"
 #include "GlobalHelper.h"
 #include "AnimatedString.h"
+#include "AnimatedSprite.h"
 
 Senario* Senario::SP;
 
@@ -27,7 +28,11 @@ Senario::Senario()
     animatedStringList = CCArray::create();
     animatedStringList->retain();
     
+    animatedSpriteList = CCArray::create();
+    animatedSpriteList->retain();
+    
     skipButton = NULL;
+    skipSlide = false;
 }
 
 Senario::~Senario()
@@ -41,6 +46,9 @@ Senario::~Senario()
     
     animatedStringList->removeAllObjects();
     CC_SAFE_RELEASE(animatedStringList);
+    
+    animatedSpriteList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedSpriteList);
 }
 
 Senario* Senario::getThis()
@@ -139,8 +147,9 @@ bool Senario::constructSenarioStage(bool skip)
              */
             
             //CCSprite* cha = CCSprite::create(ele->src.c_str(), CCRectMake(0, 0, screenSize.width * ele->width / 100.0f, screenSize.height * ele->height / 100.0f));
-            
-            CCSprite* cha = CCSprite::create(ele->src.c_str());
+            AnimatedSprite* as = AnimatedSprite::create(ele->src.c_str(), ele->fadeIn, ele->fadeOut);
+            stringstream ss;
+            CCSprite* cha = as->getSprite();
             CCSize spriteSize = cha->getContentSize();
             cha->setScale(screenSize.width / spriteSize.width * ele->width / 100.0f);
             
@@ -148,6 +157,8 @@ bool Senario::constructSenarioStage(bool skip)
             cha->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             this->addChild(cha, 2);
             spriteList.push_back(cha);
+            
+            animatedSpriteList->addObject(as);
         }
         else if(ele->type == Element::dialogue)
         {
@@ -358,11 +369,47 @@ vector<std::string> Senario::split(std::string text, char delimiter)
 
 void Senario::nextButtonPressed(bool skip)
 {
-    if(!skip)
+    bool allStopFade = true;
+    for (int i = 0; i < animatedStringList->count(); i++){
+        AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+        
+        if(!as->stopFade){
+            allStopFade = false;
+            break;
+        }
+    }
+    
+    if(allStopFade){
+        bool hasFade = false;
+        for (int i = 0; i < animatedSpriteList->count(); i++){
+            AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);
+            
+            if(as->hasFadeOutAnimation){
+                as->triggerFadeOut();
+                hasFade = true;
+            }
+        }
+        skipSlide = skip;
+        
+        if(!hasFade){
+            goNextSlide();
+        }
+    } else {
+        for (int i = 0; i < animatedStringList->count(); i++){
+            AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+            
+            as->getLabel()->setOpacity((GLubyte) 255);
+            as->stopFade = true;
+        }
+    }
+}
+
+void Senario::goNextSlide(){
+    if(!skipSlide)
     {
         curSlide++;
         this->unschedule(schedule_selector(Senario::update));
-        if(!constructSenarioStage(skip)){
+        if(!constructSenarioStage(skipSlide)){
             buttonSelect();
         }
     }
@@ -370,7 +417,7 @@ void Senario::nextButtonPressed(bool skip)
     {
         curSlide = slidesList->count() - 1;
         this->unschedule(schedule_selector(Senario::update));
-        if(!constructSenarioStage(skip)){
+        if(!constructSenarioStage(skipSlide)){
             buttonSelect();
         }
     }
@@ -408,6 +455,18 @@ void Senario::clearElements()
     
     animatedStringList = CCArray::create();
     animatedStringList->retain();
+    
+    for(int i = 0; i < animatedSpriteList->count(); i++)
+    {
+        AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);
+        this->removeChild(as->getSprite());
+    }
+    
+    animatedSpriteList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedSpriteList);
+    
+    animatedSpriteList = CCArray::create();
+    animatedSpriteList->retain();
     
     if(skipButton != NULL)
     {
@@ -468,6 +527,15 @@ void Senario::update(float time)
         for (int i = 0; i < animatedStringList->count(); i++)
         {
             AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+            as->update(time);
+        }
+    }
+    
+    if(animatedSpriteList != NULL)
+    {
+        for (int i = 0; i < animatedSpriteList->count(); i++)
+        {
+            AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);
             as->update(time);
         }
     }
