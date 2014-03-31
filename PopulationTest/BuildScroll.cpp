@@ -82,7 +82,7 @@ void BuildScroll::createMenuItems()
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.85f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.5f));
+    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.95f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.5f));
     scrollArea->enableScrollHorizontal(0, "bar.png", "bar.png");
     //scrollArea->hideScroll();
     scrollArea->setAnchorPoint(ccp(0, 0));

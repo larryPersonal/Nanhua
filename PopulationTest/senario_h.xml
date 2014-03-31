@@ -3,10 +3,10 @@
     <slide>
         <dialogue>
             <name>Narrator</name>
-            <text>Background information: In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt （黄巾之乱） .</text>
+            <text>Background information: In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt（黄巾之乱）.</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -20,7 +20,7 @@
             <text>Although the Han Empire gained a glorious victory, the cost was very high. Many innocent people had been left homeless or destitute by the wars, leaving great parts of the empire in ruins and without resources.</text>
             <width>85</width>
 			<left>15/left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -34,7 +34,7 @@
             <text>Unrest remained and bandits appeared in every district, with the government in no position to put down all social disturbances.</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -48,7 +48,7 @@
             <text>Xiao Hua is in the village centre, cracking his brains over how to utilize limited resources to develop the village.</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -69,7 +69,7 @@
             <text>Ever since the agrarian crisis that resulted in a large-scale famine, many farmers in the north were forced to seek employment in the south.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -88,7 +88,7 @@
             <text>To fund the construction of fortifications along the Silk Road and garrisons against foreign infiltration and invasion, the government even imposed high taxes on them.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -107,7 +107,7 @@
             <text>Now, with the frequent floods that swept across the lower course of the Yellow River, it had severely threatened their livelihood. No wonder that they would stage an armed conflict!</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -126,7 +126,7 @@
             <text>Although the Han armies gained a glorious victory, the cost was very high.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -145,7 +145,7 @@
             <text>Thousands were killed and innocent people had been left homeless or destitute by the wars.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -164,7 +164,7 @@
             <text>The economy and wide areas of land were left in ruins and without resources, people resorted to pillage of towns.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -183,7 +183,7 @@
             <text>The government was in no position to put down the disturbances and social unrest escalated.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -203,7 +203,7 @@
             <text>It has been one month since the refugees started to arrive in our village. There were just so many of them …</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -216,7 +216,7 @@
             <text>The mini dragons rush in.</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -238,7 +238,7 @@
             <text>Master, another group of refuges have just arrived. Oh no, what should we do? They are now waiting outside, hoping to speak to you.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>BRITANIC</font>
@@ -251,7 +251,7 @@
             <text>Xiao Hua goes outside to meet the refuges.</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -272,7 +272,7 @@
             <text>We have travelled far to arrive here after we lost our homes and all our possessions. Many villages have already turned us away.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>BRITANIC</font>
@@ -291,7 +291,7 @@
             <text>If you do not help us, we would surely die unless we become bandits. This is certainly not what we hoped for.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>BRITANIC</font>
@@ -311,7 +311,7 @@
             <text>Please don’t turn us away! We really have nowhere else to go.</text>
 			<width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>BRITANIC</font>
@@ -324,7 +324,7 @@
             <text>Xiao Hua would decide if he wants to build new house to accommodate the refuges.</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -338,7 +338,7 @@
             <text>(Outcome: Build the houses to house the refuges. If there are not enough houses to house the refuges, they will become bandit and rob the village unless they are given accommodation within a certain period of time.)</text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
@@ -352,7 +352,7 @@
             <text></text>
             <width>85</width>
 			<left>15</left>
-			<top>28</top>
+			<top>30</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>BRITANIC</font>
