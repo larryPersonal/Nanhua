@@ -255,6 +255,9 @@ void BuildScroll::scrollOut(float dt)
             GameHUD::getThis()->buildScroll->closeMenu();
             GameHUD::getThis()->buildScroll = NULL;
             GameHUD::getThis()->buildButton->setVisible(true);
+            
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            GameHUD::getThis()->buildButton->setPosition(ccp(screenSize.width, 0));
         }
         else
         {

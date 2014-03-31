@@ -117,9 +117,10 @@ bool Senario::constructSenarioStage(bool skip)
     
     CCArray* elementArray = slide->elementList;
     
-    CCSprite* blackScreen = CCSprite::create("blackscreen.png");
+    CCSprite* blackScreen = CCSprite::create("interiorhouse.png");
+    blackScreen->setScale(screenSize.width / blackScreen->boundingBox().size.width);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
-    blackScreen->setPosition(ccp(0, 0));
+    blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(blackScreen, 1);
     spriteList.push_back(blackScreen);
     
@@ -380,7 +381,7 @@ void Senario::nextButtonPressed(bool skip)
         }
     }
     
-    if(allStopFade){
+    if(allStopFade || skip){
         bool hasFade = false;
         for (int i = 0; i < animatedSpriteList->count(); i++){
             AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);

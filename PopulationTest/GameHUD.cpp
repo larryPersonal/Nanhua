@@ -984,6 +984,7 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
         {
             money += GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost;
@@ -995,6 +996,7 @@ void GameHUD::clickBuildButton()
         GameScene::getThis()->mapHandler->UnPathPreview();
         buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
+        buildButton->setPosition(ccp(screenSize.width + buildButton->boundingBox().size.width, 0));
     }
     else
     {

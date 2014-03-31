@@ -74,7 +74,7 @@ bool SystemMenu::init(CCLayer* layer)
     
     menuItems->addObject(systemMenu_restartButton);
     
-    systemMenu_optionButton = CCMenuItemImage::create("optionsbtn.png", "optionspressbtn", this, menu_selector( SystemMenu::clickOptionButton ));
+    systemMenu_optionButton = CCMenuItemImage::create("optionsbtn.png", "optionspressbtn.png", this, menu_selector( SystemMenu::clickOptionButton ));
     systemMenu_optionButton->setScale(systemMenu_resumeButton->boundingBox().size.width / systemMenu_optionButton->boundingBox().size.width, systemMenu_resumeButton->boundingBox().size.height / systemMenu_optionButton->boundingBox().size.height);
     systemMenu_optionButton->setAnchorPoint(ccp(0.5, 1));
     systemMenu_optionButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
