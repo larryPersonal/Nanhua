@@ -15,6 +15,7 @@
 #include "GlobalHelper.h"
 #include "MainMenuScene.h"
 #include "Objective.h"
+#include "SystemMenu.h"
 
 GameHUD* GameHUD::SP;
 
@@ -257,7 +258,7 @@ void GameHUD::update(float deltaTime)
         mGameReputationMax = reputationMax;
         
         std::stringstream ss;
-        ss << mGameReputation << "/" << mGameReputationMax;
+        ss << mGameReputation;
         
         achivementsLabel->setString(ss.str().c_str());
     }
@@ -523,7 +524,7 @@ void GameHUD::createStatsMenu()
     // create the background of the stats menu
     statsMenu = CCSprite::create("chargirl_represent.png");
     CCSize spriteSize = statsMenu->getContentSize();
-    statsMenu->setScale(screenSize.width / spriteSize.width * 0.28f);
+    statsMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
 
     statsMenu->setAnchorPoint(ccp(0, 1));
     statsMenu->setPosition(ccp(0, screenSize.height));
@@ -579,12 +580,12 @@ void GameHUD::createStatsMenu()
     
     // create the achievements label for the values
     ss.str(std::string());
-    ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
-    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    ss << GameScene::getThis()->configSettings->default_ini_reputation;
+    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(200, screenSize.height - 87);
+    achivementsLabel->CCNode::setPosition(180, screenSize.height - 76);
     
     // showing the average happiness attribute
     average_happiness = 0;
@@ -818,6 +819,7 @@ void GameHUD::createObjectiveMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorGreen = ccc3(0, 255, 0);
+    ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the objective group background
     string objectiveBackground = "objective.png";
@@ -840,6 +842,7 @@ void GameHUD::createObjectiveMenu()
     ss << "Objective";
     objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
+    objectiveTitle->setColor(colorBlack);
     objectiveTitle->setPosition(ccp((objectiveMenu->boundingBox().size.width - 60) / 2.0f + 60, screenSize.height - 240));
     
     CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectives;
@@ -852,6 +855,8 @@ void GameHUD::createObjectiveMenu()
         tempLabel->setPosition(ccp(75.0f, screenSize.height - 280 - 20.0f * i));
         objectiveStrs->addObject(tempLabel);
         this->addChild(tempLabel, 3);
+        
+        tempLabel->setColor(colorBlack);
         if(objective->complete)
         {
             tempLabel->setColor(colorGreen);
@@ -869,29 +874,93 @@ void GameHUD::createObjectiveMenu()
     }
 }
 
-void GameHUD::clickObjectiveButton()
+void GameHUD::fadeIn(float dt)
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    if(objectiveMenu->isVisible())
+    if(fade_in)
     {
-        objectiveMenu->setVisible(false);
-        objectiveTitle->setVisible(false);
-        objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
-        for (int i = 0; i < objectiveStrs->count(); i++)
+        float speed = 5;
+        float opacity = ((float)objectiveMenu->getOpacity()) + speed;
+        
+        if(opacity >= 255)
+        {
+            opacity = 255;
+            this->unschedule(schedule_selector( GameHUD::fadeIn ));
+            fade_in = false;
+        }
+        objectiveMenu->setOpacity((GLubyte) opacity);
+        objectiveTitle->setOpacity((GLubyte) opacity);
+        for(int i = 0; i < objectiveStrs->count(); i++)
         {
             CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-            objectiveStr->setVisible(false);
+            objectiveStr->setOpacity((GLubyte) opacity);
         }
     }
-    else
+}
+
+void GameHUD::fadeOut(float dt)
+{
+    if(fade_out)
     {
-        objectiveMenu->setVisible(true);
-        objectiveTitle->setVisible(true);
-        objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
-        for (int i = 0; i < objectiveStrs->count(); i++)
+        float speed = 5;
+        float opacity = ((float) objectiveMenu->getOpacity()) - speed;
+        
+        if(opacity <= 0)
+        {
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            opacity = 0;
+            this->unschedule(schedule_selector( GameHUD::fadeOut ));
+            fade_out = false;
+            objectiveMenu->setVisible(false);
+            objectiveTitle->setVisible(false);
+            objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
+            for(int i = 0; i < objectiveStrs->count(); i++)
+            {
+                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+                objectiveStr->setVisible(false);
+            }
+        }
+        objectiveMenu->setOpacity((GLubyte) opacity);
+        objectiveTitle->setOpacity((GLubyte) opacity);
+        for(int i = 0; i < objectiveStrs->count(); i++)
         {
             CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-            objectiveStr->setVisible(true);
+            objectiveStr->setOpacity((GLubyte) opacity);
+        }
+    }
+}
+
+void GameHUD::clickObjectiveButton()
+{
+    if(!fade_in && !fade_out)
+    {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        if(objectiveMenu->isVisible())
+        {
+            objectiveMenu->setOpacity((GLubyte) 255);
+            objectiveTitle->setOpacity((GLubyte) 255);
+            for (int i = 0; i < objectiveStrs->count(); i++)
+            {
+                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+                objectiveStr->setOpacity((GLubyte) 255);
+            }
+            fade_out = true;
+            this->schedule(schedule_selector( GameHUD::fadeOut ), 1.0f / 240.0f);
+        }
+        else
+        {
+            objectiveMenu->setOpacity((GLubyte) 0);
+            objectiveMenu->setVisible(true);
+            objectiveTitle->setOpacity((GLubyte) 0);
+            objectiveTitle->setVisible(true);
+            objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
+            for (int i = 0; i < objectiveStrs->count(); i++)
+            {
+                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+                objectiveStr->setOpacity((GLubyte) 0);
+                objectiveStr->setVisible(true);
+            }
+            fade_in = true;
+            this->schedule(schedule_selector( GameHUD::fadeIn ), 1.0f / 240.0f);
         }
     }
 }
@@ -1085,6 +1154,7 @@ void GameHUD::stickGameHappiness()
 
 void GameHUD::clickSystemButton()
 {
-    GameScene::getThis()->mapHandler->UnBuildEndGame();
-    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+    SystemMenu* sm = SystemMenu::create(this);
+    sm->retain();
+    pause = true;
 }

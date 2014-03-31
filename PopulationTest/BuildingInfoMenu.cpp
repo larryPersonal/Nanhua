@@ -295,10 +295,9 @@ void BuildingInfoMenu::createMenuItems()
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
     
-    buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
-    buttonClose->setTag(-1);
+    buttonClose = CCSprite::create("Closebtn_Sq.png");
     
-    menuItems->addObject(buttonClose);
+    this->addChild(buttonClose);
     
     selectWorkerButton = CCMenuItemImage::create("assigntaskicon.png", "assigntaskicon.png", this, menu_selector(BuildingInfoMenu::selectPop));
     selectWorkerButton->setScale( 60.0f / selectWorkerButton->boundingBox().size.width );
@@ -697,7 +696,6 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
     {
         case -1:
         {
-            // buttonClose
             this->closeMenu(true);
             GameScene::getThis()->setTouchEnabled(true);
         }
@@ -705,12 +703,6 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
             
         default:
         {
-            /*
-            SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu((GameSprite*)pMenuItem->getTag());
-            spriteInfoMenu->useAsTopmostPopupMenu();
-            */
-            
-            //SelectPopulation* selectPopulationMenu = new SelectPopulation(this->building);
             SelectPopulation* selectPopulationMenu = SelectPopulation::create(this->building);
             selectPopulationMenu->useAsTopmostPopupMenu();
         }
@@ -756,7 +748,7 @@ void BuildingInfoMenu::reposition()
     textName->CCNode::setPosition(hw, halfHeight - 20.0f + hh);
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 60.0f + hw, halfHeight - 20.0f + hh);
+    buttonClose->setPosition(ccp(halfWidth - 60.0f + hw, halfHeight - 20.0f + hh));
     
     // Anchored bottom right
     textPrice->CCNode::setPosition(halfWidth -200.0f + hw, -halfHeight + 40.0f + hh);
@@ -1254,7 +1246,6 @@ void BuildingInfoMenu::upgrade()
 
 void BuildingInfoMenu::showSprite(CCObject *pSender)
 {
-    CCLog("test1");
     if(building->isCurrentConstructing)
     {
         return;
@@ -1265,9 +1256,6 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
     
     GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(tag);
     
-    this->closeMenu(true);
-    CCLog("test2");
-    
     SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
     spriteInfoMenu->autorelease();
     spriteInfoMenu->useAsBasePopupMenu();
@@ -1275,7 +1263,6 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
 
 void BuildingInfoMenu::selectPop()
 {
-    this->closeMenu();
     SelectPopulation* selectPopulationMenu = SelectPopulation::create(building);
     selectPopulationMenu->useAsBasePopupMenu();
 }

@@ -9,35 +9,39 @@
 #ifndef __PopulationTest__SystemMenu__
 #define __PopulationTest__SystemMenu__
 
-#include <iostream>
-#include "PopupMenu.h"
-#include "TabbedView.h"
-#include "ScrollArea.h"
+#include "cocos2d.h"
 
-class SystemMenu:public PopupMenu
+using namespace cocos2d;
+
+class SystemMenu : public CCObject
 {
     
-private:
+public:
+    static SystemMenu* SP;
     
-    TabbedView* tabbedView;
-    CCMenuItemImage* tabItemSystem;
-    CCLayer* tabLayerSystem;
-    ScrollArea* scrollArea;
+    CCSprite* blackScreen;
+    CCSprite* systemMenu_background;
+    CCMenuItemImage* systemMenu_resumeButton;
+    CCMenuItemImage* systemMenu_optionButton;
+    CCMenuItemImage* systemMenu_restartButton;
+    CCMenuItemImage* systemMenu_exitButton;
     
-    CCLabelTTF* TitleLabel;
-    
-protected:
-    
-    //General create menu
-    virtual void createMenuItems();
+    CCArray* menuItems;
+    CCMenu* newMenu;
     
 public:
-    virtual ~SystemMenu();
+    static SystemMenu* create(CCLayer*);
+    SystemMenu(CCLayer*);
+    ~SystemMenu();
+    bool init(CCLayer*);
+    static SystemMenu* getThis();
     
-    //General menu callback.
-    virtual void onMenuItemSelected(CCObject* pSender);
-    virtual void onOrientationChanged();
+    void clickResumeButton();
+    void clickOptionButton();
+    void clickExitButton();
+    void clickRestartButton();
     
+    void releaseAll();
 };
 
 #endif /* defined(__PopulationTest__SystemMenu__) */
