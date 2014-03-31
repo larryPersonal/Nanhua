@@ -19,6 +19,8 @@
 #include "GameManager.h"
 #include "BuildingInfoMenu.h"
 #include "BuildScroll.h"
+#include "ReputationOrb.h"
+#include "SystemMenu.h"
 
 #include <cmath>
 
@@ -260,6 +262,25 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
     {
         return;
     }
+    else if(SystemMenu::getThis() != NULL)
+    {
+        if(SystemMenu::getThis()->systemMenu_background->boundingBox().containsPoint(touchLoc))
+        {
+            return;
+        }
+        else
+        {
+            GameHUD::getThis()->pause = false;
+            CCArray* spritesOnMap = spriteHandler->spritesOnMap;
+            
+            for (int i = 0; i < spritesOnMap->count(); i++)
+            {
+                GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+                sp->followPath();
+            }
+            SystemMenu::getThis()->releaseAll();
+        }
+    }
     // the second priority for dragging on the screen is to check whether it is for the GameHUD layer
     else
     {
@@ -410,6 +431,8 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             }
         }
         
+        
+        
     }
     
     CCSetIterator it;
@@ -538,6 +561,25 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         
         return;
     }
+    else if(SystemMenu::getThis() != NULL)
+    {
+        if(SystemMenu::getThis()->systemMenu_background->boundingBox().containsPoint(touchLoc))
+        {
+            return;
+        }
+        else
+        {
+            GameHUD::getThis()->pause = false;
+            CCArray* spritesOnMap = spriteHandler->spritesOnMap;
+            
+            for (int i = 0; i < spritesOnMap->count(); i++)
+            {
+                GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+                sp->followPath();
+            }
+            SystemMenu::getThis()->releaseAll();
+        }
+    }
     else
     // the second priority for clicking on the screen is to check whether it is for the GameHUD layer;
     {
@@ -663,15 +705,17 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         
         if(BuildingInfoMenu::getThis() != NULL && BuildingInfoMenu::getThis()->spriteBackground != NULL)
         {
-            CCLog("test1");
             if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
-                CCLog("test2");
+                // check whether has clicked the close button
+                if(BuildingInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
+                {
+                    BuildingInfoMenu::getThis()->closeMenu();
+                }
                 return;
             }
             else
             {
-                CCLog("test3");
                 BuildingInfoMenu::getThis()->closeMenu();
             }
         }
@@ -680,6 +724,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         {
             if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
+                // check whether has clicked the close button
+                if(SelectPopulation::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
+                {
+                    SelectPopulation::getThis()->closeMenu();
+                }
                 return;
             }
             else
@@ -692,6 +741,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         {
             if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
+                // check whether has clicked the close button
+                if(SpriteInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
+                {
+                    SpriteInfoMenu::getThis()->closeMenu();
+                }
                 return;
             }
             else
@@ -1032,20 +1086,20 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
     
     for (int i = 0; i < allTokens->count(); i++)
     {
-        CCSprite* token = (CCSprite*) allTokens->objectAtIndex(i);
-        if (token == NULL)
+        ReputationOrb* ob = (ReputationOrb*) allTokens->objectAtIndex(i);
+        if (ob == NULL)
         {
             continue;
         }
         
-        if (!token->isVisible())
+        if (!ob->getSprite()->isVisible())
         {
             continue;
         }
         
-        if (token->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
+        if (ob->getSprite()->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
         {
-            mapHandler->getMap()->removeChild(token);
+            mapHandler->getMap()->removeChild(ob->getSprite());
             allTokens->removeObjectAtIndex(i);
             
             GameHUD::getThis()->addReputation(5);
@@ -1111,12 +1165,18 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->master)
             selectedTile = selectedTile->master;
         
-        if (selectedTile->building)// && selectedTile->building->buildingType != DECORATION)
+        if (selectedTile->building && selectedTile->building->buildingType != DECORATION)
         {
-            //this->setTouchEnabled(false);
-
-            BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-            buildingInfoMenu->useAsBasePopupMenu();
+            if(selectedTile->building->buildingType == AMENITY || selectedTile->building->buildingType == MILITARY)
+            {
+                SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                selectPopulation->useAsBasePopupMenu();
+            }
+            else
+            {
+                BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                buildingInfoMenu->useAsBasePopupMenu();
+            }
             
             return true;
         }
@@ -1147,13 +1207,19 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     selectedTile = selectedTile->master;
                 
                 if (selectedTile->building &&
-                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) )//&&
-                    //selectedTile->building->buildingType != DECORATION)
+                    selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) &&
+                    selectedTile->building->buildingType != DECORATION)
                 {
-                    //this->setTouchEnabled(false);
-                    
-                    BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
-                    buildingInfoMenu->useAsBasePopupMenu();
+                    if(selectedTile->building->buildingType == AMENITY || selectedTile->building->buildingType == MILITARY)
+                    {
+                        SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                        selectPopulation->useAsBasePopupMenu();
+                    }
+                    else
+                    {
+                        BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
+                        buildingInfoMenu->useAsBasePopupMenu();
+                    }
                     
                     return true;
                 }

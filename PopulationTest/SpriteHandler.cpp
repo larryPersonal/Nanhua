@@ -21,6 +21,7 @@
 
 #include "NameGenerator.h"
 #include "GlobalHelper.h"
+#include "ReputationOrb.h"
 
 #include <json/json.h>
 
@@ -527,11 +528,26 @@ void SpriteHandler::update(float dt)
     /*
      * schedule the ren token dropping mechanism. The ren tokens will be dropped by chance.
      */
-    for(int i = 0; i < spritesOnMap->count(); i++)
+    if(!GameScene::getThis()->banditsAttackHandler->warMode)
     {
-        GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
-        
-        gs->scheduleToken(dt);
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = ((GameSprite*) spritesOnMap->objectAtIndex(i));
+            
+            gs->scheduleToken(dt);
+        }
+    }
+    
+    /*
+     * schedule the ren tokens, see whether it will start to fade out.
+     */
+    for (int i = 0; i < tokensOnMap->count(); i++)
+    {
+        ReputationOrb* ro = ((ReputationOrb*) tokensOnMap->objectAtIndex(i));
+        if(ro != NULL)
+        {
+            ro->update(dt);
+        }
     }
 }
 

@@ -279,8 +279,8 @@ void SpriteInfoMenu::createMenuItems()
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
     
-    buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
-    buttonClose->setTag(0);
+    buttonClose = CCSprite::create("Closebtn_Sq.png");
+    this->addChild(buttonClose);
 
     buttonHome = CCMenuItemImage::create("homebutton.png", "homebutton_pressed.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
     buttonHome->setScale(0.75);
@@ -290,8 +290,6 @@ void SpriteInfoMenu::createMenuItems()
     buttonWorkPlace->setScale(0.75);
     buttonWorkPlace->setTag(2);
     
-    
-    menuItems->addObject(buttonClose);
     menuItems->addObject(buttonWorkPlace);
     menuItems->addObject(buttonHome);
     
@@ -434,10 +432,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
             {
                 if (gameSprite->getPossessions()->homeLocation != NULL)
                 {
-                    this->closeMenu(false);
-                
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(gameSprite->getPossessions()->homeLocation);//new BuildingInfoMenu(selectedTile->building);
-                //   buildingInfoMenu->autorelease();
                     buildingInfoMenu->useAsTopmostPopupMenu();
                 }
             }
@@ -451,10 +446,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
                /*
                 if (gameSprite->getPossessions()->hasJob)
                 {
-                    this->closeMenu(false);
-            
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(gameSprite->getPossessions()->jobLocation);//new BuildingInfoMenu(selectedTile->building);
-                    //   buildingInfoMenu->autorelease();
                     buildingInfoMenu->useAsTopmostPopupMenu();
                 }*/
             }
@@ -528,7 +520,7 @@ void SpriteInfoMenu::reposition()
     textName->CCNode::setPosition(0, halfHeight - 20.0f);
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 60.0f, halfHeight - 20.0f);
+    buttonClose->setPosition(ccp(halfWidth - 60.0f, halfHeight - 20.0f));
     buttonHome->setPosition(-halfWidth + 140.0f,  -halfHeight + 80.0f);
     buttonWorkPlace->setPosition(-halfWidth + 80.0f, -halfHeight + 80.0f);
     

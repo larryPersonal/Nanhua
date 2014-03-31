@@ -16,6 +16,7 @@
 #include "NameGenerator.h"
 #include "BuildingHandler.h"
 #include "GlobalHelper.h"
+#include "ReputationOrb.h"
 
 #include <sstream>
 
@@ -865,7 +866,7 @@ bool GameSprite::Wander()
     wanderFlag = !wanderFlag;
     if (wanderFlag)
     {
-        saySpeech("I am wandering!", 5.0f);
+        saySpeech(IDLING, 5.0f);
         
         CCPoint tgt = GameScene::getThis()->mapHandler->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
         if (tgt.x == -1 && tgt.y == -1)
@@ -1665,7 +1666,30 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             label = CCSprite::create("stuck.png");
 
             break;
+        case GUARD_EMOTION:
+            label = CCSprite::create("happy1.png");
             
+            break;
+        case BUILDER_EMOTION:
+            label = CCSprite::create("happy2.png");
+            
+            break;
+        case FARMER_EMOTION:
+            label = CCSprite::create("idle1.png");
+            
+            break;
+        case STUCK_FOOD:
+            label = CCSprite::create("stuck1.png");
+            
+            break;
+        case FIND_HOME:
+            label = CCSprite::create("idle2.png");
+            
+            break;
+        case HOMELESS:
+            label = CCSprite::create("stuck2.png");
+            
+            break;
             
     }
     if (label == NULL) return;
@@ -2335,13 +2359,13 @@ void GameSprite::goToEat()
             
             if(startPos.equals(endPos))
             {
-                saySpeech("Eating food aiya!", 5.0f);
+                //saySpeech("Eating food aiya!", 5.0f);
                 setTargetLocation(bui);
                 currAction = EATING;
             }
             else
             {
-                saySpeech("Food, I am coming!", 5.0f);
+                saySpeech(HUNGRY, 5.0f);
                 setTargetLocation(bui);
                 GoEat(bui);
             }
@@ -2403,7 +2427,7 @@ void GameSprite::goToSleep()
         }
         else
         {
-            saySpeech("My home! My Home!", 5.0f);
+            saySpeech(TIRED, 5.0f);
             setTargetLocation(getHome());
             GoRest(getHome());
         }
@@ -2726,21 +2750,30 @@ void GameSprite::scheduleToken(float dt)
 void GameSprite::checkDropTresholdTime()
 {
     float mAverageHappiness = possessions->happinessRating;
+    int timeDiffer = 0;
     if(mAverageHappiness >= 70)
     {
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_happy;
+        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_happy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_happy_min;
+        int randomTime = rand() % timeDiffer;
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_happy_min + randomTime;
     }
     else if(mAverageHappiness >= 40)
     {
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_normal;
+        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_normal_max - GameScene::getThis()->configSettings->token_drop_treshold_time_normal_min;
+        int randomTime = rand() % timeDiffer;
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_normal_min + randomTime;
     }
     else if(mAverageHappiness >= 10)
     {
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy;
+        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy_min;
+        int randomTime = rand() % timeDiffer;
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy_min + randomTime;
     }
     else
     {
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_angry;
+        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_angry_max - GameScene::getThis()->configSettings->token_drop_treshold_time_angry_min;
+        int randomTime = rand() % timeDiffer;
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_angry_min + randomTime;
     }
 }
 
@@ -2752,14 +2785,15 @@ void GameSprite::dropToken()
     if(random_number <= token_drop_rate)
     {
         saySpeech(HAPPY, 1.0f);
-        CCSprite* newToken = CCSprite::create("tokenball_REN.png");
+        ReputationOrb* ro = ReputationOrb::create("tokenball_REN.png", GameScene::getThis()->configSettings->token_disappear_time);
+        CCSprite* newToken = ro->getSprite();
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize spriteSize = newToken->getContentSize();
         
         newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
         
-        GameScene::getThis()->spriteHandler->tokensOnMap->addObject(newToken);
+        GameScene::getThis()->spriteHandler->tokensOnMap->addObject(ro);
         
         GameScene::getThis()->mapHandler->getMap()->addChild(newToken, GameScene::getThis()->mapHandler->calcZIndex(currPos));
         

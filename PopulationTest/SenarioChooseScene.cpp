@@ -9,6 +9,7 @@
 #include "SenarioChooseScene.h"
 #include "GameScene.h"
 #include "GameManager.h"
+#include "MainMenuScene.h"
 
 using namespace cocos2d;
 
@@ -205,7 +206,7 @@ void SenarioChooseScene::chooseSenario5()
 //THIS IS ACTUALLY THE GO BACK BUTTON.
 void SenarioChooseScene::chooseSenario6()
 {
-    CCLog ("Back pressed");
+    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
 }
 
 void SenarioChooseScene::onOrientateChange(){
