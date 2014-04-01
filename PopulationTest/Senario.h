@@ -37,8 +37,11 @@ public:
     
     CCArray* slidesList;
     CCArray* animatedStringList;
+    CCArray* animatedSpriteList;
     
     CCMenu* startGameMenu;
+    
+    bool skipSlide;
     
 public:
     Senario();
@@ -72,6 +75,8 @@ public:
     void displayTexts(std::string, float, float, string, float, ccColor3B);
     
     void update(float time);
+    
+    void goNextSlide();
     
     vector<std::string> split(std::string, char);
 };

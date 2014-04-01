@@ -20,6 +20,7 @@
 			<left>0</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
+            <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
@@ -77,6 +78,7 @@
 			<left>0</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
+            <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
@@ -96,6 +98,8 @@
 			<left>0</left>
 			<top>90</top>
 			<src>refugee_c.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
@@ -115,6 +119,8 @@
 			<left>0</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>

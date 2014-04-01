@@ -101,6 +101,11 @@ public:
     bool scroll_in;
     bool scroll_out;
     
+    bool fade_in;
+    bool fade_out;
+    
+    bool scrolled_in;
+    
     BuildScroll* buildScroll;
     
     bool getMoney;
@@ -229,6 +234,9 @@ public:
     void scrollOut(float);
     void scheduleScrollIn();
     void scheduleScrollOut();
+    
+    void fadeIn(float);
+    void fadeOut(float);
 };
 
 #endif

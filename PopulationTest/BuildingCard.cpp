@@ -286,9 +286,13 @@ void BuildingCard::tryToBuild(int tag)
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }
     GameScene::getThis()->isThisTapCounted = true;
+    
+    GameHUD::getThis()->buildScroll->scheduleScrollOut();
+    /*
     BuildScroll::getThis()->closeMenu();
     GameHUD::getThis()->buildButton->setVisible(true);
     GameHUD::getThis()->buildScroll = NULL;
+    */
 }
 
 void BuildingCard::setOpacity(GLubyte opacity)

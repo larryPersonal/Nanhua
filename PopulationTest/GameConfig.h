@@ -35,15 +35,21 @@ struct ConfigSettings
     int secondToDayRatio;
     
     // token drop
-    int token_drop_treshold_time_happy;
-    int token_drop_treshold_time_normal;
-    int token_drop_treshold_time_unhappy;
-    int token_drop_treshold_time_angry;
+    int token_drop_treshold_time_happy_min;
+    int token_drop_treshold_time_happy_max;
+    int token_drop_treshold_time_normal_min;
+    int token_drop_treshold_time_normal_max;
+    int token_drop_treshold_time_unhappy_min;
+    int token_drop_treshold_time_unhappy_max;
+    int token_drop_treshold_time_angry_min;
+    int token_drop_treshold_time_angry_max;
     
     int token_drop_rate_happy;
     int token_drop_rate_normal;
     int token_drop_rate_unhappy;
     int token_drop_rate_angry;
+    
+    float token_disappear_time;
     
     ConfigSettings()
     {
@@ -68,15 +74,21 @@ struct ConfigSettings
         secondToDayRatio = 5; // x means x seconds for a day in the game, 7x seconds for a week and 28x seconds for a month;
         
         // token drop treshold time, x seconds per checking
-        token_drop_treshold_time_happy = 10;
-        token_drop_treshold_time_normal = 15;
-        token_drop_treshold_time_unhappy = 20;
-        token_drop_treshold_time_angry = 30;
+        token_drop_treshold_time_happy_min = 15;
+        token_drop_treshold_time_happy_max = 30;
+        token_drop_treshold_time_normal_min = 35;
+        token_drop_treshold_time_normal_max = 60;
+        token_drop_treshold_time_unhappy_min = 70;
+        token_drop_treshold_time_unhappy_max = 120;
+        token_drop_treshold_time_angry_min = 300;
+        token_drop_treshold_time_angry_max = 600;
         
         token_drop_rate_happy = 60;     // 60 by default
         token_drop_rate_normal = 40;    // 40 by default
         token_drop_rate_unhappy = 20;   // 20 by default
         token_drop_rate_angry = 0;
+        
+        token_disappear_time = 15;
     }
 };
 

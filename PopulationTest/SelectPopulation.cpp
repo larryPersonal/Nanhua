@@ -126,16 +126,16 @@ void SelectPopulation::createMenuItems()
         menuItemPositions = CCPointArray::create(menuItems->capacity());
         menuItemPositions->retain();
         
-        buttonClose = CCMenuItemImage::create("assign_menu_cancel.png", "assign_menu_cancel.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
+        buttonClose = CCSprite::create("assign_menu_cancel.png");
         buttonClose->setScale(0.4);
-        buttonClose->setTag(-1);
         buttonClose->setAnchorPoint(ccp(1, 1));
-        
+        this->addChild(buttonClose);
+    
         buttonOk = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
         buttonOk->setScale(0.4);
         buttonOk->setTag(-2);
         buttonOk->setAnchorPoint(ccp(1, 1));
-        
+    
         buttonCancel = CCMenuItemImage::create("Building Info UI placeholdercircleclose.png", "Building Info UI placeholdercircleclose.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
         buttonCancel->setScale(buttonClose->boundingBox().size.width / buttonCancel->boundingBox().size.width);
         buttonCancel->setTag(-4);
@@ -145,7 +145,6 @@ void SelectPopulation::createMenuItems()
         
         menuItems->addObject(buttonCancel);
         menuItems->addObject(buttonOk);
-        menuItems->addObject(buttonClose);
         menuItems->addObject(spriteBuilding);
         
         menu = CCMenu::createWithArray(menuItems);
@@ -333,7 +332,6 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             break;
         case -3:
         {
-            this->closeMenu(true);
             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(building);
             buildingInfoMenu->useAsBasePopupMenu();
         }
@@ -489,7 +487,7 @@ void SelectPopulation::scheduleFarming()
         
         prepareJob(gameSprite);
         
-        gameSprite->saySpeech("Food is an apple of my eyes!", 5.0f);
+        gameSprite->saySpeech(HUNGRY, 5.0f);
     }
 }
 
@@ -508,7 +506,7 @@ void SelectPopulation::reposition(){
     spriteBuilding->setPosition(ccp(240.0f + hw, 40.0f + hh));
     
     // Anchored top right
-    buttonClose->setPosition(halfWidth - 25.0f + hw, -halfHeight + 75.0f + hh);
+    buttonClose->setPosition(ccp(halfWidth - 25.0f + hw, -halfHeight + 75.0f + hh));
     buttonOk->setPosition(halfWidth - 135.0f + hw, -halfHeight + 75.0f + hh);
     
     buttonCancel->setPosition(halfWidth - 80.0f + hw, -halfHeight + 75.0f + hh);
@@ -772,8 +770,6 @@ void SelectPopulation::cancelSprite(CCObject *pSender)
     int tag = pMenuItem->getTag();
     
     GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(tag);
-    
-    this->closeMenu(true);
     
     SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
     spriteInfoMenu->autorelease();

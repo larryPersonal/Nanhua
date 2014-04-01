@@ -36,7 +36,7 @@ public:
     // Graphical Items
     Building* building;
     
-    CCMenuItemImage* buttonClose;
+    CCSprite* buttonClose;
     CCMenuItemImage* buttonOk;
     CCMenuItemImage* buttonCancel;
     

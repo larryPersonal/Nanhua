@@ -77,7 +77,7 @@ public:
     
     ProgressBar* barEnergy;
     
-    CCMenuItemImage* buttonClose;
+    CCSprite* buttonClose;
     CCMenuItemImage* buttonWorkPlace;
     CCMenuItemImage* buttonHome;
     

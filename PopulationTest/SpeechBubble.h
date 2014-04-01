@@ -19,7 +19,16 @@ enum SpeechMood
     HUNGRY,
     STUCK,
     TIRED,
-    UNHAPPY=5
+    GUARD_EMOTION,
+    BUILDER_EMOTION,
+    FARMER_EMOTION,
+    BATTLE,
+    STUCK_FOOD,
+    FIND_HOME,
+    HOMELESS,
+    STEAL_MONEY,
+    STEAL_FOOD,
+    UNHAPPY=14
 };
 
 

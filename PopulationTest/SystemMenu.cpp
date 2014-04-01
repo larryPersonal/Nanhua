@@ -7,140 +7,127 @@
 //
 
 #include "SystemMenu.h"
-SystemMenu::~SystemMenu()
-{
-    
-    scrollArea->removeAllChildren();
-    scrollArea->release();
-    
-    
-}
+#include "GameHUD.h"
+#include "MainMenuScene.h"
 
-void SystemMenu::createMenuItems()
+SystemMenu* SystemMenu::SP;
+SystemMenu* SystemMenu::create(CCLayer* layer)
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    float yPosition = 0.0f;
-    
-    /*policy menu*/
-    menuItems = CCArray::createWithCapacity(4);
-    menuItems->retain();
-    menuItemPositions = CCPointArray::create(menuItems->capacity());
-    menuItemPositions->retain();
-    
-    //Demolish & Cancel
-    CCSprite* demoNormalImage =     CCSprite::create("demolish.png");
-    CCSprite* demoSelectedImage =   CCSprite::create("demolish.png");
-    demoNormalImage->               setScale(128 / demoNormalImage->boundingBox().size.width);
-    demoSelectedImage->             setScale(demoNormalImage->getScale());
-    CCMenuItemSprite* demoItem =    CCMenuItemSprite::create(demoNormalImage, demoSelectedImage, this, menu_selector(SystemMenu::onMenuItemSelected) );
-    
-    demoItem->  setTag(-1);
-    demoItem->  setAnchorPoint(ccp(0, 1));
-    demoItem->  setContentSize(demoNormalImage->boundingBox().size);
-    
-    CCLabelTTF* demoLabel =     CCLabelTTF::create("Demolish", "Shojumaru-Regular", 30);
-    
-    CCPoint labelPosition = ccp(demoItem->boundingBox().size.width*2.5,
-                                demoItem->boundingBox().size.height*0.5);
-    
-    demoItem->  setPosition(CCPointMake(0, yPosition));
-    
-    demoLabel->     setPosition(labelPosition);
-    
-    demoItem->addChild(demoLabel);
-    
-    menuItems->addObject(demoItem);
-    
-    CCMenu* menu = CCMenu::createWithArray(menuItems);
-    menu->setPosition(CCPointZero);
-    
-    // Build Menu UI vars
-    CCSize PolicyMenuSize = CCSizeMake(622.0f, 370.0f);
-  //  ccColor3B colorYellow = ccc3(225, 219, 108);
-    
-    // Scroll Area
-    scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(PolicyMenuSize, CCSizeMake(0.0f, -(yPosition - 200)));
-    scrollArea->addItem(menu, ccp(20.0f, 0.0f));
-    scrollArea->enableScrollVertical(10, "bar.png", "bar.png");
-    scrollArea->reposition();
-    scrollArea->updateScrollBars();
-    
-    
-    // Tabbed View
-    tabbedView = new TabbedView();
-    
-    // Tab Menu Background
-    CCSprite* tabbedViewBg = CCSprite::create("outerbox.png");
-    tabbedViewBg->setAnchorPoint(CCPointZero);
-    tabbedViewBg->setScale(700.0f / tabbedViewBg->getContentSize().width);
-  
-    CCSprite* tabbedViewBgInner = CCSprite::create("innerbox-policy.png");
-    tabbedViewBgInner->setAnchorPoint(CCPointZero);
-    tabbedViewBgInner->setPosition(ccp(10, 10));
-    tabbedViewBgInner->setScale(tabbedViewBg->getScale());
-   
-   
-    // Tab Layers
-    tabLayerSystem = CCLayer::create();
-    tabLayerSystem->setContentSize(PolicyMenuSize);
-    tabLayerSystem->addChild(scrollArea);
-    
-    // Tab Items
-    tabItemSystem= CCMenuItemImage::create("nav button.png", "nav button-pressed.png");
-   // tabItemSystem->setAnchorPoint(CCPointZero);
-    tabItemSystem->setVisible(false);
-//    tabItemSystem->setScale(tabbedViewBg->getScale());
- //   CCLabelTTF* label = CCLabelTTF::create("System", "Shojumaru-Regular", 32);
- //   label->setColor(colorYellow);
-  //  label->setScale(1.0f / tabItemSystem->getScale());
-   // label->CCNode::setPosition(tabItemSystem->getContentSize().width / 2.0f, tabItemSystem->getContentSize().height / 2.0f);
-   // tabItemSystem->addChild(label);
-   
-    // Create tabbed view and add its items
-    tabbedView->createTabbedView(ccp(0.0f, tabbedViewBg->getContentSize().height * tabbedViewBg->getScale()),
-                                 ccp(42.0f, 55.0f));
-    tabbedView->addChild(tabbedViewBg);
-    tabbedView->addChild(tabbedViewBgInner);
-    tabbedView->addTabWithContent(tabItemSystem, ccp(218.0f, -20.0f), tabLayerSystem);
-    tabbedView->setPosition((screenSize.width - 700.0f) / 2.0f, (screenSize.height - 600.0f) / 2.0f);
-    
-    this->addChild(tabbedView);
-    
-    TitleLabel = CCLabelTTF::create("System", "Vinland", 64);
-    if (screenSize.width > screenSize.height) // landscape
-        TitleLabel->setPosition(ccp(screenSize.width * 0.5f, screenSize.height * 0.70f));
-    else
-        TitleLabel->setPosition(ccp(screenSize.width * 0.5f, screenSize.height * 0.65f));
-    
-    this->addChild(TitleLabel,4);
-    
-    //    Animate();
-}
-
-void SystemMenu::onMenuItemSelected(cocos2d::CCObject *pSender)
-{
-    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
-    int tag = (int)pMenuItem->getTag();
-    
-    
-    switch (tag)
+    SystemMenu *pRet = new SystemMenu(layer);
+    if (pRet && pRet->init(layer))
     {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
     }
 }
 
-void SystemMenu::onOrientationChanged()
+SystemMenu* SystemMenu::getThis()
 {
-    PopupMenu::onOrientationChanged();
-    
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    
-    tabbedView->setPosition((screenSize.width - 700.0f) / 2.0f, (screenSize.height - 600.0f) / 2.0f);
-    
-    if (screenSize.width > screenSize.height) // landscape
-        TitleLabel->setPosition(ccp(screenSize.width * 0.5f, screenSize.height * 0.70f));
-    else
-        TitleLabel->setPosition(ccp(screenSize.width * 0.5f, screenSize.height * 0.65f));
-    
+    return SP;
 }
 
+SystemMenu::SystemMenu(CCLayer* layer)
+{
+    SystemMenu::SP = this;
+    menuItems = CCArray::create();
+    menuItems->retain();
+}
+
+SystemMenu::~SystemMenu()
+{
+    SystemMenu::SP = NULL;
+    menuItems->removeAllObjects();
+    CC_SAFE_RELEASE(menuItems);
+}
+
+bool SystemMenu::init(CCLayer* layer)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
+    blackScreen->setAnchorPoint(ccp(0.5, 0.5));
+    blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    layer->addChild(blackScreen, 5);
+    
+    systemMenu_background = CCSprite::create("PauseMenu.png");
+    systemMenu_background->setScale(1.0f);
+    systemMenu_background->setAnchorPoint(ccp(0.5, 0.5));
+    systemMenu_background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    layer->addChild(systemMenu_background, 6);
+    
+    systemMenu_resumeButton = CCMenuItemImage::create("resumebtn.png", "resumepressbtn.png", this, menu_selector( SystemMenu::clickResumeButton ));
+    systemMenu_resumeButton->setScale((systemMenu_background->boundingBox().size.width / systemMenu_resumeButton->boundingBox().size.width) * 0.6f, systemMenu_background->boundingBox().size.height / systemMenu_resumeButton->boundingBox().size.height * 0.15f);
+    systemMenu_resumeButton->setAnchorPoint(ccp(0.5, 1));
+    systemMenu_resumeButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + systemMenu_resumeButton->boundingBox().size.height * 2));
+    
+    menuItems->addObject(systemMenu_resumeButton);
+    
+    systemMenu_restartButton = CCMenuItemImage::create("restartbtn.png", "restartpressbtn.png", this, menu_selector( SystemMenu::clickRestartButton ));
+    systemMenu_restartButton->setScale(systemMenu_resumeButton->boundingBox().size.width / systemMenu_restartButton->boundingBox().size.width, systemMenu_resumeButton->boundingBox().size.height / systemMenu_restartButton->boundingBox().size.height);
+    systemMenu_restartButton->setAnchorPoint(ccp(0.5, 1));
+    systemMenu_restartButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + systemMenu_resumeButton->boundingBox().size.height));
+    
+    menuItems->addObject(systemMenu_restartButton);
+    
+    systemMenu_optionButton = CCMenuItemImage::create("optionsbtn.png", "optionspressbtn.png", this, menu_selector( SystemMenu::clickOptionButton ));
+    systemMenu_optionButton->setScale(systemMenu_resumeButton->boundingBox().size.width / systemMenu_optionButton->boundingBox().size.width, systemMenu_resumeButton->boundingBox().size.height / systemMenu_optionButton->boundingBox().size.height);
+    systemMenu_optionButton->setAnchorPoint(ccp(0.5, 1));
+    systemMenu_optionButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    
+    menuItems->addObject(systemMenu_optionButton);
+    
+    systemMenu_exitButton = CCMenuItemImage::create("exitbtn.png", "exitpressbtn.png", this, menu_selector( SystemMenu::clickExitButton ));
+    systemMenu_exitButton->setScale(systemMenu_resumeButton->boundingBox().size.width / systemMenu_exitButton->boundingBox().size.width, systemMenu_resumeButton->boundingBox().size.height / systemMenu_exitButton->boundingBox().size.height);
+    systemMenu_exitButton->setAnchorPoint(ccp(0.5, 1));
+    systemMenu_exitButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - systemMenu_resumeButton->boundingBox().size.height));
+    
+    menuItems->addObject(systemMenu_exitButton);
+    
+    newMenu = CCMenu::createWithArray(menuItems);
+    newMenu->setPosition(CCPointZero);
+    layer->addChild(newMenu, 7);
+    
+    return true;
+}
+
+void SystemMenu::clickResumeButton()
+{
+    GameHUD::getThis()->pause = false;
+    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    
+    for (int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+        sp->followPath();
+    }
+    releaseAll();
+}
+
+void SystemMenu::clickOptionButton()
+{
+    CCLog("Option Button: Under Construction!");
+}
+
+void SystemMenu::clickExitButton()
+{
+    GameScene::getThis()->mapHandler->UnBuildEndGame();
+    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+}
+
+void SystemMenu::clickRestartButton()
+{
+    CCLog("Restart Button: Under Construction!");
+}
+
+void SystemMenu::releaseAll()
+{
+    GameHUD::getThis()->removeChild(blackScreen);
+    GameHUD::getThis()->removeChild(systemMenu_background);
+    GameHUD::getThis()->removeChild(newMenu);
+    CC_SAFE_RELEASE(this);
+}

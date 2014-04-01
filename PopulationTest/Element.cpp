@@ -10,6 +10,9 @@
 
 Element::Element(){
     isBackground = false;
+    
+    fadeIn = false;
+    fadeOut = false;
 }
 
 Element::~Element(){

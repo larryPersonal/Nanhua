@@ -15,6 +15,7 @@
 #include "GlobalHelper.h"
 #include "MainMenuScene.h"
 #include "Objective.h"
+#include "SystemMenu.h"
 
 GameHUD* GameHUD::SP;
 
@@ -65,6 +66,8 @@ GameHUD::GameHUD()
     
     scroll_in = false;
     scroll_out = false;
+    
+    scrolled_in = false;
 }
 
 GameHUD::~GameHUD()
@@ -255,7 +258,7 @@ void GameHUD::update(float deltaTime)
         mGameReputationMax = reputationMax;
         
         std::stringstream ss;
-        ss << mGameReputation << "/" << mGameReputationMax;
+        ss << mGameReputation;
         
         achivementsLabel->setString(ss.str().c_str());
     }
@@ -517,97 +520,72 @@ void GameHUD::createStatsMenu()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorWhite = ccc3(255, 255, 255);
-    bool isHori = GlobalHelper::isHorizontal();
     
     // create the background of the stats menu
     statsMenu = CCSprite::create("chargirl_represent.png");
     CCSize spriteSize = statsMenu->getContentSize();
-    if(isHori)
-    {
-        statsMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        statsMenu->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    statsMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
+
     statsMenu->setAnchorPoint(ccp(0, 1));
     statsMenu->setPosition(ccp(0, screenSize.height));
     this->addChild(statsMenu, 1);
     
     // create the money indicator
     moneyIcon = CCSprite::create("yuanbao_amount.png");
-    if(isHori)
-    {
-        moneyIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        moneyIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    moneyIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.28f, screenSize.width / spriteSize.width * 0.25f);
+
     moneyIcon->setAnchorPoint(ccp(0, 1));
-    moneyIcon->setPosition(ccp(110, screenSize.height - 8));
+    moneyIcon->setPosition(ccp(120, screenSize.height - 8));
     this->addChild(moneyIcon, 2);
     
     std::stringstream ss;
     ss << money << "G";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     moneyLabel->setColor(colorWhite);
     moneyLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(moneyLabel, 2);
-    moneyLabel->CCNode::setPosition(255, screenSize.height - 25);
+    moneyLabel->CCNode::setPosition(285, screenSize.height - 26);
     
     // create the food indicator
     foodIcon = CCSprite::create("rice_amount.png");
-    if(isHori)
-    {
-        foodIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        foodIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    foodIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.32f, screenSize.width / spriteSize.width * 0.25f);
+
     foodIcon->setAnchorPoint(ccp(0, 1));
-    foodIcon->setPosition(ccp(340, screenSize.height));
+    foodIcon->setPosition(ccp(350, screenSize.height));
     this->addChild(foodIcon, 2);
     
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     foodLabel->setColor(colorWhite);
     foodLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(foodLabel, 2);
-    foodLabel->CCNode::setPosition(450, screenSize.height - 25);
+    foodLabel->CCNode::setPosition(495, screenSize.height - 28);
     
     // create the population indicator
     populationIcon = CCSprite::create("population_amount.png");
-    if(isHori)
-    {
-        populationIcon->setScale(screenSize.width / spriteSize.width * 0.25f);
-    }
-    else
-    {
-        populationIcon->setScale(screenSize.height / spriteSize.width * 0.25f);
-    }
+    populationIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.28f, screenSize.width / spriteSize.width * 0.25f);
+
     populationIcon->setAnchorPoint(ccp(0, 1));
-    populationIcon->setPosition(ccp(540, screenSize.height - 2));
+    populationIcon->setPosition(ccp(580, screenSize.height - 2));
     this->addChild(populationIcon, 2);
     
     ss.str(std::string());
     ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
-    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
-    populationLabel->CCNode::setPosition(650, screenSize.height - 25);
+    populationLabel->CCNode::setPosition(700, screenSize.height - 28);
     
     // create the achievements label for the values
     ss.str(std::string());
-    ss << GameScene::getThis()->configSettings->default_ini_reputation << "/" << GameScene::getThis()->settingsLevel->default_max_reputation;
+    ss << GameScene::getThis()->configSettings->default_ini_reputation;
     achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(185, screenSize.height - 75);
+    achivementsLabel->CCNode::setPosition(180, screenSize.height - 76);
     
     // showing the average happiness attribute
     average_happiness = 0;
@@ -782,6 +760,7 @@ void GameHUD::scrollIn(float dt)
             leftPos = maxPos;
             this->unschedule(schedule_selector( GameHUD::scrollIn ));
             scroll_in = false;
+            scrolled_in = true;
         }
         
         timeGroupReposition();
@@ -804,6 +783,7 @@ void GameHUD::scrollOut(float dt)
             timeBackground->setVisible(false);
             timeLabel_1->setVisible(false);
             timeLabel_2->setVisible(false);
+            scrolled_in = false;
         }
         
         timeGroupReposition();
@@ -839,6 +819,7 @@ void GameHUD::createObjectiveMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorGreen = ccc3(0, 255, 0);
+    ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the objective group background
     string objectiveBackground = "objective.png";
@@ -861,6 +842,7 @@ void GameHUD::createObjectiveMenu()
     ss << "Objective";
     objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
+    objectiveTitle->setColor(colorBlack);
     objectiveTitle->setPosition(ccp((objectiveMenu->boundingBox().size.width - 60) / 2.0f + 60, screenSize.height - 240));
     
     CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectives;
@@ -873,6 +855,8 @@ void GameHUD::createObjectiveMenu()
         tempLabel->setPosition(ccp(75.0f, screenSize.height - 280 - 20.0f * i));
         objectiveStrs->addObject(tempLabel);
         this->addChild(tempLabel, 3);
+        
+        tempLabel->setColor(colorBlack);
         if(objective->complete)
         {
             tempLabel->setColor(colorGreen);
@@ -890,29 +874,93 @@ void GameHUD::createObjectiveMenu()
     }
 }
 
-void GameHUD::clickObjectiveButton()
+void GameHUD::fadeIn(float dt)
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    if(objectiveMenu->isVisible())
+    if(fade_in)
     {
-        objectiveMenu->setVisible(false);
-        objectiveTitle->setVisible(false);
-        objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
-        for (int i = 0; i < objectiveStrs->count(); i++)
+        float speed = 5;
+        float opacity = ((float)objectiveMenu->getOpacity()) + speed;
+        
+        if(opacity >= 255)
+        {
+            opacity = 255;
+            this->unschedule(schedule_selector( GameHUD::fadeIn ));
+            fade_in = false;
+        }
+        objectiveMenu->setOpacity((GLubyte) opacity);
+        objectiveTitle->setOpacity((GLubyte) opacity);
+        for(int i = 0; i < objectiveStrs->count(); i++)
         {
             CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-            objectiveStr->setVisible(false);
+            objectiveStr->setOpacity((GLubyte) opacity);
         }
     }
-    else
+}
+
+void GameHUD::fadeOut(float dt)
+{
+    if(fade_out)
     {
-        objectiveMenu->setVisible(true);
-        objectiveTitle->setVisible(true);
-        objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
-        for (int i = 0; i < objectiveStrs->count(); i++)
+        float speed = 5;
+        float opacity = ((float) objectiveMenu->getOpacity()) - speed;
+        
+        if(opacity <= 0)
+        {
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            opacity = 0;
+            this->unschedule(schedule_selector( GameHUD::fadeOut ));
+            fade_out = false;
+            objectiveMenu->setVisible(false);
+            objectiveTitle->setVisible(false);
+            objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
+            for(int i = 0; i < objectiveStrs->count(); i++)
+            {
+                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+                objectiveStr->setVisible(false);
+            }
+        }
+        objectiveMenu->setOpacity((GLubyte) opacity);
+        objectiveTitle->setOpacity((GLubyte) opacity);
+        for(int i = 0; i < objectiveStrs->count(); i++)
         {
             CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-            objectiveStr->setVisible(true);
+            objectiveStr->setOpacity((GLubyte) opacity);
+        }
+    }
+}
+
+void GameHUD::clickObjectiveButton()
+{
+    if(!fade_in && !fade_out)
+    {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        if(objectiveMenu->isVisible())
+        {
+            objectiveMenu->setOpacity((GLubyte) 255);
+            objectiveTitle->setOpacity((GLubyte) 255);
+            for (int i = 0; i < objectiveStrs->count(); i++)
+            {
+                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+                objectiveStr->setOpacity((GLubyte) 255);
+            }
+            fade_out = true;
+            this->schedule(schedule_selector( GameHUD::fadeOut ), 1.0f / 240.0f);
+        }
+        else
+        {
+            objectiveMenu->setOpacity((GLubyte) 0);
+            objectiveMenu->setVisible(true);
+            objectiveTitle->setOpacity((GLubyte) 0);
+            objectiveTitle->setVisible(true);
+            objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
+            for (int i = 0; i < objectiveStrs->count(); i++)
+            {
+                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
+                objectiveStr->setOpacity((GLubyte) 0);
+                objectiveStr->setVisible(true);
+            }
+            fade_in = true;
+            this->schedule(schedule_selector( GameHUD::fadeIn ), 1.0f / 240.0f);
         }
     }
 }
@@ -936,6 +984,7 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
         {
             money += GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost;
@@ -947,6 +996,7 @@ void GameHUD::clickBuildButton()
         GameScene::getThis()->mapHandler->UnPathPreview();
         buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
+        buildButton->setPosition(ccp(screenSize.width + buildButton->boundingBox().size.width, 0));
     }
     else
     {
@@ -1106,6 +1156,7 @@ void GameHUD::stickGameHappiness()
 
 void GameHUD::clickSystemButton()
 {
-    GameScene::getThis()->mapHandler->UnBuildEndGame();
-    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+    SystemMenu* sm = SystemMenu::create(this);
+    sm->retain();
+    pause = true;
 }

@@ -96,7 +96,7 @@ public:
     CCLabelTTF* workCompleteLabel;
     CCLabelTTF* workCompleteTitleLabel;
     
-    CCMenuItemImage* buttonClose;
+    CCSprite* buttonClose;
     
     CCMenu* menu;
     

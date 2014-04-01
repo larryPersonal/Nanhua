@@ -697,7 +697,6 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
     {
         case -1:
         {
-            // buttonClose
             this->closeMenu(true);
             GameScene::getThis()->setTouchEnabled(true);
         }
@@ -705,12 +704,6 @@ void BuildingInfoMenu::onMenuItemSelected(CCObject *pSender)
             
         default:
         {
-            /*
-            SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu((GameSprite*)pMenuItem->getTag());
-            spriteInfoMenu->useAsTopmostPopupMenu();
-            */
-            
-            //SelectPopulation* selectPopulationMenu = new SelectPopulation(this->building);
             SelectPopulation* selectPopulationMenu = SelectPopulation::create(this->building);
             selectPopulationMenu->useAsTopmostPopupMenu();
         }
@@ -1254,7 +1247,6 @@ void BuildingInfoMenu::upgrade()
 
 void BuildingInfoMenu::showSprite(CCObject *pSender)
 {
-    CCLog("test1");
     if(building->isCurrentConstructing)
     {
         return;
@@ -1265,9 +1257,6 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
     
     GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(tag);
     
-    this->closeMenu(true);
-    CCLog("test2");
-    
     SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
     spriteInfoMenu->autorelease();
     spriteInfoMenu->useAsBasePopupMenu();
@@ -1275,7 +1264,6 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
 
 void BuildingInfoMenu::selectPop()
 {
-    this->closeMenu();
     SelectPopulation* selectPopulationMenu = SelectPopulation::create(building);
     selectPopulationMenu->useAsBasePopupMenu();
 }
