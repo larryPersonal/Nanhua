@@ -561,10 +561,10 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     else
                         b->build_uint_required = 0;
                     
-                    currProperty = properties->valueForKey("random_anim");
+                    currProperty = properties->valueForKey("anim_random");
                     if (currProperty)
                     {
-                        CCString* isTrue = CCStringMake(properties->valueForKey("random_anim")->getCString());
+                        CCString* isTrue = CCStringMake(properties->valueForKey("anim_random")->getCString());
                         if (isTrue->length() > 0)
                         {
                             if (isTrue->compare("true") == 0)
@@ -582,10 +582,10 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         b->anim_random = false;
                     }
 
-                    currProperty = properties->valueForKey("random_anim_chance");
+                    currProperty = properties->valueForKey("anim_random_chance");
                     if (currProperty)
                     {
-                        CCString* chance = CCStringMake(properties->valueForKey("random_anim_chance")->getCString());
+                        CCString* chance = CCStringMake(properties->valueForKey("anim_random_chance")->getCString());
                         if (chance->length() > 0)
                         {
                             b->anim_random_chance = atof(chance->getCString());

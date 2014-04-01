@@ -40,7 +40,7 @@ Building::Building()
     buildingBuyPrice = 0;
     constructionEndTime = 0.0f;
     constructionTime = 10.0f;
-   
+    anim_curr_chance = 0.0f;
     researchCost = 100.0f;
     
     upgrade_unit_max = 0;
@@ -801,7 +801,7 @@ void Building::BeginAnim()
     {
     
         currGID = baseGID;
-        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Building::AnimUpdate), this, 1.0f, false);
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Building::AnimUpdate), this, 0.1f, false);
         
         
     }
@@ -827,6 +827,7 @@ void Building::AnimUpdate()
     {
         anim_curr_chance = float(rand()) / RAND_MAX;
         if (anim_curr_chance >= anim_random_chance) anim_triggered = true;
+        else anim_triggered = false;
     }
     
     if ((anim_random && anim_triggered) || !anim_random)

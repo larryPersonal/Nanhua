@@ -3358,11 +3358,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/SenarioChooseScene.cpp"
-            timestampString = "418038743.621953"
+            timestampString = "418040998.110081"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209">
+            startingLineNumber = "214"
+            endingLineNumber = "214">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3436,11 +3436,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MainMenuScene.cpp"
-            timestampString = "418038743.621953"
+            timestampString = "418040998.110081"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "MainMenuScene::onNewGame(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3452,12 +3452,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MainMenuScene.cpp"
-            timestampString = "418038743.621953"
+            timestampString = "418040998.110081"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/Building.cpp"
+            timestampString = "418039668.466702"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "828"
+            endingLineNumber = "828"
+            landmarkName = "Building::AnimUpdate()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/Building.cpp"
+            timestampString = "418039700.750591"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "825"
+            endingLineNumber = "825"
+            landmarkName = "Building::AnimUpdate()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

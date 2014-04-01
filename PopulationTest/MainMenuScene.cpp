@@ -151,7 +151,11 @@ void MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)
     
     //GameManager::getThis()->setLoadedGame(true);
     //GameManager::getThis()->newGameData();.
+    
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 
 }
@@ -169,7 +173,10 @@ void MainMenuScene::onNewGame(cocos2d::CCObject *pSender)
     */
     
     //onRejectTutorial(pSender);
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
 
     CCDirector::sharedDirector()->replaceScene(SenarioChooseScene::scene());
 }

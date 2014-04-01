@@ -173,15 +173,20 @@ void SenarioChooseScene::chooseTutorial()
     GameManager::getThis()->setLevel(0);
     
     // load the actual game scene
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-
+    
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario1()
 {
     GameManager::getThis()->setLevel(1);
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
 
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
