@@ -24,6 +24,16 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
+#define MOVE_INCH            7.0f/160.0f
+#define SCROLL_DEACCEL_RATE  0.95f
+#define SCROLL_DEACCEL_DIST  1.0f
+
+static float convertDistanceFromPointToInch(float pointDis)
+{
+    float factor = ( CCEGLView::sharedOpenGLView()->getScaleX() + CCEGLView::sharedOpenGLView()->getScaleY() ) / 2;
+    return pointDis * factor / CCDevice::getDPI();
+}
+
 class GameScene : public CCLayer
 {
 public:
@@ -34,25 +44,15 @@ public:
     
     CCSprite* gameBG;                   // background image of the game, use to decorate the game map
     
-    float _currentTime;                 // register to hold the current system time
-    float _previousTime;                // register to hold the previous system time
-    struct cc_timeval now;              // time interval stucture use to store the time value
-    
-    float _speedX;                      // horizontal (x) speed of the scrolling action
-    float _speedY;                      // vertical (y) speed of the scroll action
-    
-    float _previous_pos_x;
-    float _previous_pos_y;
-    
-    float _current_pos_x;
-    float _current_pos_y;
-    
-    bool _post_drag_effect;             // flag to check the elasticity effect
-    
     float cumulatedTime;
     
     ConfigSettings* configSettings;
     SettingsLevel* settingsLevel;
+    SystemConfig* systemConfig;
+    
+    bool hasBeenDragged;
+    bool isInDeccelerating;
+    CCPoint scrollDistance;
     
 public:
     
@@ -111,11 +111,11 @@ public:
     void setBuildPathDistance(int dist);
     
     void lostGame(CCObject* psender);
+    void decceleratingDragging(float dt);
     
     // jerry added
     void enableTouch();
     virtual void move(float time);
-    virtual void postDrag(float time);
     
     CREATE_FUNC(GameScene);
 };

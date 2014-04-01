@@ -650,7 +650,13 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
     if (m_pTouches->containsObject(touch))
     {
-        if (m_pTouches->count() == 1 && m_bDragging)
+        if (m_pTouches->count() == 2 && !m_bDragging)
+        {
+            const float len = ccpDistance(m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0)),
+                                          m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
+            this->setZoomScale(this->getZoomScale()*len/m_fTouchLength);
+        }
+        else if (m_bDragging)
         { // scrolling
             CCPoint moveDistance, newPoint, maxInset, minInset;
             CCRect  frame;
@@ -712,12 +718,6 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
                 m_tScrollDistance = moveDistance;
                 this->setContentOffset(ccp(newX, newY));
             }
-        }
-        else if (m_pTouches->count() == 2 && !m_bDragging)
-        {
-            const float len = ccpDistance(m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0)),
-                                            m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
-            this->setZoomScale(this->getZoomScale()*len/m_fTouchLength);
         }
         
         GameHUD::getThis()->isThisTapCounted = false;

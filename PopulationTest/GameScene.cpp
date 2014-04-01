@@ -33,15 +33,11 @@ GameScene::GameScene()
     objectiveHandler = new ObjectiveHandler();
     objectiveHandler->loadObjective();
     
-    _currentTime = 0;
-    _previousTime = 0;
-    
     cumulatedTime = 0;
-    
-    _post_drag_effect = false;
     
     configSettings = new ConfigSettings();
     settingsLevel = new SettingsLevel();
+    systemConfig = new SystemConfig();
     
     switch (GameManager::getThis()->getLevel())
     {
@@ -54,6 +50,10 @@ GameScene::GameScene()
         default:
             break;
     }
+    
+    hasBeenDragged = false;
+    isInDeccelerating = false;
+    scrollDistance = CCPointZero;
 }
 
 GameScene::~GameScene()
@@ -439,23 +439,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
     CCTouch* touchOne;
     CCTouch* touchTwo;
     
-    // store the starting time of dragging;
-    if(_previousTime == 0)
-    {
-        // stop previous _post_drag_effect
-        _speedX = 0;
-        _speedY = 0;
-        _post_drag_effect = false;
-        this->unschedule(schedule_selector(GameScene::postDrag));
-        
-        _previousTime = CCTime::gettimeofdayCocos2d(&now, NULL);
-        _previousTime = (now.tv_sec * 1000 + now.tv_usec / 1000);
-        
-        CCTouch* touch = (CCTouch*)*touches->begin();
-        _previous_pos_x = touch->getLocation().x;
-        _previous_pos_y = touch->getLocation().y;
-    }
-    
     /*
     // handle the build button
     if(BuildScroll::getThis() != NULL)
@@ -504,35 +487,35 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             else
             {
                 CCTouch* touch = (CCTouch*)*touches->begin();
-                float moveX = touch->getLocation().x - touch->getPreviousLocation().x;
-                float moveY = touch->getLocation().y - touch->getPreviousLocation().y;
+                CCPoint moveDistance;
+                float newX, newY;
                 
-                _current_pos_x = touch->getLocation().x;
-                _current_pos_y = touch->getLocation().y;
+                moveDistance = ccpSub(touch->getLocation(), touch->getPreviousLocation());
+                float dis = 0.0f;
+                
+                dis = sqrtf(moveDistance.x * moveDistance.x + moveDistance.y * moveDistance.y);
+                
+                if (!hasBeenDragged && fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
+                {
+                    return;
+                }
+                
+                if (!hasBeenDragged)
+                {
+                    moveDistance = CCPointZero;
+                }
+                
+                hasBeenDragged = true;
+                
+                float moveX = moveDistance.x;
+                float moveY = moveDistance.y;
+                
+                scrollDistance = moveDistance;
                 
                 mapHandler->moveMapBy(moveX, moveY);
             }
     
     isThisTapCounted = false;
-}
-
-void GameScene::postDrag(float time)
-{
-    mapHandler->moveMapBy(_speedX * 10, _speedY * 10);
-    if(cumulatedTime > 0.05f)
-    {
-        _speedX *= 0.1f;
-        _speedY *= 0.1f;
-        cumulatedTime = 0;
-    }
-    cumulatedTime += time;
-    if(fabsf(_speedX) <= 0.001f && fabsf(_speedY) <= 0.001f)
-    {
-        _speedX = 0;
-        _speedY = 0;
-        _post_drag_effect = false;
-        this->unschedule(schedule_selector(GameScene::postDrag));
-    }
 }
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
@@ -762,47 +745,16 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     if (!isThisTapCounted) {
         isThisTapCounted = true;
         
-        // calculate the draggin speed
-        _currentTime = CCTime::gettimeofdayCocos2d(&now, NULL);
-        _currentTime = (now.tv_sec * 1000 + now.tv_usec / 1000);
-        float time_elapse = _currentTime - _previousTime;
-        
-        if(time_elapse < 0.1f)
+        if ((touches->count() == 1 && hasBeenDragged) && !isInDeccelerating)
         {
-            time_elapse = 0.1f;
+            this->schedule(schedule_selector(GameScene::decceleratingDragging));
+            isInDeccelerating = true;
         }
-        
-        _speedX = (_current_pos_x - _previous_pos_x) / time_elapse * 1.5f;
-        _speedY = (_current_pos_y - _previous_pos_y) / time_elapse * 1.5f;
-        
-        if(_speedX > 2)
+        else if(touches->count() == 0)
         {
-            _speedX = 2;
+            isInDeccelerating = false;
+            hasBeenDragged = false;
         }
-        else if(_speedX < -2)
-        {
-            _speedX = -2;
-        }
-        
-        if(_speedY > 2)
-        {
-            _speedY = 2;
-        }
-        else if(_speedY < -2)
-        {
-            _speedY = -2;
-        }
-
-        
-        // enable post drag effect
-        _post_drag_effect = true;
-        this->schedule(schedule_selector( GameScene::postDrag ), 1/120.0f);
-        _currentTime = 0;
-        _previousTime = 0;
-        _previous_pos_x = 0;
-        _previous_pos_y = 0;
-        _current_pos_x = 0;
-        _current_pos_y = 0;
         
         return;
     }
@@ -951,6 +903,34 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 break;
         }
     }
+}
+
+// going to finish deccelerating dragging.
+void GameScene::decceleratingDragging(float dt)
+{
+    if(hasBeenDragged)
+    {
+        this->unschedule(schedule_selector(GameScene::decceleratingDragging));
+        hasBeenDragged = false;
+        isInDeccelerating = false;
+    }
+    
+    scrollDistance = ccpMult(scrollDistance, SCROLL_DEACCEL_RATE);
+    mapHandler->moveMapBy(scrollDistance.x, scrollDistance.y);
+    
+    stringstream ss;
+    ss << "scrollDistance: (" << scrollDistance.x << ", " << scrollDistance.y << ");";
+    CCLog(ss.str().c_str());
+    
+    if ((fabsf(scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
+         fabsf(scrollDistance.y) <= SCROLL_DEACCEL_DIST))
+    {
+        CCLog("test1");
+        this->unschedule(schedule_selector(GameScene::decceleratingDragging));
+        isInDeccelerating = false;
+        hasBeenDragged = false;
+    }
+
 }
 
 /*we can only start adding sprites to the gamescene after init(), so putting buildings dynamically on the map has to be done here. */

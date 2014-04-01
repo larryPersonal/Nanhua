@@ -11,6 +11,16 @@
 
 #include <iostream>
 
+struct SystemConfig
+{
+    bool skipSenario;
+    
+    SystemConfig()
+    {
+        skipSenario = true;
+    }
+};
+
 /* contains the config settings for the whole game */
 struct ConfigSettings
 {
