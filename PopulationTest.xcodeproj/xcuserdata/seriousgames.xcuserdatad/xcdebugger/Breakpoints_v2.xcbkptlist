@@ -1587,7 +1587,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "520"
             endingLineNumber = "520"
-            landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
+            landmarkName = "GameScene::postDrag(float time)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1618,9 +1618,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "519"
-            endingLineNumber = "519"
-            landmarkName = "GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)"
-            landmarkType = "5">
+            endingLineNumber = "519">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3294,11 +3292,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "417002856.811071"
+            timestampString = "418010228.089867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "BuildingInfoMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3310,11 +3308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "417002856.811071"
+            timestampString = "418010228.089867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
+            startingLineNumber = "879"
+            endingLineNumber = "879"
             landmarkName = "BuildingInfoMenu::refreshAllMenuItemValues()"
             landmarkType = "5">
          </BreakpointContent>

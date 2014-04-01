@@ -535,7 +535,6 @@
 		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
 		84509B7F1887B9F100EF8BD8 /* rest.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7E1887B9F100EF8BD8 /* rest.png */; };
 		84509B811887CFFF00EF8BD8 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B801887CFFF00EF8BD8 /* home.png */; };
-		845854751892702F00824F5F /* testScene.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 845854581892702F00824F5F /* testScene.tmx */; };
 		845854781892702F00824F5F /* testSheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8458545B1892702F00824F5F /* testSheet.plist */; };
 		845854791892702F00824F5F /* testSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 8458545C1892702F00824F5F /* testSheet.png */; };
 		84589CDC1896653F00AA9E1C /* senario1_option2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 84589CDB1896653F00AA9E1C /* senario1_option2.xml */; };
@@ -1492,7 +1491,6 @@
 		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		84509B7E1887B9F100EF8BD8 /* rest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rest.png; sourceTree = "<group>"; };
 		84509B801887CFFF00EF8BD8 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
-		845854581892702F00824F5F /* testScene.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = testScene.tmx; sourceTree = "<group>"; };
 		8458545B1892702F00824F5F /* testSheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testSheet.plist; sourceTree = "<group>"; };
 		8458545C1892702F00824F5F /* testSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testSheet.png; sourceTree = "<group>"; };
 		84589CDB1896653F00AA9E1C /* senario1_option2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = senario1_option2.xml; sourceTree = "<group>"; };
@@ -1813,7 +1811,6 @@
 				36D87D1318C7146B00FE8B31 /* roads.png */,
 				8412CA4118AC8D3200AF4645 /* newUI */,
 				36AC558F18D6A31100C165F5 /* gound.png */,
-				845854581892702F00824F5F /* testScene.tmx */,
 				36AC558B18D6A16600C165F5 /* building3x3.png */,
 				36AC558D18D6A21C00C165F5 /* building2x2.png */,
 				8458545B1892702F00824F5F /* testSheet.plist */,
@@ -3738,7 +3735,6 @@
 				36682A3718DAC12100BC4214 /* Level Select Screen.png in Resources */,
 				36041A7F1714093C00A14BE6 /* background.jpg in Resources */,
 				36AC556318D6981900C165F5 /* housedetail.png in Resources */,
-				845854751892702F00824F5F /* testScene.tmx in Resources */,
 				84589CE11896655500AA9E1C /* conversation_textbox_empty_left.png in Resources */,
 				361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */,
 				36C16E4C18D0049000C307DB /* MaleOldMan_port.png in Resources */,

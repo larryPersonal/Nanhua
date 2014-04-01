@@ -708,10 +708,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
+                /*
                 if(BuildingInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                 {
                     BuildingInfoMenu::getThis()->closeMenu();
-                }
+                }*/ //close button no longer implemented
                 return;
             }
             else
@@ -725,10 +726,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
+                /*
                 if(SelectPopulation::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                 {
                     SelectPopulation::getThis()->closeMenu();
-                }
+                }*/ //close button no longer implemented
                 return;
             }
             else
@@ -742,10 +744,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
+                /*
                 if(SpriteInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                 {
                     SpriteInfoMenu::getThis()->closeMenu();
-                }
+                }*/ //close button no longer implemented
                 return;
             }
             else

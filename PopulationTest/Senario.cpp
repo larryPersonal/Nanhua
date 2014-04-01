@@ -82,10 +82,11 @@ void Senario::playSenario(const char* senario)
     active = true;
     GameScene::getThis()->setTouchEnabled(true);
     readSenarioFile();
-    constructSenarioStage(false);
+    //constructSenarioStage(false);
     //onOrientationChanged();
-    createGUI();
+    //createGUI();
     GameScene::getThis()->mapHandler->centerMap();
+    buttonSelect();
 }
 
 void Senario::readSenarioFile()
