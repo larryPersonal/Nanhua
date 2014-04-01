@@ -556,15 +556,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -585,15 +585,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -614,15 +614,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall CORNER"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -643,15 +643,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall CORNER"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -672,15 +672,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall with door"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall (Door)"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -701,15 +701,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall CORNER"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -730,15 +730,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall CORNER"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -759,15 +759,15 @@
     <property name="builder_limit" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
-    <property name="description" value="A house of brick"/>
+    <property name="description" value="wall with door"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="Stone Wall (Door)"/>
     <property name="population_limit" value="0"/>
-    <property name="prereqs" value="Straw House"/>
+    <property name="prereqs" value=""/>
     <property name="recovery_rate" value="1"/>
     <property name="req_building_count" value="6"/>
     <property name="req_capita" value="0"/>
@@ -847,7 +847,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2NEJACAIBcBWa/+lmiAkSki8+xQCNfDjjQEAANDDPKz/qFKvr3WeHf8fsR8AAAAgcpsfVH8PsOO+AAAAAACQQf4MAAAAAECGKH9eI/YDTg==
+   eJzt2MkJADAIBEBbS/9NpYLgIxfizF/wAB8bAQAAdDV+N/DYat5Ke6jU62mdZ8f9M/YDAAAAZHbzg+r1ACv+CwAAAAAAN8ifAQAAAAC4IcufJ4FUA48=
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">
