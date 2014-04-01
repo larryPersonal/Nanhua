@@ -25,9 +25,14 @@ void ScrollArea::createScrollArea(CCSize viewSize, CCSize scrollContentSize)
     
     // Scroll content should not be smaller than view
     if (scrollContentSize.width < viewSize.width)
+    {
         scrollContentSize.width = viewSize.width;
+    }
+    
     if (scrollContentSize.height < viewSize.height)
+    {
         scrollContentSize.height = viewSize.height;
+    }
     
     // Create scroll content layer
     layer = CCLayer::create();
