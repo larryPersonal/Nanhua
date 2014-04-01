@@ -150,9 +150,10 @@ void MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)
     //GameManager::getThis()->setTutorialMode(true);
     
     //GameManager::getThis()->setLoadedGame(true);
-    //GameManager::getThis()->newGameData();
-    
-    CCDirector::sharedDirector()->pushScene(GameScene::scene());
+    //GameManager::getThis()->newGameData();.
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
+
 }
 
 void MainMenuScene::onNewGame(cocos2d::CCObject *pSender)
@@ -168,7 +169,9 @@ void MainMenuScene::onNewGame(cocos2d::CCObject *pSender)
     */
     
     //onRejectTutorial(pSender);
-    CCDirector::sharedDirector()->pushScene(SenarioChooseScene::scene());
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+
+    CCDirector::sharedDirector()->replaceScene(SenarioChooseScene::scene());
 }
 
 
@@ -198,8 +201,7 @@ void MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)
     //GameManager::getThis()->setLoadedGame(false);
     
     //GameManager::getThis()->newGameData();
-    
-    CCDirector::sharedDirector()->pushScene(GameScene::scene());
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
     
 }
 void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){

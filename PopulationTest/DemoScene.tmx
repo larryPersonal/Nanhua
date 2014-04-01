@@ -261,6 +261,8 @@
   <tile id="0">
    <properties>
     <property name="anim_frames" value="4"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.6"/>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
@@ -306,6 +308,8 @@
   <tile id="4">
    <properties>
     <property name="anim_frames" value="4"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.6"/>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
@@ -351,6 +355,8 @@
   <tile id="8">
    <properties>
     <property name="anim_frames" value="4"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.6"/>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
@@ -396,6 +402,8 @@
   <tile id="12">
    <properties>
     <property name="anim_frames" value="4"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.6"/>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>

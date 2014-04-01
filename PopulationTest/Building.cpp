@@ -71,6 +71,11 @@ Building::Building()
     required_building_count = required_capita = required_population = 0;
     
     cumulatedTimeUpgrading = 0;
+    
+    anim_random = false;
+    anim_random_chance = 1.0f; //1.0 is 100%, 0 is 0%;
+    
+    anim_triggered = true;
 }
 Building::~Building()
 {
@@ -176,7 +181,8 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->currGID = pCopy->baseGID;
         pCopy->lastGID = pCopy->lastGID;
         pCopy->animframe_count = this->animframe_count;
-        
+        pCopy->anim_random = this->anim_random;
+        pCopy->anim_random_chance = this->anim_random_chance;
         pCopy->currentExp = this->currentExp;
         pCopy->expToLevel->initWithArray(this->expToLevel);
         
@@ -771,7 +777,14 @@ void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
     
     //NEED TO REMOVE THE OLD SPRITE BEFORE CREATING THE NEW ONE.
     
-    
+    if (should_completely_change_anim) //if the anim changes, change the whole lot. GIDs are different per anim.
+    {
+        animframe_count = b->animframe_count;
+        anim_triggered = false;
+        baseGID = b->baseGID;
+        currGID = b->baseGID;
+        maxGID = b->maxGID;
+    }
     
     GameScene::getThis()->mapHandler->getMap()->removeChild(buildingRep);
     //Because ::Create was used the old one should garbage collect on its own. TO MONITOR.
@@ -809,11 +822,24 @@ void Building::AnimUpdate()
 {
     if (buildingRep == NULL) return;
     if (!GameScene::getThis()) return;
-    if (currGID < maxGID)
-        ++currGID;
-    else
-        currGID = baseGID;
-    ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
+    
+    if (anim_random && !anim_triggered)
+    {
+        anim_curr_chance = float(rand()) / RAND_MAX;
+        if (anim_curr_chance >= anim_random_chance) anim_triggered = true;
+    }
+    
+    if ((anim_random && anim_triggered) || !anim_random)
+    {
+        if (currGID < maxGID)
+            ++currGID;
+        else
+        {
+            currGID = baseGID;
+            anim_triggered = false;
+        }
+        ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
+    }
     
 }
 

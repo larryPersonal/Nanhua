@@ -540,7 +540,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     {
                         b->upgrade_unit_max = 10.0f;
                     }
-          
+                    
                     
                     currProperty = properties->valueForKey("build_uint_required");
                     if (currProperty)
@@ -560,8 +560,41 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     else
                         b->build_uint_required = 0;
+                    
+                    currProperty = properties->valueForKey("random_anim");
+                    if (currProperty)
+                    {
+                        CCString* isTrue = CCStringMake(properties->valueForKey("random_anim")->getCString());
+                        if (isTrue->length() > 0)
+                        {
+                            if (isTrue->compare("true") == 0)
+                                {
+                                    b->anim_random = true;
+                                }
+                                else
+                                {
+                                    b->anim_random = false;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        b->anim_random = false;
+                    }
 
-                                                        
+                    currProperty = properties->valueForKey("random_anim_chance");
+                    if (currProperty)
+                    {
+                        CCString* chance = CCStringMake(properties->valueForKey("random_anim_chance")->getCString());
+                        if (chance->length() > 0)
+                        {
+                            b->anim_random_chance = atof(chance->getCString());
+                        }
+                    }
+                    else
+                    {
+                        b->anim_random_chance = 1.0f;
+                    }
                 }
                 else
                 {

@@ -83,6 +83,10 @@ public:
     int currGID;
     int lastGID;
     int animframe_count;
+    bool anim_random;
+    float anim_random_chance;
+    float anim_curr_chance;
+    float anim_triggered;
     
     int width;
     int height;

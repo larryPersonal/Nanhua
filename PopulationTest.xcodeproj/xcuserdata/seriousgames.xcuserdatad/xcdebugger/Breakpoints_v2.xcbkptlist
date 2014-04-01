@@ -1267,7 +1267,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "481"
             endingLineNumber = "481"
-            landmarkName = "SpriteHandler::getRank(std::string spriteclass)"
+            landmarkName = "SpriteHandler::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1283,7 +1283,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "490"
             endingLineNumber = "490"
-            landmarkName = "SpriteHandler::getAlienCount()"
+            landmarkName = "SpriteHandler::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1299,7 +1299,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "482"
             endingLineNumber = "482"
-            landmarkName = "SpriteHandler::getRank(std::string spriteclass)"
+            landmarkName = "SpriteHandler::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1379,7 +1379,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "570"
             endingLineNumber = "570"
-            landmarkName = "SpriteHandler::update(float dt)"
+            landmarkName = "SpriteHandler::setCumulatedTime(float time)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1395,7 +1395,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "565"
             endingLineNumber = "565"
-            landmarkName = "SpriteHandler::update(float dt)"
+            landmarkName = "SpriteHandler::setCumulatedTime(float time)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1443,7 +1443,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "562"
             endingLineNumber = "562"
-            landmarkName = "SpriteHandler::update(float dt)"
+            landmarkName = "SpriteHandler::setCumulatedTime(float time)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2973,7 +2973,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "199"
             endingLineNumber = "199"
-            landmarkName = "Building::getExpToLevel()"
+            landmarkName = "Building::getWorldPosition()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3234,7 +3234,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "706"
-            endingLineNumber = "706">
+            endingLineNumber = "706"
+            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3356,13 +3358,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/SenarioChooseScene.cpp"
-            timestampString = "416994906.928755"
+            timestampString = "418038743.621953"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "SenarioChooseScene::chooseSenario6()"
-            landmarkType = "5">
+            startingLineNumber = "209"
+            endingLineNumber = "209">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3410,6 +3410,54 @@
             startingLineNumber = "522"
             endingLineNumber = "522"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/MainMenuScene.cpp"
+            timestampString = "418035979.610541"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/MainMenuScene.cpp"
+            timestampString = "418038743.621953"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "MainMenuScene::onNewGame(cocos2d::CCObject *pSender)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/MainMenuScene.cpp"
+            timestampString = "418038743.621953"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
