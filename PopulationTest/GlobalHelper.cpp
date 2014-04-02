@@ -171,6 +171,65 @@ GameSprite* GlobalHelper::getSpriteByVillagerClass(GameSprite* gameSprite, Villa
     return NULL;
 }
 
+vector<std::string> GlobalHelper::split(std::string text, char delimiter)
+{
+    int startIndex = -1;
+    int endIndex = -1;
+    vector<std::string> tokens;
+    stringstream ss;
+    
+    for (int i = 0; i < text.length(); i++)
+    {
+        if(text[i] == delimiter)
+        {
+            if(startIndex < 0)
+            {
+            }
+            else if(startIndex == endIndex)
+            {
+                ss.str(string());
+                ss << text[startIndex];
+                tokens.push_back(ss.str());
+            }
+            else
+            {
+                ss.str(string());
+                for (int j = startIndex; j <= endIndex; j++)
+                {
+                    ss << text[j];
+                }
+                tokens.push_back(ss.str());
+            }
+            startIndex = -1;
+            endIndex = -1;
+        }
+        else
+        {
+            if(startIndex < 0)
+            {
+                startIndex = i;
+                endIndex = i;
+            }
+            else
+            {
+                endIndex = i;
+            }
+        }
+    }
+    
+    if(startIndex >= 0 && endIndex >= startIndex)
+    {
+        ss.str(string());
+        for(int i = startIndex; i <= endIndex; i++)
+        {
+            ss << text[i];
+        }
+        tokens.push_back(ss.str());
+    }
+    
+    return tokens;
+}
+
 
 
 

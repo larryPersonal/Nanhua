@@ -16,6 +16,7 @@
 #include "MainMenuScene.h"
 #include "Objective.h"
 #include "SystemMenu.h"
+#include "TutorialManager.h"
 
 GameHUD* GameHUD::SP;
 
@@ -68,6 +69,8 @@ GameHUD::GameHUD()
     scroll_out = false;
     
     scrolled_in = false;
+    
+    setTutorial = false;
 }
 
 GameHUD::~GameHUD()
@@ -104,7 +107,6 @@ GameHUD* GameHUD::create()
 bool GameHUD::init()
 {
     currTapMode = Normal;
-    menuIsOpen = false;
     
     //this->CCLayer::setTouchEnabled(true);
     
@@ -125,130 +127,129 @@ void GameHUD::setAllStats()
 
 void GameHUD::update(float deltaTime)
 {
-    if(pause)
-    {
-        return;
-    }
     
-    // update date
-    cumulatedTime += deltaTime;
-    
-    if(cumulatedTime > GameScene::getThis()->configSettings->secondToDayRatio)
+    if(!pause)
     {
-        date->addDay();
-        cumulatedTime = 0;
+        // update date
+        cumulatedTime += deltaTime;
         
-        if(date->week == 0 && date->day == 0)
+        if(cumulatedTime > GameScene::getThis()->configSettings->secondToDayRatio)
         {
-            CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-            for(int i = 0; i < spritesOnMap->count(); i++)
+            date->addDay();
+            cumulatedTime = 0;
+            
+            if(date->week == 0 && date->day == 0)
             {
-                GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-                gs->futureAction1 = EATING;
-                gs->futureAction2 = RESTING;
+                CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+                for(int i = 0; i < spritesOnMap->count(); i++)
+                {
+                    GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+                    gs->futureAction1 = EATING;
+                    gs->futureAction2 = RESTING;
+                }
             }
         }
-    }
-    
-    // if it's the first day of the month, update money;
-    if (date->day == 0 && date->week == 0 && getMoney)
-    {
-        money += 100 * GameScene::getThis()->buildingHandler->housingOnMap->count();
-        getMoney = false;
-    }
-    
-    // if it's the last day of the month, change get money to true;
-    if (date->day == 6 && date->week == 3)
-    {
-        getMoney = true;
-    }
-    
-    // if money has change, update in the UI
-    if (mGameMoney != money)
-    {
-        mGameMoney = money;
-        stringstream ss;
-        ss << mGameMoney << "g";
-        moneyLabel->setString(ss.str().c_str());
-    }
-    
-    // update time group
-    // if week has been changed
-    if(mGameWeek != date->week)
-    {
-        switch (date->week) {
-            case 0:
-                firstWeekLabel->setOpacity(255);
-                secondWeekLabel->setOpacity(120);
-                thirdWeekLabel->setOpacity(120);
-                lastWeekLabel->setOpacity(120);
-                break;
-            case 1:
-                firstWeekLabel->setOpacity(120);
-                secondWeekLabel->setOpacity(255);
-                thirdWeekLabel->setOpacity(120);
-                lastWeekLabel->setOpacity(120);
-                break;
-            case 2:
-                firstWeekLabel->setOpacity(120);
-                secondWeekLabel->setOpacity(120);
-                thirdWeekLabel->setOpacity(255);
-                lastWeekLabel->setOpacity(120);
-                break;
-            case 3:
-                firstWeekLabel->setOpacity(120);
-                secondWeekLabel->setOpacity(120);
-                thirdWeekLabel->setOpacity(120);
-                lastWeekLabel->setOpacity(255);
-                break;
-                
-            default:
-                break;
-        }
-        mGameWeek = date->week;
-    }
-    
-    // if month has been changed
-    if(mGameMonth != date->month)
-    {
-        if(date->month < 3)
+        
+        // if it's the first day of the month, update money;
+        if (date->day == 0 && date->week == 0 && getMoney)
         {
-            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
-            
-        }
-        else if(date->month < 6)
-        {
-            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
-            
-        }
-        else if(date->month < 9)
-        {
-           //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
-            
-        }
-        else
-        {
-            //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
-            timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
-            
+            money += 100 * GameScene::getThis()->buildingHandler->housingOnMap->count();
+            getMoney = false;
         }
         
-        std::stringstream ss;
-        ss << "Month: " << (date->month + 1);
-        timeLabel_2->setString(ss.str().c_str());
-        mGameMonth = date->month;
-    }
-    
-    // if year has been changed
-    if(mGameYear != date->year)
-    {
-        std::stringstream ss;
-        ss << "Year: " << (date->year + 1);
-        timeLabel_1->setString(ss.str().c_str());
-        mGameYear = date->year;
+        // if it's the last day of the month, change get money to true;
+        if (date->day == 6 && date->week == 3)
+        {
+            getMoney = true;
+        }
+        
+        // if money has change, update in the UI
+        if (mGameMoney != money)
+        {
+            mGameMoney = money;
+            stringstream ss;
+            ss << mGameMoney << "g";
+            moneyLabel->setString(ss.str().c_str());
+        }
+        
+        // update time group
+        // if week has been changed
+        if(mGameWeek != date->week)
+        {
+            switch (date->week) {
+                case 0:
+                    firstWeekLabel->setOpacity(255);
+                    secondWeekLabel->setOpacity(120);
+                    thirdWeekLabel->setOpacity(120);
+                    lastWeekLabel->setOpacity(120);
+                    break;
+                case 1:
+                    firstWeekLabel->setOpacity(120);
+                    secondWeekLabel->setOpacity(255);
+                    thirdWeekLabel->setOpacity(120);
+                    lastWeekLabel->setOpacity(120);
+                    break;
+                case 2:
+                    firstWeekLabel->setOpacity(120);
+                    secondWeekLabel->setOpacity(120);
+                    thirdWeekLabel->setOpacity(255);
+                    lastWeekLabel->setOpacity(120);
+                    break;
+                case 3:
+                    firstWeekLabel->setOpacity(120);
+                    secondWeekLabel->setOpacity(120);
+                    thirdWeekLabel->setOpacity(120);
+                    lastWeekLabel->setOpacity(255);
+                    break;
+                    
+                default:
+                    break;
+            }
+            mGameWeek = date->week;
+        }
+        
+        // if month has been changed
+        if(mGameMonth != date->month)
+        {
+            if(date->month < 3)
+            {
+                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                
+            }
+            else if(date->month < 6)
+            {
+                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                
+            }
+            else if(date->month < 9)
+            {
+                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                
+            }
+            else
+            {
+                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                
+            }
+            
+            std::stringstream ss;
+            ss << "Month: " << (date->month + 1);
+            timeLabel_2->setString(ss.str().c_str());
+            mGameMonth = date->month;
+        }
+        
+        // if year has been changed
+        if(mGameYear != date->year)
+        {
+            std::stringstream ss;
+            ss << "Year: " << (date->year + 1);
+            timeLabel_1->setString(ss.str().c_str());
+            mGameYear = date->year;
+        }
     }
     
     // reputation change
@@ -554,6 +555,15 @@ void GameHUD::createStatsMenu()
     foodIcon->setPosition(ccp(350, screenSize.height));
     this->addChild(foodIcon, 2);
     
+    mGameCurrentFood = 0;
+    mGameCurrentStorage = 0;
+    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    for (int i = 0; i < allGranary->count(); i++)
+    {
+        Building* b = (Building*) allGranary->objectAtIndex(i);
+        mGameCurrentFood += b->currentStorage;
+        mGameCurrentStorage += b->storageLimit;
+    }
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
     foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
@@ -569,6 +579,26 @@ void GameHUD::createStatsMenu()
     populationIcon->setAnchorPoint(ccp(0, 1));
     populationIcon->setPosition(ccp(580, screenSize.height - 2));
     this->addChild(populationIcon, 2);
+    
+    mGameCurrentCitizenPopulation = 0;
+    mGameCurrentPopulationRoom = 0;
+    
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for(int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END && gs->getHome() != NULL)
+        {
+            mGameCurrentCitizenPopulation++;
+        }
+    }
+    
+    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    for(int i = 0; i < allHousing->count(); i++)
+    {
+        Building* b = (Building*) allHousing->objectAtIndex(i);
+        mGameCurrentPopulationRoom += b->populationLimit;
+    }
     
     ss.str(std::string());
     ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
@@ -978,12 +1008,27 @@ void GameHUD::createBuildMenu()
     buildButton->setPosition(ccp(screenSize.width, 0));
     
     this->addChild(buildButton, 2);
+    
+    mask = CCSprite::create("black.png");
+    mask->setScale(screenSize.width / mask->boundingBox().size.width);
+    mask->setAnchorPoint(ccp(0.5, 0.5));
+    mask->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    mask->setOpacity((GLubyte) 0);
+    this->addChild(mask, 10);
 }
 
 void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildButton)
+        {
+            TutorialManager::getThis()->lockBuildScroll = true;
+            TutorialManager::getThis()->miniDragon->display();
+            TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
+            TutorialManager::getThis()->teachBuildButton = false;
+            TutorialManager::getThis()->teachBuildHouse = true;
+        }
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
         {
@@ -997,6 +1042,8 @@ void GameHUD::clickBuildButton()
         buildScroll = BuildScroll::create();
         buildScroll->useAsTopmostPopupMenu();
         buildButton->setPosition(ccp(screenSize.width + buildButton->boundingBox().size.width, 0));
+        
+        buildScroll->cocos2d::CCNode::setZOrder(30);
     }
     else
     {

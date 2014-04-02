@@ -54,6 +54,8 @@ public:
     bool isInDeccelerating;
     CCPoint scrollDistance;
     
+    bool tapped;
+    
 public:
     
     CCNode* screenCenter;

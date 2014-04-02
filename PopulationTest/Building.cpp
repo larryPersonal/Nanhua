@@ -14,6 +14,7 @@
 #include "BuildingInfoMenu.h"
 #include "GlobalHelper.h"
 #include <iterator>
+#include "TutorialManager.h"
 
 Building::Building()
 {
@@ -406,6 +407,11 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                         }
                     }
                     memberSpriteList->removeAllObjects();
+                    
+                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
+                    {
+                        TutorialManager::getThis()->miniDragon->display();
+                    }
                 }
                 else
                 {

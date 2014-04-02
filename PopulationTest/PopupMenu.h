@@ -10,7 +10,34 @@
 #define __PopulationTest__PopupMenu__
 
 #include "cocos2d.h"
+#include "Building.h"
+#include "Sprite.h"
 using namespace cocos2d;
+
+enum PopupMenuType {
+    SpInfoMenu = 0, BuInfoMenu, SePopulationMenu = 2
+};
+
+struct PreviousMenu
+{
+    PopupMenuType pmt;
+    Building* b;
+    GameSprite* gs;
+    
+    PreviousMenu(PopupMenuType v_pmt, Building* v_b)
+    {
+        pmt = v_pmt;
+        b = v_b;
+        gs = NULL;
+    }
+    
+    PreviousMenu(PopupMenuType v_pmt, GameSprite* v_gs)
+    {
+        pmt = v_pmt;
+        b = NULL;
+        gs = v_gs;
+    }
+};
 
 //Do not try to instantiate this. Instantiate subclasses
 class PopupMenu:public cocos2d::CCLayer
@@ -50,18 +77,15 @@ public:
     //The subclasses will also contain these attributes so you don't have to declare them again.
     CCArray* menuItems;
     CCPointArray* menuItemPositions;
-    bool menuIsOpen;
     bool canPressButtons;
     
     //Usage helper functions
-    void useAsBasePopupMenu();          // Opens if there is no other active popupMenu
+    static void backupCurrentPopupMenu();          // Opens if there is no other active popupMenu
     void useAsExclusivePopupMenu();     // Closes all active popupMenu and open this
     void useAsTopmostPopupMenu();       // Opens on top of other popupMenu
-    static PopupMenu* getTopmostPopupMenu();
-    static PopupMenu* getBottommostPopupMenu();
     static int openPopupCount();
     
-    static void closeAllPopupMenu(bool toFullyClose=true);
+    static void closeAllPopupMenu();
     
     virtual void willChangeOrientation();
     virtual void onOrientationChanged();
@@ -71,7 +95,7 @@ public:
     virtual void onMenuItemSelected(CCObject* pSender) = 0;
     
     //Close menu instantly, if there is no animation
-    virtual void closeMenu(bool toFullyClose=true);
+    virtual void closeMenu(bool);
     
     //Override this if you do not want your menu to scroll!
     //virtual void scrollY(float scrollBy);

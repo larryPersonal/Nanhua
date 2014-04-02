@@ -11,6 +11,7 @@
 #include "GlobalHelper.h"
 #include "SpriteInfoMenu.h"
 #include "SelectPopulation.h"
+#include "TutorialManager.h"
 
 float portraitScale; //hack
 BuildingInfoMenu* BuildingInfoMenu::SP;
@@ -98,7 +99,7 @@ void BuildingInfoMenu::createMenuItems()
 {
     if (building->buildingName.length() == 0)
     {
-        this->closeMenu();
+        this->closeMenu(true);
         return;
     }
     
@@ -207,20 +208,6 @@ void BuildingInfoMenu::createMenuItems()
     );
     unitBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
     
-    /*
-    // loyalty
-    ss.str(std::string());
-    ss << "0";
-    labelLoy = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelLoy->setColor(colorYellow);
-    
-    // hapiness
-    ss.str(std::string());
-    ss << "0";
-    labelHap = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    labelHap->setColor(colorYellow);
-    */
-    
     // recovery rate
     ss.str(std::string());
     ss << "RR:";
@@ -314,8 +301,6 @@ void BuildingInfoMenu::createMenuItems()
     menu->setPosition(CCPointZero);
     
     // Add children
-    
-  //  this->addChild(spriteBackgroundInner);
     this->addChild(spPrice);
     this->addChild(textName);
     this->addChild(textPrice);
@@ -327,10 +312,6 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(labelStatus);
     this->addChild(unitBar);
     this->addChild(unitLabel);
-    //this->addChild(spLoy);
-    //this->addChild(spHap);
-    //this->addChild(labelLoy);
-    //this->addChild(labelHap);
     
     this->addChild(recoveryRateTitleLabel);
     this->addChild(recoveryRateLabel);
@@ -357,10 +338,6 @@ void BuildingInfoMenu::createMenuItems()
     labelStatus->setAnchorPoint(ccp(0, 1));
     unitBar->setAnchorPoint(ccp(0, 1));
     unitLabel->setAnchorPoint(ccp(0, 1));
-    //spLoy->setAnchorPoint(ccp(0, 1));
-    //spHap->setAnchorPoint(ccp(0, 1));
-    //labelLoy->setAnchorPoint(ccp(0, 1));
-    //labelHap->setAnchorPoint(ccp(0, 1));
     
     recoveryRateTitleLabel->setAnchorPoint(ccp(0, 1));
     recoveryRateLabel->setAnchorPoint(ccp(0, 1));
@@ -1256,13 +1233,23 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
     
     GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(tag);
     
-    SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
-    spriteInfoMenu->autorelease();
-    spriteInfoMenu->useAsBasePopupMenu();
+    if (SpriteInfoMenu::getThis() == NULL)
+    {
+        GameScene::getThis()->tapped = true;
+        PopupMenu::backupCurrentPopupMenu();
+        SpriteInfoMenu* spriteInfoMenu = SpriteInfoMenu::create(gameSprite);
+        spriteInfoMenu->useAsTopmostPopupMenu();
+    }
 }
 
 void BuildingInfoMenu::selectPop()
 {
+    PopupMenu::backupCurrentPopupMenu();
     SelectPopulation* selectPopulationMenu = SelectPopulation::create(building);
-    selectPopulationMenu->useAsBasePopupMenu();
+    selectPopulationMenu->useAsTopmostPopupMenu();
+    
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
+    {
+        TutorialManager::getThis()->miniDragon->display();
+    }
 }

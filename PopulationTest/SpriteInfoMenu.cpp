@@ -13,6 +13,21 @@
 
 SpriteInfoMenu* SpriteInfoMenu::SP;
 
+SpriteInfoMenu* SpriteInfoMenu::create(GameSprite* gs)
+{
+    SpriteInfoMenu *pRet = new SpriteInfoMenu(gs);
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
 SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
 {
     if (!gameSprite) CCLog("Warning NO SPRITE!!!");
@@ -50,9 +65,6 @@ void SpriteInfoMenu::createMenuItems()
     // Create constant menu items
     spriteBackground = CCSprite::create("BuildingInfoUI.png");
     spriteBackground->setScale(700 / spriteBackground->boundingBox().size.width);
-    
-    spriteBackgroundInner = CCSprite::create("blackscreen.png");
-    spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
     mGameSpriteEnergy = gameSprite->getPossessions()->energyRating;
@@ -280,7 +292,7 @@ void SpriteInfoMenu::createMenuItems()
     menuItemPositions->retain();
     
     buttonClose = CCSprite::create("Closebtn_Sq.png");
-    this->addChild(buttonClose);
+    this->addChild(buttonClose, 2);
 
     buttonHome = CCMenuItemImage::create("homebutton.png", "homebutton_pressed.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
     buttonHome->setScale(0.75);
@@ -298,9 +310,7 @@ void SpriteInfoMenu::createMenuItems()
     
     // Add children
     this->addChild(spriteBackground);
-    this->addChild(spriteBackgroundInner);
     this->addChild(spCash);
-   // this->addChild(labelCash);
     this->addChild(textName);
     this->addChild(textCash);
     this->addChild(menu);
@@ -421,8 +431,7 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
         case 0:
         {
             // buttonClose
-            GameScene::getThis()->setTouchEnabled(true);
-            this->closeMenu(false);
+            //this->closeMenu(false);
         }
             break;
         case 1:
@@ -464,71 +473,74 @@ void SpriteInfoMenu::reposition()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    this->CCNode::setPosition(screenSize.width * 0.5f, screenSize.height * 0.5f);
-    
     float halfWidth = spriteBackground->boundingBox().size.width / 2.0f;
     float halfHeight = spriteBackground->boundingBox().size.height / 2.0f;
     
+    float hw = screenSize.width / 2.0f;
+    float hh = screenSize.height / 2.0f;
+    
+    spriteBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    
     // Anchored top left
-    barEnergy->CCNode::setPosition(-140.0f, 140.0f);
-    energyLabel->CCNode::setPosition(-140.0f, 160.0f);
-    energyTitleLabel->CCNode::setPosition(-280.0f, 156.0f);
+    barEnergy->CCNode::setPosition(-140.0f + hw, 140.0f + hh);
+    energyLabel->CCNode::setPosition(-140.0f + hw, 160.0f + hh);
+    energyTitleLabel->CCNode::setPosition(-280.0f + hw, 156.0f + hh);
     
-    classTitleLabel->CCNode::setPosition(20.0f, 156.0f);
-    classLabel->CCNode::setPosition(160.0f, 156.0f);
+    classTitleLabel->CCNode::setPosition(20.0f + hw, 156.0f + hh);
+    classLabel->CCNode::setPosition(160.0f + hw, 156.0f + hh);
     
-    gameSpriteImage->CCNode::setPosition(-300.0f, 125.0f);
+    gameSpriteImage->CCNode::setPosition(-300.0f + hw, 125.0f + hh);
     
-    foodCarriageTitleLabel->CCNode::setPosition(40.0f, 90.0f);
-    barFoodCarriage->CCNode::setPosition(40.0f, 60.0f);
-    foodCarriageLabel->CCNode::setPosition(180.0f, 60.0f);
+    foodCarriageTitleLabel->CCNode::setPosition(40.0f + hw, 90.0f + hh);
+    barFoodCarriage->CCNode::setPosition(40.0f + hw, 60.0f + hh);
+    foodCarriageLabel->CCNode::setPosition(180.0f + hw, 60.0f + hh);
     
-    genderTitleLabel->CCNode::setPosition(-160.0f, 100.0f);
-    genderLabel->CCNode::setPosition(-60.0f, 100.0f);
-    raceTitleLabel->CCNode::setPosition(-160.0f, 70.0f);
-    raceLabel->CCNode::setPosition(-60.0f, 70.0f);
-    movementSpeedTitleLabel->CCNode::setPosition(-160.0f, 40.0f);
-    movementSpeedLabel->CCNode::setPosition(-60.0f, 40.0f);
+    genderTitleLabel->CCNode::setPosition(-160.0f + hw, 100.0f + hh);
+    genderLabel->CCNode::setPosition(-60.0f + hw, 100.0f + hh);
+    raceTitleLabel->CCNode::setPosition(-160.0f + hw, 70.0f + hh);
+    raceLabel->CCNode::setPosition(-60.0f + hw, 70.0f + hh);
+    movementSpeedTitleLabel->CCNode::setPosition(-160.0f + hw, 40.0f + hh);
+    movementSpeedLabel->CCNode::setPosition(-60.0f + hw, 40.0f + hh);
     
-    spLoy->CCNode::setPosition(-280.0f, 20.0f);
-    loyaltyLabel->CCNode::setPosition(-220.0f, 5.0f);
-    spHap->CCNode::setPosition(-140.0f, 20.0f);
-    happinessLabel->CCNode::setPosition(-80.0f, 5.0f);
+    spLoy->CCNode::setPosition(-280.0f + hw, 20.0f + hh);
+    loyaltyLabel->CCNode::setPosition(-220.0f + hw, 5.0f + hh);
+    spHap->CCNode::setPosition(-140.0f + hw, 20.0f + hh);
+    happinessLabel->CCNode::setPosition(-80.0f + hw, 5.0f + hh);
     
-    movementRangeTitleLabel->CCNode::setPosition(-280.0f, -35.0f);
-    movementRangeLabel->CCNode::setPosition(-200.0f, -35.0f);
-    animateSpeedTitleLabel->CCNode::setPosition(-120.0f, -35.0f);
-    animateSpeedLabel->CCNode::setPosition(-40.0f, -35.0f);
+    movementRangeTitleLabel->CCNode::setPosition(-280.0f + hw, -35.0f + hh);
+    movementRangeLabel->CCNode::setPosition(-200.0f + hw, -35.0f + hh);
+    animateSpeedTitleLabel->CCNode::setPosition(-120.0f + hw, -35.0f + hh);
+    animateSpeedLabel->CCNode::setPosition(-40.0f + hw, -35.0f + hh);
     
-    currentActionTitleLabel->CCNode::setPosition(-280.0f, -65.0f);
-    currentActionLabel->CCNode::setPosition(-100.0f, -65.0f);
+    currentActionTitleLabel->CCNode::setPosition(-280.0f + hw, -65.0f + hh);
+    currentActionLabel->CCNode::setPosition(-100.0f + hw, -65.0f + hh);
     
-    targetLocationTitleLabel->CCNode::setPosition(-280.0f, -100.0f);
+    targetLocationTitleLabel->CCNode::setPosition(-280.0f + hw, -100.0f + hh);
     
-    hungryTitleLabel->CCNode::setPosition(40.0f, 30.0f);
-    barHungry->CCNode::setPosition(40.0f, 0.0f);
-    hungryLabel->CCNode::setPosition(180.0f, 0.0f);
+    hungryTitleLabel->CCNode::setPosition(40.0f + hw, 30.0f + hh);
+    barHungry->CCNode::setPosition(40.0f + hw, 0.0f + hh);
+    hungryLabel->CCNode::setPosition(180.0f + hw, 0.0f + hh);
     
-    workRateTitleLabel->CCNode::setPosition(40.0f, -30.0f);
-    workRateLabel->CCNode::setPosition(180.0f, -30.0f);
+    workRateTitleLabel->CCNode::setPosition(40.0f + hw, -30.0f + hh);
+    workRateLabel->CCNode::setPosition(180.0f + hw, -30.0f + hh);
     
-    workUnitPerDayTitleLabel->CCNode::setPosition(40.0f, -60.0f);
-    workUnitPerDayLabel->CCNode::setPosition(180.0f, -60.0f);
+    workUnitPerDayTitleLabel->CCNode::setPosition(40.0f + hw, -60.0f + hh);
+    workUnitPerDayLabel->CCNode::setPosition(180.0f + hw, -60.0f + hh);
     
     
     // Anchored top
-    textName->CCNode::setPosition(0, halfHeight - 20.0f);
+    textName->CCNode::setPosition(0 + hw, halfHeight - 20.0f + hh);
     
     // Anchored top right
-    buttonClose->setPosition(ccp(halfWidth - 60.0f, halfHeight - 20.0f));
-    buttonHome->setPosition(-halfWidth + 140.0f,  -halfHeight + 80.0f);
-    buttonWorkPlace->setPosition(-halfWidth + 80.0f, -halfHeight + 80.0f);
+    buttonClose->setPosition(ccp(halfWidth - 60.0f + hw, halfHeight - 20.0f + hh));
+    buttonHome->setPosition(-halfWidth + 140.0f + hw,  -halfHeight + 80.0f + hh);
+    buttonWorkPlace->setPosition(-halfWidth + 80.0f + hw, -halfHeight + 80.0f + hh);
     
     
     // Anchored bottom right
 //    labelCash->CCNode::setPosition(halfWidth -380.0f, -halfHeight + 40.0f);
-    spCash->CCNode::setPosition(halfWidth - 430.0f, -halfHeight + 40.0f);
-    textCash->CCNode::setPosition(halfWidth - 330.0f, -halfHeight + 40.0f);
+    spCash->CCNode::setPosition(halfWidth - 430.0f + hw, -halfHeight + 40.0f + hh);
+    textCash->CCNode::setPosition(halfWidth - 330.0f + hw, -halfHeight + 40.0f + hh);
 }
 
 void SpriteInfoMenu::refreshAllMenuItemValues()

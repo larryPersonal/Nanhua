@@ -98,6 +98,7 @@ bool SystemMenu::init(CCLayer* layer)
 void SystemMenu::clickResumeButton()
 {
     GameHUD::getThis()->pause = false;
+    GameScene::getThis()->tapped = true;
     CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
     
     for (int i = 0; i < spritesOnMap->count(); i++)

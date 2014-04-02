@@ -2742,7 +2742,7 @@ void GameSprite::scheduleToken(float dt)
         
         if (villagerClass != V_BANDIT && villagerClass != V_SOLDIER && villagerClass != V_CLASS_END)
         {
-            dropToken();
+            dropToken(false);
         }
     }
 }
@@ -2777,12 +2777,12 @@ void GameSprite::checkDropTresholdTime()
     }
 }
 
-void GameSprite::dropToken()
+void GameSprite::dropToken(bool tutorial)
 {
     checkDropRate();
     
     int random_number = rand() % 100 + 1;
-    if(random_number <= token_drop_rate)
+    if(random_number <= token_drop_rate || tutorial)
     {
         saySpeech(HAPPY, 1.0f);
         ReputationOrb* ro = ReputationOrb::create("tokenball_REN.png", GameScene::getThis()->configSettings->token_disappear_time);

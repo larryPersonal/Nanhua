@@ -16,7 +16,7 @@ using namespace cocos2d;
 
 class BuildingCard : public CCObject
 {
-private:
+public:
     Building* building;
     ScrollArea* scrollArea;
     
@@ -45,6 +45,8 @@ private:
     
     CCMenu* menu;
     CCArray* menuItemsArray;
+    
+    CCSprite* mask;
     
 public:
     BuildingCard(Building*, ScrollArea*, int, int);

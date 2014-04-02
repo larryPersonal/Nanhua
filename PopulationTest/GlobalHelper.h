@@ -43,6 +43,8 @@ public:
     
     static SpriteClass* getSpriteClassByVillagerClass(VillagerClass villagerClass);
     static GameSprite* getSpriteByVillagerClass(GameSprite*, VillagerClass);
+    
+    static vector<std::string> split(std::string, char);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */
