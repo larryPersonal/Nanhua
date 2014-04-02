@@ -799,20 +799,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
-<<<<<<< HEAD
                 if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
                 {
                     BuildingInfoMenu::getThis()->closeMenu(true);
                 }
                 skip = true;
-=======
-                /*
-                if(BuildingInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
-                {
-                    BuildingInfoMenu::getThis()->closeMenu();
-                }*/ //close button no longer implemented
-                return;
->>>>>>> aeaf2dfd3e53b557945a19942b9ecf8afd8b9d58
             }
             else
             {
@@ -828,21 +819,14 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
-                /*
                 if(SelectPopulation::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                 {
-<<<<<<< HEAD
                     if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
                     {
                         SelectPopulation::getThis()->closeMenu(true);
                     }
                 }
                 skip = true;
-=======
-                    SelectPopulation::getThis()->closeMenu();
-                }*/ //close button no longer implemented
-                return;
->>>>>>> aeaf2dfd3e53b557945a19942b9ecf8afd8b9d58
             }
             else
             {
@@ -858,18 +842,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
-                /*
-                if(SpriteInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
-                {
-<<<<<<< HEAD
-                    SpriteInfoMenu::getThis()->closeMenu(true);
-                }
+                SpriteInfoMenu::getThis()->closeMenu(true);
                 skip = true;
-=======
-                    SpriteInfoMenu::getThis()->closeMenu();
-                }*/ //close button no longer implemented
-                return;
->>>>>>> aeaf2dfd3e53b557945a19942b9ecf8afd8b9d58
             }
             else
             {
