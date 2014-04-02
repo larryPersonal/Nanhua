@@ -279,6 +279,19 @@ bool MapHandler::isTilePosWithinBounds(CCPoint &tilePos)
     
     return true;
 }
+//ignores playarea settings which generally mean "smaller than map"
+bool MapHandler::isTilePosWithinMap(CCPoint & tilePos)
+{
+    if ((tilePos.x < 0) ||
+        (tilePos.x > mapPtr->getMapSize().width) ||
+        (tilePos.y < 0) ||
+        (tilePos.y > mapPtr->getMapSize().height))
+    {
+        return false;
+    }
+    
+    return true;
+}
 
 void MapHandler::originateMapToTile()
 {
@@ -353,14 +366,25 @@ CCPoint MapHandler::pointRelativeToCenterFromLocation(cocos2d::CCPoint &location
     return ccpSub(mapPtr->getPosition(), location);
 }
 
-bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos)
+bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos, bool obey_playarea)
 {
-    if (!isTilePosWithinBounds(tilePos))
+    if (obey_playarea)
     {
-        CCLog("outofBounds");
-        return false;
+        if (!isTilePosWithinBounds(tilePos))
+        {
+            CCLog("outofBounds");
+            return false;
+        }
     }
-
+    else
+    {
+        if (!isTilePosWithinMap(tilePos))
+        {
+            CCLog("outofMap");
+            return false;
+        }
+        
+    }
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
     if (targetTile == NULL) return false;
     if (targetTile->hasBuilding() || targetTile->isPath)
@@ -411,11 +435,13 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos, bool tryEscape)
 bool MapHandler::isBuildableOnTile(CCPoint &target, Building* building)
 {
     // Check if tiles are occupied
+    bool shouldObeyPlayArea = (building->buildingType != DECORATION);
+    
     for (int i = 0; i < building->height; i++)
         for (int j = 0; j < building->width; j++)
         {
             CCPoint tilePos = ccp(target.x + j, target.y + i);
-            if (!isTileBuildable(tilePos))
+            if (!isTileBuildable(tilePos, shouldObeyPlayArea))
                 return false;
         }
     return true;
@@ -607,7 +633,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         return false;
     }
     
-    // Don't build if tiles are occupied
+    // Don't build if tiles are occupied. EDIT: Ignore this rule if Building is a decoration, which allows it to build on OOB tiles and over each other.
     if (!isBuildableOnTile(target, cloneBuilding))
     {
         return false;

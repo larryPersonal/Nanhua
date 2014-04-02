@@ -559,16 +559,36 @@
   </tile>
  </tileset>
  <tileset firstgid="81" name="border map_bush_bottomalign" tilewidth="2048" tileheight="2048">
+  <tileoffset x="-960" y="960"/>
   <image source="border map_bush_bottomalign.png" width="2048" height="2048"/>
   <tile id="0">
    <properties>
-    <property name="ignore_this_blank" value=""/>
+    <property name="building_type" value="decoration"/>
+    <property name="name" value="shrubbery"/>
    </properties>
   </tile>
  </tileset>
  <tileset firstgid="82" name="river_anim_bottomalign" tilewidth="2048" tileheight="2048">
+  <tileoffset x="-960" y="960"/>
   <image source="river_anim_bottomalign.png" width="4096" height="4096"/>
+  <tile id="0">
+   <properties>
+    <property name="anim_frames" value="4"/>
+    <property name="building_type" value="decoration"/>
+    <property name="name" value="river"/>
+   </properties>
+  </tile>
   <tile id="1">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
    <properties>
     <property name="ignore_this_blank" value=""/>
    </properties>
@@ -756,7 +776,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="10000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="housing"/>
+    <property name="building_type" value="decoration"/>
     <property name="cost" value="200"/>
     <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
@@ -866,22 +886,13 @@
    eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
   </data>
  </layer>
- <layer name="Ground_River" width="90" height="60">
+ <layer name="Building_River" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="4"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2EENAAAIxDA04l8MJriQkFbB3qsCAAAALvR1AAAAAAAAL/nPAAAAAAAk+M8AAAAAACT4z3sGPmMBSQ==
-  </data>
- </layer>
- <layer name="Ground_Border" width="90" height="60">
-  <properties>
-   <property name="number_of_tiles" value="1"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJzt2LsNACAIBUBXdP9lnMBQKFH0rifhk1C81gDgfv10AwCP+u2/zuattIdKve728+y4f8R+AAAAgMhqflC9HmDGfwEAAAAAIIP8GQAAAACADFH+PABlfATA
+   eJzt2EENAAAIxDA04l8MKg4S0irYe1Vs6OsAAAAAAABe8p8BAAAAAEjwnwEAAAAASPCfAQAAIGcAZ9EBSQ==
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">
@@ -945,6 +956,15 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJzt1MkJACEUREGjVBAn/zTMwQWhp+ryT0IfHpYCAAAAAAD/1l4PgIP0TBI9k0TPJNEzSb7XA+Ag/zNJ9EwSPXNTXbx98d3YGQsAAAAAAAAAAFw3AakjCCo=
+  </data>
+ </layer>
+ <layer name="Building_Border" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="1"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt2LENAAAIAjBf9P9nfMBRB5J2ZweqSNDyAAAAAABwzv8MAAAAAMAXHzQAAEAmew4ASKCzAAAAsBmGDALa
   </data>
  </layer>
 </map>

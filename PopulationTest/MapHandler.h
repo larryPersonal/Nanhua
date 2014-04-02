@@ -90,8 +90,9 @@ public:
     CCPoint forceBoundsConstraints(CCPoint &tilePos);
     
     bool isTilePosWithinBounds(CCPoint &tilePos);
+    bool isTilePosWithinMap(CCPoint &tilePos); //ignores playarea
     bool isTileBlocked(CCPoint &tilePos, bool);
-    bool isTileBuildable(CCPoint &tilePos);
+    bool isTileBuildable(CCPoint &tilePos, bool obey_playarea = true);
     bool isBuildableOnTile(CCPoint &target, Building* building);
 
     void originateMapToTile();
