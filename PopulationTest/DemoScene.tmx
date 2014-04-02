@@ -756,7 +756,7 @@
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="10000"/>
     <property name="builder_limit" value="0"/>
-    <property name="building_type" value="decoration"/>
+    <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
     <property name="description" value="wall"/>
     <property name="food_consumption_rate" value="0"/>
@@ -881,7 +881,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2MkJADAIBEBbTP/NpILgIxfizF/wAB8bAQAAdDV+N/DYat5Ke6jU62mdZ8f9M/YDAAAAZHbzg+r1ACv+CwAAAAAAN8ifAQAAAAC4IcufJ89VBG8=
+   eJzt2LsNACAIBUBXdP9lnMBQKFH0rifhk1C81gDgfv10AwCP+u2/zuattIdKve728+y4f8R+AAAAgMhqflC9HmDGfwEAAAAAIIP8GQAAAACADFH+PABlfATA
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">
@@ -891,15 +891,6 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJzt1FEKwjAQBcC9iBq11vvfUIsKVaPYIhsIM7Ak7Fd4PBIBAAAAAAAA8D+765wrc6jcT43e2IPxh/1Y2bGMnHNs4/2fmGY/25f7fWjzxC586mptr8/rLcn50f3a8J0+59jErY8lnv/p8nJOc2zxwE7pbA4555BzDjnnkHMOOQMAAAAAAAAAAKx3AbirCk4=
-  </data>
- </layer>
- <layer name="Building_Wall" width="90" height="60">
-  <properties>
-   <property name="number_of_tiles" value="8"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJzt1MEJwCAURMFUaUBi/23YgxqE/TMXT8IiD8cDAAAAAAC1vbcHFOGdSaJnkuiZJHomybg9AA7yP5NEzyTRM0mq9twWz75479sZCwAAAAAAAAAA/G4C2sgI3g==
   </data>
  </layer>
  <layer name="Building_House" width="90" height="60">
@@ -945,6 +936,15 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJzt0qENAEAIBEEqpf8yXoNCfEJIZszaExcBAAAAAAAAAABVbg+Aj/yZK7IVAAAAAAAAAAAAAGDqAcecAXk=
+  </data>
+ </layer>
+ <layer name="Building_Wall" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="8"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1MkJACEUREGjVBAn/zTMwQWhp+ryT0IfHpYCAAAAAAD/1l4PgIP0TBI9k0TPJNEzSb7XA+Ag/zNJ9EwSPXNTXbx98d3YGQsAAAAAAAAAAFw3AakjCCo=
   </data>
  </layer>
 </map>
