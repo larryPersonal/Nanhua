@@ -7,7 +7,7 @@
     <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
-  <tile id="1">
+  <tile id="1"> 
    <properties>
     <property name="anim_frames" value="3"/>
     <property name="build_time" value="30"/>
