@@ -26,6 +26,7 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>app_icon</string>
 				<string>Icon.png</string>
 				<string>Icon-114.png</string>
 				<string>Icon-72.png</string>

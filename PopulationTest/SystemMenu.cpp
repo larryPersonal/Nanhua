@@ -117,7 +117,9 @@ void SystemMenu::clickOptionButton()
 void SystemMenu::clickExitButton()
 {
     GameScene::getThis()->mapHandler->UnBuildEndGame();
-    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+
+    CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 
 void SystemMenu::clickRestartButton()

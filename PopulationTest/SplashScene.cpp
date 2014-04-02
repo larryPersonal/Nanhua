@@ -97,6 +97,8 @@ void SplashScene::update(float dt){
         case 1:
             alpha += 5;
             if (alpha >= 255) {
+                CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+
                 CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
             }
             break;

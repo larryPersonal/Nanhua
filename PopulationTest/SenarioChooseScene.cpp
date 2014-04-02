@@ -173,14 +173,22 @@ void SenarioChooseScene::chooseTutorial()
     GameManager::getThis()->setLevel(0);
     
     // load the actual game scene
-    CCDirector::sharedDirector()->pushScene(GameScene::scene());
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario1()
 {
     GameManager::getThis()->setLevel(1);
-    
-    CCDirector::sharedDirector()->pushScene(GameScene::scene());
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario2()
@@ -206,7 +214,9 @@ void SenarioChooseScene::chooseSenario5()
 //THIS IS ACTUALLY THE GO BACK BUTTON.
 void SenarioChooseScene::chooseSenario6()
 {
-    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+    CCDirector::sharedDirector()->popScene();
+    
+   // CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
 }
 
 void SenarioChooseScene::onOrientateChange(){

@@ -281,11 +281,12 @@ void BuildingInfoMenu::createMenuItems()
     menuItems->retain();
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
+    /*
+    buttonClose = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(BuildingInfoMenu::onMenuItemSelected));
+    buttonClose->setTag(-1);
     
-    buttonClose = CCSprite::create("Closebtn_Sq.png");
-    
-    this->addChild(buttonClose);
-    
+    menuItems->addObject(buttonClose);
+    */
     selectWorkerButton = CCMenuItemImage::create("assigntaskicon.png", "assigntaskicon.png", this, menu_selector(BuildingInfoMenu::selectPop));
     selectWorkerButton->setScale( 60.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
@@ -330,7 +331,7 @@ void BuildingInfoMenu::createMenuItems()
     textName->setAnchorPoint(ccp(0.5, 1));
     spPrice->setAnchorPoint(ccp(1, 0));
     textPrice->setAnchorPoint(ccp(1, 0));
-    buttonClose->setAnchorPoint(ccp(1, 1));
+//    buttonClose->setAnchorPoint(ccp(1, 1));
     
     spriteBuilding->setAnchorPoint(ccp(0, 1));
     labelLevel->setAnchorPoint(ccp(0.5, 1));
@@ -725,7 +726,7 @@ void BuildingInfoMenu::reposition()
     textName->CCNode::setPosition(hw, halfHeight - 20.0f + hh);
     
     // Anchored top right
-    buttonClose->setPosition(ccp(halfWidth - 60.0f + hw, halfHeight - 20.0f + hh));
+    //buttonClose->setPosition(halfWidth - 60.0f + hw, halfHeight - 20.0f + hh);
     
     // Anchored bottom right
     textPrice->CCNode::setPosition(halfWidth -200.0f + hw, -halfHeight + 40.0f + hh);
