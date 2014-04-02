@@ -288,7 +288,7 @@ void InGameMenu::scrollY(float scrollBy)
 
 void InGameMenu::exitGame(CCObject* pSender)
 {
-    closeAllPopupMenu(true);
+    closeAllPopupMenu();
     
     SoundtrackManager::PlayBGM("Tikopia.mp3");
     

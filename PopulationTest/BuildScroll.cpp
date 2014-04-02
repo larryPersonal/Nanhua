@@ -19,7 +19,6 @@ BuildScroll* BuildScroll::create(){
     if (pRet && pRet->init())
     {
         pRet->autorelease();
-        //pRet->setTouchEnabled(true);
         return pRet;
     }
     else
@@ -252,7 +251,7 @@ void BuildScroll::scrollOut(float dt)
             this->unschedule(schedule_selector( BuildScroll::scrollOut ));
             scroll_out = false;
             
-            GameHUD::getThis()->buildScroll->closeMenu();
+            GameHUD::getThis()->buildScroll->closeMenu(true);
             GameHUD::getThis()->buildScroll = NULL;
             GameHUD::getThis()->buildButton->setVisible(true);
             

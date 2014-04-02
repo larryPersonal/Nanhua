@@ -106,6 +106,8 @@ public:
     
     bool scrolled_in;
     
+    bool setTutorial;
+    
     BuildScroll* buildScroll;
     
     bool getMoney;
@@ -175,8 +177,9 @@ public:
     CCSprite* peaceButton;
     CCSprite* warButton;
     
+    CCSprite* mask;
+    
 public:
-    bool menuIsOpen;
     
     GameHUD();
     ~GameHUD();

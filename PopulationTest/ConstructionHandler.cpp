@@ -10,6 +10,7 @@
 #include "GameScene.h"
 #include "GameManager.h"
 #include "ProgressBar.h"
+#include "TutorialManager.h"
 
 static const int PROGRESSBAR_TAG = (int)"constructionProgressBar";
 
@@ -225,6 +226,11 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
         GameScene::getThis()->buildingHandler->decorationOnMap->addObject(building);
     }
 
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
+    {
+        TutorialManager::getThis()->miniDragon->display();
+    }
+    
 }
 
 int ConstructionHandler::getConstructingBuildingCount()

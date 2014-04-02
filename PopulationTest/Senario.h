@@ -77,8 +77,6 @@ public:
     void update(float time);
     
     void goNextSlide();
-    
-    vector<std::string> split(std::string, char);
 };
 
 #endif

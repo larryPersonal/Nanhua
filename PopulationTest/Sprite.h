@@ -332,7 +332,7 @@ public:
     
     // token part
     void scheduleToken(float dt);
-    void dropToken();
+    void dropToken(bool);
     void checkDropTresholdTime();
     void checkDropRate();
     

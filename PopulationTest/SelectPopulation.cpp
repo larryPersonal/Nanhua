@@ -12,6 +12,7 @@
 #include "SpriteInfoMenu.h"
 #include "BuildingInfoMenu.h"
 #include "GlobalHelper.h"
+#include "TutorialManager.h"
 
 SelectPopulation* SelectPopulation::SP;
 
@@ -322,24 +323,33 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
         case -1:
             // buttonClose
         {
-            this->closeMenu(true);
-            GameScene::getThis()->setTouchEnabled(true);
+            if(!TutorialManager::getThis()->lockButtonClose)
+            {
+                this->closeMenu(true);
+            }
         }
             break;
         case -2:
             // button ok -> to construct
-            performTask();
+            if(!TutorialManager::getThis()->lockButtonOk)
+            {
+                performTask();
+            }
             break;
         case -3:
         {
+            PopupMenu::backupCurrentPopupMenu();
             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(building);
-            buildingInfoMenu->useAsBasePopupMenu();
+            buildingInfoMenu->useAsTopmostPopupMenu();
         }
             break;
         case -4:
         {
             // button cancel -> cancel the construction;
-            cancelTask();
+            if(!TutorialManager::getThis()->lockButtonCancel)
+            {
+                cancelTask();
+            }
             break;
         }
         default:
@@ -351,6 +361,12 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
 
 void SelectPopulation::cancelTask()
 {
+    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D2T5))
+    {
+        TutorialManager::getThis()->miniDragon->display();
+        return;
+    }
+    
     CCArray* memberSprites = building->memberSpriteList;
     
     
@@ -385,6 +401,22 @@ void SelectPopulation::performTask()
     if(memberArray->count() <= 0)
     {
         return;
+    }
+    
+    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D2T4))
+    {
+        TutorialManager::getThis()->miniDragon->display();
+        return;
+    }
+    
+    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D2T6))
+    {
+        TutorialManager::getThis()->miniDragon->display();
+    }
+    
+    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D3T5))
+    {
+        TutorialManager::getThis()->miniDragon->display();
     }
     
     if(building->isUnderConstruction())
@@ -634,13 +666,17 @@ void SelectPopulation::update(float deltaTime){
         }
         taskLabel->setString(ss.str().c_str());
         
-        this->closeMenu();
+        this->closeMenu(true);
     }
     
     
     if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->isCurrentConstructing && !building->isCurrentWorking)
     {
         buttonOk->setVisible(true);
+        if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon->ds < D2T4)
+        {
+            TutorialManager::getThis()->miniDragon->display();
+        }
     }
     else if(memberArray->count() < population && buttonOk->isVisible())
     {
@@ -667,6 +703,11 @@ void SelectPopulation::addVillagerRow(GameSprite * gameSprite, SpriteRow * sprit
 
 void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
 {
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockManpowerSelect)
+    {
+        return;
+    }
+    
     if(building->isCurrentConstructing)
     {
         return;
@@ -718,6 +759,11 @@ void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow
 
 void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteRow)
 {
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockManpowerSelect)
+    {
+        return;
+    }
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     float hw = screenSize.width / 2.0f;
     float hh = screenSize.height / 2.0f;
@@ -771,9 +817,21 @@ void SelectPopulation::cancelSprite(CCObject *pSender)
     
     GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(tag);
     
-    SpriteInfoMenu* spriteInfoMenu = new SpriteInfoMenu(gameSprite);
-    spriteInfoMenu->autorelease();
-    spriteInfoMenu->useAsBasePopupMenu();
+    PopupMenu::backupCurrentPopupMenu();
+    SpriteInfoMenu* spriteInfoMenu = SpriteInfoMenu::create(gameSprite);
+    spriteInfoMenu->useAsTopmostPopupMenu();
     
+}
+
+void SelectPopulation::adjustZIndex(bool tutorial)
+{
+    if(tutorial)
+    {
+        scrollArea->setZOrder(100);
+    }
+    else
+    {
+        scrollArea->setZOrder(4);
+    }
 }
 

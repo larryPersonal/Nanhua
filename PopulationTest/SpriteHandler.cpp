@@ -25,6 +25,25 @@
 
 #include <json/json.h>
 
+SpriteHandler::SpriteHandler()
+{
+    tokensOnMap = CCArray::create();
+    tokensOnMap->retain();
+    
+    //create and add all spritesheets first.
+    allSprites = CCArray::create();
+    allSprites->retain();
+    
+    allSpriteSheets = CCArray::create();
+    allSpriteSheets->retain();
+    
+    spritesOnMap = CCArray::create();
+    spritesOnMap->retain();
+    
+    allSpriteClass = CCArray::create();
+    allSpriteClass->retain();
+}
+
 SpriteHandler::~SpriteHandler()
 {
     allSpriteClass->removeAllObjects();
@@ -60,22 +79,6 @@ void SpriteHandler::initialize()
     cumulatedTime = 0.0f;
     
     NameGenerator::init();
-    
-    tokensOnMap = CCArray::create();
-    tokensOnMap->retain();
-    
-    //create and add all spritesheets first.
-    allSprites = CCArray::create();
-    allSprites->retain();
-    
-    allSpriteSheets = CCArray::create();
-    allSpriteSheets->retain();
-    
-    spritesOnMap = CCArray::create();
-    spritesOnMap->retain();
-    
-    allSpriteClass = CCArray::create();
-    allSpriteClass->retain();
     
     int targetIdleF = 0;
     int targetWalkF = 0;

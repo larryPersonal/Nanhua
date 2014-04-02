@@ -43,7 +43,6 @@ public:
     GameSprite* gameSprite;
     
     CCSprite* spriteBackground;
-    CCSprite* spriteBackgroundInner;
     CCSprite* gameSpriteImage;
     
     CCLabelTTF* labelCash;
@@ -114,6 +113,7 @@ protected:
 public:
     static SpriteInfoMenu* SP;
     
+    static SpriteInfoMenu* create(GameSprite*);
     static SpriteInfoMenu* getThis();
     
     virtual ~SpriteInfoMenu();

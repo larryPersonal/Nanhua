@@ -14,10 +14,12 @@
 struct SystemConfig
 {
     bool skipSenario;
+    bool skipTutorial;
     
     SystemConfig()
     {
         skipSenario = true;
+        skipTutorial = true;
     }
 };
 

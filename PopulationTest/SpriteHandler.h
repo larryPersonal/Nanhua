@@ -23,6 +23,7 @@ private:
 public:
     CCArray* allSpriteClass;
     
+    SpriteHandler();
     ~SpriteHandler();
     
     CCArray* tokensOnMap;

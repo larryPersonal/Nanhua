@@ -9,35 +9,27 @@
 #include "PopupMenu.h"
 #include "GameHUD.h"
 #include "MainMenuScene.h"
+#include "BuildingInfoMenu.h"
+#include "SpriteInfoMenu.h"
+#include "SelectPopulation.h"
 
 // static pointer to the current open popup menu
-static vector<PopupMenu*> pOpenPopupMenu;
-
+static vector<PreviousMenu*> pOpenPopupMenu;
 
 PopupMenu::PopupMenu()
 {
     menuItems = NULL;
     menuItemPositions = NULL;
-    menuIsOpen = false;
     canPressButtons = false;
-    setTouchEnabled(true);
 }
 
 PopupMenu::~PopupMenu()
 {
-//    if (menuItems != NULL) CCLog("menuitems not null!");
- //   if (menuItemPositions != NULL) CCLog("positions not null!");
 
 }
 
-
 void PopupMenu::cleanup()
 {
-
-    // Another check here, in case this gets destroyed without proper call
-    if (pOpenPopupMenu.back() == this)
-        pOpenPopupMenu.pop_back();
-
     if (this->getChildrenCount() > 0)
     {
       
@@ -61,26 +53,38 @@ void PopupMenu::cleanup()
     this->removeFromParentAndCleanup(false);    //cleanup should be called by closeMenu()
 }
 
-void PopupMenu::useAsBasePopupMenu()
+void PopupMenu::backupCurrentPopupMenu()
 {
-    if (pOpenPopupMenu.size() > 0)
+    if(BuildingInfoMenu::getThis() != NULL)
     {
-        CCLog("Popup already open, release!");
-        this->closeMenu(false);
-        return;
+        PreviousMenu* pm = new PreviousMenu(BuInfoMenu, BuildingInfoMenu::getThis()->building);
+        pOpenPopupMenu.push_back(pm);
+        BuildingInfoMenu::getThis()->closeMenu(false);
     }
-    useAsTopmostPopupMenu();
+    
+    if(SpriteInfoMenu::getThis() != NULL)
+    {
+        PreviousMenu* pm = new PreviousMenu(SpInfoMenu, SpriteInfoMenu::getThis()->gameSprite);
+        pOpenPopupMenu.push_back(pm);
+        SpriteInfoMenu::getThis()->closeMenu(false);
+    }
+    
+    if(SelectPopulation::getThis() != NULL)
+    {
+        PreviousMenu* pm = new PreviousMenu(SePopulationMenu, SelectPopulation::getThis()->building);
+        pOpenPopupMenu.push_back(pm);
+        SelectPopulation::getThis()->closeMenu(false);
+    }
 }
 
 void PopupMenu::useAsExclusivePopupMenu()
 {
-    closeAllPopupMenu(false);
+    closeAllPopupMenu();
     useAsTopmostPopupMenu();
 }
 
 void PopupMenu::useAsTopmostPopupMenu()
 {
-    pOpenPopupMenu.push_back(this);
     if (GameHUD::getThis() != NULL)
     {
         GameHUD::getThis()->addChild(this, 5);
@@ -92,45 +96,66 @@ void PopupMenu::useAsTopmostPopupMenu()
     this->createMenuItems();
 }
 
-PopupMenu* PopupMenu::getTopmostPopupMenu()
-{
-    return pOpenPopupMenu.back();
-}
-
-PopupMenu* PopupMenu::getBottommostPopupMenu()
-{
-    return pOpenPopupMenu.front();
-}
-
-
 int PopupMenu::openPopupCount()
 {
     return pOpenPopupMenu.size();
 }
 
 
-void PopupMenu::closeAllPopupMenu(bool toFullyClose)
+void PopupMenu::closeAllPopupMenu()
 {
-    while (pOpenPopupMenu.size() > 0){
-        pOpenPopupMenu.back()->closeMenu(toFullyClose);
+    if(BuildingInfoMenu::getThis() != NULL)
+    {
+        BuildingInfoMenu::getThis()->closeMenu(false);
     }
+    
+    if(SpriteInfoMenu::getThis() != NULL)
+    {
+        SpriteInfoMenu::getThis()->closeMenu(false);
+    }
+    
+    if(SelectPopulation::getThis() != NULL)
+    {
+        SelectPopulation::getThis()->closeMenu(false);
+    }
+    
+    pOpenPopupMenu.clear();
 }
 
 
-void PopupMenu::closeMenu(bool toFullyClose)
+void PopupMenu::closeMenu(bool openPreviousMenu)
 {
-    if (toFullyClose)
+    if(openPreviousMenu)
     {
-        if (GameHUD::getThis() != NULL)
-        GameHUD::getThis()->menuIsOpen = false;
+        if(pOpenPopupMenu.size() > 0)
+        {
+            PreviousMenu* pm = pOpenPopupMenu.back();
+            pOpenPopupMenu.pop_back();
+            
+            if(pm->pmt == BuInfoMenu)
+            {
+                BuildingInfoMenu* bim = BuildingInfoMenu::create(pm->b);
+                bim->useAsTopmostPopupMenu();
+            }
+            else if(pm->pmt == SpInfoMenu)
+            {
+                SpriteInfoMenu* sim = new SpriteInfoMenu(pm->gs);
+                sim->autorelease();
+                sim->useAsTopmostPopupMenu();
+            }
+            else if(pm->pmt == SePopulationMenu)
+            {
+                SelectPopulation* sp = SelectPopulation::create(pm->b);
+                sp->useAsTopmostPopupMenu();
+            }
+            else
+            {
+                closeMenu(openPreviousMenu);
+                return;
+            }
+        }
     }
-    
-    
-    
-    if (pOpenPopupMenu.back() == this)
-        pOpenPopupMenu.pop_back();
-    
-        this->cleanup();
+    this->cleanup();
 }
 
 /*
