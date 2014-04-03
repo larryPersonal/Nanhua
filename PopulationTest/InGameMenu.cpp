@@ -15,6 +15,7 @@
 #include "AlertBox.h"
 
 #include "SoundtrackManager.h"
+#include "MainMenuScene.h"
 
 InGameMenu::~InGameMenu()
 {
@@ -292,7 +293,7 @@ void InGameMenu::exitGame(CCObject* pSender)
     
     SoundtrackManager::PlayBGM("Tikopia.mp3");
     
-    CCDirector::sharedDirector()->popScene();
+    CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 
 

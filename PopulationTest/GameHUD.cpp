@@ -80,6 +80,11 @@ GameHUD::~GameHUD()
     objectiveStrs->removeAllObjects();
     CC_SAFE_RELEASE(objectiveStrs);
 
+    if (SystemMenu::SP != NULL)
+    {
+        CC_SAFE_RELEASE(SystemMenu::SP);
+    }
+    
     GameHUD::SP = NULL;
 }
 
@@ -860,7 +865,7 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0.3, 0.5));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 85.0f));
+    objectiveMenu->setPosition(ccp(-1500, screenSize.height - 85.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
@@ -1217,7 +1222,7 @@ void GameHUD::stickGameHappiness()
 
 void GameHUD::clickSystemButton()
 {
-    SystemMenu* sm = SystemMenu::create(this);
+   SystemMenu* sm = SystemMenu::create(this);
     sm->retain();
     pause = true;
 }
