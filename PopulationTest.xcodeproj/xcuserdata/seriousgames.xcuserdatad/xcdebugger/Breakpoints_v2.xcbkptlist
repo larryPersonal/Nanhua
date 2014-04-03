@@ -3414,7 +3414,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MainMenuScene.cpp"
@@ -3423,7 +3423,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "151"
             endingLineNumber = "151"
-            landmarkName = "MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)"
+            landmarkName = "MainMenuScene::onButtonStartPressed(CCObject* pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3439,7 +3439,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
-            landmarkName = "MainMenuScene::onNewGame(cocos2d::CCObject *pSender)"
+            landmarkName = "MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3455,7 +3455,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "209"
             endingLineNumber = "209"
-            landmarkName = "MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)"
+            landmarkName = "MainMenuScene::onRejectTutorial(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

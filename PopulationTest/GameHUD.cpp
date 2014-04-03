@@ -856,15 +856,15 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu = CCSprite::create(objectiveBackground.c_str());
     CCSize spriteSize = objectiveMenu->getContentSize();
     objectiveMenu->setVisible(false);
-    objectiveMenu->setAnchorPoint(ccp(0, 1));
+    objectiveMenu->setAnchorPoint(ccp(0.3, 0.5));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 80.0f));
+    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 85.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
     objectiveButton->setAnchorPoint(ccp(0.3, 0.5));
     objectiveButton->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveButton->setPosition(ccp(40, screenSize.height - 145));
+    objectiveButton->setPosition(ccp(40, screenSize.height - 160));
     this->addChild(objectiveButton);
     
     // create the objective title and objective strings!
@@ -1113,7 +1113,7 @@ void GameHUD::createSystemMenu()
     
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
-    systemButton->setPosition(ccp(screenSize.width, screenSize.height - 125.0f));
+    systemButton->setPosition(ccp(screenSize.width * 0.075f, screenSize.height - 205.0f));
     
     stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
     stickHappinessButton->setAnchorPoint(ccp(1, 1));

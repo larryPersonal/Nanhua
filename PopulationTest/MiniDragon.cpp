@@ -49,10 +49,11 @@ MiniDragon::MiniDragon()
 MiniDragon::~MiniDragon()
 {
     animatedStringList->removeAllObjects();
-    CC_SAFE_RELEASE(animatedStringList);
     
     TutorialManager::getThis()->removeChild(dragon);
     TutorialManager::getThis()->removeChild(bubble);
+    CC_SAFE_RELEASE(animatedStringList);
+    
 }
 
 void MiniDragon::display()
