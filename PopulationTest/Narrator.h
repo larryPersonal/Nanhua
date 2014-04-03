@@ -15,7 +15,7 @@ using namespace cocos2d;
 
 enum Narrator_State
 {
-    NS_START = 0, C1T1, C1T2, C1T3, NS_END = 4
+    NS_START = 0, C1T1=1, C1T2=2, C1T3=3, NS_END = 4
 };
 
 class Narrator

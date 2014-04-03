@@ -54,7 +54,7 @@ void Narrator::display()
         TutorialManager::getThis()->removeChild(as->getLabel());
     }
     animatedStringList->removeAllObjects();
-    ns++;
+    ns = (Narrator_State)((int)ns + 1);
     
     string str = "";
     

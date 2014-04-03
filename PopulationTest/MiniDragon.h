@@ -15,9 +15,9 @@ using namespace cocos2d;
 using namespace std;
 
 enum Dragon_State {
-    Dragon_Start = 0, D1T1, D1T2, D1T3, D1T4, D1T5, D2T1, D2T2, D2T3, D2T4, D2T5, D2T6, D2T7, D2T8,
-    D3T1, D3T2, D3T3, D3T4, D3T5, D3T6, D3T7, D3T8,
-    D4T1, D4T2, D4T3, Dragon_End
+    Dragon_Start = 0, D1T1=1, D1T2=2, D1T3=3, D1T4=4, D1T5=5, D2T1=6, D2T2=7, D2T3=8, D2T4=9, D2T5=10, D2T6=11, D2T7=12, D2T8=13,
+    D3T1=14, D3T2=15, D3T3=16, D3T4=17, D3T5=18, D3T6=19, D3T7 =20, D3T8=21,
+    D4T1=22, D4T2=23, D4T3=24, Dragon_End = 25
 };
 
 class MiniDragon
