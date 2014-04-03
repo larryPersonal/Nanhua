@@ -14,9 +14,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "SenarioChooseScene::chooseSenario1()"
-            landmarkType = "5">
+            endingLineNumber = "208">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -70,7 +68,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "418193004.186469"
+            timestampString = "418205661.642408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "244"
@@ -460,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "418193004.186469"
+            timestampString = "418207955.881406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1117"
-            endingLineNumber = "1117"
+            startingLineNumber = "1105"
+            endingLineNumber = "1105"
             landmarkName = "GameScene::FirstRunPopulate()"
             landmarkType = "5">
          </BreakpointContent>
@@ -620,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/TutorialManager.cpp"
-            timestampString = "418135644.758538"
+            timestampString = "418208256.456137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "TutorialManager::setupForTutorial()"
             landmarkType = "5">
          </BreakpointContent>
@@ -636,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/TutorialManager.cpp"
-            timestampString = "418135644.758538"
+            timestampString = "418208256.456137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "TutorialManager::setupForTutorial()"
             landmarkType = "5">
          </BreakpointContent>
@@ -652,11 +650,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/TutorialManager.cpp"
-            timestampString = "418135644.758538"
+            timestampString = "418208256.456137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "TutorialManager::moveCameraToGate(float dt)"
             landmarkType = "5">
          </BreakpointContent>
@@ -668,11 +666,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/TutorialManager.cpp"
-            timestampString = "418135644.758538"
+            timestampString = "418208256.456137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "TutorialManager::setupForTutorial()"
             landmarkType = "5">
          </BreakpointContent>
