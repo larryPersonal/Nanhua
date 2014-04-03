@@ -104,6 +104,13 @@ void TutorialManager::setupForTutorial()
     GameScene::getThis()->addChild(hudlayer, 1);
     SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
     
+    if(GameScene::getThis()->systemConfig->skipTutorial)
+    {
+        GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
+        unlockAll();
+        return;
+    }
+    
     GameScene::getThis()->mapHandler->Populate(GameScene::getThis()->buildingHandler->allBuildingLayers);
     
     GameScene::getThis()->spriteHandler->initialize();

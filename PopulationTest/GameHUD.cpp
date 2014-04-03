@@ -1109,7 +1109,7 @@ void GameHUD::createSystemMenu()
     
     resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
     resumeButton->setAnchorPoint(ccp(1, 1));
-    resumeButton->setPosition(ccp(screenSize.width - 50.0f, screenSize.height - 125.0f));
+    resumeButton->setPosition(ccp(screenSize.width + 450.0f, screenSize.height - 125.0f));
     
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
@@ -1121,7 +1121,7 @@ void GameHUD::createSystemMenu()
     
     resumeHappinessButton->setScale(screenSize.width / resumeHappinessButton->boundingBox().size.width * 0.05f);
     resumeHappinessButton->setAnchorPoint(ccp(1, 1));
-    resumeHappinessButton->setPosition(ccp(screenSize.width - 100.0f, screenSize.height - 125.0f));
+    resumeHappinessButton->setPosition(ccp(screenSize.width + 400.0f, screenSize.height - 125.0f));
     
     warButton->setScale(screenSize.width / warButton->boundingBox().size.width * 0.05f);
     warButton->setAnchorPoint(ccp(0, 0));
@@ -1129,7 +1129,7 @@ void GameHUD::createSystemMenu()
     
     peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
     peaceButton->setAnchorPoint(ccp(0, 0));
-    peaceButton->setPosition(ccp(0, 0));
+    peaceButton->setPosition(ccp(0, -500));
     
     resumeButton->setVisible(false);
     resumeHappinessButton->setVisible(false);
@@ -1150,14 +1150,18 @@ void GameHUD::banditsAttack()
     {
         startWar = false;
         peaceButton->setVisible(false);
+        peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() - 500));
         warButton->setVisible(true);
+        warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() + 500));
         GameScene::getThis()->banditsAttackHandler->stopWar();
     }
     else
     {
         startWar = true;
         peaceButton->setVisible(true);
+        peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() + 500));
         warButton->setVisible(false);
+        warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
         GameScene::getThis()->banditsAttackHandler->startWar();
     }
 }
@@ -1168,7 +1172,9 @@ void GameHUD::pauseGame()
     {
         pause = false;
         pauseButton->setVisible(true);
+        pauseButton->setPosition(ccp(pauseButton->getPositionX() - 500, pauseButton->getPositionY()));
         resumeButton->setVisible(false);
+        resumeButton->setPosition(ccp(resumeButton->getPositionX() + 500, resumeButton->getPositionY()));
         CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
         
         for (int i = 0; i < spritesOnMap->count(); i++)
@@ -1181,7 +1187,9 @@ void GameHUD::pauseGame()
     {
         pause = true;
         pauseButton->setVisible(false);
+        pauseButton->setPosition(ccp(pauseButton->getPositionX() + 500, pauseButton->getPositionY()));
         resumeButton->setVisible(true);
+        resumeButton->setPosition(ccp(resumeButton->getPositionX() - 500, resumeButton->getPositionY()));
     }
 }
 
@@ -1191,13 +1199,17 @@ void GameHUD::stickGameHappiness()
     {
         stickHappiness = false;
         stickHappinessButton->setVisible(true);
+        stickHappinessButton->setPosition(ccp(stickHappinessButton->getPositionX() - 500, stickHappinessButton->getPositionY()));
         resumeHappinessButton->setVisible(false);
+        resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX() + 500, resumeHappinessButton->getPositionY()));
     }
     else
     {
         stickHappiness = true;
         stickHappinessButton->setVisible(false);
+        stickHappinessButton->setPosition(ccp(stickHappinessButton->getPositionX() + 500, stickHappinessButton->getPositionY()));
         resumeHappinessButton->setVisible(true);
+        resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX() - 500, resumeHappinessButton->getPositionY()));
     }
 }
 

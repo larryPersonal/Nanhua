@@ -260,6 +260,7 @@ void GameScene::onOrientationChanged()
 void GameScene::enableTouch()
 {
     this->CCLayer::setTouchEnabled(true);
+    TutorialManager::getThis()->unlockAll();
     //GameHUD* hudlayer = GameHUD::create();
     //this->addChild(hudlayer, 1);
     //this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
@@ -553,7 +554,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             {
                 CCTouch* touch = (CCTouch*)*touches->begin();
                 CCPoint moveDistance;
-                float newX, newY;
                 
                 moveDistance = ccpSub(touch->getLocation(), touch->getPreviousLocation());
                 float dis = 0.0f;
@@ -694,54 +694,43 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             }
         }
         
-        if(GameHUD::getThis()->peaceButton != NULL)
+        if(GameHUD::getThis()->peaceButton != NULL && GameHUD::getThis()->warButton != NULL)
         {
+            
             if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
             {
                 GameHUD::getThis()->banditsAttack();
                 skip = true;
             }
-        }
-        
-        if(GameHUD::getThis()->warButton != NULL)
-        {
-            if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
+            else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
             {
                 GameHUD::getThis()->banditsAttack();
                 skip = true;
             }
         }
         
-        if(GameHUD::getThis()->stickHappinessButton != NULL)
+        if(GameHUD::getThis()->stickHappinessButton != NULL && GameHUD::getThis()->resumeHappinessButton != NULL)
         {
             if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
             {
                 GameHUD::getThis()->stickGameHappiness();
                 skip = true;
             }
-        }
-        
-        if(GameHUD::getThis()->resumeHappinessButton != NULL)
-        {
-            if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
+            else if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
             {
                 GameHUD::getThis()->stickGameHappiness();
                 skip = true;
             }
         }
         
-        if(GameHUD::getThis()->pauseButton != NULL)
+        if(GameHUD::getThis()->pauseButton != NULL && GameHUD::getThis()->resumeButton != NULL)
         {
             if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
             {
                 GameHUD::getThis()->pauseGame();
                 skip = true;
             }
-        }
-        
-        if(GameHUD::getThis()->resumeButton != NULL)
-        {
-            if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
+            else if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
             {
                 GameHUD::getThis()->pauseGame();
                 skip = true;
@@ -791,6 +780,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 } else {
                     GameHUD::getThis()->scheduleScrollIn();
                 }
+                skip = true;
             }
             else
             {
@@ -1095,7 +1085,6 @@ void GameScene::FirstRunPopulate()
     }
     else
     {
-        /*
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(25,23);
         
@@ -1106,7 +1095,6 @@ void GameScene::FirstRunPopulate()
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
-        */
     }
     
     CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());
@@ -1310,10 +1298,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
             }
             else
             {
-                CCLog("test6");
                 if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY))
                 {
-                    CCLog("test7");
                     PopupMenu::backupCurrentPopupMenu();
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                     buildingInfoMenu->useAsTopmostPopupMenu();
@@ -1379,10 +1365,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     }
                     else
                     {
-                        CCLog("test8");
                         if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY))
                         {
-                            CCLog("test9");
                             PopupMenu::backupCurrentPopupMenu();
                             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                             buildingInfoMenu->useAsTopmostPopupMenu();
