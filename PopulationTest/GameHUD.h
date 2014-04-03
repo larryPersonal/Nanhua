@@ -179,6 +179,11 @@ public:
     
     CCSprite* mask;
     
+    // soldier helper
+    CCLabelTTF* soldierName;
+    CCLabelTTF* enermyName;
+    CCLabelTTF* stopActionLabel;
+    
 public:
     
     GameHUD();
@@ -218,6 +223,9 @@ public:
     void createObjectiveMenu();
     void createBuildMenu();
     void createSystemMenu();
+    
+    void createSoldierHelper();
+    void updateSoldierHelper(float dt);
     
     void clickObjectiveButton();
     void clickBuildButton();

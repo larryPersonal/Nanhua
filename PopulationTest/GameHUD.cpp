@@ -380,6 +380,8 @@ void GameHUD::update(float deltaTime)
         foodLabel->setDimensions(CCSizeMake(ss.str().length() * 20.0f, 5.0f));
         foodLabel->setString(ss.str().c_str());
     }
+    
+    updateSoldierHelper(deltaTime);
 }
 
 void GameHUD::createInitialGUI(){
@@ -395,7 +397,7 @@ void GameHUD::createInitialGUI(){
     createTimeMenu();
     createBuildMenu();
     createSystemMenu();
- 
+    createSoldierHelper();
 }
 
 void GameHUD::setTapMode(int mode)
@@ -1249,5 +1251,117 @@ void GameHUD::UpdateBuildButton()
     }
     buildButton->setTexture(tex);
 //    CC_SAFE_RELEASE(tex);
+}
+void GameHUD::createSoldierHelper()
+{
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    GameSprite* firstSoldier = NULL;
+    for(int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* temp = (GameSprite*) allSprites->objectAtIndex(i);
+        if(temp->villagerClass == V_SOLDIER)
+        {
+            firstSoldier = temp;
+            break;
+        }
+    }
+    
+    stringstream ss;
+    
+    if(firstSoldier == NULL)
+    {
+        ss << "NULL";
+    }
+    else
+    {
+        ss << firstSoldier->spriteName;
+    }
+    
+    soldierName = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
+    soldierName->setAnchorPoint(ccp(0, 0));
+    soldierName->setPosition(ccp(50, 0));
+    this->addChild(soldierName);
+    
+    ss.str(string());
+    if(firstSoldier == NULL || firstSoldier->enermy == NULL)
+    {
+        ss << "NULL";
+    }
+    else
+    {
+        ss << firstSoldier->enermy->spriteName;
+    }
+    
+    enermyName = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
+    enermyName->setAnchorPoint(ccp(0, 0));
+    enermyName->setPosition(ccp(250, 0));
+    this->addChild(enermyName);
+    
+    ss.str(string());
+    if(firstSoldier == NULL)
+    {
+        ss << "NULL";
+    }
+    else
+    {
+        ss << "StopAction: " << (firstSoldier->stopAction ? "true" : "false");
+    }
+    
+    stopActionLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
+    stopActionLabel->setAnchorPoint(ccp(0, 0));
+    stopActionLabel->setPosition(ccp(450, 0));
+    this->addChild(stopActionLabel);
+}
+
+void GameHUD::updateSoldierHelper(float dt)
+{
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    GameSprite* firstSoldier = NULL;
+    for(int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* temp = (GameSprite*) allSprites->objectAtIndex(i);
+        if(temp->villagerClass == V_SOLDIER)
+        {
+            firstSoldier = temp;
+            break;
+        }
+    }
+    
+    stringstream ss;
+    
+    if(firstSoldier == NULL)
+    {
+        ss << "NULL";
+    }
+    else
+    {
+        ss << firstSoldier->spriteName;
+    }
+    
+    soldierName->setString(ss.str().c_str());
+    
+    ss.str(string());
+    if(firstSoldier == NULL || firstSoldier->enermy == NULL)
+    {
+        ss << "NULL";
+    }
+    else
+    {
+        ss << firstSoldier->enermy->spriteName;
+    }
+    
+    enermyName->setString(ss.str().c_str());
+    
+    ss.str(string());
+    if(firstSoldier == NULL)
+    {
+        ss << "NULL";
+    }
+    else
+    {
+        ss << "StopAction: " << (firstSoldier->stopAction ? "true" : "false");
+    }
+    
+    stopActionLabel->setString(ss.str().c_str());
 
 }

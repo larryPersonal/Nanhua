@@ -45,6 +45,7 @@ public:
     static GameSprite* getSpriteByVillagerClass(GameSprite*, VillagerClass);
     
     static vector<std::string> split(std::string, char);
+    static bool compareCCPoint(CCPoint, CCPoint);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */
