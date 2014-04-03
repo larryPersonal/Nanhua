@@ -49,6 +49,7 @@ void SenarioManager::parseXMLFile(string xml)
     bool inSprite = false;
     bool inDialogue = false;
     bool inOption = false;
+    bool inOutcome = false;
     
     Slide* slide;
     Element* element;
@@ -118,6 +119,58 @@ void SenarioManager::parseXMLFile(string xml)
             {
                 slidesList->addObject(slide);
                 inSlide = false;
+            }
+        }
+        else if(inOutcome)
+        {
+            unsigned start_pos = -1;
+            unsigned end_pos = -1;
+            string content = "";
+            float temp;
+            
+            if(str.find("<bandit>") != std::string::npos)
+            {
+                start_pos = str.find("<bandit>");
+                end_pos = str.find("</bandit>");
+                content = str.substr(start_pos + 8, end_pos - start_pos - 8);
+                temp = ::atoi(content.c_str());
+                element->banditsModifier = temp;
+            }
+            else if(str.find("<refugee>") != std::string::npos)
+            {
+                start_pos = str.find("<refugee>");
+                end_pos = str.find("</refugee>");
+                content = str.substr(start_pos + 9, end_pos - start_pos - 9);
+                temp = ::atoi(content.c_str());
+                element->refugeeModifier = temp;
+            }
+            else if(str.find("<gold>") != std::string::npos)
+            {
+                start_pos = str.find("<gold>");
+                end_pos = str.find("</gold>");
+                content = str.substr(start_pos + 6, end_pos - start_pos - 6);
+                temp = ::atoi(content.c_str());
+                element->goldModifier = temp;
+            }
+            else if(str.find("<food>") != std::string::npos)
+            {
+                start_pos = str.find("<food>");
+                end_pos = str.find("</food>");
+                content = str.substr(start_pos + 6, end_pos - start_pos - 6);
+                temp = ::atoi(content.c_str());
+                element->foodModifier = temp;
+            }
+            else if(str.find("<population>") != std::string::npos)
+            {
+                start_pos = str.find("<population>");
+                end_pos = str.find("</population>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                temp = ::atoi(content.c_str());
+                element->populationModifier = temp;
+            }
+            else if(str.find("</outcome>") != std::string::npos)
+            {
+                inOutcome = false;
             }
         }
         else
@@ -238,6 +291,11 @@ void SenarioManager::parseXMLFile(string xml)
                 } else {
                     element->fadeOut = false;
                 }
+            }
+            else if(str.find("<outcome>") != std::string::npos)
+            {
+                element->outcome = true;
+                inOutcome = true;
             }
             else if(str.find("</dialogue>") != std::string::npos)
             {

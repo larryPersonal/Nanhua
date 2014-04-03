@@ -41,6 +41,13 @@ public:
     bool fadeIn;
     bool fadeOut;
     
+    int banditsModifier;
+    int refugeeModifier;
+    int goldModifier;
+    int foodModifier;
+    int populationModifier;
+    bool outcome;
+    
 public:
     Element();
     ~Element();

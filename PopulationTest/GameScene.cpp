@@ -35,6 +35,8 @@ GameScene::GameScene()
     objectiveHandler = new ObjectiveHandler();
     objectiveHandler->loadObjective();
     
+    globalOutcomeModifier = new GlobalOutcomeModifier();
+    
     cumulatedTime = 0;
     
     configSettings = new ConfigSettings();
@@ -260,7 +262,7 @@ void GameScene::enableTouch()
     this->CCLayer::setTouchEnabled(true);
     GameHUD* hudlayer = GameHUD::create();
     this->addChild(hudlayer, 1);
-    this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
+    //this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
     SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
 }
 
@@ -273,13 +275,8 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
-    // the first priority for dragging on the screen is to check whether it is for the senario stage
-    if(Senario::getThis()->active)
-    {
-        return;
-    }
     // then check the tutorial manager
-    else if(TutorialManager::getThis()->active)
+    if(TutorialManager::getThis()->active)
     {
         bool skip = false;
         
@@ -304,6 +301,12 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         {
             return;
         }
+    }
+    
+    // the first priority for dragging on the screen is to check whether it is for the senario stage
+    if(Senario::getThis()->active)
+    {
+        return;
     }
     // the second priority for draggin on the screen is to check whether it is for the system menu;
     else if(SystemMenu::getThis() != NULL && !(TutorialManager::getThis()->lockSystemButton))
@@ -584,6 +587,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
     if(tapped)
     {
+        CCLog("test1");
         tapped = false;
         return;
     }
@@ -865,8 +869,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         return;
     }
     
-    CCLog("test5");
-    
     hasBeenDragged = false;
     
     //If dragged screen, don't count it as a tap
@@ -1093,6 +1095,7 @@ void GameScene::FirstRunPopulate()
     }
     else
     {
+        /*
         CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(25,23);
         
@@ -1103,8 +1106,7 @@ void GameScene::FirstRunPopulate()
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
-
-        
+        */
     }
     
     CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());

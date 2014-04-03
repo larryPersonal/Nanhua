@@ -43,6 +43,9 @@ public:
     
     bool skipSlide;
     
+    float cumulativeTime;
+    int lastTime;
+    
 public:
     Senario();
     ~Senario();
@@ -77,6 +80,8 @@ public:
     void update(float time);
     
     void goNextSlide();
+    
+    void activateRefugee(float);
 };
 
 #endif

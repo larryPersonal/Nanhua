@@ -50,7 +50,7 @@ public:
     void finishDisplay();
     void update(float);
     
-    void scheduleSenario(float dt);
+    void scheduleSenario();
     
     void move(CCPoint);
 };

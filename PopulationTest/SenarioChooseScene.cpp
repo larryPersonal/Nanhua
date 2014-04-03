@@ -162,13 +162,32 @@ bool SenarioChooseScene::init()
     this->addChild(menu, 1);
     this->addChild(backgroundImage, 0);
     
+    /* loading screen module */
+    loadingScreen = CCSprite::create("black.png");
+    loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
+    loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
+    loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(loadingScreen, 10);
+    loadingScreen->setVisible(false);
+    
+    loadingLabel = CCLabelTTF::create("Loading....", "Shojumaru-Regular", 32);
+    loadingLabel->setAnchorPoint(ccp(0.5, 0.5));
+    loadingLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(loadingLabel, 11);
+    loadingLabel->setVisible(false);
+    
+    
     return true;
 }
 
 void SenarioChooseScene::chooseTutorial()
 {
-    // need to parse the specific senario file (xml file) and construct the senario manager to play the senario
-    
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
+}
+
+void SenarioChooseScene::loadingTutorial()
+{
     // update the level number in the Game Manager
     GameManager::getThis()->setLevel(0);
     
@@ -182,16 +201,27 @@ void SenarioChooseScene::chooseTutorial()
 
 void SenarioChooseScene::chooseSenario1()
 {
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario1), 0.1f);
+}
+
+void SenarioChooseScene::loadingSenario1()
+{
     GameManager::getThis()->setLevel(1);
     CCTextureCache::sharedTextureCache()->removeAllTextures();
-
+    
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-
+    
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario2()
+{
+    
+}
+
+void SenarioChooseScene::loadingSenario2()
 {
     
 }
@@ -201,12 +231,27 @@ void SenarioChooseScene::chooseSenario3()
     
 }
 
+void SenarioChooseScene::loadingSenario3()
+{
+    
+}
+
 void SenarioChooseScene::chooseSenario4()
 {
     
 }
 
+void SenarioChooseScene::loadingSenario4()
+{
+    
+}
+
 void SenarioChooseScene::chooseSenario5()
+{
+    
+}
+
+void SenarioChooseScene::loadingSenario5()
 {
     
 }
@@ -219,18 +264,27 @@ void SenarioChooseScene::chooseSenario6()
    // CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
 }
 
+void SenarioChooseScene::loadingSenario6()
+{
+    
+}
+
+void SenarioChooseScene::enableLoadingScreen()
+{
+    this->removeChild(backgroundImage);
+    this->removeChild(senarioButtonTutorial);
+    this->removeChild(senarioButtonS1);
+    this->removeChild(senarioButtonS2);
+    this->removeChild(senarioButtonS3);
+    this->removeChild(senarioButtonS4);
+    this->removeChild(senarioButtonS5);
+    this->removeChild(senarioButtonS6);
+    
+    loadingScreen->setVisible(true);
+    loadingLabel->setVisible(true);
+}
+
 void SenarioChooseScene::onOrientateChange(){
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    
-    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.6));
-    senarioButtonS1->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.4));
-    senarioButtonS2->setPosition(ccp(screenSize.width * 0.25, screenSize.height * 0.2));
-    senarioButtonS3->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.6));
-    senarioButtonS4->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.4));
-    senarioButtonS5->setPosition(ccp(screenSize.width * 0.75, screenSize.height * 0.2));
-    senarioButtonS6->setPosition(ccp(screenSize.width * 0.85, screenSize.height * 0.1));
-    
-    
 }
 
 void SenarioChooseScene::onOrientationChangedToPortrait(){

@@ -20,6 +20,7 @@
 #include "GameConfig.h"
 #include "BanditsAttackHandler.h"
 #include "ObjectiveHandler.h"
+#include "GlobalOutcomeModifier.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -55,6 +56,8 @@ public:
     CCPoint scrollDistance;
     
     bool tapped;
+    
+    GlobalOutcomeModifier* globalOutcomeModifier;
     
 public:
     

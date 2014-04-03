@@ -257,6 +257,15 @@ void Senario::selectButtonPressed(CCObject* pSender)
     CCArray* elementArray = slide->elementList;
     Element* ele = (Element*)elementArray->objectAtIndex(index);
     
+    if(ele->outcome)
+    {
+        GameScene::getThis()->globalOutcomeModifier->banditsModifier = ele->banditsModifier;
+        GameScene::getThis()->globalOutcomeModifier->refugeesModifier = ele->refugeeModifier;
+        GameScene::getThis()->globalOutcomeModifier->goldModifier = ele->goldModifier;
+        GameScene::getThis()->globalOutcomeModifier->foodModifier = ele->foodModifier;
+        GameScene::getThis()->globalOutcomeModifier->populationModifier = ele->populationModifier;
+    }
+    
     string fileName = ele->nextFile;
     slidesList->removeAllObjects();
     CC_SAFE_RELEASE(slidesList);
@@ -333,7 +342,11 @@ void Senario::nextButtonPressed(bool skip)
         for (int i = 0; i < animatedSpriteList->count(); i++){
             AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);
             
-            if(as->hasFadeOutAnimation){
+            if(as->fadeOut || as->fadeIn)
+            {
+                hasFade = true;
+            }
+            else if(as->hasFadeOutAnimation){
                 as->triggerFadeOut();
                 hasFade = true;
             }
@@ -454,12 +467,31 @@ void Senario::createGUI(){
 
 void Senario::buttonSelect()
 {
-    //if(active)
-    //{
-        active = false;
-        this->setVisible(false);
-        GameScene::getThis()->enableTouch();
-    //}
+    active = false;
+    this->setVisible(false);
+    GameScene::getThis()->enableTouch();
+    cumulativeTime = 0;
+    lastTime = 0;
+    if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
+    {
+        this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
+    }
+}
+
+void Senario::activateRefugee(float dt)
+{
+    cumulativeTime += dt;
+    CCPoint target = CCPointMake(29,33);
+    if(cumulativeTime >= lastTime + 1)
+    {
+        GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);
+        lastTime++;
+        if(lastTime >= GameScene::getThis()->globalOutcomeModifier->refugeesModifier)
+        {
+            this->unschedule(schedule_selector(Senario::activateRefugee));
+            GameScene::getThis()->globalOutcomeModifier = 0;
+        }
+    }
 }
 
 void Senario::onOrientationChanged(){
