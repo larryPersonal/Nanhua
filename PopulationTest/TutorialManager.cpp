@@ -88,6 +88,9 @@ void TutorialManager::unlockAll()
     lockButtonCancel = false;
     lockButtonClose = false;
     lockManpowerSelect = false;
+    lockMap = false;
+    lockVillager = false;
+    active = false;
     
     teachBuildButton = false;
     teachBuildHouse = false;
