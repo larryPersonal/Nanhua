@@ -66,7 +66,7 @@ void MiniDragon::display()
         TutorialManager::getThis()->removeChild(as->getLabel());
     }
     animatedStringList->removeAllObjects();
-    ds++;
+    ds = (Dragon_State)((int)ds + 1);
     
     string str = "";
     

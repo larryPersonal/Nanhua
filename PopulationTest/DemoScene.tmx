@@ -7,7 +7,7 @@
     <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
-  <tile id="1"> 
+  <tile id="1">
    <properties>
     <property name="anim_frames" value="3"/>
     <property name="build_time" value="30"/>
@@ -964,7 +964,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2LENAAAIAjBf9P9nfMBRB5J2ZweqSNDyAAAAAABwzv8MAAAAAMAXHzQAAEAmew4ASKCzAAAAsBmGDALa
+   eJzt27ENADAIAzBe7P/P8AAjBVW19+xRpETwgiMPAAAAAADt7M8AAAAAANxigwYAAH61/SndzgMATNBZAAAAqCS7QgPN
   </data>
  </layer>
 </map>

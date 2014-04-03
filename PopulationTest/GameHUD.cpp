@@ -857,14 +857,14 @@ void GameHUD::createObjectiveMenu()
     CCSize spriteSize = objectiveMenu->getContentSize();
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0, 1));
-    objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.55f);
-    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
+    objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
+    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 80.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
     objectiveButton->setAnchorPoint(ccp(0.3, 0.5));
-    objectiveButton->setScale(screenSize.width / spriteSize.width * 0.55f);
-    objectiveButton->setPosition(ccp(40, screenSize.height - 185));
+    objectiveButton->setScale(screenSize.width / spriteSize.width * 0.35f);
+    objectiveButton->setPosition(ccp(40, screenSize.height - 145));
     this->addChild(objectiveButton);
     
     // create the objective title and objective strings!
