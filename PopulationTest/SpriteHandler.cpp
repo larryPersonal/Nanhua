@@ -42,6 +42,8 @@ SpriteHandler::SpriteHandler()
     
     allSpriteClass = CCArray::create();
     allSpriteClass->retain();
+    
+    
 }
 
 SpriteHandler::~SpriteHandler()
@@ -67,10 +69,13 @@ SpriteHandler::~SpriteHandler()
     allSprites->removeAllObjects();
     CC_SAFE_RELEASE(allSprites);
     
+    /*
+    if (allClassRequirements != NULL)
+    {
     
-    allClassRequirements->removeAllObjects();
-    CC_SAFE_RELEASE(allClassRequirements);
-    
+        allClassRequirements->removeAllObjects();
+        CC_SAFE_RELEASE(allClassRequirements);
+    }*/
     CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
 }
 
