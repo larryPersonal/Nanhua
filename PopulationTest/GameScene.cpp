@@ -260,8 +260,8 @@ void GameScene::onOrientationChanged()
 void GameScene::enableTouch()
 {
     this->CCLayer::setTouchEnabled(true);
-    GameHUD* hudlayer = GameHUD::create();
-    this->addChild(hudlayer, 1);
+    //GameHUD* hudlayer = GameHUD::create();
+    //this->addChild(hudlayer, 1);
     //this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
     SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
 }
