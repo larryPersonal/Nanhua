@@ -235,6 +235,7 @@ void MiniDragon::display()
             move(ccp(0, -500));
             autoJump = false;
             cumulativeTime = 0;
+            TutorialManager::getThis()->unlockAll();
             TutorialManager::getThis()->scheduleOnce(schedule_selector( MiniDragon::scheduleSenario ), 360);
             break;
         default:

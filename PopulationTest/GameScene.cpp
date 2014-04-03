@@ -793,9 +793,12 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
-                if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
+                if(BuildingInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                 {
-                    BuildingInfoMenu::getThis()->closeMenu(true);
+                    if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
+                    {
+                        BuildingInfoMenu::getThis()->closeMenu(true);
+                    }
                 }
                 skip = true;
             }
@@ -836,7 +839,10 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
             {
                 // check whether has clicked the close button
-                SpriteInfoMenu::getThis()->closeMenu(true);
+                if(SpriteInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
+                {
+                    SpriteInfoMenu::getThis()->closeMenu(true);
+                }
                 skip = true;
             }
             else
