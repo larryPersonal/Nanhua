@@ -12,6 +12,7 @@
 #include "GlobalHelper.h"
 #include "AnimatedString.h"
 #include "AnimatedSprite.h"
+#include "GameHUD.h"
 
 Senario* Senario::SP;
 
@@ -470,6 +471,7 @@ void Senario::buttonSelect()
     active = false;
     this->setVisible(false);
     GameScene::getThis()->enableTouch();
+    GameHUD::getThis()->pause = false;
     cumulativeTime = 0;
     lastTime = 0;
     if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
