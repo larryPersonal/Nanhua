@@ -229,6 +229,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
+        
             GameHUD::getThis()->setTapMode(3);
             GameScene::getThis()->isThisTapCounted = true;
             BuildScroll::getThis()->closeMenu(false);
@@ -336,6 +337,9 @@ void BuildingCard::tryToBuild(int tag)
         }
         GameHUD::getThis()->money -= buildingToBuy->buildingCost;
         GameHUD::getThis()->setTapMode(1);
+        
+        
+        
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }
     GameScene::getThis()->isThisTapCounted = true;

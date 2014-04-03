@@ -352,6 +352,8 @@ void GameHUD::update(float deltaTime)
 
         }
         tapModeLabel->setString(ss.str().c_str());
+        UpdateBuildButton();
+
     }
     
     // for food and storage change!
@@ -1000,6 +1002,8 @@ void GameHUD::clickObjectiveButton()
     }
 }
 
+
+
 void GameHUD::createBuildMenu()
 {
     // set common variables
@@ -1021,6 +1025,9 @@ void GameHUD::createBuildMenu()
     mask->setOpacity((GLubyte) 0);
     this->addChild(mask, 10);
 }
+
+
+
 
 void GameHUD::clickBuildButton()
 {
@@ -1223,4 +1230,24 @@ void GameHUD::clickSystemButton()
    SystemMenu* sm = SystemMenu::create(this);
     sm->retain();
     pause = true;
+}
+
+void GameHUD::UpdateBuildButton()
+{
+    if (buildButton == NULL) return;
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    
+    CCTexture2D* tex;
+    if (getTapMode() == 0)
+    {
+        tex = CCTextureCache::sharedTextureCache()->addImage("main-game-buttons_build.png");
+    }
+    else
+    {
+        tex = CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png");
+        
+    }
+    buildButton->setTexture(tex);
+//    CC_SAFE_RELEASE(tex);
+
 }
