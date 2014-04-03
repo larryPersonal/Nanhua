@@ -1693,6 +1693,8 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             label = CCSprite::create("stuck2.png");
             
             break;
+        default:
+            break;
             
     }
     if (label == NULL) return;
