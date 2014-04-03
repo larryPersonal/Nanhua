@@ -367,6 +367,9 @@
             <fontSize>24</fontSize>
             <left>25</left>
 			<top>20</top>
+            <outcome>
+                <refugee>5</refugee>
+            </outcome>
         </option>
         <option>
             <text>Option 2: Reject refuges.</text>
@@ -375,6 +378,9 @@
             <fontSize>24</fontSize>
             <left>25</left>
 			<top>12</top>
+            <outcome>
+                <bandit>5</bandit>
+            </outcome>
         </option>
     </slide>
 </project>

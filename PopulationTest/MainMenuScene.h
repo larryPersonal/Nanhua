@@ -25,6 +25,10 @@ class MainMenuScene : public cocos2d::CCLayer
     CCMenuItemImage* buttonOptions;
     CCMenuItemImage* buttonCredits;
     
+    // loading screen module
+    CCSprite* loadingScreen;
+    CCLabelTTF* loadingLabel;
+    
 public:
     
     CCSize sz; 
@@ -51,6 +55,9 @@ public:
     
     void onAcceptTutorial(CCObject* pSender);
     void onRejectTutorial(CCObject* pSender);
+    
+    void enableLoadingScreen();
+    void loadSenarioChooseScene();
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(MainMenuScene);

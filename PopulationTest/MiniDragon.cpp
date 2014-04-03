@@ -86,6 +86,7 @@ void MiniDragon::display()
                 TutorialManager::getThis()->unlockAll();
                 TutorialManager::getThis()->active = false;
                 move(ccp(0, -500));
+                scheduleSenario();
                 return;
             }
             else
@@ -233,7 +234,7 @@ void MiniDragon::display()
             move(ccp(0, -500));
             autoJump = false;
             cumulativeTime = 0;
-            TutorialManager::getThis()->schedule(schedule_selector( MiniDragon::scheduleSenario ), 1.0f / 120.0f);
+            TutorialManager::getThis()->scheduleOnce(schedule_selector( MiniDragon::scheduleSenario ), 360);
             break;
         default:
             break;
@@ -299,21 +300,13 @@ void MiniDragon::finishDisplay()
     }
 }
 
-void MiniDragon::scheduleSenario(float dt)
+void MiniDragon::scheduleSenario()
 {
-    if(cumulativeTime < 300)
-    {
-        cumulativeTime += dt;
-    }
-    else
-    {
-        TutorialManager::getThis()->unschedule(schedule_selector( MiniDragon::scheduleSenario ));
-        TutorialManager::getThis()->active = false;
-        TutorialManager::getThis()->unlockAll();
-        GameHUD::getThis()->pause = true;
-        std::string filename = "tutorial.xml";
-        Senario::getThis()->playSenario(filename.c_str());
-    }
+    TutorialManager::getThis()->active = false;
+    TutorialManager::getThis()->unlockAll();
+    GameHUD::getThis()->pause = true;
+    std::string filename = "tutorial.xml";
+    Senario::getThis()->playSenario(filename.c_str());
 }
 
 void MiniDragon::update(float dt)

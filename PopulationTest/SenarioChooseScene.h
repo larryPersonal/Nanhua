@@ -19,8 +19,6 @@ public:
     static SenarioChooseScene* SP;
     
     CCSprite* backgroundImage;
-    CCSprite* backgroundDemonstrationPanel;
-    CCSprite* backgroundChoosePanel;
     
     CCMenuItem* senarioButtonTutorial;
     CCMenuItem* senarioButtonS1;
@@ -29,6 +27,9 @@ public:
     CCMenuItem* senarioButtonS4;
     CCMenuItem* senarioButtonS5;
     CCMenuItem* senarioButtonS6;
+    
+    CCSprite* loadingScreen;
+    CCLabelTTF* loadingLabel;
     
 public:
     SenarioChooseScene();
@@ -53,6 +54,16 @@ public:
     void onOrientateChange();
     void onOrientationChangedToPortrait();
     void onOrientationChangedToLandscape();
+    
+    void enableLoadingScreen();
+    
+    void loadingTutorial();
+    void loadingSenario1();
+    void loadingSenario2();
+    void loadingSenario3();
+    void loadingSenario4();
+    void loadingSenario5();
+    void loadingSenario6();
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(SenarioChooseScene);

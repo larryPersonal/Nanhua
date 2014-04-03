@@ -11,7 +11,7 @@
 
 std::string builderDefaults =
 "{\"default_movement_range\":\"20\","
-"\"default_movement_speed\":\"50\","  // basic default value is 50 for mayan game
+"\"default_movement_speed\":\"30\","  // basic default value is 50 for mayan game
 "\"default_animate_speed\":\"50\","  // basic default value is 50 for mayan game
 "\"default_hungry_limit\":\"100\","
 "\"default_food_carriage_limit\":\"0\","

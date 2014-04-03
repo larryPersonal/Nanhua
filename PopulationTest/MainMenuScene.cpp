@@ -93,6 +93,19 @@ bool MainMenuScene::init()
     creditsLabel->setColor(ccc3(255,189,68));
     */
     
+    /* loading screen module */
+    loadingScreen = CCSprite::create("black.png");
+    loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
+    loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
+    loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(loadingScreen, 10);
+    loadingScreen->setVisible(false);
+    
+    loadingLabel = CCLabelTTF::create("Loading....", "Shojumaru-Regular", 32);
+    loadingLabel->setAnchorPoint(ccp(0.5, 0.5));
+    loadingLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(loadingLabel, 11);
+    loadingLabel->setVisible(false);
     
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
@@ -162,25 +175,31 @@ void MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)
 
 void MainMenuScene::onNewGame(cocos2d::CCObject *pSender)
 {
-    /*
-    PopupMenu::closeAllPopupMenu();
-    AlertBox* alert = AlertBox::create();
-    alert->useAsExclusivePopupMenu();
-    alert->setDisplayText("Play the tutorial?");
-    
-    alert->addButton(0, "Yes", this, callfuncO_selector(MainMenuScene::onAcceptTutorial), pSender);
-    alert->addButton(0, "No", this, callfuncO_selector(MainMenuScene::onRejectTutorial), pSender);
-    */
-    
-    //onRejectTutorial(pSender);
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(MainMenuScene::loadSenarioChooseScene), 0.1f);
+}
+
+void MainMenuScene::loadSenarioChooseScene()
+{
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-
+    
     CCDirector::sharedDirector()->replaceScene(SenarioChooseScene::scene());
 }
 
+void MainMenuScene::enableLoadingScreen()
+{
+    this->removeChild(backgroundImage);
+    this->removeChild(backgroundDeco);
+    this->removeChild(backgroundDeco2);
+    this->removeChild(buttonStart);
+    this->removeChild(buttonOptions);
+    
+    loadingScreen->setVisible(true);
+    loadingLabel->setVisible(true);
+}
 
 void MainMenuScene::onRejectTutorial(cocos2d::CCObject *pSender)
 {

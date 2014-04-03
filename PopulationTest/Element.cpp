@@ -13,6 +13,13 @@ Element::Element(){
     
     fadeIn = false;
     fadeOut = false;
+    
+    outcome = false;
+    banditsModifier = 0;
+    refugeeModifier = 0;
+    foodModifier = 0;
+    goldModifier = 0;
+    populationModifier = 0;
 }
 
 Element::~Element(){
