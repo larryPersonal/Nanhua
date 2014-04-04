@@ -330,9 +330,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "Building::ArriveHandler(GameSprite* sp)"
-            landmarkType = "5">
+            endingLineNumber = "210">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -681,7 +679,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "630"
             endingLineNumber = "630"
-            landmarkName = "GameSprite::followPath()"
+            landmarkName = "GameSprite::setFrameCount(int idleFrames, int walkFrames)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1710,7 +1708,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "744"
-            endingLineNumber = "744">
+            endingLineNumber = "744"
+            landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1724,9 +1724,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "942"
-            endingLineNumber = "942"
-            landmarkName = "GameSprite::getAction()"
-            landmarkType = "5">
+            endingLineNumber = "942">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3488,9 +3486,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "825"
-            endingLineNumber = "825"
-            landmarkName = "Building::AnimUpdate()"
-            landmarkType = "5">
+            endingLineNumber = "825">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

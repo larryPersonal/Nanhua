@@ -259,9 +259,12 @@ void SenarioChooseScene::loadingSenario5()
 //THIS IS ACTUALLY THE GO BACK BUTTON.
 void SenarioChooseScene::chooseSenario6()
 {
-    CCDirector::sharedDirector()->popScene();
+   // CCDirector::sharedDirector()->popScene();
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
     
-   // CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
 }
 
 void SenarioChooseScene::loadingSenario6()
