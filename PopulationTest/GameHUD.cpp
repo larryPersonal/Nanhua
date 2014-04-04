@@ -71,6 +71,9 @@ GameHUD::GameHUD()
     scrolled_in = false;
     
     setTutorial = false;
+    
+    fade_out = false;
+    fade_in = false;
 }
 
 GameHUD::~GameHUD()
@@ -865,9 +868,9 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu = CCSprite::create(objectiveBackground.c_str());
     CCSize spriteSize = objectiveMenu->getContentSize();
     objectiveMenu->setVisible(false);
-    objectiveMenu->setAnchorPoint(ccp(0.3, 0.5));
+    objectiveMenu->setAnchorPoint(ccp(0.0, 1.0));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveMenu->setPosition(ccp(-1500, screenSize.height - 85.0f));
+    objectiveMenu->setPosition(ccp(-screenSize.width , screenSize.height - 115.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
@@ -882,16 +885,16 @@ void GameHUD::createObjectiveMenu()
     objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
     objectiveTitle->setColor(colorBlack);
-    objectiveTitle->setPosition(ccp((objectiveMenu->boundingBox().size.width - 60) / 2.0f + 60, screenSize.height - 240));
+    objectiveTitle->setPosition(ccp((objectiveMenu->boundingBox().size.width - 60) / 2.0f + 60, screenSize.height * 0.75f));
     
     CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectives;
     for (int i = 0; i < allObjectives->count(); i++)
     {
         Objective* objective = (Objective*) allObjectives->objectAtIndex(i);
         std::string objectiveStr = objective->getObjectiveString();
-        CCLabelTTF* tempLabel = CCLabelTTF::create(objectiveStr.c_str(), "Shojumaru-Regular", 16, CCSizeMake(objectiveStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        CCLabelTTF* tempLabel = CCLabelTTF::create(objectiveStr.c_str(), "Shojumaru-Regular", 10, CCSizeMake(objectiveStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
         tempLabel->setAnchorPoint(ccp(0, 0));
-        tempLabel->setPosition(ccp(75.0f, screenSize.height - 280 - 20.0f * i));
+        tempLabel->setPosition(ccp(75.0f, (screenSize.height *0.7f) - 20.0f * i));
         objectiveStrs->addObject(tempLabel);
         this->addChild(tempLabel, 3);
         
@@ -951,7 +954,7 @@ void GameHUD::fadeOut(float dt)
             fade_out = false;
             objectiveMenu->setVisible(false);
             objectiveTitle->setVisible(false);
-            objectiveMenu->setPosition(ccp(-1000, screenSize.height - 120.0f));
+            objectiveMenu->setPosition(ccp(-screenSize.width , screenSize.height - 115.0f));
             for(int i = 0; i < objectiveStrs->count(); i++)
             {
                 CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
@@ -970,6 +973,9 @@ void GameHUD::fadeOut(float dt)
 
 void GameHUD::clickObjectiveButton()
 {
+    
+    
+    
     if(!fade_in && !fade_out)
     {
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -991,7 +997,7 @@ void GameHUD::clickObjectiveButton()
             objectiveMenu->setVisible(true);
             objectiveTitle->setOpacity((GLubyte) 0);
             objectiveTitle->setVisible(true);
-            objectiveMenu->setPosition(ccp(0, screenSize.height - 120.0f));
+            objectiveMenu->setPosition(ccp(screenSize.width * 0.015f, screenSize.height - 115.0f));
             for (int i = 0; i < objectiveStrs->count(); i++)
             {
                 CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
