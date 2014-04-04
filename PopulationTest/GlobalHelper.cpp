@@ -230,6 +230,24 @@ vector<std::string> GlobalHelper::split(std::string text, char delimiter)
     return tokens;
 }
 
+bool GlobalHelper::compareCCPoint(CCPoint ccp1, CCPoint ccp2)
+{
+    stringstream ss;
+    ss << "ccp1: (" << ccp1.x << ", " << ccp1.y << ")    ccp2: (" << ccp2.x << ", " << ccp2.y << ")    result: ";
+    if(ccp1.x == ccp2.x && ccp1.y == ccp2.y)
+    {
+        ss << "true";
+        //CCLog(ss.str().c_str());
+        return true;
+    }
+    else
+    {
+        ss << "false";
+        //CCLog(ss.str().c_str());
+        return false;
+    }
+}
+
 
 
 

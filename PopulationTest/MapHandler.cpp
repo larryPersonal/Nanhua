@@ -1129,6 +1129,7 @@ void MapHandler::UnPathPreviewLineExtend()
 
 void MapHandler::update(float dt)
 {
+    /*
     CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
     
     for(int i = 0; i < combatTiles->count(); i++)
@@ -1149,6 +1150,7 @@ void MapHandler::update(float dt)
             combatTiles->addObject(gs->currTile);
         }
     }
+    */
 }
 
 

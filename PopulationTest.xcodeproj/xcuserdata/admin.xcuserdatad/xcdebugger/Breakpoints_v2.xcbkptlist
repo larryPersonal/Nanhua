@@ -174,11 +174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418276244.285793"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2167"
-            endingLineNumber = "2167"
+            startingLineNumber = "2251"
+            endingLineNumber = "2251"
             landmarkName = "GameSprite::ReplaceSpriteRep()"
             landmarkType = "5">
          </BreakpointContent>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "865"
-            endingLineNumber = "865"
+            startingLineNumber = "851"
+            endingLineNumber = "851"
             landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "840"
-            endingLineNumber = "840"
+            startingLineNumber = "826"
+            endingLineNumber = "826"
             landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "862"
-            endingLineNumber = "862"
+            startingLineNumber = "848"
+            endingLineNumber = "848"
             landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,12 +362,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "847"
-            endingLineNumber = "847"
-            landmarkName = "GameSprite::Wander()"
+            startingLineNumber = "833"
+            endingLineNumber = "833"
+            landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -378,13 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "853"
-            endingLineNumber = "853"
-            landmarkName = "GameSprite::Wander()"
-            landmarkType = "5">
+            startingLineNumber = "839"
+            endingLineNumber = "839">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -394,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "842"
-            endingLineNumber = "842"
+            startingLineNumber = "828"
+            endingLineNumber = "828"
             landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "418207955.881406"
+            timestampString = "418208782.007441"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1105"
-            endingLineNumber = "1105"
+            startingLineNumber = "1111"
+            endingLineNumber = "1111"
             landmarkName = "GameScene::FirstRunPopulate()"
             landmarkType = "5">
          </BreakpointContent>
@@ -490,11 +488,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418272379.431673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "904"
-            endingLineNumber = "904"
+            startingLineNumber = "890"
+            endingLineNumber = "890"
             landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
@@ -506,11 +504,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Sprite.cpp"
-            timestampString = "417932551.360794"
+            timestampString = "418218260.163685"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "578"
-            endingLineNumber = "578"
+            startingLineNumber = "579"
+            endingLineNumber = "579"
             landmarkName = "GameSprite::followPath()"
             landmarkType = "5">
          </BreakpointContent>
@@ -538,11 +536,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "418130933.156891"
+            timestampString = "418208841.39113"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
             landmarkName = "BuildingInfoMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -570,11 +568,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "418130933.156891"
+            timestampString = "418208841.39113"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "994"
-            endingLineNumber = "994"
+            startingLineNumber = "996"
+            endingLineNumber = "996"
             landmarkName = "BuildingInfoMenu::refreshAllMenuItemValues()"
             landmarkType = "5">
          </BreakpointContent>
