@@ -105,6 +105,7 @@ public:
     VillagerClass villagerClass;
     
     GameSprite* enermy;
+    GameSprite* preEnermy;
     
     CCPoint nextTile;
     CCPoint currentTile;

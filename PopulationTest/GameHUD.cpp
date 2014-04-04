@@ -1258,6 +1258,7 @@ void GameHUD::UpdateBuildButton()
     buildButton->setTexture(tex);
 //    CC_SAFE_RELEASE(tex);
 }
+
 void GameHUD::createSoldierHelper()
 {
     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
@@ -1369,5 +1370,4 @@ void GameHUD::updateSoldierHelper(float dt)
     }
     
     stopActionLabel->setString(ss.str().c_str());
-
 }
