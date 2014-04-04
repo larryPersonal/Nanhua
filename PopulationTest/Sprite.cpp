@@ -297,7 +297,7 @@ GameSprite* GameSprite::create()
      std::string initName = spriteName.c_str();
      initName+= "_IDL001.png";
      spriteRep->initWithSpriteFrameName(initName.c_str());
-     spriteRep->setAnchorPoint(ccp(0.5, 0.5));
+     spriteRep->setAnchorPoint(ccp(0.5, 0.75));
 
      spriteRep->setScale(0.5f);
     // spriteRep->retain();
@@ -2142,7 +2142,7 @@ void GameSprite::ReplaceSpriteRep()
     std::string initName = spriteName;
     initName+= "_IDL001.png";
     spriteRep->initWithSpriteFrameName(initName.c_str());
-    spriteRep->setAnchorPoint(ccp(0.5, 0.5));
+    spriteRep->setAnchorPoint(ccp(0.5, 0.75));
     spriteRep->setScale(0.5f);
 
     initAI(true);

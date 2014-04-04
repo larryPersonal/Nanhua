@@ -193,7 +193,6 @@
 		365FBC4416E5E31000A57CF0 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365FBC4316E5E31000A57CF0 /* LocalStorageAndroid.cpp */; };
 		365FBC4716E5E31000A57CF0 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365FBC4616E5E31000A57CF0 /* HttpClient.cpp */; };
 		365FBC5C16E5E31000A57CF0 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365FBC5B16E5E31000A57CF0 /* AppDelegate.cpp */; };
-		36682A3618DAC12100BC4214 /* Level Select Screen 02.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3418DAC12100BC4214 /* Level Select Screen 02.png */; };
 		36682A3718DAC12100BC4214 /* Level Select Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3518DAC12100BC4214 /* Level Select Screen.png */; };
 		36682A3918DAC68400BC4214 /* Energy_brown bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 36682A3818DAC68400BC4214 /* Energy_brown bar.png */; };
 		366F6CA0171CFD5700CDCC6F /* citizenbehavior.lua in Resources */ = {isa = PBXBuildFile; fileRef = 366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */; };
@@ -901,7 +900,6 @@
 		365FBC5816E5E31000A57CF0 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		365FBC5A16E5E31000A57CF0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		365FBC5B16E5E31000A57CF0 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		36682A3418DAC12100BC4214 /* Level Select Screen 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen 02.png"; sourceTree = "<group>"; };
 		36682A3518DAC12100BC4214 /* Level Select Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level Select Screen.png"; sourceTree = "<group>"; };
 		36682A3818DAC68400BC4214 /* Energy_brown bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Energy_brown bar.png"; sourceTree = "<group>"; };
 		366F6C9F171CFD5700CDCC6F /* citizenbehavior.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citizenbehavior.lua; sourceTree = "<group>"; };
@@ -2211,7 +2209,6 @@
 		36AC559118D6B81800C165F5 /* ScenarioSelect */ = {
 			isa = PBXGroup;
 			children = (
-				36682A3418DAC12100BC4214 /* Level Select Screen 02.png */,
 				36682A3518DAC12100BC4214 /* Level Select Screen.png */,
 			);
 			name = ScenarioSelect;
@@ -3927,7 +3924,6 @@
 				84360A2E18B21FED002EC8C2 /* workers_assign_ui_girl_portrait.png in Resources */,
 				3658DD7918D6F1430056B895 /* char6MMCVillager Wave Sprite.png in Resources */,
 				3604970C17AB969E00CACE25 /* homebutton_pressed.png in Resources */,
-				36682A3618DAC12100BC4214 /* Level Select Screen 02.png in Resources */,
 				3604970D17AB969E00CACE25 /* homebutton.png in Resources */,
 				36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */,
 				36AC555A18D6981900C165F5 /* allocatebtn-press.png in Resources */,
