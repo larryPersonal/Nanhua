@@ -46,11 +46,22 @@ GameScene::GameScene()
     switch (GameManager::getThis()->getLevel())
     {
         case 0:
+            CCLog("l0");
             settingsLevel->setLevel0();
+            systemConfig->skipSenario = false;
+            systemConfig->skipTutorial = false;
             break;
         case 1:
+            CCLog("l1");
             settingsLevel->setLevel0();
+            systemConfig->skipSenario = true;
+            systemConfig->skipTutorial = true;
             break;
+        case 2:
+            CCLog("l2");
+            settingsLevel->setLevel0();
+            systemConfig->skipSenario = true;
+            systemConfig->skipTutorial = true;
         default:
             break;
     }
@@ -107,11 +118,8 @@ CCScene* GameScene::scene()
     */
     
     TutorialManager* tm = TutorialManager::create();
-    
-    if(GameManager::getThis()->getLevel() == 0)
-    {
-        tm->setupForTutorial();
-    }
+    CCLog("Level is %d", GameManager::getThis()->getLevel());
+    tm->setupForTutorial();
     
     scene->addChild(senlayer, 1);
     scene->addChild(tm, 1);
@@ -151,6 +159,10 @@ void GameScene::setupScene()
 {
     int level = GameManager::getThis()->getLevel();
     if(level == 0)
+    {
+        mapHandler->initTiles("DemoScene.tmx");
+    }
+    else if(level == 1)
     {
         mapHandler->initTiles("DemoScene.tmx");
     }
