@@ -67,11 +67,12 @@ TutorialManager::TutorialManager()
 
 TutorialManager::~TutorialManager()
 {
-    TutorialManager::SP = NULL;
-    if(miniDragon != NULL)
+     if(miniDragon != NULL)
     {
         delete miniDragon;
     }
+    TutorialManager::SP = NULL;
+    
 }
 
 void TutorialManager::unlockAll()

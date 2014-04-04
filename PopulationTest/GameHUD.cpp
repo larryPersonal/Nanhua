@@ -80,6 +80,11 @@ GameHUD::~GameHUD()
     objectiveStrs->removeAllObjects();
     CC_SAFE_RELEASE(objectiveStrs);
 
+    if (SystemMenu::SP != NULL)
+    {
+        CC_SAFE_RELEASE(SystemMenu::SP);
+    }
+    
     GameHUD::SP = NULL;
 }
 
@@ -347,6 +352,8 @@ void GameHUD::update(float deltaTime)
 
         }
         tapModeLabel->setString(ss.str().c_str());
+        UpdateBuildButton();
+
     }
     
     // for food and storage change!
@@ -860,7 +867,7 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0.3, 0.5));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveMenu->setPosition(ccp(-1000, screenSize.height - 85.0f));
+    objectiveMenu->setPosition(ccp(-1500, screenSize.height - 85.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
@@ -997,6 +1004,8 @@ void GameHUD::clickObjectiveButton()
     }
 }
 
+
+
 void GameHUD::createBuildMenu()
 {
     // set common variables
@@ -1018,6 +1027,9 @@ void GameHUD::createBuildMenu()
     mask->setOpacity((GLubyte) 0);
     this->addChild(mask, 10);
 }
+
+
+
 
 void GameHUD::clickBuildButton()
 {
@@ -1217,11 +1229,32 @@ void GameHUD::stickGameHappiness()
 
 void GameHUD::clickSystemButton()
 {
-    SystemMenu* sm = SystemMenu::create(this);
+   SystemMenu* sm = SystemMenu::create(this);
     sm->retain();
     pause = true;
 }
 
+<<<<<<< HEAD
+=======
+void GameHUD::UpdateBuildButton()
+{
+    if (buildButton == NULL) return;
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    
+    CCTexture2D* tex;
+    if (getTapMode() == 0)
+    {
+        tex = CCTextureCache::sharedTextureCache()->addImage("main-game-buttons_build.png");
+    }
+    else
+    {
+        tex = CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png");
+        
+    }
+    buildButton->setTexture(tex);
+//    CC_SAFE_RELEASE(tex);
+}
+>>>>>>> 8603fd0b9f5de0654e04b67ebfc1c97abb553246
 void GameHUD::createSoldierHelper()
 {
     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
@@ -1333,4 +1366,8 @@ void GameHUD::updateSoldierHelper(float dt)
     }
     
     stopActionLabel->setString(ss.str().c_str());
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8603fd0b9f5de0654e04b67ebfc1c97abb553246
 }

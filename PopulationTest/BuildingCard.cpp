@@ -229,11 +229,13 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
+        
             GameHUD::getThis()->setTapMode(3);
             GameScene::getThis()->isThisTapCounted = true;
-            BuildScroll::getThis()->closeMenu(false);
+            GameHUD::getThis()->buildScroll->scheduleScrollOut();
             GameHUD::getThis()->buildButton->setVisible(true);
-            GameHUD::getThis()->buildScroll = NULL;
+            
+            
         }
             break;
         case -2 : //unbuild path
@@ -243,9 +245,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
                 return;
             }
             GameHUD::getThis()->setTapMode(4);
-            BuildScroll::getThis()->closeMenu(false);
+            GameScene::getThis()->isThisTapCounted = true;
+            
+            GameHUD::getThis()->buildScroll->scheduleScrollOut();
             GameHUD::getThis()->buildButton->setVisible(true);
-            GameHUD::getThis()->buildScroll = NULL;
+            
         }
             break;
         case -3: //destory building
@@ -254,10 +258,12 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
-            //I'll need to set tap mode to demolish.
-            BuildScroll::getThis()->closeMenu(false);
+            //I'll need to set tap mode to demolish. TODO
+            GameScene::getThis()->isThisTapCounted = true;
+            
+            GameHUD::getThis()->buildScroll->scheduleScrollOut();
+            
             GameHUD::getThis()->buildButton->setVisible(true);
-            GameHUD::getThis()->buildScroll = NULL;
         }
             break;
         default:
@@ -336,6 +342,9 @@ void BuildingCard::tryToBuild(int tag)
         }
         GameHUD::getThis()->money -= buildingToBuy->buildingCost;
         GameHUD::getThis()->setTapMode(1);
+        
+        
+        
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }
     GameScene::getThis()->isThisTapCounted = true;

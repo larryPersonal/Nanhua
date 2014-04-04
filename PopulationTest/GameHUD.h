@@ -248,6 +248,8 @@ public:
     
     void fadeIn(float);
     void fadeOut(float);
+    
+    void UpdateBuildButton();
 };
 
 #endif
