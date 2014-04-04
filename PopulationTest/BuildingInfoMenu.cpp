@@ -289,8 +289,8 @@ void BuildingInfoMenu::createMenuItems()
     /*
     menuItems->addObject(buttonClose);
     */
-    selectWorkerButton = CCMenuItemImage::create("assigntaskicon.png", "assigntaskicon.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton->setScale( 60.0f / selectWorkerButton->boundingBox().size.width );
+    selectWorkerButton = CCMenuItemImage::create("allocatebtn.png", "allocatebtn-press.png", this, menu_selector(BuildingInfoMenu::selectPop));
+    selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
     if(!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY)
@@ -432,14 +432,15 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(foodLabel);
     
     upgradeButton = CCMenuItemImage::create("upgrade.png", "upgrade.png", this, menu_selector(BuildingInfoMenu::upgrade));
-    upgradeButton->setScale(0.4f);
+   // upgradeButton->setScale(f);
     upgradeButton->setAnchorPoint(ccp(0, 1));
-    upgradeButton->setPosition(ccp(150 + hw, -180 + hh));
+    upgradeButton->setPosition(ccp(150 + hw, -105 + hh));
     
     cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
-    cancelUpgradeButton->setScale(upgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, upgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
+    cancelUpgradeButton->setScale(0.25f);
+  //  cancelUpgradeButton->setScale(cancelUpgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, cancelUpgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
     cancelUpgradeButton->setAnchorPoint(ccp(0, 1));
-    cancelUpgradeButton->setPosition(ccp(150 + hw, -180 + hh));
+    cancelUpgradeButton->setPosition(ccp(160 + hw, -165 + hh));
     
     menuItemsUpgrade = CCArray::create();
     menuItemsUpgrade->retain();
@@ -755,7 +756,7 @@ void BuildingInfoMenu::reposition()
         spp->setPosition(ccp(-halfWidth * 3.0f / 4.0f + hw + 5.0f + (((CCSprite*)spritePopulationSlot->objectAtIndex(0))->boundingBox().size.width + 5.0f) * i, -62.0f + hh));
     }
     
-    selectWorkerButton->setPosition(ccp(-halfWidth + 25.0f + hw, -halfHeight + 85.0f + hh));
+    selectWorkerButton->setPosition(ccp(-halfWidth + 50.0f + hw, -halfHeight + 85.0f + hh));
 }
 
 void BuildingInfoMenu::refreshAllMenuItemValues()

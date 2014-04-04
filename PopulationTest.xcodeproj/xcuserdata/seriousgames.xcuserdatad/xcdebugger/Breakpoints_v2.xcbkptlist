@@ -3308,11 +3308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "418010228.089867"
+            timestampString = "418270478.783334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "879"
-            endingLineNumber = "879"
+            startingLineNumber = "880"
+            endingLineNumber = "880"
             landmarkName = "BuildingInfoMenu::refreshAllMenuItemValues()"
             landmarkType = "5">
          </BreakpointContent>
