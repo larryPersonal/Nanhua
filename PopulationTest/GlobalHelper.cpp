@@ -237,21 +237,13 @@ bool GlobalHelper::compareCCPoint(CCPoint ccp1, CCPoint ccp2)
     if(ccp1.x == ccp2.x && ccp1.y == ccp2.y)
     {
         ss << "true";
-<<<<<<< HEAD
         //CCLog(ss.str().c_str());
-=======
-        CCLog(ss.str().c_str());
->>>>>>> 8603fd0b9f5de0654e04b67ebfc1c97abb553246
         return true;
     }
     else
     {
         ss << "false";
-<<<<<<< HEAD
         //CCLog(ss.str().c_str());
-=======
-        CCLog(ss.str().c_str());
->>>>>>> 8603fd0b9f5de0654e04b67ebfc1c97abb553246
         return false;
     }
 }

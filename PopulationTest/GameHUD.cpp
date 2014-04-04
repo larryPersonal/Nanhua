@@ -1234,8 +1234,6 @@ void GameHUD::clickSystemButton()
     pause = true;
 }
 
-<<<<<<< HEAD
-=======
 void GameHUD::UpdateBuildButton()
 {
     if (buildButton == NULL) return;
@@ -1254,7 +1252,7 @@ void GameHUD::UpdateBuildButton()
     buildButton->setTexture(tex);
 //    CC_SAFE_RELEASE(tex);
 }
->>>>>>> 8603fd0b9f5de0654e04b67ebfc1c97abb553246
+
 void GameHUD::createSoldierHelper()
 {
     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
@@ -1366,8 +1364,4 @@ void GameHUD::updateSoldierHelper(float dt)
     }
     
     stopActionLabel->setString(ss.str().c_str());
-<<<<<<< HEAD
-=======
-
->>>>>>> 8603fd0b9f5de0654e04b67ebfc1c97abb553246
 }
