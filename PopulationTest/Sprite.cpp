@@ -89,6 +89,7 @@ GameSprite::GameSprite()
     isMoving = false;
     
     enermy = NULL;
+    preEnermy = NULL;
     
     currentTile = CCPointZero;
 }
@@ -585,6 +586,7 @@ void GameSprite::followPath()
                             //nextTile = currentTile;
                             stopAction = true;
                             isMoving = false;
+                            preEnermy = gs;
                             return;
                         }
                     }
@@ -608,6 +610,7 @@ void GameSprite::followPath()
                             //nextTile = currentTile;
                             isMoving = false;
                             stopAction = true;
+                            preEnermy = gs;
                             return;
                         }
                     }
@@ -969,7 +972,6 @@ void GameSprite::updateSprite(float dt)
     {
         if(currAction == IDLE)
         {
-            CCLog("test ||||||||||||||||||||||||||");
             attack();
         }
     }
@@ -1359,17 +1361,12 @@ void GameSprite::updateSprite(float dt)
                             
                             if(gs != this && gs->villagerClass == V_BANDIT && gs->combatState == C_IDLE)
                             {
-                                CCPoint gsTile = gs->getWorldPosition();
-                                gsTile = GameScene::getThis()->mapHandler->tilePosFromLocation(gsTile);
-                                
-                                if(GlobalHelper::compareCCPoint(currPos, gsTile) || GlobalHelper::compareCCPoint(enermy->currPos, gsTile))
+                                if(gs->stopAction && gs->preEnermy == enermy)
                                 {
-                                    if(gs->stopAction)
-                                    {
-                                        gs->stopAction = false;
-                                        gs->followPath();
-                                        gs->currAction = WALKING;
-                                    }
+                                    gs->stopAction = false;
+                                    gs->followPath();
+                                    gs->currAction = WALKING;
+                                    gs->preEnermy = NULL;
                                 }
                             }
                         }
