@@ -51,13 +51,16 @@ SpriteRow* SpriteRow::create(GameSprite* gs, ScrollArea* sa, Building* building,
 
 bool SpriteRow::init()
 {
+    int row = (int) (index / 4);
+    int column = (int) (index % 4);
+    
     mSpriteRowEnergyCurrent = gameSprite->getPossessions()->energyRating;
     mSpriteRowEnergyRequired = gameSprite->getPossessions()->default_energy_limit;
     mSpriteRowSpriteName = gameSprite->spriteName;
     
     // display the sprite row background
-    spriteRowBackground = CCSprite::create("Energy.png");
-    spriteRowBackground->setScale(440.0f / spriteRowBackground->boundingBox().size.width);
+    spriteRowBackground = CCSprite::create("characterbox.png");
+    spriteRowBackground->setScale(100.0f / spriteRowBackground->boundingBox().size.width);
     spriteRowBackground->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(spriteRowBackground, ccp(5.0f, 0.0f + 90.0f * index));
     
@@ -68,17 +71,6 @@ bool SpriteRow::init()
     villagerImage->setAnchorPoint(ccp(0, 1));
     scrollArea->addItem(villagerImage, ccp(10.0f, 15.0f + 90.0f * index));
     
-   // ccColor3B colorBlack = ccc3(0, 0, 0);
-   // std::stringstream ss;
-    
-    // display the name of the sprite
-    /*
-    ss << "Energy";
-    villagerEnergyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    villagerEnergyLabel->setColor(colorBlack);
-    villagerEnergyLabel->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(villagerEnergyLabel, ccp(85.0f, 25.0f + 90.0f * index));
-    */
     // display the energy bar of the sprite
     Possessions* possessions = gameSprite->getPossessions();
     
