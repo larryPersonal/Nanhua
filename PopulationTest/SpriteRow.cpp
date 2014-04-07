@@ -62,26 +62,26 @@ bool SpriteRow::init()
     spriteRowBackground = CCSprite::create("characterbox.png");
     spriteRowBackground->setScale(100.0f / spriteRowBackground->boundingBox().size.width);
     spriteRowBackground->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(spriteRowBackground, ccp(5.0f, 0.0f + 90.0f * index));
+    scrollArea->addItem(spriteRowBackground, ccp(30.0f + 100.0f * column, 30.0f + 100.0f * row));
     
     //display the image of the sprite
     std::string tempStr = gameSprite->spriteName;
     villagerImage = CCMenuItemImage::create( tempStr.append("_port.png").c_str(), tempStr.c_str(), this, menu_selector(SpriteRow::showSprite) );
     villagerImage->setScale(64.0f / villagerImage->boundingBox().size.width);
     villagerImage->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(villagerImage, ccp(10.0f, 15.0f + 90.0f * index));
+    scrollArea->addItem(villagerImage, ccp(30.0f + 100.0f * column, 42.0f + 100.0f * row));
     
     // display the energy bar of the sprite
     Possessions* possessions = gameSprite->getPossessions();
     
     // display the energy bar of the sprite
     villagerEnergyBar = new ProgressBar();
-    villagerEnergyBar->createProgressBar(CCRectMake(0, 0, 300, 30),
-                                   CCRectMake(0, 6, 300, 30),
+    villagerEnergyBar->createProgressBar(CCRectMake(0, 0, 10, 100),
+                                   CCRectMake(0, 6, 10, 100),
+                                   "worker availablevertbar.png",
                                    "NONE",
                                    "NONE",
-                                   "NONE",
-                                   "Energybar.png");
+                                   "worker availablevertbarinner.png", false);
     villagerEnergyBar->setValue((float)possessions->energyRating / (float)possessions->default_energy_limit);
     scrollArea->addItem(villagerEnergyBar, ccp(80.0f, 45.0f + 90.0f * index));
     
@@ -165,7 +165,6 @@ void SpriteRow::eatFood()
 {
     if(gameSprite != NULL && building != NULL)
     {
-        
         gameSprite->setTargetLocation(building);
         gameSprite->GoEat(building);
         

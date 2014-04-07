@@ -20,11 +20,11 @@ public:
     Building* building;
     ScrollArea* scrollArea;
     
-    CCSprite* cardBG;
+    CCMenuItemImage* cardBG;
     CCSprite* cardDetailBG;
     
     CCLabelTTF* buildingNameLabel;
-    CCMenuItemSprite* buildingImage;
+    CCSprite* buildingImage;
     CCMenuItemImage* buildingInfoButton;
     
     CCSprite* costImage;
@@ -43,7 +43,9 @@ public:
     //where 2 overrides with Destroy Path
     //Where 3 overrides with Demolish
     
+    CCMenu* infoButtonMenu;
     CCMenu* menu;
+    CCArray* infoButtonMenuItemsArray;
     CCArray* menuItemsArray;
     
     CCSprite* mask;
@@ -58,7 +60,10 @@ public:
     
     void refreshAllMenuItems();
     
+    void pressDownInfo();
     void showBuildingInfo();
+    
+    void pressBuildingCard();
     
     //General menu callback
     void onMenuItemSelected(CCObject*);

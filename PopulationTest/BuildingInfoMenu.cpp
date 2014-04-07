@@ -204,7 +204,8 @@ void BuildingInfoMenu::createMenuItems()
                                "Energy_brown dialog.png",
                                "NONE",
                                "NONE",
-                               "Energybar.png"
+                               "Energybar.png",
+                               true
     );
     unitBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
     
@@ -245,7 +246,8 @@ void BuildingInfoMenu::createMenuItems()
                                "Energy_brown dialog.png",
                                "NONE",
                                "NONE",
-                               "Energybar.png"
+                               "Energybar.png",
+                               true
                                );
     foodStorageBar->setValue((float)building->currentStorage / (float)building->storageLimit);
     
@@ -267,7 +269,8 @@ void BuildingInfoMenu::createMenuItems()
                                       "Energy_brown dialog.png",
                                       "NONE",
                                       "NONE",
-                                      "Energybar.png"
+                                      "Energybar.png",
+                                      true
                                       );
     workCompleteBar->setValue((float)building->work_unit_current / (float)building->work_unit_required);
     
@@ -460,7 +463,8 @@ void BuildingInfoMenu::createMenuItems()
                                        "Energy_brown dialog.png",
                                        "NONE",
                                        "NONE",
-                                       "Energybar.png"
+                                       "Energybar.png",
+                                        true
                                        );
     upgradeBar->setValue((float)building->current_upgrade_unit / (float)building->upgrade_unit_max);
     upgradeBar->setAnchorPoint(ccp(0, 1));

@@ -608,7 +608,7 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
     }
     
     CCRect frame = getViewRect();
-
+    
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (m_pTouches->count() > 2 ||
         m_bTouchMoved          ||
@@ -740,19 +740,22 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
             {
                 this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
             }
-            m_pTouches->removeObject(touch);
+            
         }
-        
-        if (m_pTouches->count() == 0)
-        {
-            m_bDragging = false;
-            m_bTouchMoved = false;
-        }
+    }
+    
+    m_pTouches->removeAllObjects();
+    
+    if (m_pTouches->count() == 0)
+    {
+        m_bDragging = false;
+        m_bTouchMoved = false;
     }
 }
 
 void CCScrollView::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 {
+    CCLog("try my best");
     if (!this->isVisible())
     {
         return;

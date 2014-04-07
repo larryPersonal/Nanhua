@@ -61,8 +61,8 @@ private:
     // Value of this progress bar
     float currentValue;
     
+    bool horizontal;
 public:
-    
     // Constructor / Destructor
     ~ProgressBar();
     
@@ -74,7 +74,7 @@ public:
                            const char* bgBodyFileName,
                            const char* bgLeftFileName,
                            const char* bgRightFileName,
-                           const char* barFileName);
+                           const char* barFileName, bool horizontal);
     void reposition();
     
     // Value functions

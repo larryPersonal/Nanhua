@@ -138,7 +138,8 @@ void SpriteInfoMenu::createMenuItems()
                                  "Energy_brown dialog.png",
                                  "NONE",
                                  "NONE",
-                                 "Energybar.png");
+                                 "Energybar.png",
+                                 true);
     barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
     
     ss.str(std::string());
@@ -194,7 +195,8 @@ void SpriteInfoMenu::createMenuItems()
                                  "Energy_brown dialog.png",
                                  "NONE",
                                  "NONE",
-                                 "Energybar.png");
+                                 "Energybar.png",
+                                 true);
     barHungry->setValue((float)gameSprite->getPossessions()->currentHungry / (float)gameSprite->getPossessions()->default_hungry_limit);
     
     ss.str(std::string());
@@ -214,7 +216,8 @@ void SpriteInfoMenu::createMenuItems()
                                  "Energy_brown dialog.png",
                                  "NONE",
                                  "NONE",
-                                 "Energybar.png");
+                                 "Energybar.png",
+                                true);
     barFoodCarriage->setValue((float)gameSprite->getFoodCarried() / (float)gameSprite->getPossessions()->default_food_carriage_limit);
     
     ss.str(std::string());

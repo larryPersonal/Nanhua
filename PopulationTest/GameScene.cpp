@@ -279,6 +279,20 @@ void GameScene::enableTouch()
     SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
 }
 
+void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
+{
+    CCTouch* touch = (CCTouch*)*touches->begin();
+    CCPoint touchLoc = touch->getLocation();
+    
+    if(GameHUD::getThis() != NULL)
+    {
+        if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
+        {
+            CCLog("I clicked the money icon.");
+        }
+    }
+}
+
 void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
     if(tapped)
     {
@@ -863,6 +877,31 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 {
                     PopupMenu::closeAllPopupMenu();
                 }
+            }
+        }
+        
+        // check the info label
+        if(GameHUD::getThis() != NULL && GameHUD::getThis()->moneyIcon != NULL)
+        {
+            if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->clickMoneyLabel();
+            }
+        }
+        
+        if(GameHUD::getThis() != NULL && GameHUD::getThis()->foodIcon != NULL)
+        {
+            if(GameHUD::getThis()->foodIcon->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->clickFoodLabel();
+            }
+        }
+        
+        if(GameHUD::getThis() != NULL && GameHUD::getThis()->populationIcon != NULL)
+        {
+            if(GameHUD::getThis()->populationIcon->boundingBox().containsPoint(touchLoc))
+            {
+                GameHUD::getThis()->clickPopulationLabel();
             }
         }
         
