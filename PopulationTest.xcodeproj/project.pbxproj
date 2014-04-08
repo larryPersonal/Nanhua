@@ -567,6 +567,8 @@
 		8491B40F16F6A8F1008FC9C2 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8491B40D16F6A8F1008FC9C2 /* SplashScene.cpp */; };
 		8491B41216F6A92C008FC9C2 /* HighScoreScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8491B41016F6A92C008FC9C2 /* HighScoreScene.cpp */; };
 		8491B41516F6A942008FC9C2 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8491B41316F6A942008FC9C2 /* OptionsScene.cpp */; };
+		8497F6EB18F3D54B00838503 /* sortbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6E918F3D54B00838503 /* sortbtn.png */; };
+		8497F6EC18F3D54B00838503 /* sortpressbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6EA18F3D54B00838503 /* sortpressbtn.png */; };
 		8499931618645BD8004C706A /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8499931518645BD8004C706A /* MainMenuScene.cpp */; };
 		84A1696218EEB8D700FCCC8F /* SelectPopulationUI.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A1696118EEB8D700FCCC8F /* SelectPopulationUI.png */; };
 		84C97AFE18DFD87D00640CE8 /* banditicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C97AFD18DFD87D00640CE8 /* banditicon.png */; };
@@ -1548,6 +1550,8 @@
 		8491B41116F6A92C008FC9C2 /* HighScoreScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighScoreScene.h; sourceTree = "<group>"; };
 		8491B41316F6A942008FC9C2 /* OptionsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsScene.cpp; sourceTree = "<group>"; };
 		8491B41416F6A942008FC9C2 /* OptionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsScene.h; sourceTree = "<group>"; };
+		8497F6E918F3D54B00838503 /* sortbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbtn.png; sourceTree = "<group>"; };
+		8497F6EA18F3D54B00838503 /* sortpressbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortpressbtn.png; sourceTree = "<group>"; };
 		8499931518645BD8004C706A /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuScene.cpp; sourceTree = "<group>"; };
 		84A1696118EEB8D700FCCC8F /* SelectPopulationUI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectPopulationUI.png; sourceTree = "<group>"; };
 		84C97AFD18DFD87D00640CE8 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditicon.png; sourceTree = "<group>"; };
@@ -3059,6 +3063,8 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				8497F6E918F3D54B00838503 /* sortbtn.png */,
+				8497F6EA18F3D54B00838503 /* sortpressbtn.png */,
 				8490D37318F2C45E002BB152 /* worker availablevertbar.png */,
 				8490D37418F2C45E002BB152 /* worker availablevertbarinner.png */,
 				843B18D918F2A4FA00C00490 /* infor display ui.png */,
@@ -3785,6 +3791,7 @@
 				36682A3718DAC12100BC4214 /* Level Select Screen.png in Resources */,
 				36041A7F1714093C00A14BE6 /* background.jpg in Resources */,
 				8490D37518F2C45E002BB152 /* worker availablevertbar.png in Resources */,
+				8497F6EC18F3D54B00838503 /* sortpressbtn.png in Resources */,
 				36AC556318D6981900C165F5 /* housedetail.png in Resources */,
 				84589CE11896655500AA9E1C /* conversation_textbox_empty_left.png in Resources */,
 				361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */,
@@ -3881,6 +3888,7 @@
 				360496E817AB49DC00CACE25 /* merchant-icon.png in Resources */,
 				3658DD7618D6F1430056B895 /* Soldier.png in Resources */,
 				8410543F18E90DA7003D88C6 /* stuck3.png in Resources */,
+				8497F6EB18F3D54B00838503 /* sortbtn.png in Resources */,
 				360496E917AB49DC00CACE25 /* militia-icon.png in Resources */,
 				360496EA17AB49DC00CACE25 /* money icon.png in Resources */,
 				360496EB17AB49DC00CACE25 /* social icon.png in Resources */,

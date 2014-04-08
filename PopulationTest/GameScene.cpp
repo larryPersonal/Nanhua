@@ -1032,7 +1032,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     //build
                     //allow a building to be built on top of a path.
                     mapHandler->UnPath(tilePos);
-                    if (mapHandler->Build(tilePos, newBuilding))
+                    if (mapHandler->Build(tilePos, newBuilding, false, "", true))
                     {
                         GameHUD::getThis()->closeAllMenuAndResetTapMode();
                         lastTilePosPreview.x = INT_MAX;
@@ -1096,6 +1096,21 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 break;
         }
     }
+}
+
+void GameScene::centerCamera(Building* b)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    // get the currentPosition
+    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    
+    // get the horizontal and vertical length difference between the screen centre and the target position!
+    float xDiff = b->buildingRep->getPositionX() - xPos;
+    float yDiff = b->buildingRep->getPositionY() - yPos;
+    
+    mapHandler->moveMapBy(-xDiff, -yDiff);
 }
 
 // going to finish deccelerating dragging.
@@ -1371,6 +1386,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 }
             }
             
+            centerCamera(selectedTile->building);
+            
             return true;
         }
     }
@@ -1437,6 +1454,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                             }
                         }
                     }
+                    
+                    centerCamera(selectedTile->building);
                     
                     return true;
                 }

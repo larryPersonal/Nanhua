@@ -10,6 +10,7 @@
 #include "GameScene.h"
 #include "GameHUD.h"
 #include "GlobalHelper.h"
+#include "SelectPopulation.h"
 
 MapHandler::MapHandler()
 {
@@ -619,7 +620,7 @@ CCPoint MapHandler::getRandomPathTile()
     return CCPointMake(tgtTile->xpos, tgtTile->ypos);
 }
 
-bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails)
+bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)
 {
     if (!building)
     {
@@ -701,6 +702,12 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         GameScene::getThis()->constructionHandler->addConstructingBuilding(cloneBuilding);
     }
     
+    if(inGame)
+    {
+        PopupMenu::backupCurrentPopupMenu();
+        SelectPopulation* selectPopulation = SelectPopulation::create(cloneBuilding);
+        selectPopulation->useAsTopmostPopupMenu();
+    }
     return true;
 }
 
@@ -739,9 +746,10 @@ bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
     //I assume buildings are SQUARE.
     getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target, currBuildingPreview->width)); //force buildings to be drawn always on top
     
-    // Show red-tinted preview and return false if tiles are occupied.
+    // Show red-tinted preview and red-tinted tile and return false if tiles are occupied.
     if (!isBuildableOnTile(target, currBuildingPreview))
     {
+        previewTileHighlight->setColor(ccc4f(255/255.0f, 64/255.0f, 64/255.0f, 0.25f));
         currBuildingPreview->buildingRep->setColor(ccc3(255, 64, 64));
         return false;
     }

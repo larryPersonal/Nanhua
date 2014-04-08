@@ -80,8 +80,9 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     }
     else
     {
-        barFill->setScale(barFillOffsetRect.size.width / barFillTexSize.width);
-        barFillScale =  barFillTexSize.width / barOffsetRect.size.width;
+        barFill->setScaleX(barFillOffsetRect.size.width / barFillTexSize.width);
+        barFill->setScaleY(barFillOffsetRect.size.height / barFillTexSize.height);
+        barFillScale = barFillTexSize.width / barOffsetRect.size.width;
     }
     
     // Add them to this object
@@ -140,10 +141,10 @@ void ProgressBar::setValue(float value)
     }
     else
     {
-        float newFillHeight = currentValue * barFillOffsetRect.size.height;
+        float newFillHeight = currentValue * barFillTexSize.height;
         barFill->setTextureRect(CCRectMake(0, 0,
                                            barFillTexSize.width,
-                                           newFillHeight * barFillScale));
+                                           newFillHeight));
     }
 }
 

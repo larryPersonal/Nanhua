@@ -74,6 +74,11 @@ SelectPopulation::SelectPopulation(Building* building){
     
     population = 0;
     isPerformingTask = false;
+    
+    isSorted = false;
+    happinessIncre = false;
+    energyIncre = false;
+    isSortedByHappiness = false;
 }
 
 SelectPopulation::~SelectPopulation()
@@ -143,14 +148,6 @@ void SelectPopulation::createMenuItems()
     buttonCancel->setAnchorPoint(ccp(1, 1));
     
     buttonOk->setVisible(false);
-    
-    menuItems->addObject(buttonCancel);
-    menuItems->addObject(buttonOk);
-    menuItems->addObject(spriteBuilding);
-    
-    menu = CCMenu::createWithArray(menuItems);
-    menu->setPosition(CCPointZero);
-    this->addChild(menu, 3);
     
     // building name label
     std::stringstream ss;
@@ -260,9 +257,24 @@ void SelectPopulation::createMenuItems()
             count++;
         }
     }
+    num_of_citizens = count;
     
     scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * count));
     scrollArea->updateScrollBars();
+    
+    sortButton = CCMenuItemImage::create("sortbtn.png", "sortpressbtn.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortButton));
+    sortButton->setScale(0.6f);
+    sortButton->setAnchorPoint(ccp(0, 1));
+    sortButton->setPosition(ccp(75, 515));
+    
+    menuItems->addObject(buttonCancel);
+    menuItems->addObject(buttonOk);
+    menuItems->addObject(spriteBuilding);
+    menuItems->addObject(sortButton);
+    
+    menu = CCMenu::createWithArray(menuItems);
+    menu->setPosition(CCPointZero);
+    this->addChild(menu, 3);
     
     // set the position of all the elements
     reposition();
@@ -642,6 +654,42 @@ void SelectPopulation::update(float deltaTime){
         taskLabel->setString(ss.str().c_str());
     }
     
+    int pp = 0;
+    if(building->isUnderConstruction())
+    {
+        pp = building->builderLimit;
+    }
+    else
+    {
+        pp = building->number_of_jobs;
+    }
+    
+    if(population != pp)
+    {
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        
+        float hw = screenSize.width / 2.0f;
+        float hh = screenSize.height / 2.0f;
+        
+        population = pp;
+        for(int i = 0; i < emptySpaceArray->count(); i++)
+        {
+            CCSprite* tempSp = (CCSprite*) emptySpaceArray->objectAtIndex(i);
+            this->removeChild(tempSp);
+        }
+        emptySpaceArray->removeAllObjects();
+        
+        for (int i = 0; i < population; i++)
+        {
+            CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
+            eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
+            eSpace->setAnchorPoint(ccp(0, 1));
+            eSpace->setPosition(ccp(45.0f + 70.0f * i + hw, -105.0f + hh));
+            this->addChild(eSpace, 4);
+            emptySpaceArray->addObject(eSpace);
+        }
+    }
+    
     if(isCurrentlyUnderConstruction != building->isCurrentConstructing)
     {
         stringstream ss;
@@ -683,6 +731,66 @@ void SelectPopulation::update(float deltaTime){
         buttonOk->setVisible(false);
     }
     
+    // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
+    CCArray* spritesForSelection = getSpriteList();
+    
+    int count = 0;
+    int index = 0;
+    
+    for(int i = 0; i < spritesForSelection->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
+        
+        if(building->isCurrentConstructing || (!building->isCurrentConstructing && gs->villagerClass == V_CITIZEN))
+        {
+            count++;
+        }
+    }
+    
+    if(num_of_citizens != count)
+    {
+        num_of_citizens = count;
+        for(int i = 0; i < spriteRowArray->count(); i++)
+        {
+            SpriteRow* sr = (SpriteRow*)spriteRowArray->objectAtIndex(i);
+            sr->unlinkChildren();
+        }
+        spriteRowArray->removeAllObjects();
+        
+        count = 0;
+        index = 0;
+        for(int i = 0; i < spritesForSelection->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
+            
+            if(building->isCurrentConstructing || (!building->isCurrentConstructing && gs->villagerClass == V_CITIZEN))
+            {
+                SpriteRow* sp = SpriteRow::create((GameSprite*) spritesForSelection->objectAtIndex(i), scrollArea, building, index);
+                spriteRowArray->addObject((CCObject*) sp);
+                index++;
+                count++;
+                
+                bool flag = false;
+                for(int j = 0; j < memberArray->count(); j++)
+                {
+                    GameSprite* gameS = (GameSprite*) memberArray->objectAtIndex(j);
+                    if(gameS == gs)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                
+                if(flag)
+                {
+                    sp->getMask()->setVisible(true);
+                }
+            }
+        }
+    }
+    
+    spritesForSelection->removeAllObjects();
+    CC_SAFE_RELEASE(spritesForSelection);
 }
 
 void SelectPopulation::addMemberRow(GameSprite* gameSprite, SpriteRow* spriteRow)
@@ -792,14 +900,14 @@ void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteR
             for(int j = 0; j < memberRowArray->count(); j++)
             {
                 CCMenuItemImage* tempSprite = (CCMenuItemImage*) memberRowArray->objectAtIndex(j);
-                tempSprite->setPosition(ccp(35.0f + 70.0f * j + hw, -137.0f + hh));
+                tempSprite->setPosition(ccp(50.0f + 70.0f * j + hw, -107.0f + hh));
                 tempSprite->setTag(j);
             }
             
             for(int j = 0; j < memberRowBackgroundArray->count(); j++)
             {
                 CCSprite* tempSprite = (CCSprite*) memberRowBackgroundArray->objectAtIndex(j);
-                tempSprite->setPosition(ccp(30.0f + 70.0f * j + hw, -135.0f + hh));
+                tempSprite->setPosition(ccp(45.0f + 70.0f * j + hw, -105.0f + hh));
             }
         }
     }
@@ -835,3 +943,217 @@ void SelectPopulation::adjustZIndex(bool tutorial)
     }
 }
 
+void SelectPopulation::clickSortButton()
+{
+    isSorted = true;
+    isSortedByHappiness = false;
+    energyIncre = !energyIncre;
+    
+    // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
+    CCArray* spritesForSelection = getSpriteList();
+    
+    int count = 0;
+    int index = 0;
+    
+    for(int i = 0; i < spriteRowArray->count(); i++)
+    {
+        SpriteRow* sr = (SpriteRow*)spriteRowArray->objectAtIndex(i);
+        sr->unlinkChildren();
+    }
+    spriteRowArray->removeAllObjects();
+    
+    count = 0;
+    index = 0;
+    for(int i = 0; i < spritesForSelection->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
+        
+        if(building->isCurrentConstructing || (!building->isCurrentConstructing && gs->villagerClass == V_CITIZEN))
+        {
+            SpriteRow* sp = SpriteRow::create((GameSprite*) spritesForSelection->objectAtIndex(i), scrollArea, building, index);
+            spriteRowArray->addObject((CCObject*) sp);
+            index++;
+            count++;
+            
+            bool flag = false;
+            for(int j = 0; j < memberArray->count(); j++)
+            {
+                GameSprite* gameS = (GameSprite*) memberArray->objectAtIndex(j);
+                if(gameS == gs)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            
+            if(flag)
+            {
+                sp->getMask()->setVisible(true);
+            }
+        }
+    }
+    
+    spritesForSelection->removeAllObjects();
+    CC_SAFE_RELEASE(spritesForSelection);
+}
+
+CCArray* SelectPopulation::getSpriteList()
+{
+    if(isSorted && isSortedByHappiness)
+    {
+        return sortByHappiness();
+    }
+    else
+    {
+        return sortByEnergy();
+    }
+}
+
+CCArray* SelectPopulation::sortByHappiness()
+{
+    // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
+    CCArray* spritesForSelection;
+    if (building->isCurrentConstructing)
+    {
+        spritesForSelection = building->memberSpriteList;
+    }
+    else
+    {
+        spritesForSelection = GameScene::getThis()->spriteHandler->spritesOnMap;
+    }
+    
+    CCArray* unsortedArray = CCArray::create();
+    unsortedArray->retain();
+    
+    for(int i = 0; i < spritesForSelection->count(); i++)
+    {
+        unsortedArray->addObject(spritesForSelection->objectAtIndex(i));
+    }
+    
+    if(isSorted)
+    {
+        CCArray* sortedArray = CCArray::create();
+        sortedArray->retain();
+        
+        while (unsortedArray->count() > 0)
+        {
+            GameSprite* gs = getSpriteWithHappiness(unsortedArray, happinessIncre);
+            sortedArray->addObject(gs);
+            unsortedArray->removeObject(gs);
+        }
+        
+        unsortedArray->removeAllObjects();
+        CC_SAFE_RELEASE(unsortedArray);
+        return sortedArray;
+    }
+    else
+    {
+        return unsortedArray;
+    }
+}
+
+CCArray* SelectPopulation::sortByEnergy()
+{
+    // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
+    CCArray* spritesForSelection;
+    if (building->isCurrentConstructing)
+    {
+        spritesForSelection = building->memberSpriteList;
+    }
+    else
+    {
+        spritesForSelection = GameScene::getThis()->spriteHandler->spritesOnMap;
+    }
+    
+    CCArray* unsortedArray = CCArray::create();
+    unsortedArray->retain();
+    
+    for(int i = 0; i < spritesForSelection->count(); i++)
+    {
+        unsortedArray->addObject(spritesForSelection->objectAtIndex(i));
+    }
+    
+    if(isSorted)
+    {
+        CCArray* sortedArray = CCArray::create();
+        sortedArray->retain();
+        
+        while (unsortedArray->count() > 0)
+        {
+            GameSprite* gs = getSpriteWithEnergy(unsortedArray, energyIncre);
+            sortedArray->addObject(gs);
+            unsortedArray->removeObject(gs);
+        }
+        
+        unsortedArray->removeAllObjects();
+        CC_SAFE_RELEASE(unsortedArray);
+        return sortedArray;
+    }
+    else
+    {
+        return unsortedArray;
+    }
+}
+
+GameSprite* SelectPopulation::getSpriteWithEnergy(CCArray* spriteList, bool fromMin)
+{
+    if(spriteList->count() <= 0)
+    {
+        return NULL;
+    }
+    GameSprite* temp;
+    if(fromMin)
+    {
+        temp = (GameSprite*)spriteList->objectAtIndex(0);
+        for(int i = 0; i < spriteList->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*)spriteList->objectAtIndex(i);
+            if(gs->getPossessions()->energyRating < temp->getPossessions()->energyRating)
+            {
+                temp = gs;
+            }
+        }
+    }
+    else
+    {
+        temp = (GameSprite*)spriteList->objectAtIndex(spriteList->count() - 1);
+        for(int i = spriteList->count() - 1; i >= 0; i--)
+        {
+            GameSprite* gs = (GameSprite*)spriteList->objectAtIndex(i);
+            if(gs->getPossessions()->energyRating > temp->getPossessions()->energyRating)
+            {
+                temp = gs;
+            }
+        }
+    }
+    return temp;
+}
+
+GameSprite* SelectPopulation::getSpriteWithHappiness(CCArray* spriteList, bool fromMin)
+{
+    if(spriteList->count() <= 0)
+    {
+        return NULL;
+    }
+    GameSprite* temp = (GameSprite*)spriteList->objectAtIndex(0);
+    
+    for(int i = 0; i < spriteList->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*)spriteList->objectAtIndex(i);
+        if(fromMin)
+        {
+            if(gs->getPossessions()->happinessRating < temp->getPossessions()->happinessRating)
+            {
+                temp = gs;
+            }
+        }
+        else
+        {
+            if(gs->getPossessions()->happinessRating > temp->getPossessions()->happinessRating)
+            {
+                temp = gs;
+            }
+        }
+    }
+    return temp;
+}

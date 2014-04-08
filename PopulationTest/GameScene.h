@@ -123,6 +123,8 @@ public:
     void enableTouch();
     virtual void move(float time);
     
+    void centerCamera(Building*);
+    
     CREATE_FUNC(GameScene);
 };
 
