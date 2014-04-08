@@ -25,10 +25,11 @@ MiniDragon::MiniDragon()
     dragon->setScale(screenSize.width / dragon->boundingBox().size.width * 0.2f);
     dragon->setAnchorPoint(ccp(0, 0));
     dragon->setPosition(ccp(0, 0));
+    dragon->setFlipX(true);
     TutorialManager::getThis()->addChild(dragon, 2);
     
     bubble = CCSprite::create("bubble.png");
-    bubble->cocos2d::CCNode::setScale(dragon->boundingBox().size.width / bubble->boundingBox().size.width * 2.0f, dragon->boundingBox().size.height / bubble->boundingBox().size.height * 0.4f);
+    bubble->cocos2d::CCNode::setScale(dragon->boundingBox().size.width / bubble->boundingBox().size.width * 2.0f, dragon->boundingBox().size.height / bubble->boundingBox().size.height * 1.0f);
     bubble->setAnchorPoint(ccp(0, 1));
     bubble->setPosition(ccp(dragon->boundingBox().size.width * 2.0f / 5.0f, dragon->boundingBox().size.height * 5.5f / 5.0f));
     TutorialManager::getThis()->addChild(bubble, 1);

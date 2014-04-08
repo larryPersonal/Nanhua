@@ -27,6 +27,7 @@ public:
     float top;
     
     std::string src;
+    std::string srcp;
     std::string name;
     std::string font;
     int fontSize;

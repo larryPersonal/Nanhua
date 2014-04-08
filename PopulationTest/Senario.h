@@ -26,6 +26,7 @@ public:
     
     bool active;
     bool inOption;
+    bool notJump;
     
     int curSlide;
     

@@ -34,6 +34,7 @@ Senario::Senario()
     
     skipButton = NULL;
     skipSlide = false;
+    notJump = false;
 }
 
 Senario::~Senario()
@@ -139,6 +140,12 @@ bool Senario::constructSenarioStage(bool skip)
     this->addChild(skipButton, 2);
     spriteList.push_back(skipButton);
     
+    if(GameScene::getThis()->systemConfig->hideSkipButton)
+    {
+        skipButton->setAnchorPoint(ccp(0, 1));
+        skipButton->setPosition(ccp(screenSize.width, screenSize.height));
+    }
+    
     bool isChoosingOption = false;
     for(int i = 0; i < elementArray->count(); i++)
     {
@@ -161,6 +168,7 @@ bool Senario::constructSenarioStage(bool skip)
             CCSprite* cha = as->getSprite();
             CCSize spriteSize = cha->getContentSize();
             cha->setScale(screenSize.width / spriteSize.width * ele->width / 100.0f);
+            cha->setFlipX(true);
             
             cha->setAnchorPoint(ccp(0, 1));
             cha->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
@@ -216,22 +224,15 @@ bool Senario::constructSenarioStage(bool skip)
         {
             isChoosingOption = true;
             inOption = true;
-            stringstream ss;
-            ss << ele->text;
-            CCLabelTTF* optionLabel = CCLabelTTF::create(ss.str().c_str(), ele->font.c_str(), ele->fontSize);
-            optionLabel->setColor(colorBlack);
-            optionLabel->setAnchorPoint(ccp(0, 1));
-            optionLabel->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
-            labelList.push_back(optionLabel);
-            this->addChild(optionLabel, 4);
+            notJump = true;
             
-            CCMenuItemImage* selectButton = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(Senario::selectButtonPressed));
+            CCMenuItemImage* selectButton = CCMenuItemImage::create(ele->src.c_str(), ele->srcp.c_str(), this, menu_selector(Senario::selectButtonPressed));
             selectButton->setTag(i);
             selectButton->setAnchorPoint(ccp(0, 1));
-            selectButton->setScale(0.3f);
+            selectButton->setScale(0.6f);
             
             CCMenu* menu = CCMenu::create(selectButton, NULL);
-            menu->setPosition(ccp(screenSize.width * (ele->left / 100.0f) + optionLabel->boundingBox().size.width + 20.0f, screenSize.height * (ele->top / 100.0f)));
+            menu->setPosition(ccp(screenSize.width * (ele->left / 100.0f), screenSize.height * (ele->top / 100.0f)));
             this->addChild(menu, 4);
             menuList.push_back(menu);
         }
@@ -299,7 +300,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
         CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
         tempLabel->retain();
         
-        if (startX + offX + tempLabel->boundingBox().size.width > 900.0f)
+        if (startX + offX + tempLabel->boundingBox().size.width > 1000.0f)
         {
             offY = offY + 30.0f;
             offX = 0;
@@ -328,6 +329,10 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
 
 void Senario::nextButtonPressed(bool skip)
 {
+    if(inOption)
+    {
+        return;
+    }
     bool allStopFade = true;
     for (int i = 0; i < animatedStringList->count(); i++){
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
@@ -358,6 +363,11 @@ void Senario::nextButtonPressed(bool skip)
             goNextSlide();
         }
     } else {
+        if(notJump)
+        {
+            notJump = false;
+            return;
+        }
         for (int i = 0; i < animatedStringList->count(); i++){
             AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
             
