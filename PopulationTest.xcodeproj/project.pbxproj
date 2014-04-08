@@ -569,6 +569,11 @@
 		8491B41516F6A942008FC9C2 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8491B41316F6A942008FC9C2 /* OptionsScene.cpp */; };
 		8497F6EB18F3D54B00838503 /* sortbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6E918F3D54B00838503 /* sortbtn.png */; };
 		8497F6EC18F3D54B00838503 /* sortpressbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6EA18F3D54B00838503 /* sortpressbtn.png */; };
+		8497F6F118F40B8400838503 /* acceptbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6ED18F40B8400838503 /* acceptbtn.png */; };
+		8497F6F218F40B8400838503 /* rejectpressbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6EE18F40B8400838503 /* rejectpressbtn.png */; };
+		8497F6F318F40B8400838503 /* rejectbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6EF18F40B8400838503 /* rejectbtn.png */; };
+		8497F6F418F40B8400838503 /* acceptpressbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6F018F40B8400838503 /* acceptpressbtn.png */; };
+		8497F6F618F40F5C00838503 /* loading screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 8497F6F518F40F5C00838503 /* loading screen.png */; };
 		8499931618645BD8004C706A /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8499931518645BD8004C706A /* MainMenuScene.cpp */; };
 		84A1696218EEB8D700FCCC8F /* SelectPopulationUI.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A1696118EEB8D700FCCC8F /* SelectPopulationUI.png */; };
 		84C97AFE18DFD87D00640CE8 /* banditicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C97AFD18DFD87D00640CE8 /* banditicon.png */; };
@@ -1552,6 +1557,11 @@
 		8491B41416F6A942008FC9C2 /* OptionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsScene.h; sourceTree = "<group>"; };
 		8497F6E918F3D54B00838503 /* sortbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbtn.png; sourceTree = "<group>"; };
 		8497F6EA18F3D54B00838503 /* sortpressbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortpressbtn.png; sourceTree = "<group>"; };
+		8497F6ED18F40B8400838503 /* acceptbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = acceptbtn.png; sourceTree = "<group>"; };
+		8497F6EE18F40B8400838503 /* rejectpressbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rejectpressbtn.png; sourceTree = "<group>"; };
+		8497F6EF18F40B8400838503 /* rejectbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rejectbtn.png; sourceTree = "<group>"; };
+		8497F6F018F40B8400838503 /* acceptpressbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = acceptpressbtn.png; sourceTree = "<group>"; };
+		8497F6F518F40F5C00838503 /* loading screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading screen.png"; sourceTree = "<group>"; };
 		8499931518645BD8004C706A /* MainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuScene.cpp; sourceTree = "<group>"; };
 		84A1696118EEB8D700FCCC8F /* SelectPopulationUI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectPopulationUI.png; sourceTree = "<group>"; };
 		84C97AFD18DFD87D00640CE8 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditicon.png; sourceTree = "<group>"; };
@@ -3063,6 +3073,11 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				8497F6F518F40F5C00838503 /* loading screen.png */,
+				8497F6ED18F40B8400838503 /* acceptbtn.png */,
+				8497F6EE18F40B8400838503 /* rejectpressbtn.png */,
+				8497F6EF18F40B8400838503 /* rejectbtn.png */,
+				8497F6F018F40B8400838503 /* acceptpressbtn.png */,
 				8497F6E918F3D54B00838503 /* sortbtn.png */,
 				8497F6EA18F3D54B00838503 /* sortpressbtn.png */,
 				8490D37318F2C45E002BB152 /* worker availablevertbar.png */,
@@ -3745,12 +3760,14 @@
 				36AC558418D69A0100C165F5 /* splash0.png in Resources */,
 				3608CB031704343E00AB65A3 /* FMW.png in Resources */,
 				3608CB041704343E00AB65A3 /* MaleOldMan.plist in Resources */,
+				8497F6F318F40B8400838503 /* rejectbtn.png in Resources */,
 				3608CB051704343E00AB65A3 /* MaleFarmer.png in Resources */,
 				3658DD7E18D6F1430056B895 /* char1MMCpushingcart.png in Resources */,
 				3608CB061704343E00AB65A3 /* MaleFarmer.plist in Resources */,
 				84EDD26918C6E7A8003BAF5E /* system.png in Resources */,
 				84360A3218B21FED002EC8C2 /* assign_menu_filled.png in Resources */,
 				3608CB071704343E00AB65A3 /* FemaleFarmer.png in Resources */,
+				8497F6F618F40F5C00838503 /* loading screen.png in Resources */,
 				84360A3018B21FED002EC8C2 /* assign_menu_accept.png in Resources */,
 				36AC556F18D6981900C165F5 /* scroller.png in Resources */,
 				3608CB081704343E00AB65A3 /* MaleBandit.plist in Resources */,
@@ -3774,6 +3791,7 @@
 				84360A3418B21FED002EC8C2 /* workers_menu_selectedBG.png in Resources */,
 				8410546818E98A17003D88C6 /* interiorhouse.png in Resources */,
 				8412CA6418AC8D4A00AF4645 /* time_winter-bg.png in Resources */,
+				8497F6F118F40B8400838503 /* acceptbtn.png in Resources */,
 				36D87D1418C7146B00FE8B31 /* roads.png in Resources */,
 				843E972918DA94F100DBB48D /* FemaleVillager_port.png in Resources */,
 				843689FD18DC007600FA08FF /* guardtower.png in Resources */,
@@ -3793,6 +3811,7 @@
 				8490D37518F2C45E002BB152 /* worker availablevertbar.png in Resources */,
 				8497F6EC18F3D54B00838503 /* sortpressbtn.png in Resources */,
 				36AC556318D6981900C165F5 /* housedetail.png in Resources */,
+				8497F6F218F40B8400838503 /* rejectpressbtn.png in Resources */,
 				84589CE11896655500AA9E1C /* conversation_textbox_empty_left.png in Resources */,
 				361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */,
 				36C16E4C18D0049000C307DB /* MaleOldMan_port.png in Resources */,
@@ -3810,6 +3829,7 @@
 				B4B0148517389F540071E59F /* demolish.png in Resources */,
 				84EB328518684185003B5CEB /* new slide.png in Resources */,
 				36682A3918DAC68400BC4214 /* Energy_brown bar.png in Resources */,
+				8497F6F418F40B8400838503 /* acceptpressbtn.png in Resources */,
 				844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */,
 				361A56371754BF3200854FE1 /* builderbehavior.lua in Resources */,
 				36AC558A18D69A0100C165F5 /* options.png in Resources */,

@@ -2,7 +2,7 @@
 <project>
 	<slide>
         <dialogue>
-            <name>Narrator</name>
+            <name></name>
             <text>Option 2: Xiao Hua decides that he would not build new house to accommodate the refuges.</text>
             <width>85</width>
 			<left>15</left>
@@ -136,7 +136,7 @@
 	</slide>
     <slide>
         <dialogue>
-            <name>Narrator</name>
+            <name></name>
             <text>The refuges left the village and soon became bandits who would occasionally raid your village, resulting in loss of resources.</text>
             <width>85</width>
 			<left>15</left>

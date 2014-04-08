@@ -30,8 +30,8 @@ AnimatedSprite::AnimatedSprite(std::string spritePicture, bool hasFadeIn, bool h
     hasFadeInAnimation = hasFadeIn;
     hasFadeOutAnimation = hasFadeOut;
     
-    fadeInSpeed = 10;
-    fadeOutSpeed = 10;
+    fadeInSpeed = 20;
+    fadeOutSpeed = 20;
     
     fadeIn = false;
     fadeOut = false;

@@ -163,14 +163,14 @@ bool SenarioChooseScene::init()
     this->addChild(backgroundImage, 0);
     
     /* loading screen module */
-    loadingScreen = CCSprite::create("black.png");
+    loadingScreen = CCSprite::create("loading screen.png");
     loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
     loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
     loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(loadingScreen, 10);
     loadingScreen->setVisible(false);
     
-    loadingLabel = CCLabelTTF::create("Loading....", "Shojumaru-Regular", 32);
+    loadingLabel = CCLabelTTF::create("", "Shojumaru-Regular", 32);
     loadingLabel->setAnchorPoint(ccp(0.5, 0.5));
     loadingLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(loadingLabel, 11);

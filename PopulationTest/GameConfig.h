@@ -15,11 +15,13 @@ struct SystemConfig
 {
     bool skipSenario;
     bool skipTutorial;
+    bool hideSkipButton;
     
     SystemConfig()
     {
         skipSenario = true;
         skipTutorial = true;
+        hideSkipButton = true;
     }
 };
 

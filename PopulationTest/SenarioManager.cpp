@@ -211,6 +211,13 @@ void SenarioManager::parseXMLFile(string xml)
                 content = str.substr(start_pos + 5, end_pos - start_pos - 5);
                 element->src = content;
             }
+            else if(str.find("<srcp>") != std::string::npos)
+            {
+                start_pos = str.find("<srcp>");
+                end_pos = str.find("</srcp>");
+                content = str.substr(start_pos + 6, end_pos - start_pos - 6);
+                element->srcp = content;
+            }
             else if(str.find("<dir>") != std::string::npos)
             {
                 start_pos = str.find("<dir>");

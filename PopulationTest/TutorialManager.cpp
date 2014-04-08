@@ -11,6 +11,7 @@
 #include "SoundTrackManager.h"
 #include "GameScene.h"
 #include "GameManager.h"
+#include "Senario.h"
 
 TutorialManager* TutorialManager::SP;
 
@@ -50,7 +51,7 @@ TutorialManager::TutorialManager()
     lockBuildButton = true;
     lockObjectiveButton = true;
     lockScroll = true;
-    lockSystemButton = true;
+    lockSystemButton = false;
     lockTimeGroup = true;
     lockBuildScroll = true;
     lockBuildingButton = true;
@@ -112,6 +113,12 @@ void TutorialManager::setupForTutorial()
     {
         GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
         unlockAll();
+        if(!GameScene::getThis()->systemConfig->skipSenario)
+        {
+            GameHUD::getThis()->pause = true;
+            std::string filename = "tutorial.xml";
+            Senario::getThis()->playSenario(filename.c_str());
+        }
         return;
     }
     
@@ -141,7 +148,7 @@ void TutorialManager::setupForTutorial()
     this->target = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
     
     lockVillager = true;
-    lockMap = true;
+    lockMap = false;
     GameManager::getThis()->UpdateUnlocks();
     GameScene::getThis()->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
     GameScene::getThis()->mapHandler->rescaleScrollLimits();
