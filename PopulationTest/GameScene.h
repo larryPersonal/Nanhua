@@ -99,6 +99,7 @@ public:
     void deleteScene();
 
     // touch controller
+    void ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     void ccTouchesMoved(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     void ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     // preprocessor macro for "static create()" constructor ( node() deprecated )
@@ -121,6 +122,8 @@ public:
     // jerry added
     void enableTouch();
     virtual void move(float time);
+    
+    void centerCamera(Building*);
     
     CREATE_FUNC(GameScene);
 };

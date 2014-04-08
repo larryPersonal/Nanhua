@@ -23,7 +23,9 @@ BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea, int index
 BuildingCard::~BuildingCard()
 {
     menuItemsArray->removeAllObjects();
-    menuItemsArray->release();
+    CC_SAFE_RELEASE(menuItemsArray);
+    infoButtonMenuItemsArray->removeAllObjects();
+    CC_SAFE_RELEASE(infoButtonMenuItemsArray);
 }
 
 BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea, int index, int type = 0)
@@ -43,7 +45,7 @@ BuildingCard* BuildingCard::create(Building* building, ScrollArea* scrollArea, i
 
 void BuildingCard::init()
 {
-  //  CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
   //  ccColor3B colorYellow = ccc3(225, 219, 108);
  //   ccColor3B colorGreen = ccc3(81, 77, 2);
@@ -62,23 +64,27 @@ void BuildingCard::init()
     // display the name of the building
     //std::stringstream ss;
     //ss << building->buildingName;
-    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Shojumaru-Regular", 16, CCSizeMake(buildingname.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingNameLabel = CCLabelTTF::create(buildingname.c_str(), "Shojumaru-Regular", 20);
     buildingNameLabel->setColor(colorBlack);
-    buildingNameLabel->setAnchorPoint(ccp(0.5, 1));
+    buildingNameLabel->setAnchorPoint(ccp(0, 1));
     
     // display the building info button
-    buildingInfoButton = CCMenuItemImage::create( "build-menu_info.png", "build-menu_info.png", this, menu_selector(BuildingCard::showBuildingInfo) );
+    buildingInfoButton = CCMenuItemImage::create( "build-menu_info.png", "build-menu_info.png", NULL, this, menu_selector(BuildingCard::pressDownInfo), menu_selector(BuildingCard::showBuildingInfo) );
     buildingInfoButton->setScale(32.0f / buildingInfoButton->boundingBox().size.width);
-    buildingInfoButton->setAnchorPoint(ccp(0, 1));
+    buildingInfoButton->setAnchorPoint(ccp(0.5, 0.5));
+    
+    infoButtonMenuItemsArray = CCArray::create();
+    infoButtonMenuItemsArray->retain();
+    infoButtonMenuItemsArray->addObject(buildingInfoButton);
+    infoButtonMenu = CCMenu::createWithArray(infoButtonMenuItemsArray);
     
     // display the picture of the building
     if (type == 0)
     {
         CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-        menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
-        buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
-        buildingImage->setTag(building->ID);
-        buildingImage->setAnchorPoint(ccp(0, 1));
+        menuImage->setScale(192.0f / menuImage->boundingBox().size.width);
+        buildingImage = menuImage;
+        buildingImage->setAnchorPoint(ccp(0.5, 0.5));
         buildingImage->setContentSize(menuImage->boundingBox().size);
     }
     else
@@ -94,22 +100,15 @@ void BuildingCard::init()
         else
             menuImage = CCSprite::create("path.png");
        
-        menuImage->setScale(128.0f / menuImage->boundingBox().size.width);
-        buildingImage = CCMenuItemSprite::create(menuImage, NULL, this, menu_selector(BuildingCard::onMenuItemSelected));
-        buildingImage->setTag(-type); //this should only give -1, -2 and -3.
-        buildingImage->setAnchorPoint(ccp(0, 1));
+        menuImage->setScale(192.0f / menuImage->boundingBox().size.width);
+        buildingImage = menuImage;
+        buildingImage->setAnchorPoint(ccp(0.5, 0.5));
         buildingImage->setContentSize(menuImage->boundingBox().size);
     }
     
-    
-    menuItemsArray = CCArray::create();
-    menuItemsArray->retain();
-    menuItemsArray->addObject(buildingImage);
-    menu = CCMenu::createWithArray(menuItemsArray);
-    
     // cost
     costImage = CCSprite::create("build-menu_goldreq.png");
-    costImage->setScale(28.0f / costImage->boundingBox().size.width);
+    costImage->setScale(42.0f / costImage->boundingBox().size.width);
     costImage->setAnchorPoint(ccp(0, 1));
     
     std::string buildingcost;
@@ -131,7 +130,7 @@ void BuildingCard::init()
     
     // population
     populationImage = CCSprite::create("build-menu_worker-req.png");
-    populationImage->setScale(28.0f / populationImage->boundingBox().size.width);
+    populationImage->setScale(42.0f / populationImage->boundingBox().size.width);
     populationImage->setAnchorPoint(ccp(0, 1));
     
     std::string populationLimit;
@@ -148,7 +147,7 @@ void BuildingCard::init()
     
     // building time
     buildingTimeImage = CCSprite::create("build-menu_time-req.png");
-    buildingTimeImage->setScale(28.0f / buildingTimeImage->boundingBox().size.width);
+    buildingTimeImage->setScale(42.0f / buildingTimeImage->boundingBox().size.width);
     buildingTimeImage->setAnchorPoint(ccp(0, 1));
     
     std::string buildTime;
@@ -164,13 +163,27 @@ void BuildingCard::init()
     buildingTimeLabel->setAnchorPoint(ccp(0, 1));
     
     
-    cardBG = CCSprite::create("house_btn.png");
+    cardBG = CCMenuItemImage::create("house_btn.png", NULL, NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
+    if(type == 0)
+    {
+        cardBG->setTag(building->ID);
+    }
+    else
+    {
+        cardBG->setTag(-type); //this should only give -1, -2 and -3.
+    }
+    cardBG->setAnchorPoint(ccp(0.5, 0.5));
     cardBG->setScaleY(18.0f / buildingInfoButton->boundingBox().size.width);
     cardBG->setScaleX(22.0f / buildingInfoButton->boundingBox().size.width);
     
-    cardDetailBG = CCSprite::create("housedetail.png");
-    cardDetailBG->setScaleY(20.0f / buildingInfoButton->boundingBox().size.width);
-    cardDetailBG->setScaleX(22.0f / buildingInfoButton->boundingBox().size.width);
+    menuItemsArray = CCArray::create();
+    menuItemsArray->retain();
+    menuItemsArray->addObject(cardBG);
+    menu = CCMenu::createWithArray(menuItemsArray);
+    
+    cardDetailBG = CCSprite::create("housedetailred.png");
+    cardDetailBG->setScale(1.01f);
+    cardDetailBG->setAnchorPoint(ccp(0.5, 0.5));
     
     mask = CCSprite::create("black.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
@@ -188,18 +201,67 @@ void BuildingCard::init()
     }
     
     
-    scrollArea->addItem(cardBG, ccp(200.0f * index, 0.0f));
-    scrollArea->addItem(cardDetailBG, ccp(3.f + 200.0f * index, 145.0f));
-
-    scrollArea->addItem(buildingNameLabel, ccp(20.0f + 200.0f * index, 5.0f));
-    scrollArea->addItem(buildingInfoButton, ccp(160.0f + 200.0f * index, 0.0f));
-    scrollArea->addItem(menu, ccp(40.0f + 200.0f * index, 10.0f));
-    scrollArea->addItem(costImage, ccp(10.0f + 200.0f * index, 145.0f));
-    scrollArea->addItem(costLabel, ccp(40.0f + 200.0f * index, 150.0f));
-    scrollArea->addItem(populationImage, ccp(80.0f + 200.0f * index, 145.0f));
-    scrollArea->addItem(populationLabel, ccp(110.0f + 200.0f * index, 150.0f));
-    scrollArea->addItem(buildingTimeImage, ccp(130.0f + 200.0f * index, 145.0f));
-    scrollArea->addItem(buildingTimeLabel, ccp(160.0f + 200.0f * index, 150.0f));
+    cardBG->addChild(buildingNameLabel);
+    buildingNameLabel->setPosition(ccp(20, cardBG->boundingBox().size.height * 2 - 50));
+    
+    cardBG->addChild(buildingImage);
+    if(type == 0)
+    {
+        if(building->buildingType == HOUSING)
+        {
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 40));
+        }
+        else if(building->buildingType == AMENITY)
+        {
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 60));
+        }
+        else if(building->buildingType == GRANARY)
+        {
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width - 75, cardBG->boundingBox().size.height - 20));
+        }
+        else
+        {
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 30));
+        }
+    }
+    else
+    {
+        buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 30));
+    }
+    
+    cardBG->addChild(cardDetailBG);
+    cardDetailBG->setPosition(ccp(cardBG->boundingBox().size.width - 54, 12));
+    
+    cardBG->addChild(infoButtonMenu);
+    buildingInfoButton->setScaleX(buildingInfoButton->getScaleX() * 1.2f);
+    buildingInfoButton->setScaleY(buildingInfoButton->getScaleY() * 22.0f / 18.0f * 1.2f);
+    infoButtonMenu->setPosition(ccp(265, 265));
+    
+    cardBG->addChild(costImage);
+    costImage->setPosition(ccp(12, 30));
+    
+    cardBG->addChild(costLabel);
+    costLabel->setScaleX(costLabel->getScaleX() * 1.4f);
+    costLabel->setScaleY(costLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
+    costLabel->setPosition(ccp(55, 20));
+    
+    cardBG->addChild(populationImage);
+    populationImage->setPosition(ccp(110, 30));
+    
+    cardBG->addChild(populationLabel);
+    populationLabel->setScaleX(populationLabel->getScaleX() * 1.4f);
+    populationLabel->setScaleY(populationLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
+    populationLabel->setPosition(ccp(60, 20));
+    
+    cardBG->addChild(buildingTimeImage);
+    buildingTimeImage->setPosition(ccp( 170, 30));
+    
+    cardBG->addChild(buildingTimeLabel);
+    buildingTimeLabel->setScaleX(buildingTimeLabel->getScaleX() * 1.4f);
+    buildingTimeLabel->setScaleY(buildingTimeLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
+    populationLabel->setPosition(ccp(200, 20));
+    
+    scrollArea->addItem(menu, ccp(100.0f + 200.0f * index, 82.0f));
     scrollArea->addItem(mask, ccp(200.0f * index, 0.0f));
 }
 
@@ -207,9 +269,26 @@ void BuildingCard::refreshAllMenuItems()
 {
 }
 
+void BuildingCard::pressDownInfo()
+{
+    buildingInfoButton->setScaleX(buildingInfoButton->getScaleX() * 9.0f / 10.0f);
+    buildingInfoButton->setScaleY(buildingInfoButton->getScaleY() * 9.0f / 10.0f);
+}
+
 void BuildingCard::showBuildingInfo()
 {
-    
+    buildingInfoButton->setScaleX(buildingInfoButton->getScaleX() * 10.0f / 9.0f);
+    buildingInfoButton->setScaleY(buildingInfoButton->getScaleY() * 10.0f / 9.0f);
+}
+
+void BuildingCard::pressBuildingCard()
+{
+    if (!GameHUD::getThis()->isThisTapCounted)
+    {
+        return;
+    }
+    //cardBG->setScaleX(cardBG->getScaleX() * 0.95f / 1.0f);
+    //cardBG->setScaleY(cardBG->getScaleY() * 0.95f / 1.0f);
 }
 
 void BuildingCard::onMenuItemSelected(CCObject* pSender)
@@ -218,6 +297,9 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
     {
         return;
     }
+    
+    //cardBG->setScaleX(cardBG->getScaleX() * 1.0f / 0.95f);
+    //cardBG->setScaleY(cardBG->getScaleY() * 1.0f / 0.95f);
     
     CCMenuItemImage* pMenuItemImage = (CCMenuItemImage *)(pSender);
     int tag = pMenuItemImage->getTag();

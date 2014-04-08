@@ -111,7 +111,7 @@ public:
     void UnPathPreviewLineExtend();
     
     /*building*/
-    bool Build(CCPoint &target, Building* building, bool skipConstruction=false, std::string withDetails = "");
+    bool Build(CCPoint &target, Building* building, bool skipConstruction=false, std::string withDetails = "", bool inGame=false);
     bool BuildPreview(CCPoint &target, Building* building);
     void ForceUnbuild(CCPoint &target);
     void UnBuild(CCPoint &target);

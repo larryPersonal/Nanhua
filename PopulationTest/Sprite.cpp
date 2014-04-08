@@ -78,7 +78,7 @@ GameSprite::GameSprite()
                              "Energy_brown bar.png",
                              "NONE",
                              "NONE",
-                             "Energybar.png");
+                             "Energybar.png", true);
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     hpLabels = CCArray::create();
@@ -2173,7 +2173,7 @@ void GameSprite::ReplaceSpriteRep()
                              "Energy_brown bar.png",
                              "NONE",
                              "NONE",
-                             "Energybar.png");
+                             "Energybar.png", true);
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);

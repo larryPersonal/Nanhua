@@ -74,6 +74,14 @@ GameHUD::GameHUD()
     
     fade_out = false;
     fade_in = false;
+    
+    labelStatus = Default;
+    isToggle = false;
+    newPos = CCPointZero;
+    targetOpacity = 0;
+    fadeSpeed = 0;
+    label_fade_in = false;
+    label_fade_out = false;
 }
 
 GameHUD::~GameHUD()
@@ -641,6 +649,15 @@ void GameHUD::createStatsMenu()
     average_happiness_label->setAnchorPoint(ccp(0, 0));
     this->addChild(average_happiness_label, 2);
     average_happiness_label->CCNode::setPosition(620, 0);
+    
+    infoBackground = CCSprite::create("infor display ui.png");
+    infoBackground->setScale(screenSize.width / infoBackground->boundingBox().size.width * 0.25f);
+    infoBackground->setAnchorPoint(ccp(0.5, 1));
+    infoBackground->setPosition(ccp(220, screenSize.height));
+    this->addChild(infoBackground, 3);
+    
+    float opacity = 0;
+    infoBackground->setOpacity(opacity);
     
     // tap mode label
     ss.str(std::string());
@@ -1370,4 +1387,173 @@ void GameHUD::updateSoldierHelper(float dt)
     }
     
     stopActionLabel->setString(ss.str().c_str());
+}
+
+void GameHUD::labelBackgroundFade(float dt)
+{
+    int tempOpacity = (int) infoBackground->getOpacity();
+    if(label_fade_in)
+    {
+        tempOpacity += fadeSpeed;
+        if(tempOpacity >= targetOpacity)
+        {
+            tempOpacity = targetOpacity;
+            newPos = CCPointZero;
+            targetOpacity = 0;
+            fadeSpeed = 0;
+            label_fade_out = false;
+            label_fade_in = false;
+            this->unschedule(schedule_selector(GameHUD::labelBackgroundFade));
+        }
+    }
+    else if(label_fade_out)
+    {
+        tempOpacity -= fadeSpeed;
+        if(tempOpacity <= targetOpacity)
+        {
+            tempOpacity = targetOpacity;
+            if(isToggle)
+            {
+                targetOpacity = 255 * 0.9f;
+                label_fade_out = false;
+                label_fade_in = true;
+                infoBackground->setPosition(newPos);
+            }
+            else
+            {
+                newPos = CCPointZero;
+                targetOpacity = 0;
+                fadeSpeed = 0;
+                label_fade_out = false;
+                label_fade_in = false;
+                this->unschedule(schedule_selector(GameHUD::labelBackgroundFade));
+            }
+        }
+    }
+    else
+    {
+        this->unschedule(schedule_selector(GameHUD::labelBackgroundFade));
+        return;
+    }
+    infoBackground->setOpacity((GLubyte) tempOpacity);
+}
+
+void GameHUD::clickMoneyLabel()
+{
+    if(label_fade_in || label_fade_out)
+    {
+        return;
+    }
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    if(labelStatus == InMoneyLabel)
+    {
+        isToggle = false;
+        newPos = CCPointZero;
+        targetOpacity = 0;
+        fadeSpeed = 10;
+        label_fade_out = true;
+        labelStatus = Default;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+    else if(labelStatus == Default)
+    {
+        isToggle = false;
+        infoBackground->setPosition(ccp(220, screenSize.height - 55));
+        targetOpacity = 255 * 0.9f;
+        fadeSpeed = 10;
+        label_fade_in = true;
+        labelStatus = InMoneyLabel;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+    else
+    {
+        isToggle = true;
+        newPos = ccp(220, screenSize.height - 55);
+        targetOpacity = 0;
+        fadeSpeed = 10;
+        label_fade_out = true;
+        labelStatus = InMoneyLabel;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+}
+
+void GameHUD::clickFoodLabel()
+{
+    if(label_fade_in || label_fade_out)
+    {
+        return;
+    }
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    if(labelStatus == InFoodLabel)
+    {
+        isToggle = false;
+        newPos = CCPointZero;
+        targetOpacity = 0;
+        fadeSpeed = 10;
+        label_fade_out = true;
+        labelStatus = Default;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+    else if(labelStatus == Default)
+    {
+        isToggle = false;
+        infoBackground->setPosition(ccp(440, screenSize.height - 55));
+        targetOpacity = 255 * 0.9f;
+        fadeSpeed = 10;
+        label_fade_in = true;
+        labelStatus = InFoodLabel;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+    else
+    {
+        isToggle = true;
+        newPos = ccp(440, screenSize.height - 55);
+        targetOpacity = 0;
+        fadeSpeed = 10;
+        label_fade_out = true;
+        labelStatus = InFoodLabel;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+}
+
+void GameHUD::clickPopulationLabel()
+{
+    if(label_fade_in || label_fade_out)
+    {
+        return;
+    }
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    if(labelStatus == InPopulationLabel)
+    {
+        isToggle = false;
+        newPos = CCPointZero;
+        targetOpacity = 0;
+        fadeSpeed = 10;
+        label_fade_out = true;
+        labelStatus = Default;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+    else if(labelStatus == Default)
+    {
+        isToggle = false;
+        infoBackground->setPosition(ccp(660, screenSize.height - 55));
+        targetOpacity = 255 * 0.9f;
+        fadeSpeed = 10;
+        label_fade_in = true;
+        labelStatus = InPopulationLabel;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
+    else
+    {
+        isToggle = true;
+        newPos = ccp(660, screenSize.height - 55);
+        targetOpacity = 0;
+        fadeSpeed = 10;
+        label_fade_out = true;
+        labelStatus = InPopulationLabel;
+        this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
+    }
 }

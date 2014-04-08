@@ -244,6 +244,7 @@ bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
     {
         m_eState = kCCMenuStateTrackingTouch;
         m_pSelectedItem->selected();
+        m_pSelectedItem->pressDown();
         return true;
     }
     return false;

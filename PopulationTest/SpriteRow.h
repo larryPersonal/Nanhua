@@ -44,6 +44,8 @@ private:
 public:
     CCArray* mi;
     
+    CCSprite* emotionFace;
+    
 public:
     SpriteRow(GameSprite*, ScrollArea*, Building*, int);
     ~SpriteRow();

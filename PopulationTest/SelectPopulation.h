@@ -29,6 +29,7 @@ public:
     bool isUnderConstruction;
     bool isCurrentlyUnderConstruction;
     bool isPerformingTask;
+    int num_of_citizens;
     
     // Background Rect
     Rect* background_rect;
@@ -59,9 +60,16 @@ public:
     CCLabelTTF* workerLabel;
     CCLabelTTF* taskLabel;
     
+    CCMenuItemImage* sortButton;
+    
     ScrollArea* scrollArea;
     
     CCMenu* menu;
+    
+    bool isSorted;
+    bool isSortedByHappiness;
+    bool happinessIncre;
+    bool energyIncre;
     
 protected:
     virtual void createMenuItems();
@@ -108,7 +116,15 @@ public:
     void scheduleGuardTower();
     void scheduleFarming();
     
+    void clickSortButton();
+    
     void adjustZIndex(bool);
+    
+    CCArray* getSpriteList();
+    CCArray* sortByHappiness();
+    CCArray* sortByEnergy();
+    GameSprite* getSpriteWithHappiness(CCArray*, bool);
+    GameSprite* getSpriteWithEnergy(CCArray*, bool);
 };
 
 

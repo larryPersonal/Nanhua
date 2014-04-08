@@ -51,59 +51,76 @@ SpriteRow* SpriteRow::create(GameSprite* gs, ScrollArea* sa, Building* building,
 
 bool SpriteRow::init()
 {
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    int row = (int) (index / 4);
+    int column = (int) (index % 4);
+    
     mSpriteRowEnergyCurrent = gameSprite->getPossessions()->energyRating;
     mSpriteRowEnergyRequired = gameSprite->getPossessions()->default_energy_limit;
     mSpriteRowSpriteName = gameSprite->spriteName;
     
     // display the sprite row background
-    spriteRowBackground = CCSprite::create("Energy.png");
-    spriteRowBackground->setScale(440.0f / spriteRowBackground->boundingBox().size.width);
+    spriteRowBackground = CCSprite::create("characterbox.png");
+    spriteRowBackground->setScale(100.0f / spriteRowBackground->boundingBox().size.width);
     spriteRowBackground->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(spriteRowBackground, ccp(5.0f, 0.0f + 90.0f * index));
+    scrollArea->addItem(spriteRowBackground, ccp(30.0f + 100.0f * column, 110.0f + 100.0f * row));
     
     //display the image of the sprite
     std::string tempStr = gameSprite->spriteName;
     villagerImage = CCMenuItemImage::create( tempStr.append("_port.png").c_str(), tempStr.c_str(), this, menu_selector(SpriteRow::showSprite) );
     villagerImage->setScale(64.0f / villagerImage->boundingBox().size.width);
     villagerImage->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(villagerImage, ccp(10.0f, 15.0f + 90.0f * index));
+    scrollArea->addItem(villagerImage, ccp(30.0f + 100.0f * column, 122.0f + 100.0f * row));
     
-   // ccColor3B colorBlack = ccc3(0, 0, 0);
-   // std::stringstream ss;
-    
-    // display the name of the sprite
-    /*
-    ss << "Energy";
-    villagerEnergyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    villagerEnergyLabel->setColor(colorBlack);
-    villagerEnergyLabel->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(villagerEnergyLabel, ccp(85.0f, 25.0f + 90.0f * index));
-    */
     // display the energy bar of the sprite
     Possessions* possessions = gameSprite->getPossessions();
     
     // display the energy bar of the sprite
     villagerEnergyBar = new ProgressBar();
-    villagerEnergyBar->createProgressBar(CCRectMake(0, 0, 300, 30),
-                                   CCRectMake(0, 6, 300, 30),
+    villagerEnergyBar->createProgressBar(CCRectMake(0, 0, 16, 70),
+                                   CCRectMake(4, 5, 8, 60),
+                                   "worker availablevertbar.png",
                                    "NONE",
                                    "NONE",
-                                   "NONE",
-                                   "Energybar.png");
+                                   "worker availablevertbarinner.png", false);
     villagerEnergyBar->setValue((float)possessions->energyRating / (float)possessions->default_energy_limit);
-    scrollArea->addItem(villagerEnergyBar, ccp(80.0f, 45.0f + 90.0f * index));
+    scrollArea->addItem(villagerEnergyBar, ccp(106.0f + 100.0f * column, 120.0f + 100.0f * row));
+    
+    emotionFace = CCSprite::create("happy2.png");
+    emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
+    float happinessRate = gameSprite->getPossessions()->happinessRating;
+    if(happinessRate >= 70)
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("happy2.png"));
+    }
+    else if(happinessRate >= 40)
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("idle1.png"));
+    }
+    else if(happinessRate >= 10)
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("unhappy1.png"));
+    }
+    else
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("tired1.png"));
+    }
+    scrollArea->addItem(emotionFace, ccp(80.0f + 100.0f * column, 158.0f + 100.0f * row));
     
     // display the mask of the sprite row
     spriteRowMask = CCSprite::create("workers_menu_selectedBG_overlay.png");
-    spriteRowMask->setScale(440.0f / spriteRowMask->boundingBox().size.width);
+    spriteRowMask->setScaleX( spriteRowBackground->boundingBox().size.width / spriteRowMask->boundingBox().size.width );
+    spriteRowMask->setScaleY( spriteRowBackground->boundingBox().size.height / spriteRowMask->boundingBox().size.height * 1.2f );
     spriteRowMask->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(spriteRowMask, ccp(5.0f, 0.0f + 90.0f * index));
+    scrollArea->addItem(spriteRowMask, ccp(30.0f + 100.0f * column, 100.0f + 100.0f * row));
     spriteRowMask->setVisible(false);
     
     // display the button collider
     buttonCollider = CCMenuItemImage::create( "workers_menu_buttonCollider.png", "workers_menu_buttonCollider.png", this, menu_selector(SpriteRow::clickSprite));
     //buttonCollider = CCMenuItemImage::create( "workers_menu_selectedBG_overlay.png", "workers_menu_selectedBG_overlay.png", this, menu_selector(SpriteRow::clickSprite));
-    buttonCollider->setScale( 440.0f / buttonCollider->boundingBox().size.width );
+    buttonCollider->setScaleX( spriteRowBackground->boundingBox().size.width / buttonCollider->boundingBox().size.width );
+    buttonCollider->setScaleY( spriteRowBackground->boundingBox().size.height / buttonCollider->boundingBox().size.height );
     buttonCollider->setAnchorPoint(ccp(0, 1));
     
     mi->addObject(buttonCollider);
@@ -112,7 +129,7 @@ bool SpriteRow::init()
     menu->setTouchPriority(kCCMenuHandlerPriority -10);
     menu->setPosition(CCPointZero);
 
-    scrollArea->addItem(menu, ccp(5.0f, 0.0f + 90.0f * index));
+    scrollArea->addItem(menu, ccp(30.0f + 100.0f * column, 110.0f + 100.0f * row));
     
     return true;
 }
@@ -173,7 +190,6 @@ void SpriteRow::eatFood()
 {
     if(gameSprite != NULL && building != NULL)
     {
-        
         gameSprite->setTargetLocation(building);
         gameSprite->GoEat(building);
         

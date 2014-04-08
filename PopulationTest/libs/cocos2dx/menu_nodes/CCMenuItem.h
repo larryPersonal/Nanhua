@@ -57,6 +57,7 @@ protected:
      @since v0.8.2
      */
     bool m_bSelected;
+    bool m_bTriggered;
     bool m_bEnabled;
 
 public:
@@ -65,9 +66,11 @@ public:
      */
     CCMenuItem()
     : m_bSelected(false)
+    , m_bTriggered(false)
     , m_bEnabled(false)            
     , m_pListener(NULL)            
     , m_pfnSelector(NULL)
+    , m_dfnSelector(NULL)
     , m_nScriptTapHandler(0)
     {}
     /**
@@ -86,15 +89,24 @@ public:
     /** Initializes a CCMenuItem with a target/selector 
      * @lua NA
      */
-    bool initWithTarget(CCObject *rec, SEL_MenuHandler selector);
+    bool initWithTarget(CCObject *rec, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector);
+    bool initWithTargetForPressDown(CCObject * rec, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector);
     /** Returns the outside box */
     CCRect rect();
     /** Activate the item */
     virtual void activate();
+    /** Trigger press down the item */
+    virtual void pressDown();
     /** The item was selected (not activated), similar to "mouse-over" */
     virtual void selected();
     /** The item was unselected */
     virtual void unselected();
+    /** The press down function has been fired */
+    virtual void fired();
+    /** Reset the press down function */
+    virtual void unFired();
+    
+    virtual bool isTriggered();
     
     /** Register menu handler script function */
     virtual void registerScriptTapHandler(int nHandler);
@@ -112,6 +124,7 @@ public:
 protected:
     CCObject*       m_pListener;
     SEL_MenuHandler    m_pfnSelector;
+    SEL_MenuHandler    m_dfnSelector;
     int             m_nScriptTapHandler;
 };
 
@@ -298,7 +311,7 @@ public:
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-    bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
+    bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector);
     
     /**
      @since v0.99.5
@@ -342,14 +355,16 @@ public:
      * @lua NA
      */
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector);
+    
     /** creates a menu item with a normal,selected  and disabled image with target/selector 
      * @lua NA
      */
     static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
+    static CCMenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector);
     
     bool init();
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-    bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector);
+    bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector);
     /** sets the sprite frame for the normal image */
     void setNormalSpriteFrame(CCSpriteFrame* frame);
     /** sets the sprite frame for the selected image */

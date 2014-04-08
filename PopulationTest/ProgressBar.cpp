@@ -16,7 +16,7 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
                                     const char* bgBodyFileName,
                                     const char* bgLeftFileName,
                                     const char* bgRightFileName,
-                                    const char* barFileName)
+                                    const char* barFileName, bool horizontal)
 {
     // ProgressBar is the parent node, set its position/size
     this->setPosition(bgBodyRect.origin);
@@ -71,10 +71,19 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     barFill = CCSprite::createWithTexture(texture);
     barFill->setAnchorPoint(CCPointZero);
     
-     barFill->setContentSize(barFillOffsetRect.size);
+    barFill->setContentSize(barFillOffsetRect.size);
     barFillTexSize = texture->getContentSizeInPixels();
-   barFill->setScale(barFillOffsetRect.size.height / barFillTexSize.height);
-   barFillScale = barFillTexSize.height / barOffsetRect.size.height;
+    if(horizontal)
+    {
+        barFill->setScale(barFillOffsetRect.size.height / barFillTexSize.height);
+        barFillScale = barFillTexSize.height / barOffsetRect.size.height;
+    }
+    else
+    {
+        barFill->setScaleX(barFillOffsetRect.size.width / barFillTexSize.width);
+        barFill->setScaleY(barFillOffsetRect.size.height / barFillTexSize.height);
+        barFillScale = barFillTexSize.width / barOffsetRect.size.width;
+    }
     
     // Add them to this object
     if (bgBody)
@@ -84,6 +93,8 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     if (bgRight)
         this->addChild(bgRight);
     this->addChild(barFill);
+    
+    this->horizontal = horizontal;
     
     // Initialize
     setValue(0.0f);
@@ -119,12 +130,22 @@ void ProgressBar::setValue(float value)
         value = 1.0f;
     currentValue = value;
     
-    // Set the fill rect, relative to its own texture size,
-    // as barFill already has its own scale
-    float newFillWidth = currentValue * barFillOffsetRect.size.width;
-    barFill->setTextureRect(CCRectMake(0, 0,
-                                       newFillWidth * barFillScale,
-                                       barFillTexSize.height));
+    if(horizontal)
+    {
+        // Set the fill rect, relative to its own texture size,
+        // as barFill already has its own scale
+        float newFillWidth = currentValue * barFillOffsetRect.size.width;
+        barFill->setTextureRect(CCRectMake(0, 0,
+                                           newFillWidth * barFillScale,
+                                           barFillTexSize.height));
+    }
+    else
+    {
+        float newFillHeight = currentValue * barFillTexSize.height;
+        barFill->setTextureRect(CCRectMake(0, 0,
+                                           barFillTexSize.width,
+                                           newFillHeight));
+    }
 }
 
 

@@ -58,18 +58,20 @@ CCMenuItem* CCMenuItem::create()
 CCMenuItem* CCMenuItem::create(CCObject *rec, SEL_MenuHandler selector)
 {
     CCMenuItem *pRet = new CCMenuItem();
-    pRet->initWithTarget(rec, selector);
+    pRet->initWithTarget(rec, NULL, selector);
     pRet->autorelease();
     return pRet;
 }
 
-bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler selector)
+bool CCMenuItem::initWithTarget(CCObject *rec, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector)
 {
     setAnchorPoint(ccp(0.5f, 0.5f));
     m_pListener = rec;
-    m_pfnSelector = selector;
+    m_dfnSelector = down_selector;
+    m_pfnSelector = release_selector;
     m_bEnabled = true;
     m_bSelected = false;
+    m_bTriggered = false;
     return true;
 }
 
@@ -86,6 +88,16 @@ void CCMenuItem::selected()
 void CCMenuItem::unselected()
 {
     m_bSelected = false;
+}
+
+void CCMenuItem::fired()
+{
+    m_bTriggered = true;
+}
+
+void CCMenuItem::unFired()
+{
+    m_bTriggered = false;
 }
 
 void CCMenuItem::registerScriptTapHandler(int nHandler)
@@ -112,6 +124,23 @@ void CCMenuItem::activate()
         if (m_pListener && m_pfnSelector)
         {
             (m_pListener->*m_pfnSelector)(this);
+            m_bTriggered = false;
+        }
+        
+        if (kScriptTypeNone != m_eScriptType)
+        {
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
+        }
+    }
+}
+
+void CCMenuItem::pressDown()
+{
+    if (!m_bTriggered)
+    {
+        if (m_pListener && m_dfnSelector)
+        {
+            (m_pListener->*m_dfnSelector)(this);
         }
         
         if (kScriptTypeNone != m_eScriptType)
@@ -141,6 +170,11 @@ CCRect CCMenuItem::rect()
 bool CCMenuItem::isSelected()
 {
     return m_bSelected;
+}
+
+bool CCMenuItem::isTriggered()
+{
+    return m_bTriggered;
 }
 
 void CCMenuItem::setTarget(CCObject *rec, SEL_MenuHandler selector)
@@ -200,7 +234,7 @@ CCMenuItemLabel* CCMenuItemLabel::create(CCNode *label)
 
 bool CCMenuItemLabel::initWithLabel(CCNode* label, CCObject* target, SEL_MenuHandler selector)
 {
-    CCMenuItem::initWithTarget(target, selector);
+    CCMenuItem::initWithTarget(target, NULL, selector);
     m_fOriginalScale = 1.0f;
     m_tColorBackup = ccWHITE;
     setDisabledColor(ccc3(126,126,126));
@@ -500,14 +534,14 @@ CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* select
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode *normalSprite, CCNode *selectedSprite, CCNode *disabledSprite, CCObject *target, SEL_MenuHandler selector)
 {
     CCMenuItemSprite *pRet = new CCMenuItemSprite();
-    pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
+    pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, NULL, selector);
     pRet->autorelease();
     return pRet;
 }
 
-bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector)
+bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector)
 {
-    CCMenuItem::initWithTarget(target, selector); 
+    CCMenuItem::initWithTarget(target, down_selector, release_selector);
     setNormalImage(normalSprite);
     setSelectedImage(selectedSprite);
     setDisabledImage(disabledSprite);
@@ -621,7 +655,7 @@ CCMenuItemImage* CCMenuItemImage::create()
 
 bool CCMenuItemImage::init(void)
 {
-    return initWithNormalImage(NULL, NULL, NULL, NULL, NULL);
+    return initWithNormalImage(NULL, NULL, NULL, NULL, NULL, NULL);
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage)
@@ -636,8 +670,13 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
 {
+    return CCMenuItemImage::create(normalImage, selectedImage, disabledImage, target, NULL, selector);
+}
+
+CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector)
+{
     CCMenuItemImage *pRet = new CCMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector))
+    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, target, down_selector, release_selector))
     {
         pRet->autorelease();
         return pRet;
@@ -649,7 +688,7 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL))
+    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL, NULL))
     {
         pRet->autorelease();
         return pRet;
@@ -658,7 +697,7 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
     return NULL;
 }
 
-bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
+bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler down_selector, SEL_MenuHandler release_selector)
 {
     CCNode *normalSprite = NULL;
     CCNode *selectedSprite = NULL;
@@ -678,8 +717,10 @@ bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *s
     {
         disabledSprite = CCSprite::create(disabledImage);
     }
-    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
+    
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, down_selector, release_selector);
 }
+
 //
 // Setter of sprite frames
 //
@@ -717,7 +758,7 @@ CCArray* CCMenuItemToggle::getSubItems()
 CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems)
 {
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
-    pRet->CCMenuItem::initWithTarget(target, selector);
+    pRet->CCMenuItem::initWithTarget(target, NULL, selector);
     pRet->m_pSubItems = CCArray::create();
     pRet->m_pSubItems->retain();
     
@@ -753,7 +794,7 @@ CCMenuItemToggle * CCMenuItemToggle::create()
 
 bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 {
-    CCMenuItem::initWithTarget(target, selector);
+    CCMenuItem::initWithTarget(target, NULL, selector);
     this->m_pSubItems = CCArray::create();
     this->m_pSubItems->retain();
     int z = 0;
@@ -779,7 +820,7 @@ CCMenuItemToggle* CCMenuItemToggle::create(CCMenuItem *item)
 
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
-    CCMenuItem::initWithTarget(NULL, NULL);
+    CCMenuItem::initWithTarget(NULL, NULL, NULL);
     setSubItems(CCArray::create());
 
     if (item)

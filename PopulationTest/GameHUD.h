@@ -55,6 +55,11 @@ struct Date
     }
 };
 
+enum LabelStatus
+{
+    Default = 0, InMoneyLabel, InFoodLabel, InPopulationLabel = 3
+};
+
 class GameHUD : public CCLayer
 {
     static GameHUD* SP;
@@ -95,6 +100,14 @@ class GameHUD : public CCLayer
     float cumulatedTime;
     
 public:
+    LabelStatus labelStatus;
+    bool isToggle;
+    CCPoint newPos;
+    float targetOpacity;
+    float fadeSpeed;
+    bool label_fade_in;
+    bool label_fade_out;
+    
     float leftPos;
     float maxPos;
     
@@ -177,6 +190,8 @@ public:
     CCSprite* peaceButton;
     CCSprite* warButton;
     
+    CCSprite* infoBackground;
+    
     CCSprite* mask;
     
     // soldier helper
@@ -231,6 +246,10 @@ public:
     void clickBuildButton();
     void clickSystemButton();
     
+    void clickMoneyLabel();
+    void clickFoodLabel();
+    void clickPopulationLabel();
+    
     void pauseGame();
     void stickGameHappiness();
     void banditsAttack();
@@ -250,6 +269,7 @@ public:
     void fadeOut(float);
     
     void UpdateBuildButton();
+    void labelBackgroundFade(float);
 };
 
 #endif

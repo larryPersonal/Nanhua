@@ -92,7 +92,6 @@ BuildingHandler::~BuildingHandler()
     
     if (allBuildings)
     {
-        
         if (allBuildings->count() > 0)
             allBuildings->removeAllObjects();
         allBuildings->release();
