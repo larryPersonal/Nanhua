@@ -2819,7 +2819,7 @@ void GameSprite::dropToken(bool tutorial)
     if(random_number <= token_drop_rate || tutorial)
     {
         saySpeech(HAPPY, 1.0f);
-        ReputationOrb* ro = ReputationOrb::create("tokenball_REN.png", GameScene::getThis()->configSettings->token_disappear_time);
+        ReputationOrb* ro = ReputationOrb::create("REN", GameScene::getThis()->configSettings->token_disappear_time);
         CCSprite* newToken = ro->getSprite();
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();

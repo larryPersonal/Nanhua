@@ -16,6 +16,18 @@ using namespace cocos2d;
 class ReputationOrb : public CCObject
 {
 public:
+   int frameHeight;
+    int frameWidth;
+    
+    CCTexture2D *orbTexture;
+    CCRect orbRect;
+    int x_frameno;
+    int x_maxframeno;
+    int y_offset;
+
+    float delay_animFrame;
+    float delay_curr;
+    
     CCSprite* orbSprite;
     
     float opacity;
