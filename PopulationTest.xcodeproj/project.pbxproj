@@ -417,6 +417,8 @@
 		36FDC98D170049E800AB1A68 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FDC98B170049E800AB1A68 /* Sprite.cpp */; };
 		36FE13BB16F1BE2800AB0528 /* PopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FE13B916F1BE2800AB0528 /* PopupMenu.cpp */; };
 		36FFC1D216F029B30045C11F /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FFC1D116F029B30045C11F /* Building.cpp */; };
+		5E34816418F6586900BEBC70 /* TEMPSITC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5E34816218F6586900BEBC70 /* TEMPSITC.TTF */; };
+		5E34816518F6586900BEBC70 /* toony_loons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E34816318F6586900BEBC70 /* toony_loons.ttf */; };
 		8410543618E90DA7003D88C6 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541D18E90DA7003D88C6 /* bubble.png */; };
 		8410543718E90DA7003D88C6 /* tired2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541E18E90DA7003D88C6 /* tired2.png */; };
 		8410543818E90DA7003D88C6 /* tired3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541F18E90DA7003D88C6 /* tired3.png */; };
@@ -1369,6 +1371,8 @@
 		36FE13BA16F1BE2800AB0528 /* PopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenu.h; sourceTree = "<group>"; };
 		36FFC1D016F029A60045C11F /* Building.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		36FFC1D116F029B30045C11F /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
+		5E34816218F6586900BEBC70 /* TEMPSITC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = TEMPSITC.TTF; sourceTree = "<group>"; };
+		5E34816318F6586900BEBC70 /* toony_loons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = toony_loons.ttf; sourceTree = "<group>"; };
 		8410541D18E90DA7003D88C6 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
 		8410541E18E90DA7003D88C6 /* tired2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tired2.png; sourceTree = "<group>"; };
 		8410541F18E90DA7003D88C6 /* tired3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tired3.png; sourceTree = "<group>"; };
@@ -3588,6 +3592,8 @@
 		B497C35017264A9500993475 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				5E34816218F6586900BEBC70 /* TEMPSITC.TTF */,
+				5E34816318F6586900BEBC70 /* toony_loons.ttf */,
 				84CFAEE518E04A7300A81C94 /* BRITANIC.TTF */,
 				36AC553A18D690C200C165F5 /* Shojumaru-Regular.ttf */,
 			);
@@ -3766,6 +3772,7 @@
 				843689F918DBF1A200FA08FF /* Full_Scene.tmx in Resources */,
 				36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */,
 				3658DD8218D6F31E0056B895 /* Soldier.plist in Resources */,
+				5E34816518F6586900BEBC70 /* toony_loons.ttf in Resources */,
 				3608CAFE1704343E00AB65A3 /* YoungGirl.plist in Resources */,
 				84F9B76918D949D900579060 /* MaleVillager.plist in Resources */,
 				3632864318CEC503002C58D3 /* houses.png in Resources */,
@@ -3892,6 +3899,7 @@
 				3617292E17AA543B00D2558E /* loadingbar-right.png in Resources */,
 				8421158618D2C4DD00A441D0 /* timeclock.png in Resources */,
 				3617293117AA596900D2558E /* nav button.png in Resources */,
+				5E34816418F6586900BEBC70 /* TEMPSITC.TTF in Resources */,
 				8412CA6818AC8D4A00AF4645 /* build-menu_info.png in Resources */,
 				3617293217AA596900D2558E /* nav button-pressed.png in Resources */,
 				36AC556218D6981900C165F5 /* house_btn.png in Resources */,
