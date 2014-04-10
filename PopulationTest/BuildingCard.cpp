@@ -188,7 +188,15 @@ void BuildingCard::init()
     mask = CCSprite::create("black.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
     mask->setOpacity((GLubyte) 120);
-    if(TutorialManager::getThis()->teachBuildHouse)
+    
+    if(TutorialManager::getThis()->teachBuildRoad)
+    {
+        if(type == 1)
+        {
+            mask->setOpacity((GLubyte) 0);
+        }
+    }
+    else if(TutorialManager::getThis()->teachBuildHouse)
     {
         if(type != 1 && type != 2 && type != 3 && building->buildingType == HOUSING)
         {
@@ -326,6 +334,12 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
+            
+            if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                return;
+            }
+            
             GameHUD::getThis()->setTapMode(4);
             GameScene::getThis()->isThisTapCounted = true;
             
@@ -340,6 +354,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
+            
+            if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                return;
+            }
             //I'll need to set tap mode to demolish. TODO
             GameScene::getThis()->isThisTapCounted = true;
             
@@ -350,6 +369,10 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             break;
         default:
         {
+            if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                return;
+            }
             tryToBuild(tag);
         }
             break;

@@ -1,0 +1,89 @@
+<?xml encoding="ISO-8859-1"?>
+
+<tutorial>
+    <slide>
+        <speech>Hello, welcome to 'Hope of San Guo' Village! My name is Mini Dragon, nice to meet you. From now, you are the governor of the village. Your responsibility is to direct the village to high prosperity.</speech>
+        <cameraMove>6016,2176</cameraMove>
+        <clickToNext></clickToNext>
+        <lock>
+            <villager></villager>
+            <buildButton></buildButton>
+            <objectiveButton></objectiveButton>
+            <timeGroup></timeGroup>
+            <scroll></scroll>
+            <buildScroll></buildScroll>
+            <buildingButton></buildingButton>
+            <popup></popup>
+            <buttonOk></buttonOK>
+            <buttonCancel></buttonCancel>
+            <buttonClose></buttonClose>
+            <manPowerSelect></manPowerSelect>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Now, please let me introduce the village to you. This is the town hall of the village. Town hall will be responsible to support the whole village and provide updagrading service.</speech>
+        <fade_out>160</fade_out>
+        <highlight>special</highlight>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Now, please let me introduce the house to you.</speech>
+        <cameraMove>6272,2048</cameraMove>
+        <clickToNext></clickToNext>
+        <deHighlight></deHighlight>
+    </slide>
+    <slide>
+        <speech>This is the houses of the village. Houses are home of villagers. Villagers cannot work without home and they will become unhappy until leave the village.</speech>
+        <highlight>housing</highlight>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Now, please let me introduce the farm to you.</speech>
+        <cameraMove>6400,1984</cameraMove>
+        <clickToNext></clickToNext>
+        <deHighlight></deHighlight>
+    </slide>
+    <slide>
+        <speech>This is the farm of the village. Farm are places to produce food. Villagers must eat food periodically to sustain their life in the village and maintain their happiness.</speech>
+        <highlight>amenity</highlight>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Now, please let me introduce the granary to you.</speech>
+        <cameraMove>6464,2144</cameraMove>
+        <clickToNext></clickToNext>
+        <deHighlight></deHighlight>
+    </slide>
+    <slide>
+        <speech>This is the granary of the village. Granaries are places to store food. Food produced from farm need to be stored inside the granary, otherwise the food will be wasted.</speech>
+        <highlight>granary</highlight>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Now, please let me introduce the guard tower to you.</speech>
+        <cameraMove>6592,1888</cameraMove>
+        <clickToNext></clickToNext>
+        <deHighlight></deHighlight>
+    </slide>
+    <slide>
+        <speech>This is the guard tower of the village. Guard towers are places to train villages to soldiers. In the bandits attack event, bandits will steal gold and food from you village, soldiers will help to defend the bandits during the attack.</speech>
+        <highlight>military</highlight>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Now, please let me tell you how to build roads.</speech>
+        <cameraMove>6016,2176</cameraMove>
+        <deHighlight></deHighlight>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Click build button to open the build scroll.</speech>
+        <highlight>buildButton</highlight>
+        <unlock>
+            <buildButton></buildButton>
+        </unlock>
+        <lock>
+            <teachBuildRoad></teachBuildRoad>
+        </lock>
+    </slide>
+</tutorial>

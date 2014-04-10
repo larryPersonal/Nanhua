@@ -11,6 +11,9 @@
 
 #include "cocos2d.h"
 #include <vector.h>
+#include "TutorialReader.h"
+#include "Building.h"
+
 using namespace cocos2d;
 using namespace std;
 
@@ -36,11 +39,14 @@ public:
     
     CCArray* animatedStringList;
     
-    bool autoJump;
-    
     float delay;
     
     float cumulativeTime;
+    
+    CCArray* slidesList;
+    int curSlide;
+    
+    bool clickToNext;
     
 public:
     MiniDragon();
@@ -53,6 +59,18 @@ public:
     void scheduleSenario();
     
     void move(CCPoint);
+    
+    void readTutorialFile();
+    void playMiniDraggon();
+    void clickNext();
+    bool constructTutorialSlide();
+    void moveCamera(CCPoint);
+    
+    void fadeInScreen(float);
+    void fadeOutScreen(float);
+    
+    void highlightBuilding(string);
+    void deHighlightBuilding();
 };
 
 #endif

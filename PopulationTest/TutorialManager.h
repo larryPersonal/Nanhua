@@ -54,6 +54,12 @@ public:
     bool teachBuildButton;
     bool teachBuildHouse;
     bool teachFarming;
+    bool teachBuildRoad;
+    
+    bool clickable;
+    Building* highlightedBuilding;
+    CCPoint highlightedBuildingPos;
+    float highlightedBuildingZOrder;
     
 public:
     TutorialManager();
@@ -64,7 +70,7 @@ public:
     
     void setupForTutorial();
     
-    void moveCameraToGate(float);
+    void moveCamera(float);
     
     void fadeOut(float);
     void fadeIn(float);
