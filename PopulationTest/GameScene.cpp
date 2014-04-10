@@ -621,6 +621,12 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext)
+    {
+        TutorialManager::getThis()->miniDragon->clickNext();
+        TutorialManager::getThis()->clickable = false;
+    }
+    
     // then check the tutorial manager
     if(TutorialManager::getThis()->active)
     {
@@ -1109,6 +1115,10 @@ void GameScene::centerCamera(Building* b)
     // get the horizontal and vertical length difference between the screen centre and the target position!
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
+    
+    stringstream ss;
+    ss << b->buildingRep->getPositionX() << ", " << b->buildingRep->getPositionY();
+    CCLog(ss.str().c_str());
     
     mapHandler->moveMapBy(-xDiff, -yDiff);
 }

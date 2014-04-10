@@ -64,6 +64,12 @@ TutorialManager::TutorialManager()
     teachBuildButton = false;
     teachBuildHouse = false;
     teachFarming = false;
+    teachBuildRoad = false;
+    
+    clickable = false;
+    highlightedBuilding = NULL;
+    highlightedBuildingPos = CCPointZero;
+    highlightedBuildingZOrder = 0;
 }
 
 TutorialManager::~TutorialManager()
@@ -128,6 +134,7 @@ void TutorialManager::setupForTutorial()
     
     GameManager::getThis()->initGameData();
     
+    /*
     CCPoint location = CCPointMake(28, 36);
     
     GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
@@ -146,25 +153,24 @@ void TutorialManager::setupForTutorial()
     
     this->target = CCPointMake(32,46);
     this->target = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
+    */
     
-    lockVillager = true;
-    lockMap = false;
     GameManager::getThis()->UpdateUnlocks();
     GameScene::getThis()->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
     GameScene::getThis()->mapHandler->rescaleScrollLimits();
     GameHUD::getThis()->update(0.1f);
     GameHUD::getThis()->pause = true;
-    this->schedule(schedule_selector( TutorialManager::moveCameraToGate ), 1.0f / 120.0f);
+    //this->schedule(schedule_selector( TutorialManager::moveCamera ), 1.0f / 120.0f);
+    setupMiniDragon();
 }
 
-void TutorialManager::moveCameraToGate(float dt)
+void TutorialManager::moveCamera(float dt)
 {
-    // get the screen dimension.
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // get the currentPosition
-    float xPos = - GameScene::getThis()->mapHandler->getMap()->getPositionX();
-    float yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY();
+    float xPos = - GameScene::getThis()->mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
     
     // get the horizontal and vertical length difference between the screen centre and the target position!
     float xDiff = target.x - xPos;
@@ -186,22 +192,23 @@ void TutorialManager::moveCameraToGate(float dt)
     // update the position of the screen centre.
     GameScene::getThis()->mapHandler->moveMapBy(-xSpeed, -ySpeed);
     
+    xPos = - GameScene::getThis()->mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    
     if(xSpeed > 0)
     {
-        if(-GameScene::getThis()->mapHandler->getMap()->getPositionX() >= TutorialManager::getThis()->target.x)
+        if(xPos >= TutorialManager::getThis()->target.x)
         {
-            GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x, -TutorialManager::getThis()->target.y);
-            this->unschedule(schedule_selector( TutorialManager::moveCameraToGate ));
-            scheduleFadeOut(255, 5);
+            GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
+            this->unschedule(schedule_selector( TutorialManager::moveCamera ));
         }
     }
     else
     {
-        if(-GameScene::getThis()->mapHandler->getMap()->getPositionX() <= TutorialManager::getThis()->target.x)
+        if(xPos <= TutorialManager::getThis()->target.x)
         {
-            GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x, -TutorialManager::getThis()->target.y);
-            this->unschedule(schedule_selector( TutorialManager::moveCameraToGate ));
-            scheduleFadeOut(255, 5);
+            GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
+            this->unschedule(schedule_selector( TutorialManager::moveCamera ));
         }
     }
     
@@ -218,10 +225,6 @@ void TutorialManager::fadeOut(float dt)
     {
         currentOpacity = targetOpacity;
         this->unschedule(schedule_selector( TutorialManager::fadeOut ));
-        if(narrator == NULL)
-        {
-            setupNarrator();
-        }
     }
     mask->setOpacity((GLubyte) currentOpacity);
 }
@@ -264,7 +267,7 @@ void TutorialManager::setupMiniDragon()
 {
     miniDragon = new MiniDragon();
     inDraggon = true;
-    miniDragon->display();
+    miniDragon->playMiniDraggon();
 }
 
 

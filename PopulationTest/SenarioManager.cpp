@@ -9,6 +9,7 @@
 #include "SenarioManager.h"
 #include "Slide.h"
 #include "Element.h"
+#include "GlobalHelper.h"
 
 SenarioManager::SenarioManager(){
     slidesList = CCArray::create();
@@ -66,14 +67,6 @@ void SenarioManager::parseXMLFile(string xml)
         {
             continue;
         }
-        
-        /*
-        CCLog("Hello my name is gaoyu! ");
-        const int length = 100;
-        char text[length];
-        sprintf(text, "%d", i);
-        CCLog(text);
-        */
         
         if(!inProject)
         {
