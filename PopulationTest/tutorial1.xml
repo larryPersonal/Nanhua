@@ -1,0 +1,94 @@
+<?xml encoding="ISO-8859-1"?>
+
+<tutorial>
+    <slide>
+        <speech>Now, please let me tell you how to build roads.</speech>
+        <cameraMove>6016,2176</cameraMove>
+        <fade_out>160</fade_out>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Click build button to open the build scroll.</speech>
+        <highlight>buildButton</highlight>
+        <unlock>
+            <buildButton></buildButton>
+        </unlock>
+        <lock>
+            <teachBuildRoad></teachBuildRoad>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Click the build path to launch the path building mode.</speech>
+        <deHighlight>buildButton</deHighlight>
+        <offY>220</offY>
+        <lock>
+            <buildButton></buildButton>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Now try to build some path in the village by click on the ground.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>After you done, click the cancel buildButton.</speech>
+        <fade_in>0</fade_in>
+        <unlock>
+            <scroll></scroll>
+            <buildButton></buildButton>
+            <teachBuildRoad></teachBuildRoad>
+        </unlock>
+        <lock>
+            <teachBuildButton></teachBuildButton>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Now, I will indroduce you how to build a house. Click the house button in the build scroll.</speech>
+        <addVillager>5</addVillager>
+        <fade_out>160</fade_out>
+        <offY>220</offY>
+        <lock>
+            <buildButton></buildButton>
+        </lock>
+        <unlock>
+            <pause></pause>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on any empty plot of land! Red preview means cannot build there.</speech>
+        <fade_in>0</fade_in>
+    </slide>
+    <slide>
+        <speech>Tap again to confirm building location. Tap on another area to change the building location.</speech>
+    </slide>
+    <slide>
+        <speech>In order to build, or work, you need to allocate manpower for the activity. Tap on the villagers to allocate them and tap again to deallocate them.</speech>
+        <fade_out>160</fade_out>
+        <hide></hide>
+        <lock>
+            <scroll></scroll>
+        </lock>
+        <unlock>
+            <manpowerSelect></manpowerSelect>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on the allocate button to confirm the allocation and commerce the activity.</speech>
+        <lock>
+            <manpowerSelect></manpowerSelect>
+        </lock>
+        <show></show>
+        <unlock>
+            <buttonOk></buttonOk>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Wait for building to be completed, the remaining refugee will find the new home.</speech>
+        <fade_in>0</fade_in>
+        <lock>
+            <buttonOk></buttonOk>
+        </lock>
+        <unlock>
+            <scroll></scroll>
+        </unlock>
+    </slide>
+</tutorial>

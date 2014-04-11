@@ -60,6 +60,11 @@ TutorialManager::TutorialManager()
     lockButtonCancel = true;
     lockButtonClose = true;
     lockManpowerSelect = true;
+    lockSpriteInfo = true;
+    lockBuildingInfo = true;
+    lockGoldLabel = true;
+    lockFoodLabel = true;
+    lockPopulationLabel = true;
     
     teachBuildButton = false;
     teachBuildHouse = false;
@@ -70,6 +75,12 @@ TutorialManager::TutorialManager()
     highlightedBuilding = NULL;
     highlightedBuildingPos = CCPointZero;
     highlightedBuildingZOrder = 0;
+    
+    villagersToBeAdded = 0;
+    cumulativeTime = 0;
+    
+    show = false;
+    hide = false;
 }
 
 TutorialManager::~TutorialManager()
@@ -98,6 +109,10 @@ void TutorialManager::unlockAll()
     lockManpowerSelect = false;
     lockMap = false;
     lockVillager = false;
+    lockSpriteInfo = false;
+    lockGoldLabel = false;
+    lockFoodLabel = false;
+    lockPopulationLabel = false;
     active = false;
     
     teachBuildButton = false;
@@ -162,6 +177,30 @@ void TutorialManager::setupForTutorial()
     GameHUD::getThis()->pause = true;
     //this->schedule(schedule_selector( TutorialManager::moveCamera ), 1.0f / 120.0f);
     setupMiniDragon();
+}
+
+void TutorialManager::addVillagers(int num)
+{
+    villagersToBeAdded = num;
+    this->schedule(schedule_selector(TutorialManager::scheduleVillagers), 1.0f/120.0f);
+}
+
+void TutorialManager::scheduleVillagers(float dt)
+{
+    cumulativeTime += dt;
+    
+    if(villagersToBeAdded <= 0)
+    {
+        this->unschedule(schedule_selector(TutorialManager::scheduleVillagers));
+    }
+    
+    if(cumulativeTime >= 1.0f)
+    {
+        cumulativeTime = 0;
+        CCPoint location = CCPointMake(29, 33);
+        GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
+        villagersToBeAdded--;
+    }
 }
 
 void TutorialManager::moveCamera(float dt)

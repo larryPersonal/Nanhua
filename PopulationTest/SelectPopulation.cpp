@@ -345,14 +345,21 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             // button ok -> to construct
             if(!TutorialManager::getThis()->lockButtonOk)
             {
+                if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachFarming) && TutorialManager::getThis()->miniDragon != NULL)
+                {
+                    TutorialManager::getThis()->miniDragon->clickNext();
+                }
                 performTask();
             }
             break;
         case -3:
         {
-            PopupMenu::backupCurrentPopupMenu();
-            BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(building);
-            buildingInfoMenu->useAsTopmostPopupMenu();
+            if(!TutorialManager::getThis()->lockBuildingInfo)
+            {
+                PopupMenu::backupCurrentPopupMenu();
+                BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(building);
+                buildingInfoMenu->useAsTopmostPopupMenu();
+            }
         }
             break;
         case -4:
@@ -373,12 +380,6 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
 
 void SelectPopulation::cancelTask()
 {
-    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D2T5))
-    {
-        TutorialManager::getThis()->miniDragon->display();
-        return;
-    }
-    
     CCArray* memberSprites = building->memberSpriteList;
     
     
@@ -413,22 +414,6 @@ void SelectPopulation::performTask()
     if(memberArray->count() <= 0)
     {
         return;
-    }
-    
-    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D2T4))
-    {
-        TutorialManager::getThis()->miniDragon->display();
-        return;
-    }
-    
-    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D2T6))
-    {
-        TutorialManager::getThis()->miniDragon->display();
-    }
-    
-    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->ds == D3T5))
-    {
-        TutorialManager::getThis()->miniDragon->display();
     }
     
     if(building->isUnderConstruction())
@@ -721,9 +706,9 @@ void SelectPopulation::update(float deltaTime){
     if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->isCurrentConstructing && !building->isCurrentWorking)
     {
         buttonOk->setVisible(true);
-        if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon->ds < D2T4)
+        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
         {
-            TutorialManager::getThis()->miniDragon->display();
+            TutorialManager::getThis()->miniDragon->clickNext();
         }
     }
     else if(memberArray->count() < population && buttonOk->isVisible())
@@ -915,6 +900,11 @@ void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteR
 
 void SelectPopulation::cancelSprite(CCObject *pSender)
 {
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockSpriteInfo)
+    {
+        return;
+    }
+    
     if(building->isCurrentConstructing)
     {
         return;

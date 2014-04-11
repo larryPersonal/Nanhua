@@ -19,12 +19,22 @@ TutorialSlide::TutorialSlide()
     highlight = false;
     deHighlight = false;
     highlightBuilding = "";
+    deHighlightBuilding = "";
     
     fade_in = false;
     fade_out = false;
     target_opacity = 0;
     
     clickToNext = false;
+    offY = 0;
+    addVillager = 0;
+    
+    hide = false;
+    show = false;
+    
+    triggerDropToken = false;
+    unlockAll = false;
+    hideBubble = false;
 }
 
 TutorialSlide::~TutorialSlide()

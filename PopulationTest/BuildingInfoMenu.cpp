@@ -1258,6 +1258,7 @@ void BuildingInfoMenu::selectPop()
     
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
     {
-        TutorialManager::getThis()->miniDragon->display();
+        selectPopulationMenu->setZOrder(35);
+        TutorialManager::getThis()->miniDragon->clickNext();
     }
 }

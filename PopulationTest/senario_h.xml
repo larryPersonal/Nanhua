@@ -9,7 +9,11 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
+<<<<<<< HEAD
+            <font>TEMPSITC</font>
+=======
             <font>TooneyLoons</font>
+>>>>>>> 75b9d052c23dd19760b3743ed0fb4650485aabf5
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>

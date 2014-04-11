@@ -325,7 +325,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             GameHUD::getThis()->buildScroll->scheduleScrollOut();
             GameHUD::getThis()->buildButton->setVisible(true);
             
-            
+            if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                TutorialManager::getThis()->miniDragon->clickNext();
+            }
         }
             break;
         case -2 : //unbuild path
@@ -373,6 +377,13 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
+            
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                TutorialManager::getThis()->miniDragon->clickNext();
+            }
+            
             tryToBuild(tag);
         }
             break;
@@ -447,15 +458,8 @@ void BuildingCard::tryToBuild(int tag)
     
     if(GameHUD::getThis()->money > buildingToBuy->buildingCost)
     {
-        if(TutorialManager::getThis()->teachBuildHouse)
-        {
-            TutorialManager::getThis()->miniDragon->display();
-        }
         GameHUD::getThis()->money -= buildingToBuy->buildingCost;
         GameHUD::getThis()->setTapMode(1);
-        
-        
-        
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }
     GameScene::getThis()->isThisTapCounted = true;

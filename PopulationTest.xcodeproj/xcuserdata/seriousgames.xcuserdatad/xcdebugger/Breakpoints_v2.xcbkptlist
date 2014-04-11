@@ -94,7 +94,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "181"
-            endingLineNumber = "181">
+            endingLineNumber = "181"
+            landmarkName = "MapHandler::getScaleLayer()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1344,9 +1346,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "776"
-            endingLineNumber = "776"
-            landmarkName = "MapHandler::ForceUnbuild(cocos2d::CCPoint &amp;target)"
-            landmarkType = "5">
+            endingLineNumber = "776">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

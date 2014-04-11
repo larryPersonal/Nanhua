@@ -613,7 +613,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
     if(tapped)
     {
-        CCLog("test1");
         tapped = false;
         return;
     }
@@ -621,10 +620,18 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
-    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext)
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL)
     {
-        TutorialManager::getThis()->miniDragon->clickNext();
-        TutorialManager::getThis()->clickable = false;
+    
+        if(TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext)
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+            TutorialManager::getThis()->clickable = false;
+        }
+        else
+        {
+            TutorialManager::getThis()->miniDragon->showAllSpeech();
+        }
     }
     
     // then check the tutorial manager
@@ -646,12 +653,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         
         if(TutorialManager::getThis()->lockMap)
         {
-            skip = true;
-        }
-        
-        if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->ds == D3T2)
-        {
-            TutorialManager::getThis()->miniDragon->display();
             skip = true;
         }
         
@@ -891,7 +892,15 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         {
             if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
             {
-                GameHUD::getThis()->clickMoneyLabel();
+                if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockGoldLabel)
+                {
+                    
+                }
+                else
+                {
+                    GameHUD::getThis()->clickMoneyLabel();
+                }
+                skip = true;
             }
         }
         
@@ -899,7 +908,15 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         {
             if(GameHUD::getThis()->foodIcon->boundingBox().containsPoint(touchLoc))
             {
-                GameHUD::getThis()->clickFoodLabel();
+                if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockFoodLabel)
+                {
+                    
+                }
+                else
+                {
+                    GameHUD::getThis()->clickFoodLabel();
+                }
+                skip = true;
             }
         }
         
@@ -907,7 +924,15 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         {
             if(GameHUD::getThis()->populationIcon->boundingBox().containsPoint(touchLoc))
             {
-                GameHUD::getThis()->clickPopulationLabel();
+                if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockPopulationLabel)
+                {
+                    
+                }
+                else
+                {
+                    GameHUD::getThis()->clickPopulationLabel();
+                }
+                skip = true;
             }
         }
         
@@ -1047,11 +1072,19 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
                     {
-                        TutorialManager::getThis()->miniDragon->display();
+                        TutorialManager::getThis()->miniDragon->clickNext();
                     }
                 }
                 else
                 {
+                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                    {
+                        if(mapHandler->currBuildingPreview == NULL)
+                        {
+                            TutorialManager::getThis()->miniDragon->clickNext();
+                        }
+                    }
+                    
                     mapHandler->UnBuildPreview();
 
                     if (mapHandler->BuildPreview(tilePos, newBuilding))
@@ -1062,14 +1095,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     {
                         lastTilePosPreview.x = INT_MAX;
                         lastTilePosPreview.y = INT_MAX;
-                    }
-                    
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
-                    {
-                        if(TutorialManager::getThis()->miniDragon->ds < D1T5)
-                        {
-                            TutorialManager::getThis()->miniDragon->display();
-                        }
                     }
                 }
             }
@@ -1371,9 +1396,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
                     {
-                        TutorialManager::getThis()->miniDragon->display();
-                        TutorialManager::getThis()->miniDragon->move(ccp(0, -100));
-                        selectPopulation->setZOrder(30);
+                        TutorialManager::getThis()->miniDragon->clickNext();
+                        selectPopulation->setZOrder(35);
                         TutorialManager::getThis()->lockPopup = true;
                     }
                 }
@@ -1388,9 +1412,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
                     {
-                        TutorialManager::getThis()->miniDragon->display();
-                        TutorialManager::getThis()->miniDragon->move(ccp(0, -100));
-                        buildingInfoMenu->setZOrder(30);
+                        TutorialManager::getThis()->miniDragon->clickNext();
+                        buildingInfoMenu->setZOrder(35);
                         TutorialManager::getThis()->lockPopup = true;
                     }
                 }
@@ -1440,9 +1463,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                             
                             if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
                             {
-                                TutorialManager::getThis()->miniDragon->display();
-                                TutorialManager::getThis()->miniDragon->move(ccp(0, -100));
-                                selectPopulation->setZOrder(30);
+                                TutorialManager::getThis()->miniDragon->clickNext();
+                                selectPopulation->setZOrder(35);
                                 TutorialManager::getThis()->lockPopup = true;
                             }
                         }
@@ -1457,9 +1479,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                             
                             if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
                             {
-                                TutorialManager::getThis()->miniDragon->display();
-                                TutorialManager::getThis()->miniDragon->move(ccp(0, -100));
-                                buildingInfoMenu->setZOrder(30);
+                                TutorialManager::getThis()->miniDragon->clickNext();
+                                buildingInfoMenu->setZOrder(35);
                                 TutorialManager::getThis()->lockPopup = true;
                             }
                         }

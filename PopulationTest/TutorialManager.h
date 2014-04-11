@@ -50,6 +50,11 @@ public:
     bool lockButtonCancel;
     bool lockButtonClose;
     bool lockManpowerSelect;
+    bool lockSpriteInfo;
+    bool lockBuildingInfo;
+    bool lockGoldLabel;
+    bool lockFoodLabel;
+    bool lockPopulationLabel;
     
     bool teachBuildButton;
     bool teachBuildHouse;
@@ -60,6 +65,12 @@ public:
     Building* highlightedBuilding;
     CCPoint highlightedBuildingPos;
     float highlightedBuildingZOrder;
+    
+    int villagersToBeAdded;
+    float cumulativeTime;
+    
+    bool show;
+    bool hide;
     
 public:
     TutorialManager();
@@ -83,6 +94,10 @@ public:
     void setupMiniDragon();
     
     void unlockAll();
+    
+    void addVillagers(int);
+    
+    void scheduleVillagers(float);
     
     //void saySpeech(std::string());
 };

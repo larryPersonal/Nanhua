@@ -294,6 +294,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
     float flashTimeGap = 0.05f;
     int flashGapCount = 0;
     
+    CCLog("hello: %s", font.c_str());
     for (int i = 0; i < tokens.size(); i++)
     {
                 std::string tokenStr = tokens.at(i);

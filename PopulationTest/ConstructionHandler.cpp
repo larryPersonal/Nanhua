@@ -227,9 +227,10 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
         GameScene::getThis()->buildingHandler->decorationOnMap->addObject(building);
     }
 
-    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
     {
-        TutorialManager::getThis()->miniDragon->display();
+        TutorialManager::getThis()->miniDragon->clickNext();
+        TutorialManager::getThis()->teachBuildHouse = false;
     }
     
 }
