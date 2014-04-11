@@ -9,7 +9,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -23,7 +23,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -37,7 +37,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -51,7 +51,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -72,7 +72,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -91,7 +91,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -110,7 +110,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -129,7 +129,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -148,7 +148,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -167,7 +167,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -186,7 +186,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -206,7 +206,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -219,7 +219,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -241,7 +241,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -254,7 +254,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -275,7 +275,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -294,7 +294,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -314,7 +314,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -327,7 +327,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -341,7 +341,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -355,7 +355,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
             <background>yes<background>
@@ -364,7 +364,7 @@
             <src>acceptbtn.png</src>
             <srcp>acceptpressbtn.png</srcp>
             <file>senario1_option1.xml</file>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <left>25</left>
 			<top>20</top>
@@ -376,7 +376,7 @@
             <src>rejectbtn.png</src>
             <srcp>rejectpressbtn.png</src>
             <file>senario1_option2.xml</file>
-            <font>toony_loons</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <left>25</left>
 			<top>12</top>

@@ -71,6 +71,9 @@ public:
     void scrollOut(float);
     
     void scheduleScrollOut();
+    
+    bool nameExists(const std::string& name);
+    
 };
 
 #endif
