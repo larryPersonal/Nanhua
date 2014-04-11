@@ -54,7 +54,7 @@ GameScene::GameScene()
         case 1:
             CCLog("l1");
             settingsLevel->setLevel0();
-            systemConfig->skipSenario = false;
+            systemConfig->skipSenario = true;
             systemConfig->skipTutorial = true;
             break;
         case 2:

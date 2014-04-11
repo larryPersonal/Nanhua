@@ -137,7 +137,7 @@ void GameHUD::setAllStats()
     mGameCurrentFood = 0;
     mGameCurrentStorage = 0;
     
-    mGameCurrentCitizenPopulation = 0;
+    mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
 }
 
@@ -303,18 +303,26 @@ void GameHUD::update(float deltaTime)
     for (int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        if(gs->getHome() != NULL)
+        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
         {
             temp++;
         }
     }
     
-    if(mGameCurrentCitizenPopulation != temp)
+    if(mGameCurrentPopulation != temp)
     {
-        mGameCurrentCitizenPopulation = temp;
+        mGameCurrentPopulation = temp;
         std::stringstream ss;
-        ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+        ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
+        if(mGameCurrentPopulation > mGameCurrentPopulationRoom)
+        {
+            populationLabel->setColor(ccc3(255, 0, 0));
+        }
+        else
+        {
+            populationLabel->setColor(ccc3(255, 255, 255));
+        }
     }
     
     temp = 0;
@@ -329,7 +337,7 @@ void GameHUD::update(float deltaTime)
     {
         mGameCurrentPopulationRoom = temp;
         std::stringstream ss;
-        ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+        ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
     }
     
@@ -600,16 +608,16 @@ void GameHUD::createStatsMenu()
     populationIcon->setPosition(ccp(580, screenSize.height - 2));
     this->addChild(populationIcon, 2);
     
-    mGameCurrentCitizenPopulation = 0;
+    mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
     
     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
     for(int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END && gs->getHome() != NULL)
+        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
         {
-            mGameCurrentCitizenPopulation++;
+            mGameCurrentPopulation++;
         }
     }
     
@@ -621,7 +629,7 @@ void GameHUD::createStatsMenu()
     }
     
     ss.str(std::string());
-    ss << mGameCurrentCitizenPopulation << "/" << mGameCurrentPopulationRoom;
+    ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
