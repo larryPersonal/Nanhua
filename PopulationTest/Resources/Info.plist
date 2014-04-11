@@ -62,13 +62,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>toony_loons.ttf</string>
-<<<<<<< HEAD
-		<string>TEMPSITC.ttf</string>
-		<string>MBBlockType.ttf</string>
-		<string>Vinland.ttf</string>
-=======
 		<string>TEMPSITC.TTF</string>
->>>>>>> 75b9d052c23dd19760b3743ed0fb4650485aabf5
 		<string>Shojumaru-Regular.ttf</string>
 	</array>
 	<key>UILaunchImages~ipad</key>
