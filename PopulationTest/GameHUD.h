@@ -72,7 +72,7 @@ class GameHUD : public CCLayer
     int mGameReputation;
     int mGameReputationMax;
     
-    int mGameCurrentCitizenPopulation;
+    int mGameCurrentPopulation;
     int mGameCurrentPopulationRoom;
     
     float mAverageHappiness;
