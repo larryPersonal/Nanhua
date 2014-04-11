@@ -11,6 +11,7 @@
 #include "GameHUD.h"
 #include "GlobalHelper.h"
 #include "SelectPopulation.h"
+#include "TutorialManager.h"
 
 MapHandler::MapHandler()
 {
@@ -707,6 +708,11 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         PopupMenu::backupCurrentPopupMenu();
         SelectPopulation* selectPopulation = SelectPopulation::create(cloneBuilding);
         selectPopulation->useAsTopmostPopupMenu();
+        
+        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+        {
+            selectPopulation->setZOrder(35);
+        }
     }
     return true;
 }

@@ -236,7 +236,19 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             // workval > 0 means the construction is successful, so update the construction scale and the energy scale
             if(workval > 0)
             {
-                this->build_uint_current += workval;
+                if(TutorialManager::getThis()->active)
+                {
+                    this->build_uint_current += workval * 10;
+                }
+                else
+                {
+                    this->build_uint_current += workval;
+                }
+                
+                if(this->build_uint_current > this->build_uint_required)
+                {
+                    this->build_uint_current = this->build_uint_required;
+                }
                 
                 sp->updateIdleDelay(0.2f);
             }
@@ -343,7 +355,15 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 if(sp->getCumulativeTime() >= 0.33333333f)
                 {
                     sp->getPossessions()->energyRating -= 0.1f;
-                    work_unit_current += sp->getPossessions()->default_work_unit_per_day / 12.0f;
+                    if(TutorialManager::getThis()->active)
+                    {
+                        work_unit_current += sp->getPossessions()->default_work_unit_per_day / 12.0f * 10;
+                    }
+                    else
+                    {
+                        work_unit_current += sp->getPossessions()->default_work_unit_per_day / 12.0f;
+                    }
+                    
                     sp->setCumulativeTime(0.0f);
                 }
                 
@@ -416,7 +436,8 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
                     {
-                        TutorialManager::getThis()->miniDragon->display();
+                        PopupMenu::closeAllPopupMenu();
+                        TutorialManager::getThis()->miniDragon->clickNext();
                     }
                 }
                 else

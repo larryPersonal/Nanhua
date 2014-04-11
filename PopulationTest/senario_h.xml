@@ -9,7 +9,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>toony_loons</font>
+            <font>TEMPSITC</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>

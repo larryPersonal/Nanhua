@@ -1061,13 +1061,13 @@ void GameHUD::clickBuildButton()
         if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || TutorialManager::getThis()->teachBuildRoad))
         {
             TutorialManager::getThis()->lockBuildScroll = true;
-            TutorialManager::getThis()->miniDragon->display();
             TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
             if(TutorialManager::getThis()->teachBuildButton)
             {
                 TutorialManager::getThis()->teachBuildButton = false;
                 TutorialManager::getThis()->teachBuildHouse = true;
             }
+            TutorialManager::getThis()->miniDragon->clickNext();
         }
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)

@@ -52,7 +52,6 @@ public:
     MiniDragon();
     ~MiniDragon();
     
-    void display();
     void finishDisplay();
     void update(float);
     
@@ -70,7 +69,10 @@ public:
     void fadeOutScreen(float);
     
     void highlightBuilding(string);
-    void deHighlightBuilding();
+    void deHighlightBuilding(string);
+    
+    void showAllSpeech();
+    void hideDragonGroup();
 };
 
 #endif

@@ -27,12 +27,22 @@ public:
     bool highlight;
     bool deHighlight;
     string highlightBuilding;
+    string deHighlightBuilding;
     
     bool fade_out;
     bool fade_in;
     float target_opacity;
     
     bool clickToNext;
+    float offY;
+    int addVillager;
+    
+    bool hide;
+    bool show;
+    
+    bool triggerDropToken;
+    bool unlockAll;
+    bool hideBubble;
     
 public:
     TutorialSlide();

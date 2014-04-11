@@ -1,0 +1,75 @@
+<?xml encoding="ISO-8859-1"?>
+
+<tutorial>
+    <slide>
+        <speech>Now you need to produce food to sustain your population.</speech>
+        <cameraMove>6400,1984</cameraMove>
+        <fade_out>160</fade_out>
+        <clickToNext></clickToNext>
+        <addVillager>5</addVillager>
+        <highlight>foodLabel</highlight>
+        <lock>
+            <teachFarming></teachFarming>
+        </lock>
+        <unlock>
+            <pause></pause>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on the farm to see the stats of the farm.</speech>
+        <deHighlight>foodLabel</deHighlight>
+        <fade_in>0</fade_in>
+        <unlock>
+            <popup></popup>
+            <scroll></scroll>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on Allocate to open up the allocate screen.</speech>
+        <fade_out>160</fade_out>
+        <hide></hide>
+        <lock>
+            <popup></popup>
+            <scroll></scroll>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Allocate manpower for the farming process.</speech>
+        <show></show>
+        <hide></hide>
+        <unlock>
+            <manpowerSelect></manpowerSelect>
+            <buttonOk></buttonOk>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>After farming is completed, food will be transported to the granary.</speech>
+        <show></show>
+        <fade_in>0</fade_in>
+        <lock>
+            <manpowerSelect></manpowerSelect>
+            <buttonOk></buttonOk>
+        </lock>
+        <unlock>
+            <scroll></scroll>
+            <buttonClose></buttonClose>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>if the villages keep happy, they will have chance to drop reputatoin tokens, collect them by tapping on them.</speech>
+        <clickToNext></clickToNext>
+        <triggerDropToken></triggerDropToken>
+    </slide>
+    <slide>
+        <speech>Be careful, reputation tokens will disappear after a period of time, collect them as soon as possible.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Well done, now you know how to build our village already, keep it.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <hideBubble></hideBubble>
+        <unlockAll><unlockAll>
+    </slide>
+</tutorial>

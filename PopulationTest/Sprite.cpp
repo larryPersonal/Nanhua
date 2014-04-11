@@ -595,7 +595,6 @@ void GameSprite::followPath()
             
             // if the bandit's next target tile is already taken by the soldiers, stop moving and prepare to attack the soldier
             if(villagerClass == V_BANDIT){
-                CCLog("test1");
                 CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
                 CCPoint myTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(currPos));
                 
@@ -1171,7 +1170,6 @@ void GameSprite::updateSprite(float dt)
                         currAction = IDLE;
                         combatState = C_IDLE;
                         stopAction = false;
-                        CCLog("test123");
                         return;
                     }
                 }

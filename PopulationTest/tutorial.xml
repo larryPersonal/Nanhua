@@ -70,6 +70,7 @@
         <highlight>military</highlight>
         <clickToNext></clickToNext>
     </slide>
+    
     <slide>
         <speech>Now, please let me tell you how to build roads.</speech>
         <cameraMove>6016,2176</cameraMove>
@@ -85,5 +86,150 @@
         <lock>
             <teachBuildRoad></teachBuildRoad>
         </lock>
+    </slide>
+    <slide>
+        <speech>Click the build path to launch the path building mode.</speech>
+        <deHighlight>buildButton</deHighlight>
+        <offY>220</offY>
+        <lock>
+            <buildButton></buildButton>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Now try to build some path in the village by click on the ground.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>After you done, click the cancel buildButton.</speech>
+        <fade_in>0</fade_in>
+        <unlock>
+            <scroll></scroll>
+            <buildButton></buildButton>
+            <teachBuildRoad></teachBuildRoad>
+        </unlock>
+        <lock>
+            <teachBuildButton></teachBuildButton>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Now, I will indroduce you how to build a house. In tutorial, I will increase the speed of building and working with my power. Click the house button in the build scroll.</speech>
+        <addVillager>5</addVillager>
+        <fade_out>160</fade_out>
+        <offY>220</offY>
+        <lock>
+            <buildButton></buildButton>
+        </lock>
+        <unlock>
+            <pause></pause>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on any empty plot of land! Red preview means cannot build there.</speech>
+        <fade_in>0</fade_in>
+    </slide>
+    <slide>
+        <speech>Tap again to confirm building location. Tap on another area to change the building location.</speech>
+    </slide>
+    <slide>
+        <speech>In order to build, or work, you need to allocate manpower for the activity. Tap on the villagers to allocate them and tap again to deallocate them.</speech>
+        <fade_out>160</fade_out>
+        <hide></hide>
+        <lock>
+            <scroll></scroll>
+        </lock>
+        <unlock>
+            <manpowerSelect></manpowerSelect>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on the allocate button to confirm the allocation and commerce the activity.</speech>
+        <lock>
+            <manpowerSelect></manpowerSelect>
+        </lock>
+        <show></show>
+        <unlock>
+            <buttonOk></buttonOk>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Wait for building to be completed, the remaining refugee will find the new home.</speech>
+        <fade_in>0</fade_in>
+        <lock>
+            <buttonOk></buttonOk>
+        </lock>
+        <unlock>
+            <scroll></scroll>
+        </unlock>
+    </slide>
+    
+    <slide>
+        <speech>Now you need to produce food to sustain your population.</speech>
+        <cameraMove>6400,1984</cameraMove>
+        <fade_out>160</fade_out>
+        <clickToNext></clickToNext>
+        <highlight>foodLabel</highlight>
+        <lock>
+            <teachFarming></teachFarming>
+        </lock>
+        <unlock>
+            <pause></pause>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on the farm to see the stats of the farm.</speech>
+        <deHighlight>foodLabel</deHighlight>
+        <fade_in>0</fade_in>
+        <unlock>
+            <popup></popup>
+            <scroll></scroll>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Tap on Allocate to open up the allocate screen.</speech>
+        <fade_out>160</fade_out>
+        <hide></hide>
+        <lock>
+            <popup></popup>
+            <scroll></scroll>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Allocate manpower for the farming process.</speech>
+        <show></show>
+        <hide></hide>
+        <unlock>
+            <manpowerSelect></manpowerSelect>
+            <buttonOk></buttonOk>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>After farming is completed, food will be transported to the granary.</speech>
+        <show></show>
+        <fade_in>0</fade_in>
+        <lock>
+            <manpowerSelect></manpowerSelect>
+            <buttonOk></buttonOk>
+        </lock>
+        <unlock>
+            <scroll></scroll>
+            <buttonClose></buttonClose>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>if the villages keep happy, they will have chance to drop reputatoin tokens, collect them by tapping on them.</speech>
+        <clickToNext></clickToNext>
+        <triggerDropToken></triggerDropToken>
+    </slide>
+    <slide>
+        <speech>Be careful, reputation tokens will disappear after a period of time, collect them as soon as possible.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Well done, now you know how to build our village already, keep it.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <hideBubble></hideBubble>
+        <unlockAll><unlockAll>
     </slide>
 </tutorial>

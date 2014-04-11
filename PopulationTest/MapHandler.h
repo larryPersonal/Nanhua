@@ -34,6 +34,7 @@ enum TileType
 
 class MapHandler
 {
+public:
     CCTMXTiledMap* mapPtr;
   
     CCLayer* scalePanLayer;
