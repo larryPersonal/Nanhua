@@ -393,6 +393,7 @@
 		36C16E4F18D0049000C307DB /* YoungGirl_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4518D0049000C307DB /* YoungGirl_port.png */; };
 		36C38C7C176ED60B00CE0F8D /* tutorial.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36C38C7B176ED60B00CE0F8D /* tutorial.txt */; };
 		36C3A80518F77E7200C93E6B /* tokenanim.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80418F77E7200C93E6B /* tokenanim.png */; };
+		36C3A80718F7E16300C93E6B /* GIL_____.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80618F7DE9100C93E6B /* GIL_____.TTF */; };
 		36D551F6173788E500C20BBD /* JobCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D551F4173788E500C20BBD /* JobCollection.cpp */; };
 		36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A6F17BB3F1D00C41D54 /* FMW_port.png */; };
 		36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87CEC18C5BA1D00FE8B31 /* bandit_c.png */; };
@@ -1338,6 +1339,7 @@
 		36C38C7B176ED60B00CE0F8D /* tutorial.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tutorial.txt; sourceTree = "<group>"; };
 		36C38C7D176EE71F00CE0F8D /* BanditCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BanditCFG.h; sourceTree = "<group>"; };
 		36C3A80418F77E7200C93E6B /* tokenanim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenanim.png; sourceTree = "<group>"; };
+		36C3A80618F7DE9100C93E6B /* GIL_____.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GIL_____.TTF"; sourceTree = "<group>"; };
 		36D551F4173788E500C20BBD /* JobCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JobCollection.cpp; sourceTree = "<group>"; };
 		36D551F5173788E500C20BBD /* JobCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobCollection.h; sourceTree = "<group>"; };
 		36D551F717378A5100C20BBD /* luafunctions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = luafunctions.txt; sourceTree = "<group>"; };
@@ -3596,6 +3598,7 @@
 			isa = PBXGroup;
 			children = (
 				5E34816218F6586900BEBC70 /* TEMPSITC.TTF */,
+				36C3A80618F7DE9100C93E6B /* GIL_____.TTF */,
 				5E34816318F6586900BEBC70 /* toony_loons.ttf */,
 				84CFAEE518E04A7300A81C94 /* BRITANIC.TTF */,
 				36AC553A18D690C200C165F5 /* Shojumaru-Regular.ttf */,
@@ -3807,6 +3810,7 @@
 				367613E81712AEF400CD354B /* json_internalarray.inl in Resources */,
 				8410546118E94ECB003D88C6 /* PauseMenu.png in Resources */,
 				36C16E4A18D0049000C307DB /* FemaleFarmer_port.png in Resources */,
+				36C3A80718F7E16300C93E6B /* GIL_____.TTF in Resources */,
 				367613E91712AEF400CD354B /* json_internalmap.inl in Resources */,
 				8412CA5B18AC8D4A00AF4645 /* objective-menu-button_06.png in Resources */,
 				84EB32811867FB7A003B5CEB /* senario1_option1.xml in Resources */,

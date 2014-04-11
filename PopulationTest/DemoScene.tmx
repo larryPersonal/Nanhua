@@ -262,7 +262,7 @@
    <properties>
     <property name="anim_frames" value="10"/>
     <property name="anim_random" value="true"/>
-    <property name="anim_random_chance" value="0.6"/>
+    <property name="anim_random_chance" value="0.2"/>
     <property name="build_time" value="20"/>
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="3"/>
@@ -274,7 +274,7 @@
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Brick House"/>
+    <property name="name" value="House"/>
     <property name="population_limit" value="2"/>
     <property name="prereqs" value="Straw House"/>
     <property name="recovery_rate" value="1"/>
@@ -312,7 +312,7 @@
   </tile>
   <tile id="5">
    <properties>
-       <property name="ignore_this_blank" value=""/>
+    <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
   <tile id="6">
@@ -337,34 +337,34 @@
   </tile>
   <tile id="10">
    <properties>
-       <property name="anim_frames" value="10"/>
-       <property name="anim_random" value="true"/>
-       <property name="anim_random_chance" value="0.6"/>
-       <property name="build_time" value="20"/>
-       <property name="build_uint_required" value="2000"/>
-       <property name="builder_limit" value="3"/>
-       <property name="building_type" value="housing"/>
-       <property name="cost" value="200"/>
-       <property name="description" value="A house of brick"/>
-       <property name="food_consumption_rate" value="0"/>
-       <property name="jobs_available" value="0"/>
-       <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-       <property name="level_gain_cost" value="2:50, 4:50"/>
-       <property name="level_gain_population_limit" value="3:1, 5:1"/>
-       <property name="name" value="Brick House"/>
-       <property name="population_limit" value="2"/>
-       <property name="prereqs" value="Straw House"/>
-       <property name="recovery_rate" value="1"/>
-       <property name="req_building_count" value="6"/>
-       <property name="req_capita" value="0"/>
-       <property name="req_population" value="10"/>
-       <property name="research_cost" value="150"/>
-       <property name="storage" value="0"/>
-       <property name="storage_limit" value="0"/>
-       <property name="unlocked_at_start" value="yes"/>
-       <property name="upgrade_unit" value="0"/>
-       <property name="work_unit" value=""/>
-       <property name="work_unit_required" value=""/>
+    <property name="anim_frames" value="10"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.2"/>
+    <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="2000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="housing"/>
+    <property name="cost" value="200"/>
+    <property name="description" value="A house of brick"/>
+    <property name="food_consumption_rate" value="0"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="House"/>
+    <property name="population_limit" value="2"/>
+    <property name="prereqs" value="Straw House"/>
+    <property name="recovery_rate" value="1"/>
+    <property name="req_building_count" value="6"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="10"/>
+    <property name="research_cost" value="150"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="11">
@@ -389,7 +389,7 @@
   </tile>
   <tile id="15">
    <properties>
-       <property name="ignore_this_blank" value=""/>
+    <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
   <tile id="16">
@@ -414,34 +414,34 @@
   </tile>
   <tile id="20">
    <properties>
-       <property name="anim_frames" value="10"/>
-       <property name="anim_random" value="true"/>
-       <property name="anim_random_chance" value="0.6"/>
-       <property name="build_time" value="20"/>
-       <property name="build_uint_required" value="2000"/>
-       <property name="builder_limit" value="3"/>
-       <property name="building_type" value="housing"/>
-       <property name="cost" value="200"/>
-       <property name="description" value="A house of brick"/>
-       <property name="food_consumption_rate" value="0"/>
-       <property name="jobs_available" value="0"/>
-       <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-       <property name="level_gain_cost" value="2:50, 4:50"/>
-       <property name="level_gain_population_limit" value="3:1, 5:1"/>
-       <property name="name" value="Brick House"/>
-       <property name="population_limit" value="2"/>
-       <property name="prereqs" value="Straw House"/>
-       <property name="recovery_rate" value="1"/>
-       <property name="req_building_count" value="6"/>
-       <property name="req_capita" value="0"/>
-       <property name="req_population" value="10"/>
-       <property name="research_cost" value="150"/>
-       <property name="storage" value="0"/>
-       <property name="storage_limit" value="0"/>
-       <property name="unlocked_at_start" value="yes"/>
-       <property name="upgrade_unit" value="0"/>
-       <property name="work_unit" value=""/>
-       <property name="work_unit_required" value=""/>
+    <property name="anim_frames" value="10"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.2"/>
+    <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="2000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="housing"/>
+    <property name="cost" value="200"/>
+    <property name="description" value="A house of brick"/>
+    <property name="food_consumption_rate" value="0"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="House"/>
+    <property name="population_limit" value="2"/>
+    <property name="prereqs" value="Straw House"/>
+    <property name="recovery_rate" value="1"/>
+    <property name="req_building_count" value="6"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="10"/>
+    <property name="research_cost" value="150"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="21">
@@ -491,34 +491,34 @@
   </tile>
   <tile id="30">
    <properties>
-       <property name="anim_frames" value="10"/>
-       <property name="anim_random" value="true"/>
-       <property name="anim_random_chance" value="0.6"/>
-       <property name="build_time" value="20"/>
-       <property name="build_uint_required" value="2000"/>
-       <property name="builder_limit" value="3"/>
-       <property name="building_type" value="housing"/>
-       <property name="cost" value="200"/>
-       <property name="description" value="A house of brick"/>
-       <property name="food_consumption_rate" value="0"/>
-       <property name="jobs_available" value="0"/>
-       <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-       <property name="level_gain_cost" value="2:50, 4:50"/>
-       <property name="level_gain_population_limit" value="3:1, 5:1"/>
-       <property name="name" value="Brick House"/>
-       <property name="population_limit" value="2"/>
-       <property name="prereqs" value="Straw House"/>
-       <property name="recovery_rate" value="1"/>
-       <property name="req_building_count" value="6"/>
-       <property name="req_capita" value="0"/>
-       <property name="req_population" value="10"/>
-       <property name="research_cost" value="150"/>
-       <property name="storage" value="0"/>
-       <property name="storage_limit" value="0"/>
-       <property name="unlocked_at_start" value="yes"/>
-       <property name="upgrade_unit" value="0"/>
-       <property name="work_unit" value=""/>
-       <property name="work_unit_required" value=""/>
+    <property name="anim_frames" value="10"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.2"/>
+    <property name="build_time" value="20"/>
+    <property name="build_uint_required" value="2000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="housing"/>
+    <property name="cost" value="200"/>
+    <property name="description" value="A house of brick"/>
+    <property name="food_consumption_rate" value="0"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="House"/>
+    <property name="population_limit" value="2"/>
+    <property name="prereqs" value="Straw House"/>
+    <property name="recovery_rate" value="1"/>
+    <property name="req_building_count" value="6"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="10"/>
+    <property name="research_cost" value="150"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
    </properties>
   </tile>
   <tile id="31">
