@@ -1340,11 +1340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418904205.975598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "766"
-            endingLineNumber = "766"
+            startingLineNumber = "776"
+            endingLineNumber = "776"
             landmarkName = "MapHandler::ForceUnbuild(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1356,12 +1356,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418904205.975598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "648"
-            endingLineNumber = "648"
-            landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails)"
+            startingLineNumber = "655"
+            endingLineNumber = "655"
+            landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3164,11 +3164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418904205.975598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "945"
-            endingLineNumber = "945"
+            startingLineNumber = "955"
+            endingLineNumber = "955"
             landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3180,11 +3180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418904205.975598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "852"
-            endingLineNumber = "852"
+            startingLineNumber = "862"
+            endingLineNumber = "862"
             landmarkName = "MapHandler::Path(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3196,11 +3196,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418904205.975598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "856"
-            endingLineNumber = "856">
+            startingLineNumber = "866"
+            endingLineNumber = "866"
+            landmarkName = "MapHandler::Path(cocos2d::CCPoint &amp;target)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3210,11 +3212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418904205.975598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "880"
-            endingLineNumber = "880"
+            startingLineNumber = "890"
+            endingLineNumber = "890"
             landmarkName = "MapHandler::PathTileUpdate(cocos2d::CCPoint &amp;target, int propogate, CCTMXLayer* groundpath, bool destroymode = false)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3326,9 +3328,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "592"
-            endingLineNumber = "592"
-            landmarkName = "SelectPopulation::update(float deltaTime)"
-            landmarkType = "5">
+            endingLineNumber = "592">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3338,11 +3338,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418902703.026424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "504"
-            endingLineNumber = "504"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3386,11 +3386,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418902703.026424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "540"
-            endingLineNumber = "540"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3402,11 +3402,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MapHandler.cpp"
-            timestampString = "418106259.87538"
+            timestampString = "418902703.026424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "548"
-            endingLineNumber = "548"
+            startingLineNumber = "553"
+            endingLineNumber = "553"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3582,6 +3582,38 @@
             startingLineNumber = "136"
             endingLineNumber = "136"
             landmarkName = "ReputationOrb::update(float dt)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/BuildingHandler.cpp"
+            timestampString = "418903312.818604"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "956"
+            endingLineNumber = "956"
+            landmarkName = "BuildingHandler::getRandomBuildingWithName(std::string name)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/MapHandler.cpp"
+            timestampString = "418902686.47541"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "486"
+            endingLineNumber = "486"
+            landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
