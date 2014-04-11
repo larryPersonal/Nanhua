@@ -73,6 +73,10 @@ public:
     void removeBuildingFromMap(Building* b);
     void addBuildingToMap(Building* b);
     
+    
+    Building* getRandomBuildingWithName(std::string name);
+    
+    
     int getHighestBuildingID();
 };
 

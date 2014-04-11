@@ -743,7 +743,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "459"
             endingLineNumber = "459"
-            landmarkName = "GameHUD::onSpriteRemovedFromMap(GameSprite* sprite)"
+            landmarkName = "GameHUD::onSpriteAddedToMap(GameSprite* sprite)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3533,7 +3533,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "976"
             endingLineNumber = "976"
-            landmarkName = "GameHUD::clickObjectiveButton()"
+            landmarkName = "GameHUD::fadeOut(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3549,7 +3549,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
             endingLineNumber = "983"
-            landmarkName = "GameHUD::clickObjectiveButton()"
+            landmarkName = "GameHUD::fadeOut(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3565,7 +3565,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "987"
             endingLineNumber = "987"
-            landmarkName = "GameHUD::clickObjectiveButton()"
+            landmarkName = "GameHUD::fadeOut(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

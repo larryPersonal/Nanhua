@@ -297,7 +297,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
     CCLog("hello: %s", font.c_str());
     for (int i = 0; i < tokens.size(); i++)
     {
-        std::string tokenStr = tokens.at(i);
+                std::string tokenStr = tokens.at(i);
         CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
         tempLabel->retain();
         
@@ -463,8 +463,8 @@ void Senario::createGUI(){
     
     std::stringstream ss;
     ss << "Start Game!";
-    CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
-//    CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "toony_loons" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
+   CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
+   // CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "TooneyLoons" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
 
     chatboxLabel->setAnchorPoint(ccp(0, 0));
     chatboxLabel->setPosition( ccp(chatbox->boundingBox().size.width / 2.0f, chatbox->boundingBox().size.height));

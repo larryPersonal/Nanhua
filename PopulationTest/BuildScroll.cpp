@@ -103,9 +103,14 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == HOUSING)
         {
-            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
-            numberOfBuildingCards++;
-            buildingCards->addObject(bc);
+            if (!nameExists(tempBuilding->buildingName))
+            {
+            
+            
+                bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+                numberOfBuildingCards++;
+                buildingCards->addObject(bc);
+            }
         }
     }
     
@@ -114,9 +119,14 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == AMENITY)
         {
-            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
-            numberOfBuildingCards++;
-            buildingCards->addObject(bc);
+            if (!nameExists(tempBuilding->buildingName))
+            {
+                
+                
+                bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+                numberOfBuildingCards++;
+                buildingCards->addObject(bc);
+            }
         }
     }
     
@@ -274,3 +284,18 @@ void BuildScroll::scheduleScrollOut()
     }
 }
 
+//This check is optional because some buildings have default names and won't be added otherwise.
+//To use this supply the name of the building you are about to add to the array
+bool BuildScroll::nameExists(const std::string& checkName)
+{
+    if (buildingCards == NULL) return false;
+    if (buildingCards->count() == 0) return false;
+    for (int i = 0; i < buildingCards->count(); ++i)
+    {
+        if (buildingCards->objectAtIndex(i) == NULL) continue;
+        if (((BuildingCard*)buildingCards->objectAtIndex(i))->building == NULL) continue;
+        if (checkName.compare(((BuildingCard*)buildingCards->objectAtIndex(i))->building->buildingName));
+        return true;
+    }
+    return false;
+}
