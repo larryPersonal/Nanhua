@@ -177,7 +177,7 @@
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="storage" value="50"/>
-    <property name="storage_limit" value="200"/>
+    <property name="storage_limit" value="500"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value=""/>
@@ -235,7 +235,7 @@
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="storage" value="50"/>
-    <property name="storage_limit" value="200"/>
+    <property name="storage_limit" value="500"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value=""/>

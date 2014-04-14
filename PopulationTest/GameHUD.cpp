@@ -1044,10 +1044,10 @@ void GameHUD::createBuildMenu()
     
     // create the build button
     buildButton = CCSprite::create("main-game-buttons_build.png");
-    buildButton->setScale(0.35f);
+    buildButton->setScale(0.3f);
 
     buildButton->setAnchorPoint(ccp(1, 0));
-    buildButton->setPosition(ccp(screenSize.width, -screenSize.height * 0.05f));
+    buildButton->setPosition(ccp(screenSize.width, -screenSize.height * 0.025f));
     
     this->addChild(buildButton, 2);
     
