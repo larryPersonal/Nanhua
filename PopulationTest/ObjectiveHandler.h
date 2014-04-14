@@ -10,19 +10,34 @@
 #define PopulationTest_ObjectiveHandler_h
 
 #include "cocos2d.h"
+#include "Objective.h"
 using namespace cocos2d;
 
-class ObjectiveHandler
+class ObjectiveHandler : public CCLayer
 {
 public:
     CCArray* objectives;
+    CCArray* objectiveStrs;
+    
+    int nextID;
+    
+    int progressNumber;
+    
+    Objective* obj;
+    
+    static ObjectiveHandler* SP;
 public:
     ObjectiveHandler();
     ~ObjectiveHandler();
     
-    void loadObjective();
+    static ObjectiveHandler* create();
+    static ObjectiveHandler* getThis();
     
-    CCObject* getObjective(int index);
+    void loadObjective();
+    void playObjective();
+    
+    void update(float);
+    
 };
 
 

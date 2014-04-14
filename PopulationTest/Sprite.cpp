@@ -1022,7 +1022,6 @@ void GameSprite::updateSprite(float dt)
                     }
                     else
                     {
-                        CCLog("test");
                         enermy->enermy = NULL;
                         enermy->combatState = C_IDLE;
                         enermy->currAction = IDLE;
@@ -1240,7 +1239,6 @@ void GameSprite::updateSprite(float dt)
                     }
                     else
                     {
-                        CCLog("test 456");
                         stopAction = false;
                         combatState = C_IDLE;
                         if(enermy != NULL && enermy->enermy != this)
@@ -1514,14 +1512,13 @@ void GameSprite::updateZIndex()
     if (!spriteRep->isVisible()) return;
     if (path == NULL) return; //not necessary to update Z if there isn't a path, implies sprite isn't moving
     if (path->count() == 0) return; //same reason
-    //needs to be in world space
-   // CCPoint position = getWorldPosition();//GameScene::getThis()->mapHandler->getMap()->convertToWorldSpace(spriteRep->getPosition()); // .ConvertToWorldSpace(startPos);
+    // needs to be in world space
+    // CCPoint position = getWorldPosition();//GameScene::getThis()->mapHandler->getMap()->convertToWorldSpace(spriteRep->getPosition()); // .ConvertToWorldSpace(startPos);
     
     
     //position = GameScene::getThis()->mapHandler->tilePosFromLocation(position);
-    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos));
-    
-    
+    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true) );
+    speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true) );
 }
 
 CCPoint GameSprite::getWorldPosition()
@@ -1721,7 +1718,8 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     }
     if (label == NULL) return;
     speechBubble->addContent(label, CCPointZero );
-    speechBubble->show(timeInSeconds);
+    //speechBubble->show(timeInSeconds);
+    speechBubble->show(200);
 }
 
 

@@ -32,8 +32,6 @@ GameScene::GameScene()
 {
     screenCenter = CCNode::create();
     mapHandler = new MapHandler();
-    objectiveHandler = new ObjectiveHandler();
-    objectiveHandler->loadObjective();
     
     globalOutcomeModifier = new GlobalOutcomeModifier();
     
@@ -121,8 +119,13 @@ CCScene* GameScene::scene()
     CCLog("Level is %d", GameManager::getThis()->getLevel());
     tm->setupForTutorial();
     
+    ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
+    objectiveHandler->loadObjective();
+    objectiveHandler->playObjective();
+    
     scene->addChild(senlayer, 1);
     scene->addChild(tm, 1);
+    scene->addChild(objectiveHandler, 1);
      
     return scene;
 }
@@ -1260,6 +1263,10 @@ void GameScene::update(float time)
         banditsAttackHandler->update(time);
         
         mapHandler->update(time);
+        if(ObjectiveHandler::getThis() != NULL)
+        {
+            ObjectiveHandler::getThis()->update(time);
+        }
     }
     
     // check lose game

@@ -483,7 +483,7 @@
 		841845221884DF9000895275 /* construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 841845201884DF9000895275 /* construction.png */; };
 		841845241884FC5A00895275 /* dismiss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841845231884FC5A00895275 /* dismiss.jpg */; };
 		8418C39118D836CE00C8C9B9 /* ObjectiveHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39018D836CE00C8C9B9 /* ObjectiveHandler.cpp */; };
-		8418C39618D8399D00C8C9B9 /* objective.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8418C39518D8399D00C8C9B9 /* objective.xml */; };
+		8418C39618D8399D00C8C9B9 /* objective_tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8418C39518D8399D00C8C9B9 /* objective_tutorial.xml */; };
 		8418C39A18D83E1A00C8C9B9 /* Objective.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39918D83E1A00C8C9B9 /* Objective.cpp */; };
 		8418C39D18D8474500C8C9B9 /* ObjectiveManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */; };
 		8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155618D2C4DD00A441D0 /* dialogbox.png */; };
@@ -1446,7 +1446,7 @@
 		841845231884FC5A00895275 /* dismiss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dismiss.jpg; sourceTree = "<group>"; };
 		8418C38F18D82EE500C8C9B9 /* ObjectiveHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveHandler.h; sourceTree = "<group>"; };
 		8418C39018D836CE00C8C9B9 /* ObjectiveHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectiveHandler.cpp; sourceTree = "<group>"; };
-		8418C39518D8399D00C8C9B9 /* objective.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = objective.xml; sourceTree = "<group>"; };
+		8418C39518D8399D00C8C9B9 /* objective_tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = objective_tutorial.xml; sourceTree = "<group>"; };
 		8418C39818D83D8200C8C9B9 /* Objective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objective.h; sourceTree = "<group>"; };
 		8418C39918D83E1A00C8C9B9 /* Objective.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Objective.cpp; sourceTree = "<group>"; };
 		8418C39B18D8467900C8C9B9 /* ObjectiveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveManager.h; sourceTree = "<group>"; };
@@ -3192,7 +3192,7 @@
 		8418C39318D8396D00C8C9B9 /* Objective */ = {
 			isa = PBXGroup;
 			children = (
-				8418C39518D8399D00C8C9B9 /* objective.xml */,
+				8418C39518D8399D00C8C9B9 /* objective_tutorial.xml */,
 			);
 			name = Objective;
 			sourceTree = "<group>";
@@ -3867,7 +3867,7 @@
 				8410546418E94ECB003D88C6 /* resumepressbtn.png in Resources */,
 				8410546618E94ECB003D88C6 /* exitbtn.png in Resources */,
 				36D87CFD18C5BA7800FE8B31 /* tokenball_AI.png in Resources */,
-				8418C39618D8399D00C8C9B9 /* objective.xml in Resources */,
+				8418C39618D8399D00C8C9B9 /* objective_tutorial.xml in Resources */,
 				84EDD26D18C6EF0C003BAF5E /* happyFace.png in Resources */,
 				36D87CFA18C5BA7800FE8B31 /* tokenball_REN.png in Resources */,
 				B4B0148517389F540071E59F /* demolish.png in Resources */,

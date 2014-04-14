@@ -23,6 +23,7 @@ public:
     ObjectiveType oType;
     
     int oid;
+    int nid;
     int value;
     std::string strValue;
     
@@ -31,10 +32,7 @@ public:
     int populationReward;
     int reputationReward;
     
-    bool active;
     bool complete;
-    
-    vector<int> preConditions;
     
 public:
     static Objective* create();

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<total_objectives></total_objectives>
+
+<objective>
+    <id>1</id>
+    <type>POPULATION</POPULATION>
+    <value>20</value>
+    <next>2</next>
+</objective>
+
+<objective>
+    <id>2</id>
+    <type>

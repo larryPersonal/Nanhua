@@ -59,9 +59,6 @@ GameHUD::GameHUD()
     
     startWar = false;
     
-    objectiveStrs = CCArray::create();
-    objectiveStrs->retain();
-    
     leftPos = 0;
     maxPos = 100.0f;
     
@@ -82,14 +79,13 @@ GameHUD::GameHUD()
     fadeSpeed = 0;
     label_fade_in = false;
     label_fade_out = false;
+    
+    targetMoney = 0;
 }
 
 GameHUD::~GameHUD()
 {
     delete date;
-    
-    objectiveStrs->removeAllObjects();
-    CC_SAFE_RELEASE(objectiveStrs);
 
     if (SystemMenu::SP != NULL)
     {
@@ -169,7 +165,7 @@ void GameHUD::update(float deltaTime)
         // if it's the first day of the month, update money;
         if (date->day == 0 && date->week == 0 && getMoney)
         {
-            money += 100 * GameScene::getThis()->buildingHandler->housingOnMap->count();
+            scheduleAddMoney(100 * GameScene::getThis()->buildingHandler->housingOnMap->count());
             getMoney = false;
         }
         
@@ -569,7 +565,7 @@ void GameHUD::createStatsMenu()
     
     std::stringstream ss;
     ss << money << "G";
-    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     moneyLabel->setColor(colorWhite);
     moneyLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(moneyLabel, 2);
@@ -594,7 +590,7 @@ void GameHUD::createStatsMenu()
     }
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
-    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     foodLabel->setColor(colorWhite);
     foodLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(foodLabel, 2);
@@ -630,7 +626,7 @@ void GameHUD::createStatsMenu()
     
     ss.str(std::string());
     ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
-    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
@@ -639,7 +635,7 @@ void GameHUD::createStatsMenu()
     // create the achievements label for the values
     ss.str(std::string());
     ss << GameScene::getThis()->configSettings->default_ini_reputation;
-    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
@@ -652,7 +648,7 @@ void GameHUD::createStatsMenu()
     ss.str(std::string());
     ss << mAverageHappiness;
     
-    average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
     average_happiness_label->setColor(colorBlack);
     average_happiness_label->setAnchorPoint(ccp(0, 0));
     this->addChild(average_happiness_label, 2);
@@ -895,57 +891,49 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0.0, 1.0));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveMenu->setPosition(ccp(-screenSize.width , screenSize.height - 115.0f));
+    objectiveMenu->setPosition(ccp(screenSize.width * 0.015f - 1000, screenSize.height - 115.0f));
     
     // create the objective button
     objectiveButton = CCSprite::create("objective-menu-button_06.png");
-    objectiveButton->setAnchorPoint(ccp(0.3, 0.5));
+    objectiveButton->setAnchorPoint(ccp(0, 1));
     objectiveButton->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveButton->setPosition(ccp(40, screenSize.height - 160));
+    objectiveButton->setPosition(ccp(15, screenSize.height - 113));
     this->addChild(objectiveButton);
     
     // create the objective title and objective strings!
     stringstream ss;
     ss << "Objective";
-    objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentCenter);
+    objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
     objectiveTitle->setColor(colorBlack);
-    objectiveTitle->setPosition(ccp((objectiveMenu->boundingBox().size.width - 60) / 2.0f + 60, screenSize.height * 0.75f));
+    objectiveTitle->setPosition(ccp(screenSize.width * 0.28f + objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 480));
     
-    CCArray* allObjectives = GameScene::getThis()->objectiveHandler->objectives;
-    for (int i = 0; i < allObjectives->count(); i++)
-    {
-        Objective* objective = (Objective*) allObjectives->objectAtIndex(i);
-        std::string objectiveStr = objective->getObjectiveString();
-        CCLabelTTF* tempLabel = CCLabelTTF::create(objectiveStr.c_str(), "Shojumaru-Regular", 10, CCSizeMake(objectiveStr.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-        tempLabel->setAnchorPoint(ccp(0, 0));
-        tempLabel->setPosition(ccp(75.0f, (screenSize.height *0.7f) - 20.0f * i));
-        objectiveStrs->addObject(tempLabel);
-        this->addChild(tempLabel, 3);
-        
-        tempLabel->setColor(colorBlack);
-        if(objective->complete)
-        {
-            tempLabel->setColor(colorGreen);
-        }
-    }
+    ss.str(std::string());
+    ss << "Description";
+    objectiveDescription = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    objectiveDescription->setAnchorPoint(ccp(0, 1));
+    objectiveDescription->setColor(colorBlack);
+    objectiveDescription->setPosition(ccp(screenSize.width * 0.14f, screenSize.height - 540));
     
-    this->addChild(objectiveMenu, 2);
-    this->addChild(objectiveTitle, 3);
+    ss.str(std::string());
+    ss << "Progress";
+    objectiveProgress = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    objectiveProgress->setAnchorPoint(ccp(0, 1));
+    objectiveProgress->setColor(colorBlack);
+    objectiveProgress->setPosition(ccp(screenSize.width * 0.14f, screenSize.height - 600));
     
-    objectiveTitle->setVisible(false);
-    for (int i = 0; i < objectiveStrs->count(); i++)
-    {
-        CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-        objectiveStr->setVisible(false);
-    }
+    objectiveMenu->addChild(objectiveTitle);
+    objectiveMenu->addChild(objectiveDescription);
+    objectiveMenu->addChild(objectiveProgress);
+    
+    this->addChild(objectiveMenu, 6);
 }
 
 void GameHUD::fadeIn(float dt)
 {
     if(fade_in)
     {
-        float speed = 5;
+        float speed = 10;
         float opacity = ((float)objectiveMenu->getOpacity()) + speed;
         
         if(opacity >= 255)
@@ -956,11 +944,8 @@ void GameHUD::fadeIn(float dt)
         }
         objectiveMenu->setOpacity((GLubyte) opacity);
         objectiveTitle->setOpacity((GLubyte) opacity);
-        for(int i = 0; i < objectiveStrs->count(); i++)
-        {
-            CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-            objectiveStr->setOpacity((GLubyte) opacity);
-        }
+        objectiveDescription->setOpacity((GLubyte) opacity);
+        objectiveProgress->setOpacity((GLubyte) opacity);
     }
 }
 
@@ -968,7 +953,7 @@ void GameHUD::fadeOut(float dt)
 {
     if(fade_out)
     {
-        float speed = 5;
+        float speed = 10;
         float opacity = ((float) objectiveMenu->getOpacity()) - speed;
         
         if(opacity <= 0)
@@ -978,29 +963,18 @@ void GameHUD::fadeOut(float dt)
             this->unschedule(schedule_selector( GameHUD::fadeOut ));
             fade_out = false;
             objectiveMenu->setVisible(false);
+            objectiveMenu->setPosition(ccp(screenSize.width * 0.015f - 1000, screenSize.height - 115.0f));
             objectiveTitle->setVisible(false);
-            objectiveMenu->setPosition(ccp(-screenSize.width , screenSize.height - 115.0f));
-            for(int i = 0; i < objectiveStrs->count(); i++)
-            {
-                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-                objectiveStr->setVisible(false);
-            }
         }
         objectiveMenu->setOpacity((GLubyte) opacity);
         objectiveTitle->setOpacity((GLubyte) opacity);
-        for(int i = 0; i < objectiveStrs->count(); i++)
-        {
-            CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-            objectiveStr->setOpacity((GLubyte) opacity);
-        }
+        objectiveDescription->setOpacity((GLubyte) opacity);
+        objectiveProgress->setOpacity((GLubyte) opacity);
     }
 }
 
 void GameHUD::clickObjectiveButton()
 {
-    
-    
-    
     if(!fade_in && !fade_out)
     {
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -1008,11 +982,8 @@ void GameHUD::clickObjectiveButton()
         {
             objectiveMenu->setOpacity((GLubyte) 255);
             objectiveTitle->setOpacity((GLubyte) 255);
-            for (int i = 0; i < objectiveStrs->count(); i++)
-            {
-                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-                objectiveStr->setOpacity((GLubyte) 255);
-            }
+            objectiveDescription->setOpacity((GLubyte) 255);
+            objectiveProgress->setOpacity((GLubyte) 255);
             fade_out = true;
             this->schedule(schedule_selector( GameHUD::fadeOut ), 1.0f / 240.0f);
         }
@@ -1022,13 +993,9 @@ void GameHUD::clickObjectiveButton()
             objectiveMenu->setVisible(true);
             objectiveTitle->setOpacity((GLubyte) 0);
             objectiveTitle->setVisible(true);
+            objectiveDescription->setOpacity((GLubyte) 0);
+            objectiveProgress->setOpacity((GLubyte) 0);
             objectiveMenu->setPosition(ccp(screenSize.width * 0.015f, screenSize.height - 115.0f));
-            for (int i = 0; i < objectiveStrs->count(); i++)
-            {
-                CCLabelTTF* objectiveStr = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-                objectiveStr->setOpacity((GLubyte) 0);
-                objectiveStr->setVisible(true);
-            }
             fade_in = true;
             this->schedule(schedule_selector( GameHUD::fadeIn ), 1.0f / 240.0f);
         }
@@ -1567,4 +1534,97 @@ void GameHUD::clickPopulationLabel()
         labelStatus = InPopulationLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
     }
+}
+
+void GameHUD::scheduleAddMoney(int mon)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorGreen = ccc3(0, 255, 0);
+    ccColor3B colorRed = ccc3(255, 0, 0);
+    targetMoney = money + mon;
+    
+    stringstream ss;
+    
+    if(mon >= 0)
+    {
+        ss << "+";
+    }
+    
+    ss << mon << "G";
+    
+    addMoneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    addMoneyLabel->setPosition(ccp(280, screenSize.height - 40));
+    addMoneyLabel->setAnchorPoint(ccp(0.5, 0.5));
+    
+    if(mon < 0)
+    {
+        addMoneyLabel->setColor(colorRed);
+    }
+    else
+    {
+        addMoneyLabel->setColor(colorGreen);
+    }
+    
+    addMoneyLabel->setOpacity((GLubyte) 125);
+    addMoneyLabel->setScale(0.01f);
+    this->addChild(addMoneyLabel, 10);
+    moneyLabelOut = false;
+    
+    this->schedule(schedule_selector(GameHUD::addMoney), 1.0f / 120.0f);
+}
+
+void GameHUD::addMoney(float dt)
+{
+    bool stop = true;
+    
+    if(money < targetMoney)
+    {
+        money++;
+        stop = false;
+    }
+    
+    if(moneyLabelOut)
+    {
+        float opacity = addMoneyLabel->getOpacity() - 1.5f;
+        if(opacity <= 0)
+        {
+            opacity = 0;
+        }
+        else
+        {
+            stop = false;
+        }
+        addMoneyLabel->setOpacity((GLubyte) opacity);
+    }
+    else
+    {
+        float opacity = addMoneyLabel->getOpacity() + 20.0f;
+        if(opacity >= 255)
+        {
+            opacity = 255;
+            moneyLabelOut = true;
+        }
+        addMoneyLabel->setOpacity((GLubyte) opacity);
+        stop = false;
+    }
+    
+    float scale = addMoneyLabel->getScale();
+    scale += 0.2f;
+    if(scale >= 1)
+    {
+        scale = 1;
+    }
+    addMoneyLabel->setScale(scale);
+    
+    addMoneyLabel->setPosition(ccp(addMoneyLabel->getPositionX(), addMoneyLabel->getPositionY() + 0.2f));
+    
+    if(stop)
+    {
+        this->unschedule(schedule_selector(GameHUD::addMoney));
+    }
+}
+
+void GameHUD::scheduleAddReputation(int re)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 }

@@ -169,7 +169,8 @@ public:
     CCSprite* objectiveButton;
     
     CCLabelTTF* objectiveTitle;
-    CCArray* objectiveStrs;
+    CCLabelTTF* objectiveDescription;
+    CCLabelTTF* objectiveProgress;
     
     // build menu group
     CCSprite* buildButton;
@@ -270,6 +271,21 @@ public:
     
     void UpdateBuildButton();
     void labelBackgroundFade(float);
+    
+public:
+    CCLabelTTF* addMoneyLabel;
+    int targetMoney;
+    bool moneyLabelOut;
+    
+    CCArray* addReputationLabelArray;
+    int targetReputation;
+    
+public:
+    void scheduleAddMoney(int);
+    void addMoney(float);
+    
+    void scheduleAddReputation(int);
+    void addReputation(float);
 };
 
 #endif

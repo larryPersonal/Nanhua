@@ -582,10 +582,14 @@ void MapHandler::Populate(CCArray* layers)
 }
 
 
-float MapHandler::calcZIndex(CCPoint &point, int offset)
+float MapHandler::calcZIndex(CCPoint &point, int offset, bool isSprite)
 {
     float lowestZ = 0;// mapPtr->getMapSize().width + mapPtr->getMapSize().height;
     float currZ = point.x + point.y + offset;
+    if(isSprite)
+    {
+        currZ += 0.5f;
+    }
     return (lowestZ + currZ) + mapPtr->layerNamed("Ground_1")->getZOrder();
 }
 
