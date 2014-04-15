@@ -197,7 +197,7 @@ bool Senario::constructSenarioStage(bool skip)
                 continue;
             }
             
-            float heightOff = 60.0f;
+            float heightOff = 70.0f;
             float widthOff = 80.0f;
             
             displayTexts(ele->text, screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff, ele->font.c_str(), (float)ele->fontSize, colorBlack);
@@ -205,7 +205,7 @@ bool Senario::constructSenarioStage(bool skip)
             std::stringstream ss;
             ss << ele->text;
             
-            heightOff = 30.0f;
+            heightOff = 40.0f;
             widthOff = 80.0f;
             
             ss.str(std::string());
@@ -294,7 +294,6 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
     float flashTimeGap = 0.05f;
     int flashGapCount = 0;
     
-    CCLog("hello: %s", font.c_str());
     for (int i = 0; i < tokens.size(); i++)
     {
                 std::string tokenStr = tokens.at(i);

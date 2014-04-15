@@ -299,6 +299,7 @@ void TutorialManager::setupNarrator()
 {
     narrator = new Narrator();
     inDisplay = true;
+    inText = true;
     narrator->display();
 }
 

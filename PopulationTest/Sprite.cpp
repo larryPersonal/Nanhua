@@ -2706,14 +2706,18 @@ void GameSprite::updateHungry(float dt)
     }
     
     cumulativeTime_happiness += dt;
-    
+    float factor = 1.0f;
+    if (villagerClass == V_REFUGEE)
+    {
+        factor = 1.0f / GameScene::getThis()->configSettings->default_homeless_happiness_drop_multiplier;
+    }
     /*
      * if the sprite is hungry (currentHungry <= 0), drop happiness!
      */
     if(possessions->happinessRating >= 70.0f)
     {
         // the sprite is in happy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2722,7 +2726,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 40.0f)
     {
         // the sprite is in normal state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2731,7 +2735,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 10.0f)
     {
         // the sprite is in unhappy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2740,7 +2744,7 @@ void GameSprite::updateHungry(float dt)
     else
     {
         // the sprite is in angry state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2750,6 +2754,7 @@ void GameSprite::updateHungry(float dt)
     if(possessions->happinessRating < 0)
     {
         possessions->happinessRating = 0;
+        // when energy <= 0, the villager will leave the village.
     }
 }
 

@@ -377,6 +377,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             
             if(TutorialManager::getThis()->teachBuildRoad)
             {
+                GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
                 TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
                 TutorialManager::getThis()->miniDragon->clickNext();
             }
@@ -424,6 +425,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
         default:
         {
             if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                return;
+            }
+            
+            if(GameHUD::getThis()->getTapMode() != 0)
             {
                 return;
             }
@@ -502,7 +508,7 @@ void BuildingCard::tryToBuild(int tag)
     
     if(GameHUD::getThis()->money > buildingToBuy->buildingCost)
     {
-        GameHUD::getThis()->money -= buildingToBuy->buildingCost;
+        GameHUD::getThis()->scheduleAddMoney(-buildingToBuy->buildingCost);
         GameHUD::getThis()->setTapMode(1);
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }

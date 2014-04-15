@@ -638,7 +638,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     }
     
     // then check the tutorial manager
-    if(TutorialManager::getThis()->active)
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->narrator != NULL)
     {
         bool skip = false;
         
@@ -1072,11 +1072,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                         lastTilePosPreview.x = INT_MAX;
                         lastTilePosPreview.y = INT_MAX;
                     }
-                    
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
-                    {
-                        TutorialManager::getThis()->miniDragon->clickNext();
-                    }
                 }
                 else
                 {
@@ -1328,7 +1323,7 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
             mapHandler->getMap()->removeChild(ob->getSprite());
             allTokens->removeObjectAtIndex(i);
             
-            GameHUD::getThis()->addReputation(5);
+            GameHUD::getThis()->scheduleAddReputation(5);
             return true;
         }
     }

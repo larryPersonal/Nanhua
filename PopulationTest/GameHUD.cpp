@@ -81,6 +81,30 @@ GameHUD::GameHUD()
     label_fade_out = false;
     
     targetMoney = 0;
+    isAddingMoney = false;
+    moneyLabelDirectionUp = false;
+    
+    targetReputation = 0;
+    isAddingReputation = false;
+    
+    targetFood = 0;
+    isAddingFood = false;
+    foodLabelDirectionUp = false;
+    targetStorage = 0;
+    isAddingStorage = false;
+    storageLabelDirectionUp = false;
+    
+    addMoneyLabelArray = CCArray::create();
+    addMoneyLabelArray->retain();
+    
+    addReputationLabelArray = CCArray::create();
+    addReputationLabelArray->retain();
+    
+    addFoodLabelArray = CCArray::create();
+    addFoodLabelArray->retain();
+    
+    addStorageLabelArray = CCArray::create();
+    addStorageLabelArray->retain();
 }
 
 GameHUD::~GameHUD()
@@ -91,6 +115,15 @@ GameHUD::~GameHUD()
     {
         CC_SAFE_RELEASE(SystemMenu::SP);
     }
+    
+    addMoneyLabelArray->removeAllObjects();
+    CC_SAFE_RELEASE(addMoneyLabelArray);
+    
+    addReputationLabelArray->removeAllObjects();
+    CC_SAFE_RELEASE(addReputationLabelArray);
+    
+    addFoodLabelArray->removeAllObjects();
+    CC_SAFE_RELEASE(addFoodLabelArray);
     
     GameHUD::SP = NULL;
 }
@@ -335,6 +368,14 @@ void GameHUD::update(float deltaTime)
         std::stringstream ss;
         ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
+        if(mGameCurrentPopulation > mGameCurrentPopulationRoom)
+        {
+            populationLabel->setColor(ccc3(255, 0, 0));
+        }
+        else
+        {
+            populationLabel->setColor(ccc3(255, 255, 255));
+        }
     }
     
     // update the tapMode
@@ -385,6 +426,37 @@ void GameHUD::update(float deltaTime)
         }
     }
     
+    if(isAddingFood)
+    {
+        if(targetFood != temp)
+        {
+            scheduleAddFood(temp - targetFood);
+        }
+    }
+    else
+    {
+        if(mGameCurrentFood != temp)
+        {
+            scheduleAddFood(temp - mGameCurrentFood);
+        }
+    }
+    
+    if(isAddingStorage)
+    {
+        if(targetStorage != temp_storage)
+        {
+            scheduleAddStorage(temp_storage - targetStorage);
+        }
+    }
+    else
+    {
+        if(mGameCurrentStorage != temp_storage)
+        {
+            scheduleAddStorage(temp_storage - mGameCurrentStorage);
+        }
+    }
+    
+    /*
     if (mGameCurrentFood != temp || mGameCurrentStorage != temp_storage)
     {
         mGameCurrentFood = temp;
@@ -395,6 +467,7 @@ void GameHUD::update(float deltaTime)
         foodLabel->setDimensions(CCSizeMake(ss.str().length() * 20.0f, 5.0f));
         foodLabel->setString(ss.str().c_str());
     }
+    */
     
     updateSoldierHelper(deltaTime);
 }
@@ -933,7 +1006,7 @@ void GameHUD::fadeIn(float dt)
 {
     if(fade_in)
     {
-        float speed = 10;
+        float speed = 20;
         float opacity = ((float)objectiveMenu->getOpacity()) + speed;
         
         if(opacity >= 255)
@@ -953,7 +1026,7 @@ void GameHUD::fadeOut(float dt)
 {
     if(fade_out)
     {
-        float speed = 10;
+        float speed = 20;
         float opacity = ((float) objectiveMenu->getOpacity()) - speed;
         
         if(opacity <= 0)
@@ -1047,7 +1120,7 @@ void GameHUD::clickBuildButton()
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
         {
-            money += GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost;
+            GameHUD::getThis()->scheduleAddMoney(GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost);
         }
         buildButton->setVisible(false);
         currTapMode = Normal;
@@ -1067,6 +1140,9 @@ void GameHUD::clickBuildButton()
     }
 }
 
+/*
+ PS: reputation max is associated to the population growth, need to settle how to raise the growth of population and the reputation max with kris again.
+ 
 void GameHUD::addReputation(int incre)
 {
     reputation += incre;
@@ -1086,6 +1162,7 @@ void GameHUD::addReputation(int incre)
         addPopulation();
     }
 }
+*/
 
 void GameHUD::addPopulation(){
     CCPoint target = CCPointMake(29,33);
@@ -1429,7 +1506,7 @@ void GameHUD::clickMoneyLabel()
         isToggle = false;
         newPos = CCPointZero;
         targetOpacity = 0;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_out = true;
         labelStatus = Default;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1439,7 +1516,7 @@ void GameHUD::clickMoneyLabel()
         isToggle = false;
         infoBackground->setPosition(ccp(220, screenSize.height - 55));
         targetOpacity = 255 * 0.9f;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_in = true;
         labelStatus = InMoneyLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1449,7 +1526,7 @@ void GameHUD::clickMoneyLabel()
         isToggle = true;
         newPos = ccp(220, screenSize.height - 55);
         targetOpacity = 0;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_out = true;
         labelStatus = InMoneyLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1469,7 +1546,7 @@ void GameHUD::clickFoodLabel()
         isToggle = false;
         newPos = CCPointZero;
         targetOpacity = 0;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_out = true;
         labelStatus = Default;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1479,7 +1556,7 @@ void GameHUD::clickFoodLabel()
         isToggle = false;
         infoBackground->setPosition(ccp(440, screenSize.height - 55));
         targetOpacity = 255 * 0.9f;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_in = true;
         labelStatus = InFoodLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1489,7 +1566,7 @@ void GameHUD::clickFoodLabel()
         isToggle = true;
         newPos = ccp(440, screenSize.height - 55);
         targetOpacity = 0;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_out = true;
         labelStatus = InFoodLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1509,7 +1586,7 @@ void GameHUD::clickPopulationLabel()
         isToggle = false;
         newPos = CCPointZero;
         targetOpacity = 0;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_out = true;
         labelStatus = Default;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1519,7 +1596,7 @@ void GameHUD::clickPopulationLabel()
         isToggle = false;
         infoBackground->setPosition(ccp(660, screenSize.height - 55));
         targetOpacity = 255 * 0.9f;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_in = true;
         labelStatus = InPopulationLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1529,7 +1606,7 @@ void GameHUD::clickPopulationLabel()
         isToggle = true;
         newPos = ccp(660, screenSize.height - 55);
         targetOpacity = 0;
-        fadeSpeed = 10;
+        fadeSpeed = 20;
         label_fade_out = true;
         labelStatus = InPopulationLabel;
         this->schedule(schedule_selector(GameHUD::labelBackgroundFade), 1.0f / 120.0f);
@@ -1541,18 +1618,30 @@ void GameHUD::scheduleAddMoney(int mon)
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorGreen = ccc3(0, 255, 0);
     ccColor3B colorRed = ccc3(255, 0, 0);
-    targetMoney = money + mon;
+    if(!isAddingMoney)
+    {
+        targetMoney = money + mon;
+    }
+    else
+    {
+        targetMoney += mon;
+    }
     
     stringstream ss;
     
     if(mon >= 0)
     {
         ss << "+";
+        moneyLabelDirectionUp = true;
+    }
+    else
+    {
+        moneyLabelDirectionUp = false;
     }
     
     ss << mon << "G";
     
-    addMoneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    CCLabelTTF* addMoneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
     addMoneyLabel->setPosition(ccp(280, screenSize.height - 40));
     addMoneyLabel->setAnchorPoint(ccp(0.5, 0.5));
     
@@ -1565,12 +1654,15 @@ void GameHUD::scheduleAddMoney(int mon)
         addMoneyLabel->setColor(colorGreen);
     }
     
-    addMoneyLabel->setOpacity((GLubyte) 125);
     addMoneyLabel->setScale(0.01f);
     this->addChild(addMoneyLabel, 10);
-    moneyLabelOut = false;
+    addMoneyLabelArray->addObject(addMoneyLabel);
     
-    this->schedule(schedule_selector(GameHUD::addMoney), 1.0f / 120.0f);
+    if(!isAddingMoney)
+    {
+        isAddingMoney = true;
+        this->schedule(schedule_selector(GameHUD::addMoney), 1.0f / 120.0f);
+    }
 }
 
 void GameHUD::addMoney(float dt)
@@ -1582,44 +1674,50 @@ void GameHUD::addMoney(float dt)
         money++;
         stop = false;
     }
-    
-    if(moneyLabelOut)
+    else if(money > targetMoney)
     {
-        float opacity = addMoneyLabel->getOpacity() - 1.5f;
-        if(opacity <= 0)
-        {
-            opacity = 0;
-        }
-        else
-        {
-            stop = false;
-        }
-        addMoneyLabel->setOpacity((GLubyte) opacity);
-    }
-    else
-    {
-        float opacity = addMoneyLabel->getOpacity() + 20.0f;
-        if(opacity >= 255)
-        {
-            opacity = 255;
-            moneyLabelOut = true;
-        }
-        addMoneyLabel->setOpacity((GLubyte) opacity);
+        money--;
         stop = false;
     }
     
-    float scale = addMoneyLabel->getScale();
-    scale += 0.2f;
-    if(scale >= 1)
+    for(int i = 0; i < addMoneyLabelArray->count(); i++)
     {
-        scale = 1;
+        CCLabelTTF* temp = (CCLabelTTF*) addMoneyLabelArray->objectAtIndex(i);
+        
+        float scale = temp->getScale();
+        scale += 0.2f;
+        if(scale > 1)
+        {
+            scale = 1;
+        }
+        temp->setScale(scale);
+        
+        if(moneyLabelDirectionUp)
+        {
+            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() + 0.2f));
+        }
+        else
+        {
+            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() - 0.2f));
+        }
+        
+        float opacity = (float) temp->getOpacity();
+        opacity -= 1.5f;
+        if(opacity <= 0)
+        {
+            addMoneyLabelArray->removeObject(temp);
+            i--;
+        }
+        else
+        {
+            temp->setOpacity((GLubyte) opacity);
+        }
+        stop = false;
     }
-    addMoneyLabel->setScale(scale);
-    
-    addMoneyLabel->setPosition(ccp(addMoneyLabel->getPositionX(), addMoneyLabel->getPositionY() + 0.2f));
     
     if(stop)
     {
+        isAddingMoney = false;
         this->unschedule(schedule_selector(GameHUD::addMoney));
     }
 }
@@ -1627,4 +1725,296 @@ void GameHUD::addMoney(float dt)
 void GameHUD::scheduleAddReputation(int re)
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorGreen = ccc3(0, 255, 0);
+    
+    targetReputation += re;
+    
+    stringstream ss;
+    ss << "+" << re;
+    
+    CCLabelTTF* addReputationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    addReputationLabel->setPosition(ccp(175, screenSize.height - 90));
+    addReputationLabel->setAnchorPoint(ccp(0.5, 0.5));
+    addReputationLabel->setColor(colorGreen);
+    addReputationLabel->setScale(0.01);
+    
+    this->addChild(addReputationLabel, 10);
+    addReputationLabelArray->addObject(addReputationLabel);
+    
+    if(!isAddingReputation)
+    {
+        isAddingReputation = true;
+        this->schedule(schedule_selector(GameHUD::addReputation));
+    }
+}
+
+void GameHUD::addReputation(float dt)
+{
+    bool stop = true;
+    
+    if(reputation < targetReputation)
+    {
+        reputation++;
+        stop = false;
+    }
+    
+    for(int i = 0; i < addReputationLabelArray->count(); i++)
+    {
+        CCLabelTTF* temp = (CCLabelTTF*) addReputationLabelArray->objectAtIndex(i);
+        
+        float scale = temp->getScale();
+        scale += 0.2f;
+        if(scale > 1)
+        {
+            scale = 1;
+        }
+        temp->setScale(scale);
+        temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() + 0.2f));
+        
+        float opacity = (float) temp->getOpacity();
+        opacity -= 1.5f;
+        if(opacity <= 0)
+        {
+            addReputationLabelArray->removeObject(temp);
+            i--;
+        }
+        else
+        {
+            temp->setOpacity((GLubyte) opacity);
+        }
+        stop = false;
+    }
+    
+    if(stop)
+    {
+        isAddingReputation = false;
+        this->unschedule(schedule_selector(GameHUD::addMoney));
+    }
+
+}
+
+void GameHUD::scheduleAddFood(int fo)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorGreen = ccc3(0, 255, 0);
+    ccColor3B colorRed = ccc3(255, 0, 0);
+    if(!isAddingFood)
+    {
+        targetFood = mGameCurrentFood + fo;
+    }
+    else
+    {
+        targetFood += fo;
+    }
+    
+    stringstream ss;
+    
+    if(fo >= 0)
+    {
+        ss << "+";
+        foodLabelDirectionUp = true;
+    }
+    else
+    {
+        foodLabelDirectionUp = false;
+    }
+    
+    ss << fo;
+    
+    CCLabelTTF* addFoodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    addFoodLabel->setPosition(ccp(500, screenSize.height - 40));
+    addFoodLabel->setAnchorPoint(ccp(0.5, 0.5));
+    
+    if(fo < 0)
+    {
+        addFoodLabel->setColor(colorRed);
+    }
+    else
+    {
+        addFoodLabel->setColor(colorGreen);
+    }
+    
+    addFoodLabel->setScale(0.01f);
+    this->addChild(addFoodLabel, 10);
+    addFoodLabelArray->addObject(addFoodLabel);
+    
+    if(!isAddingFood)
+    {
+        isAddingFood = true;
+        this->schedule(schedule_selector(GameHUD::addFood), 1.0f / 120.0f);
+    }
+}
+
+void GameHUD::scheduleAddStorage(int st)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorPurple = ccc3(255, 0, 255);
+    ccColor3B colorBlue = ccc3(0, 0, 255);
+    if(!isAddingStorage)
+    {
+        targetStorage = mGameCurrentStorage + st;
+    }
+    else
+    {
+        targetStorage += st;
+    }
+    
+    stringstream ss;
+    
+    if(st >= 0)
+    {
+        ss << "+";
+        storageLabelDirectionUp = true;
+    }
+    else
+    {
+        storageLabelDirectionUp = false;
+    }
+    
+    ss << st;
+    
+    CCLabelTTF* addStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    addStorageLabel->setPosition(ccp(500, screenSize.height - 40));
+    addStorageLabel->setAnchorPoint(ccp(0.5, 0.5));
+    
+    if(st < 0)
+    {
+        addStorageLabel->setColor(colorPurple);
+    }
+    else
+    {
+        addStorageLabel->setColor(colorBlue);
+    }
+    
+    addStorageLabel->setScale(0.01f);
+    this->addChild(addStorageLabel, 10);
+    addStorageLabelArray->addObject(addStorageLabel);
+    
+    if(!isAddingStorage)
+    {
+        isAddingStorage = true;
+        this->schedule(schedule_selector(GameHUD::addStorage), 1.0f / 120.0f);
+    }
+}
+
+void GameHUD::addFood(float dt)
+{
+    bool stop = true;
+    
+    if(mGameCurrentFood < targetFood)
+    {
+        mGameCurrentFood++;
+        stop = false;
+    }
+    else if(mGameCurrentFood > targetFood)
+    {
+        mGameCurrentFood--;
+        stop = false;
+    }
+    
+    for(int i = 0; i < addFoodLabelArray->count(); i++)
+    {
+        CCLabelTTF* temp = (CCLabelTTF*) addFoodLabelArray->objectAtIndex(i);
+        
+        float scale = temp->getScale();
+        scale += 0.2f;
+        if(scale > 1)
+        {
+            scale = 1;
+        }
+        temp->setScale(scale);
+        
+        if(foodLabelDirectionUp)
+        {
+            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() + 0.2f));
+        }
+        else
+        {
+            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() - 0.2f));
+        }
+        
+        float opacity = (float) temp->getOpacity();
+        opacity -= 1.5f;
+        if(opacity <= 0)
+        {
+            addFoodLabelArray->removeObject(temp);
+            i--;
+        }
+        else
+        {
+            temp->setOpacity((GLubyte) opacity);
+        }
+        stop = false;
+    }
+    
+    stringstream ss;
+    ss << mGameCurrentFood << "/" << mGameCurrentStorage;
+    foodLabel->setString(ss.str().c_str());
+    
+    if(stop)
+    {
+        isAddingFood = false;
+        this->unschedule(schedule_selector(GameHUD::addFood));
+    }
+}
+
+void GameHUD::addStorage(float dt)
+{
+    bool stop = true;
+    
+    if(mGameCurrentStorage < targetStorage)
+    {
+        mGameCurrentStorage++;
+        stop = false;
+    }
+    else if(mGameCurrentStorage > targetStorage)
+    {
+        mGameCurrentStorage--;
+        stop = false;
+    }
+    
+    for(int i = 0; i < addStorageLabelArray->count(); i++)
+    {
+        CCLabelTTF* temp = (CCLabelTTF*) addStorageLabelArray->objectAtIndex(i);
+        
+        float scale = temp->getScale();
+        scale += 0.2f;
+        if(scale > 1)
+        {
+            scale = 1;
+        }
+        temp->setScale(scale);
+        
+        if(storageLabelDirectionUp)
+        {
+            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() + 0.2f));
+        }
+        else
+        {
+            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() - 0.2f));
+        }
+        
+        float opacity = (float) temp->getOpacity();
+        opacity -= 1.5f;
+        if(opacity <= 0)
+        {
+            addStorageLabelArray->removeObject(temp);
+            i--;
+        }
+        else
+        {
+            temp->setOpacity((GLubyte) opacity);
+        }
+        stop = false;
+    }
+    
+    stringstream ss;
+    ss << mGameCurrentFood << "/" << mGameCurrentStorage;
+    foodLabel->setString(ss.str().c_str());
+    
+    if(stop)
+    {
+        isAddingStorage = false;
+        this->unschedule(schedule_selector(GameHUD::addStorage));
+    }
 }

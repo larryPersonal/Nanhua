@@ -172,6 +172,8 @@ public:
     
     float cumulatedTimeUpgrading;
     void updateBuilding(float);
+    
+    float cumulatedTimeResting;
 };
 
 #endif

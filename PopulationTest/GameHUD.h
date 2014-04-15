@@ -255,7 +255,6 @@ public:
     void stickGameHappiness();
     void banditsAttack();
     
-    void addReputation(int);
     void addPopulation();
     
     void setAllStats();
@@ -273,12 +272,24 @@ public:
     void labelBackgroundFade(float);
     
 public:
-    CCLabelTTF* addMoneyLabel;
+    
+    CCArray* addMoneyLabelArray;
     int targetMoney;
-    bool moneyLabelOut;
+    bool isAddingMoney;
+    bool moneyLabelDirectionUp;
     
     CCArray* addReputationLabelArray;
     int targetReputation;
+    bool isAddingReputation;
+    
+    CCArray* addFoodLabelArray;
+    CCArray* addStorageLabelArray;
+    int targetFood;
+    int targetStorage;
+    bool isAddingFood;
+    bool isAddingStorage;
+    bool foodLabelDirectionUp;
+    bool storageLabelDirectionUp;
     
 public:
     void scheduleAddMoney(int);
@@ -286,6 +297,11 @@ public:
     
     void scheduleAddReputation(int);
     void addReputation(float);
+    
+    void scheduleAddFood(int);
+    void scheduleAddStorage(int);
+    void addFood(float);
+    void addStorage(float);
 };
 
 #endif

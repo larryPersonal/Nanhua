@@ -717,6 +717,11 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         {
             selectPopulation->setZOrder(35);
         }
+        
+        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
     }
     return true;
 }

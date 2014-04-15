@@ -184,47 +184,38 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     if(building->buildingType == HOUSING)
     {
         GameScene::getThis()->buildingHandler->housingGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->housingOnMap->addObject(building);
     }
     else if(building->buildingType == GRANARY)
     {
         GameScene::getThis()->buildingHandler->granaryGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->granaryOnMap->addObject(building);
     }
     else if(building->buildingType == AMENITY)
     {
         GameScene::getThis()->buildingHandler->amenityGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->amenityOnMap->addObject(building);
     }
     else if(building->buildingType == MILITARY)
     {
         GameScene::getThis()->buildingHandler->militaryGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->militaryOnMap->addObject(building);
     }
     else if(building->buildingType == COMMERCE)
     {
         GameScene::getThis()->buildingHandler->commerceGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->commerceOnMap->addObject(building);
     }
     else if(building->buildingType == EDUCATION)
     {
         GameScene::getThis()->buildingHandler->educationGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->educationOnMap->addObject(building);
     }
     else if(building->buildingType == SOCIAL)
     {
         GameScene::getThis()->buildingHandler->socialGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->socialOnMap->addObject(building);
     }
     else if(building->buildingType == SPECIAL)
     {
         GameScene::getThis()->buildingHandler->specialGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->specialOnMap->addObject(building);
     }
     else if(building->buildingType == DECORATION)
     {
         GameScene::getThis()->buildingHandler->decorationGhostOnMap->removeObject(building);
-        GameScene::getThis()->buildingHandler->decorationOnMap->addObject(building);
     }
 
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
