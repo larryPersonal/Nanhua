@@ -9,15 +9,15 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
     </slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
             <fade_in>yes</fade_in>
@@ -30,14 +30,14 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -49,14 +49,14 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -68,14 +68,14 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
             <fade_out>yes</fade_out>
@@ -88,15 +88,15 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
-			<top>90</top>
+			<width>60</width>
+			<left>-5</left>
+			<top>100</top>
 			<src>refugee_c.png</src>
             <fade_in>yes</fade_in>
             <fade_out>yes</fade_out>
@@ -109,14 +109,14 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
             <fade_in>yes</fade_in>
@@ -130,7 +130,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -143,7 +143,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>BRITANIC</font>
+            <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>

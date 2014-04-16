@@ -170,9 +170,10 @@ bool SenarioChooseScene::init()
     this->addChild(loadingScreen, 10);
     loadingScreen->setVisible(false);
     
-    loadingLabel = CCLabelTTF::create("", "Shojumaru-Regular", 32);
+    loadingLabel = CCSprite::create("loading.png");
     loadingLabel->setAnchorPoint(ccp(0.5, 0.5));
-    loadingLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    loadingLabel->setScale(0.5f);
+    loadingLabel->setPosition(ccp(screenSize.width / 2.0f + 20.0f, screenSize.height / 2.0f - 120.0f));
     this->addChild(loadingLabel, 11);
     loadingLabel->setVisible(false);
     

@@ -77,6 +77,7 @@ Building::Building()
     anim_random_chance = 1.0f; //1.0 is 100%, 0 is 0%;
     
     anim_triggered = true;
+    cumulatedTimeResting = 0;
 }
 Building::~Building()
 {
@@ -434,6 +435,8 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     }
                     memberSpriteList->removeAllObjects();
                     
+                    this->isCurrentWorking = false;
+                    
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
                     {
                         PopupMenu::closeAllPopupMenu();
@@ -584,15 +587,22 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 // if the sprite is fully recharged it will leave the home
                 if(sp->getPossessions()->energyRating >= sp->getPossessions()->default_energy_limit)
                 {
+                    cumulatedTimeResting = 0;
                     leaveHouse(sp);
                 }
                 else
                     // if the sprite is not fully recharged, it will recharge energy.
                 {
-                    sp->getPossessions()->energyRating += sp->getPossessions()->Rest();
-                    if(sp->getPossessions()->energyRating >= sp->getPossessions()->default_energy_limit)
+                    cumulatedTimeResting += dt;
+                    
+                    if(cumulatedTimeResting >= (1.0f / GameScene::getThis()->configSettings->default_energy_recovery))
                     {
-                        sp->getPossessions()->energyRating = sp->getPossessions()->default_energy_limit;
+                        sp->getPossessions()->energyRating += sp->getPossessions()->Rest();
+                        if(sp->getPossessions()->energyRating >= sp->getPossessions()->default_energy_limit)
+                        {
+                            sp->getPossessions()->energyRating = sp->getPossessions()->default_energy_limit;
+                        }
+                        cumulatedTimeResting = 0;
                     }
                 }
             }
@@ -600,6 +610,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 // if it is not the home house, leave the house
             {
                 // TODO::because the house is not sprite's home, so the spirte still does not have been recharged, to have enough energy to do other tasks, it needs to be recharged first, so try to find his home in other place, if no home, just wander around....
+                cumulatedTimeResting = 0;
                 leaveHouse(sp);
             }
         }

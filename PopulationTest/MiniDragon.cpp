@@ -188,7 +188,7 @@ bool MiniDragon::constructTutorialSlide()
     {
         bubble->setVisible(false);
         dragon->setVisible(false);
-        TutorialManager::getThis()->active = false;
+        TutorialManager::getThis()->setupNarrator();
     }
     
     for(int i = 0; i < ts->commands.size(); i++)
@@ -367,7 +367,6 @@ void MiniDragon::finishDisplay()
 
 void MiniDragon::scheduleSenario()
 {
-    TutorialManager::getThis()->active = false;
     TutorialManager::getThis()->unlockAll();
     GameHUD::getThis()->pause = true;
     std::string filename = "tutorial.xml";
@@ -563,10 +562,6 @@ void MiniDragon::clickNext()
     if(constructTutorialSlide())
     {
         
-    }
-    else
-    {
-        // no more tutorial slide already
     }
 }
 

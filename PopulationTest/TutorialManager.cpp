@@ -114,6 +114,7 @@ void TutorialManager::unlockAll()
     lockFoodLabel = false;
     lockPopulationLabel = false;
     active = false;
+    lockBuildingInfo = false;
     
     teachBuildButton = false;
     teachBuildHouse = false;
@@ -299,6 +300,7 @@ void TutorialManager::setupNarrator()
 {
     narrator = new Narrator();
     inDisplay = true;
+    inText = true;
     narrator->display();
 }
 

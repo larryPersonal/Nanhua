@@ -62,19 +62,17 @@ void Narrator::display()
     switch (ns)
     {
         case C1T1:
-            str = "5 Refugees arrive in the Town Hall, 4 of the refugees found a home in the 2 Houses on the map. 2 last requires a House.";
-            GameScene::getThis()->mapHandler->centerMap();
-            TutorialManager::getThis()->scheduleFadeIn(120.0f, 1);
+            str = "Now you have completed the basic part of the tutorial, good job!";
+            TutorialManager::getThis()->scheduleFadeIn(120.0f, 2);
+            TutorialManager::getThis()->active = true;
             GameHUD::getThis()->pause = false;
-            cumulativeTime = 0;
-            TutorialManager::getThis()->schedule(schedule_selector( Narrator::activateSprite ), 1.0f / 120.0f);
             break;
         case C1T2:
             goDisplay = false;
             TutorialManager::getThis()->inDisplay = false;
             textBackground->setVisible(false);
-            TutorialManager::getThis()->scheduleFadeIn(0.0f, 1);
-            TutorialManager::getThis()->setupMiniDragon();
+            TutorialManager::getThis()->scheduleFadeIn(0.0f, 2);
+            TutorialManager::getThis()->active = false;
             break;
         default:
             str = "end";

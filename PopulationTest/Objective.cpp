@@ -13,6 +13,7 @@ Objective::Objective()
     oType = DefaultGoal;
     
     oid = 0;
+    nid = 0;
     value = 0;
     strValue = "";
     
@@ -21,7 +22,6 @@ Objective::Objective()
     populationReward = 0;
     reputationReward = 0;
     
-    active = false;
     complete = false;
 }
 

@@ -9,11 +9,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-<<<<<<< HEAD
-            <font>TEMPSITC</font>
-=======
             <font>TooneyLoons</font>
->>>>>>> 75b9d052c23dd19760b3743ed0fb4650485aabf5
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -62,8 +58,8 @@
     </slide>
 	<slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
             <fade_in>yes</fade_in>
@@ -82,8 +78,8 @@
 	</slide>
 	<slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -101,8 +97,8 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -120,8 +116,8 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -139,8 +135,8 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -158,8 +154,8 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -177,8 +173,8 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
 		</sprite>
@@ -196,8 +192,8 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
+			<width>60</width>
+			<left>-10</left>
 			<top>90</top>
 			<src>studentboy_c.png</src>
             <fade_out>yes</fade_out>
@@ -265,9 +261,9 @@
     </slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
-			<top>90</top>
+			<width>60</width>
+			<left>-5</left>
+			<top>100</top>
 			<src>refugee_c.png</src>
             <fade_in>yes</fade_in>
 		</sprite>
@@ -285,9 +281,9 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
-			<top>90</top>
+			<width>60</width>
+			<left>-5</left>
+			<top>100</top>
 			<src>refugee_c.png</src>
 		</sprite>
 		<dialogue>
@@ -304,9 +300,9 @@
 	</slide>
     <slide>
 		<sprite>
-			<width>40</width>
-			<left>0</left>
-			<top>90</top>
+			<width>60</width>
+			<left>-5</left>
+			<top>100</top>
 			<src>refugee_c.png</src>
             <fade_out>yes</fade_out>
 		</sprite>
@@ -371,7 +367,7 @@
             <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <left>25</left>
-			<top>20</top>
+			<top>18</top>
             <outcome>
                 <refugee>5</refugee>
             </outcome>
@@ -383,7 +379,7 @@
             <font>TooneyLoons</font>
             <fontSize>24</fontSize>
             <left>25</left>
-			<top>12</top>
+			<top>10</top>
             <outcome>
                 <bandit>5</bandit>
             </outcome>

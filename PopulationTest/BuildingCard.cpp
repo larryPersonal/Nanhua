@@ -17,6 +17,7 @@ BuildingCard::BuildingCard(Building* building, ScrollArea* scrollArea, int index
     this->scrollArea = scrollArea;
     this->index = index;
     this->type = type;
+    this->active = false;
     init();
 }
 
@@ -128,6 +129,51 @@ void BuildingCard::init()
     costLabel->setColor(colorBlack);
     costLabel->setAnchorPoint(ccp(0, 1));
     
+    ss.str(std::string());
+    int level = GameManager::getThis()->town_hall_level;
+    if(type == 0)
+    {
+        if(building->buildingType == HOUSING)
+        {
+            CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+            CCArray* allGhostHousing = GameScene::getThis()->buildingHandler->housingGhostOnMap;
+            available_number = GameManager::getThis()->housingLimitation->housing_limits.at(level) - allHousing->count() - allGhostHousing->count();
+        }
+        else if(building->buildingType == AMENITY)
+        {
+            CCArray* allAmenity = GameScene::getThis()->buildingHandler->amenityOnMap;
+            CCArray* allGhostAmenity = GameScene::getThis()->buildingHandler->amenityGhostOnMap;
+            available_number = GameManager::getThis()->housingLimitation->farm_limits.at(level) - allAmenity->count() - allGhostAmenity->count();
+        }
+        else if(building->buildingType == GRANARY)
+        {
+            CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+            CCArray* allGhostGranary = GameScene::getThis()->buildingHandler->granaryGhostOnMap;
+            available_number = GameManager::getThis()->housingLimitation->granary_limits.at(level) - allGranary->count() - allGhostGranary->count();
+        }
+        else if(building->buildingType == MILITARY)
+        {
+            CCArray* allMimitary = GameScene::getThis()->buildingHandler->militaryOnMap;
+            CCArray* allGhostMilitary = GameScene::getThis()->buildingHandler->militaryGhostOnMap;
+            available_number = GameManager::getThis()->housingLimitation->guard_tower_limits.at(level) - allMimitary->count() - allGhostMilitary->count();
+        }
+        
+        if (available_number < 0)
+        {
+            available_number = 0;
+        }
+        
+        ss << available_number;
+    }
+    else
+    {
+        ss << "unlimited";
+    }
+    
+    available_number_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
+    available_number_label->setAnchorPoint(ccp(1, 0));
+    available_number_label->setPosition(ccp(270, 30));
+    
     // population
     populationImage = CCSprite::create("build-menu_worker-req.png");
     populationImage->setScale(42.0f / populationImage->boundingBox().size.width);
@@ -205,9 +251,13 @@ void BuildingCard::init()
     }
     else
     {
-        mask->setOpacity((GLubyte) 0);
+        if(type != 0 || available_number > 0)
+        {
+            mask->setOpacity((GLubyte) 0);
+        }
     }
     
+    cardBG->addChild(available_number_label);
     
     cardBG->addChild(buildingNameLabel);
     buildingNameLabel->setPosition(ccp(20, cardBG->boundingBox().size.height * 2 - 50));
@@ -327,6 +377,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             
             if(TutorialManager::getThis()->teachBuildRoad)
             {
+                GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
                 TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
                 TutorialManager::getThis()->miniDragon->clickNext();
             }
@@ -374,6 +425,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
         default:
         {
             if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                return;
+            }
+            
+            if(GameHUD::getThis()->getTapMode() != 0)
             {
                 return;
             }
@@ -458,7 +514,7 @@ void BuildingCard::tryToBuild(int tag)
     
     if(GameHUD::getThis()->money > buildingToBuy->buildingCost)
     {
-        GameHUD::getThis()->money -= buildingToBuy->buildingCost;
+        GameHUD::getThis()->scheduleAddMoney(-buildingToBuy->buildingCost);
         GameHUD::getThis()->setTapMode(1);
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }

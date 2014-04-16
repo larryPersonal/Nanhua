@@ -28,11 +28,8 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
     
     Objective* objective;
     
-    int level = GameManager::getThis()->getLevel();
     stringstream ss;
-    ss << "<level" << level << ">";
     
-    bool isInLevel = false;
     bool isInObjective = false;
     bool isInReward = false;
     
@@ -47,25 +44,13 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             continue;
         }
         
-        if(!isInLevel)
-        {
-            if(str.find(ss.str().c_str()) != std::string::npos)
-            {
-                isInLevel = true;
-            }
-        }
-        else if(!isInObjective)
+        if(!isInObjective)
         {
             ss.str(std::string());
-            ss << "</level" << level << ">";
             if(str.find("<objective>") != std::string::npos)
             {
                 objective = Objective::create();
                 isInObjective = true;
-            }
-            else if(str.find(ss.str().c_str()) != std::string::npos)
-            {
-                isInLevel = false;
             }
         }
         else if(!isInReward)
@@ -121,37 +106,13 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 temp = ::atoi(content.c_str());
                 objective->value = temp;
             }
-            else if(str.find("<active>") != std::string::npos)
+            else if(str.find("<next>") != std::string::npos)
             {
-                startPos = str.find("<active>");
-                endPos = str.find("</active>");
-                content = str.substr(startPos + 8, endPos - startPos - 8);
-                if(content.compare("yes") == 0)
-                {
-                    objective->active = true;
-                }
-                else
-                {
-                    objective->active = false;
-                }
-            }
-            else if(str.find("<pre>") != std::string::npos)
-            {
-                startPos = str.find("<pre>");
-                endPos = str.find("</pre>");
-                content = str.substr(startPos + 5, endPos - startPos - 5);
-                int preIndex = 0;
-                string tempStr = "";
-                for(int i = 0; i < content.length(); i++)
-                {
-                    if(content[i] == ',')
-                    {
-                        tempStr = content.substr(preIndex, i - preIndex);
-                        temp = ::atoi(tempStr.c_str());
-                        objective->preConditions.push_back(temp);
-                        preIndex = i + 1;
-                    }
-                }
+                startPos = str.find("<next>");
+                endPos = str.find("</next>");
+                content = str.substr(startPos + 6, endPos - startPos - 6);
+                temp = ::atoi(content.c_str());
+                objective->nid = temp;
             }
             else if(str.find("<reward>") != std::string::npos)
             {

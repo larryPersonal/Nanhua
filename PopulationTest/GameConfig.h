@@ -36,6 +36,8 @@ struct ConfigSettings
     float default_current_hungry;
     float default_current_energy;
     float default_work_rate;
+    float default_energy_recovery;
+    float default_homeless_happiness_drop_multiplier;
     
     // related to town hall
     int default_population_cap_level1;
@@ -75,6 +77,8 @@ struct ConfigSettings
         default_current_hungry = 100;
         default_current_energy = 100;
         default_work_rate = 100;
+        default_energy_recovery = 10;   // 10 energy per second
+        default_homeless_happiness_drop_multiplier = 2;
         
         // related to town hall
         default_population_cap_level1 =10;
@@ -153,7 +157,7 @@ struct SettingsLevel
     
     void setLevel0()
     {
-        default_start_money = 1500;
+        default_start_money = 1200;
         default_max_reputation = 400;
         projected_population_growth = 20;
         

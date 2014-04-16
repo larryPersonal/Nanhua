@@ -64,14 +64,14 @@ bool SpriteRow::init()
     spriteRowBackground = CCSprite::create("characterbox.png");
     spriteRowBackground->setScale(100.0f / spriteRowBackground->boundingBox().size.width);
     spriteRowBackground->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(spriteRowBackground, ccp(30.0f + 100.0f * column, 110.0f + 100.0f * row));
+    scrollArea->addItem(spriteRowBackground, ccp(2.0f + 100.0f * column, 10.0f + 100.0f * row));
     
     //display the image of the sprite
     std::string tempStr = gameSprite->spriteName;
     villagerImage = CCMenuItemImage::create( tempStr.append("_port.png").c_str(), tempStr.c_str(), this, menu_selector(SpriteRow::showSprite) );
     villagerImage->setScale(64.0f / villagerImage->boundingBox().size.width);
     villagerImage->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(villagerImage, ccp(30.0f + 100.0f * column, 122.0f + 100.0f * row));
+    scrollArea->addItem(villagerImage, ccp(2.0f + 100.0f * column, 22.0f + 100.0f * row));
     
     // display the energy bar of the sprite
     Possessions* possessions = gameSprite->getPossessions();
@@ -85,7 +85,7 @@ bool SpriteRow::init()
                                    "NONE",
                                    "worker availablevertbarinner.png", false);
     villagerEnergyBar->setValue((float)possessions->energyRating / (float)possessions->default_energy_limit);
-    scrollArea->addItem(villagerEnergyBar, ccp(106.0f + 100.0f * column, 120.0f + 100.0f * row));
+    scrollArea->addItem(villagerEnergyBar, ccp(78.0f + 100.0f * column, 20.0f + 100.0f * row));
     
     emotionFace = CCSprite::create("happy2.png");
     emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
@@ -106,14 +106,14 @@ bool SpriteRow::init()
     {
         emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("tired1.png"));
     }
-    scrollArea->addItem(emotionFace, ccp(80.0f + 100.0f * column, 158.0f + 100.0f * row));
+    scrollArea->addItem(emotionFace, ccp(52.0f + 100.0f * column, 58.0f + 100.0f * row));
     
     // display the mask of the sprite row
     spriteRowMask = CCSprite::create("workers_menu_selectedBG_overlay.png");
     spriteRowMask->setScaleX( spriteRowBackground->boundingBox().size.width / spriteRowMask->boundingBox().size.width );
     spriteRowMask->setScaleY( spriteRowBackground->boundingBox().size.height / spriteRowMask->boundingBox().size.height * 1.2f );
     spriteRowMask->setAnchorPoint(ccp(0, 1));
-    scrollArea->addItem(spriteRowMask, ccp(30.0f + 100.0f * column, 100.0f + 100.0f * row));
+    scrollArea->addItem(spriteRowMask, ccp(2.0f + 100.0f * column, 0.0f + 100.0f * row));
     spriteRowMask->setVisible(false);
     
     // display the button collider
@@ -129,7 +129,7 @@ bool SpriteRow::init()
     menu->setTouchPriority(kCCMenuHandlerPriority -10);
     menu->setPosition(CCPointZero);
 
-    scrollArea->addItem(menu, ccp(30.0f + 100.0f * column, 110.0f + 100.0f * row));
+    scrollArea->addItem(menu, ccp(2.0f + 100.0f * column, 10.0f + 100.0f * row));
     
     return true;
 }
@@ -456,7 +456,24 @@ void SpriteRow::refreshAllMenuItems()
         
         villagerImage->setScale(48.0f / villagerImage->boundingBox().size.width);
         villagerImage->setAnchorPoint(ccp(0, 1));
-
+    }
+    
+    float happinessRate = gameSprite->getPossessions()->happinessRating;
+    if(happinessRate >= 70)
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("happy2.png"));
+    }
+    else if(happinessRate >= 40)
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("idle1.png"));
+    }
+    else if(happinessRate >= 10)
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("unhappy1.png"));
+    }
+    else
+    {
+        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("tired1.png"));
     }
 }
 

@@ -169,7 +169,8 @@ public:
     CCSprite* objectiveButton;
     
     CCLabelTTF* objectiveTitle;
-    CCArray* objectiveStrs;
+    CCLabelTTF* objectiveDescription;
+    CCLabelTTF* objectiveProgress;
     
     // build menu group
     CCSprite* buildButton;
@@ -254,7 +255,6 @@ public:
     void stickGameHappiness();
     void banditsAttack();
     
-    void addReputation(int);
     void addPopulation();
     
     void setAllStats();
@@ -270,6 +270,38 @@ public:
     
     void UpdateBuildButton();
     void labelBackgroundFade(float);
+    
+public:
+    
+    CCArray* addMoneyLabelArray;
+    int targetMoney;
+    bool isAddingMoney;
+    bool moneyLabelDirectionUp;
+    
+    CCArray* addReputationLabelArray;
+    int targetReputation;
+    bool isAddingReputation;
+    
+    CCArray* addFoodLabelArray;
+    CCArray* addStorageLabelArray;
+    int targetFood;
+    int targetStorage;
+    bool isAddingFood;
+    bool isAddingStorage;
+    bool foodLabelDirectionUp;
+    bool storageLabelDirectionUp;
+    
+public:
+    void scheduleAddMoney(int);
+    void addMoney(float);
+    
+    void scheduleAddReputation(int);
+    void addReputation(float);
+    
+    void scheduleAddFood(int);
+    void scheduleAddStorage(int);
+    void addFood(float);
+    void addStorage(float);
 };
 
 #endif

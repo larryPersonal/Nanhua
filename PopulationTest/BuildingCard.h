@@ -36,6 +36,10 @@ public:
     CCSprite* buildingTimeImage;
     CCLabelTTF* buildingTimeLabel;
     
+    int available_number;
+    CCLabelTTF* available_number_label;
+    bool active;
+    
     int index;
     int type;
     //where 0 is normal,

@@ -334,7 +334,7 @@ GameSprite* GameSprite::create()
      speechBubble = new SpeechBubble();
      speechBubble->createSpeechBubble();
      
-     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f,
+     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
                                    spriteRep->boundingBox().size.height * 1.5f));
      spriteRep->addChild(speechBubble);
 
@@ -1022,7 +1022,6 @@ void GameSprite::updateSprite(float dt)
                     }
                     else
                     {
-                        CCLog("test");
                         enermy->enermy = NULL;
                         enermy->combatState = C_IDLE;
                         enermy->currAction = IDLE;
@@ -1240,7 +1239,6 @@ void GameSprite::updateSprite(float dt)
                     }
                     else
                     {
-                        CCLog("test 456");
                         stopAction = false;
                         combatState = C_IDLE;
                         if(enermy != NULL && enermy->enermy != this)
@@ -1514,14 +1512,13 @@ void GameSprite::updateZIndex()
     if (!spriteRep->isVisible()) return;
     if (path == NULL) return; //not necessary to update Z if there isn't a path, implies sprite isn't moving
     if (path->count() == 0) return; //same reason
-    //needs to be in world space
-   // CCPoint position = getWorldPosition();//GameScene::getThis()->mapHandler->getMap()->convertToWorldSpace(spriteRep->getPosition()); // .ConvertToWorldSpace(startPos);
+    // needs to be in world space
+    // CCPoint position = getWorldPosition();//GameScene::getThis()->mapHandler->getMap()->convertToWorldSpace(spriteRep->getPosition()); // .ConvertToWorldSpace(startPos);
     
     
     //position = GameScene::getThis()->mapHandler->tilePosFromLocation(position);
-    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos));
-    
-    
+    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+    speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
 }
 
 CCPoint GameSprite::getWorldPosition()
@@ -1657,7 +1654,8 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
     label->setColor(ccc3(81, 77, 2));
    
     speechBubble->addContent(label, CCPointZero);
-    speechBubble->show(timeInSeconds);
+    //speechBubble->show(timeInSeconds);
+    speechBubble->show(10000);
 }
 
 
@@ -1721,7 +1719,8 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     }
     if (label == NULL) return;
     speechBubble->addContent(label, CCPointZero );
-    speechBubble->show(timeInSeconds);
+    //speechBubble->show(timeInSeconds);
+    speechBubble->show(200);
 }
 
 
@@ -1781,7 +1780,7 @@ bool GameSprite::PathToWork()
     CCPoint startPos = getWorldPosition();
     startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
     bool hasPath = false; //temporary TODO
-  //  CCPoint endPos = possessions->jobLocation->getWorldPosition();
+   // CCPoint endPos = possessions->jobLocation->getWorldPosition();
    // endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
     /*
     bool hasPath = CreatePath(startPos, endPos);
@@ -2152,15 +2151,14 @@ void GameSprite::ReplaceSpriteRep()
     changeAnimation("DL");
     currentDir = "DL";
 
-    
-   // behaviorTree->BehaviorInit();
+    // behaviorTree->BehaviorInit();
     
     //Speech bubble
     speechBubble = new SpeechBubble();
     speechBubble->createSpeechBubble();
     
     
-    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f,
+    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
                                   spriteRep->boundingBox().size.height * 1.5f));
     
     spriteRep->addChild(speechBubble);
@@ -2708,14 +2706,18 @@ void GameSprite::updateHungry(float dt)
     }
     
     cumulativeTime_happiness += dt;
-    
+    float factor = 1.0f;
+    if (villagerClass == V_REFUGEE)
+    {
+        factor = 1.0f / GameScene::getThis()->configSettings->default_homeless_happiness_drop_multiplier;
+    }
     /*
      * if the sprite is hungry (currentHungry <= 0), drop happiness!
      */
     if(possessions->happinessRating >= 70.0f)
     {
         // the sprite is in happy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2724,7 +2726,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 40.0f)
     {
         // the sprite is in normal state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2733,7 +2735,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 10.0f)
     {
         // the sprite is in unhappy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2742,7 +2744,7 @@ void GameSprite::updateHungry(float dt)
     else
     {
         // the sprite is in angry state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)))
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2752,6 +2754,7 @@ void GameSprite::updateHungry(float dt)
     if(possessions->happinessRating < 0)
     {
         possessions->happinessRating = 0;
+        // when energy <= 0, the villager will leave the village.
     }
 }
 
@@ -2827,7 +2830,7 @@ void GameSprite::dropToken(bool tutorial)
         
         GameScene::getThis()->spriteHandler->tokensOnMap->addObject(ro);
         
-        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, GameScene::getThis()->mapHandler->calcZIndex(currPos));
+        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, 99999);
         
         CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&currPos);
         
@@ -3021,4 +3024,9 @@ bool GameSprite::isBandit()
         return true;
     }
     return false;
+}
+
+string GameSprite::getCurrentDir()
+{
+    return currentDir;
 }

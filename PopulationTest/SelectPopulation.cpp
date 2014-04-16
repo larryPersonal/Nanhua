@@ -226,10 +226,10 @@ void SelectPopulation::createMenuItems()
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(450, 360), CCSizeMake(450, 360));
+    scrollArea->createScrollArea(CCSizeMake(400, 240), CCSizeMake(400, 240));
     scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
     scrollArea->hideScroll();
-    scrollArea->setAnchorPoint(ccp(0, 0.5));
+    scrollArea->setAnchorPoint(ccp(0, 1));
     this->addChild(scrollArea, 4);
     
     // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
@@ -259,7 +259,24 @@ void SelectPopulation::createMenuItems()
     }
     num_of_citizens = count;
     
-    scrollArea->setScrollContentSize(CCSizeMake(450, 90.0f * count));
+    int cnt = 0;
+    if(count > 0)
+    {
+        if(count % 4 == 0)
+        {
+            cnt = count / 4;
+        }
+        else
+        {
+            cnt = count / 4 + 1;
+        }
+    }
+    
+    scrollArea->setScrollContentSize(CCSizeMake(400, 10.0f + 100.0f * cnt));
+    if(10.0f + 100.0f * cnt > 240)
+    {
+        scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
+    }
     scrollArea->updateScrollBars();
     
     sortButton = CCMenuItemImage::create("sortbtn.png", "sortpressbtn.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortButton));
@@ -267,10 +284,16 @@ void SelectPopulation::createMenuItems()
     sortButton->setAnchorPoint(ccp(0, 1));
     sortButton->setPosition(ccp(75, 515));
     
+    sortHappinessButton = CCMenuItemImage::create("sortby_happinessbtn.png", "sortby_happiness_pressbtn.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortHappinessButton));
+    sortHappinessButton->setScale(0.6f);
+    sortHappinessButton->setAnchorPoint(ccp(0, 1));
+    sortHappinessButton->setPosition(ccp(200, 515));
+    
     menuItems->addObject(buttonCancel);
     menuItems->addObject(buttonOk);
     menuItems->addObject(spriteBuilding);
     menuItems->addObject(sortButton);
+    menuItems->addObject(sortHappinessButton);
     
     menu = CCMenu::createWithArray(menuItems);
     menu->setPosition(CCPointZero);
@@ -552,8 +575,9 @@ void SelectPopulation::reposition(){
     }
     
     // Scroll area in center
-    scrollArea->CCNode::setPosition(-halfWidth + 20.0f + hw, -halfHeight / 2.0f - 95.0f + hh);
+    scrollArea->CCNode::setPosition(-halfWidth + 45.0f + hw, hh / 4.0f + 110.0f);
     scrollArea->reposition();
+    scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
 }
 
 void SelectPopulation::refreshAllMenuItemValues()
@@ -772,6 +796,26 @@ void SelectPopulation::update(float deltaTime){
                 }
             }
         }
+        
+        int cnt = 0;
+        if(count > 0)
+        {
+            if(count % 4 == 0)
+            {
+                cnt = count / 4;
+            }
+            else
+            {
+                cnt = count / 4 + 1;
+            }
+        }
+        
+        scrollArea->setScrollContentSize(CCSizeMake(400, 10.0f + 100.0f * cnt));
+        if(10.0f + 100.0f * cnt > 240)
+        {
+            scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
+        }
+        scrollArea->updateScrollBars();
     }
     
     spritesForSelection->removeAllObjects();
@@ -938,6 +982,60 @@ void SelectPopulation::clickSortButton()
     isSorted = true;
     isSortedByHappiness = false;
     energyIncre = !energyIncre;
+    
+    // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
+    CCArray* spritesForSelection = getSpriteList();
+    
+    int count = 0;
+    int index = 0;
+    
+    for(int i = 0; i < spriteRowArray->count(); i++)
+    {
+        SpriteRow* sr = (SpriteRow*)spriteRowArray->objectAtIndex(i);
+        sr->unlinkChildren();
+    }
+    spriteRowArray->removeAllObjects();
+    
+    count = 0;
+    index = 0;
+    for(int i = 0; i < spritesForSelection->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesForSelection->objectAtIndex(i);
+        
+        if(building->isCurrentConstructing || (!building->isCurrentConstructing && gs->villagerClass == V_CITIZEN))
+        {
+            SpriteRow* sp = SpriteRow::create((GameSprite*) spritesForSelection->objectAtIndex(i), scrollArea, building, index);
+            spriteRowArray->addObject((CCObject*) sp);
+            index++;
+            count++;
+            
+            bool flag = false;
+            for(int j = 0; j < memberArray->count(); j++)
+            {
+                GameSprite* gameS = (GameSprite*) memberArray->objectAtIndex(j);
+                if(gameS == gs)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            
+            if(flag)
+            {
+                sp->getMask()->setVisible(true);
+            }
+        }
+    }
+    
+    spritesForSelection->removeAllObjects();
+    CC_SAFE_RELEASE(spritesForSelection);
+}
+
+void SelectPopulation::clickSortHappinessButton()
+{
+    isSorted = true;
+    isSortedByHappiness = true;
+    happinessIncre = !happinessIncre;
     
     // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
     CCArray* spritesForSelection = getSpriteList();

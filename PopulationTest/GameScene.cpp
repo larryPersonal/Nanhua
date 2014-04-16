@@ -32,8 +32,6 @@ GameScene::GameScene()
 {
     screenCenter = CCNode::create();
     mapHandler = new MapHandler();
-    objectiveHandler = new ObjectiveHandler();
-    objectiveHandler->loadObjective();
     
     globalOutcomeModifier = new GlobalOutcomeModifier();
     
@@ -121,8 +119,13 @@ CCScene* GameScene::scene()
     CCLog("Level is %d", GameManager::getThis()->getLevel());
     tm->setupForTutorial();
     
+    ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
+    objectiveHandler->loadObjective();
+    objectiveHandler->playObjective();
+    
     scene->addChild(senlayer, 1);
     scene->addChild(tm, 1);
+    scene->addChild(objectiveHandler, 1);
      
     return scene;
 }
@@ -635,7 +638,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     }
     
     // then check the tutorial manager
-    if(TutorialManager::getThis()->active)
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->narrator != NULL)
     {
         bool skip = false;
         
@@ -1069,11 +1072,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                         lastTilePosPreview.x = INT_MAX;
                         lastTilePosPreview.y = INT_MAX;
                     }
-                    
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
-                    {
-                        TutorialManager::getThis()->miniDragon->clickNext();
-                    }
                 }
                 else
                 {
@@ -1202,6 +1200,9 @@ void GameScene::FirstRunPopulate()
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
+        
+        target.x += 1;
+        spriteHandler->addSpriteToMap(target, V_REFUGEE);
     }
     
     CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());
@@ -1260,6 +1261,10 @@ void GameScene::update(float time)
         banditsAttackHandler->update(time);
         
         mapHandler->update(time);
+        if(ObjectiveHandler::getThis() != NULL)
+        {
+            ObjectiveHandler::getThis()->update(time);
+        }
     }
     
     // check lose game
@@ -1321,7 +1326,7 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
             mapHandler->getMap()->removeChild(ob->getSprite());
             allTokens->removeObjectAtIndex(i);
             
-            GameHUD::getThis()->addReputation(5);
+            GameHUD::getThis()->scheduleAddReputation(5);
             return true;
         }
     }
