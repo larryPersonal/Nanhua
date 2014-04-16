@@ -521,7 +521,6 @@
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
 		843B18D818F2910600C00490 /* housedetailred.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D718F2910600C00490 /* housedetailred.png */; };
 		843B18DA18F2A4FA00C00490 /* infor display ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D918F2A4FA00C00490 /* infor display ui.png */; };
-		843BE2AD18F7DA1400682E5B /* toony_loons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AB18F7DA1400682E5B /* toony_loons.ttf */; };
 		843BE2B018F7EB2600682E5B /* tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AF18F7EB2600682E5B /* tutorial.xml */; };
 		843BE2B218F7F1BA00682E5B /* speechdialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2B118F7F1BA00682E5B /* speechdialog.png */; };
 		843E972818DA94F100DBB48D /* FemaleBandit_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E972218DA94F100DBB48D /* FemaleBandit_port.png */; };
@@ -1507,8 +1506,6 @@
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
 		843B18D718F2910600C00490 /* housedetailred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = housedetailred.png; sourceTree = "<group>"; };
 		843B18D918F2A4FA00C00490 /* infor display ui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infor display ui.png"; sourceTree = "<group>"; };
-		843BE2AB18F7DA1400682E5B /* toony_loons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = toony_loons.ttf; sourceTree = "<group>"; };
-		843BE2AC18F7DA1400682E5B /* TEMPSITC.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TEMPSITC.ttf; sourceTree = "<group>"; };
 		843BE2AF18F7EB2600682E5B /* tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial.xml; sourceTree = "<group>"; };
 		843BE2B118F7F1BA00682E5B /* speechdialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speechdialog.png; sourceTree = "<group>"; };
 		843E972218DA94F100DBB48D /* FemaleBandit_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FemaleBandit_port.png; sourceTree = "<group>"; };
@@ -3995,7 +3992,6 @@
 				3604970617AB942700CACE25 /* arrow-down.png in Resources */,
 				3604970717AB942700CACE25 /* arrow-down2.png in Resources */,
 				8412CA6018AC8D4A00AF4645 /* time-indicator-week-1.png in Resources */,
-				843BE2AE18F7DA1400682E5B /* TEMPSITC.ttf in Resources */,
 				36D87D1A18C729F000FE8B31 /* main-menu-bg.png in Resources */,
 				36C16E4F18D0049000C307DB /* YoungGirl_port.png in Resources */,
 				843E973A18DB18FE00DBB48D /* Closebtn_Circle.png in Resources */,
@@ -4481,8 +4477,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4516,7 +4512,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -4529,8 +4525,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PopUlationTest/Prefix.pch;
@@ -4563,7 +4559,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
