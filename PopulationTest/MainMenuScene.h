@@ -27,7 +27,7 @@ class MainMenuScene : public cocos2d::CCLayer
     
     // loading screen module
     CCSprite* loadingScreen;
-    CCLabelTTF* loadingLabel;
+    CCSprite* loadingLabel;
     
 public:
     

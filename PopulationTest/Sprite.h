@@ -357,6 +357,8 @@ public:
     bool isBandit();
     bool isSoldier();
     bool isBuilder();
+    
+    string getCurrentDir();
 };
 
 

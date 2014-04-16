@@ -61,6 +61,7 @@ public:
     CCLabelTTF* taskLabel;
     
     CCMenuItemImage* sortButton;
+    CCMenuItemImage* sortHappinessButton;
     
     ScrollArea* scrollArea;
     
@@ -117,6 +118,7 @@ public:
     void scheduleFarming();
     
     void clickSortButton();
+    void clickSortHappinessButton();
     
     void adjustZIndex(bool);
     

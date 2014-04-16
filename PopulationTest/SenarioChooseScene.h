@@ -29,7 +29,7 @@ public:
     CCMenuItem* senarioButtonS6;
     
     CCSprite* loadingScreen;
-    CCLabelTTF* loadingLabel;
+    CCSprite* loadingLabel;
     
 public:
     SenarioChooseScene();

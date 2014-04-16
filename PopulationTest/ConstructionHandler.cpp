@@ -84,6 +84,7 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
                                    "NONE",
                                    "Energybar.png",
                                    true);
+    progressBar->setAnchorPoint(ccp(0, 1));
     progressBar->setTag(PROGRESSBAR_TAG);
     building->buildingRep->addChild(progressBar);
     progressBar->setPosition(0, building->buildingRep->boundingBox().size.height);

@@ -114,6 +114,7 @@ void TutorialManager::unlockAll()
     lockFoodLabel = false;
     lockPopulationLabel = false;
     active = false;
+    lockBuildingInfo = false;
     
     teachBuildButton = false;
     teachBuildHouse = false;

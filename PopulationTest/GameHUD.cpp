@@ -224,26 +224,26 @@ void GameHUD::update(float deltaTime)
             switch (date->week) {
                 case 0:
                     firstWeekLabel->setOpacity(255);
-                    secondWeekLabel->setOpacity(120);
-                    thirdWeekLabel->setOpacity(120);
-                    lastWeekLabel->setOpacity(120);
+                    secondWeekLabel->setOpacity(0);
+                    thirdWeekLabel->setOpacity(0);
+                    lastWeekLabel->setOpacity(0);
                     break;
                 case 1:
-                    firstWeekLabel->setOpacity(120);
+                    firstWeekLabel->setOpacity(0);
                     secondWeekLabel->setOpacity(255);
-                    thirdWeekLabel->setOpacity(120);
-                    lastWeekLabel->setOpacity(120);
+                    thirdWeekLabel->setOpacity(0);
+                    lastWeekLabel->setOpacity(0);
                     break;
                 case 2:
-                    firstWeekLabel->setOpacity(120);
-                    secondWeekLabel->setOpacity(120);
+                    firstWeekLabel->setOpacity(0);
+                    secondWeekLabel->setOpacity(0);
                     thirdWeekLabel->setOpacity(255);
-                    lastWeekLabel->setOpacity(120);
+                    lastWeekLabel->setOpacity(0);
                     break;
                 case 3:
-                    firstWeekLabel->setOpacity(120);
-                    secondWeekLabel->setOpacity(120);
-                    thirdWeekLabel->setOpacity(120);
+                    firstWeekLabel->setOpacity(0);
+                    secondWeekLabel->setOpacity(0);
+                    thirdWeekLabel->setOpacity(0);
                     lastWeekLabel->setOpacity(255);
                     break;
                     
@@ -670,11 +670,11 @@ void GameHUD::createStatsMenu()
     foodLabel->CCNode::setPosition(495, screenSize.height - 28);
     
     // create the population indicator
-    populationIcon = CCSprite::create("population_amount.png");
-    populationIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.28f, screenSize.width / spriteSize.width * 0.25f);
+    populationIcon = CCSprite::create("population_amount1.png");
+    populationIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.24f, screenSize.width / spriteSize.width * 0.25f);
 
     populationIcon->setAnchorPoint(ccp(0, 1));
-    populationIcon->setPosition(ccp(580, screenSize.height - 2));
+    populationIcon->setPosition(ccp(565, screenSize.height - 2));
     this->addChild(populationIcon, 2);
     
     mGameCurrentPopulation = 0;
@@ -793,38 +793,38 @@ void GameHUD::createTimeMenu()
     this->addChild(timeBackground, 1);
     
     // create the four weeks labels
-    firstWeekLabel = CCSprite::create("timeclockgreen.png");
-    firstWeekLabel->setAnchorPoint(ccp(0, 1));
+    firstWeekLabel = CCSprite::create("timeclock_week1.png");
+    firstWeekLabel->setAnchorPoint(ccp(1, 1));
     firstWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
-    firstWeekLabel->setPosition(ccp(screenSize.width - 63.0f - leftPos, screenSize.height - 75.0f));
+    firstWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
 
     this->addChild(firstWeekLabel, 3);
     
-    secondWeekLabel = CCSprite::create("timeclockbrown.png");
-    secondWeekLabel->setAnchorPoint(ccp(0, 1));
+    secondWeekLabel = CCSprite::create("timeclock_week2.png");
+    secondWeekLabel->setAnchorPoint(ccp(1, 1));
     secondWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
-    secondWeekLabel->setPosition(ccp(screenSize.width - 36.0f - leftPos, screenSize.height - 55.0f));
+    secondWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
 
     this->addChild(secondWeekLabel, 3);
     
-    thirdWeekLabel = CCSprite::create("timeclockred.png");
-    thirdWeekLabel->setAnchorPoint(ccp(0, 1));
+    thirdWeekLabel = CCSprite::create("timeclock_week3.png");
+    thirdWeekLabel->setAnchorPoint(ccp(1, 1));
     thirdWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.125f);
-    thirdWeekLabel->setPosition(ccp(screenSize.width - 35.5f - leftPos, screenSize.height - 35.0f));
+    thirdWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
 
     this->addChild(thirdWeekLabel, 3);
     
-    lastWeekLabel = CCSprite::create("timeclockyellow.png");
-    lastWeekLabel->setAnchorPoint(ccp(0, 1));
+    lastWeekLabel = CCSprite::create("timeclock_week4.png");
+    lastWeekLabel->setAnchorPoint(ccp(1, 1));
     lastWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.125f);
-    lastWeekLabel->setPosition(ccp(screenSize.width - 49.0f - leftPos, screenSize.height - 15.0f));
+    lastWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
 
     this->addChild(lastWeekLabel, 3);
     
     firstWeekLabel->setOpacity(255);
-    secondWeekLabel->setOpacity(120);
-    thirdWeekLabel->setOpacity(120);
-    lastWeekLabel->setOpacity(120);
+    secondWeekLabel->setOpacity(0);
+    thirdWeekLabel->setOpacity(0);
+    lastWeekLabel->setOpacity(0);
     
     // save the current date
     mGameWeek = date->week;
@@ -859,10 +859,10 @@ void GameHUD::timeGroupReposition()
     
     timeMenu->setPosition(ccp(screenSize.width - leftPos, screenSize.height - 2.0f));
     timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height));
-    firstWeekLabel->setPosition(ccp(screenSize.width - 63.0f - leftPos, screenSize.height - 75.0f));
-    secondWeekLabel->setPosition(ccp(screenSize.width - 36.0f - leftPos, screenSize.height - 55.0f));
-    thirdWeekLabel->setPosition(ccp(screenSize.width - 35.5f - leftPos, screenSize.height - 35.0f));
-    lastWeekLabel->setPosition(ccp(screenSize.width - 49.0f - leftPos, screenSize.height - 15.0f));
+    firstWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    secondWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    thirdWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    lastWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
     timeLabel_1->CCNode::setPosition(screenSize.width - 30.0f + maxPos - leftPos, screenSize.height - 25.0f);
     timeLabel_2->CCNode::setPosition(screenSize.width - 28.0f + maxPos - leftPos, screenSize.height - 55.0f);
     
@@ -1189,7 +1189,7 @@ void GameHUD::createSystemMenu()
     
     pauseButton = CCSprite::create("pauseIcon.png");
     resumeButton = CCSprite::create("nextButton.png");
-    systemButton = CCSprite::create("system.png");
+    systemButton = CCSprite::create("optionmenubutton.png");
     stickHappinessButton = CCSprite::create("happyFace.png");
     resumeHappinessButton = CCSprite::create("normalFace.png");
     warButton = CCSprite::create("banditicon.png");

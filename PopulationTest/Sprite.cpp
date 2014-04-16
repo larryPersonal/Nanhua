@@ -334,7 +334,7 @@ GameSprite* GameSprite::create()
      speechBubble = new SpeechBubble();
      speechBubble->createSpeechBubble();
      
-     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f,
+     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
                                    spriteRep->boundingBox().size.height * 1.5f));
      spriteRep->addChild(speechBubble);
 
@@ -1517,8 +1517,8 @@ void GameSprite::updateZIndex()
     
     
     //position = GameScene::getThis()->mapHandler->tilePosFromLocation(position);
-    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true) );
-    speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true) );
+    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+    speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
 }
 
 CCPoint GameSprite::getWorldPosition()
@@ -1654,7 +1654,8 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
     label->setColor(ccc3(81, 77, 2));
    
     speechBubble->addContent(label, CCPointZero);
-    speechBubble->show(timeInSeconds);
+    //speechBubble->show(timeInSeconds);
+    speechBubble->show(10000);
 }
 
 
@@ -1779,7 +1780,7 @@ bool GameSprite::PathToWork()
     CCPoint startPos = getWorldPosition();
     startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
     bool hasPath = false; //temporary TODO
-  //  CCPoint endPos = possessions->jobLocation->getWorldPosition();
+   // CCPoint endPos = possessions->jobLocation->getWorldPosition();
    // endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
     /*
     bool hasPath = CreatePath(startPos, endPos);
@@ -2150,15 +2151,14 @@ void GameSprite::ReplaceSpriteRep()
     changeAnimation("DL");
     currentDir = "DL";
 
-    
-   // behaviorTree->BehaviorInit();
+    // behaviorTree->BehaviorInit();
     
     //Speech bubble
     speechBubble = new SpeechBubble();
     speechBubble->createSpeechBubble();
     
     
-    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f,
+    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
                                   spriteRep->boundingBox().size.height * 1.5f));
     
     spriteRep->addChild(speechBubble);
@@ -2830,7 +2830,7 @@ void GameSprite::dropToken(bool tutorial)
         
         GameScene::getThis()->spriteHandler->tokensOnMap->addObject(ro);
         
-        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, GameScene::getThis()->mapHandler->calcZIndex(currPos));
+        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, 99999);
         
         CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&currPos);
         
@@ -3024,4 +3024,9 @@ bool GameSprite::isBandit()
         return true;
     }
     return false;
+}
+
+string GameSprite::getCurrentDir()
+{
+    return currentDir;
 }

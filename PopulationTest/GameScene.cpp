@@ -1200,6 +1200,9 @@ void GameScene::FirstRunPopulate()
         
         target.x += 1;
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
+        
+        target.x += 1;
+        spriteHandler->addSpriteToMap(target, V_REFUGEE);
     }
     
     CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());

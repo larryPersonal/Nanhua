@@ -435,6 +435,8 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     }
                     memberSpriteList->removeAllObjects();
                     
+                    this->isCurrentWorking = false;
+                    
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
                     {
                         PopupMenu::closeAllPopupMenu();
