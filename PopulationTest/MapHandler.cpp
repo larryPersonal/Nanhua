@@ -389,10 +389,14 @@ bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos, bool obey_playarea)
     }
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
     if (targetTile == NULL) return false;
+    
+    if (obey_playarea)
+    {
     if (targetTile->hasBuilding() || targetTile->isPath)
     {
         CCLog("Target tile isOccupied or isPath");
         return false;
+    }
     }
     
     return true;
