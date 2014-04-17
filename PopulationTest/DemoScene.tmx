@@ -1354,13 +1354,13 @@
    </properties>
   </tile>
   <tile id="7">
-      <properties>
-          <property name="anim_frames" value="7"/>
-          <property name="anim_random" value="true"/>
-          <property name="anim_random_chance" value="0.15"/>
-          <property name="building_type" value="decoration"/>
-          <property name="name" value="river2"/>
-      </properties>
+   <properties>
+    <property name="anim_frames" value="7"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.15"/>
+    <property name="building_type" value="decoration"/>
+    <property name="name" value="river2"/>
+   </properties>
   </tile>
   <tile id="8">
    <properties>
@@ -1471,7 +1471,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgEJAAAIA7BnN7kpjiBbgiUAAAAAAAAAAAB/zXUAAAAAAAAAAAAAAADKFlJAAIM=
+   eJztzqEBAAAIA6D9nzzZvGazwAUkAAAAAAAAAADQ5jsAAAAAAAAAAAAAAADA2QJ8xACR
   </data>
  </layer>
  <layer name="Building_Border" width="90" height="60">
