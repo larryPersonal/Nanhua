@@ -1316,9 +1316,11 @@
   <image source="river_anim_w_fish.png" width="4096" height="4096"/>
   <tile id="0">
    <properties>
-    <property name="anim_frames" value="14"/>
+    <property name="anim_frames" value="7"/>
+    <property name="anim_random" value="true"/>
+    <property name="anim_random_chance" value="0.15"/>
     <property name="building_type" value="decoration"/>
-    <property name="name" value="river"/>
+    <property name="name" value="river1"/>
    </properties>
   </tile>
   <tile id="1">
@@ -1352,9 +1354,13 @@
    </properties>
   </tile>
   <tile id="7">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
+      <properties>
+          <property name="anim_frames" value="7"/>
+          <property name="anim_random" value="true"/>
+          <property name="anim_random_chance" value="0.15"/>
+          <property name="building_type" value="decoration"/>
+          <property name="name" value="river2"/>
+      </properties>
   </tile>
   <tile id="8">
    <properties>
