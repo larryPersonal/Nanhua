@@ -71,19 +71,24 @@ void BuildScroll::createMenuItems()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // create the build group background
-    string buildBackground = "scroller.png";
+    string buildBackground = "scrollermiddle_b.png";
     buildMenu = CCSprite::create(buildBackground.c_str());
     CCSize spriteSize = buildMenu->getContentSize();
     buildMenu->setAnchorPoint(ccp(0, 0));
     buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
-    buildMenu->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));
+    buildMenu->setPosition(ccp(screenSize.width * (1.01f - leftPos), 25));
     this->addChild(buildMenu, 1);
+    
+    scrollerBar = CCSprite::create("scroller_side.png");
+    scrollerBar->setAnchorPoint(ccp(0, 0));
+    scrollerBar->setScale(screenSize.width / spriteSize.width * 0.98f);
+    scrollerBar->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));
+    this->addChild(scrollerBar, 2);
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.95f, buildMenu->boundingBox().size.height * 0.7f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.5f));
+    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.96f, buildMenu->boundingBox().size.height * 0.92f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.92f));
     scrollArea->enableScrollHorizontal(0, "bar.png", "bar.png");
-    //scrollArea->hideScroll();
     scrollArea->setAnchorPoint(ccp(0, 0));
     
     // create all building references for all building categories.
@@ -152,8 +157,8 @@ void BuildScroll::createMenuItems()
         }
     }
     
-    scrollArea->setScrollContentSize(CCSizeMake(250.0f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setPosition(ccp(screenSize.width * 0.105f + screenSize.width * (maxPos - leftPos), buildMenu->boundingBox().size.height * 0.14f));
+    scrollArea->setScrollContentSize(CCSizeMake(10.0f + screenSize.width * 0.19f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.92f));
+    scrollArea->setPosition(ccp(screenSize.width * 0.06f + screenSize.width * (maxPos - leftPos), buildMenu->boundingBox().size.height * 0.14f));
     scrollArea->updateScrollBars();
     this->addChild(scrollArea, 1);
     
@@ -183,9 +188,12 @@ void BuildScroll::reposition()
     GLubyte opacity = temp;
     
     buildMenu->setOpacity(opacity);
-    buildMenu->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));
+    buildMenu->setPosition(ccp(screenSize.width * (1.01f - leftPos), 25));
     
-    scrollArea->setPosition(ccp(screenSize.width * 0.105f + screenSize.width * (maxPos - leftPos), buildMenu->boundingBox().size.height * 0.14f));
+    scrollerBar->setOpacity(opacity);
+    scrollerBar->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));
+    
+    scrollArea->setPosition(ccp(screenSize.width * 0.06f + screenSize.width * (maxPos - leftPos), buildMenu->boundingBox().size.height * 0.14f));
     
     for(int i = 0; i < buildingCards->count(); i++)
     {
@@ -204,6 +212,7 @@ void BuildScroll::willChangeOrientation()
 
 void BuildScroll::onOrientationChanged()
 {
+    /*
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     bool isHori = GlobalHelper::isHorizontal();
@@ -223,6 +232,7 @@ void BuildScroll::onOrientationChanged()
     scrollArea->setViewSize(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f, buildMenu->boundingBox().size.height * 0.7f));
     scrollArea->setPosition(0, buildMenu->boundingBox().size.height);
     scrollArea->updateScrollBars();
+    */
 }
 
 void BuildScroll::update(float deltaTime)

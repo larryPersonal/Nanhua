@@ -72,7 +72,7 @@ public:
     
     void rescale();
     
-    void displayTransportBubble();
+    void displayTransportBubble(float);
 };
 
 #endif /* defined(__PopulationTest__SpeechBubble__) */

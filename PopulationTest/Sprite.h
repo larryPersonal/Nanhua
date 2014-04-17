@@ -175,6 +175,8 @@ public:
     std::string spriteClass;
     std::string spriteDisplayedName;
     
+    float movementSpeed;
+    
     GameSprite();
     virtual ~GameSprite();
     
@@ -314,7 +316,6 @@ public:
     
     bool isHungry();
     
-    
     void setCumulativeTime(float);
     float getCumulativeTime();
     
@@ -324,6 +325,7 @@ public:
     
     bool hasEmptyHouse();
     bool findNearestHome();
+    Building* findNearestHouse();
     
     int getPathDistance(CCPoint, CCPoint);
     

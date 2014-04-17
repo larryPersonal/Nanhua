@@ -92,8 +92,9 @@ GameSprite::GameSprite()
     preEnermy = NULL;
     
     currentTile = CCPointZero;
+    
+    movementSpeed = 0;
 }
-
 
 void GameSprite::initAI(bool isUpgrade)
 {
@@ -117,6 +118,7 @@ void GameSprite::initAI(bool isUpgrade)
     }
     
     clearSetup();
+    movementSpeed = getPossessions()->default_movement_speed;
 }
 
 bool GameSprite::loadClassSetup()
@@ -728,7 +730,7 @@ void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
 
     callback = CCCallFuncN::create(pSender, callfuncN_selector(GameSprite::moveComplete));
     callback->retain();
-    spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f / possessions->default_movement_speed, diff), callback);
+    spriteRunAction = CCSequence::createWithTwoActions(CCMoveBy::create(50.0f / movementSpeed, diff), callback);
 
     spriteRep->runAction(spriteRunAction);
     
@@ -843,6 +845,11 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 bool GameSprite::Wander()
 {
     // The very first action for a refugee is alway trying to find a house, he/she will lose happiness continually.
+    if(GameScene::getThis()->banditsAttackHandler->warMode)
+    {
+        return true;
+    }
+    
     if(spriteClass.compare("refugee") == 0 && hasEmptyHouse())
     {
         return findNearestHome();
@@ -1654,8 +1661,7 @@ void GameSprite::saySpeech(const char* text, float timeInSeconds)
     label->setColor(ccc3(81, 77, 2));
    
     speechBubble->addContent(label, CCPointZero);
-    //speechBubble->show(timeInSeconds);
-    speechBubble->show(10000);
+    speechBubble->show(timeInSeconds);
 }
 
 
@@ -1670,6 +1676,7 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     {
         case IDLING:
             label = CCSprite::create("idle.png");
+            
             break;
         case HAPPY:
             label = CCSprite::create("happy.png");
@@ -1704,7 +1711,7 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             
             break;
         case TRANSPORT_EMOTION:
-            speechBubble->displayTransportBubble();
+            speechBubble->displayTransportBubble(timeInSeconds);
             show = false;
             
             break;
@@ -1729,9 +1736,8 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     
     if(show){
         speechBubble->addContent(label, CCPointZero );
+        speechBubble->show(timeInSeconds);
     }
-    
-    speechBubble->show(timeInSeconds);
 }
 
 
@@ -2341,9 +2347,19 @@ Building* GameSprite::findNearestGranary(bool isDeliveringFood)
     {
         Building* bui = (Building*) buildingsOnMap->objectAtIndex(i);
         
-        if(bui->buildingType != GRANARY || bui->currentStorage >= bui->storageLimit)
+        if(isDeliveringFood)
         {
-            continue;
+            if(bui->buildingType != GRANARY || bui->currentStorage >= bui->storageLimit)
+            {
+                continue;
+            }
+        }
+        else
+        {
+            if(bui->buildingType != GRANARY || bui->currentStorage <= 0)
+            {
+                continue;
+            }
         }
         
         CCPoint startPos = getWorldPosition();
@@ -2521,6 +2537,19 @@ bool GameSprite::hasEmptyHouse()
 
 bool GameSprite::findNearestHome()
 {
+    Building* nearestHome = findNearestHouse();
+    
+    if(nearestHome != NULL)
+    {
+        possessions->targetHomeLocation = nearestHome;
+        goToOccupyHome(nearestHome);
+    }
+    
+    return true;
+}
+
+Building* GameSprite::findNearestHouse()
+{
     CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
     Building* nearestHome = NULL;
     int distance = 999999;
@@ -2544,13 +2573,7 @@ bool GameSprite::findNearestHome()
         }
     }
     
-    if(nearestHome != NULL)
-    {
-        possessions->targetHomeLocation = nearestHome;
-        goToOccupyHome(nearestHome);
-    }
-    
-    return true;
+    return nearestHome;
 }
 
 bool GameSprite::hasValidTarget()
@@ -2725,7 +2748,16 @@ void GameSprite::updateHungry(float dt)
     /*
      * if the sprite is hungry (currentHungry <= 0), drop happiness!
      */
-    if(possessions->happinessRating >= 70.0f)
+    if(possessions->happinessRating >= 80.0f)
+    {
+        // the sprite is in very happy state
+        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_veryHappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
+        {
+            possessions->happinessRating--;
+            cumulativeTime_happiness = 0.0f;
+        }
+    }
+    else if(possessions->happinessRating >= 60.0f)
     {
         // the sprite is in happy state
         if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
@@ -2797,7 +2829,13 @@ void GameSprite::checkDropTresholdTime()
 {
     float mAverageHappiness = possessions->happinessRating;
     int timeDiffer = 0;
-    if(mAverageHappiness >= 70)
+    if(mAverageHappiness >= 80)
+    {
+        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_veryHappy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_veryHappy_min;
+        int randomTime = rand() % timeDiffer;
+        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_veryHappy_min + randomTime;
+    }
+    else if(mAverageHappiness >= 60)
     {
         timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_happy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_happy_min;
         int randomTime = rand() % timeDiffer;
@@ -2852,7 +2890,11 @@ void GameSprite::dropToken(bool tutorial)
 void GameSprite::checkDropRate()
 {
     float mAverageHappiness = GameHUD::getThis()->average_happiness;
-    if(mAverageHappiness >= 70)
+    if(mAverageHappiness >= 80)
+    {
+        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_veryHappy;
+    }
+    else if(mAverageHappiness >= 60)
     {
         token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_happy;
     }

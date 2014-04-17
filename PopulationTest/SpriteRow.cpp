@@ -27,6 +27,14 @@ SpriteRow::SpriteRow(GameSprite* gs, ScrollArea* sa, Building* building, int ind
     mi = CCArray::create();
     mi->retain();
     
+    frameWidth = 64;
+    frameHeight = 64;
+    
+    xOffset = 0;
+    yOffset = 0;
+    
+    emotionTexture = CCTextureCache::sharedTextureCache()->addImage("Happinessicon.png");
+    
     init();
 }
 
@@ -87,25 +95,42 @@ bool SpriteRow::init()
     villagerEnergyBar->setValue((float)possessions->energyRating / (float)possessions->default_energy_limit);
     scrollArea->addItem(villagerEnergyBar, ccp(78.0f + 100.0f * column, 20.0f + 100.0f * row));
     
-    emotionFace = CCSprite::create("happy2.png");
-    emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
     float happinessRate = gameSprite->getPossessions()->happinessRating;
-    if(happinessRate >= 70)
+    
+    xOffset = 0;
+    yOffset = 0;
+    
+    if(happinessRate >= 80)
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("happy2.png"));
+        xOffset = 2;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 60)
+    {
+        xOffset = 1;
+        yOffset = 0;
     }
     else if(happinessRate >= 40)
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("idle1.png"));
+        xOffset = 0;
+        yOffset = 0;
     }
     else if(happinessRate >= 10)
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("unhappy1.png"));
+        xOffset = 3;
+        yOffset = 0;
     }
     else
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("tired1.png"));
+        xOffset = 0;
+        yOffset = 1;
     }
+    
+    emotionRect = CCRectMake(xOffset * frameWidth, yOffset * frameHeight,  frameWidth, frameHeight);
+    
+    emotionFace = CCSprite::createWithTexture(emotionTexture, emotionRect);
+    emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
+    
     scrollArea->addItem(emotionFace, ccp(52.0f + 100.0f * column, 58.0f + 100.0f * row));
     
     // display the mask of the sprite row
@@ -459,22 +484,48 @@ void SpriteRow::refreshAllMenuItems()
     }
     
     float happinessRate = gameSprite->getPossessions()->happinessRating;
-    if(happinessRate >= 70)
+    
+    xOffset = 0;
+    yOffset = 0;
+    
+    if(happinessRate >= 80)
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("happy2.png"));
+        xOffset = 2;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 60)
+    {
+        xOffset = 1;
+        yOffset = 0;
     }
     else if(happinessRate >= 40)
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("idle1.png"));
+        xOffset = 0;
+        yOffset = 0;
     }
     else if(happinessRate >= 10)
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("unhappy1.png"));
+        xOffset = 3;
+        yOffset = 0;
     }
     else
     {
-        emotionFace->setTexture(CCTextureCache::sharedTextureCache()->addImage("tired1.png"));
+        xOffset = 0;
+        yOffset = 1;
     }
+    
+    int row = (int) (index / 4);
+    int column = (int) (index % 4);
+    
+    emotionRect = CCRectMake(xOffset * frameWidth, yOffset * frameHeight,  frameWidth, frameHeight);
+    CCSprite* temp = CCSprite::createWithTexture(emotionTexture, emotionRect);
+    
+    scrollArea->removeChild(emotionFace);
+    
+    emotionFace = temp;
+    emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
+    
+    scrollArea->addItem(emotionFace, ccp(52.0f + 100.0f * column, 58.0f + 100.0f * row));
 }
 
 CCSprite* SpriteRow::getMask()

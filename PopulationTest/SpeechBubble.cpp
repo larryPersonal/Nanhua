@@ -88,7 +88,7 @@ void SpeechBubble::rescale()
     // contentNode->setPositionX(bbWidth * 0.5f);
 }
 
-void SpeechBubble::displayTransportBubble()
+void SpeechBubble::displayTransportBubble(float time)
 {
     y_offset = 0;
     
@@ -99,4 +99,5 @@ void SpeechBubble::displayTransportBubble()
     
     CCSprite* bubbleSprite = CCSprite::createWithTexture(bubbleTexture, bubbleRect);
     addContent(bubbleSprite, CCPointZero);
+    show(time);
 }

@@ -40,6 +40,15 @@ private:
     
     CCPointArray* menuItemPositions;
     CCMenu* menu;
+    
+    int frameHeight;
+    int frameWidth;
+    
+    CCTexture2D* emotionTexture;
+    CCRect emotionRect;
+    
+    int xOffset;
+    int yOffset;
 
 public:
     CCArray* mi;

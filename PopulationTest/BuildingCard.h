@@ -21,7 +21,6 @@ public:
     ScrollArea* scrollArea;
     
     CCMenuItemImage* cardBG;
-    CCSprite* cardDetailBG;
     
     CCLabelTTF* buildingNameLabel;
     CCSprite* buildingImage;

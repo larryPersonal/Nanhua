@@ -111,6 +111,14 @@ GameHUD::GameHUD()
     alertFadeIn = false;
     alertTextFadeIn = false;
     alertCumulativeTime = 0;
+    
+    frameWidth = 64;
+    frameHeight = 64;
+    
+    xOffset = 0;
+    yOffset = 0;
+    
+    emotionTexture = CCTextureCache::sharedTextureCache()->addImage("Happinessicon.png");
 }
 
 GameHUD::~GameHUD()
@@ -315,21 +323,25 @@ void GameHUD::update(float deltaTime)
         achivementsLabel->setString(ss.str().c_str());
     }
     
-    float totalHappiness = 0;
     CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    for(int i = 0; i < spritesOnMap->count(); i++)
+    if(GameScene::getThis()->systemConfig->debugMode)
     {
-        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        totalHappiness += gs->getPossessions()->happinessRating;
-    }
-    average_happiness = totalHappiness / (float) spritesOnMap->count();
-    
-    if(mAverageHappiness != average_happiness)
-    {
-        mAverageHappiness = average_happiness;
-        std::stringstream ss;
-        ss << mAverageHappiness;
-        average_happiness_label->setString(ss.str().c_str());
+        float totalHappiness = 0;
+        
+        for(int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+            totalHappiness += gs->getPossessions()->happinessRating;
+        }
+        average_happiness = totalHappiness / (float) spritesOnMap->count();
+        
+        if(mAverageHappiness != average_happiness)
+        {
+            mAverageHappiness = average_happiness;
+            std::stringstream ss;
+            ss << mAverageHappiness;
+            average_happiness_label->setString(ss.str().c_str());
+        }
     }
     
     // room and population change;
@@ -476,6 +488,49 @@ void GameHUD::update(float deltaTime)
     */
     
     updateSoldierHelper(deltaTime);
+    
+    float happinessRate = average_happiness;
+    xOffset = 0;
+    yOffset = 0;
+    
+    if(happinessRate >= 80)
+    {
+        xOffset = 2;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 60)
+    {
+        xOffset = 1;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 40)
+    {
+        xOffset = 0;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 10)
+    {
+        xOffset = 3;
+        yOffset = 0;
+    }
+    else
+    {
+        xOffset = 0;
+        yOffset = 1;
+    }
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    emotionRect = CCRectMake(xOffset * frameWidth, yOffset * frameHeight,  frameWidth, frameHeight);
+    CCSprite* tempIcon = CCSprite::createWithTexture(emotionTexture, emotionRect);
+    tempIcon->setAnchorPoint(ccp(1, 1));
+    tempIcon->setScale(1.0f);
+    tempIcon->setPosition(ccp(happinessIcon->getPositionX(), happinessIcon->getPositionY()));
+    tempIcon->setPosition(ccp(screenSize.width, screenSize.height - 100));
+    
+    this->removeChild(happinessIcon);
+    happinessIcon = tempIcon;
+    this->addChild(happinessIcon, 5);
 }
 
 void GameHUD::createInitialGUI(){
@@ -725,14 +780,17 @@ void GameHUD::createStatsMenu()
     average_happiness = 0;
     mAverageHappiness = average_happiness;
     
-    ss.str(std::string());
-    ss << mAverageHappiness;
-    
-    average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
-    average_happiness_label->setColor(colorBlack);
-    average_happiness_label->setAnchorPoint(ccp(0, 0));
-    this->addChild(average_happiness_label, 2);
-    average_happiness_label->CCNode::setPosition(620, 0);
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        ss.str(std::string());
+        ss << mAverageHappiness;
+        
+        average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
+        average_happiness_label->setColor(colorBlack);
+        average_happiness_label->setAnchorPoint(ccp(0, 0));
+        this->addChild(average_happiness_label, 2);
+        average_happiness_label->CCNode::setPosition(620, 0);
+    }
     
     infoBackground = CCSprite::create("infor display ui.png");
     infoBackground->setScale(screenSize.width / infoBackground->boundingBox().size.width * 0.25f);
@@ -743,36 +801,39 @@ void GameHUD::createStatsMenu()
     float opacity = 0;
     infoBackground->setOpacity(opacity);
     
-    // tap mode label
-    ss.str(std::string());
-    switch (currTapMode)
+    if(GameScene::getThis()->systemConfig->debugMode)
     {
-        case 0:
-            ss << "Normal";
-            break;
-        case 1:
-            ss << "Build";
-            break;
-        case 2:
-            ss << "Deconstruct";
-            break;
-        case 3:
-            ss << "BuildPathPreview";
-            break;
-        case 4:
-            ss << "UnBuildPath";
-            break;
-        case 5:
-            ss << "BuildPathLine";
-            break;
-        default:
-            break;
+        // tap mode label
+        ss.str(std::string());
+        switch (currTapMode)
+        {
+            case 0:
+                ss << "Normal";
+                break;
+            case 1:
+                ss << "Build";
+                break;
+            case 2:
+                ss << "Deconstruct";
+                break;
+            case 3:
+                ss << "BuildPathPreview";
+                break;
+            case 4:
+                ss << "UnBuildPath";
+                break;
+            case 5:
+                ss << "BuildPathLine";
+                break;
+            default:
+                break;
+        }
+        tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        tapModeLabel->setColor(colorBlack);
+        tapModeLabel->setAnchorPoint(ccp(0, 0));
+        this->addChild(tapModeLabel, 2);
+        tapModeLabel->CCNode::setPosition(720, 0);
     }
-    tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-    tapModeLabel->setColor(colorBlack);
-    tapModeLabel->setAnchorPoint(ccp(0, 0));
-    this->addChild(tapModeLabel, 2);
-    tapModeLabel->CCNode::setPosition(720, 0);
 }
 
 void GameHUD::createTimeMenu()
@@ -1193,73 +1254,144 @@ void GameHUD::createSystemMenu()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    pauseButton = CCSprite::create("pauseIcon.png");
-    resumeButton = CCSprite::create("nextButton.png");
     systemButton = CCSprite::create("optionmenubutton.png");
-    stickHappinessButton = CCSprite::create("happyFace.png");
-    resumeHappinessButton = CCSprite::create("normalFace.png");
-    warButton = CCSprite::create("banditicon.png");
-    peaceButton = CCSprite::create("peaceicon.png");
     
-    pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
-    pauseButton->setAnchorPoint(ccp(1, 1));
-    pauseButton->setPosition(ccp(screenSize.width - 50.0f, screenSize.height - 125.0f));
-    
-    resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
-    resumeButton->setAnchorPoint(ccp(1, 1));
-    resumeButton->setPosition(ccp(screenSize.width + 450.0f, screenSize.height - 125.0f));
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        pauseButton = CCSprite::create("pauseIcon.png");
+        resumeButton = CCSprite::create("nextButton.png");
+        stickHappinessButton = CCSprite::create("happyFace.png");
+        resumeHappinessButton = CCSprite::create("normalFace.png");
+        warButton = CCSprite::create("banditicon.png");
+        peaceButton = CCSprite::create("peaceicon.png");
+    }
     
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
     systemButton->setPosition(ccp(screenSize.width * 0.075f, screenSize.height - 205.0f));
     
-    stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
-    stickHappinessButton->setAnchorPoint(ccp(1, 1));
-    stickHappinessButton->setPosition(ccp(screenSize.width - 100.0f, screenSize.height - 125.0f));
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
+        pauseButton->setAnchorPoint(ccp(0, 0));
+        pauseButton->setPosition(ccp(screenSize.width * 0.1f, 0));
+        
+        resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
+        resumeButton->setAnchorPoint(ccp(0, 0));
+        resumeButton->setPosition(ccp(screenSize.width * 0.1f, -500));
+        
+        stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
+        stickHappinessButton->setAnchorPoint(ccp(0, 0));
+        stickHappinessButton->setPosition(ccp(screenSize.width * 0.05f, 0));
+        
+        resumeHappinessButton->setScale(screenSize.width / resumeHappinessButton->boundingBox().size.width * 0.05f);
+        resumeHappinessButton->setAnchorPoint(ccp(0, 0));
+        resumeHappinessButton->setPosition(ccp(screenSize.width * 0.05f, -500));
+        
+        warButton->setScale(screenSize.width / warButton->boundingBox().size.width * 0.05f);
+        warButton->setAnchorPoint(ccp(0, 0));
+        warButton->setPosition(ccp(0, 0));
+        
+        peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
+        peaceButton->setAnchorPoint(ccp(0, 0));
+        peaceButton->setPosition(ccp(0, -500));
+        
+        resumeButton->setVisible(false);
+        resumeHappinessButton->setVisible(false);
+        peaceButton->setVisible(false);
+    }
     
-    resumeHappinessButton->setScale(screenSize.width / resumeHappinessButton->boundingBox().size.width * 0.05f);
-    resumeHappinessButton->setAnchorPoint(ccp(1, 1));
-    resumeHappinessButton->setPosition(ccp(screenSize.width + 400.0f, screenSize.height - 125.0f));
+    float happinessRate = average_happiness;
     
-    warButton->setScale(screenSize.width / warButton->boundingBox().size.width * 0.05f);
-    warButton->setAnchorPoint(ccp(0, 0));
-    warButton->setPosition(ccp(0, 0));
+    xOffset = 0;
+    yOffset = 0;
     
-    peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
-    peaceButton->setAnchorPoint(ccp(0, 0));
-    peaceButton->setPosition(ccp(0, -500));
+    if(happinessRate >= 80)
+    {
+        xOffset = 2;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 60)
+    {
+        xOffset = 1;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 40)
+    {
+        xOffset = 0;
+        yOffset = 0;
+    }
+    else if(happinessRate >= 10)
+    {
+        xOffset = 3;
+        yOffset = 0;
+    }
+    else
+    {
+        xOffset = 0;
+        yOffset = 1;
+    }
     
-    resumeButton->setVisible(false);
-    resumeHappinessButton->setVisible(false);
-    peaceButton->setVisible(false);
+    emotionRect = CCRectMake(xOffset * frameWidth, yOffset * frameHeight,  frameWidth, frameHeight);
     
-    this->addChild(stickHappinessButton, 5);
-    this->addChild(resumeHappinessButton, 5);
+    happinessIcon = CCSprite::createWithTexture(emotionTexture, emotionRect);
+    happinessIcon->setScale(1.0f);
+    happinessIcon->setAnchorPoint(ccp(1, 1));
+    happinessIcon->setPosition(ccp(screenSize.width, screenSize.height - 100));
+    
     this->addChild(systemButton, 5);
-    this->addChild(pauseButton, 5);
-    this->addChild(resumeButton, 5);
-    this->addChild(warButton, 5);
-    this->addChild(peaceButton, 5);
+    this->addChild(happinessIcon, 5);
+    
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        this->addChild(stickHappinessButton, 5);
+        this->addChild(resumeHappinessButton, 5);
+        this->addChild(pauseButton, 5);
+        this->addChild(resumeButton, 5);
+        this->addChild(warButton, 5);
+        this->addChild(peaceButton, 5);
+    }
 }
 
 void GameHUD::banditsAttack()
 {
     if(!isAlerting && !isAlertingText)
     {
-        /*
         if(startWar)
         {
             startWar = false;
-             peaceButton->setVisible(false);
-             peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() - 500));
-             warButton->setVisible(true);
-             warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() + 500));
-             GameScene::getThis()->banditsAttackHandler->stopWar();
+            peaceButton->setVisible(false);
+            peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() - 500));
+            warButton->setVisible(true);
+            warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() + 500));
+            GameScene::getThis()->banditsAttackHandler->stopWar();
+            
+            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+            for(int i = 0; i < allSprites->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+                if(gs->villagerClass != V_CLASS_END)
+                {
+                    if(gs->villagerClass == V_BANDIT)
+                    {
+                        gs->tryEscape = true;
+                        gs->escape();
+                    }
+                    else if(gs->villagerClass == V_REFUGEE || gs->villagerClass == V_CITIZEN)
+                    {
+                        gs->StopMoving();
+                        gs->currAction = IDLE;
+                    }
+                    else
+                    {
+                        gs->GoBuilding(gs->getPossessions()->jobLocation);
+                    }
+                }
+            }
         }
         else
         {
             startWar = true;
-        */
             redMask->setOpacity((GLubyte) 0);
             redMask->setVisible(true);
             alertText->setScale(0);
@@ -1271,14 +1403,31 @@ void GameHUD::banditsAttack()
             alertCumulativeTime = 0;
             this->schedule(schedule_selector(GameHUD::alertBanditsAttackFade), 1.0f / 120.0f);
             this->schedule(schedule_selector(GameHUD::alertBanditsAttackText), 1.0f / 120.0f);
-            /*
-             peaceButton->setVisible(true);
-             peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() + 500));
-             warButton->setVisible(false);
-             warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
-             GameScene::getThis()->banditsAttackHandler->startWar();
-             */
-        //}
+            
+            peaceButton->setVisible(true);
+            peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() + 500));
+            warButton->setVisible(false);
+            warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
+            GameScene::getThis()->banditsAttackHandler->startWar();
+            
+            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+            for (int i = 0; i < allSprites->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+                if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
+                {
+                    if(gs->villagerClass == V_REFUGEE)
+                    {
+                        Building* b = gs->findNearestHouse();
+                        gs->GoBuilding(b);
+                    }
+                    else
+                    {
+                        gs->GoBuilding(gs->getHome());
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -1348,9 +1497,9 @@ void GameHUD::pauseGame()
     {
         pause = false;
         pauseButton->setVisible(true);
-        pauseButton->setPosition(ccp(pauseButton->getPositionX() - 500, pauseButton->getPositionY()));
+        pauseButton->setPosition(ccp(pauseButton->getPositionX(), pauseButton->getPositionY() + 500));
         resumeButton->setVisible(false);
-        resumeButton->setPosition(ccp(resumeButton->getPositionX() + 500, resumeButton->getPositionY()));
+        resumeButton->setPosition(ccp(resumeButton->getPositionX(), resumeButton->getPositionY() - 500));
         CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
         
         for (int i = 0; i < spritesOnMap->count(); i++)
@@ -1363,9 +1512,9 @@ void GameHUD::pauseGame()
     {
         pause = true;
         pauseButton->setVisible(false);
-        pauseButton->setPosition(ccp(pauseButton->getPositionX() + 500, pauseButton->getPositionY()));
+        pauseButton->setPosition(ccp(pauseButton->getPositionX(), pauseButton->getPositionY() - 500));
         resumeButton->setVisible(true);
-        resumeButton->setPosition(ccp(resumeButton->getPositionX() - 500, resumeButton->getPositionY()));
+        resumeButton->setPosition(ccp(resumeButton->getPositionX(), resumeButton->getPositionY() + 500));
     }
 }
 
@@ -1375,17 +1524,17 @@ void GameHUD::stickGameHappiness()
     {
         stickHappiness = false;
         stickHappinessButton->setVisible(true);
-        stickHappinessButton->setPosition(ccp(stickHappinessButton->getPositionX() - 500, stickHappinessButton->getPositionY()));
+        stickHappinessButton->setPosition(ccp(stickHappinessButton->getPositionX(), stickHappinessButton->getPositionY() + 500));
         resumeHappinessButton->setVisible(false);
-        resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX() + 500, resumeHappinessButton->getPositionY()));
+        resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX(), resumeHappinessButton->getPositionY() - 500));
     }
     else
     {
         stickHappiness = true;
         stickHappinessButton->setVisible(false);
-        stickHappinessButton->setPosition(ccp(stickHappinessButton->getPositionX() + 500, stickHappinessButton->getPositionY()));
+        stickHappinessButton->setPosition(ccp(stickHappinessButton->getPositionX(), stickHappinessButton->getPositionY() - 500));
         resumeHappinessButton->setVisible(true);
-        resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX() - 500, resumeHappinessButton->getPositionY()));
+        resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX(), resumeHappinessButton->getPositionY() + 500));
     }
 }
 
@@ -1439,6 +1588,11 @@ void GameHUD::UpdateBuildButton()
 
 void GameHUD::createSoldierHelper()
 {
+    if(!GameScene::getThis()->systemConfig->debugMode)
+    {
+        return;
+    }
+    
     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
     GameSprite* firstSoldier = NULL;
     for(int i = 0; i < allSprites->count(); i++)
@@ -1464,7 +1618,7 @@ void GameHUD::createSoldierHelper()
     
     soldierName = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     soldierName->setAnchorPoint(ccp(0, 0));
-    soldierName->setPosition(ccp(50, 0));
+    soldierName->setPosition(ccp(150, 0));
     this->addChild(soldierName);
     
     ss.str(string());
@@ -1479,7 +1633,7 @@ void GameHUD::createSoldierHelper()
     
     enermyName = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     enermyName->setAnchorPoint(ccp(0, 0));
-    enermyName->setPosition(ccp(250, 0));
+    enermyName->setPosition(ccp(300, 0));
     this->addChild(enermyName);
     
     ss.str(string());
@@ -1500,6 +1654,11 @@ void GameHUD::createSoldierHelper()
 
 void GameHUD::updateSoldierHelper(float dt)
 {
+    if(!GameScene::getThis()->systemConfig->debugMode)
+    {
+        return;
+    }
+    
     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
     GameSprite* firstSoldier = NULL;
     for(int i = 0; i < allSprites->count(); i++)

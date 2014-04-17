@@ -438,7 +438,6 @@
 		8410544518E90DA7003D88C6 /* stuck4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410542C18E90DA7003D88C6 /* stuck4.png */; };
 		8410544618E90DA7003D88C6 /* hungry3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410542D18E90DA7003D88C6 /* hungry3.png */; };
 		8410544718E90DA7003D88C6 /* unhappy2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410542E18E90DA7003D88C6 /* unhappy2.png */; };
-		8410544818E90DA7003D88C6 /* emotionicon_anima.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410542F18E90DA7003D88C6 /* emotionicon_anima.png */; };
 		8410544918E90DA7003D88C6 /* happy1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410543018E90DA7003D88C6 /* happy1.png */; };
 		8410544A18E90DA7003D88C6 /* idle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410543118E90DA7003D88C6 /* idle2.png */; };
 		8410544B18E90DA7003D88C6 /* happy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410543218E90DA7003D88C6 /* happy.png */; };
@@ -481,6 +480,11 @@
 		8412CA7318ACD96000AF4645 /* BuildingCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8412CA7218ACD96000AF4645 /* BuildingCard.cpp */; };
 		8414BF4C18BC4875007626B2 /* worker_assign_ui_bg_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414BF4B18BC4875007626B2 /* worker_assign_ui_bg_03.png */; };
 		8414BF4E18BC8040007626B2 /* pauseIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414BF4D18BC8040007626B2 /* pauseIcon.png */; };
+		8414CF2018FF863C0052CA91 /* emotionicon_anima.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF1F18FF863C0052CA91 /* emotionicon_anima.png */; };
+		8414CF2218FF9AB80052CA91 /* Happinessicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2118FF9AB80052CA91 /* Happinessicon.png */; };
+		8414CF2618FFC5EB0052CA91 /* buildmenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2318FFC5EB0052CA91 /* buildmenu.png */; };
+		8414CF2718FFC5EB0052CA91 /* scrollermiddle_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2418FFC5EB0052CA91 /* scrollermiddle_b.png */; };
+		8414CF2A18FFC6240052CA91 /* scroller_side.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2918FFC6240052CA91 /* scroller_side.png */; };
 		841845211884DF9000895275 /* job.png in Resources */ = {isa = PBXBuildFile; fileRef = 8418451F1884DF9000895275 /* job.png */; };
 		841845221884DF9000895275 /* construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 841845201884DF9000895275 /* construction.png */; };
 		841845241884FC5A00895275 /* dismiss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841845231884FC5A00895275 /* dismiss.jpg */; };
@@ -1408,7 +1412,6 @@
 		8410542C18E90DA7003D88C6 /* stuck4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stuck4.png; sourceTree = "<group>"; };
 		8410542D18E90DA7003D88C6 /* hungry3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hungry3.png; sourceTree = "<group>"; };
 		8410542E18E90DA7003D88C6 /* unhappy2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unhappy2.png; sourceTree = "<group>"; };
-		8410542F18E90DA7003D88C6 /* emotionicon_anima.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emotionicon_anima.png; sourceTree = "<group>"; };
 		8410543018E90DA7003D88C6 /* happy1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = happy1.png; sourceTree = "<group>"; };
 		8410543118E90DA7003D88C6 /* idle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = idle2.png; sourceTree = "<group>"; };
 		8410543218E90DA7003D88C6 /* happy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = happy.png; sourceTree = "<group>"; };
@@ -1454,6 +1457,11 @@
 		8412CA7218ACD96000AF4645 /* BuildingCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BuildingCard.cpp; sourceTree = "<group>"; };
 		8414BF4B18BC4875007626B2 /* worker_assign_ui_bg_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = worker_assign_ui_bg_03.png; sourceTree = "<group>"; };
 		8414BF4D18BC8040007626B2 /* pauseIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseIcon.png; sourceTree = "<group>"; };
+		8414CF1F18FF863C0052CA91 /* emotionicon_anima.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emotionicon_anima.png; sourceTree = "<group>"; };
+		8414CF2118FF9AB80052CA91 /* Happinessicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Happinessicon.png; sourceTree = "<group>"; };
+		8414CF2318FFC5EB0052CA91 /* buildmenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buildmenu.png; sourceTree = "<group>"; };
+		8414CF2418FFC5EB0052CA91 /* scrollermiddle_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrollermiddle_b.png; sourceTree = "<group>"; };
+		8414CF2918FFC6240052CA91 /* scroller_side.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scroller_side.png; sourceTree = "<group>"; };
 		8418451F1884DF9000895275 /* job.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = job.png; sourceTree = "<group>"; };
 		841845201884DF9000895275 /* construction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = construction.png; sourceTree = "<group>"; };
 		841845231884FC5A00895275 /* dismiss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dismiss.jpg; sourceTree = "<group>"; };
@@ -3024,6 +3032,8 @@
 		36D87CFE18C5BAD900FE8B31 /* Emote */ = {
 			isa = PBXGroup;
 			children = (
+				8414CF2118FF9AB80052CA91 /* Happinessicon.png */,
+				8414CF1F18FF863C0052CA91 /* emotionicon_anima.png */,
 				8410541D18E90DA7003D88C6 /* bubble.png */,
 				8410541E18E90DA7003D88C6 /* tired2.png */,
 				8410541F18E90DA7003D88C6 /* tired3.png */,
@@ -3042,7 +3052,6 @@
 				8410542C18E90DA7003D88C6 /* stuck4.png */,
 				8410542D18E90DA7003D88C6 /* hungry3.png */,
 				8410542E18E90DA7003D88C6 /* unhappy2.png */,
-				8410542F18E90DA7003D88C6 /* emotionicon_anima.png */,
 				8410543018E90DA7003D88C6 /* happy1.png */,
 				8410543118E90DA7003D88C6 /* idle2.png */,
 				8410543218E90DA7003D88C6 /* happy.png */,
@@ -3118,6 +3127,9 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				8414CF2918FFC6240052CA91 /* scroller_side.png */,
+				8414CF2318FFC5EB0052CA91 /* buildmenu.png */,
+				8414CF2418FFC5EB0052CA91 /* scrollermiddle_b.png */,
 				84F2913018FE9A5B0045F834 /* red.png */,
 				84F2912E18FE92380045F834 /* population_icon.png */,
 				84F2912A18FE7C140045F834 /* sortby_happinessbtn.png */,
@@ -3812,6 +3824,7 @@
 				843E972A18DA94F100DBB48D /* Girl_port.png in Resources */,
 				844AC8EB18C8301F005166FD /* war.png in Resources */,
 				84F56BD11859C72600E7512B /* text_box.jpg in Resources */,
+				8414CF2218FF9AB80052CA91 /* Happinessicon.png in Resources */,
 				848D2FE8185976A400EB9257 /* bkg.png in Resources */,
 				365FB9C616E5E30B00A57CF0 /* iTunesArtwork in Resources */,
 				84589CE41896655500AA9E1C /* conversation_textbox_zhugeliang.png in Resources */,
@@ -3821,6 +3834,9 @@
 				36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */,
 				3658DD8218D6F31E0056B895 /* Soldier.plist in Resources */,
 				3608CAFE1704343E00AB65A3 /* YoungGirl.plist in Resources */,
+				8414CF2618FFC5EB0052CA91 /* buildmenu.png in Resources */,
+				8414CF2A18FFC6240052CA91 /* scroller_side.png in Resources */,
+				8414CF2718FFC5EB0052CA91 /* scrollermiddle_b.png in Resources */,
 				84F9B76918D949D900579060 /* MaleVillager.plist in Resources */,
 				3632864318CEC503002C58D3 /* houses.png in Resources */,
 				843E973718DB18E700DBB48D /* BuildingInfoUI.png in Resources */,
@@ -3941,7 +3957,6 @@
 				36B411E318D9AAEB005967EC /* DemoScene.tmx in Resources */,
 				84509B7F1887B9F100EF8BD8 /* rest.png in Resources */,
 				36D87D1018C5BF3900FE8B31 /* MaleOldMan.png in Resources */,
-				8410544818E90DA7003D88C6 /* emotionicon_anima.png in Resources */,
 				8414BF4E18BC8040007626B2 /* pauseIcon.png in Resources */,
 				8410544518E90DA7003D88C6 /* stuck4.png in Resources */,
 				8412CA5F18AC8D4A00AF4645 /* time_indicator-week-2.png in Resources */,
@@ -4113,6 +4128,7 @@
 				36AC557418D6981900C165F5 /* yuanbao_icon.png in Resources */,
 				845854781892702F00824F5F /* testSheet.plist in Resources */,
 				8412CA5818AC8D4A00AF4645 /* main-menu-resource-icons_food.png in Resources */,
+				8414CF2018FF863C0052CA91 /* emotionicon_anima.png in Resources */,
 				84F2912818FE51240045F834 /* loading screen.png in Resources */,
 				3647C7F517C1D9D7008FA626 /* Icon-114.png in Resources */,
 				36AC555D18D6981900C165F5 /* charboy_represent.png in Resources */,
@@ -4521,8 +4537,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4556,7 +4572,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -4569,8 +4585,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PopUlationTest/Prefix.pch;
@@ -4603,7 +4619,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

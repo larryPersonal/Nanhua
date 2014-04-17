@@ -509,10 +509,12 @@ void Senario::activateRefugee(float dt)
 }
 
 void Senario::onOrientationChanged(){
+    /*
     readSenarioFile();
     constructSenarioStage(false);
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
+    */
 }
 
 void Senario::update(float time)

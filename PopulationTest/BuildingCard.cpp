@@ -71,7 +71,7 @@ void BuildingCard::init()
     
     // display the building info button
     buildingInfoButton = CCMenuItemImage::create( "build-menu_info.png", "build-menu_info.png", NULL, this, menu_selector(BuildingCard::pressDownInfo), menu_selector(BuildingCard::showBuildingInfo) );
-    buildingInfoButton->setScale(32.0f / buildingInfoButton->boundingBox().size.width);
+    buildingInfoButton->setScale(64.0f / buildingInfoButton->boundingBox().size.width);
     buildingInfoButton->setAnchorPoint(ccp(0.5, 0.5));
     
     infoButtonMenuItemsArray = CCArray::create();
@@ -125,9 +125,9 @@ void BuildingCard::init()
         ss << building->buildingCost;
         buildingcost = ss.str();
     }
-    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 12);
+    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 24);
     costLabel->setColor(colorBlack);
-    costLabel->setAnchorPoint(ccp(0, 1));
+    costLabel->setAnchorPoint(ccp(0.5, 0.5));
     
     ss.str(std::string());
     int level = GameManager::getThis()->town_hall_level;
@@ -172,7 +172,8 @@ void BuildingCard::init()
     
     available_number_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
     available_number_label->setAnchorPoint(ccp(1, 0));
-    available_number_label->setPosition(ccp(270, 30));
+    available_number_label->setColor(colorBlack);
+    available_number_label->setPosition(ccp(340, 130));
     
     // population
     populationImage = CCSprite::create("population_icon.png");
@@ -187,9 +188,9 @@ void BuildingCard::init()
         ss << building->populationLimit;
         populationLimit = ss.str();
     }
-    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 12);
+    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 24);
     populationLabel->setColor(colorBlack);
-    populationLabel->setAnchorPoint(ccp(0, 1));
+    populationLabel->setAnchorPoint(ccp(0.5, 0.5));
     
     // building time
     buildingTimeImage = CCSprite::create("build-menu_time-req.png");
@@ -204,12 +205,12 @@ void BuildingCard::init()
         ss << building->build_uint_required;
         buildTime = ss.str();
     }
-    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Shojumaru-Regular", 12, CCSizeMake(buildTime.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    buildingTimeLabel = CCLabelTTF::create(buildTime.c_str(), "Shojumaru-Regular", 24);
     buildingTimeLabel->setColor(colorBlack);
-    buildingTimeLabel->setAnchorPoint(ccp(0, 1));
+    buildingTimeLabel->setAnchorPoint(ccp(0.5, 0.5));
     
     
-    cardBG = CCMenuItemImage::create("house_btn.png", NULL, NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
+    cardBG = CCMenuItemImage::create("buildmenu.png", NULL, NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
     if(type == 0)
     {
         cardBG->setTag(building->ID);
@@ -219,17 +220,13 @@ void BuildingCard::init()
         cardBG->setTag(-type); //this should only give -1, -2 and -3.
     }
     cardBG->setAnchorPoint(ccp(0.5, 0.5));
-    cardBG->setScaleY(18.0f / buildingInfoButton->boundingBox().size.width);
-    cardBG->setScaleX(22.0f / buildingInfoButton->boundingBox().size.width);
+    cardBG->setScaleY(screenSize.height / cardBG->boundingBox().size.height * 0.325f);
+    cardBG->setScaleX(screenSize.width / cardBG->boundingBox().size.width * 0.18f);
     
     menuItemsArray = CCArray::create();
     menuItemsArray->retain();
     menuItemsArray->addObject(cardBG);
     menu = CCMenu::createWithArray(menuItemsArray);
-    
-    cardDetailBG = CCSprite::create("housedetailred.png");
-    cardDetailBG->setScale(1.01f);
-    cardDetailBG->setAnchorPoint(ccp(0.5, 0.5));
     
     mask = CCSprite::create("black.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
@@ -260,71 +257,59 @@ void BuildingCard::init()
     cardBG->addChild(available_number_label);
     
     cardBG->addChild(buildingNameLabel);
-    buildingNameLabel->setPosition(ccp(20, cardBG->boundingBox().size.height * 2 - 50));
+    buildingNameLabel->setPosition(ccp(20, cardBG->boundingBox().size.height * 2 - 30));
     
     cardBG->addChild(buildingImage);
     if(type == 0)
     {
         if(building->buildingType == HOUSING)
         {
-            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 40));
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 70));
         }
         else if(building->buildingType == AMENITY)
         {
-            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 60));
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 90));
         }
         else if(building->buildingType == GRANARY)
         {
-            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width - 75, cardBG->boundingBox().size.height - 20));
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width - 35, cardBG->boundingBox().size.height + 10));
         }
         else
         {
-            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 30));
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 70));
         }
     }
     else
     {
-        buildingImage->setPosition(ccp(cardBG->boundingBox().size.width, cardBG->boundingBox().size.height + 30));
+        buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 40));
     }
     
-    cardBG->addChild(cardDetailBG);
-    cardDetailBG->setPosition(ccp(cardBG->boundingBox().size.width - 54, 12));
-    
     cardBG->addChild(infoButtonMenu);
-    buildingInfoButton->setScaleX(buildingInfoButton->getScaleX() * 1.2f);
-    buildingInfoButton->setScaleY(buildingInfoButton->getScaleY() * 22.0f / 18.0f * 1.2f);
-    infoButtonMenu->setPosition(ccp(265, 265));
+    infoButtonMenu->setPosition(ccp(330, 450));
     
     cardBG->addChild(costImage);
-    costImage->setScaleY(costImage->getScaleY() * 22.0f / 18.0f);
-    costImage->setPosition(ccp(12, 35));
+    costImage->setScale(costImage->getScale() * 1.5f);
+    costImage->setPosition(ccp(40, 120));
     
     cardBG->addChild(costLabel);
-    costLabel->setScaleX(costLabel->getScaleX() * 1.4f);
-    costLabel->setScaleY(costLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
-    costLabel->setPosition(ccp(55, 20));
+    costLabel->setPosition(ccp(70, 45));
     
     cardBG->addChild(populationImage);
-    populationImage->setScaleY(populationImage->getScaleY() * 22.0f / 18.0f);
-    populationImage->setPosition(ccp(110, 35));
+    populationImage->setScale(populationImage->getScale() * 1.5f);
+    populationImage->setPosition(ccp(160, 120));
     
     cardBG->addChild(populationLabel);
-    populationLabel->setScaleX(populationLabel->getScaleX() * 1.4f);
-    populationLabel->setScaleY(populationLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
-    populationLabel->setPosition(ccp(153, 20));
+    populationLabel->setPosition(ccp(190, 45));
     
     cardBG->addChild(buildingTimeImage);
-    buildingTimeImage->setScaleY(buildingTimeImage->getScaleY() * 22.0f / 18.0f * 0.8f);
-    buildingTimeImage->setScaleX(buildingTimeImage->getScaleX() * 0.8f);
-    buildingTimeImage->setPosition(ccp( 180, 34));
+    buildingTimeImage->setScale(buildingTimeImage->getScale() * 1.2f);
+    buildingTimeImage->setPosition(ccp(280, 120));
     
     cardBG->addChild(buildingTimeLabel);
-    buildingTimeLabel->setScaleX(buildingTimeLabel->getScaleX() * 1.4f);
-    buildingTimeLabel->setScaleY(buildingTimeLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
-    buildingTimeLabel->setPosition(ccp(223, 20));
+    buildingTimeLabel->setPosition(ccp(305, 45));
     
-    scrollArea->addItem(menu, ccp(100.0f + 200.0f * index, 82.0f));
-    scrollArea->addItem(mask, ccp(200.0f * index, 0.0f));
+    scrollArea->addItem(menu, ccp(100.0f + screenSize.width * 0.19f * index, 126));
+    scrollArea->addItem(mask, ccp(8.0f + screenSize.width * 0.19f * index, 0.0f));
 }
 
 void BuildingCard::refreshAllMenuItems()
@@ -535,7 +520,6 @@ void BuildingCard::tryToBuild(int tag)
 void BuildingCard::setOpacity(GLubyte opacity)
 {
     cardBG->setOpacity(opacity);
-    cardDetailBG->setOpacity(opacity);
     buildingNameLabel->setOpacity(opacity);
     buildingImage->setOpacity(opacity);
     buildingInfoButton->setOpacity(opacity);

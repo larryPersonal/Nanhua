@@ -186,6 +186,16 @@ public:
     bool stickHappiness;
     CCSprite* stickHappinessButton;
     CCSprite* resumeHappinessButton;
+    CCSprite* happinessIcon;
+    
+    int frameHeight;
+    int frameWidth;
+    
+    CCTexture2D* emotionTexture;
+    CCRect emotionRect;
+    
+    int xOffset;
+    int yOffset;
     
     bool startWar;
     CCSprite* peaceButton;

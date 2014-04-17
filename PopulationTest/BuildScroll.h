@@ -28,6 +28,7 @@ public:
     CCMenu* menu;
     
     CCSprite* buildMenu;
+    CCSprite* scrollerBar;
     
     int numberOfBuildingCards;
     

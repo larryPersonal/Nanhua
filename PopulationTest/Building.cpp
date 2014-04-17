@@ -410,6 +410,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             {
                 sp->setJob(DELIVERER);
                 sp->saySpeech(TRANSPORT_EMOTION, 20000);
+                sp->movementSpeed = sp->getPossessions()->default_movement_speed * 0.5f;
                 if(currentStorage <= sp->getPossessions()->default_food_carriage_limit)
                 {
                     sp->setFoodCarried(currentStorage);
@@ -432,11 +433,13 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                             gameS->setJobLocation(NULL);
                             gameS->setTargetLocation(NULL);
                             gameS->changeToCitizen();
+                            gameS->movementSpeed = gameS->getPossessions()->default_movement_speed;
                         }
                     }
                     memberSpriteList->removeAllObjects();
                     
                     this->isCurrentWorking = false;
+                    this->isCurrentHarvest = false;
                     
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
                     {
@@ -470,6 +473,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     sp->setJobLocation(NULL);
                     sp->setTargetLocation(NULL);
                     sp->changeToCitizen();
+                    sp->movementSpeed = sp->getPossessions()->default_movement_speed;
                 }
             }
         }
@@ -504,6 +508,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->setJobLocation(NULL);
                 sp->setTargetLocation(NULL);
                 sp->changeToCitizen();
+                sp->movementSpeed = sp->getPossessions()->default_movement_speed;
             }
         }
         else
@@ -531,6 +536,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->setJobLocation(NULL);
                 sp->setTargetLocation(NULL);
                 sp->changeToCitizen();
+                sp->movementSpeed = sp->getPossessions()->default_movement_speed;
             }
         }
     }
