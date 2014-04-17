@@ -1276,39 +1276,115 @@
   <tileoffset x="-64" y="64"/>
   <image source="guardtower anim.png" width="1024" height="1024"/>
   <tile id="0">
-      <properties>
-          <property name="anim_frames" value="14"/>
-          <property name="build_time" value="30"/>
-          <property name="build_uint_required" value="100"/>
-          <property name="builder_limit" value="3"/>
-          <property name="building_type" value="military"/>
-          <property name="cost" value="300"/>
-          <property name="description" value="Protect Your Town"/>
-          <property name="food_consumption_rate" value=""/>
-          <property name="jobs_available" value="1"/>
-          <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-          <property name="level_gain_cost" value="2:50, 4:50"/>
-          <property name="level_gain_population_limit" value="3:1, 5:1"/>
-          <property name="name" value="Guard Tower"/>
-          <property name="population_limit" value="0"/>
-          <property name="prereqs" value=""/>
-          <property name="recovery_rate" value="0"/>
-          <property name="req_building_count" value="15"/>
-          <property name="req_capita" value="0"/>
-          <property name="req_population" value="15"/>
-          <property name="research_cost" value="300"/>
-          <property name="storage" value="0"/>
-          <property name="storage_limit" value="0"/>
-          <property name="unlocked_at_start" value="yes"/>
-          <property name="upgrade_unit" value="0"/>
-          <property name="work_unit" value="0"/>
-          <property name="work_unit_required" value="0"/>
-      </properties>
+   <properties>
+    <property name="anim_frames" value="14"/>
+    <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="100"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="military"/>
+    <property name="cost" value="300"/>
+    <property name="description" value="Protect Your Town"/>
+    <property name="food_consumption_rate" value=""/>
+    <property name="jobs_available" value="1"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Guard Tower"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="0"/>
+    <property name="req_building_count" value="15"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="15"/>
+    <property name="research_cost" value="300"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value="0"/>
+    <property name="work_unit_required" value="0"/>
+   </properties>
   </tile>
   <tile id="1">
-      <properties>
-          <property name="ignore_this_blank" value=""/>
-      </properties>
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="160" name="river_anim_w_fish" tilewidth="1024" tileheight="1024">
+  <tileoffset x="-454" y="454"/>
+  <image source="river_anim_w_fish.png" width="4096" height="4096"/>
+  <tile id="0">
+   <properties>
+    <property name="anim_frames" value="14"/>
+    <property name="building_type" value="decoration"/>
+    <property name="name" value="river"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
   </tile>
  </tileset>
  <layer name="Ground_0" width="90" height="60">
@@ -1335,7 +1411,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1qEBACAMwLDdzP+CFzqDIdE9oDPdWbQAAPA7/wwAAJ1/BgCAzj8DAEDnnwEAoPPPAADQ+WcAAOj8M8A7FxEAA5E=
+   eJztzqERwDAAA7HsP4VHLSxroc8XiT75c77lpwMAAK+0BwAAYEjaAwAAMCTtAQAAGJL2AAAADEl7AAAAhqQ9AAAAQ9IeALjUA8GABQE=
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">
