@@ -37,6 +37,7 @@ public:
     void startWar();
     void stopWar();
     
+    void alertAttack();
 };
 
 #endif

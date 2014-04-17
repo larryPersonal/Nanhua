@@ -105,6 +105,12 @@ GameHUD::GameHUD()
     
     addStorageLabelArray = CCArray::create();
     addStorageLabelArray->retain();
+    
+    isAlerting = false;
+    isAlertingText = false;
+    alertFadeIn = false;
+    alertTextFadeIn = false;
+    alertCumulativeTime = 0;
 }
 
 GameHUD::~GameHUD()
@@ -486,6 +492,7 @@ void GameHUD::createInitialGUI(){
     createBuildMenu();
     createSystemMenu();
     createSoldierHelper();
+    createAlertSystem();
 }
 
 void GameHUD::setTapMode(int mode)
@@ -954,7 +961,6 @@ void GameHUD::createObjectiveMenu()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor3B colorGreen = ccc3(0, 255, 0);
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the objective group background
@@ -1238,23 +1244,101 @@ void GameHUD::createSystemMenu()
 
 void GameHUD::banditsAttack()
 {
-    if(startWar)
+    if(!isAlerting && !isAlertingText)
     {
-        startWar = false;
-        peaceButton->setVisible(false);
-        peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() - 500));
-        warButton->setVisible(true);
-        warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() + 500));
-        GameScene::getThis()->banditsAttackHandler->stopWar();
+        /*
+        if(startWar)
+        {
+            startWar = false;
+             peaceButton->setVisible(false);
+             peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() - 500));
+             warButton->setVisible(true);
+             warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() + 500));
+             GameScene::getThis()->banditsAttackHandler->stopWar();
+        }
+        else
+        {
+            startWar = true;
+        */
+            redMask->setOpacity((GLubyte) 0);
+            redMask->setVisible(true);
+            alertText->setScale(0);
+            alertText->setVisible(true);
+            isAlerting = true;
+            isAlertingText = true;
+            alertFadeIn = true;
+            alertTextFadeIn = true;
+            alertCumulativeTime = 0;
+            this->schedule(schedule_selector(GameHUD::alertBanditsAttackFade), 1.0f / 120.0f);
+            this->schedule(schedule_selector(GameHUD::alertBanditsAttackText), 1.0f / 120.0f);
+            /*
+             peaceButton->setVisible(true);
+             peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() + 500));
+             warButton->setVisible(false);
+             warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
+             GameScene::getThis()->banditsAttackHandler->startWar();
+             */
+        //}
+    }
+}
+
+void GameHUD::alertBanditsAttackFade(float dt)
+{
+    if(alertFadeIn)
+    {
+        float temp = (float) redMask->getOpacity();
+        temp += 5.0f;
+        if(temp >= 120.0f)
+        {
+            alertFadeIn = false;
+            temp = 120.0f;
+        }
+        redMask->setOpacity((GLubyte) temp);
     }
     else
     {
-        startWar = true;
-        peaceButton->setVisible(true);
-        peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() + 500));
-        warButton->setVisible(false);
-        warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
-        GameScene::getThis()->banditsAttackHandler->startWar();
+        float temp = (float) redMask->getOpacity();
+        temp -= 5.0f;
+        if(temp <= 0)
+        {
+            this->unschedule(schedule_selector(GameHUD::alertBanditsAttackFade));
+            temp = 0;
+            redMask->setVisible(false);
+            isAlerting = false;
+        }
+        redMask->setOpacity((GLubyte) temp);
+    }
+}
+
+void GameHUD::alertBanditsAttackText(float dt)
+{
+    if(alertTextFadeIn)
+    {
+        float scale = (float) alertText->getScale();
+        scale += 0.1f;
+        if(scale >= 1.0f)
+        {
+            alertTextFadeIn = false;
+            scale = 1.0f;
+        }
+        alertText->setScale(scale);
+    }
+    else if(alertCumulativeTime < 1)
+    {
+        alertCumulativeTime += dt;
+    }
+    else
+    {
+        float scale = (float) alertText->getScale();
+        scale -= 0.1f;
+        if(scale <= 0)
+        {
+            this->unschedule(schedule_selector(GameHUD::alertBanditsAttackText));
+            scale = 0;
+            alertText->setVisible(false);
+            isAlertingText = false;
+        }
+        alertText->setScale(scale);
     }
 }
 
@@ -1310,6 +1394,28 @@ void GameHUD::clickSystemButton()
    SystemMenu* sm = SystemMenu::create(this);
     sm->retain();
     pause = true;
+}
+
+void GameHUD::createAlertSystem()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    redMask = CCSprite::create("red.png");
+    redMask->cocos2d::CCNode::setScale(screenSize.width / redMask->boundingBox().size.width, screenSize.height / redMask->boundingBox().size.height);
+    redMask->setAnchorPoint(ccp(0.5f, 0.5f));
+    redMask->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    redMask->setOpacity((GLubyte) 60);
+    
+    this->addChild(redMask, 100);
+    
+    alertText = CCLabelTTF::create("Bandits Attack!", "Shojumaru-Regular", 48);
+    alertText->setAnchorPoint(ccp(0.5f, 0.5f));
+    alertText->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    
+    this->addChild(alertText, 101);
+    
+    redMask->setVisible(false);
+    alertText->setVisible(false);
 }
 
 void GameHUD::UpdateBuildButton()

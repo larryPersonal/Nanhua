@@ -241,7 +241,6 @@ public:
     void saySpeech(const char* text, float timeInSeconds);
     void saySpeech(SpeechMood s, float timeInSeconds);
     
-    
     /*movement*/
     bool Wander();
     void StopMoving();

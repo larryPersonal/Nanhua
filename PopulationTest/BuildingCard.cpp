@@ -125,7 +125,7 @@ void BuildingCard::init()
         ss << building->buildingCost;
         buildingcost = ss.str();
     }
-    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 12, CCSizeMake(buildingcost.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    costLabel = CCLabelTTF::create(buildingcost.c_str(), "Shojumaru-Regular", 12);
     costLabel->setColor(colorBlack);
     costLabel->setAnchorPoint(ccp(0, 1));
     
@@ -175,7 +175,7 @@ void BuildingCard::init()
     available_number_label->setPosition(ccp(270, 30));
     
     // population
-    populationImage = CCSprite::create("build-menu_worker-req.png");
+    populationImage = CCSprite::create("population_icon.png");
     populationImage->setScale(42.0f / populationImage->boundingBox().size.width);
     populationImage->setAnchorPoint(ccp(0, 1));
     
@@ -187,7 +187,7 @@ void BuildingCard::init()
         ss << building->populationLimit;
         populationLimit = ss.str();
     }
-    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 12, CCSizeMake(populationLimit.length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 12);
     populationLabel->setColor(colorBlack);
     populationLabel->setAnchorPoint(ccp(0, 1));
     
@@ -296,7 +296,8 @@ void BuildingCard::init()
     infoButtonMenu->setPosition(ccp(265, 265));
     
     cardBG->addChild(costImage);
-    costImage->setPosition(ccp(12, 30));
+    costImage->setScaleY(costImage->getScaleY() * 22.0f / 18.0f);
+    costImage->setPosition(ccp(12, 35));
     
     cardBG->addChild(costLabel);
     costLabel->setScaleX(costLabel->getScaleX() * 1.4f);
@@ -304,20 +305,23 @@ void BuildingCard::init()
     costLabel->setPosition(ccp(55, 20));
     
     cardBG->addChild(populationImage);
-    populationImage->setPosition(ccp(110, 30));
+    populationImage->setScaleY(populationImage->getScaleY() * 22.0f / 18.0f);
+    populationImage->setPosition(ccp(110, 35));
     
     cardBG->addChild(populationLabel);
     populationLabel->setScaleX(populationLabel->getScaleX() * 1.4f);
     populationLabel->setScaleY(populationLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
-    populationLabel->setPosition(ccp(60, 20));
+    populationLabel->setPosition(ccp(153, 20));
     
     cardBG->addChild(buildingTimeImage);
-    buildingTimeImage->setPosition(ccp( 170, 30));
+    buildingTimeImage->setScaleY(buildingTimeImage->getScaleY() * 22.0f / 18.0f * 0.8f);
+    buildingTimeImage->setScaleX(buildingTimeImage->getScaleX() * 0.8f);
+    buildingTimeImage->setPosition(ccp( 180, 34));
     
     cardBG->addChild(buildingTimeLabel);
     buildingTimeLabel->setScaleX(buildingTimeLabel->getScaleX() * 1.4f);
     buildingTimeLabel->setScaleY(buildingTimeLabel->getScaleY() * 22.0f / 18.0f * 1.4f);
-    populationLabel->setPosition(ccp(200, 20));
+    buildingTimeLabel->setPosition(ccp(223, 20));
     
     scrollArea->addItem(menu, ccp(100.0f + 200.0f * index, 82.0f));
     scrollArea->addItem(mask, ccp(200.0f * index, 0.0f));

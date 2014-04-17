@@ -22,6 +22,7 @@ enum SpeechMood
     GUARD_EMOTION,
     BUILDER_EMOTION,
     FARMER_EMOTION,
+    TRANSPORT_EMOTION,
     BATTLE,
     STUCK_FOOD,
     FIND_HOME,
@@ -42,6 +43,21 @@ class SpeechBubble:public cocos2d::CCNode
     
     float orig_sizeX;
     float node_sizeX;
+    
+public:
+    // this part is for the frame animation
+    int frameHeight;
+    int frameWidth;
+    
+    CCTexture2D* bubbleTexture;
+    CCRect bubbleRect;
+    int x_frameno;
+    int x_maxframeno;
+    int y_offset;
+    
+    float delay_animFrame;
+    float delay_curr;
+    
 public:
 
     SpeechBubble();
@@ -55,6 +71,8 @@ public:
     void hide();
     
     void rescale();
+    
+    void displayTransportBubble();
 };
 
 #endif /* defined(__PopulationTest__SpeechBubble__) */

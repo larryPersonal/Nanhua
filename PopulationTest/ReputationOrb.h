@@ -16,7 +16,7 @@ using namespace cocos2d;
 class ReputationOrb : public CCObject
 {
 public:
-   int frameHeight;
+    int frameHeight;
     int frameWidth;
     
     CCTexture2D *orbTexture;

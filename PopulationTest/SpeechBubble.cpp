@@ -14,6 +14,17 @@ SpeechBubble::SpeechBubble()
     contentNode = NULL;
     
     isHideScheduled = false;
+    
+    delay_animFrame = 0.1f;
+    delay_curr = 0.1f;
+    
+    frameHeight = 64;
+    frameWidth = 64;
+    
+    bubbleTexture = CCTextureCache::sharedTextureCache()->addImage("emotionicon_anima.png");
+    
+    x_frameno = 0;
+    x_maxframeno = 1;
 }
 
 void SpeechBubble::createSpeechBubble()
@@ -72,9 +83,20 @@ void SpeechBubble::rescale()
     background->setScaleX(node_sizeX * 1.5f /orig_sizeX);
     //background->setContentSize(((CCNode*)contentNode->getChildren()->objectAtIndex(0))->boundingBox().getWidth);
    
-   // float bbWidth = background->boundingBox().getMaxX() - background->boundingBox().getMinX();
+    // float bbWidth = background->boundingBox().getMaxX() - background->boundingBox().getMinX();
     
- //   contentNode->setPositionX(bbWidth * 0.5f);
+    // contentNode->setPositionX(bbWidth * 0.5f);
+}
+
+void SpeechBubble::displayTransportBubble()
+{
+    y_offset = 0;
     
+    x_frameno = 0;
+    x_maxframeno = 2;
     
+    bubbleRect = CCRectMake(0, y_offset * frameHeight,  frameWidth, frameHeight);
+    
+    CCSprite* bubbleSprite = CCSprite::createWithTexture(bubbleTexture, bubbleRect);
+    addContent(bubbleSprite, CCPointZero);
 }

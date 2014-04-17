@@ -124,7 +124,6 @@ void TutorialManager::unlockAll()
 void TutorialManager::setupForTutorial()
 {
     active = true;
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     GameHUD* hudlayer = GameHUD::create();
     GameScene::getThis()->setTouchEnabled(true);
@@ -149,27 +148,6 @@ void TutorialManager::setupForTutorial()
     GameScene::getThis()->spriteHandler->initialize();
     
     GameManager::getThis()->initGameData();
-    
-    /*
-    CCPoint location = CCPointMake(28, 36);
-    
-    GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
-    
-    location.x += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
-    
-    location.x += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
-    
-    location.y += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
-    
-    location.x -= 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
-    
-    this->target = CCPointMake(32,46);
-    this->target = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
-    */
     
     GameManager::getThis()->UpdateUnlocks();
     GameScene::getThis()->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);

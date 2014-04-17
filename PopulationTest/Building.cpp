@@ -409,6 +409,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             if(farmState == HARVEST)
             {
                 sp->setJob(DELIVERER);
+                sp->saySpeech(TRANSPORT_EMOTION, 20000);
                 if(currentStorage <= sp->getPossessions()->default_food_carriage_limit)
                 {
                     sp->setFoodCarried(currentStorage);

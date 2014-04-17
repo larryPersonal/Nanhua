@@ -1664,6 +1664,8 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     speechBubble->clearContent();
     
     CCSprite* label = NULL;
+    bool show = true;
+    
     switch (s)
     {
         case IDLING:
@@ -1701,6 +1703,11 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             label = CCSprite::create("idle1.png");
             
             break;
+        case TRANSPORT_EMOTION:
+            speechBubble->displayTransportBubble();
+            show = false;
+            
+            break;
         case STUCK_FOOD:
             label = CCSprite::create("stuck1.png");
             
@@ -1717,10 +1724,14 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             break;
             
     }
+    
     if (label == NULL) return;
-    speechBubble->addContent(label, CCPointZero );
-    //speechBubble->show(timeInSeconds);
-    speechBubble->show(200);
+    
+    if(show){
+        speechBubble->addContent(label, CCPointZero );
+    }
+    
+    speechBubble->show(timeInSeconds);
 }
 
 

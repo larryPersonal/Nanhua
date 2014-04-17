@@ -92,3 +92,8 @@ void BanditsAttackHandler::stopWar()
         }
     }
 }
+
+void BanditsAttackHandler::alertAttack()
+{
+    
+}

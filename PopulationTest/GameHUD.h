@@ -200,6 +200,15 @@ public:
     CCLabelTTF* enermyName;
     CCLabelTTF* stopActionLabel;
     
+    // alert system
+    CCSprite* redMask;
+    CCLabelTTF* alertText;
+    bool alertFadeIn;
+    bool alertTextFadeIn;
+    bool isAlerting;
+    bool isAlertingText;
+    float alertCumulativeTime;
+    
 public:
     
     GameHUD();
@@ -240,6 +249,8 @@ public:
     void createBuildMenu();
     void createSystemMenu();
     
+    void createAlertSystem();
+    
     void createSoldierHelper();
     void updateSoldierHelper(float dt);
     
@@ -254,6 +265,8 @@ public:
     void pauseGame();
     void stickGameHappiness();
     void banditsAttack();
+    void alertBanditsAttackFade(float);
+    void alertBanditsAttackText(float);
     
     void addPopulation();
     
