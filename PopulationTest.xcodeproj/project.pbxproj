@@ -485,6 +485,9 @@
 		8414CF2618FFC5EB0052CA91 /* buildmenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2318FFC5EB0052CA91 /* buildmenu.png */; };
 		8414CF2718FFC5EB0052CA91 /* scrollermiddle_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2418FFC5EB0052CA91 /* scrollermiddle_b.png */; };
 		8414CF2A18FFC6240052CA91 /* scroller_side.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2918FFC6240052CA91 /* scroller_side.png */; };
+		8414CF2C18FFEAD40052CA91 /* river_anim_w_fish.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2B18FFEAD40052CA91 /* river_anim_w_fish.png */; };
+		8414CF2E18FFEB250052CA91 /* guardtower anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2D18FFEB250052CA91 /* guardtower anim.png */; };
+		8414CF3018FFEB5B0052CA91 /* greatwall-256x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8414CF2F18FFEB5B0052CA91 /* greatwall-256x512.png */; };
 		841845211884DF9000895275 /* job.png in Resources */ = {isa = PBXBuildFile; fileRef = 8418451F1884DF9000895275 /* job.png */; };
 		841845221884DF9000895275 /* construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 841845201884DF9000895275 /* construction.png */; };
 		841845241884FC5A00895275 /* dismiss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841845231884FC5A00895275 /* dismiss.jpg */; };
@@ -1462,6 +1465,9 @@
 		8414CF2318FFC5EB0052CA91 /* buildmenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buildmenu.png; sourceTree = "<group>"; };
 		8414CF2418FFC5EB0052CA91 /* scrollermiddle_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrollermiddle_b.png; sourceTree = "<group>"; };
 		8414CF2918FFC6240052CA91 /* scroller_side.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scroller_side.png; sourceTree = "<group>"; };
+		8414CF2B18FFEAD40052CA91 /* river_anim_w_fish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = river_anim_w_fish.png; sourceTree = "<group>"; };
+		8414CF2D18FFEB250052CA91 /* guardtower anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guardtower anim.png"; sourceTree = "<group>"; };
+		8414CF2F18FFEB5B0052CA91 /* greatwall-256x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greatwall-256x512.png"; sourceTree = "<group>"; };
 		8418451F1884DF9000895275 /* job.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = job.png; sourceTree = "<group>"; };
 		841845201884DF9000895275 /* construction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = construction.png; sourceTree = "<group>"; };
 		841845231884FC5A00895275 /* dismiss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dismiss.jpg; sourceTree = "<group>"; };
@@ -3127,6 +3133,9 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				8414CF2F18FFEB5B0052CA91 /* greatwall-256x512.png */,
+				8414CF2D18FFEB250052CA91 /* guardtower anim.png */,
+				8414CF2B18FFEAD40052CA91 /* river_anim_w_fish.png */,
 				8414CF2918FFC6240052CA91 /* scroller_side.png */,
 				8414CF2318FFC5EB0052CA91 /* buildmenu.png */,
 				8414CF2418FFC5EB0052CA91 /* scrollermiddle_b.png */,
@@ -3980,6 +3989,7 @@
 				3617293917AA6C9900D2558E /* arrow-left2.png in Resources */,
 				3658DD8918D6FCD40056B895 /* MaleYoungVillager.plist in Resources */,
 				3617293A17AA6C9900D2558E /* arrow-right2.png in Resources */,
+				8414CF2E18FFEB250052CA91 /* guardtower anim.png in Resources */,
 				36AC556A18D6981900C165F5 /* population_amount.png in Resources */,
 				84589CE21896655500AA9E1C /* conversation_textbox_empty_right.png in Resources */,
 				3658DD7818D6F1430056B895 /* MaleYoungVillager.png in Resources */,
@@ -4080,12 +4090,14 @@
 				3604971017AB96BC00CACE25 /* jobbutton_pressed.png in Resources */,
 				84F2912518FE36770045F834 /* population_amount1.png in Resources */,
 				84CFAEE018E034E900A81C94 /* timeclockyellow.png in Resources */,
+				8414CF2C18FFEAD40052CA91 /* river_anim_w_fish.png in Resources */,
 				8444E4E918D6DCAD00BD5F63 /* schedule.png in Resources */,
 				3658DD7F18D6F1430056B895 /* char1MMC.png in Resources */,
 				843E973218DAEB2F00DBB48D /* studentboy_c.png in Resources */,
 				8421157818D2C4DD00A441D0 /* info_btn.png in Resources */,
 				843E972D18DA94F100DBB48D /* Soldier_port.png in Resources */,
 				8410543A18E90DA7003D88C6 /* unhappy1.png in Resources */,
+				8414CF3018FFEB5B0052CA91 /* greatwall-256x512.png in Resources */,
 				8412CA5618AC8D4A00AF4645 /* main-menu-resource-icons_info.png in Resources */,
 				8410544118E90DA7003D88C6 /* hungry.png in Resources */,
 				3604971117AB96BC00CACE25 /* jobbutton.png in Resources */,

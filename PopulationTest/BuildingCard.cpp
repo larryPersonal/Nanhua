@@ -276,7 +276,7 @@ void BuildingCard::init()
         }
         else
         {
-            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 70));
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width - 20, cardBG->boundingBox().size.height + 0));
         }
     }
     else
