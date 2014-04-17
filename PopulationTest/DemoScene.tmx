@@ -1274,7 +1274,7 @@
  </tileset>
  <tileset firstgid="144" name="guardtower-anim" tilewidth="256" tileheight="256">
   <tileoffset x="-64" y="64"/>
-  <image source="guardtower-anim.png" width="1024" height="1024"/>
+  <image source="guardtower anim.png" width="1024" height="1024"/>
   <tile id="0">
       <properties>
           <property name="anim_frames" value="14"/>
