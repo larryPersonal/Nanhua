@@ -119,14 +119,14 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == AMENITY)
         {
-            if (!nameExists(tempBuilding->buildingName))
-            {
+           // if (!nameExists(tempBuilding->buildingName))
+           // {
                 
                 
                 bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
                 numberOfBuildingCards++;
                 buildingCards->addObject(bc);
-            }
+          //  }
         }
     }
     

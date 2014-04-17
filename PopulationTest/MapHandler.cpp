@@ -389,10 +389,14 @@ bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos, bool obey_playarea)
     }
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
     if (targetTile == NULL) return false;
+    
+    if (obey_playarea)
+    {
     if (targetTile->hasBuilding() || targetTile->isPath)
     {
         CCLog("Target tile isOccupied or isPath");
         return false;
+    }
     }
     
     return true;
@@ -481,6 +485,11 @@ void MapHandler::Populate(CCArray* layers)
                 if (!targetBuilding) continue;
                 if (targetBuilding->buildingType != BUILDINGCATEGORYMAX)
                 {
+                    
+                    if (targetBuilding->buildingType == HOUSING)
+                    {
+                        targetBuilding = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(targetBuilding->buildingName);
+                    }                    
                     
                     Build(tgtPoint, targetBuilding, true);
                 }
@@ -656,7 +665,9 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
     }
     
     /*Note: do NOT use the pointer directly! The pointer points to the main instance of the building. */
+    
     Building* cloneBuilding = (Building*) building->copy();
+    
     if (cloneBuilding->buildingType == BUILDINGCATEGORYMAX)
     {
         return false;
@@ -733,6 +744,9 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
     {
         //GameHUD::getThis()->buyBuilding(cloneBuilding->buildingCost);
         //GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
+        
+        
+        
         GameScene::getThis()->constructionHandler->addConstructingBuilding(cloneBuilding);
     }
     

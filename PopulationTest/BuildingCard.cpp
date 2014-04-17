@@ -468,9 +468,13 @@ void BuildingCard::tryToBuild(int tag)
             // alert player that the number of buildings has reached the limitation.
             return;
         }
+        //buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
+        
+        
     }
     else if(type == GRANARY)
     {
+       
         if(TutorialManager::getThis()->teachBuildHouse)
         {
             return;
@@ -482,6 +486,8 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == AMENITY)
     {
+       // buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
+        
         if(TutorialManager::getThis()->teachBuildHouse)
         {
             return;

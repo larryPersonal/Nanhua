@@ -393,6 +393,8 @@
 		36C16E4F18D0049000C307DB /* YoungGirl_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4518D0049000C307DB /* YoungGirl_port.png */; };
 		36C38C7C176ED60B00CE0F8D /* tutorial.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36C38C7B176ED60B00CE0F8D /* tutorial.txt */; };
 		36C3A80518F77E7200C93E6B /* tokenanim.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80418F77E7200C93E6B /* tokenanim.png */; };
+		36C3A80718F7E16300C93E6B /* GIL_____.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80618F7DE9100C93E6B /* GIL_____.TTF */; };
+		36C3A80B18F8000700C93E6B /* toony_loons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80A18F7FF8F00C93E6B /* toony_loons.ttf */; };
 		36D551F6173788E500C20BBD /* JobCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D551F4173788E500C20BBD /* JobCollection.cpp */; };
 		36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A6F17BB3F1D00C41D54 /* FMW_port.png */; };
 		36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87CEC18C5BA1D00FE8B31 /* bandit_c.png */; };
@@ -519,8 +521,6 @@
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
 		843B18D818F2910600C00490 /* housedetailred.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D718F2910600C00490 /* housedetailred.png */; };
 		843B18DA18F2A4FA00C00490 /* infor display ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D918F2A4FA00C00490 /* infor display ui.png */; };
-		843BE2AD18F7DA1400682E5B /* toony_loons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AB18F7DA1400682E5B /* toony_loons.ttf */; };
-		843BE2AE18F7DA1400682E5B /* TEMPSITC.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AC18F7DA1400682E5B /* TEMPSITC.ttf */; };
 		843BE2B018F7EB2600682E5B /* tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AF18F7EB2600682E5B /* tutorial.xml */; };
 		843BE2B218F7F1BA00682E5B /* speechdialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2B118F7F1BA00682E5B /* speechdialog.png */; };
 		843E972818DA94F100DBB48D /* FemaleBandit_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E972218DA94F100DBB48D /* FemaleBandit_port.png */; };
@@ -1353,6 +1353,8 @@
 		36C38C7B176ED60B00CE0F8D /* tutorial.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tutorial.txt; sourceTree = "<group>"; };
 		36C38C7D176EE71F00CE0F8D /* BanditCFG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BanditCFG.h; sourceTree = "<group>"; };
 		36C3A80418F77E7200C93E6B /* tokenanim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenanim.png; sourceTree = "<group>"; };
+		36C3A80618F7DE9100C93E6B /* GIL_____.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GIL_____.TTF"; sourceTree = "<group>"; };
+		36C3A80A18F7FF8F00C93E6B /* toony_loons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = toony_loons.ttf; sourceTree = "<group>"; };
 		36D551F4173788E500C20BBD /* JobCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JobCollection.cpp; sourceTree = "<group>"; };
 		36D551F5173788E500C20BBD /* JobCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobCollection.h; sourceTree = "<group>"; };
 		36D551F717378A5100C20BBD /* luafunctions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = luafunctions.txt; sourceTree = "<group>"; };
@@ -1515,8 +1517,6 @@
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
 		843B18D718F2910600C00490 /* housedetailred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = housedetailred.png; sourceTree = "<group>"; };
 		843B18D918F2A4FA00C00490 /* infor display ui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infor display ui.png"; sourceTree = "<group>"; };
-		843BE2AB18F7DA1400682E5B /* toony_loons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = toony_loons.ttf; sourceTree = "<group>"; };
-		843BE2AC18F7DA1400682E5B /* TEMPSITC.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TEMPSITC.ttf; sourceTree = "<group>"; };
 		843BE2AF18F7EB2600682E5B /* tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial.xml; sourceTree = "<group>"; };
 		843BE2B118F7F1BA00682E5B /* speechdialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speechdialog.png; sourceTree = "<group>"; };
 		843E972218DA94F100DBB48D /* FemaleBandit_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FemaleBandit_port.png; sourceTree = "<group>"; };
@@ -3640,8 +3640,8 @@
 		B497C35017264A9500993475 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				843BE2AB18F7DA1400682E5B /* toony_loons.ttf */,
-				843BE2AC18F7DA1400682E5B /* TEMPSITC.ttf */,
+				36C3A80A18F7FF8F00C93E6B /* toony_loons.ttf */,
+				36C3A80618F7DE9100C93E6B /* GIL_____.TTF */,
 				84CFAEE518E04A7300A81C94 /* BRITANIC.TTF */,
 				36AC553A18D690C200C165F5 /* Shojumaru-Regular.ttf */,
 			);
@@ -3851,6 +3851,7 @@
 				367613E81712AEF400CD354B /* json_internalarray.inl in Resources */,
 				8410546118E94ECB003D88C6 /* PauseMenu.png in Resources */,
 				36C16E4A18D0049000C307DB /* FemaleFarmer_port.png in Resources */,
+				36C3A80718F7E16300C93E6B /* GIL_____.TTF in Resources */,
 				367613E91712AEF400CD354B /* json_internalmap.inl in Resources */,
 				8412CA5B18AC8D4A00AF4645 /* objective-menu-button_06.png in Resources */,
 				845A9EDF18F7CAC50074EF77 /* tutorial2.xml in Resources */,
@@ -3965,7 +3966,6 @@
 				3658DD8918D6FCD40056B895 /* MaleYoungVillager.plist in Resources */,
 				3617293A17AA6C9900D2558E /* arrow-right2.png in Resources */,
 				36AC556A18D6981900C165F5 /* population_amount.png in Resources */,
-				843BE2AD18F7DA1400682E5B /* toony_loons.ttf in Resources */,
 				84589CE21896655500AA9E1C /* conversation_textbox_empty_right.png in Resources */,
 				3658DD7818D6F1430056B895 /* MaleYoungVillager.png in Resources */,
 				84509B7D18879C2900EF8BD8 /* cancel.png in Resources */,
@@ -4012,6 +4012,7 @@
 				84360A3318B21FED002EC8C2 /* workers_menu_unselectedBG.png in Resources */,
 				8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */,
 				8410543718E90DA7003D88C6 /* tired2.png in Resources */,
+				36C3A80B18F8000700C93E6B /* toony_loons.ttf in Resources */,
 				8410543818E90DA7003D88C6 /* tired3.png in Resources */,
 				360496F917AB5EF100CACE25 /* buildbox.png in Resources */,
 				360496FB17AB604E00CACE25 /* board.png in Resources */,
@@ -4031,7 +4032,6 @@
 				3604970617AB942700CACE25 /* arrow-down.png in Resources */,
 				3604970717AB942700CACE25 /* arrow-down2.png in Resources */,
 				8412CA6018AC8D4A00AF4645 /* time-indicator-week-1.png in Resources */,
-				843BE2AE18F7DA1400682E5B /* TEMPSITC.ttf in Resources */,
 				36D87D1A18C729F000FE8B31 /* main-menu-bg.png in Resources */,
 				36C16E4F18D0049000C307DB /* YoungGirl_port.png in Resources */,
 				843E973A18DB18FE00DBB48D /* Closebtn_Circle.png in Resources */,
@@ -4521,8 +4521,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4556,7 +4556,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -4569,8 +4569,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PopUlationTest/Prefix.pch;
@@ -4603,7 +4603,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

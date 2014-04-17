@@ -938,3 +938,25 @@ int BuildingHandler::getHighestBuildingID()
     
     return ((Building*)allBuildingsOnMap->objectAtIndex(allBuildingsOnMap->count() -1))->ID;
 }
+
+Building* BuildingHandler::getRandomBuildingWithName(std::string name)
+{
+    if (!allBuildings) return NULL;
+    if (allBuildings->count() == 0) return NULL;
+    
+    std::vector<Building*> foundBuildings; //this should deallocate the moment I exit this function
+    Building* currBuilding = NULL;
+    for (int i = 0; i < allBuildings->count(); ++i)
+    {
+        currBuilding = (Building*)allBuildings->objectAtIndex(i);
+        std::string bname = currBuilding->buildingName;
+        CCLog("%s %s", name.c_str(), bname.c_str());
+        if (bname.find(name) != std::string::npos) foundBuildings.push_back(currBuilding);
+    }
+   
+    if (foundBuildings.size() == 0) return NULL;
+    
+    int targetIdx = rand() % foundBuildings.size();
+    
+    return foundBuildings[targetIdx];
+}
