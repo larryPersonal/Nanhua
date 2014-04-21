@@ -745,7 +745,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "459"
             endingLineNumber = "459"
-            landmarkName = "GameHUD::onSpriteAddedToMap(GameSprite* sprite)"
+            landmarkName = "GameHUD::update(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1801,7 +1801,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "179"
             endingLineNumber = "179"
-            landmarkName = "GameHUD::update(float deltaTime)"
+            landmarkName = "GameHUD::setAllStats()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3516,9 +3516,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "997"
-            endingLineNumber = "997"
-            landmarkName = "GameHUD::clickObjectiveButton()"
-            landmarkType = "5">
+            endingLineNumber = "997">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3533,7 +3531,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "976"
             endingLineNumber = "976"
-            landmarkName = "GameHUD::fadeOut(float dt)"
+            landmarkName = "GameHUD::scrollOut(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3549,7 +3547,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
             endingLineNumber = "983"
-            landmarkName = "GameHUD::fadeOut(float dt)"
+            landmarkName = "GameHUD::scrollOut(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3565,7 +3563,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "987"
             endingLineNumber = "987"
-            landmarkName = "GameHUD::fadeOut(float dt)"
+            landmarkName = "GameHUD::scrollOut(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3615,6 +3613,29 @@
             endingLineNumber = "490"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/BuilderCFG.h"
+            timestampString = "419758945.881922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.AddressBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "*0xbfffd388">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
