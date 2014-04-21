@@ -12,6 +12,7 @@
 #include "GameScene.h"
 #include "GameManager.h"
 #include "Senario.h"
+#include "FloatingArraw.h"
 
 TutorialManager* TutorialManager::SP;
 
@@ -156,6 +157,8 @@ void TutorialManager::setupForTutorial()
     GameHUD::getThis()->pause = true;
     //this->schedule(schedule_selector( TutorialManager::moveCamera ), 1.0f / 120.0f);
     setupMiniDragon();
+    
+    FloatingArraw* fa = new FloatingArraw();
 }
 
 void TutorialManager::addVillagers(int num)

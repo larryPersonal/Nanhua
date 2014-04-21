@@ -122,13 +122,12 @@ void ReputationOrb::update(float dt)
     }
     else
     {
-       if (delay_curr > 0)
-       {
-           delay_curr -= dt;
-       }
+        if (delay_curr > 0)
+        {
+            delay_curr -= dt;
+        }
         else
         {
-            
             ++x_frameno;
             if (x_frameno >= x_maxframeno)
             {

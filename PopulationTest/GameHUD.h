@@ -222,6 +222,13 @@ public:
     bool isAlertingText;
     float alertCumulativeTime;
     
+    // event notification system;
+    CCArray* eventLabels;
+    int numberOfEventsToDisplay;
+    bool slideUp;
+    bool slideIn;
+    bool slideOut;
+    
 public:
     
     GameHUD();
@@ -333,6 +340,8 @@ public:
     void scheduleHideNewObjectiveNotification();
     void showNewObjectiveNotification(float);
     void hideNewObjectiveNotification(float);
+    
+    void addNewNotification(std::string);
 };
 
 #endif

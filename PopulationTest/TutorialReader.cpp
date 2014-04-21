@@ -192,6 +192,42 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->hideBubble = true;
             }
+            else if(str.find("<showArrow>") != std::string::npos)
+            {
+                slide->showArrow = true;
+            }
+            else if(str.find("<hideArrow>") != std::string::npos)
+            {
+                slide->hideArrow = true;
+            }
+            else if(str.find("<arrowX>") != std::string::npos)
+            {
+                start_pos = str.find("<arrowX>");
+                end_pos = str.find("</arrowX>");
+                content = str.substr(start_pos + 8, end_pos - start_pos - 8);
+                slide->arrowX = ::atof(content.c_str());
+            }
+            else if(str.find("<arrowY>") != std::string::npos)
+            {
+                start_pos = str.find("<arrowY>");
+                end_pos = str.find("</arrowY>");
+                content = str.substr(start_pos + 8, end_pos - start_pos - 8);
+                slide->arrowY = ::atof(content.c_str());
+            }
+            else if(str.find("<arrowAngle>") != std::string::npos)
+            {
+                start_pos = str.find("<arrowAngle>");
+                end_pos = str.find("</arrowAngle>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->arrowAngle = ::atof(content.c_str());
+            }
+            else if(str.find("<arrowScale>") != std::string::npos)
+            {
+                start_pos = str.find("<arrowScale>");
+                end_pos = str.find("</arrowScale>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->arrowScale = ::atof(content.c_str());
+            }
             else if(str.find("<lock>") != std::string::npos)
             {
                 inLock = true;

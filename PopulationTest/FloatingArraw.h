@@ -15,6 +15,8 @@ using namespace cocos2d;
 class FloatingArraw
 {
 public:
+    static FloatingArraw* SP;
+    
     CCSprite* arrow;
     
     // this part is for the frame animation
@@ -34,7 +36,12 @@ public:
     FloatingArraw();
     ~FloatingArraw();
     
+    static FloatingArraw* getThis();
+    
     void update(float);
+    
+    void showArrow(CCPoint, float, float);
+    void hideArrow();
 };
 
 #endif

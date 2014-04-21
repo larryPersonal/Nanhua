@@ -25,50 +25,79 @@
         <fade_out>160</fade_out>
         <highlight>special</highlight>
         <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>0</arrowX>
+        <arrowY>0</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Now, please let me introduce the house to you.</speech>
         <cameraMove>6272,2048</cameraMove>
         <clickToNext></clickToNext>
         <deHighlight></deHighlight>
+        <hideArrow></hideArrow>
     </slide>
     <slide>
         <speech>This is the houses of the village. Houses are home of villagers. Villagers cannot work without home and they will become unhappy until leave the village.</speech>
         <highlight>housing</highlight>
         <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>0</arrowX>
+        <arrowY>50</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Now, please let me introduce the farm to you.</speech>
         <cameraMove>6400,1984</cameraMove>
         <clickToNext></clickToNext>
         <deHighlight></deHighlight>
+        <hideArrow></hideArrow>
     </slide>
     <slide>
         <speech>This is the farm of the village. Farm are places to produce food. Villagers must eat food periodically to sustain their life in the village and maintain their happiness.</speech>
         <highlight>amenity</highlight>
         <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>0</arrowX>
+        <arrowY>50</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Now, please let me introduce the granary to you.</speech>
         <cameraMove>6464,2144</cameraMove>
         <clickToNext></clickToNext>
         <deHighlight></deHighlight>
+        <hideArrow></hideArrow>
     </slide>
     <slide>
         <speech>This is the granary of the village. Granaries are places to store food. Food produced from farm need to be stored inside the granary, otherwise the food will be wasted.</speech>
         <highlight>granary</highlight>
         <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>0</arrowX>
+        <arrowY>50</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Now, please let me introduce the guard tower to you.</speech>
         <cameraMove>6592,1888</cameraMove>
         <clickToNext></clickToNext>
         <deHighlight></deHighlight>
+        <hideArrow></hideArrow>
     </slide>
     <slide>
         <speech>This is the guard tower of the village. Guard towers are places to train villages to soldiers. In the bandits attack event, bandits will steal gold and food from you village, soldiers will help to defend the bandits during the attack.</speech>
         <highlight>military</highlight>
         <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>0</arrowX>
+        <arrowY>50</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     
     <slide>
@@ -76,6 +105,7 @@
         <cameraMove>6016,2176</cameraMove>
         <deHighlight></deHighlight>
         <clickToNext></clickToNext>
+        <hideArrow></hideArrow>
     </slide>
     <slide>
         <speech>Click build button to open the build scroll.</speech>
@@ -86,6 +116,11 @@
         <lock>
             <teachBuildRoad></teachBuildRoad>
         </lock>
+        <showArrow></showArrow>
+        <arrowX>300</arrowX>
+        <arrowY>-250</arrowY>
+        <arrowAngle>320</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Click the build path to launch the path building mode.</speech>
@@ -94,10 +129,16 @@
         <lock>
             <buildButton></buildButton>
         </lock>
+        <showArrow></showArrow>
+        <arrowX>-200</arrowX>
+        <arrowY>-100</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Now try to build some path in the village by click on the ground.</speech>
         <clickToNext></clickToNext>
+        <hideArrow></hideArrow>
     </slide>
     <slide>
         <speech>After you done, click the cancel buildButton.</speech>
@@ -110,6 +151,11 @@
         <lock>
             <teachBuildButton></teachBuildButton>
         </lock>
+        <showArrow></showArrow>
+        <arrowX>200</arrowX>
+        <arrowY>-150</arrowY>
+        <arrowAngle>300</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Now, I will indroduce you how to build a house. In tutorial, I will increase the speed of building and working with my power. Click the house button in the build scroll.</speech>
@@ -122,6 +168,11 @@
         <unlock>
             <pause></pause>
         </unlock>
+        <showArrow></showArrow>
+        <arrowX>0</arrowX>
+        <arrowY>0</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
     </slide>
     <slide>
         <speech>Tap on any empty plot of land! Red preview means cannot build there.</speech>

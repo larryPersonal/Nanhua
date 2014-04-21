@@ -17,6 +17,7 @@
 #include "Objective.h"
 #include "SystemMenu.h"
 #include "TutorialManager.h"
+#include "NotificationString.h"
 
 GameHUD* GameHUD::SP;
 
@@ -121,6 +122,15 @@ GameHUD::GameHUD()
     emotionTexture = CCTextureCache::sharedTextureCache()->addImage("Happinessicon.png");
     
     showObjectiveNotification = false;
+    
+    eventLabels = CCArray::create();
+    eventLabels->retain();
+    
+    numberOfEventsToDisplay = 8;
+    
+    slideIn = false;
+    slideUp = false;
+    slideOut = false;
 }
 
 GameHUD::~GameHUD()
@@ -140,6 +150,9 @@ GameHUD::~GameHUD()
     
     addFoodLabelArray->removeAllObjects();
     CC_SAFE_RELEASE(addFoodLabelArray);
+    
+    eventLabels->removeAllObjects();
+    CC_SAFE_RELEASE(eventLabels);
     
     GameHUD::SP = NULL;
 }
@@ -188,7 +201,6 @@ void GameHUD::setAllStats()
 
 void GameHUD::update(float deltaTime)
 {
-    
     if(!pause)
     {
         // update date
@@ -427,9 +439,13 @@ void GameHUD::update(float deltaTime)
                 break;
 
         }
-        tapModeLabel->setString(ss.str().c_str());
+        
+        if(GameScene::getThis()->systemConfig->debugMode)
+        {
+            tapModeLabel->setString(ss.str().c_str());
+        }
+        
         UpdateBuildButton();
-
     }
     
     // for food and storage change!
@@ -533,6 +549,48 @@ void GameHUD::update(float deltaTime)
     this->removeChild(happinessIcon);
     happinessIcon = tempIcon;
     this->addChild(happinessIcon, 5);
+    bool tmp = false;
+    
+    for(int i = 0; i < eventLabels->count(); i++)
+    {
+        NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
+        
+        if(slideUp)
+        {
+            float height = 0;
+            for(int j = 0; j < i; j++)
+            {
+                NotificationString* tempNS = (NotificationString*) eventLabels->objectAtIndex(j);
+                height += tempNS->notificationLabel->getPositionY();
+            }
+            
+            if(ns->notificationLabel->getPositionY() >= screenSize.height - ns->borderY - height)
+            {
+                ns->notificationLabel->setPositionY(screenSize.height - ns->borderY - height);
+            }
+            else
+            {
+                ns->slideUp(deltaTime);
+                tmp = true;
+            }
+        }
+        
+        if(i == eventLabels->count() - 1)
+        {
+            if(ns->notificationLabel->getPositionX() > screenSize.width && slideIn)
+            {
+                ns->slideIn(deltaTime);
+            }
+        }
+        else if(i == 0)
+        {
+            if(ns->notificationLabel->getPositionX() < screenSize.width + ns->borderX && slideOut)
+            {
+                ns->slideOut(deltaTime);
+            }
+        }
+    }
+    slideUp = tmp;
 }
 
 void GameHUD::createInitialGUI(){
@@ -2343,5 +2401,25 @@ void GameHUD::addStorage(float dt)
     {
         isAddingStorage = false;
         this->unschedule(schedule_selector(GameHUD::addStorage));
+    }
+}
+
+void GameHUD::addNewNotification(std::string notificationStr)
+{
+    float height = 0;
+    for (int i = 0; i < eventLabels->count(); i++)
+    {
+        NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
+        height += ns->notificationLabel->boundingBox().size.height;
+    }
+    
+    NotificationString* ns = NotificationString::create("This is a test notification!", height);
+    ns->scheduleSlideIn();
+    eventLabels->addObject(ns);
+    
+    slideIn = true;
+    if(eventLabels->count() > numberOfEventsToDisplay)
+    {
+        slideOut = true;
     }
 }

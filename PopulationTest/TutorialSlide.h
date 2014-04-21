@@ -44,6 +44,14 @@ public:
     bool unlockAll;
     bool hideBubble;
     
+    bool showArrow;
+    bool hideArrow;
+    
+    float arrowX;
+    float arrowY;
+    float arrowAngle;
+    float arrowScale;
+    
 public:
     TutorialSlide();
     ~TutorialSlide();
