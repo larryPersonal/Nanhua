@@ -34,8 +34,6 @@ public:
     FloatingArraw();
     ~FloatingArraw();
     
-    static FloatingArraw* create();
-    
     void update(float);
 };
 

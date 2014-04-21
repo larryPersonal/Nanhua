@@ -8,23 +8,10 @@
 
 #include "FloatingArraw.h"
 
-FloatingArraw* FloatingArraw::create()
-{
-    FloatingArraw *pRet = new FloatingArraw();
-    if (pRet)
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-        return NULL;
-    }
-}
-
 FloatingArraw::FloatingArraw()
 {
+    //CCSize screenSize = CCDirector
+    /*
     delay_animFrame = 0.1f;
     delay_curr = 0.1f;
     
@@ -44,18 +31,13 @@ FloatingArraw::FloatingArraw()
     y_offset = x_frameno / 4.0f;
     x_offset = x_frameno % 4.0f;
     
-    orbRect = CCRectMake(0, y_offset * frameHeight,  frameWidth, frameHeight);
+    arrowRect = CCRectMake(x_offset * frameWidth, y_offset * frameHeight,  frameWidth, frameHeight);
     
     //set the thing to the first frame.
-    orbSprite = CCSprite::createWithTexture(orbTexture, orbRect);
+    arrow = CCSprite::createWithTexture(arrowTexture, arrowRect);
+    arrow->setAnchorPoint(ccp(0.5, 0.5));
+    */
     
-    
-    targetOpacity = 0;
-    fadeSpeed = 5;
-    cumulativeTime = 0;
-    triggerTime = tTime;
-    disappear = false;
-    stopAnimation = false;
 }
 
 FloatingArraw::~FloatingArraw()
@@ -63,8 +45,9 @@ FloatingArraw::~FloatingArraw()
     
 }
 
-void FloatingArraw::displayArraw(float dt)
+void FloatingArraw::update(float dt)
 {
+    /*
     y_offset = 0;
     
     x_frameno = 0;
@@ -73,4 +56,5 @@ void FloatingArraw::displayArraw(float dt)
     arrowRect = CCRectMake(0, y_offset * frameHeight,  frameWidth, frameHeight);
     
     CCSprite* arrowSprite = CCSprite::createWithTexture(arrowTexture, arrowRect);
+    */
 }
