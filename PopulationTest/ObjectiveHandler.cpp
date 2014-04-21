@@ -62,7 +62,7 @@ void ObjectiveHandler::loadObjective()
     objectives->removeAllObjects();
     objectives->release();
     
-    objectives = ObjectiveManager::parseXMLFile("objective.xml");
+    objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
 }
 
 void ObjectiveHandler::playObjective()
@@ -95,6 +95,7 @@ void ObjectiveHandler::playObjective()
             Objective* temp = (Objective*) objectives->objectAtIndex(i);
             if(temp->oid == nextID)
             {
+                CCLog("nextID: %d", nextID);
                 obj = temp;
             }
         }
@@ -166,6 +167,8 @@ void ObjectiveHandler::playObjective()
     GameHUD::getThis()->objectiveDescription->setString(ss1.str().c_str());
     GameHUD::getThis()->objectiveProgress->setString(ss2.str().c_str());
     nextID = obj->nid;
+    
+    GameHUD::getThis()->scheduleShowNewObjectiveNotification();
 }
 
 void ObjectiveHandler::update(float dt)
@@ -178,6 +181,7 @@ void ObjectiveHandler::update(float dt)
     stringstream ss;
     
     bool hasUpdate = false;
+    bool completeObjective = false;
     
     if(obj->oType == GoldGoal)
     {
@@ -187,6 +191,15 @@ void ObjectiveHandler::update(float dt)
             ss << "(" << progressNumber << "/" << obj->value << ")";
             hasUpdate = true;
         }
+        else
+        {
+            progressNumber = GameHUD::getThis()->money;
+        }
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
+        }
     }
     else if(obj->oType == FoodGoal)
     {
@@ -195,6 +208,15 @@ void ObjectiveHandler::update(float dt)
             progressNumber = ::atoi(GameHUD::getThis()->foodLabel->getString());
             ss << "(" << progressNumber << "/" << obj->value << ")";
             hasUpdate = true;
+        }
+        else
+        {
+            progressNumber = ::atoi(GameHUD::getThis()->foodLabel->getString());
+        }
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
         }
     }
     else if(obj->oType == PopulationGoal)
@@ -209,11 +231,21 @@ void ObjectiveHandler::update(float dt)
                 num++;
             }
         }
+        
         if(progressNumber != num)
         {
             progressNumber = num;
             ss << "(" << progressNumber << "/" << obj->value << ")";
             hasUpdate = true;
+        }
+        else
+        {
+            progressNumber = num;
+        }
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
         }
     }
     else if(obj->oType == ReputationGoal)
@@ -224,6 +256,15 @@ void ObjectiveHandler::update(float dt)
             ss << "(" << progressNumber << "/" << obj->value << ")";
             hasUpdate = true;
         }
+        else
+        {
+            progressNumber = GameHUD::getThis()->reputation;
+        }
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
+        }
     }
     else if(obj->oType == BuildBuilding)
     {
@@ -232,16 +273,33 @@ void ObjectiveHandler::update(float dt)
         //ss2 << "(Build: Incomplete)";
         progressNumber = 0;
         hasUpdate = true;
+        
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
+        }
     }
     else
     {
         ss << "OBJECTIVE";
         progressNumber = -1;
         hasUpdate = true;
+        
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
+        }
     }
     
     if(hasUpdate)
     {
         GameHUD::getThis()->objectiveProgress->setString(ss.str().c_str());
+    }
+    
+    if(completeObjective)
+    {
+        playObjective();
     }
 }

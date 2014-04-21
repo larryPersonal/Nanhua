@@ -172,6 +172,9 @@ public:
     CCLabelTTF* objectiveDescription;
     CCLabelTTF* objectiveProgress;
     
+    CCLabelTTF* objectiveNotificationLabel;
+    bool showObjectiveNotification;
+    
     // build menu group
     CCSprite* buildButton;
     
@@ -325,6 +328,11 @@ public:
     void scheduleAddStorage(int);
     void addFood(float);
     void addStorage(float);
+    
+    void scheduleShowNewObjectiveNotification();
+    void scheduleHideNewObjectiveNotification();
+    void showNewObjectiveNotification(float);
+    void hideNewObjectiveNotification(float);
 };
 
 #endif

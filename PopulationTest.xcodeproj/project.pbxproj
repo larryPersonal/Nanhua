@@ -578,6 +578,8 @@
 		848D2FE51859730A00EB9257 /* SenarioChooseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848D2FE41859730A00EB9257 /* SenarioChooseScene.cpp */; };
 		848D2FE8185976A400EB9257 /* bkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 848D2FE7185976A400EB9257 /* bkg.png */; };
 		848D2FEF1859B6DB00EB9257 /* Senario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848D2FEE1859B6DB00EB9257 /* Senario.cpp */; };
+		848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */ = {isa = PBXBuildFile; fileRef = 848DDAF919050B4A001229B8 /* arrowupanddown.png */; };
+		848DDAFD19050CCE001229B8 /* FloatingArraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DDAFC19050CCE001229B8 /* FloatingArraw.cpp */; };
 		848DFC95172E32C100BAA843 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DFC93172E32C100BAA843 /* GameManager.cpp */; };
 		8490D37518F2C45E002BB152 /* worker availablevertbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8490D37318F2C45E002BB152 /* worker availablevertbar.png */; };
 		8490D37618F2C45E002BB152 /* worker availablevertbarinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 8490D37418F2C45E002BB152 /* worker availablevertbarinner.png */; };
@@ -1591,6 +1593,9 @@
 		848D2FE7185976A400EB9257 /* bkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bkg.png; sourceTree = "<group>"; };
 		848D2FED1859AF9500EB9257 /* Senario.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Senario.h; sourceTree = "<group>"; };
 		848D2FEE1859B6DB00EB9257 /* Senario.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Senario.cpp; sourceTree = "<group>"; };
+		848DDAF919050B4A001229B8 /* arrowupanddown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowupanddown.png; sourceTree = "<group>"; };
+		848DDAFB19050BA6001229B8 /* FloatingArraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatingArraw.h; sourceTree = "<group>"; };
+		848DDAFC19050CCE001229B8 /* FloatingArraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingArraw.cpp; sourceTree = "<group>"; };
 		848DFC93172E32C100BAA843 /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
 		848DFC94172E32C100BAA843 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		848EB39616F070A50048463A /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
@@ -3133,6 +3138,7 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				848DDAF919050B4A001229B8 /* arrowupanddown.png */,
 				8414CF2F18FFEB5B0052CA91 /* greatwall-256x512.png */,
 				8414CF2D18FFEB250052CA91 /* guardtower anim.png */,
 				8414CF2B18FFEAD40052CA91 /* river_anim_w_fish.png */,
@@ -3759,6 +3765,7 @@
 				842BAFFE18EBB3AD006FE297 /* Narrator.h */,
 				8476EB9218F63EB70004DE79 /* TutorialSlide.h */,
 				8476EB9518F6432C0004DE79 /* TutorialReader.h */,
+				848DDAFB19050BA6001229B8 /* FloatingArraw.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3771,6 +3778,7 @@
 				842BAFFF18EBB426006FE297 /* Narrator.cpp */,
 				8476EB9318F6422A0004DE79 /* TutorialSlide.cpp */,
 				8476EB9618F643C40004DE79 /* TutorialReader.cpp */,
+				848DDAFC19050CCE001229B8 /* FloatingArraw.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3948,6 +3956,7 @@
 				3619CADF17A6596600B59924 /* button-side.png in Resources */,
 				84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */,
 				8410544618E90DA7003D88C6 /* hungry3.png in Resources */,
+				848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */,
 				3619CAE317A6599400B59924 /* button-up.png in Resources */,
 				8410546018E94ECB003D88C6 /* exitpressbtn.png in Resources */,
 				843E973518DAEB3A00DBB48D /* dragon_c.png in Resources */,
@@ -4450,6 +4459,7 @@
 				36B18A5F18A0A6A700A8B515 /* CCActionInstant.cpp in Sources */,
 				84EB32781867D717003B5CEB /* Slide.cpp in Sources */,
 				36B18A9018A0A6A700A8B515 /* CCLabelAtlas.cpp in Sources */,
+				848DDAFD19050CCE001229B8 /* FloatingArraw.cpp in Sources */,
 				36B18AE518A0A6A800A8B515 /* CCThread.mm in Sources */,
 				36B18A7F18A0A6A700A8B515 /* aabb.c in Sources */,
 				36B190D418A0A6AD00A8B515 /* TGAlib.cpp in Sources */,
