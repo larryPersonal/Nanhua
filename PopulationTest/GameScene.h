@@ -59,6 +59,11 @@ public:
     
     GlobalOutcomeModifier* globalOutcomeModifier;
     
+    bool isSwipe;
+    
+    CCSprite* loadingScreen;
+    CCSprite* loadingLabel;
+    
 public:
     
     CCNode* screenCenter;
@@ -124,6 +129,9 @@ public:
     virtual void move(float time);
     
     void centerCamera(Building*);
+    
+    void enableLoadingScreen();
+    void goToMainMenu();
     
     CREATE_FUNC(GameScene);
 };

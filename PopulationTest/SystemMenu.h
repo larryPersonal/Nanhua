@@ -29,6 +29,9 @@ public:
     CCArray* menuItems;
     CCMenu* newMenu;
     
+    bool show;
+    bool hide;
+    
 public:
     static SystemMenu* create(CCLayer*);
     SystemMenu(CCLayer*);
@@ -40,6 +43,12 @@ public:
     void clickOptionButton();
     void clickExitButton();
     void clickRestartButton();
+    
+    void scheduleShowSystemMenu();
+    void scheduleHideSystemMenu();
+    void showSystemMenu(float);
+    void hideSystemMenu(float);
+    void removeSystemMenu();
     
     void releaseAll();
 };

@@ -23,6 +23,7 @@
 #include "SystemMenu.h"
 #include "TutorialManager.h"
 #include "BuildingCard.h"
+#include "MainMenuScene.h"
 
 #include <cmath>
 
@@ -69,6 +70,24 @@ GameScene::GameScene()
     scrollDistance = CCPointZero;
     
     tapped = false;
+    isSwipe = false;
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    /* loading screen module */
+    loadingScreen = CCSprite::create("loading screen.png");
+    loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
+    loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
+    loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(loadingScreen, 10);
+    loadingScreen->setVisible(false);
+    
+    loadingLabel = CCSprite::create("loading.png");
+    loadingLabel->setAnchorPoint(ccp(0.5, 0.5));
+    loadingLabel->setScale(0.5f);
+    loadingLabel->setPosition(ccp(screenSize.width / 2.0f + 20.0f, screenSize.height / 2.0f - 120.0f));
+    this->addChild(loadingLabel, 11);
+    loadingLabel->setVisible(false);
 }
 
 GameScene::~GameScene()
@@ -302,6 +321,8 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         tapped = false;
     }
     
+    isSwipe = true;
+    
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
@@ -347,15 +368,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         }
         else
         {
-            GameHUD::getThis()->pause = false;
-            CCArray* spritesOnMap = spriteHandler->spritesOnMap;
-            
-            for (int i = 0; i < spritesOnMap->count(); i++)
-            {
-                GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-                sp->followPath();
-            }
-            SystemMenu::getThis()->releaseAll();
+            SystemMenu::getThis()->scheduleHideSystemMenu();
         }
     }
     // the second priority for dragging on the screen is to check whether it is for the GameHUD layer
@@ -690,258 +703,271 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     // system menu
     else if(SystemMenu::getThis() != NULL && !(TutorialManager::getThis()->lockSystemButton))
     {
-        if(SystemMenu::getThis()->systemMenu_background->boundingBox().containsPoint(touchLoc))
+        if(!hasBeenDragged)
         {
-            return;
-        }
-        else
-        {
-            GameHUD::getThis()->pause = false;
-            CCArray* spritesOnMap = spriteHandler->spritesOnMap;
-            
-            for (int i = 0; i < spritesOnMap->count(); i++)
+            if(SystemMenu::getThis()->systemMenu_background->boundingBox().containsPoint(touchLoc))
             {
-                GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-                sp->followPath();
+                return;
             }
-            SystemMenu::getThis()->releaseAll();
+            else
+            {
+                SystemMenu::getThis()->scheduleHideSystemMenu();
+            }
         }
     }
     else
     // the second priority for clicking on the screen is to check whether it is for the GameHUD layer;
     {
-        bool skip = false;
-        // check whether the clicking is on the objective button (GameHUD)
-        if(GameHUD::getThis()->objectiveButton != NULL && !(TutorialManager::getThis()->lockObjectiveButton))
+        if(!hasBeenDragged)
         {
-            if(GameHUD::getThis()->objectiveButton->boundingBox().containsPoint(touchLoc))
+            bool skip = false;
+            // check whether the clicking is on the objective button (GameHUD)
+            if(GameHUD::getThis()->objectiveButton != NULL && !(TutorialManager::getThis()->lockObjectiveButton))
             {
-                GameHUD::getThis()->clickObjectiveButton();
-                skip = true;
-            }
-        }
-        
-        // check whether the clicking is on the objective menu (GameHUD)
-        if(GameHUD::getThis()->objectiveMenu != NULL && !(TutorialManager::getThis()->lockObjectiveButton))
-        {
-            if(GameHUD::getThis()->objectiveMenu->boundingBox().containsPoint(touchLoc))
-            {
-                skip = true;
-            }
-        }
-        
-        if(GameHUD::getThis()->peaceButton != NULL && GameHUD::getThis()->warButton != NULL)
-        {
-            
-            if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->banditsAttack();
-                skip = true;
-            }
-            else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->banditsAttack();
-                skip = true;
-            }
-        }
-        
-        if(GameHUD::getThis()->stickHappinessButton != NULL && GameHUD::getThis()->resumeHappinessButton != NULL)
-        {
-            if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->stickGameHappiness();
-                skip = true;
-            }
-            else if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->stickGameHappiness();
-                skip = true;
-            }
-        }
-        
-        if(GameHUD::getThis()->pauseButton != NULL && GameHUD::getThis()->resumeButton != NULL)
-        {
-            if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->pauseGame();
-                skip = true;
-            }
-            else if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->pauseGame();
-                skip = true;
-            }
-        }
-        
-        if(GameHUD::getThis()->systemButton != NULL && !(TutorialManager::getThis()->lockSystemButton))
-        {
-            if(GameHUD::getThis()->systemButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->clickSystemButton();
-                skip = true;
-            }
-        }
-
-        if(GameHUD::getThis()->buildButton != NULL && !(TutorialManager::getThis()->lockBuildButton))
-        {
-            if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
-            {
-                GameHUD::getThis()->clickBuildButton();
-                skip = true;
-            }
-        }
-        
-        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL)
-        {
-            if(GameHUD::getThis()->buildScroll->buildMenu->boundingBox().containsPoint(touchLoc))
-            {
-                skip = true;
-            }
-            else
-            {
-                if(!(TutorialManager::getThis()->lockBuildScroll))
+                if(GameHUD::getThis()->objectiveButton->boundingBox().containsPoint(touchLoc))
                 {
-                    GameHUD::getThis()->buildScroll->scheduleScrollOut();
+                    GameHUD::getThis()->clickObjectiveButton();
+                    if(GameHUD::getThis()->showObjectiveNotification)
+                    {
+                        GameHUD::getThis()->scheduleHideNewObjectiveNotification();
+                    }
+                    skip = true;
                 }
             }
-        }
-        
-        if(GameHUD::getThis()->timeMenu != NULL && !(TutorialManager::getThis()->lockTimeGroup))
-        {
-            if(GameHUD::getThis()->timeMenu->boundingBox().containsPoint(touchLoc))
+            
+            // check whether the clicking is on the objective menu (GameHUD)
+            if(GameHUD::getThis()->objectiveMenu != NULL && !(TutorialManager::getThis()->lockObjectiveButton))
             {
-                if(GameHUD::getThis()->scrolled_in)
+                if(GameHUD::getThis()->objectiveMenu->boundingBox().containsPoint(touchLoc))
+                {
+                    skip = true;
+                }
+            }
+            
+            // check whether the clicking is on the objectiveNotification
+            if(GameHUD::getThis()->objectiveNotificationLabel != NULL && GameHUD::getThis()->showObjectiveNotification)
+            {
+                if(GameHUD::getThis()->objectiveNotificationLabel->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->clickObjectiveButton();
+                    GameHUD::getThis()->scheduleHideNewObjectiveNotification();
+                    skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->peaceButton != NULL && GameHUD::getThis()->warButton != NULL && GameHUD::getThis()->peaceButton->isVisible())
+            {
+                
+                if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->banditsAttack();
+                    skip = true;
+                }
+                else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->banditsAttack();
+                    skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->stickHappinessButton != NULL && GameHUD::getThis()->resumeHappinessButton != NULL)
+            {
+                if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->stickGameHappiness();
+                    skip = true;
+                }
+                else if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->stickGameHappiness();
+                    skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->pauseButton != NULL && GameHUD::getThis()->resumeButton != NULL)
+            {
+                if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->pauseGame();
+                    skip = true;
+                }
+                else if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->pauseGame();
+                    skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->systemButton != NULL && !(TutorialManager::getThis()->lockSystemButton))
+            {
+                if(GameHUD::getThis()->systemButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->clickSystemButton();
+                    skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->buildButton != NULL && !(TutorialManager::getThis()->lockBuildButton))
+            {
+                if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->clickBuildButton();
+                    skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL)
+            {
+                if(GameHUD::getThis()->buildScroll->buildMenu->boundingBox().containsPoint(touchLoc))
+                {
+                    skip = true;
+                }
+                else
+                {
+                    if(!(TutorialManager::getThis()->lockBuildScroll))
+                    {
+                        GameHUD::getThis()->buildScroll->scheduleScrollOut();
+                    }
+                }
+            }
+            
+            if(GameHUD::getThis()->timeMenu != NULL && !(TutorialManager::getThis()->lockTimeGroup))
+            {
+                if(GameHUD::getThis()->timeMenu->boundingBox().containsPoint(touchLoc))
+                {
+                    if(GameHUD::getThis()->scrolled_in)
+                    {
+                        GameHUD::getThis()->scheduleScrollOut();
+                    } else {
+                        GameHUD::getThis()->scheduleScrollIn();
+                    }
+                    skip = true;
+                }
+                else
                 {
                     GameHUD::getThis()->scheduleScrollOut();
-                } else {
-                    GameHUD::getThis()->scheduleScrollIn();
                 }
-                skip = true;
             }
-            else
+            
+            if(BuildingInfoMenu::getThis() != NULL && BuildingInfoMenu::getThis()->spriteBackground != NULL)
             {
-                GameHUD::getThis()->scheduleScrollOut();
-            }
-        }
-        
-        if(BuildingInfoMenu::getThis() != NULL && BuildingInfoMenu::getThis()->spriteBackground != NULL)
-        {
-            if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
-            {
-                // check whether has clicked the close button
-                if(BuildingInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
+                if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
                 {
-                    if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
+                    // check whether has clicked the close button
+                    if(BuildingInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                     {
-                        BuildingInfoMenu::getThis()->closeMenu(true);
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
+                        {
+                            BuildingInfoMenu::getThis()->closeMenu(true);
+                        }
+                    }
+                    skip = true;
+                }
+                else
+                {
+                    if(!TutorialManager::getThis()->lockScroll)
+                    {
+                        PopupMenu::closeAllPopupMenu();
                     }
                 }
-                skip = true;
             }
-            else
+            
+            if(SelectPopulation::getThis() != NULL && SelectPopulation::getThis()->spriteBackground != NULL)
             {
-                if(!TutorialManager::getThis()->lockScroll)
+                if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
                 {
-                    PopupMenu::closeAllPopupMenu();
-                }
-            }
-        }
-        
-        if(SelectPopulation::getThis() != NULL && SelectPopulation::getThis()->spriteBackground != NULL)
-        {
-            if(SelectPopulation::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
-            {
-                // check whether has clicked the close button
-                if(SelectPopulation::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
-                {
-                    if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
+                    // check whether has clicked the close button
+                    if(SelectPopulation::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
                     {
-                        SelectPopulation::getThis()->closeMenu(true);
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonClose))
+                        {
+                            SelectPopulation::getThis()->closeMenu(true);
+                        }
+                    }
+                    skip = true;
+                }
+                else
+                {
+                    if(!TutorialManager::getThis()->lockScroll)
+                    {
+                        PopupMenu::closeAllPopupMenu();
                     }
                 }
-                skip = true;
             }
-            else
+            
+            if(SpriteInfoMenu::getThis() != NULL && SpriteInfoMenu::getThis()->spriteBackground != NULL)
             {
-                if(!TutorialManager::getThis()->lockScroll)
+                if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
                 {
-                    PopupMenu::closeAllPopupMenu();
-                }
-            }
-        }
-        
-        if(SpriteInfoMenu::getThis() != NULL && SpriteInfoMenu::getThis()->spriteBackground != NULL)
-        {
-            if(SpriteInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
-            {
-                // check whether has clicked the close button
-                if(SpriteInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
-                {
-                    SpriteInfoMenu::getThis()->closeMenu(true);
-                }
-                skip = true;
-            }
-            else
-            {
-                if(!TutorialManager::getThis()->lockScroll)
-                {
-                    PopupMenu::closeAllPopupMenu();
-                }
-            }
-        }
-        
-        // check the info label
-        if(GameHUD::getThis() != NULL && GameHUD::getThis()->moneyIcon != NULL)
-        {
-            if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
-            {
-                if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockGoldLabel)
-                {
-                    
+                    // check whether has clicked the close button
+                    if(SpriteInfoMenu::getThis()->buttonClose->boundingBox().containsPoint(touchLoc))
+                    {
+                        SpriteInfoMenu::getThis()->closeMenu(true);
+                    }
+                    skip = true;
                 }
                 else
                 {
-                    GameHUD::getThis()->clickMoneyLabel();
+                    if(!TutorialManager::getThis()->lockScroll)
+                    {
+                        PopupMenu::closeAllPopupMenu();
+                    }
                 }
-                skip = true;
             }
-        }
-        
-        if(GameHUD::getThis() != NULL && GameHUD::getThis()->foodIcon != NULL)
-        {
-            if(GameHUD::getThis()->foodIcon->boundingBox().containsPoint(touchLoc))
+            
+            // check the info label
+            if(GameHUD::getThis() != NULL && GameHUD::getThis()->moneyIcon != NULL)
             {
-                if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockFoodLabel)
+                if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
                 {
-                    
+                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockGoldLabel)
+                    {
+                        
+                    }
+                    else
+                    {
+                        GameHUD::getThis()->clickMoneyLabel();
+                    }
+                    skip = true;
                 }
-                else
-                {
-                    GameHUD::getThis()->clickFoodLabel();
-                }
-                skip = true;
             }
-        }
-        
-        if(GameHUD::getThis() != NULL && GameHUD::getThis()->populationIcon != NULL)
-        {
-            if(GameHUD::getThis()->populationIcon->boundingBox().containsPoint(touchLoc))
+            
+            if(GameHUD::getThis() != NULL && GameHUD::getThis()->foodIcon != NULL)
             {
-                if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockPopulationLabel)
+                if(GameHUD::getThis()->foodIcon->boundingBox().containsPoint(touchLoc))
                 {
-                    
+                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockFoodLabel)
+                    {
+                        
+                    }
+                    else
+                    {
+                        GameHUD::getThis()->clickFoodLabel();
+                    }
+                    skip = true;
                 }
-                else
-                {
-                    GameHUD::getThis()->clickPopulationLabel();
-                }
-                skip = true;
             }
-        }
-        
-        if(skip)
-        {
-            return;
+            
+            if(GameHUD::getThis() != NULL && GameHUD::getThis()->populationIcon != NULL)
+            {
+                if(GameHUD::getThis()->populationIcon->boundingBox().containsPoint(touchLoc))
+                {
+                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockPopulationLabel)
+                    {
+                        
+                    }
+                    else
+                    {
+                        GameHUD::getThis()->clickPopulationLabel();
+                    }
+                    skip = true;
+                }
+            }
+            
+            if(skip)
+            {
+                return;
+            }
         }
     }
     
@@ -1141,7 +1167,6 @@ void GameScene::centerCamera(Building* b)
     
     stringstream ss;
     ss << b->buildingRep->getPositionX() << ", " << b->buildingRep->getPositionY();
-    CCLog(ss.str().c_str());
     
     mapHandler->moveMapBy(-xDiff, -yDiff);
 }
@@ -1522,7 +1547,20 @@ void GameScene::setBuildPathDistance(int dist)
     GameHUD::getThis()->updateBuildCostLabel(10, dist);
 }
 
+void GameScene::enableLoadingScreen()
+{
+    loadingScreen->setVisible(true);
+    loadingLabel->setVisible(true);
+    
+    GameScene::getThis()->mapHandler->UnBuildEndGame();
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    this->scheduleOnce(schedule_selector(GameScene::goToMainMenu), 0.1f);
+}
 
-
-
-
+void GameScene::goToMainMenu()
+{
+    CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
+}

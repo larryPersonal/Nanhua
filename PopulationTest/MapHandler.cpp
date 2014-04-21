@@ -827,7 +827,7 @@ void MapHandler::ForceUnbuild(cocos2d::CCPoint &target)
 {
     Building* targetB = getTileAt(target.x, target.y)->building;
     if (targetB == NULL){
-        CCLog("Building is null leh");
+        //CCLog("Building is null leh");
         return;
     }
     
@@ -848,7 +848,7 @@ void MapHandler::UnBuild(cocos2d::CCPoint &target)
 {
     Building* targetB = getTileAt(target.x, target.y)->building;
     if (targetB == NULL){
-        CCLog("Building is null leh");
+        //CCLog("Building is null leh");
         return;
     }
     

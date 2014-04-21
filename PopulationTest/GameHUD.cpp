@@ -119,6 +119,8 @@ GameHUD::GameHUD()
     yOffset = 0;
     
     emotionTexture = CCTextureCache::sharedTextureCache()->addImage("Happinessicon.png");
+    
+    showObjectiveNotification = false;
 }
 
 GameHUD::~GameHUD()
@@ -564,7 +566,7 @@ void GameHUD::onOrientationChanged(){
 }
 
 void GameHUD::closeAllMenuAndResetTapMode()
-{    
+{
     GameScene::getThis()->resetBuildMode();
     
     // Continues building path once built
@@ -877,14 +879,14 @@ void GameHUD::createTimeMenu()
     
     thirdWeekLabel = CCSprite::create("timeclock_week3.png");
     thirdWeekLabel->setAnchorPoint(ccp(1, 1));
-    thirdWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.125f);
+    thirdWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
     thirdWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
 
     this->addChild(thirdWeekLabel, 3);
     
     lastWeekLabel = CCSprite::create("timeclock_week4.png");
     lastWeekLabel->setAnchorPoint(ccp(1, 1));
-    lastWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.125f);
+    lastWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
     lastWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
 
     this->addChild(lastWeekLabel, 3);
@@ -1038,7 +1040,7 @@ void GameHUD::createObjectiveMenu()
     objectiveButton->setAnchorPoint(ccp(0, 1));
     objectiveButton->setScale(screenSize.width / spriteSize.width * 0.35f);
     objectiveButton->setPosition(ccp(15, screenSize.height - 113));
-    this->addChild(objectiveButton);
+    this->addChild(objectiveButton, 5);
     
     // create the objective title and objective strings!
     stringstream ss;
@@ -1067,6 +1069,64 @@ void GameHUD::createObjectiveMenu()
     objectiveMenu->addChild(objectiveProgress);
     
     this->addChild(objectiveMenu, 6);
+    
+    // objective notification
+    ss.str(std::string());
+    ss << "NEW OBJECTIVE!";
+    
+    objectiveNotificationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16);
+    objectiveNotificationLabel->setAnchorPoint(ccp(0, 1));
+    objectiveNotificationLabel->setPosition(ccp(100, screenSize.height - 145));
+    objectiveNotificationLabel->setColor(colorBlack);
+    objectiveNotificationLabel->setOpacity((GLubyte) 0);
+    this->addChild(objectiveNotificationLabel, 4);
+}
+
+void GameHUD::scheduleShowNewObjectiveNotification()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    showObjectiveNotification = false;
+    objectiveNotificationLabel->setOpacity((GLubyte) 0);
+    objectiveNotificationLabel->setPosition(ccp(-100, screenSize.height - 145));
+    this->schedule(schedule_selector(GameHUD::showNewObjectiveNotification), 1.0f/120.0f);
+}
+
+void GameHUD::scheduleHideNewObjectiveNotification()
+{
+    if(showObjectiveNotification)
+    {
+        showObjectiveNotification = false;
+        this->schedule(schedule_selector(GameHUD::hideNewObjectiveNotification), 1.0f/120.0f);
+    }
+}
+
+void GameHUD::showNewObjectiveNotification(float dt)
+{
+    float opacity = 255.0f * ((objectiveNotificationLabel->getPositionX() + 100.0f) / 200.0f);
+    int xPos = objectiveNotificationLabel->getPositionX();
+    xPos += 10.0f;
+    if(xPos >= 100.0f)
+    {
+        xPos = 100.0f;
+        showObjectiveNotification = true;
+        this->unschedule(schedule_selector(GameHUD::showNewObjectiveNotification));
+    }
+    objectiveNotificationLabel->setPosition(ccp(xPos, objectiveNotificationLabel->getPositionY()));
+    objectiveNotificationLabel->setOpacity((GLubyte) opacity);
+}
+
+void GameHUD::hideNewObjectiveNotification(float dt)
+{
+    float opacity = 255.0f * ((objectiveNotificationLabel->getPositionX() + 100.0f) / 200.0f);
+    int xPos = objectiveNotificationLabel->getPositionX();
+    xPos -= 10.0f;
+    if(xPos <= -100)
+    {
+        xPos = -100;
+        this->unschedule(schedule_selector(GameHUD::hideNewObjectiveNotification));
+    }
+    objectiveNotificationLabel->setPosition(ccp(xPos, objectiveNotificationLabel->getPositionY()));
+    objectiveNotificationLabel->setOpacity((GLubyte) opacity);
 }
 
 void GameHUD::fadeIn(float dt)
@@ -1256,50 +1316,44 @@ void GameHUD::createSystemMenu()
     
     systemButton = CCSprite::create("optionmenubutton.png");
     
-    if(GameScene::getThis()->systemConfig->debugMode)
-    {
-        pauseButton = CCSprite::create("pauseIcon.png");
-        resumeButton = CCSprite::create("nextButton.png");
-        stickHappinessButton = CCSprite::create("happyFace.png");
-        resumeHappinessButton = CCSprite::create("normalFace.png");
-        warButton = CCSprite::create("banditicon.png");
-        peaceButton = CCSprite::create("peaceicon.png");
-    }
+    pauseButton = CCSprite::create("pauseIcon.png");
+    resumeButton = CCSprite::create("nextButton.png");
+    stickHappinessButton = CCSprite::create("happyFace.png");
+    resumeHappinessButton = CCSprite::create("normalFace.png");
+    warButton = CCSprite::create("banditicon.png");
+    peaceButton = CCSprite::create("peaceicon.png");
     
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
     systemButton->setPosition(ccp(screenSize.width * 0.075f, screenSize.height - 205.0f));
     
-    if(GameScene::getThis()->systemConfig->debugMode)
-    {
-        pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
-        pauseButton->setAnchorPoint(ccp(0, 0));
-        pauseButton->setPosition(ccp(screenSize.width * 0.1f, 0));
-        
-        resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
-        resumeButton->setAnchorPoint(ccp(0, 0));
-        resumeButton->setPosition(ccp(screenSize.width * 0.1f, -500));
-        
-        stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
-        stickHappinessButton->setAnchorPoint(ccp(0, 0));
-        stickHappinessButton->setPosition(ccp(screenSize.width * 0.05f, 0));
-        
-        resumeHappinessButton->setScale(screenSize.width / resumeHappinessButton->boundingBox().size.width * 0.05f);
-        resumeHappinessButton->setAnchorPoint(ccp(0, 0));
-        resumeHappinessButton->setPosition(ccp(screenSize.width * 0.05f, -500));
-        
-        warButton->setScale(screenSize.width / warButton->boundingBox().size.width * 0.05f);
-        warButton->setAnchorPoint(ccp(0, 0));
-        warButton->setPosition(ccp(0, 0));
-        
-        peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
-        peaceButton->setAnchorPoint(ccp(0, 0));
-        peaceButton->setPosition(ccp(0, -500));
-        
-        resumeButton->setVisible(false);
-        resumeHappinessButton->setVisible(false);
-        peaceButton->setVisible(false);
-    }
+    pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
+    pauseButton->setAnchorPoint(ccp(0, 0));
+    pauseButton->setPosition(ccp(screenSize.width * 0.1f, 0));
+    
+    resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
+    resumeButton->setAnchorPoint(ccp(0, 0));
+    resumeButton->setPosition(ccp(screenSize.width * 0.1f, -500));
+    
+    stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
+    stickHappinessButton->setAnchorPoint(ccp(0, 0));
+    stickHappinessButton->setPosition(ccp(screenSize.width * 0.05f, 0));
+    
+    resumeHappinessButton->setScale(screenSize.width / resumeHappinessButton->boundingBox().size.width * 0.05f);
+    resumeHappinessButton->setAnchorPoint(ccp(0, 0));
+    resumeHappinessButton->setPosition(ccp(screenSize.width * 0.05f, -500));
+    
+    warButton->setScale(screenSize.width / warButton->boundingBox().size.width * 0.05f);
+    warButton->setAnchorPoint(ccp(0, 0));
+    warButton->setPosition(ccp(0, 0));
+    
+    peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
+    peaceButton->setAnchorPoint(ccp(0, 0));
+    peaceButton->setPosition(ccp(0, -500));
+    
+    resumeButton->setVisible(false);
+    resumeHappinessButton->setVisible(false);
+    peaceButton->setVisible(false);
     
     float happinessRate = average_happiness;
     
@@ -1342,15 +1396,22 @@ void GameHUD::createSystemMenu()
     this->addChild(systemButton, 5);
     this->addChild(happinessIcon, 5);
     
-    if(GameScene::getThis()->systemConfig->debugMode)
+    if(!GameScene::getThis()->systemConfig->debugMode)
     {
-        this->addChild(stickHappinessButton, 5);
-        this->addChild(resumeHappinessButton, 5);
-        this->addChild(pauseButton, 5);
-        this->addChild(resumeButton, 5);
-        this->addChild(warButton, 5);
-        this->addChild(peaceButton, 5);
+        stickHappinessButton->cocos2d::CCNode::setScale(0, 0);
+        resumeHappinessButton->cocos2d::CCNode::setScale(0, 0);
+        pauseButton->cocos2d::CCNode::setScale(0, 0);
+        resumeButton->cocos2d::CCNode::setScale(0, 0);
+        warButton->cocos2d::CCNode::setScale(0, 0);
+        peaceButton->cocos2d::CCNode::setScale(0, 0);
     }
+    
+    this->addChild(stickHappinessButton, 5);
+    this->addChild(resumeHappinessButton, 5);
+    this->addChild(pauseButton, 5);
+    this->addChild(resumeButton, 5);
+    this->addChild(warButton, 5);
+    this->addChild(peaceButton, 5);
 }
 
 void GameHUD::banditsAttack()
@@ -1540,9 +1601,10 @@ void GameHUD::stickGameHappiness()
 
 void GameHUD::clickSystemButton()
 {
-   SystemMenu* sm = SystemMenu::create(this);
+    SystemMenu* sm = SystemMenu::create(this);
     sm->retain();
     pause = true;
+    sm->scheduleShowSystemMenu();
 }
 
 void GameHUD::createAlertSystem()
