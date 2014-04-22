@@ -35,6 +35,14 @@ TutorialSlide::TutorialSlide()
     triggerDropToken = false;
     unlockAll = false;
     hideBubble = false;
+    
+    showArrow = false;
+    hideArrow = false;
+    
+    arrowAngle = 0;
+    arrowX = 0;
+    arrowY = 0;
+    arrowScale = 0;
 }
 
 TutorialSlide::~TutorialSlide()

@@ -95,7 +95,6 @@ void ObjectiveHandler::playObjective()
             Objective* temp = (Objective*) objectives->objectAtIndex(i);
             if(temp->oid == nextID)
             {
-                CCLog("nextID: %d", nextID);
                 obj = temp;
             }
         }

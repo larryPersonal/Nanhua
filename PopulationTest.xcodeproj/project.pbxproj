@@ -580,6 +580,7 @@
 		848D2FEF1859B6DB00EB9257 /* Senario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848D2FEE1859B6DB00EB9257 /* Senario.cpp */; };
 		848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */ = {isa = PBXBuildFile; fileRef = 848DDAF919050B4A001229B8 /* arrowupanddown.png */; };
 		848DDAFD19050CCE001229B8 /* FloatingArraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DDAFC19050CCE001229B8 /* FloatingArraw.cpp */; };
+		848DDB0019052CBB001229B8 /* NotificationString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DDAFF19052CBB001229B8 /* NotificationString.cpp */; };
 		848DFC95172E32C100BAA843 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DFC93172E32C100BAA843 /* GameManager.cpp */; };
 		8490D37518F2C45E002BB152 /* worker availablevertbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8490D37318F2C45E002BB152 /* worker availablevertbar.png */; };
 		8490D37618F2C45E002BB152 /* worker availablevertbarinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 8490D37418F2C45E002BB152 /* worker availablevertbarinner.png */; };
@@ -1596,6 +1597,8 @@
 		848DDAF919050B4A001229B8 /* arrowupanddown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowupanddown.png; sourceTree = "<group>"; };
 		848DDAFB19050BA6001229B8 /* FloatingArraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatingArraw.h; sourceTree = "<group>"; };
 		848DDAFC19050CCE001229B8 /* FloatingArraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingArraw.cpp; sourceTree = "<group>"; };
+		848DDAFE19052B8E001229B8 /* NotificationString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationString.h; sourceTree = "<group>"; };
+		848DDAFF19052CBB001229B8 /* NotificationString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotificationString.cpp; sourceTree = "<group>"; };
 		848DFC93172E32C100BAA843 /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
 		848DFC94172E32C100BAA843 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		848EB39616F070A50048463A /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
@@ -3386,6 +3389,7 @@
 				B4A21D3F174A14B1005FA984 /* AlertBox.h */,
 				843AFFB8187FE7DD0053546B /* SelectPopulation.h */,
 				8412CA6E18ACCFE200AF4645 /* BuildScroll.h */,
+				848DDAFE19052B8E001229B8 /* NotificationString.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3404,6 +3408,7 @@
 				B4A21D3E174A14AF005FA984 /* AlertBox.cpp */,
 				843AFFBA187FEC530053546B /* SelectPopulation.cpp */,
 				8412CA6F18ACD1DB00AF4645 /* BuildScroll.cpp */,
+				848DDAFF19052CBB001229B8 /* NotificationString.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -4189,6 +4194,7 @@
 				36B190D618A0A6AD00A8B515 /* TransformUtils.cpp in Sources */,
 				365FB9CB16E5E30B00A57CF0 /* AppController.mm in Sources */,
 				365FB9CE16E5E30B00A57CF0 /* RootViewController.mm in Sources */,
+				848DDB0019052CBB001229B8 /* NotificationString.cpp in Sources */,
 				FFB89C2018EB37990001E588 /* MiniDragon.cpp in Sources */,
 				36B18A9718A0A6A700A8B515 /* CCTransitionProgress.cpp in Sources */,
 				365FB9D016E5E30B00A57CF0 /* main.m in Sources */,

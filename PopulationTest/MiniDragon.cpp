@@ -14,6 +14,7 @@
 #include "GameHUD.h"
 #include "Senario.h"
 #include "Building.h"
+#include "FloatingArraw.h"
 
 MiniDragon::MiniDragon()
 {
@@ -189,6 +190,16 @@ bool MiniDragon::constructTutorialSlide()
         bubble->setVisible(false);
         dragon->setVisible(false);
         TutorialManager::getThis()->setupNarrator();
+    }
+    
+    if(ts->showArrow)
+    {
+        FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale);
+    }
+    
+    if(ts->hideArrow)
+    {
+        FloatingArraw::getThis()->hideArrow();
     }
     
     for(int i = 0; i < ts->commands.size(); i++)

@@ -23,7 +23,7 @@ struct SystemConfig
         skipSenario = true;
         skipTutorial = true;
         hideSkipButton = true;
-        debugMode = false;
+        debugMode = true;
     }
 };
 

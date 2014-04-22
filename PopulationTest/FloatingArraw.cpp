@@ -7,11 +7,19 @@
 //
 
 #include "FloatingArraw.h"
+#include "TutorialManager.h"
+
+FloatingArraw* FloatingArraw::SP;
+
+FloatingArraw* FloatingArraw::getThis()
+{
+    return SP;
+}
 
 FloatingArraw::FloatingArraw()
 {
-    //CCSize screenSize = CCDirector
-    /*
+    FloatingArraw::SP = this;
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     delay_animFrame = 0.1f;
     delay_curr = 0.1f;
     
@@ -29,32 +37,62 @@ FloatingArraw::FloatingArraw()
     x_maxframeno = 8;
     
     y_offset = x_frameno / 4.0f;
-    x_offset = x_frameno % 4.0f;
+    x_offset = ((int)x_frameno) % 4;
     
     arrowRect = CCRectMake(x_offset * frameWidth, y_offset * frameHeight,  frameWidth, frameHeight);
     
     //set the thing to the first frame.
     arrow = CCSprite::createWithTexture(arrowTexture, arrowRect);
     arrow->setAnchorPoint(ccp(0.5, 0.5));
-    */
+    arrow->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    arrow->setVisible(false);
     
+    TutorialManager::getThis()->addChild(arrow, 5);
+    TutorialManager::getThis()->schedule(schedule_selector(FloatingArraw::update), 1.0f/120.0f);
 }
 
 FloatingArraw::~FloatingArraw()
 {
-    
+    FloatingArraw::SP = NULL;
 }
 
 void FloatingArraw::update(float dt)
 {
-    /*
-    y_offset = 0;
+    if (FloatingArraw::getThis()->delay_curr > 0)
+    {
+        FloatingArraw::getThis()->delay_curr -= dt;
+    }
+    else
+    {
+        FloatingArraw::getThis()->x_frameno++;
+        if (FloatingArraw::getThis()->x_frameno >= FloatingArraw::getThis()->x_maxframeno)
+        {
+            FloatingArraw::getThis()->x_frameno = 0;
+        }
+        
+        FloatingArraw::getThis()->y_offset = FloatingArraw::getThis()->x_frameno / 4.0f;
+        int x_offset = ((int)FloatingArraw::getThis()->x_frameno) % 4;
+        
+        FloatingArraw::getThis()->arrowRect.setRect(x_offset * FloatingArraw::getThis()->frameWidth, FloatingArraw::getThis()->y_offset * FloatingArraw::getThis()->frameHeight, FloatingArraw::getThis()->frameWidth, FloatingArraw::getThis()->frameHeight);
+        FloatingArraw::getThis()->arrow->setTextureRect(FloatingArraw::getThis()->arrowRect);
+        
+        FloatingArraw::getThis()->delay_curr = FloatingArraw::getThis()->delay_animFrame;
+    }
+}
+
+void FloatingArraw::showArrow(CCPoint pos, float ang, float scale)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    float hw = screenSize.width / 2.0f;
+    float hh = screenSize.height / 2.0f;
     
-    x_frameno = 0;
-    x_maxframeno = 8;
-    
-    arrowRect = CCRectMake(0, y_offset * frameHeight,  frameWidth, frameHeight);
-    
-    CCSprite* arrowSprite = CCSprite::createWithTexture(arrowTexture, arrowRect);
-    */
+    arrow->setPosition(ccp(hw + pos.x, hh + pos.y));
+    arrow->setRotation(ang);
+    arrow->setScale(scale);
+    arrow->setVisible(true);
+}
+
+void FloatingArraw::hideArrow()
+{
+    arrow->setVisible(false);
 }

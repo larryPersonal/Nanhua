@@ -755,9 +755,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            if(GameHUD::getThis()->peaceButton != NULL && GameHUD::getThis()->warButton != NULL && GameHUD::getThis()->peaceButton->isVisible())
+            if(GameHUD::getThis()->peaceButton != NULL && GameHUD::getThis()->warButton != NULL)
             {
-                
                 if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
                 {
                     GameHUD::getThis()->banditsAttack();
@@ -766,6 +765,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
                 {
                     GameHUD::getThis()->banditsAttack();
+                    GameHUD::getThis()->addNewNotification("");
                     skip = true;
                 }
             }
