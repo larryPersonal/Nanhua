@@ -427,7 +427,7 @@ void GameHUD::update(float deltaTime)
                 break;
 
         }
-        tapModeLabel->setString(ss.str().c_str());
+        //tapModeLabel->setString(ss.str().c_str());
         UpdateBuildButton();
 
     }

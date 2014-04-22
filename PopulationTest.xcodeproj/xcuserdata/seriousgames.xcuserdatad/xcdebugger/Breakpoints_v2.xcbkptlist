@@ -1800,9 +1800,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "179"
-            endingLineNumber = "179"
-            landmarkName = "GameHUD::setAllStats()"
-            landmarkType = "5">
+            endingLineNumber = "179">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3094,9 +3092,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "SpeechBubble::show(float time)"
-            landmarkType = "5">
+            endingLineNumber = "59">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3111,7 +3107,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
             endingLineNumber = "24"
-            landmarkName = "SpeechBubble::createSpeechBubble()"
+            landmarkName = "SpeechBubble::SpeechBubble()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3516,7 +3512,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "997"
-            endingLineNumber = "997">
+            endingLineNumber = "997"
+            landmarkName = "GameHUD::scrollOut(float dt)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3530,9 +3528,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "976"
-            endingLineNumber = "976"
-            landmarkName = "GameHUD::scrollOut(float dt)"
-            landmarkType = "5">
+            endingLineNumber = "976">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

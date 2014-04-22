@@ -77,8 +77,8 @@ void ConstructionHandler::update(float deltaTime)
 void ConstructionHandler::addConstructingBuilding(Building* building)
 {
     ProgressBar* progressBar = ProgressBar::create();
-    progressBar->createProgressBar(CCRectMake(0, 0, building->buildingRep->boundingBox().size.width, 20),
-                                   CCRectMake(5, 5, building->buildingRep->boundingBox().size.width-10, 10),
+    progressBar->createProgressBar(CCRectMake(0, 0, building->buildingRep->boundingBox().size.width, 10),
+                                   CCRectMake(0, 0, building->buildingRep->boundingBox().size.width, 10),
                                    "Energy_brown bar.png",
                                    "NONE",
                                    "NONE",
