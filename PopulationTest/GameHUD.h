@@ -224,6 +224,7 @@ public:
     
     // event notification system;
     CCArray* eventLabels;
+    vector<std::string> notificationToBeScheduled;
     int numberOfEventsToDisplay;
     bool slideUp;
     bool slideIn;

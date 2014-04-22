@@ -844,12 +844,17 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 
 bool GameSprite::Wander()
 {
-    // The very first action for a refugee is alway trying to find a house, he/she will lose happiness continually.
     if(GameScene::getThis()->banditsAttackHandler->warMode)
     {
         return true;
     }
     
+    if(tryEscape)
+    {
+        return true;
+    }
+    
+    // The very first action for a refugee is alway trying to find a house, he/she will lose happiness continually.
     if(spriteClass.compare("refugee") == 0 && hasEmptyHouse())
     {
         return findNearestHome();
@@ -971,6 +976,45 @@ bool GameSprite::PathToResources()
 void GameSprite::updateSprite(float dt)
 {
     updateZIndex();
+    
+    if(possessions->happinessRating <= 0)
+    {
+        if(villagerClass == V_REFUGEE)
+        {
+            if(!tryEscape)
+            {
+                tryEscape = true;
+                stringstream ss;
+                ss << spriteDisplayedName << " will leave the village!";
+                GameHUD::getThis()->addNewNotification(ss.str());
+
+                CCPoint target = CCPointMake(29,33);
+                if(GoLocation(target, true))
+                {
+                    isLeavingNextUpdate = true;
+                }
+            }
+        }
+        else if(villagerClass != V_BANDIT && villagerClass != V_CLASS_END)
+        {
+            if(!GameScene::getThis()->banditsAttackHandler->warMode)
+            {
+                if(villagerClass != V_CITIZEN)
+                {
+                    if(possessions->jobLocation != NULL)
+                    {
+                        possessions->jobLocation->memberSpriteList->removeObject(this);
+                        possessions->jobLocation = NULL;
+                    }
+                }
+                
+                getHome()->memberSpriteList->removeObject(this);
+                possessions->homeLocation = NULL;
+                
+                changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
+            }
+        }
+    }
     
     lastFrameAction = currAction;
     

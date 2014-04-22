@@ -765,7 +765,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
                 {
                     GameHUD::getThis()->banditsAttack();
-                    GameHUD::getThis()->addNewNotification("");
                     skip = true;
                 }
             }

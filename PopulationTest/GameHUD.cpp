@@ -549,48 +549,88 @@ void GameHUD::update(float deltaTime)
     this->removeChild(happinessIcon);
     happinessIcon = tempIcon;
     this->addChild(happinessIcon, 5);
-    bool tmp = false;
+    
+    if(notificationToBeScheduled.size() > 0)
+    {
+        if(!slideIn)
+        {
+            float height = 0;
+            for (int i = 0; i < eventLabels->count(); i++)
+            {
+                NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
+                height += ns->notificationLabel->boundingBox().size.height;
+            }
+            
+            NotificationString* ns = NotificationString::create(notificationToBeScheduled.front(), height);
+            ns->scheduleSlideIn();
+            eventLabels->addObject(ns);
+            notificationToBeScheduled.erase(notificationToBeScheduled.begin());
+            
+            slideIn = true;
+        }
+    }
+    
+    if(eventLabels->count() > numberOfEventsToDisplay)
+    {
+        slideOut = true;
+    }
+    
+    for(int i = 0; i < eventLabels->count(); i++)
+    {
+        NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
+        ns->update(deltaTime);
+    }
     
     for(int i = 0; i < eventLabels->count(); i++)
     {
         NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
         
-        if(slideUp)
+        if(slideIn)
         {
-            float height = 0;
-            for(int j = 0; j < i; j++)
+            if(i == eventLabels->count() - 1)
             {
-                NotificationString* tempNS = (NotificationString*) eventLabels->objectAtIndex(j);
-                height += tempNS->notificationLabel->getPositionY();
-            }
-            
-            if(ns->notificationLabel->getPositionY() >= screenSize.height - ns->borderY - height)
-            {
-                ns->notificationLabel->setPositionY(screenSize.height - ns->borderY - height);
-            }
-            else
-            {
-                ns->slideUp(deltaTime);
-                tmp = true;
+                if(ns->notificationLabel->getPositionX() > screenSize.width)
+                {
+                    ns->slideIn(deltaTime);
+                }
             }
         }
         
-        if(i == eventLabels->count() - 1)
+        if(slideOut)
         {
-            if(ns->notificationLabel->getPositionX() > screenSize.width && slideIn)
+            if(i == 0)
             {
-                ns->slideIn(deltaTime);
+                if(ns->notificationLabel->getPositionX() < screenSize.width + ns->borderX)
+                {
+                    if(ns->slideOut(deltaTime))
+                    {
+                        break;
+                    }
+                }
             }
         }
-        else if(i == 0)
+        
+        if(slideUp)
         {
-            if(ns->notificationLabel->getPositionX() < screenSize.width + ns->borderX && slideOut)
+            ns->slideUp(deltaTime, i);
+            
+            if(i == eventLabels->count() - 1)
             {
-                ns->slideOut(deltaTime);
+                bool tmp = false;
+                
+                for(int j = 0; j < eventLabels->count(); j++)
+                {
+                    NotificationString* tempNS = (NotificationString*) eventLabels->objectAtIndex(i);
+                    tmp = tempNS->isUp;
+                }
+                
+                if(!tmp)
+                {
+                    slideUp = false;
+                }
             }
         }
     }
-    slideUp = tmp;
 }
 
 void GameHUD::createInitialGUI(){
@@ -2406,20 +2446,5 @@ void GameHUD::addStorage(float dt)
 
 void GameHUD::addNewNotification(std::string notificationStr)
 {
-    float height = 0;
-    for (int i = 0; i < eventLabels->count(); i++)
-    {
-        NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
-        height += ns->notificationLabel->boundingBox().size.height;
-    }
-    
-    NotificationString* ns = NotificationString::create("This is a test notification!", height);
-    ns->scheduleSlideIn();
-    eventLabels->addObject(ns);
-    
-    slideIn = true;
-    if(eventLabels->count() > numberOfEventsToDisplay)
-    {
-        slideOut = true;
-    }
+    notificationToBeScheduled.push_back(notificationStr);
 }

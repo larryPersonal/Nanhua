@@ -498,7 +498,7 @@ void SpriteHandler::update(float dt)
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
             GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-            gs->getPossessions()->happinessRating = 70;
+            gs->getPossessions()->happinessRating = 2;
         }
     }
     else

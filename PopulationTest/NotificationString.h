@@ -19,6 +19,8 @@ public:
     float borderX;
     float borderY;
     float startY;
+    bool isUp;
+    float cumulativeTime;
     
 public:
     static NotificationString* create(std::string, float);
@@ -30,8 +32,9 @@ public:
     void scheduleSlideUp();
     
     void slideIn(float);
-    void slideOut(float);
-    void slideUp(float);
+    bool slideOut(float);
+    void slideUp(float, int);
+    void update(float);
 };
 
 #endif
