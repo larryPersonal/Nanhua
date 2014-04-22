@@ -90,31 +90,31 @@ bool SenarioChooseScene::init()
     senarioButtonTutorial->addChild(tutorialLabel);
     tutorialLabel->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel1 = CCLabelTTF::create("Senario 1", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* senarioLabel1 = CCLabelTTF::create("Scenario 1", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel1->setAnchorPoint(ccp(0.5f, 0.5));
     senarioLabel1->setPosition( ccp(senarioButtonS1->boundingBox().size.width * 0.5f, senarioButtonS1->boundingBox().size.height * 0.5f));
     senarioButtonS1->addChild(senarioLabel1);
     senarioLabel1->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel2 = CCLabelTTF::create("Senario 2", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* senarioLabel2 = CCLabelTTF::create("Scenario 2", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel2->setAnchorPoint(ccp(0.5f, 0.5));
     senarioLabel2->setPosition( ccp(senarioButtonS2->boundingBox().size.width * 0.5f, senarioButtonS2->boundingBox().size.height * 0.5f));
     senarioButtonS2->addChild(senarioLabel2);
     senarioLabel2->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel3 = CCLabelTTF::create("Senario 3", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* senarioLabel3 = CCLabelTTF::create("Scenario 3", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel3->setAnchorPoint(ccp(0.5f, 0.5));
     senarioLabel3->setPosition( ccp(senarioButtonS3->boundingBox().size.width * 0.5f, senarioButtonS3->boundingBox().size.height * 0.5f));
     senarioButtonS3->addChild(senarioLabel3);
     senarioLabel3->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel4 = CCLabelTTF::create("Senario 4", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* senarioLabel4 = CCLabelTTF::create("Scenario 4", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel4->setAnchorPoint(ccp(0.5f, 0.5));
     senarioLabel4->setPosition( ccp(senarioButtonS4->boundingBox().size.width * 0.5f, senarioButtonS4->boundingBox().size.height * 0.5f));
     senarioButtonS4->addChild(senarioLabel4);
     senarioLabel4->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel5 = CCLabelTTF::create("Senario 5", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* senarioLabel5 = CCLabelTTF::create("Scenario 5", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel5->setAnchorPoint(ccp(0.5f, 0.5));
     senarioLabel5->setPosition( ccp(senarioButtonS5->boundingBox().size.width * 0.5f, senarioButtonS5->boundingBox().size.height * 0.5f));
     senarioButtonS5->addChild(senarioLabel5);

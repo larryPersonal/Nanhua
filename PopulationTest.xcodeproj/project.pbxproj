@@ -507,6 +507,19 @@
 		8421158518D2C4DD00A441D0 /* ticksign.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421156818D2C4DD00A441D0 /* ticksign.png */; };
 		8421158618D2C4DD00A441D0 /* timeclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421156918D2C4DD00A441D0 /* timeclock.png */; };
 		8421158B18D2F02D00A441D0 /* upgrade.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421158A18D2F02D00A441D0 /* upgrade.png */; };
+		842B84C519064FCF00D43E2E /* ingamedragonanim.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84C419064FCF00D43E2E /* ingamedragonanim.png */; };
+		842B84C81906599800D43E2E /* ingamedragonanimwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84C61906599800D43E2E /* ingamedragonanimwhite.png */; };
+		842B84C91906599800D43E2E /* objectiveScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84C71906599800D43E2E /* objectiveScreen.png */; };
+		842B84CC190662C200D43E2E /* igamechar_boy.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84CA190662C200D43E2E /* igamechar_boy.png */; };
+		842B84CD190662C200D43E2E /* ingame_chargirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84CB190662C200D43E2E /* ingame_chargirl.png */; };
+		842B84D119066AC600D43E2E /* autumtimeclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84CE19066AC600D43E2E /* autumtimeclock.png */; };
+		842B84D219066AC600D43E2E /* summertimeclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84CF19066AC600D43E2E /* summertimeclock.png */; };
+		842B84D319066AC600D43E2E /* springtimeclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84D019066AC600D43E2E /* springtimeclock.png */; };
+		842B84D619066DCE00D43E2E /* ren_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84D419066DCE00D43E2E /* ren_icon.png */; };
+		842B84D719066DCE00D43E2E /* yellow_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84D519066DCE00D43E2E /* yellow_icon.png */; };
+		842B84D9190674DB00D43E2E /* food_label.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84D8190674DB00D43E2E /* food_label.png */; };
+		842B84DB190674DE00D43E2E /* money_label.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84DA190674DE00D43E2E /* money_label.png */; };
+		842B84DD1906795100D43E2E /* amount_ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84DC1906795100D43E2E /* amount_ui.png */; };
 		842BAFFD18EBB0B5006FE297 /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = 842BAFFC18EBB0B5006FE297 /* black.png */; };
 		842BB00018EBB426006FE297 /* Narrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 842BAFFF18EBB426006FE297 /* Narrator.cpp */; };
 		842CCC6C18ED1DA8007C5C24 /* GlobalOutcomeModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 842CCC6B18ED1DA8007C5C24 /* GlobalOutcomeModifier.cpp */; };
@@ -1509,6 +1522,19 @@
 		8421156B18D2C4DD00A441D0 /* yuanbao_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao_icon.png; sourceTree = "<group>"; };
 		8421156C18D2C4DD00A441D0 /* yuanbao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao.png; sourceTree = "<group>"; };
 		8421158A18D2F02D00A441D0 /* upgrade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upgrade.png; sourceTree = "<group>"; };
+		842B84C419064FCF00D43E2E /* ingamedragonanim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ingamedragonanim.png; sourceTree = "<group>"; };
+		842B84C61906599800D43E2E /* ingamedragonanimwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ingamedragonanimwhite.png; sourceTree = "<group>"; };
+		842B84C71906599800D43E2E /* objectiveScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = objectiveScreen.png; sourceTree = "<group>"; };
+		842B84CA190662C200D43E2E /* igamechar_boy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = igamechar_boy.png; sourceTree = "<group>"; };
+		842B84CB190662C200D43E2E /* ingame_chargirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ingame_chargirl.png; sourceTree = "<group>"; };
+		842B84CE19066AC600D43E2E /* autumtimeclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = autumtimeclock.png; sourceTree = "<group>"; };
+		842B84CF19066AC600D43E2E /* summertimeclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = summertimeclock.png; sourceTree = "<group>"; };
+		842B84D019066AC600D43E2E /* springtimeclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = springtimeclock.png; sourceTree = "<group>"; };
+		842B84D419066DCE00D43E2E /* ren_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ren_icon.png; sourceTree = "<group>"; };
+		842B84D519066DCE00D43E2E /* yellow_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_icon.png; sourceTree = "<group>"; };
+		842B84D8190674DB00D43E2E /* food_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = food_label.png; sourceTree = "<group>"; };
+		842B84DA190674DE00D43E2E /* money_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = money_label.png; sourceTree = "<group>"; };
+		842B84DC1906795100D43E2E /* amount_ui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amount_ui.png; sourceTree = "<group>"; };
 		842BAFFC18EBB0B5006FE297 /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		842BAFFE18EBB3AD006FE297 /* Narrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Narrator.h; sourceTree = "<group>"; };
 		842BAFFF18EBB426006FE297 /* Narrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Narrator.cpp; sourceTree = "<group>"; };
@@ -3141,6 +3167,19 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				842B84DC1906795100D43E2E /* amount_ui.png */,
+				842B84DA190674DE00D43E2E /* money_label.png */,
+				842B84D8190674DB00D43E2E /* food_label.png */,
+				842B84D419066DCE00D43E2E /* ren_icon.png */,
+				842B84D519066DCE00D43E2E /* yellow_icon.png */,
+				842B84CE19066AC600D43E2E /* autumtimeclock.png */,
+				842B84CF19066AC600D43E2E /* summertimeclock.png */,
+				842B84D019066AC600D43E2E /* springtimeclock.png */,
+				842B84CA190662C200D43E2E /* igamechar_boy.png */,
+				842B84CB190662C200D43E2E /* ingame_chargirl.png */,
+				842B84C61906599800D43E2E /* ingamedragonanimwhite.png */,
+				842B84C71906599800D43E2E /* objectiveScreen.png */,
+				842B84C419064FCF00D43E2E /* ingamedragonanim.png */,
 				848DDAF919050B4A001229B8 /* arrowupanddown.png */,
 				8414CF2F18FFEB5B0052CA91 /* greatwall-256x512.png */,
 				8414CF2D18FFEB250052CA91 /* guardtower anim.png */,
@@ -3207,8 +3246,8 @@
 				8412CA4A18AC8D4A00AF4645 /* time_indicator-week-3.png */,
 				8412CA4B18AC8D4A00AF4645 /* time_indicator-week-2.png */,
 				8412CA4C18AC8D4A00AF4645 /* time-indicator-week-1.png */,
-				8412CA4D18AC8D4A00AF4645 /* time_spring-bg.png */,
 				8412CA4E18AC8D4A00AF4645 /* time_summer-bg.png */,
+				8412CA4D18AC8D4A00AF4645 /* time_spring-bg.png */,
 				8412CA4F18AC8D4A00AF4645 /* time_autumn-bg.png */,
 				8412CA5018AC8D4A00AF4645 /* time_winter-bg.png */,
 				8412CA5118AC8D4A00AF4645 /* build-menu_goldreq.png */,
@@ -3879,8 +3918,10 @@
 				3608CB061704343E00AB65A3 /* MaleFarmer.plist in Resources */,
 				84EDD26918C6E7A8003BAF5E /* system.png in Resources */,
 				84360A3218B21FED002EC8C2 /* assign_menu_filled.png in Resources */,
+				842B84D119066AC600D43E2E /* autumtimeclock.png in Resources */,
 				3608CB071704343E00AB65A3 /* FemaleFarmer.png in Resources */,
 				84360A3018B21FED002EC8C2 /* assign_menu_accept.png in Resources */,
+				842B84C81906599800D43E2E /* ingamedragonanimwhite.png in Resources */,
 				36AC556F18D6981900C165F5 /* scroller.png in Resources */,
 				84F2912318FE307D0045F834 /* timeclock_week4.png in Resources */,
 				3608CB081704343E00AB65A3 /* MaleBandit.plist in Resources */,
@@ -3898,6 +3939,7 @@
 				36AC558818D69A0100C165F5 /* press_options.png in Resources */,
 				84F2912918FE51240045F834 /* loading.png in Resources */,
 				36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */,
+				842B84C91906599800D43E2E /* objectiveScreen.png in Resources */,
 				84315337187CFA8200F5B5E2 /* blue square.png in Resources */,
 				36D87CF118C5BA3100FE8B31 /* liubei_c.png in Resources */,
 				36D87D0E18C5BEFD00FE8B31 /* YoungGirl.png in Resources */,
@@ -3963,6 +4005,7 @@
 				8410544618E90DA7003D88C6 /* hungry3.png in Resources */,
 				848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */,
 				3619CAE317A6599400B59924 /* button-up.png in Resources */,
+				842B84CC190662C200D43E2E /* igamechar_boy.png in Resources */,
 				8410546018E94ECB003D88C6 /* exitpressbtn.png in Resources */,
 				843E973518DAEB3A00DBB48D /* dragon_c.png in Resources */,
 				3619CAE417A6599400B59924 /* button-down.png in Resources */,
@@ -3985,10 +4028,12 @@
 				8412CA5F18AC8D4A00AF4645 /* time_indicator-week-2.png in Resources */,
 				843B18DA18F2A4FA00C00490 /* infor display ui.png in Resources */,
 				8437DA9318895D4D00B93FEF /* farm.png in Resources */,
+				842B84C519064FCF00D43E2E /* ingamedragonanim.png in Resources */,
 				8412CA6718AC8D4A00AF4645 /* build-menu_worker-req.png in Resources */,
 				3617292D17AA543B00D2558E /* loadingbar-left.png in Resources */,
 				8412CA6318AC8D4A00AF4645 /* time_autumn-bg.png in Resources */,
 				84F9B76718D9415200579060 /* Ishikari Lore.mp3 in Resources */,
+				842B84D9190674DB00D43E2E /* food_label.png in Resources */,
 				3617292E17AA543B00D2558E /* loadingbar-right.png in Resources */,
 				8421158618D2C4DD00A441D0 /* timeclock.png in Resources */,
 				3617293117AA596900D2558E /* nav button.png in Resources */,
@@ -4006,6 +4051,7 @@
 				8414CF2E18FFEB250052CA91 /* guardtower anim.png in Resources */,
 				36AC556A18D6981900C165F5 /* population_amount.png in Resources */,
 				84589CE21896655500AA9E1C /* conversation_textbox_empty_right.png in Resources */,
+				842B84D319066AC600D43E2E /* springtimeclock.png in Resources */,
 				3658DD7818D6F1430056B895 /* MaleYoungVillager.png in Resources */,
 				84509B7D18879C2900EF8BD8 /* cancel.png in Resources */,
 				843E972F18DA95AC00DBB48D /* MaleBandit_port.png in Resources */,
@@ -4031,16 +4077,19 @@
 				360496E817AB49DC00CACE25 /* merchant-icon.png in Resources */,
 				3658DD7618D6F1430056B895 /* Soldier.png in Resources */,
 				84F2911B18FE2F030045F834 /* optionmenubutton.png in Resources */,
+				842B84D719066DCE00D43E2E /* yellow_icon.png in Resources */,
 				8410543F18E90DA7003D88C6 /* stuck3.png in Resources */,
 				8497F6EB18F3D54B00838503 /* sortbtn.png in Resources */,
 				360496E917AB49DC00CACE25 /* militia-icon.png in Resources */,
 				360496EA17AB49DC00CACE25 /* money icon.png in Resources */,
 				360496EB17AB49DC00CACE25 /* social icon.png in Resources */,
 				360496EE17AB4CC400CACE25 /* hint left.png in Resources */,
+				842B84CD190662C200D43E2E /* ingame_chargirl.png in Resources */,
 				84589CE61896758900AA9E1C /* nextButton.png in Resources */,
 				360496EF17AB4CC400CACE25 /* hint right.png in Resources */,
 				360496F117AB5A9600CACE25 /* vacancy slot.png in Resources */,
 				360496F317AB5E4100CACE25 /* vacancy slot overload.png in Resources */,
+				842B84D219066AC600D43E2E /* summertimeclock.png in Resources */,
 				36B18A8118A0A6A700A8B515 /* CMakeLists.txt in Resources */,
 				84CFAEDF18E034E900A81C94 /* timeclock0.png in Resources */,
 				36AC558218D69A0100C165F5 /* start.png in Resources */,
@@ -4068,6 +4117,7 @@
 				3604970117AB8A6C00CACE25 /* innerbox-policy.png in Resources */,
 				8421157C18D2C4DD00A441D0 /* objective_content.png in Resources */,
 				8412CA6118AC8D4A00AF4645 /* time_spring-bg.png in Resources */,
+				842B84DB190674DE00D43E2E /* money_label.png in Resources */,
 				3604970617AB942700CACE25 /* arrow-down.png in Resources */,
 				3604970717AB942700CACE25 /* arrow-down2.png in Resources */,
 				8412CA6018AC8D4A00AF4645 /* time-indicator-week-1.png in Resources */,
@@ -4101,12 +4151,14 @@
 				36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */,
 				36AC555A18D6981900C165F5 /* allocatebtn-press.png in Resources */,
 				84C97AFE18DFD87D00640CE8 /* banditicon.png in Resources */,
+				842B84D619066DCE00D43E2E /* ren_icon.png in Resources */,
 				3604971017AB96BC00CACE25 /* jobbutton_pressed.png in Resources */,
 				84F2912518FE36770045F834 /* population_amount1.png in Resources */,
 				84CFAEE018E034E900A81C94 /* timeclockyellow.png in Resources */,
 				8414CF2C18FFEAD40052CA91 /* river_anim_w_fish.png in Resources */,
 				8444E4E918D6DCAD00BD5F63 /* schedule.png in Resources */,
 				3658DD7F18D6F1430056B895 /* char1MMC.png in Resources */,
+				842B84DD1906795100D43E2E /* amount_ui.png in Resources */,
 				843E973218DAEB2F00DBB48D /* studentboy_c.png in Resources */,
 				8421157818D2C4DD00A441D0 /* info_btn.png in Resources */,
 				843E972D18DA94F100DBB48D /* Soldier_port.png in Resources */,
@@ -4565,8 +4617,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4600,7 +4652,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -4613,8 +4665,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PopUlationTest/Prefix.pch;
@@ -4647,7 +4699,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "3BF04C8E-9812-409E-A4AB-37603174BDF7";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

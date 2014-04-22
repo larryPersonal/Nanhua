@@ -915,9 +915,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             }
             
             // check the info label
-            if(GameHUD::getThis() != NULL && GameHUD::getThis()->moneyIcon != NULL)
+            if(GameHUD::getThis() != NULL && GameHUD::getThis()->moneyIcon != NULL && GameHUD::getThis()->moneyBackground != NULL)
             {
-                if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc) || GameHUD::getThis()->moneyBackground->boundingBox().containsPoint(touchLoc))
                 {
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockGoldLabel)
                     {
@@ -931,9 +931,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            if(GameHUD::getThis() != NULL && GameHUD::getThis()->foodIcon != NULL)
+            if(GameHUD::getThis() != NULL && GameHUD::getThis()->foodIcon != NULL && GameHUD::getThis()->foodBackground != NULL)
             {
-                if(GameHUD::getThis()->foodIcon->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->foodIcon->boundingBox().containsPoint(touchLoc) || GameHUD::getThis()->foodBackground->boundingBox().containsPoint(touchLoc))
                 {
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockFoodLabel)
                     {
@@ -947,9 +947,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            if(GameHUD::getThis() != NULL && GameHUD::getThis()->populationIcon != NULL)
+            if(GameHUD::getThis() != NULL && GameHUD::getThis()->populationIcon != NULL && GameHUD::getThis()->populationBackground != NULL)
             {
-                if(GameHUD::getThis()->populationIcon->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->populationIcon->boundingBox().containsPoint(touchLoc) || GameHUD::getThis()->populationBackground->boundingBox().containsPoint(touchLoc))
                 {
                     if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockPopulationLabel)
                     {
