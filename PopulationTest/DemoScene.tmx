@@ -1273,7 +1273,7 @@
   </tile>
  </tileset>
  <tileset firstgid="144" name="guardtower-anim" tilewidth="256" tileheight="256">
-  <tileoffset x="-64" y="64"/>
+  <tileoffset x="-128" y="128"/>
   <image source="guardtower anim.png" width="1024" height="1024"/>
   <tile id="0">
    <properties>
@@ -1306,6 +1306,66 @@
    </properties>
   </tile>
   <tile id="1">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
    <properties>
     <property name="ignore_this_blank" value=""/>
    </properties>
@@ -1393,6 +1453,205 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="176" name="SchoolAnimDog" tilewidth="384" tileheight="384">
+  <tileoffset x="-128" y="128"/>
+  <image source="school_anim_dog.png" width="2048" height="4096"/>
+  <tile id="0">
+   <properties>
+    <property name="anim_frames" value="34"/>
+    <property name="build_time" value="30"/>
+    <property name="build_uint_required" value="5000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="education"/>
+    <property name="cost" value="1200"/>
+    <property name="description" value="Educate your peaple"/>
+    <property name="food_consumption_rate" value=""/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="School"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="0"/>
+    <property name="req_building_count" value="15"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="15"/>
+    <property name="research_cost" value="300"/>
+    <property name="storage" value="0"/>
+    <property name="storage_limit" value="0"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value="0"/>
+    <property name="work_unit_required" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="ignore_this_blank" value=""/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Ground_0" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
@@ -1467,7 +1726,7 @@
  </layer>
  <layer name="Building_GuardTower" width="90" height="60">
   <properties>
-   <property name="number_of_tiles" value="2"/>
+   <property name="number_of_tiles" value="14"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
@@ -1490,6 +1749,15 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJzt1DEKgEAMBMB7vIKg/tlGH6BEIutMkypkiyVjAAAAAADAv+3dAaDQ3B0ACukzSfSZJGt3ACjkP5NEn0mizyTRZ960nXO6OZeHe9c9AAAAAAAAAADgmw40xQyM
+  </data>
+ </layer>
+ <layer name="Building_School" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="34"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztzgEJAAAMA6D1T/OIjzEGmsAEAAAAAAAAoOfaAQAAAAAAAAAAAAAAAAAY95zaALE=
   </data>
  </layer>
 </map>

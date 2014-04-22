@@ -520,6 +520,7 @@
 		842B84D9190674DB00D43E2E /* food_label.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84D8190674DB00D43E2E /* food_label.png */; };
 		842B84DB190674DE00D43E2E /* money_label.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84DA190674DE00D43E2E /* money_label.png */; };
 		842B84DD1906795100D43E2E /* amount_ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84DC1906795100D43E2E /* amount_ui.png */; };
+		842B84DF1906881C00D43E2E /* school_anim_dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84DE1906881C00D43E2E /* school_anim_dog.png */; };
 		842BAFFD18EBB0B5006FE297 /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = 842BAFFC18EBB0B5006FE297 /* black.png */; };
 		842BB00018EBB426006FE297 /* Narrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 842BAFFF18EBB426006FE297 /* Narrator.cpp */; };
 		842CCC6C18ED1DA8007C5C24 /* GlobalOutcomeModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 842CCC6B18ED1DA8007C5C24 /* GlobalOutcomeModifier.cpp */; };
@@ -1535,6 +1536,7 @@
 		842B84D8190674DB00D43E2E /* food_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = food_label.png; sourceTree = "<group>"; };
 		842B84DA190674DE00D43E2E /* money_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = money_label.png; sourceTree = "<group>"; };
 		842B84DC1906795100D43E2E /* amount_ui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amount_ui.png; sourceTree = "<group>"; };
+		842B84DE1906881C00D43E2E /* school_anim_dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = school_anim_dog.png; sourceTree = "<group>"; };
 		842BAFFC18EBB0B5006FE297 /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		842BAFFE18EBB3AD006FE297 /* Narrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Narrator.h; sourceTree = "<group>"; };
 		842BAFFF18EBB426006FE297 /* Narrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Narrator.cpp; sourceTree = "<group>"; };
@@ -3167,6 +3169,7 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				842B84DE1906881C00D43E2E /* school_anim_dog.png */,
 				842B84DC1906795100D43E2E /* amount_ui.png */,
 				842B84DA190674DE00D43E2E /* money_label.png */,
 				842B84D8190674DB00D43E2E /* food_label.png */,
@@ -3893,6 +3896,7 @@
 				3658DD8018D6F1430056B895 /* char1MMC_currentlyinworking.png in Resources */,
 				843689F918DBF1A200FA08FF /* Full_Scene.tmx in Resources */,
 				36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */,
+				842B84DF1906881C00D43E2E /* school_anim_dog.png in Resources */,
 				3658DD8218D6F31E0056B895 /* Soldier.plist in Resources */,
 				3608CAFE1704343E00AB65A3 /* YoungGirl.plist in Resources */,
 				8414CF2618FFC5EB0052CA91 /* buildmenu.png in Resources */,
