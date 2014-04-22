@@ -439,7 +439,7 @@ void GameHUD::update(float deltaTime)
                 break;
 
         }
-        
+        //tapModeLabel->setString(ss.str().c_str());
         if(GameScene::getThis()->systemConfig->debugMode)
         {
             tapModeLabel->setString(ss.str().c_str());

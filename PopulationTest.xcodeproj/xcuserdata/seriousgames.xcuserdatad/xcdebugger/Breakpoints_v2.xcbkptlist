@@ -740,12 +740,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "418274857.299172"
+            timestampString = "419834218.259811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
-            landmarkName = "GameHUD::onSpriteAddedToMap(GameSprite* sprite)"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
+            landmarkName = "GameHUD::update(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1801,7 +1801,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "179"
             endingLineNumber = "179"
-            landmarkName = "GameHUD::update(float deltaTime)"
+            landmarkName = "GameHUD::create()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2247,7 +2247,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "GameHUD::update(float deltaTime)"
+            landmarkName = "GameHUD::setAllStats()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3094,9 +3094,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "SpeechBubble::show(float time)"
-            landmarkType = "5">
+            endingLineNumber = "59">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3111,7 +3109,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
             endingLineNumber = "24"
-            landmarkName = "SpeechBubble::createSpeechBubble()"
+            landmarkName = "SpeechBubble::SpeechBubble()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3512,12 +3510,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "418274857.299172"
+            timestampString = "419834218.259811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "997"
-            endingLineNumber = "997"
-            landmarkName = "GameHUD::clickObjectiveButton()"
+            startingLineNumber = "993"
+            endingLineNumber = "993"
+            landmarkName = "GameHUD::timeGroupReposition()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3528,12 +3526,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "418274857.299172"
+            timestampString = "419834218.259811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "976"
-            endingLineNumber = "976"
-            landmarkName = "GameHUD::fadeOut(float dt)"
+            startingLineNumber = "972"
+            endingLineNumber = "972"
+            landmarkName = "GameHUD::createTimeMenu()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3544,29 +3542,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "418274857.299172"
+            timestampString = "419834218.259811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "979"
+            endingLineNumber = "979"
+            landmarkName = "GameHUD::createTimeMenu()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/GameHUD.cpp"
+            timestampString = "419834218.259811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
-            endingLineNumber = "983"
-            landmarkName = "GameHUD::fadeOut(float dt)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "418274857.299172"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "987"
-            endingLineNumber = "987"
-            landmarkName = "GameHUD::fadeOut(float dt)"
-            landmarkType = "5">
+            endingLineNumber = "983">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3615,6 +3611,29 @@
             endingLineNumber = "490"
             landmarkName = "MapHandler::Populate(CCArray* layers)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/BuilderCFG.h"
+            timestampString = "419758945.881922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.AddressBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "*0xbfffd388">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
