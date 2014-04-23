@@ -46,6 +46,8 @@ public:
     
     static vector<std::string> split(std::string, char);
     static bool compareCCPoint(CCPoint, CCPoint);
+    
+    static float getDirectDistance(CCPoint startPos, CCPoint endPos);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */
