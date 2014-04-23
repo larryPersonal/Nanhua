@@ -70,6 +70,7 @@ ReputationOrb::ReputationOrb(std::string spriteStr, float tTime)
     triggerTime = tTime;
     disappear = false;
     stopAnimation = false;
+    collected = false;
 }
 
 ReputationOrb::~ReputationOrb()
@@ -84,7 +85,7 @@ CCSprite* ReputationOrb::getSprite()
 
 void ReputationOrb::update(float dt)
 {
-    if(!stopAnimation)
+      if(!stopAnimation)
     {
         if(!disappear)
         {

@@ -37,6 +37,7 @@ public:
     float cumulativeTime;
     float triggerTime;
     bool disappear;
+    bool collected;
     bool stopAnimation;
     
 public:
