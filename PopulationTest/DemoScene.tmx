@@ -157,31 +157,7 @@
   <image source="building2x2.png" width="1024" height="512"/>
   <tile id="0">
    <properties>
-    <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="1000"/>
-    <property name="builder_limit" value="3"/>
-    <property name="building_type" value="granary"/>
-    <property name="cost" value="100"/>
-    <property name="description" value="Granary for storing food!"/>
-    <property name="food_consumption_rate" value="1"/>
-    <property name="jobs_available" value="0"/>
-    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-    <property name="level_gain_cost" value="2:50, 4:50"/>
-    <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Granary"/>
-    <property name="population_limit" value="0"/>
-    <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="10"/>
-    <property name="req_building_count" value="0"/>
-    <property name="req_capita" value="0"/>
-    <property name="req_population" value="0"/>
-    <property name="research_cost" value=""/>
-    <property name="storage" value="50"/>
-    <property name="storage_limit" value="200"/>
-    <property name="unlocked_at_start" value="yes"/>
-    <property name="upgrade_unit" value="0"/>
-    <property name="work_unit" value=""/>
-    <property name="work_unit_required" value=""/>
+    <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
   <tile id="1">
@@ -940,45 +916,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="130" name="GuardTower" tilewidth="128" tileheight="128">
-  <image source="guardtower.png" width="256" height="128"/>
-  <tile id="0">
-   <properties>
-    <property name="anim_frames" value="2"/>
-    <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="100"/>
-    <property name="builder_limit" value="3"/>
-    <property name="building_type" value="military"/>
-    <property name="cost" value="300"/>
-    <property name="description" value="Protect Your Town"/>
-    <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="1"/>
-    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-    <property name="level_gain_cost" value="2:50, 4:50"/>
-    <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Guard Tower"/>
-    <property name="population_limit" value="0"/>
-    <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="0"/>
-    <property name="req_building_count" value="15"/>
-    <property name="req_capita" value="0"/>
-    <property name="req_population" value="15"/>
-    <property name="research_cost" value="300"/>
-    <property name="storage" value="0"/>
-    <property name="storage_limit" value="0"/>
-    <property name="unlocked_at_start" value="yes"/>
-    <property name="upgrade_unit" value="0"/>
-    <property name="work_unit" value="0"/>
-    <property name="work_unit_required" value="0"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="132" name="latestgreatwall" tilewidth="256" tileheight="512">
+ <tileset firstgid="130" name="latestgreatwall" tilewidth="256" tileheight="512">
   <tileoffset x="-64" y="128"/>
   <image source="greatwall-256x512.png" width="1024" height="1536"/>
   <tile id="0">
@@ -1272,8 +1210,8 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="144" name="guardtower-anim" tilewidth="256" tileheight="256">
-  <tileoffset x="-128" y="128"/>
+ <tileset firstgid="142" name="guardtower-anim" tilewidth="256" tileheight="256">
+  <tileoffset x="-64" y="64"/>
   <image source="guardtower anim.png" width="1024" height="1024"/>
   <tile id="0">
    <properties>
@@ -1371,7 +1309,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="160" name="river_anim_w_fish" tilewidth="1024" tileheight="1024">
+ <tileset firstgid="158" name="river_anim_w_fish" tilewidth="1024" tileheight="1024">
   <tileoffset x="-454" y="454"/>
   <image source="river_anim_w_fish.png" width="4096" height="4096"/>
   <tile id="0">
@@ -1453,7 +1391,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="176" name="SchoolAnimDog" tilewidth="384" tileheight="384">
+ <tileset firstgid="174" name="SchoolAnimDog" tilewidth="384" tileheight="384">
   <tileoffset x="-128" y="128"/>
   <image source="school_anim_dog.png" width="2048" height="4096"/>
   <tile id="0">
@@ -1652,6 +1590,40 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="224" name="Granary" tilewidth="256" tileheight="256">
+  <tileoffset x="-64" y="64"/>
+  <image source="granary.png" width="1024" height="1024"/>
+  <tile id="0">
+   <properties>
+    <property name="anim_frames" value="9"/>
+    <property name="build_time" value="10"/>
+    <property name="build_uint_required" value="1000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="granary"/>
+    <property name="cost" value="100"/>
+    <property name="description" value="Granary for storing food!"/>
+    <property name="food_consumption_rate" value="1"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Granary"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="10"/>
+    <property name="req_building_count" value="0"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="0"/>
+    <property name="research_cost" value=""/>
+    <property name="storage" value="50"/>
+    <property name="storage_limit" value="200"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Ground_0" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
@@ -1676,7 +1648,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzqERwDAAA7HsP4VHLSxroc8XiT75c77lpwMAAK+0BwAAYEjaAwAAMCTtAQAAGJL2AAAADEl7AAAAhqQ9AAAAQ9IeALjUA8GABQE=
+   eJzt1iEBACAQwMDvH4KsSBzMYe7sCmzmbj06AABw+GcAAOj8MwAAdP4ZAAA6/wwAAJ1/BgCAzj8DAEDnnwH+2PNTBPE=
   </data>
  </layer>
  <layer name="Ground_Road" width="90" height="60">
@@ -1712,7 +1684,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzkENAAAIBCBL+LN/zmuhm4METAEAAAAAAADwSV8HAAAAAAAAAAAAAAAAAFgVBOoAMg==
+   eJztwQEJAAAAAqCG9H9nOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2PZwAd
   </data>
  </layer>
  <layer name="Building_3" width="90" height="60">
@@ -1730,7 +1702,11 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
+<<<<<<< HEAD
    eJzt1KEBAAAIw7D9rzgZjUQhSC6oagIAAAAAAAAAAFNdBwA858MAAAAAAAAAAAAAwEYDiHsBIQ==
+=======
+   eJztzqEBAAAIA6D9H7zZvGazwAUkAAAAAAAAAADQ5jsAAAAAAAAAAAAAAADA2QIYrACP
+>>>>>>> 099a4f57228dca1d968495ea4ec88619b375ecc5
   </data>
  </layer>
  <layer name="Building_Border" width="90" height="60">
@@ -1748,7 +1724,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1DEKgEAMBMB7vIKg/tlGH6BEIutMkypkiyVjAAAAAADAv+3dAaDQ3B0ACukzSfSZJGt3ACjkP5NEn0mizyTRZ960nXO6OZeHe9c9AAAAAAAAAADgmw40xQyM
+   eJzt1DEKgEAMBMB7u4KgftpGH6BEIutMkypkiyVjAAAAAADAv+3dAaDQ3B0ACukzSfSZJGt3ACjkP5NEn0mizyTRZ960nXO6OZeHe9c9AAAAAAAAAADgmw513Qxc
   </data>
  </layer>
  <layer name="Building_School" width="90" height="60">
@@ -1757,7 +1733,16 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgEJAAAMA6D1T/OIjzEGmsAEAAAAAAAAoOfaAQAAAAAAAAAAAAAAAAAY95zaALE=
+   eJztzgEJAAAMA6D1D/OMjzEGmsAEAAAAAAAAoOfaAQAAAAAAAAAAAAAAAAAY9y2CAK8=
+  </data>
+ </layer>
+ <layer name="Building_Granary" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="9"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6D3T2kUW9zNQQISAAAAAAAAAD6Z6wAAAAAAAAAAAAAAAAAAVQvkIQDh
   </data>
  </layer>
 </map>

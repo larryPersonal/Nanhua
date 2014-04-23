@@ -395,6 +395,7 @@
 		36C3A80518F77E7200C93E6B /* tokenanim.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80418F77E7200C93E6B /* tokenanim.png */; };
 		36C3A80718F7E16300C93E6B /* GIL_____.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80618F7DE9100C93E6B /* GIL_____.TTF */; };
 		36C3A80B18F8000700C93E6B /* toony_loons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C3A80A18F7FF8F00C93E6B /* toony_loons.ttf */; };
+		36D0CB4419079BFC001AEBC0 /* granary.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D0CB4319079BFC001AEBC0 /* granary.png */; };
 		36D551F6173788E500C20BBD /* JobCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D551F4173788E500C20BBD /* JobCollection.cpp */; };
 		36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87A6F17BB3F1D00C41D54 /* FMW_port.png */; };
 		36D87CED18C5BA1D00FE8B31 /* bandit_c.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D87CEC18C5BA1D00FE8B31 /* bandit_c.png */; };
@@ -1390,6 +1391,7 @@
 		36C3A80418F77E7200C93E6B /* tokenanim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenanim.png; sourceTree = "<group>"; };
 		36C3A80618F7DE9100C93E6B /* GIL_____.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GIL_____.TTF"; sourceTree = "<group>"; };
 		36C3A80A18F7FF8F00C93E6B /* toony_loons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = toony_loons.ttf; sourceTree = "<group>"; };
+		36D0CB4319079BFC001AEBC0 /* granary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = granary.png; sourceTree = "<group>"; };
 		36D551F4173788E500C20BBD /* JobCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JobCollection.cpp; sourceTree = "<group>"; };
 		36D551F5173788E500C20BBD /* JobCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobCollection.h; sourceTree = "<group>"; };
 		36D551F717378A5100C20BBD /* luafunctions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = luafunctions.txt; sourceTree = "<group>"; };
@@ -1951,6 +1953,7 @@
 			children = (
 				8444D6B7190779DB00D5AFAC /* animation */,
 				362CB65618EBA0B400365A12 /* app_icon.png */,
+				36D0CB4319079BFC001AEBC0 /* granary.png */,
 				84C97AFF18DFF2B100640CE8 /* skip_button.png */,
 				84C97AFD18DFD87D00640CE8 /* banditicon.png */,
 				847309CD18DC0A22001869C6 /* peaceicon.png */,
@@ -4002,7 +4005,11 @@
 				84509B811887CFFF00EF8BD8 /* home.png in Resources */,
 				84360A3418B21FED002EC8C2 /* workers_menu_selectedBG.png in Resources */,
 				8410546818E98A17003D88C6 /* interiorhouse.png in Resources */,
+<<<<<<< HEAD
 				8444D6B41907720C00D5AFAC /* findingbandit.png in Resources */,
+=======
+				36D0CB4419079BFC001AEBC0 /* granary.png in Resources */,
+>>>>>>> 099a4f57228dca1d968495ea4ec88619b375ecc5
 				8412CA6418AC8D4A00AF4645 /* time_winter-bg.png in Resources */,
 				8497F6F118F40B8400838503 /* acceptbtn.png in Resources */,
 				36D87D1418C7146B00FE8B31 /* roads.png in Resources */,
