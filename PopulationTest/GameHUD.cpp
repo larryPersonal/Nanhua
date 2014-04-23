@@ -116,10 +116,35 @@ GameHUD::GameHUD()
     frameWidth = 64;
     frameHeight = 64;
     
+    dragonFrameWidth = 189;
+    dragonFrameHeight = 199;
+    
+    characterFrameWidth = 245;
+    characterFrameHeight = 225;
+    
     xOffset = 0;
     yOffset = 0;
     
+    characterXOffset = 0;
+    characterYOffset = 0;
+    
+    x_frameNo = 0;
+    x_maxFrameNo = 0;
+    
+    character_frameNo = 0;
+    character_maxFrameNo = 0;
+    
+    delay_curr = 0;
+    delay_animFrame = 0;
+    
+    character_delay_curr = 0;
+    character_delay_animFrame = 0;
+    
     emotionTexture = CCTextureCache::sharedTextureCache()->addImage("Happinessicon.png");
+    objectiveButtonTexture = CCTextureCache::sharedTextureCache()->addImage("ingamedragonanim.png");
+    objectiveButtonWhiteTexture = CCTextureCache::sharedTextureCache()->addImage("ingamedragonanimwhite.png");
+    boyTexture = CCTextureCache::sharedTextureCache()->addImage("igamechar_boy.png");
+    girlTexture = CCTextureCache::sharedTextureCache()->addImage("ingame_chargirl.png");
     
     showObjectiveNotification = false;
     
@@ -131,6 +156,8 @@ GameHUD::GameHUD()
     slideIn = false;
     slideUp = false;
     slideOut = false;
+    
+    genderMale = true;
 }
 
 GameHUD::~GameHUD()
@@ -201,6 +228,51 @@ void GameHUD::setAllStats()
 
 void GameHUD::update(float deltaTime)
 {
+    if (delay_curr > 0)
+    {
+        delay_curr -= deltaTime;
+    }
+    else
+    {
+        x_frameNo++;
+        if (x_frameNo >= x_maxFrameNo)
+        {
+            x_frameNo = 0;
+        }
+        
+        xOffset = x_frameNo % 5;
+        yOffset = x_frameNo / 5;
+        
+        objectiveButtonRect.setRect(xOffset * dragonFrameWidth, yOffset * dragonFrameHeight, dragonFrameWidth, dragonFrameHeight);
+        objectiveButton->setTextureRect(objectiveButtonRect);
+        
+        objectiveButtonBlueRect.setRect(xOffset * dragonFrameWidth, yOffset * dragonFrameHeight, dragonFrameWidth, dragonFrameHeight);
+        objectiveButtonBlue->setTextureRect(objectiveButtonBlueRect);
+        
+        delay_curr = delay_animFrame;
+    }
+    
+    if (character_delay_curr > 0)
+    {
+        character_delay_curr -= deltaTime;
+    }
+    else
+    {
+        character_frameNo++;
+        if (character_frameNo >= character_maxFrameNo)
+        {
+            character_frameNo = 0;
+        }
+        
+        characterXOffset = character_frameNo % 4;
+        characterYOffset = character_frameNo / 4;
+        
+        characterRect.setRect(characterXOffset * characterFrameWidth, characterYOffset * characterFrameHeight, characterFrameWidth, characterFrameHeight);
+        statsMenu->setTextureRect(characterRect);
+        
+        character_delay_curr = character_delay_animFrame;
+    }
+    
     if(!pause)
     {
         // update date
@@ -287,19 +359,19 @@ void GameHUD::update(float deltaTime)
             if(date->month < 3)
             {
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("springtimeclock.png"));
                 
             }
             else if(date->month < 6)
             {
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("summertimeclock.png"));
                 
             }
             else if(date->month < 9)
             {
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("autumtimeclock.png"));
                 
             }
             else
@@ -782,21 +854,66 @@ void GameHUD::createStatsMenu()
     ccColor3B colorWhite = ccc3(255, 255, 255);
     
     // create the background of the stats menu
+    /*
     statsMenu = CCSprite::create("chargirl_represent.png");
-    CCSize spriteSize = statsMenu->getContentSize();
+    */
+    
+    character_frameNo = 0;
+    
+    if(genderMale)
+    {
+        character_maxFrameNo = 13;
+    }
+    else
+    {
+        character_maxFrameNo = 15;
+    }
+    
+    character_delay_animFrame = 0.1f;
+    character_delay_curr = 0.1f;
+    characterRect = CCRectMake(0, 0, characterFrameWidth, characterFrameHeight);
+    
+    //set the thing to the first frame.
+    if(genderMale)
+    {
+        statsMenu = CCSprite::createWithTexture(boyTexture, characterRect);
+    }
+    else
+    {
+        statsMenu = CCSprite::createWithTexture(girlTexture, characterRect);
+    }
+    
+    CCSize spriteSize = ccp(statsMenu->getContentSize().width * 2.05f, statsMenu->getContentSize().height * 2.05f);
     statsMenu->setScale(screenSize.width / spriteSize.width * 0.25f);
 
     statsMenu->setAnchorPoint(ccp(0, 1));
     statsMenu->setPosition(ccp(0, screenSize.height));
-    this->addChild(statsMenu, 1);
+    this->addChild(statsMenu, 2);
+    
+    reputationBackground = CCSprite::create("yellow_icon.png");
+    reputationBackground->setAnchorPoint(ccp(0, 1));
+    reputationBackground->setScale(0.6f);
+    reputationBackground->setPosition(ccp(60, screenSize.height - 65));
+    this->addChild(reputationBackground, 1);
+    
+    reputationIcon = CCSprite::create("ren_icon.png");
+    reputationIcon->setAnchorPoint(ccp(0, 1));
+    reputationIcon->setScale(0.5f);
+    reputationIcon->setPosition(ccp(76, screenSize.height - 62));
+    this->addChild(reputationIcon, 3);
     
     // create the money indicator
-    moneyIcon = CCSprite::create("yuanbao_amount.png");
-    moneyIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.28f, screenSize.width / spriteSize.width * 0.25f);
-
+    moneyIcon = CCSprite::create("money_label.png");
+    moneyIcon->setScale(0.5f);
     moneyIcon->setAnchorPoint(ccp(0, 1));
     moneyIcon->setPosition(ccp(120, screenSize.height - 8));
     this->addChild(moneyIcon, 2);
+    
+    moneyBackground = CCSprite::create("amount_ui.png");
+    moneyBackground->setScale(0.4f);
+    moneyBackground->setAnchorPoint(ccp(0, 1));
+    moneyBackground->setPosition(ccp(170, screenSize.height - 2));
+    this->addChild(moneyBackground, 1);
     
     std::stringstream ss;
     ss << money << "G";
@@ -804,15 +921,20 @@ void GameHUD::createStatsMenu()
     moneyLabel->setColor(colorWhite);
     moneyLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(moneyLabel, 2);
-    moneyLabel->CCNode::setPosition(285, screenSize.height - 26);
+    moneyLabel->CCNode::setPosition(282, screenSize.height - 22);
     
     // create the food indicator
-    foodIcon = CCSprite::create("rice_amount.png");
-    foodIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.32f, screenSize.width / spriteSize.width * 0.25f);
-
+    foodIcon = CCSprite::create("food_label.png");
+    foodIcon->setScale(moneyIcon->boundingBox().size.height / foodIcon->boundingBox().size.height * 1.1f);
     foodIcon->setAnchorPoint(ccp(0, 1));
-    foodIcon->setPosition(ccp(350, screenSize.height));
+    foodIcon->setPosition(ccp(370, screenSize.height - 8));
     this->addChild(foodIcon, 2);
+    
+    foodBackground = CCSprite::create("amount_ui.png");
+    foodBackground->setScale(moneyBackground->boundingBox().size.width / foodBackground->boundingBox().size.width);
+    foodBackground->setAnchorPoint(ccp(0, 1));
+    foodBackground->setPosition(ccp(380, screenSize.height - 2));
+    this->addChild(foodBackground, 1);
     
     mGameCurrentFood = 0;
     mGameCurrentStorage = 0;
@@ -829,15 +951,20 @@ void GameHUD::createStatsMenu()
     foodLabel->setColor(colorWhite);
     foodLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(foodLabel, 2);
-    foodLabel->CCNode::setPosition(495, screenSize.height - 28);
+    foodLabel->CCNode::setPosition(492, screenSize.height - 22);
     
     // create the population indicator
-    populationIcon = CCSprite::create("population_amount1.png");
-    populationIcon->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.24f, screenSize.width / spriteSize.width * 0.25f);
-
+    populationIcon = CCSprite::create("population_icon.png");
+    populationIcon->setScale(moneyIcon->boundingBox().size.height / populationIcon->boundingBox().size.height * 1.4f);
     populationIcon->setAnchorPoint(ccp(0, 1));
-    populationIcon->setPosition(ccp(565, screenSize.height - 2));
+    populationIcon->setPosition(ccp(580, screenSize.height - 6));
     this->addChild(populationIcon, 2);
+    
+    populationBackground = CCSprite::create("amount_ui.png");
+    populationBackground->setScale(moneyBackground->boundingBox().size.width / populationBackground->boundingBox().size.width);
+    populationBackground->setAnchorPoint(ccp(0, 1));
+    populationBackground->setPosition(ccp(600, screenSize.height - 2));
+    this->addChild(populationBackground, 1);
     
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
@@ -865,7 +992,7 @@ void GameHUD::createStatsMenu()
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(populationLabel, 2);
-    populationLabel->CCNode::setPosition(700, screenSize.height - 28);
+    populationLabel->CCNode::setPosition(705, screenSize.height - 22);
     
     // create the achievements label for the values
     ss.str(std::string());
@@ -874,7 +1001,7 @@ void GameHUD::createStatsMenu()
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
     this->addChild(achivementsLabel, 2);
-    achivementsLabel->CCNode::setPosition(180, screenSize.height - 76);
+    achivementsLabel->CCNode::setPosition(178, screenSize.height - 75);
     
     // showing the average happiness attribute
     average_happiness = 0;
@@ -943,7 +1070,7 @@ void GameHUD::createTimeMenu()
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the time group background
-    string timeBG = "timeclock0.png";
+    string timeBG = "springtimeclock.png";
     timeMenu = CCSprite::create(timeBG.c_str());
     CCSize spriteSize = timeMenu->getContentSize();
     timeMenu->setAnchorPoint(ccp(1, 1));
@@ -1125,20 +1252,37 @@ void GameHUD::createObjectiveMenu()
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the objective group background
-    string objectiveBackground = "objective.png";
+    string objectiveBackground = "objectiveScreen.png";
     objectiveMenu = CCSprite::create(objectiveBackground.c_str());
     CCSize spriteSize = objectiveMenu->getContentSize();
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0.0, 1.0));
     objectiveMenu->setScale(screenSize.width / spriteSize.width * 0.35f);
-    objectiveMenu->setPosition(ccp(screenSize.width * 0.015f - 1000, screenSize.height - 115.0f));
+    objectiveMenu->setPosition(ccp(screenSize.width * 0.04f - 1000, screenSize.height - 145.0f));
     
     // create the objective button
-    objectiveButton = CCSprite::create("objective-menu-button_06.png");
+    x_frameNo = 0;
+    x_maxFrameNo = 14;
+    delay_animFrame = 0.1f;
+    delay_curr = 0.1f;
+    objectiveButtonRect = CCRectMake(0, 0,  dragonFrameWidth, dragonFrameHeight);
+    objectiveButtonBlueRect = CCRectMake(0, 0, dragonFrameWidth, dragonFrameHeight);
+    
+    //set the thing to the first frame.
+    objectiveButton = CCSprite::createWithTexture(objectiveButtonWhiteTexture, objectiveButtonRect);
+    
     objectiveButton->setAnchorPoint(ccp(0, 1));
     objectiveButton->setScale(screenSize.width / spriteSize.width * 0.35f);
     objectiveButton->setPosition(ccp(15, screenSize.height - 113));
-    this->addChild(objectiveButton, 5);
+    this->addChild(objectiveButton, 7);
+    
+    objectiveButtonBlue = CCSprite::createWithTexture(objectiveButtonTexture, objectiveButtonBlueRect);
+    
+    objectiveButtonBlue->setAnchorPoint(ccp(0, 1));
+    objectiveButtonBlue->setScale(screenSize.width / spriteSize.width * 0.35f);
+    objectiveButtonBlue->setPosition(ccp(15, screenSize.height -113));
+    objectiveButtonBlue->setOpacity((GLubyte) 0);
+    this->addChild(objectiveButtonBlue, 8);
     
     // create the objective title and objective strings!
     stringstream ss;
@@ -1146,7 +1290,7 @@ void GameHUD::createObjectiveMenu()
     objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
     objectiveTitle->setColor(colorBlack);
-    objectiveTitle->setPosition(ccp(screenSize.width * 0.28f + objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 480));
+    objectiveTitle->setPosition(ccp(screenSize.width * 0.22f + objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 480));
     
     ss.str(std::string());
     ss << "Description";
@@ -1241,6 +1385,7 @@ void GameHUD::fadeIn(float dt)
             fade_in = false;
         }
         objectiveMenu->setOpacity((GLubyte) opacity);
+        objectiveButtonBlue->setOpacity((GLubyte) opacity);
         objectiveTitle->setOpacity((GLubyte) opacity);
         objectiveDescription->setOpacity((GLubyte) opacity);
         objectiveProgress->setOpacity((GLubyte) opacity);
@@ -1261,10 +1406,11 @@ void GameHUD::fadeOut(float dt)
             this->unschedule(schedule_selector( GameHUD::fadeOut ));
             fade_out = false;
             objectiveMenu->setVisible(false);
-            objectiveMenu->setPosition(ccp(screenSize.width * 0.015f - 1000, screenSize.height - 115.0f));
+            objectiveMenu->setPosition(ccp(screenSize.width * 0.04f - 1000, screenSize.height - 145.0f));
             objectiveTitle->setVisible(false);
         }
         objectiveMenu->setOpacity((GLubyte) opacity);
+        objectiveButtonBlue->setOpacity((GLubyte) opacity);
         objectiveTitle->setOpacity((GLubyte) opacity);
         objectiveDescription->setOpacity((GLubyte) opacity);
         objectiveProgress->setOpacity((GLubyte) opacity);
@@ -1279,6 +1425,7 @@ void GameHUD::clickObjectiveButton()
         if(objectiveMenu->isVisible())
         {
             objectiveMenu->setOpacity((GLubyte) 255);
+            objectiveButtonBlue->setOpacity((GLubyte) 255);
             objectiveTitle->setOpacity((GLubyte) 255);
             objectiveDescription->setOpacity((GLubyte) 255);
             objectiveProgress->setOpacity((GLubyte) 255);
@@ -1289,11 +1436,12 @@ void GameHUD::clickObjectiveButton()
         {
             objectiveMenu->setOpacity((GLubyte) 0);
             objectiveMenu->setVisible(true);
+            objectiveButtonBlue->setOpacity((GLubyte) 0);
             objectiveTitle->setOpacity((GLubyte) 0);
             objectiveTitle->setVisible(true);
             objectiveDescription->setOpacity((GLubyte) 0);
             objectiveProgress->setOpacity((GLubyte) 0);
-            objectiveMenu->setPosition(ccp(screenSize.width * 0.015f, screenSize.height - 115.0f));
+            objectiveMenu->setPosition(ccp(screenSize.width * 0.04f, screenSize.height - 145.0f));
             fade_in = true;
             this->schedule(schedule_selector( GameHUD::fadeIn ), 1.0f / 240.0f);
         }
@@ -1939,7 +2087,7 @@ void GameHUD::clickMoneyLabel()
     else if(labelStatus == Default)
     {
         isToggle = false;
-        infoBackground->setPosition(ccp(220, screenSize.height - 55));
+        infoBackground->setPosition(ccp(245, screenSize.height - 55));
         targetOpacity = 255 * 0.9f;
         fadeSpeed = 20;
         label_fade_in = true;
@@ -1949,7 +2097,7 @@ void GameHUD::clickMoneyLabel()
     else
     {
         isToggle = true;
-        newPos = ccp(220, screenSize.height - 55);
+        newPos = ccp(245, screenSize.height - 55);
         targetOpacity = 0;
         fadeSpeed = 20;
         label_fade_out = true;
@@ -1979,7 +2127,7 @@ void GameHUD::clickFoodLabel()
     else if(labelStatus == Default)
     {
         isToggle = false;
-        infoBackground->setPosition(ccp(440, screenSize.height - 55));
+        infoBackground->setPosition(ccp(470, screenSize.height - 55));
         targetOpacity = 255 * 0.9f;
         fadeSpeed = 20;
         label_fade_in = true;
@@ -1989,7 +2137,7 @@ void GameHUD::clickFoodLabel()
     else
     {
         isToggle = true;
-        newPos = ccp(440, screenSize.height - 55);
+        newPos = ccp(470, screenSize.height - 55);
         targetOpacity = 0;
         fadeSpeed = 20;
         label_fade_out = true;
@@ -2019,7 +2167,7 @@ void GameHUD::clickPopulationLabel()
     else if(labelStatus == Default)
     {
         isToggle = false;
-        infoBackground->setPosition(ccp(660, screenSize.height - 55));
+        infoBackground->setPosition(ccp(685, screenSize.height - 55));
         targetOpacity = 255 * 0.9f;
         fadeSpeed = 20;
         label_fade_in = true;
@@ -2029,7 +2177,7 @@ void GameHUD::clickPopulationLabel()
     else
     {
         isToggle = true;
-        newPos = ccp(660, screenSize.height - 55);
+        newPos = ccp(685, screenSize.height - 55);
         targetOpacity = 0;
         fadeSpeed = 20;
         label_fade_out = true;

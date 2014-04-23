@@ -142,9 +142,16 @@ public:
     
     // stats menu group
     CCSprite* statsMenu;
+    CCSprite* reputationIcon;
+    CCSprite* reputationBackground;
+    
     CCSprite* moneyIcon;
+    CCSprite* moneyBackground;
     CCSprite* foodIcon;
+    CCSprite* foodBackground;
     CCSprite* populationIcon;
+    CCSprite* populationBackground;
+    
     CCLabelTTF* moneyLabel;
     CCLabelTTF* foodLabel;
     CCLabelTTF* populationLabel;
@@ -167,6 +174,7 @@ public:
     // objective menu group
     CCSprite* objectiveMenu;
     CCSprite* objectiveButton;
+    CCSprite* objectiveButtonBlue;
     
     CCLabelTTF* objectiveTitle;
     CCLabelTTF* objectiveDescription;
@@ -194,11 +202,41 @@ public:
     int frameHeight;
     int frameWidth;
     
+    int dragonFrameHeight;
+    int dragonFrameWidth;
+    
+    int characterFrameHeight;
+    int characterFrameWidth;
+    
     CCTexture2D* emotionTexture;
     CCRect emotionRect;
     
+    CCTexture2D* boyTexture;
+    CCTexture2D* girlTexture;
+    CCRect characterRect;
+    
     int xOffset;
     int yOffset;
+    
+    int characterXOffset;
+    int characterYOffset;
+    
+    int x_frameNo;
+    int x_maxFrameNo;
+    
+    int character_frameNo;
+    int character_maxFrameNo;
+    
+    float delay_animFrame;
+    float delay_curr;
+    
+    float character_delay_animFrame;
+    float character_delay_curr;
+    
+    CCTexture2D* objectiveButtonWhiteTexture;
+    CCTexture2D* objectiveButtonTexture;
+    CCRect objectiveButtonRect;
+    CCRect objectiveButtonBlueRect;
     
     bool startWar;
     CCSprite* peaceButton;
@@ -229,6 +267,8 @@ public:
     bool slideUp;
     bool slideIn;
     bool slideOut;
+    
+    bool genderMale;
     
 public:
     
