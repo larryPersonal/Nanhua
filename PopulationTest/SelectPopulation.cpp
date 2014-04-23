@@ -495,7 +495,7 @@ void SelectPopulation::scheduleGuardTower()
         
         prepareJob(gameSprite);
         
-        gameSprite->saySpeech("I will protect you!", 5.0f);
+        gameSprite->saySpeech(GUARD_EMOTION, 5.0f);
     }
 }
 
@@ -516,7 +516,9 @@ void SelectPopulation::scheduleConstruction()
         
         prepareJob(gameSprite);
         
-        gameSprite->saySpeech("Rome wasn't built in a day!", 5.0f);
+        gameSprite->saySpeech(BUILDER_EMOTION, 5.0f);
+        
+        CCLog("test");
     }
 
 }
@@ -539,7 +541,7 @@ void SelectPopulation::scheduleFarming()
         
         prepareJob(gameSprite);
         
-        gameSprite->saySpeech(HUNGRY, 5.0f);
+        gameSprite->saySpeech(FARMER_EMOTION, 5.0f);
     }
 }
 

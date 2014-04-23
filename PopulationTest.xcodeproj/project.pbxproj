@@ -558,6 +558,17 @@
 		843E973A18DB18FE00DBB48D /* Closebtn_Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E973818DB18FE00DBB48D /* Closebtn_Circle.png */; };
 		843E973B18DB18FE00DBB48D /* Closebtn_Sq.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E973918DB18FE00DBB48D /* Closebtn_Sq.png */; };
 		843E973D18DB190700DBB48D /* Energy_brown dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E973C18DB190700DBB48D /* Energy_brown dialog.png */; };
+		8444D6AE1907616E00D5AFAC /* goingToWork.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6AD1907616E00D5AFAC /* goingToWork.png */; };
+		8444D6B019076FD900D5AFAC /* buildinganim.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6AF19076FD900D5AFAC /* buildinganim.png */; };
+		8444D6B41907720C00D5AFAC /* findingbandit.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6B11907720C00D5AFAC /* findingbandit.png */; };
+		8444D6B51907720C00D5AFAC /* defending.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6B21907720C00D5AFAC /* defending.png */; };
+		8444D6B61907720C00D5AFAC /* injured.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6B31907720C00D5AFAC /* injured.png */; };
+		8444D6BC190779E500D5AFAC /* banditAttackRightDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6B8190779E500D5AFAC /* banditAttackRightDown.png */; };
+		8444D6BD190779E500D5AFAC /* banditAttackLeftDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6B9190779E500D5AFAC /* banditAttackLeftDown.png */; };
+		8444D6BE190779E500D5AFAC /* banditAttackRightUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6BA190779E500D5AFAC /* banditAttackRightUp.png */; };
+		8444D6BF190779E500D5AFAC /* banditAttackLeftUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6BB190779E500D5AFAC /* banditAttackLeftUp.png */; };
+		8444D6C21907A67F00D5AFAC /* BattleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8444D6C11907A67F00D5AFAC /* BattleManager.cpp */; };
+		8444D6C51907A76000D5AFAC /* BattlePair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8444D6C41907A76000D5AFAC /* BattlePair.cpp */; };
 		8444E4E918D6DCAD00BD5F63 /* schedule.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444E4E818D6DCAD00BD5F63 /* schedule.png */; };
 		844AC8E818C81954005166FD /* BanditsAttackHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */; };
 		844AC8EB18C8301F005166FD /* war.png in Resources */ = {isa = PBXBuildFile; fileRef = 844AC8E918C8301F005166FD /* war.png */; };
@@ -1578,6 +1589,19 @@
 		843E973818DB18FE00DBB48D /* Closebtn_Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Closebtn_Circle.png; sourceTree = "<group>"; };
 		843E973918DB18FE00DBB48D /* Closebtn_Sq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Closebtn_Sq.png; sourceTree = "<group>"; };
 		843E973C18DB190700DBB48D /* Energy_brown dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Energy_brown dialog.png"; sourceTree = "<group>"; };
+		8444D6AD1907616E00D5AFAC /* goingToWork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goingToWork.png; sourceTree = "<group>"; };
+		8444D6AF19076FD900D5AFAC /* buildinganim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buildinganim.png; sourceTree = "<group>"; };
+		8444D6B11907720C00D5AFAC /* findingbandit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = findingbandit.png; sourceTree = "<group>"; };
+		8444D6B21907720C00D5AFAC /* defending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defending.png; sourceTree = "<group>"; };
+		8444D6B31907720C00D5AFAC /* injured.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = injured.png; sourceTree = "<group>"; };
+		8444D6B8190779E500D5AFAC /* banditAttackRightDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditAttackRightDown.png; sourceTree = "<group>"; };
+		8444D6B9190779E500D5AFAC /* banditAttackLeftDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditAttackLeftDown.png; sourceTree = "<group>"; };
+		8444D6BA190779E500D5AFAC /* banditAttackRightUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditAttackRightUp.png; sourceTree = "<group>"; };
+		8444D6BB190779E500D5AFAC /* banditAttackLeftUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditAttackLeftUp.png; sourceTree = "<group>"; };
+		8444D6C01907A4A700D5AFAC /* BattleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleManager.h; sourceTree = "<group>"; };
+		8444D6C11907A67F00D5AFAC /* BattleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleManager.cpp; sourceTree = "<group>"; };
+		8444D6C31907A6D600D5AFAC /* BattlePair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattlePair.h; sourceTree = "<group>"; };
+		8444D6C41907A76000D5AFAC /* BattlePair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattlePair.cpp; sourceTree = "<group>"; };
 		8444E4E818D6DCAD00BD5F63 /* schedule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedule.png; sourceTree = "<group>"; };
 		8448D64F18C59A04003AFB3A /* guardtower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guardtower.png; sourceTree = "<group>"; };
 		844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BanditsAttackHandler.cpp; sourceTree = "<group>"; };
@@ -1925,6 +1949,7 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8444D6B7190779DB00D5AFAC /* animation */,
 				362CB65618EBA0B400365A12 /* app_icon.png */,
 				84C97AFF18DFF2B100640CE8 /* skip_button.png */,
 				84C97AFD18DFD87D00640CE8 /* banditicon.png */,
@@ -3074,6 +3099,11 @@
 		36D87CFE18C5BAD900FE8B31 /* Emote */ = {
 			isa = PBXGroup;
 			children = (
+				8444D6B11907720C00D5AFAC /* findingbandit.png */,
+				8444D6B21907720C00D5AFAC /* defending.png */,
+				8444D6B31907720C00D5AFAC /* injured.png */,
+				8444D6AD1907616E00D5AFAC /* goingToWork.png */,
+				8444D6AF19076FD900D5AFAC /* buildinganim.png */,
 				8414CF2118FF9AB80052CA91 /* Happinessicon.png */,
 				8414CF1F18FF863C0052CA91 /* emotionicon_anima.png */,
 				8410541D18E90DA7003D88C6 /* bubble.png */,
@@ -3337,6 +3367,17 @@
 			name = "New GameHUD";
 			sourceTree = "<group>";
 		};
+		8444D6B7190779DB00D5AFAC /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				8444D6B8190779E500D5AFAC /* banditAttackRightDown.png */,
+				8444D6B9190779E500D5AFAC /* banditAttackLeftDown.png */,
+				8444D6BA190779E500D5AFAC /* banditAttackRightUp.png */,
+				8444D6BB190779E500D5AFAC /* banditAttackLeftUp.png */,
+			);
+			name = animation;
+			sourceTree = "<group>";
+		};
 		8476EB9118F63E650004DE79 /* TutorialFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -3553,6 +3594,8 @@
 				361DA9A717A8E87C004838A6 /* NameGenerator.h */,
 				3647C80617C20D8E008FA626 /* SoundtrackManager.h */,
 				842CCC6A18ED1D15007C5C24 /* GlobalOutcomeModifier.h */,
+				8444D6C01907A4A700D5AFAC /* BattleManager.h */,
+				8444D6C31907A6D600D5AFAC /* BattlePair.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3566,6 +3609,8 @@
 				361DA9A617A8E87C004838A6 /* NameGenerator.cpp */,
 				3647C80517C20D8E008FA626 /* SoundtrackManager.cpp */,
 				842CCC6B18ED1DA8007C5C24 /* GlobalOutcomeModifier.cpp */,
+				8444D6C11907A67F00D5AFAC /* BattleManager.cpp */,
+				8444D6C41907A76000D5AFAC /* BattlePair.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3908,6 +3953,7 @@
 				844AC8EC18C8301F005166FD /* peace.png in Resources */,
 				36325C1A18D7FAC20008227D /* closebutton-down.png in Resources */,
 				3608CB001704343E00AB65A3 /* FemaleFarmer.plist in Resources */,
+				8444D6BE190779E500D5AFAC /* banditAttackRightUp.png in Resources */,
 				8410544D18E90DA7003D88C6 /* tired.png in Resources */,
 				8412CA5D18AC8D4A00AF4645 /* time_indicator-week-4.png in Resources */,
 				36B411E918D9ACFF005967EC /* greatwall2x2.png in Resources */,
@@ -3917,6 +3963,7 @@
 				3608CB031704343E00AB65A3 /* FMW.png in Resources */,
 				3608CB041704343E00AB65A3 /* MaleOldMan.plist in Resources */,
 				8497F6F318F40B8400838503 /* rejectbtn.png in Resources */,
+				8444D6B51907720C00D5AFAC /* defending.png in Resources */,
 				3608CB051704343E00AB65A3 /* MaleFarmer.png in Resources */,
 				3658DD7E18D6F1430056B895 /* char1MMCpushingcart.png in Resources */,
 				3608CB061704343E00AB65A3 /* MaleFarmer.plist in Resources */,
@@ -3928,16 +3975,19 @@
 				842B84C81906599800D43E2E /* ingamedragonanimwhite.png in Resources */,
 				36AC556F18D6981900C165F5 /* scroller.png in Resources */,
 				84F2912318FE307D0045F834 /* timeclock_week4.png in Resources */,
+				8444D6B61907720C00D5AFAC /* injured.png in Resources */,
 				3608CB081704343E00AB65A3 /* MaleBandit.plist in Resources */,
 				8412CA6D18ACCADB00AF4645 /* main-game-buttons_build.png in Resources */,
 				3608CB091704343E00AB65A3 /* MaleBandit.png in Resources */,
 				367613E81712AEF400CD354B /* json_internalarray.inl in Resources */,
+				8444D6AE1907616E00D5AFAC /* goingToWork.png in Resources */,
 				8410546118E94ECB003D88C6 /* PauseMenu.png in Resources */,
 				36C16E4A18D0049000C307DB /* FemaleFarmer_port.png in Resources */,
 				36C3A80718F7E16300C93E6B /* GIL_____.TTF in Resources */,
 				367613E91712AEF400CD354B /* json_internalmap.inl in Resources */,
 				8412CA5B18AC8D4A00AF4645 /* objective-menu-button_06.png in Resources */,
 				845A9EDF18F7CAC50074EF77 /* tutorial2.xml in Resources */,
+				8444D6B019076FD900D5AFAC /* buildinganim.png in Resources */,
 				84EB32811867FB7A003B5CEB /* senario1_option1.xml in Resources */,
 				367613EC1712AEF400CD354B /* json_valueiterator.inl in Resources */,
 				36AC558818D69A0100C165F5 /* press_options.png in Resources */,
@@ -3952,6 +4002,7 @@
 				84509B811887CFFF00EF8BD8 /* home.png in Resources */,
 				84360A3418B21FED002EC8C2 /* workers_menu_selectedBG.png in Resources */,
 				8410546818E98A17003D88C6 /* interiorhouse.png in Resources */,
+				8444D6B41907720C00D5AFAC /* findingbandit.png in Resources */,
 				8412CA6418AC8D4A00AF4645 /* time_winter-bg.png in Resources */,
 				8497F6F118F40B8400838503 /* acceptbtn.png in Resources */,
 				36D87D1418C7146B00FE8B31 /* roads.png in Resources */,
@@ -3962,6 +4013,7 @@
 				8410544318E90DA7003D88C6 /* hungry2.png in Resources */,
 				8412CA5718AC8D4A00AF4645 /* main-menu-resource-icons_population.png in Resources */,
 				84F2912C18FE7C140045F834 /* sortby_happinessbtn.png in Resources */,
+				8444D6BD190779E500D5AFAC /* banditAttackLeftDown.png in Resources */,
 				36D87CFC18C5BA7800FE8B31 /* tokenball_ZHONG.png in Resources */,
 				36AC558618D69A0100C165F5 /* press_start.png in Resources */,
 				84EB328418684185003B5CEB /* addPicture.png in Resources */,
@@ -4006,6 +4058,7 @@
 				8421158518D2C4DD00A441D0 /* ticksign.png in Resources */,
 				3619CADF17A6596600B59924 /* button-side.png in Resources */,
 				84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */,
+				8444D6BF190779E500D5AFAC /* banditAttackLeftUp.png in Resources */,
 				8410544618E90DA7003D88C6 /* hungry3.png in Resources */,
 				848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */,
 				3619CAE317A6599400B59924 /* button-up.png in Resources */,
@@ -4230,6 +4283,7 @@
 				8410544718E90DA7003D88C6 /* unhappy2.png in Resources */,
 				84F4933B18838E6600377957 /* empty_profile.gif in Resources */,
 				3624032817C308AD005BED27 /* Tikopia.mp3 in Resources */,
+				8444D6BC190779E500D5AFAC /* banditAttackRightDown.png in Resources */,
 				841845221884DF9000895275 /* construction.png in Resources */,
 				362CB65718EBA0B400365A12 /* app_icon.png in Resources */,
 				3624032917C308AD005BED27 /* Rite of Passage.mp3 in Resources */,
@@ -4247,6 +4301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8444D6C21907A67F00D5AFAC /* BattleManager.cpp in Sources */,
 				36B190D618A0A6AD00A8B515 /* TransformUtils.cpp in Sources */,
 				365FB9CB16E5E30B00A57CF0 /* AppController.mm in Sources */,
 				365FB9CE16E5E30B00A57CF0 /* RootViewController.mm in Sources */,
@@ -4517,6 +4572,7 @@
 				36B18A6F18A0A6A700A8B515 /* CCAffineTransform.cpp in Sources */,
 				36B190E518A0A6AD00A8B515 /* CCTileMapAtlas.cpp in Sources */,
 				36B190EC18A0A6AD00A8B515 /* CCTouchHandler.cpp in Sources */,
+				8444D6C51907A76000D5AFAC /* BattlePair.cpp in Sources */,
 				848BD5B61754A65000D5346A /* InfoMenu.cpp in Sources */,
 				36B18A5F18A0A6A700A8B515 /* CCActionInstant.cpp in Sources */,
 				84EB32781867D717003B5CEB /* Slide.cpp in Sources */,

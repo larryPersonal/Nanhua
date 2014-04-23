@@ -1552,6 +1552,7 @@ void GameScene::enableLoadingScreen()
     loadingLabel->setVisible(true);
     
     GameScene::getThis()->mapHandler->UnBuildEndGame();
+    GameScene::getThis()->unschedule(schedule_selector(GameScene::update));
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();

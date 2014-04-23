@@ -19,17 +19,18 @@ enum SpeechMood
     HUNGRY,
     STUCK,
     TIRED,
-    GUARD_EMOTION,
-    BUILDER_EMOTION,
-    FARMER_EMOTION,
-    TRANSPORT_EMOTION,
-    BATTLE,
     STUCK_FOOD,
     FIND_HOME,
     HOMELESS,
     STEAL_MONEY,
     STEAL_FOOD,
-    UNHAPPY=14
+    UNHAPPY,
+    FIND_BANDIT,
+    BATTLE,
+    GUARD_EMOTION,
+    BUILDER_EMOTION,
+    FARMER_EMOTION,
+    TRANSPORT_EMOTION
 };
 
 
@@ -38,11 +39,14 @@ class SpeechBubble:public cocos2d::CCNode
     
     CCSprite* background;
     CCNode* contentNode;
+    CCSprite* emotionSprite;
     
     bool isHideScheduled;
     
     float orig_sizeX;
     float node_sizeX;
+    
+    bool hasAnimation;
     
 public:
     // this part is for the frame animation
@@ -53,10 +57,14 @@ public:
     CCRect bubbleRect;
     int x_frameno;
     int x_maxframeno;
+    int x_offset;
     int y_offset;
     
     float delay_animFrame;
     float delay_curr;
+    
+    int numberOfElementInOneRow;
+    int startElementId;
     
 public:
 
@@ -64,7 +72,7 @@ public:
     void createSpeechBubble();
     
     void addContent(CCNode* node, CCPoint offset);
-    void addContent(SpeechMood s, CCPoint offset);
+    void addContent(std::string, CCPoint, int, int, int);
     void clearContent();
     
     void show(float time=5.0f);
@@ -72,7 +80,7 @@ public:
     
     void rescale();
     
-    void displayTransportBubble(float);
+    void update(float);
 };
 
 #endif /* defined(__PopulationTest__SpeechBubble__) */

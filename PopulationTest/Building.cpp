@@ -197,8 +197,14 @@ Building* Building::copyWithZone(CCZone *pZone)
 
 CCPoint Building::getWorldPosition()
 {
-    if (!buildingRep) return CCPointMake(-1, -1);
-    return ccpAdd(buildingRep->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
+    if (!buildingRep)
+    {
+        return CCPointMake(-1, -1);
+    }
+    else
+    {
+        return ccpAdd(buildingRep->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
+    }
     
 }
 

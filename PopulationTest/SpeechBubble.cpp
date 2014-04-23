@@ -25,6 +25,12 @@ SpeechBubble::SpeechBubble()
     
     x_frameno = 0;
     x_maxframeno = 1;
+    
+    numberOfElementInOneRow = 0;
+    startElementId = 0;
+    
+    x_offset = 0;
+    y_offset = 0;
 }
 
 void SpeechBubble::createSpeechBubble()
@@ -36,7 +42,7 @@ void SpeechBubble::createSpeechBubble()
     
     contentNode = CCNode::create();
     
-  //  float bbWidth = background->boundingBox().getMaxX() - background->boundingBox().getMinX();
+    // float bbWidth = background->boundingBox().getMaxX() - background->boundingBox().getMinX();
     float bbHeight = background->getContentSize().height;
     
     contentNode->setPositionY(bbHeight * 0.55f);
@@ -54,18 +60,55 @@ void SpeechBubble::addContent(CCNode* node, CCPoint offset)
     node_sizeX = node->getContentSize().width;
     contentNode->addChild(node);
     
+    hasAnimation = false;
+    
+    emotionSprite = NULL;
+    
     rescale();
+}
+
+void SpeechBubble::addContent(std::string texture, CCPoint offset, int maxFrameNo, int numberOfFrame, int startID)
+{
+    bubbleTexture = CCTextureCache::sharedTextureCache()->addImage(texture.c_str());
+    
+    x_maxframeno = maxFrameNo;
+    numberOfElementInOneRow = numberOfFrame;
+    startElementId = startID;
+    
+    x_frameno = 0;
+    hasAnimation = true;
+    
+    x_offset = startElementId % numberOfElementInOneRow;
+    y_offset = startElementId / numberOfElementInOneRow;
+    
+    bubbleRect = CCRectMake(0, 0, frameWidth, frameHeight);
+    
+    emotionSprite = CCSprite::createWithTexture(bubbleTexture, bubbleRect);
+    emotionSprite->setPosition(offset);
+    node_sizeX = emotionSprite->getContentSize().width;
+    contentNode->addChild(emotionSprite);
+    
+    rescale();
+    
+    this->setVisible(true);
+    this->schedule(schedule_selector(SpeechBubble::update), 1.0f/120.0f);
 }
 
 void SpeechBubble::clearContent()
 {
+    if(hasAnimation)
+    {
+        this->unschedule(schedule_selector(SpeechBubble::update));
+    }
     contentNode->removeAllChildren();
 }
 
 void SpeechBubble::show(float time)
 {
     if (isHideScheduled)
+    {
         this->unschedule(schedule_selector(SpeechBubble::hide));
+    }
     
     this->setVisible(true);
     this->scheduleOnce(schedule_selector(SpeechBubble::hide), time);
@@ -88,16 +131,29 @@ void SpeechBubble::rescale()
     // contentNode->setPositionX(bbWidth * 0.5f);
 }
 
-void SpeechBubble::displayTransportBubble(float time)
+void SpeechBubble::update(float dt)
 {
-    y_offset = 0;
-    
-    x_frameno = 0;
-    x_maxframeno = 2;
-    
-    bubbleRect = CCRectMake(0, y_offset * frameHeight,  frameWidth, frameHeight);
-    
-    CCSprite* bubbleSprite = CCSprite::createWithTexture(bubbleTexture, bubbleRect);
-    addContent(bubbleSprite, CCPointZero);
-    show(time);
+    if(hasAnimation)
+    {
+        if (delay_curr > 0)
+        {
+            delay_curr -= dt;
+        }
+        else
+        {
+            x_frameno++;
+            if (x_frameno >= x_maxframeno)
+            {
+                x_frameno = 0;
+            }
+            
+            x_offset = (x_frameno + startElementId) % numberOfElementInOneRow;
+            y_offset = (x_frameno + startElementId) / numberOfElementInOneRow;
+            
+            bubbleRect.setRect(x_offset * frameWidth, y_offset * frameHeight, frameWidth, frameHeight);
+            emotionSprite->setTextureRect(bubbleRect);
+            
+            delay_curr = delay_animFrame;
+        }
+    }
 }

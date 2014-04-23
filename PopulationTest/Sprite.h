@@ -146,7 +146,6 @@ public:
     
     bool shouldSetVisibleNextFrame;
     
-    
     void ReplaceSpriteRep();
     
     CCCallFuncN* callback;
@@ -360,6 +359,25 @@ public:
     bool isBuilder();
     
     string getCurrentDir();
+    
+public:
+    bool isInAttackAction;
+    
+    CCTexture2D* spriteTexture;
+    CCRect spriteRect;
+    
+    float frameWidth;
+    float frameHeight;
+    int currentFrameNumber;
+    int maxFrameNumber;
+    int xOffset;
+    int yOffset;
+    
+    float delay_animFrame;
+    float delay_curr;
+    
+public:
+    void playAttackAction();
 };
 
 

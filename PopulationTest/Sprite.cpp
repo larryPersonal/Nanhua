@@ -94,6 +94,17 @@ GameSprite::GameSprite()
     currentTile = CCPointZero;
     
     movementSpeed = 0;
+    
+    isInAttackAction = false;
+    frameWidth = 64;
+    frameHeight = 64;
+    currentFrameNumber = 0;
+    maxFrameNumber = 0;
+    xOffset = 0;
+    yOffset = 0;
+    
+    delay_animFrame = 0.1f;
+    delay_curr = 0.1f;
 }
 
 void GameSprite::initAI(bool isUpgrade)
@@ -693,8 +704,6 @@ void GameSprite::changeAnimation(std::string dir)
     spriteAnimAction = CCRepeatForever::create(CCAnimate::create(animation));
     
     spriteRep->runAction(spriteAnimAction);
-    
-    
 }
 
 void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
@@ -977,6 +986,31 @@ void GameSprite::updateSprite(float dt)
 {
     updateZIndex();
     
+    if(isInAttackAction)
+    {
+        if (delay_curr > 0)
+        {
+            delay_curr -= dt;
+        }
+        else
+        {
+            currentFrameNumber++;
+            if (currentFrameNumber >= maxFrameNumber)
+            {
+                currentFrameNumber = 0;
+                isInAttackAction = false;
+            }
+            
+            xOffset = currentFrameNumber % 4;
+            yOffset = currentFrameNumber / 4;
+            
+            spriteRect.setRect(xOffset * frameWidth, yOffset * frameHeight, frameWidth, frameHeight);
+            spriteRep->setTextureRect(spriteRect);
+            
+            delay_curr = delay_animFrame;
+        }
+    }
+    
     if(possessions->happinessRating <= 0)
     {
         if(villagerClass == V_REFUGEE)
@@ -1217,6 +1251,7 @@ void GameSprite::updateSprite(float dt)
                     }
                     else
                     {
+                        // no enermy in all the directions, resume find enermy.
                         currAction = IDLE;
                         combatState = C_IDLE;
                         stopAction = false;
@@ -1290,6 +1325,7 @@ void GameSprite::updateSprite(float dt)
                     }
                     else
                     {
+                        // not enermy in all directions, resume the finding enermy process
                         stopAction = false;
                         combatState = C_IDLE;
                         if(enermy != NULL && enermy->enermy != this)
@@ -1334,6 +1370,11 @@ void GameSprite::updateSprite(float dt)
                         int random_number = rand() % diff;
                         int damage = possessions->attack_power_min + random_number;
                         enermy->damaged(damage);
+                        
+                        if(villagerClass == V_BANDIT)
+                        {
+                            playAttackAction();
+                        }
                     }
                     
                     cumulativeTime_attack = 0;
@@ -1470,6 +1511,7 @@ void GameSprite::updateSprite(float dt)
                     
                     if(!isMoving)
                     {
+                        CCLog("test my speed");
                         //stopAction = false;
                         GoLocation(nearestTarget, false);
                     }
@@ -1719,49 +1761,32 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     switch (s)
     {
         case IDLING:
-            label = CCSprite::create("idle.png");
-            
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 1, 4, 7);
+            show = false;
             break;
         case HAPPY:
-            label = CCSprite::create("happy.png");
-
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 8);
+            show = false;
             break;
         case HUNGRY:
-            label = CCSprite::create("hungry.png");
-
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 3, 4, 4);
+            show = false;
             break;
         case TIRED:
-            label = CCSprite::create("tired.png");
-
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 3, 4, 14);
+            show = false;
             break;
         case UNHAPPY:
-            label = CCSprite::create("unhappy.png");
-
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 17);
+            show = false;
             break;
         case STUCK:
-            label = CCSprite::create("stuck.png");
-
-            break;
-        case GUARD_EMOTION:
-            label = CCSprite::create("happy1.png");
-            
-            break;
-        case BUILDER_EMOTION:
-            label = CCSprite::create("happy2.png");
-            
-            break;
-        case FARMER_EMOTION:
-            label = CCSprite::create("idle1.png");
-            
-            break;
-        case TRANSPORT_EMOTION:
-            speechBubble->displayTransportBubble(timeInSeconds);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 4, 4, 10);
             show = false;
-            
             break;
         case STUCK_FOOD:
-            label = CCSprite::create("stuck1.png");
-            
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 4, 4, 10);
+            show = false;
             break;
         case FIND_HOME:
             label = CCSprite::create("idle2.png");
@@ -1770,6 +1795,30 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
         case HOMELESS:
             label = CCSprite::create("stuck2.png");
             
+            break;
+        case FIND_BANDIT:
+            speechBubble->addContent("findingbandit.png", CCPointZero, 10, 4, 0);
+            show = false;
+            break;
+        case BATTLE:
+            speechBubble->addContent("defending.png", CCPointZero, 17, 4, 0);
+            show = false;
+            break;
+        case GUARD_EMOTION:
+            speechBubble->addContent("defending.png", CCPointZero, 17, 4, 0);
+            show = false;
+            break;
+        case BUILDER_EMOTION:
+            speechBubble->addContent("buildinganim.png", CCPointZero, 5, 2, 0);
+            show = false;
+            break;
+        case FARMER_EMOTION:
+            speechBubble->addContent("goingToWork.png", CCPointZero, 4, 2, 0);
+            show = false;
+            break;
+        case TRANSPORT_EMOTION:
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 0);
+            show = false;
             break;
         default:
             break;
@@ -2473,7 +2522,7 @@ void GameSprite::goToEat()
     // if the granary does not have food, do next scheduled action.
     else if(bui != NULL)
     {
-        saySpeech("No food store with food!", 5.0f);
+        saySpeech(STUCK_FOOD, 5.0f);
         if(getJob() == NONE && getJobLocation() == NULL)
         {
             if(futureAction1 == RESTING || futureAction2 == RESTING)
@@ -2490,7 +2539,7 @@ void GameSprite::goToEat()
     // if there is no granary found, do next scheduled action.
     else
     {
-        saySpeech("No food store!", 5.0f);
+        saySpeech(STUCK_FOOD, 5.0f);
         if(futureAction1 == RESTING || futureAction2 == RESTING)
         {
             futureAction1 = RESTING;
@@ -2519,7 +2568,7 @@ void GameSprite::goToSleep()
         
         if(startPos.equals(endPos))
         {
-            saySpeech("Sleep loh!", 5.0f);
+            saySpeech(TIRED, 5.0f);
             setTargetLocation(getHome());
             currAction = RESTING;
         }
@@ -3126,4 +3175,104 @@ bool GameSprite::isBandit()
 string GameSprite::getCurrentDir()
 {
     return currentDir;
+}
+
+void GameSprite::playAttackAction()
+{
+    CCPoint pos = spriteRep->getPosition();
+    CCSize spriteSize = spriteRep->boundingBox().size;
+    spriteRep->stopAllActions();
+    
+    delete behaviorTree;
+    spriteRep->removeChild(speechBubble, true);
+    delete speechBubble;
+    spriteRep->removeChild(barHP, true);
+    delete barHP;
+    
+    frameWidth = 128;
+    frameHeight = 128;
+    
+    delay_animFrame = 0.1f;
+    delay_curr = 0.1f;
+    
+    GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    
+    if(villagerClass == V_BANDIT)
+    {
+        if(currentDir == "UL")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("banditAttackLeftUp.png");
+            maxFrameNumber = 11;
+            currentFrameNumber = 0;
+        }
+        else if(currentDir == "DL")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("banditAttackLeftDown.png");
+            maxFrameNumber = 15;
+            currentFrameNumber = 0;
+        }
+        else if(currentDir == "UR")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("banditAttackRightUp.png");
+            maxFrameNumber = 11;
+            currentFrameNumber = 0;
+        }
+        else if(currentDir == "DR")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("banditAttackRightDown.png");
+            maxFrameNumber = 14;
+            currentFrameNumber = 0;
+        }
+    }
+    
+    spriteRect = CCRectMake(0, 0,  frameWidth, frameHeight);
+    
+    spriteRep = CCSprite::createWithTexture(spriteTexture, spriteRect);
+    spriteRep->setAnchorPoint(ccp(0.5, 0.75));
+    spriteRep->cocos2d::CCNode::setScale(spriteSize.width / spriteRep->boundingBox().size.width, spriteSize.height / spriteRep->boundingBox().size.height);
+    initAI(true);
+    
+    spriteRep->setPosition(pos);
+    
+    //Speech bubble
+    speechBubble = new SpeechBubble();
+    speechBubble->createSpeechBubble();
+    
+    
+    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
+                                  spriteRep->boundingBox().size.height * 1.5f));
+    
+    spriteRep->addChild(speechBubble);
+    
+    barHP = new ProgressBar();
+    barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
+                             CCRectMake(5, 5, 70, 10),
+                             "Energy_brown bar.png",
+                             "NONE",
+                             "NONE",
+                             "Energybar.png", true);
+    barHP->setAnchorPoint(ccp(0.5, 0.5));
+    
+    barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
+    barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f, spriteRep->boundingBox().size.height * 1.0f));
+    spriteRep->addChild(barHP);
+    
+    mGameCurrentEndurance = getPossessions()->current_endurance;
+    mGameMaxEndurance = getPossessions()->max_endurance;
+    
+    if (villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
+    {
+        barHP->setVisible(false);
+    }
+    else
+    {
+        barHP->setVisible(true);
+    }
+    
+    GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
+                                                         GameScene::getThis()->mapHandler->calcZIndex(pos));
+    behaviorTree->onInitialize();
+    behaviorTree->update();
+    
+    isInAttackAction = true;
 }
