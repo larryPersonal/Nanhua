@@ -157,31 +157,7 @@
   <image source="building2x2.png" width="1024" height="512"/>
   <tile id="0">
    <properties>
-    <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="1000"/>
-    <property name="builder_limit" value="3"/>
-    <property name="building_type" value="granary"/>
-    <property name="cost" value="100"/>
-    <property name="description" value="Granary for storing food!"/>
-    <property name="food_consumption_rate" value="1"/>
-    <property name="jobs_available" value="0"/>
-    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-    <property name="level_gain_cost" value="2:50, 4:50"/>
-    <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Granary"/>
-    <property name="population_limit" value="0"/>
-    <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="10"/>
-    <property name="req_building_count" value="0"/>
-    <property name="req_capita" value="0"/>
-    <property name="req_population" value="0"/>
-    <property name="research_cost" value=""/>
-    <property name="storage" value="50"/>
-    <property name="storage_limit" value="200"/>
-    <property name="unlocked_at_start" value="yes"/>
-    <property name="upgrade_unit" value="0"/>
-    <property name="work_unit" value=""/>
-    <property name="work_unit_required" value=""/>
+    <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
   <tile id="1">
@@ -1614,6 +1590,40 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="224" name="Granary" tilewidth="256" tileheight="256">
+  <tileoffset x="-64" y="64"/>
+  <image source="granary.png" width="1024" height="1024"/>
+  <tile id="0">
+   <properties>
+    <property name="anim_frames" value="9"/>
+    <property name="build_time" value="10"/>
+    <property name="build_uint_required" value="1000"/>
+    <property name="builder_limit" value="3"/>
+    <property name="building_type" value="granary"/>
+    <property name="cost" value="100"/>
+    <property name="description" value="Granary for storing food!"/>
+    <property name="food_consumption_rate" value="1"/>
+    <property name="jobs_available" value="0"/>
+    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
+    <property name="level_gain_cost" value="2:50, 4:50"/>
+    <property name="level_gain_population_limit" value="3:1, 5:1"/>
+    <property name="name" value="Granary"/>
+    <property name="population_limit" value="0"/>
+    <property name="prereqs" value=""/>
+    <property name="recovery_rate" value="10"/>
+    <property name="req_building_count" value="0"/>
+    <property name="req_capita" value="0"/>
+    <property name="req_population" value="0"/>
+    <property name="research_cost" value=""/>
+    <property name="storage" value="50"/>
+    <property name="storage_limit" value="200"/>
+    <property name="unlocked_at_start" value="yes"/>
+    <property name="upgrade_unit" value="0"/>
+    <property name="work_unit" value=""/>
+    <property name="work_unit_required" value=""/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Ground_0" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
@@ -1674,7 +1684,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzkENAAAIBCBL+LN/zmuhm4METAEAAAAAAADwSV8HAAAAAAAAAAAAAAAAAFgVBOoAMg==
+   eJztwQEJAAAAAqCG9H9nOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2PZwAd
   </data>
  </layer>
  <layer name="Building_3" width="90" height="60">
@@ -1720,6 +1730,15 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJztzgEJAAAMA6D1D/OMjzEGmsAEAAAAAAAAoOfaAQAAAAAAAAAAAAAAAAAY9y2CAK8=
+  </data>
+ </layer>
+ <layer name="Building_Granary" width="90" height="60">
+  <properties>
+   <property name="number_of_tiles" value="9"/>
+   <property name="start_tile_offset" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6D3T2kUW9zNQQISAAAAAAAAAD6Z6wAAAAAAAAAAAAAAAAAAVQvkIQDh
   </data>
  </layer>
 </map>
