@@ -4005,11 +4005,8 @@
 				84509B811887CFFF00EF8BD8 /* home.png in Resources */,
 				84360A3418B21FED002EC8C2 /* workers_menu_selectedBG.png in Resources */,
 				8410546818E98A17003D88C6 /* interiorhouse.png in Resources */,
-<<<<<<< HEAD
 				8444D6B41907720C00D5AFAC /* findingbandit.png in Resources */,
-=======
 				36D0CB4419079BFC001AEBC0 /* granary.png in Resources */,
->>>>>>> 099a4f57228dca1d968495ea4ec88619b375ecc5
 				8412CA6418AC8D4A00AF4645 /* time_winter-bg.png in Resources */,
 				8497F6F118F40B8400838503 /* acceptbtn.png in Resources */,
 				36D87D1418C7146B00FE8B31 /* roads.png in Resources */,
