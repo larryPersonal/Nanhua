@@ -18,9 +18,11 @@ using namespace cocos2d;
 class BattleManager
 {
 public:
+    static BattleManager* SP;
     CCArray* battlePairs;
     
 public:
+    static BattleManager* getThis();
     BattleManager();
     ~BattleManager();
     

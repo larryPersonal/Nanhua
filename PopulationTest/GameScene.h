@@ -21,6 +21,7 @@
 #include "BanditsAttackHandler.h"
 #include "ObjectiveHandler.h"
 #include "GlobalOutcomeModifier.h"
+#include "BattleManager.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;

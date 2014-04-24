@@ -23,6 +23,8 @@ class PathFinder
     
     
 public:
+    
+    PathfindingNode* closestNode;
     CCPoint closest;
     int lowest_h;
     
@@ -34,16 +36,17 @@ public:
     void setDestination(CCPoint dest);
     void setSource(CCPoint src);
     
-    CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile, bool tryEscape);
+    CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile);
     
     CCArray* makePath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
-    CCArray* makePathEscape(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
+    
+    //CCArray* makePathEscape(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     
     PathfindingNode* isOnList(CCPoint tilePos, CCArray* list);
     
-    void initializeWithLowestCostNode(CCPoint target, bool tryEscape);
+    //void initializeWithLowestCostNode(CCPoint target, bool tryEscape);
     
-    bool isReachable(CCPoint* tilePos, bool tryEscape);
+    bool isReachable(CCPoint* tilePos);
 };
 
 #endif /* defined(__PopulationTest__PathFinder__) */

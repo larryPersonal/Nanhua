@@ -950,7 +950,7 @@ Building* BuildingHandler::getRandomBuildingWithName(std::string name)
     {
         currBuilding = (Building*)allBuildings->objectAtIndex(i);
         std::string bname = currBuilding->buildingName;
-        CCLog("%s %s", name.c_str(), bname.c_str());
+        //CCLog("%s %s", name.c_str(), bname.c_str());
         if (bname.find(name) != std::string::npos) foundBuildings.push_back(currBuilding);
     }
    

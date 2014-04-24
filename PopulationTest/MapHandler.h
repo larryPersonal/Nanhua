@@ -92,7 +92,7 @@ public:
     
     bool isTilePosWithinBounds(CCPoint &tilePos);
     bool isTilePosWithinMap(CCPoint &tilePos); //ignores playarea
-    bool isTileBlocked(CCPoint &tilePos, bool);
+    bool isTileBlocked(CCPoint &tilePos);
     bool isTileBuildable(CCPoint &tilePos, bool obey_playarea = true);
     bool isBuildableOnTile(CCPoint &target, Building* building);
 

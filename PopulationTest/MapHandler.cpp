@@ -404,7 +404,7 @@ bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos, bool obey_playarea)
 
 
 //Note: ignore this for destination.
-bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos, bool tryEscape)
+bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
 {
     if (!isTilePosWithinBounds(tilePos)){
         return true;
@@ -412,7 +412,7 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos, bool tryEscape)
     
     
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
-    if (!targetTile->isPath  || (targetTile->isInCombat && !tryEscape)){
+    if (!targetTile->isPath && !targetTile->hasBuilding()){
         return true;
     }
     
@@ -647,11 +647,6 @@ CCPoint MapHandler::getRandomPathTile()
     // if the tile is not a path, cannot go there.
     if (!tgtTile->isPath){
         return CCPointMake(-1,-1);
-    }
-    
-    // if the tile is in combat, avoid to go there.
-    if(tgtTile->isInCombat){
-        return CCPointMake(-1, -1);
     }
     
     return CCPointMake(tgtTile->xpos, tgtTile->ypos);

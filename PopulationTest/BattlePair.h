@@ -25,6 +25,9 @@ public:
     static BattlePair* create(GameSprite* theSoldier, GameSprite* theBandit);
     BattlePair(GameSprite* theSoldier, GameSprite* theBandit);
     ~BattlePair();
+    
+    void update(float deltaTime);
+    void battle();
 };
 
 

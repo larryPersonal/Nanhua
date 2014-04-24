@@ -248,9 +248,10 @@ bool GlobalHelper::compareCCPoint(CCPoint ccp1, CCPoint ccp2)
     }
 }
 
-
-
-
-
-
-
+float GlobalHelper::getDirectDistance(CCPoint startPos, CCPoint endPos)
+{
+    float width = endPos.x + 1 - startPos.x;
+    float height = endPos.y + 1 - startPos.y;
+    
+    return (float) sqrt(width * width + height * height);
+}

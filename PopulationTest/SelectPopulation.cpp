@@ -517,10 +517,7 @@ void SelectPopulation::scheduleConstruction()
         prepareJob(gameSprite);
         
         gameSprite->saySpeech(BUILDER_EMOTION, 5.0f);
-        
-        CCLog("test");
     }
-
 }
 
 void SelectPopulation::scheduleFarming()

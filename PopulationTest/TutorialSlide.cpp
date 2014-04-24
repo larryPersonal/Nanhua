@@ -43,6 +43,7 @@ TutorialSlide::TutorialSlide()
     arrowX = 0;
     arrowY = 0;
     arrowScale = 0;
+    arrowLayer = 0;
 }
 
 TutorialSlide::~TutorialSlide()

@@ -140,7 +140,6 @@ bool NotificationString::slideOut(float dt)
 
 void NotificationString::update(float dt)
 {
-    CCLog("test my bad: %f", cumulativeTime);
     cumulativeTime += dt;
     if(cumulativeTime > 30)
     {

@@ -8,6 +8,7 @@
 
 #include "FloatingArraw.h"
 #include "TutorialManager.h"
+#include "BuildScroll.h"
 
 FloatingArraw* FloatingArraw::SP;
 
@@ -36,6 +37,8 @@ FloatingArraw::FloatingArraw()
     x_frameno = 0;
     x_maxframeno = 8;
     
+    layer = 0;
+    
     y_offset = x_frameno / 4.0f;
     x_offset = ((int)x_frameno) % 4;
     
@@ -46,6 +49,7 @@ FloatingArraw::FloatingArraw()
     arrow->setAnchorPoint(ccp(0.5, 0.5));
     arrow->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     arrow->setVisible(false);
+    arrow->retain();
     
     TutorialManager::getThis()->addChild(arrow, 5);
     TutorialManager::getThis()->schedule(schedule_selector(FloatingArraw::update), 1.0f/120.0f);
@@ -54,6 +58,7 @@ FloatingArraw::FloatingArraw()
 FloatingArraw::~FloatingArraw()
 {
     FloatingArraw::SP = NULL;
+    CC_SAFE_RELEASE(arrow);
 }
 
 void FloatingArraw::update(float dt)
@@ -80,8 +85,9 @@ void FloatingArraw::update(float dt)
     }
 }
 
-void FloatingArraw::showArrow(CCPoint pos, float ang, float scale)
+void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLayer)
 {
+    CCLog("arrow mode: %d", arrowLayer);
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     float hw = screenSize.width / 2.0f;
     float hh = screenSize.height / 2.0f;
@@ -90,6 +96,52 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale)
     arrow->setRotation(ang);
     arrow->setScale(scale);
     arrow->setVisible(true);
+    
+    if(arrowLayer == 1)
+    {
+        CCLog("test my bad");
+        if(BuildScroll::getThis() != NULL)
+        {
+            if(layer == 0)
+            {
+                arrow->retain();
+                TutorialManager::getThis()->removeChild(arrow);
+                BuildScroll::getThis()->scrollArea->addItem(arrow, ccp(pos.x, pos.y));
+            }
+            else
+            {
+                arrow->retain();
+                BuildScroll::getThis()->scrollArea->removeI(arrow);
+                BuildScroll::getThis()->scrollArea->addItem(arrow, ccp(pos.x, pos.y));
+            }
+            layer = arrowLayer;
+        }
+    }
+    else if(arrowLayer == 0)
+    {
+        if(layer == 1)
+        {
+            if(BuildScroll::getThis() != NULL)
+            {
+                arrow->retain();
+                BuildScroll::getThis()->scrollArea->removeI(arrow);
+                TutorialManager::getThis()->addChild(arrow);
+            }
+            else
+            {
+                //set the thing to the first frame.
+                arrow = CCSprite::createWithTexture(arrowTexture, arrowRect);
+                arrow->setAnchorPoint(ccp(0.5, 0.5));
+                arrow->setPosition(ccp(hw + pos.x, hh + pos.y));
+                arrow->setRotation(ang);
+                arrow->retain();
+                
+                TutorialManager::getThis()->addChild(arrow, 5);
+                TutorialManager::getThis()->schedule(schedule_selector(FloatingArraw::update), 1.0f/120.0f);
+            }
+            layer = arrowLayer;
+        }
+    }
 }
 
 void FloatingArraw::hideArrow()

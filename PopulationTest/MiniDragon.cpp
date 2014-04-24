@@ -194,7 +194,7 @@ bool MiniDragon::constructTutorialSlide()
     
     if(ts->showArrow)
     {
-        FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale);
+        FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale, ts->arrowLayer);
     }
     
     if(ts->hideArrow)

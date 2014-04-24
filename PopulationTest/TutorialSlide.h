@@ -51,6 +51,7 @@ public:
     float arrowY;
     float arrowAngle;
     float arrowScale;
+    int arrowLayer;
     
 public:
     TutorialSlide();
