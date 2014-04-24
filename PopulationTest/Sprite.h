@@ -179,7 +179,7 @@ public:
     GameSprite();
     virtual ~GameSprite();
     
-    void followPath();
+    void followPath(bool moveOneTile = false);
     
     virtual GameSprite* copyWithZone(CCZone *pZone);
 
@@ -289,7 +289,7 @@ public:
     void setIsFollowingMovementInstruction(bool);
     
     bool GoBuilding(Building* b);
-    bool GoLocation(CCPoint, bool);
+    bool GoLocation(CCPoint);
     
     bool GoRest(Building* b);
     bool GoEat(Building* b);
@@ -361,7 +361,11 @@ public:
     string getCurrentDir();
     
 public:
+    bool isInCombat;
+    
     bool isInAttackAction;
+    
+    bool justMoveOneTile;
     
     CCTexture2D* spriteTexture;
     CCRect spriteRect;

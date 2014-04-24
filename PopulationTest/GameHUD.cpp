@@ -1488,8 +1488,8 @@ void GameHUD::clickBuildButton()
                 TutorialManager::getThis()->teachBuildButton = false;
                 TutorialManager::getThis()->teachBuildHouse = true;
             }
-            TutorialManager::getThis()->miniDragon->clickNext();
         }
+        
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
         {
@@ -1505,6 +1505,11 @@ void GameHUD::clickBuildButton()
         buildButton->setPosition(ccp(screenSize.width + buildButton->boundingBox().size.width, 0));
         
         buildScroll->cocos2d::CCNode::setZOrder(30);
+        
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildRoad))
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
     }
     else
     {
@@ -1703,12 +1708,12 @@ void GameHUD::banditsAttack()
             redMask->setVisible(true);
             alertText->setScale(0);
             alertText->setVisible(true);
-            isAlerting = true;
+            //isAlerting = true;
             isAlertingText = true;
-            alertFadeIn = true;
+            //alertFadeIn = true;
             alertTextFadeIn = true;
             alertCumulativeTime = 0;
-            this->schedule(schedule_selector(GameHUD::alertBanditsAttackFade), 1.0f / 120.0f);
+            //this->schedule(schedule_selector(GameHUD::alertBanditsAttackFade), 1.0f / 120.0f);
             this->schedule(schedule_selector(GameHUD::alertBanditsAttackText), 1.0f / 120.0f);
             
             peaceButton->setVisible(true);
@@ -1778,6 +1783,9 @@ void GameHUD::alertBanditsAttackText(float dt)
             scale = 1.0f;
         }
         alertText->setScale(scale);
+        
+        float opacity = 120.0f * scale;
+        redMask->setOpacity((GLubyte) opacity);
     }
     else if(alertCumulativeTime < 1)
     {
@@ -1795,6 +1803,9 @@ void GameHUD::alertBanditsAttackText(float dt)
             isAlertingText = false;
         }
         alertText->setScale(scale);
+        
+        float opacity = 120.0f * scale;
+        redMask->setOpacity((GLubyte) opacity);
     }
 }
 

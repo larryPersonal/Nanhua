@@ -82,14 +82,14 @@
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
     </slide>
-    <slide>
+    <1slide>
         <speech>Now, please let me introduce the guard tower to you.</speech>
         <cameraMove>6592,1888</cameraMove>
         <clickToNext></clickToNext>
         <deHighlight></deHighlight>
         <hideArrow></hideArrow>
-    </slide>
-    <slide>
+    <1/slide>
+    <1slide>
         <speech>This is the guard tower of the village. Guard towers are places to train villages to soldiers. In the bandits attack event, bandits will steal gold and food from you village, soldiers will help to defend the bandits during the attack.</speech>
         <highlight>military</highlight>
         <clickToNext></clickToNext>
@@ -98,7 +98,7 @@
         <arrowY>50</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
-    </slide>
+    <1/slide>
     
     <slide>
         <speech>Now, please let me tell you how to build roads.</speech>
@@ -117,8 +117,8 @@
             <teachBuildRoad></teachBuildRoad>
         </lock>
         <showArrow></showArrow>
-        <arrowX>300</arrowX>
-        <arrowY>-250</arrowY>
+        <arrowX>345</arrowX>
+        <arrowY>-265</arrowY>
         <arrowAngle>320</arrowAngle>
         <arrowScale>1</arrowScale>
     </slide>
@@ -130,10 +130,11 @@
             <buildButton></buildButton>
         </lock>
         <showArrow></showArrow>
-        <arrowX>-200</arrowX>
-        <arrowY>-100</arrowY>
+        <arrowX>65</arrowX>
+        <arrowY>20</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
         <speech>Now try to build some path in the village by click on the ground.</speech>
@@ -152,10 +153,11 @@
             <teachBuildButton></teachBuildButton>
         </lock>
         <showArrow></showArrow>
-        <arrowX>200</arrowX>
-        <arrowY>-150</arrowY>
-        <arrowAngle>300</arrowAngle>
+        <arrowX>345</arrowX>
+        <arrowY>-265</arrowY>
+        <arrowAngle>320</arrowAngle>
         <arrowScale>1</arrowScale>
+        <arrowLayer>0</arrowLayer>
     </slide>
     <slide>
         <speech>Now, I will indroduce you how to build a house. In tutorial, I will increase the speed of building and working with my power. Click the house button in the build scroll.</speech>
@@ -169,10 +171,11 @@
             <pause></pause>
         </unlock>
         <showArrow></showArrow>
-        <arrowX>0</arrowX>
-        <arrowY>0</arrowY>
+        <arrowX>465</arrowX>
+        <arrowY>20</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
         <speech>Tap on any empty plot of land! Red preview means cannot build there.</speech>

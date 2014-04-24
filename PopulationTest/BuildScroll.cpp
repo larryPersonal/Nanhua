@@ -11,6 +11,7 @@
 #include "BuildingCard.h"
 #include "GlobalHelper.h"
 #include "GameHUD.h"
+#include "TutorialManager.h"
 
 BuildScroll* BuildScroll::SP;
 

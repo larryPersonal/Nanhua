@@ -3597,8 +3597,6 @@
 				361DA9A717A8E87C004838A6 /* NameGenerator.h */,
 				3647C80617C20D8E008FA626 /* SoundtrackManager.h */,
 				842CCC6A18ED1D15007C5C24 /* GlobalOutcomeModifier.h */,
-				8444D6C01907A4A700D5AFAC /* BattleManager.h */,
-				8444D6C31907A6D600D5AFAC /* BattlePair.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3612,8 +3610,6 @@
 				361DA9A617A8E87C004838A6 /* NameGenerator.cpp */,
 				3647C80517C20D8E008FA626 /* SoundtrackManager.cpp */,
 				842CCC6B18ED1DA8007C5C24 /* GlobalOutcomeModifier.cpp */,
-				8444D6C11907A67F00D5AFAC /* BattleManager.cpp */,
-				8444D6C41907A76000D5AFAC /* BattlePair.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3645,6 +3641,8 @@
 		849A50FE185AD1870002A8EE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				8444D6C11907A67F00D5AFAC /* BattleManager.cpp */,
+				8444D6C41907A76000D5AFAC /* BattlePair.cpp */,
 				B4B0147C1738908B0071E59F /* SpeechBubble.cpp */,
 				36FDC98716FFF9D100AB1A68 /* SpriteHandler.cpp */,
 				36FDC98B170049E800AB1A68 /* Sprite.cpp */,
@@ -3658,6 +3656,8 @@
 		849A50FF185AD19E0002A8EE /* Header */ = {
 			isa = PBXGroup;
 			children = (
+				8444D6C31907A6D600D5AFAC /* BattlePair.h */,
+				8444D6C01907A4A700D5AFAC /* BattleManager.h */,
 				365FBC5A16E5E31000A57CF0 /* AppDelegate.h */,
 				B4B0147D1738908B0071E59F /* SpeechBubble.h */,
 				36FDC98816FFF9D100AB1A68 /* SpriteHandler.h */,

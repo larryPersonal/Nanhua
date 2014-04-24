@@ -228,6 +228,13 @@ void TutorialReader::parseXMLFile(string xml)
                 content = str.substr(start_pos + 12, end_pos - start_pos - 12);
                 slide->arrowScale = ::atof(content.c_str());
             }
+            else if(str.find("<arrowLayer") != std::string::npos)
+            {
+                start_pos = str.find("<arrowLayer>");
+                end_pos = str.find("</arrowLayer>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->arrowLayer = ::atoi(content.c_str());
+            }
             else if(str.find("<lock>") != std::string::npos)
             {
                 inLock = true;

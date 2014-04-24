@@ -649,11 +649,6 @@ CCPoint MapHandler::getRandomPathTile()
         return CCPointMake(-1,-1);
     }
     
-    // if the tile is in combat, avoid to go there.
-    if(tgtTile->isInCombat){
-        return CCPointMake(-1, -1);
-    }
-    
     return CCPointMake(tgtTile->xpos, tgtTile->ypos);
 }
 

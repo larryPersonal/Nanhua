@@ -1297,16 +1297,12 @@ void GameScene::update(float time)
     {
         this->unschedule(schedule_selector(GameScene::update));
         
-        
         AlertBox* alert = AlertBox::create();
         alert->useAsTopmostPopupMenu();
         alert->useAsExclusivePopupMenu();
         alert->setDisplayText("Your people have had enough of your mismanagement! Furious citizens drag you from your office...");
         
         alert->addButton(0, "DOH!", this, callfuncO_selector(GameScene::lostGame), this);
-   
-        
-        
     }
     */
     

@@ -31,6 +31,8 @@ public:
     
     float delay_animFrame;
     float delay_curr;
+    
+    int layer;
 
 public:
     FloatingArraw();
@@ -40,7 +42,7 @@ public:
     
     void update(float);
     
-    void showArrow(CCPoint, float, float);
+    void showArrow(CCPoint, float, float, int arrowLayer = 0);
     void hideArrow();
 };
 
