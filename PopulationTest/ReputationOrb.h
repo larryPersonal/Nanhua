@@ -47,6 +47,9 @@ public:
     
     CCSprite* getSprite();
     void update(float);
+    
+    void collect();
+    void collectComplete();
 };
 
 #endif

@@ -118,28 +118,61 @@ void ReputationOrb::update(float dt)
     
     if (opacity == 0)
     {
-       // CC_SAFE_RELEASE(orbSprite);
+        if (orbSprite) orbSprite = NULL;
+        if (orbTexture) orbTexture = NULL;
+        // CC_SAFE_RELEASE(orbSprite);
        // CC_SAFE_RELEASE(orbTexture);
     }
     else
     {
-        if (delay_curr > 0)
+        if (!collected)
         {
-            delay_curr -= dt;
-        }
-        else
-        {
-            ++x_frameno;
-            if (x_frameno >= x_maxframeno)
+        
+       
+        
+            if (delay_curr > 0)
             {
-                x_frameno = 0;
+                delay_curr -= dt;
             }
-            orbRect.setRect(x_frameno * frameWidth, y_offset * frameHeight, frameWidth, frameHeight);
-            orbSprite->setTextureRect(orbRect);
+            else
+            {
+                ++x_frameno;
+                if (x_frameno >= x_maxframeno)
+                {
+                    x_frameno = 0;
+                }
+                orbRect.setRect(x_frameno * frameWidth, y_offset * frameHeight, frameWidth, frameHeight);
+                orbSprite->setTextureRect(orbRect);
             
-            delay_curr = delay_animFrame;
+                delay_curr = delay_animFrame;
+            }
         }
         
     }
+    
+}
+
+void ReputationOrb::collectComplete()
+{
+    opacity = 0;
+}
+
+
+void ReputationOrb::collect()
+{
+    collected = true;
+    stopAnimation = true;
+    
+    
+    CCCallFuncN* callback = CCCallFuncN::create(this, callfuncN_selector(ReputationOrb::collectComplete));
+    callback->retain();
+    
+    
+    CC_SAFE_RELEASE(callback);
+    CCSequence* runAction = CCSequence::createWithTwoActions(CCMoveTo::create(1.0f, CCPointZero), callback);
+    runAction->retain();
+    orbSprite->runAction(runAction);
+    CC_SAFE_RELEASE(runAction);
+    
     
 }
