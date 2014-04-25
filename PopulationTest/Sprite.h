@@ -62,7 +62,7 @@ public:
 
 class GameSprite: public CCObject
 {
-private:
+public:
     //This ensures that a move instruction other than Wander will not be interrupted by another instruction that resets the path.
     bool isFollowingMoveInstruction;
 
@@ -79,6 +79,7 @@ private:
     Possessions* possessions;
     
     SpeechBubble* speechBubble;
+    CCArray* battleIconArray;
     
     /*note: clones will always have NULL requirements, only the primary copy inside allSprites has these initialized.*/
     int spriteSpeed;
@@ -327,6 +328,7 @@ public:
     Building* findNearestHouse();
     
     int getPathDistance(CCPoint, CCPoint);
+    int getDistance(CCPoint, CCPoint);
     
     void updateHungry(float);
     void updateEndurance(float);

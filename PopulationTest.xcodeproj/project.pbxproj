@@ -508,6 +508,22 @@
 		8421158518D2C4DD00A441D0 /* ticksign.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421156818D2C4DD00A441D0 /* ticksign.png */; };
 		8421158618D2C4DD00A441D0 /* timeclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421156918D2C4DD00A441D0 /* timeclock.png */; };
 		8421158B18D2F02D00A441D0 /* upgrade.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421158A18D2F02D00A441D0 /* upgrade.png */; };
+		842A0F41190A0193008B16AF /* thiefStealingFood.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F3F190A0193008B16AF /* thiefStealingFood.png */; };
+		842A0F42190A0193008B16AF /* thieftStealingMoney.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F40190A0193008B16AF /* thieftStealingMoney.png */; };
+		842A0F47190A2EB2008B16AF /* soldierAnimationDL.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F43190A2EB2008B16AF /* soldierAnimationDL.png */; };
+		842A0F48190A2EB2008B16AF /* soldierAnimationDR.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F44190A2EB2008B16AF /* soldierAnimationDR.png */; };
+		842A0F49190A2EB2008B16AF /* soldierAnimationUL.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F45190A2EB2008B16AF /* soldierAnimationUL.png */; };
+		842A0F4A190A2EB2008B16AF /* soldierAnimationUR.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F46190A2EB2008B16AF /* soldierAnimationUR.png */; };
+		842A0F53190A494A008B16AF /* sortbyenergy_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F4B190A494A008B16AF /* sortbyenergy_up.png */; };
+		842A0F54190A494A008B16AF /* sortbyhappiness_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F4C190A494A008B16AF /* sortbyhappiness_up.png */; };
+		842A0F55190A494A008B16AF /* sortbyenergy_downpress.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F4D190A494A008B16AF /* sortbyenergy_downpress.png */; };
+		842A0F56190A494A008B16AF /* sortbyenergy_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F4E190A494A008B16AF /* sortbyenergy_down.png */; };
+		842A0F57190A494A008B16AF /* sortbyhappiness_uppress.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F4F190A494A008B16AF /* sortbyhappiness_uppress.png */; };
+		842A0F58190A494A008B16AF /* sortbyhappiness_downpress.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F50190A494A008B16AF /* sortbyhappiness_downpress.png */; };
+		842A0F59190A494A008B16AF /* sortbyenergy_uppress.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F51190A494A008B16AF /* sortbyenergy_uppress.png */; };
+		842A0F5A190A494A008B16AF /* sortbyhappiness_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F52190A494A008B16AF /* sortbyhappiness_down.png */; };
+		842A0F5D190A5E43008B16AF /* BattleIcon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 842A0F5C190A5E43008B16AF /* BattleIcon.cpp */; };
+		842A0F5F190A6423008B16AF /* swordAnimation.png in Resources */ = {isa = PBXBuildFile; fileRef = 842A0F5E190A6423008B16AF /* swordAnimation.png */; };
 		842B84C519064FCF00D43E2E /* ingamedragonanim.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84C419064FCF00D43E2E /* ingamedragonanim.png */; };
 		842B84C81906599800D43E2E /* ingamedragonanimwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84C61906599800D43E2E /* ingamedragonanimwhite.png */; };
 		842B84C91906599800D43E2E /* objectiveScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 842B84C71906599800D43E2E /* objectiveScreen.png */; };
@@ -1536,6 +1552,23 @@
 		8421156B18D2C4DD00A441D0 /* yuanbao_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao_icon.png; sourceTree = "<group>"; };
 		8421156C18D2C4DD00A441D0 /* yuanbao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao.png; sourceTree = "<group>"; };
 		8421158A18D2F02D00A441D0 /* upgrade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upgrade.png; sourceTree = "<group>"; };
+		842A0F3F190A0193008B16AF /* thiefStealingFood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thiefStealingFood.png; sourceTree = "<group>"; };
+		842A0F40190A0193008B16AF /* thieftStealingMoney.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thieftStealingMoney.png; sourceTree = "<group>"; };
+		842A0F43190A2EB2008B16AF /* soldierAnimationDL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soldierAnimationDL.png; sourceTree = "<group>"; };
+		842A0F44190A2EB2008B16AF /* soldierAnimationDR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soldierAnimationDR.png; sourceTree = "<group>"; };
+		842A0F45190A2EB2008B16AF /* soldierAnimationUL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soldierAnimationUL.png; sourceTree = "<group>"; };
+		842A0F46190A2EB2008B16AF /* soldierAnimationUR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soldierAnimationUR.png; sourceTree = "<group>"; };
+		842A0F4B190A494A008B16AF /* sortbyenergy_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyenergy_up.png; sourceTree = "<group>"; };
+		842A0F4C190A494A008B16AF /* sortbyhappiness_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyhappiness_up.png; sourceTree = "<group>"; };
+		842A0F4D190A494A008B16AF /* sortbyenergy_downpress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyenergy_downpress.png; sourceTree = "<group>"; };
+		842A0F4E190A494A008B16AF /* sortbyenergy_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyenergy_down.png; sourceTree = "<group>"; };
+		842A0F4F190A494A008B16AF /* sortbyhappiness_uppress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyhappiness_uppress.png; sourceTree = "<group>"; };
+		842A0F50190A494A008B16AF /* sortbyhappiness_downpress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyhappiness_downpress.png; sourceTree = "<group>"; };
+		842A0F51190A494A008B16AF /* sortbyenergy_uppress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyenergy_uppress.png; sourceTree = "<group>"; };
+		842A0F52190A494A008B16AF /* sortbyhappiness_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbyhappiness_down.png; sourceTree = "<group>"; };
+		842A0F5B190A5C28008B16AF /* BattleIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleIcon.h; sourceTree = "<group>"; };
+		842A0F5C190A5E43008B16AF /* BattleIcon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleIcon.cpp; sourceTree = "<group>"; };
+		842A0F5E190A6423008B16AF /* swordAnimation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swordAnimation.png; sourceTree = "<group>"; };
 		842B84C419064FCF00D43E2E /* ingamedragonanim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ingamedragonanim.png; sourceTree = "<group>"; };
 		842B84C61906599800D43E2E /* ingamedragonanimwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ingamedragonanimwhite.png; sourceTree = "<group>"; };
 		842B84C71906599800D43E2E /* objectiveScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = objectiveScreen.png; sourceTree = "<group>"; };
@@ -3102,6 +3135,8 @@
 		36D87CFE18C5BAD900FE8B31 /* Emote */ = {
 			isa = PBXGroup;
 			children = (
+				842A0F3F190A0193008B16AF /* thiefStealingFood.png */,
+				842A0F40190A0193008B16AF /* thieftStealingMoney.png */,
 				8444D6B11907720C00D5AFAC /* findingbandit.png */,
 				8444D6B21907720C00D5AFAC /* defending.png */,
 				8444D6B31907720C00D5AFAC /* injured.png */,
@@ -3202,6 +3237,15 @@
 		8412CA4118AC8D3200AF4645 /* newUI */ = {
 			isa = PBXGroup;
 			children = (
+				842A0F5E190A6423008B16AF /* swordAnimation.png */,
+				842A0F4B190A494A008B16AF /* sortbyenergy_up.png */,
+				842A0F4C190A494A008B16AF /* sortbyhappiness_up.png */,
+				842A0F4D190A494A008B16AF /* sortbyenergy_downpress.png */,
+				842A0F4E190A494A008B16AF /* sortbyenergy_down.png */,
+				842A0F4F190A494A008B16AF /* sortbyhappiness_uppress.png */,
+				842A0F50190A494A008B16AF /* sortbyhappiness_downpress.png */,
+				842A0F51190A494A008B16AF /* sortbyenergy_uppress.png */,
+				842A0F52190A494A008B16AF /* sortbyhappiness_down.png */,
 				842B84DE1906881C00D43E2E /* school_anim_dog.png */,
 				842B84DC1906795100D43E2E /* amount_ui.png */,
 				842B84DA190674DE00D43E2E /* money_label.png */,
@@ -3373,6 +3417,10 @@
 		8444D6B7190779DB00D5AFAC /* animation */ = {
 			isa = PBXGroup;
 			children = (
+				842A0F43190A2EB2008B16AF /* soldierAnimationDL.png */,
+				842A0F44190A2EB2008B16AF /* soldierAnimationDR.png */,
+				842A0F45190A2EB2008B16AF /* soldierAnimationUL.png */,
+				842A0F46190A2EB2008B16AF /* soldierAnimationUR.png */,
 				8444D6B8190779E500D5AFAC /* banditAttackRightDown.png */,
 				8444D6B9190779E500D5AFAC /* banditAttackLeftDown.png */,
 				8444D6BA190779E500D5AFAC /* banditAttackRightUp.png */,
@@ -3649,6 +3697,7 @@
 				84F4933D1883E3EA00377957 /* SpriteRow.cpp */,
 				844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */,
 				8410545018E91940003D88C6 /* ReputationOrb.cpp */,
+				842A0F5C190A5E43008B16AF /* BattleIcon.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3667,6 +3716,7 @@
 				84F4933C1883E32F00377957 /* SpriteRow.h */,
 				84EDD27018C729D3003BAF5E /* BanditsAttackHandler.h */,
 				8410544F18E916DA003D88C6 /* ReputationOrb.h */,
+				842A0F5B190A5C28008B16AF /* BattleIcon.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3936,6 +3986,8 @@
 				843E972A18DA94F100DBB48D /* Girl_port.png in Resources */,
 				844AC8EB18C8301F005166FD /* war.png in Resources */,
 				84F56BD11859C72600E7512B /* text_box.jpg in Resources */,
+				842A0F47190A2EB2008B16AF /* soldierAnimationDL.png in Resources */,
+				842A0F57190A494A008B16AF /* sortbyhappiness_uppress.png in Resources */,
 				8414CF2218FF9AB80052CA91 /* Happinessicon.png in Resources */,
 				848D2FE8185976A400EB9257 /* bkg.png in Resources */,
 				365FB9C616E5E30B00A57CF0 /* iTunesArtwork in Resources */,
@@ -4011,6 +4063,7 @@
 				8497F6F118F40B8400838503 /* acceptbtn.png in Resources */,
 				36D87D1418C7146B00FE8B31 /* roads.png in Resources */,
 				843E972918DA94F100DBB48D /* FemaleVillager_port.png in Resources */,
+				842A0F48190A2EB2008B16AF /* soldierAnimationDR.png in Resources */,
 				843BE2B218F7F1BA00682E5B /* speechdialog.png in Resources */,
 				84F2913118FE9A5B0045F834 /* red.png in Resources */,
 				843689FD18DC007600FA08FF /* guardtower.png in Resources */,
@@ -4046,6 +4099,7 @@
 				8410546618E94ECB003D88C6 /* exitbtn.png in Resources */,
 				36D87CFD18C5BA7800FE8B31 /* tokenball_AI.png in Resources */,
 				8418C39618D8399D00C8C9B9 /* objective_tutorial.xml in Resources */,
+				842A0F54190A494A008B16AF /* sortbyhappiness_up.png in Resources */,
 				84EDD26D18C6EF0C003BAF5E /* happyFace.png in Resources */,
 				36D87CFA18C5BA7800FE8B31 /* tokenball_REN.png in Resources */,
 				B4B0148517389F540071E59F /* demolish.png in Resources */,
@@ -4065,6 +4119,7 @@
 				8444D6BF190779E500D5AFAC /* banditAttackLeftUp.png in Resources */,
 				8410544618E90DA7003D88C6 /* hungry3.png in Resources */,
 				848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */,
+				842A0F53190A494A008B16AF /* sortbyenergy_up.png in Resources */,
 				3619CAE317A6599400B59924 /* button-up.png in Resources */,
 				842B84CC190662C200D43E2E /* igamechar_boy.png in Resources */,
 				8410546018E94ECB003D88C6 /* exitpressbtn.png in Resources */,
@@ -4096,6 +4151,7 @@
 				84F9B76718D9415200579060 /* Ishikari Lore.mp3 in Resources */,
 				842B84D9190674DB00D43E2E /* food_label.png in Resources */,
 				3617292E17AA543B00D2558E /* loadingbar-right.png in Resources */,
+				842A0F5A190A494A008B16AF /* sortbyhappiness_down.png in Resources */,
 				8421158618D2C4DD00A441D0 /* timeclock.png in Resources */,
 				3617293117AA596900D2558E /* nav button.png in Resources */,
 				8412CA6818AC8D4A00AF4645 /* build-menu_info.png in Resources */,
@@ -4109,6 +4165,7 @@
 				3617293917AA6C9900D2558E /* arrow-left2.png in Resources */,
 				3658DD8918D6FCD40056B895 /* MaleYoungVillager.plist in Resources */,
 				3617293A17AA6C9900D2558E /* arrow-right2.png in Resources */,
+				842A0F4A190A2EB2008B16AF /* soldierAnimationUR.png in Resources */,
 				8414CF2E18FFEB250052CA91 /* guardtower anim.png in Resources */,
 				36AC556A18D6981900C165F5 /* population_amount.png in Resources */,
 				84589CE21896655500AA9E1C /* conversation_textbox_empty_right.png in Resources */,
@@ -4123,6 +4180,7 @@
 				3617294017AA6E0600D2558E /* hint box.png in Resources */,
 				847309CE18DC0A23001869C6 /* peaceicon.png in Resources */,
 				3658DD7518D6F1430056B895 /* Girl.png in Resources */,
+				842A0F55190A494A008B16AF /* sortbyenergy_downpress.png in Resources */,
 				360496E417AB49DC00CACE25 /* farmer-icon.png in Resources */,
 				360496E517AB49DC00CACE25 /* happiness icon.png in Resources */,
 				84360A3718B22150002EC8C2 /* worker_assign_sample_ui.png in Resources */,
@@ -4146,23 +4204,28 @@
 				360496EB17AB49DC00CACE25 /* social icon.png in Resources */,
 				360496EE17AB4CC400CACE25 /* hint left.png in Resources */,
 				842B84CD190662C200D43E2E /* ingame_chargirl.png in Resources */,
+				842A0F58190A494A008B16AF /* sortbyhappiness_downpress.png in Resources */,
 				84589CE61896758900AA9E1C /* nextButton.png in Resources */,
 				360496EF17AB4CC400CACE25 /* hint right.png in Resources */,
 				360496F117AB5A9600CACE25 /* vacancy slot.png in Resources */,
+				842A0F5F190A6423008B16AF /* swordAnimation.png in Resources */,
 				360496F317AB5E4100CACE25 /* vacancy slot overload.png in Resources */,
 				842B84D219066AC600D43E2E /* summertimeclock.png in Resources */,
 				36B18A8118A0A6A700A8B515 /* CMakeLists.txt in Resources */,
 				84CFAEDF18E034E900A81C94 /* timeclock0.png in Resources */,
+				842A0F59190A494A008B16AF /* sortbyenergy_uppress.png in Resources */,
 				36AC558218D69A0100C165F5 /* start.png in Resources */,
 				360496F617AB5EE700CACE25 /* innerbox.png in Resources */,
 				8410546218E94ECB003D88C6 /* pausemenusample.png in Resources */,
 				360496F717AB5EE700CACE25 /* outerbox.png in Resources */,
 				84C97B0018DFF2B100640CE8 /* skip_button.png in Resources */,
 				84360A3318B21FED002EC8C2 /* workers_menu_unselectedBG.png in Resources */,
+				842A0F56190A494A008B16AF /* sortbyenergy_down.png in Resources */,
 				8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */,
 				8410543718E90DA7003D88C6 /* tired2.png in Resources */,
 				36C3A80B18F8000700C93E6B /* toony_loons.ttf in Resources */,
 				8410543818E90DA7003D88C6 /* tired3.png in Resources */,
+				842A0F49190A2EB2008B16AF /* soldierAnimationUL.png in Resources */,
 				360496F917AB5EF100CACE25 /* buildbox.png in Resources */,
 				360496FB17AB604E00CACE25 /* board.png in Resources */,
 				84F2912018FE307D0045F834 /* timeclock_week3.png in Resources */,
@@ -4173,6 +4236,7 @@
 				36AC556018D6981900C165F5 /* Energy.png in Resources */,
 				844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */,
 				360496FD17AB605400CACE25 /* boards.png in Resources */,
+				842A0F41190A0193008B16AF /* thiefStealingFood.png in Resources */,
 				84CFAEE318E034E900A81C94 /* timeclockgreen.png in Resources */,
 				360496FF17AB68A400CACE25 /* board-alert.png in Resources */,
 				3604970117AB8A6C00CACE25 /* innerbox-policy.png in Resources */,
@@ -4249,6 +4313,7 @@
 				8421158418D2C4DD00A441D0 /* stopsign.png in Resources */,
 				36AC558C18D6A16600C165F5 /* building3x3.png in Resources */,
 				36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */,
+				842A0F42190A0193008B16AF /* thieftStealingMoney.png in Resources */,
 				36C3A80518F77E7200C93E6B /* tokenanim.png in Resources */,
 				843E973B18DB18FE00DBB48D /* Closebtn_Sq.png in Resources */,
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,
@@ -4404,6 +4469,7 @@
 				36B18ACF18A0A6A800A8B515 /* CCEGLViewProtocol.cpp in Sources */,
 				36B190E618A0A6AD00A8B515 /* CCTMXLayer.cpp in Sources */,
 				365FBC3D16E5E31000A57CF0 /* CCTableViewCell.cpp in Sources */,
+				842A0F5D190A5E43008B16AF /* BattleIcon.cpp in Sources */,
 				36B18A8518A0A6A700A8B515 /* mat4.c in Sources */,
 				365FBC4116E5E31000A57CF0 /* LocalStorage.cpp in Sources */,
 				36B18A8C18A0A6A700A8B515 /* vec3.c in Sources */,

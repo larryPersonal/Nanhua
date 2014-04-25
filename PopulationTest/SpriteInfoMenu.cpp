@@ -50,6 +50,7 @@ SpriteInfoMenu::SpriteInfoMenu(GameSprite* gameSprite)
 
 SpriteInfoMenu::~SpriteInfoMenu()
 {
+    this->unschedule(schedule_selector(SpriteInfoMenu::update));
     SpriteInfoMenu::SP = NULL;
 }
 

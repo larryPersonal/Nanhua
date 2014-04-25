@@ -76,14 +76,14 @@ SelectPopulation::SelectPopulation(Building* building){
     isPerformingTask = false;
     
     isSorted = false;
-    happinessIncre = false;
-    energyIncre = false;
     isSortedByHappiness = false;
 }
 
 SelectPopulation::~SelectPopulation()
 {
     SelectPopulation::SP = NULL;
+    
+    this->unschedule(schedule_selector(SelectPopulation::update));
     /*
      for (int i = 0; i < allSprites->count(); ++i)
      {
@@ -279,21 +279,38 @@ void SelectPopulation::createMenuItems()
     }
     scrollArea->updateScrollBars();
     
-    sortButton = CCMenuItemImage::create("sortbtn.png", "sortpressbtn.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortButton));
-    sortButton->setScale(0.6f);
-    sortButton->setAnchorPoint(ccp(0, 1));
-    sortButton->setPosition(ccp(75, 515));
+    sortButtonUp = CCMenuItemImage::create("sortbyenergy_up.png", "sortbyenergy_uppress.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortButtonUp));
+    sortButtonUp->setScale(0.6f);
+    sortButtonUp->setAnchorPoint(ccp(0, 1));
+    sortButtonUp->setPosition(ccp(75, 515));
     
-    sortHappinessButton = CCMenuItemImage::create("sortby_happinessbtn.png", "sortby_happiness_pressbtn.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortHappinessButton));
-    sortHappinessButton->setScale(0.6f);
-    sortHappinessButton->setAnchorPoint(ccp(0, 1));
-    sortHappinessButton->setPosition(ccp(200, 515));
+    sortButtonDown = CCMenuItemImage::create("sortbyenergy_down.png", "sortbyenergy_downpress.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortButtonDown));
+    sortButtonDown->setScale(0.6f);
+    sortButtonDown->setAnchorPoint(ccp(0, 1));
+    sortButtonDown->setPosition(ccp(75, 515));
+    
+    sortHappinessButtonUp = CCMenuItemImage::create("sortbyhappiness_up.png", "sortbyhappiness_uppress.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortHappinessButtonUp));
+    sortHappinessButtonUp->setScale(0.6f);
+    sortHappinessButtonUp->setAnchorPoint(ccp(0, 1));
+    sortHappinessButtonUp->setPosition(ccp(200, 515));
+    
+    sortHappinessButtonDown = CCMenuItemImage::create("sortbyhappiness_down.png", "sortbyhappiness_downpress.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortHappinessButtonDown));
+    sortHappinessButtonDown->setScale(0.6f);
+    sortHappinessButtonDown->setAnchorPoint(ccp(0, 1));
+    sortHappinessButtonDown->setPosition(ccp(200, 515));
+    
+    sortButtonUp->setVisible(true);
+    sortButtonDown->setVisible(false);
+    sortHappinessButtonUp->setVisible(false);
+    sortHappinessButtonDown->setVisible(false);
     
     menuItems->addObject(buttonCancel);
     menuItems->addObject(buttonOk);
     menuItems->addObject(spriteBuilding);
-    menuItems->addObject(sortButton);
-    menuItems->addObject(sortHappinessButton);
+    menuItems->addObject(sortButtonUp);
+    menuItems->addObject(sortButtonDown);
+    menuItems->addObject(sortHappinessButtonUp);
+    menuItems->addObject(sortHappinessButtonDown);
     
     menu = CCMenu::createWithArray(menuItems);
     menu->setPosition(CCPointZero);
@@ -980,7 +997,6 @@ void SelectPopulation::clickSortButton()
 {
     isSorted = true;
     isSortedByHappiness = false;
-    energyIncre = !energyIncre;
     
     // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
     CCArray* spritesForSelection = getSpriteList();
@@ -1030,11 +1046,32 @@ void SelectPopulation::clickSortButton()
     CC_SAFE_RELEASE(spritesForSelection);
 }
 
+void SelectPopulation::clickSortButtonUp()
+{
+    isSortedUp = true;
+    clickSortButton();
+    
+    sortButtonUp->setVisible(false);
+    sortButtonDown->setVisible(true);
+    sortHappinessButtonUp->setVisible(false);
+    sortHappinessButtonDown->setVisible(false);
+}
+
+void SelectPopulation::clickSortButtonDown()
+{
+    isSortedUp = false;
+    clickSortButton();
+    
+    sortButtonUp->setVisible(false);
+    sortButtonDown->setVisible(false);
+    sortHappinessButtonUp->setVisible(true);
+    sortHappinessButtonDown->setVisible(false);
+}
+
 void SelectPopulation::clickSortHappinessButton()
 {
     isSorted = true;
     isSortedByHappiness = true;
-    happinessIncre = !happinessIncre;
     
     // if the building is in preparing stage, list down all the available worker/builders. if the building is in working stage, list down all the members of the workers and builders.
     CCArray* spritesForSelection = getSpriteList();
@@ -1082,6 +1119,28 @@ void SelectPopulation::clickSortHappinessButton()
     
     spritesForSelection->removeAllObjects();
     CC_SAFE_RELEASE(spritesForSelection);
+}
+
+void SelectPopulation::clickSortHappinessButtonUp()
+{
+    isSortedUp = true;
+    clickSortHappinessButton();
+    
+    sortButtonUp->setVisible(false);
+    sortButtonDown->setVisible(false);
+    sortHappinessButtonUp->setVisible(false);
+    sortHappinessButtonDown->setVisible(true);
+}
+
+void SelectPopulation::clickSortHappinessButtonDown()
+{
+    isSortedUp = false;
+    clickSortHappinessButton();
+    
+    sortButtonUp->setVisible(true);
+    sortButtonDown->setVisible(false);
+    sortHappinessButtonUp->setVisible(false);
+    sortHappinessButtonDown->setVisible(false);
 }
 
 CCArray* SelectPopulation::getSpriteList()
@@ -1124,7 +1183,7 @@ CCArray* SelectPopulation::sortByHappiness()
         
         while (unsortedArray->count() > 0)
         {
-            GameSprite* gs = getSpriteWithHappiness(unsortedArray, happinessIncre);
+            GameSprite* gs = getSpriteWithHappiness(unsortedArray, isSortedUp);
             sortedArray->addObject(gs);
             unsortedArray->removeObject(gs);
         }
@@ -1167,7 +1226,7 @@ CCArray* SelectPopulation::sortByEnergy()
         
         while (unsortedArray->count() > 0)
         {
-            GameSprite* gs = getSpriteWithEnergy(unsortedArray, energyIncre);
+            GameSprite* gs = getSpriteWithEnergy(unsortedArray, isSortedUp);
             sortedArray->addObject(gs);
             unsortedArray->removeObject(gs);
         }

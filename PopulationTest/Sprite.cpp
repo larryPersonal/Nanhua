@@ -17,8 +17,9 @@
 #include "BuildingHandler.h"
 #include "GlobalHelper.h"
 #include "ReputationOrb.h"
-#include "BattleManager.h"
+#include "BattleIcon.h"
 
+#include <cmath>
 #include <sstream>
 
 GameSprite::GameSprite()
@@ -109,6 +110,9 @@ GameSprite::GameSprite()
     
     isInCombat = false;
     justMoveOneTile = false;
+    
+    battleIconArray = CCArray::create();
+    battleIconArray->retain();
 }
 
 void GameSprite::initAI(bool isUpgrade)
@@ -354,11 +358,13 @@ GameSprite* GameSprite::create()
      speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
                                    spriteRep->boundingBox().size.height * 1.5f));
      spriteRep->addChild(speechBubble);
+     
+     BattleIcon* battleIcon = BattleIcon::create(this);
+     battleIconArray->addObject(battleIcon);
 
      GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
                                                           GameScene::getThis()->mapHandler->calcZIndex(*tilePos));
      //speechBubble->autorelease();
-     
      
      behaviorTree->onInitialize();
      behaviorTree->update();
@@ -375,11 +381,10 @@ void GameSprite::unmakeSpriteEndGame()
 {
     spriteRep->stopAllActions();
     
-   // CC_SAFE_RELEASE(callback);
-   //spriteRep->removeChild(speechBubble, true);
     delete speechBubble;
-    //  animation->release();
-  //  spriteRep->release();
+    battleIconArray->removeAllObjects();
+    CC_SAFE_RELEASE(battleIconArray);
+    
     if (path != NULL)
         path->removeAllObjects();
     
@@ -410,6 +415,8 @@ void GameSprite::unmakeSprite()
     }
     
     delete speechBubble;
+    battleIconArray->removeAllObjects();
+    CC_SAFE_RELEASE(battleIconArray);
     
     if (path != NULL)
     {
@@ -527,8 +534,10 @@ int GameSprite::getPathDistance(CCPoint from, CCPoint to)
     }
 }
 
-
-
+int GameSprite::getDistance(CCPoint from, CCPoint to)
+{
+    return (abs(from.x - to.x) + abs(from.y - to.y));
+}
 
 void GameSprite::followPath(bool moveOneTile)
 {
@@ -720,6 +729,12 @@ void GameSprite::changeAnimation(std::string dir)
             animFrames->addObject(fr);
         }	
         
+    }
+    
+    for(int i = 0; i < battleIconArray->count(); i++)
+    {
+        BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(i);
+        bi->adjustPosition();
     }
     
     animation = CCAnimation::createWithSpriteFrames(animFrames, 50.0f / possessions->default_animate_speed * 0.2f);
@@ -1040,45 +1055,6 @@ void GameSprite::updateSprite(float dt)
         }
     }
     
-    if(possessions->happinessRating <= 0)
-    {
-        if(villagerClass == V_REFUGEE)
-        {
-            if(!tryEscape)
-            {
-                tryEscape = true;
-                stringstream ss;
-                ss << spriteDisplayedName << " will leave the village!";
-                GameHUD::getThis()->addNewNotification(ss.str());
-
-                CCPoint target = CCPointMake(29,33);
-                if(GoLocation(target))
-                {
-                    isLeavingNextUpdate = true;
-                }
-            }
-        }
-        else if(villagerClass != V_BANDIT && villagerClass != V_CLASS_END)
-        {
-            if(!GameScene::getThis()->banditsAttackHandler->warMode)
-            {
-                if(villagerClass != V_CITIZEN)
-                {
-                    if(possessions->jobLocation != NULL)
-                    {
-                        possessions->jobLocation->memberSpriteList->removeObject(this);
-                        possessions->jobLocation = NULL;
-                    }
-                }
-                
-                getHome()->memberSpriteList->removeObject(this);
-                possessions->homeLocation = NULL;
-                
-                changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
-            }
-        }
-    }
-    
     lastFrameAction = currAction;
     
     if(villagerClass == V_BANDIT)
@@ -1380,6 +1356,15 @@ void GameSprite::updateSprite(float dt)
                         hasEnermy = true;
                     }
                 }
+                
+                if(villagerClass == V_BANDIT)
+                {
+                    if(battleIconArray->count() > 0)
+                    {
+                        BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(0);
+                        bi->update(dt);
+                    }
+                }
 
                 if(hasEnermy)
                 {
@@ -1400,10 +1385,7 @@ void GameSprite::updateSprite(float dt)
                         int damage = possessions->attack_power_min + random_number;
                         enermy->damaged(damage);
                         
-                        if(villagerClass == V_BANDIT)
-                        {
-                            playAttackAction();
-                        }
+                        playAttackAction();
                     }
                     
                     cumulativeTime_attack = 0;
@@ -1425,11 +1407,11 @@ void GameSprite::updateSprite(float dt)
                 }
             }
         }
-        else if(combatState == C_IDLE && false)
+        else if(combatState == C_IDLE)
         {
             // free means sprites that are not in battle and are not escaping
             // free bandits will be stop by free soldiers to a 1:1 ratio and become non-free bandits. They will escape after losing all endurance
-            if (villagerClass == V_BANDIT && false)
+            if (villagerClass == V_BANDIT)
             {
                 // get the current position of the soldier
                 CCPoint bPos = getWorldPosition();
@@ -1449,8 +1431,8 @@ void GameSprite::updateSprite(float dt)
                     {
                         CCPoint sPos = gs->getWorldPosition();
                         sPos = GameScene::getThis()->mapHandler->tilePosFromLocation(sPos);
-                        int tempDistance = getPathDistance(currPos, sPos);
-                        if(tempDistance <= 2 && !tryEscape && gs->combatState == C_IDLE && gs->enermy == NULL)
+                        int tempDistance = getDistance(currPos, sPos);
+                        if(tempDistance <= 1 && !tryEscape && gs->combatState == C_IDLE && gs->enermy == NULL)
                         {
                             stop = true;
                             opponent = gs;
@@ -1472,6 +1454,12 @@ void GameSprite::updateSprite(float dt)
                         enermy->combatState = C_COMBAT;
                         enermy->currAction = FIGHTING;
                         
+                        if(battleIconArray->count() > 0)
+                        {
+                            BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(0);
+                            bi->show();
+                        }
+                        
                         for(int i = 0; i < spritesOnMap->count(); i++)
                         {
                             GameSprite* gs = (GameSprite*)spritesOnMap->objectAtIndex(i);
@@ -1489,18 +1477,8 @@ void GameSprite::updateSprite(float dt)
                         }
                     }
                 }
-                else
-                {
-                    if(!isMoving)
-                    {
-                        //stopAction = false;
-                        //attack();
-                    }
-                }
             }
-            
         }
-
     }
 
     //After this part, only functions relating to IDLE will be called. This is because WALKING already has its own function calls.
@@ -1574,6 +1552,20 @@ void GameSprite::updateZIndex()
     
     spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
     speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+    /*
+    for(int i = 0; i < battleIconArray->count(); i++)
+    {
+        BattleIcon* battleIcon = (BattleIcon*) battleIconArray->objectAtIndex(i);
+        if(currentDir == "UL" || currentDir == "UR")
+        {
+            battleIcon->battleSprite->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) - 2 );
+        }
+        else
+        {
+            battleIcon->battleSprite->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+        }
+    }
+    */
 }
 
 CCPoint GameSprite::getWorldPosition()
@@ -1780,6 +1772,14 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             break;
         case TRANSPORT_EMOTION:
             speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 0);
+            show = false;
+            break;
+        case STEAL_MONEY:
+            speechBubble->addContent("thieftStealingMoney.png", CCPointZero, 14, 4, 0);
+            show = false;
+            break;
+        case STEAL_FOOD:
+            speechBubble->addContent("thiefStealingFood.png", CCPointZero, 13, 4, 0);
             show = false;
             break;
         default:
@@ -2193,6 +2193,13 @@ void GameSprite::ReplaceSpriteRep()
     delete behaviorTree;
     spriteRep->removeChild(speechBubble, true);
     delete speechBubble;
+    for(int i = 0; i < battleIconArray->count(); i++)
+    {
+        BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(i);
+        spriteRep->removeChild(bi->battleSprite, true);
+    }
+    battleIconArray->removeAllObjects();
+    
     spriteRep->removeChild(barHP, true);
     delete barHP;
     
@@ -2226,6 +2233,9 @@ void GameSprite::ReplaceSpriteRep()
                                   spriteRep->boundingBox().size.height * 1.5f));
     
     spriteRep->addChild(speechBubble);
+    
+    BattleIcon* battleIcon = BattleIcon::create(this);
+    battleIconArray->addObject(battleIcon);
     
     barHP = new ProgressBar();
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
@@ -2648,11 +2658,11 @@ bool GameSprite::hasValidTarget()
         nextAction = ROB;
         if(nearestTarget->buildingType == SPECIAL)
         {
-            saySpeech("Your money is mine!", 5.0f);
+            saySpeech(STEAL_MONEY, 5.0f);
         }
         else
         {
-            saySpeech("I want to get food free!", 5.0f);
+            saySpeech(STEAL_FOOD, 5.0f);
         }
         GoBuilding(nearestTarget);
         return true;
@@ -2844,7 +2854,53 @@ void GameSprite::updateHungry(float dt)
     if(possessions->happinessRating < 0)
     {
         possessions->happinessRating = 0;
+        
         // when energy <= 0, the villager will leave the village.
+        if(villagerClass == V_REFUGEE)
+        {
+            if(!tryEscape)
+            {
+                tryEscape = true;
+                stringstream ss;
+                ss << spriteDisplayedName << " will leave the village!";
+                GameHUD::getThis()->addNewNotification(ss.str());
+                
+                CCPoint target = CCPointMake(29,33);
+                if(GoLocation(target))
+                {
+                    isLeavingNextUpdate = true;
+                }
+            }
+        }
+        else if(villagerClass != V_BANDIT && villagerClass != V_CLASS_END)
+        {
+            if(!GameScene::getThis()->banditsAttackHandler->warMode)
+            {
+                if(villagerClass != V_CITIZEN)
+                {
+                    if(possessions->jobLocation != NULL)
+                    {
+                        possessions->jobLocation->memberSpriteList->removeObject(this);
+                        possessions->jobLocation = NULL;
+                    }
+                }
+                
+                getHome()->memberSpriteList->removeObject(this);
+                possessions->homeLocation = NULL;
+                
+                changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
+                tryEscape = true;
+                stringstream ss;
+                ss << spriteDisplayedName << " will leave the village!";
+                GameHUD::getThis()->addNewNotification(ss.str());
+                
+                CCPoint target = CCPointMake(29, 33);
+                if(GoLocation(target))
+                {
+                    isLeavingNextUpdate = true;
+                }
+            }
+        }
     }
 }
 
@@ -3140,6 +3196,13 @@ void GameSprite::playAttackAction()
     delete behaviorTree;
     spriteRep->removeChild(speechBubble, true);
     delete speechBubble;
+    for(int i = 0; i < battleIconArray->count(); i++)
+    {
+        BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(i);
+        spriteRep->removeChild(bi->battleSprite, true);
+    }
+    battleIconArray->removeAllObjects();
+    
     spriteRep->removeChild(barHP, true);
     delete barHP;
     
@@ -3178,13 +3241,48 @@ void GameSprite::playAttackAction()
             currentFrameNumber = 0;
         }
     }
+    else if(villagerClass == V_SOLDIER)
+    {
+        if(currentDir == "UL")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("soldierAnimationUL.png");
+            maxFrameNumber = 9;
+            currentFrameNumber = 0;
+        }
+        else if(currentDir == "DL")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("soldierAnimationDL.png");
+            maxFrameNumber = 11;
+            currentFrameNumber = 0;
+        }
+        else if(currentDir == "UR")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("soldierAnimationUR.png");
+            maxFrameNumber = 9;
+            currentFrameNumber = 0;
+        }
+        else if(currentDir == "DR")
+        {
+            spriteTexture = CCTextureCache::sharedTextureCache()->addImage("soldierAnimationDR.png");
+            maxFrameNumber = 11;
+            currentFrameNumber = 0;
+        }
+    }
     
     spriteRect = CCRectMake(0, 0,  frameWidth, frameHeight);
     
     spriteRep = CCSprite::createWithTexture(spriteTexture, spriteRect);
     spriteRep->setAnchorPoint(ccp(0.5, 0.75));
     spriteRep->cocos2d::CCNode::setScale(spriteSize.width / spriteRep->boundingBox().size.width, spriteSize.height / spriteRep->boundingBox().size.height);
-    initAI(true);
+    
+    // common stats
+    bool parsingSuccessful = false;
+    
+    // specific stats
+    parsingSuccessful = loadClassSetup();
+    
+    clearSetup();
+    movementSpeed = getPossessions()->default_movement_speed;
     
     spriteRep->setPosition(pos);
     
@@ -3197,6 +3295,13 @@ void GameSprite::playAttackAction()
                                   spriteRep->boundingBox().size.height * 1.5f));
     
     spriteRep->addChild(speechBubble);
+    
+    BattleIcon* battleIcon = BattleIcon::create(this);
+    if(villagerClass == V_BANDIT)
+    {
+        battleIcon->show();
+    }
+    battleIconArray->addObject(battleIcon);
     
     barHP = new ProgressBar();
     barHP->createProgressBar(CCRectMake(0, 0, 80, 20),

@@ -60,8 +60,10 @@ public:
     CCLabelTTF* workerLabel;
     CCLabelTTF* taskLabel;
     
-    CCMenuItemImage* sortButton;
-    CCMenuItemImage* sortHappinessButton;
+    CCMenuItemImage* sortButtonUp;
+    CCMenuItemImage* sortButtonDown;
+    CCMenuItemImage* sortHappinessButtonUp;
+    CCMenuItemImage* sortHappinessButtonDown;
     
     ScrollArea* scrollArea;
     
@@ -69,8 +71,7 @@ public:
     
     bool isSorted;
     bool isSortedByHappiness;
-    bool happinessIncre;
-    bool energyIncre;
+    bool isSortedUp;
     
 protected:
     virtual void createMenuItems();
@@ -117,6 +118,10 @@ public:
     void scheduleGuardTower();
     void scheduleFarming();
     
+    void clickSortButtonUp();
+    void clickSortButtonDown();
+    void clickSortHappinessButtonUp();
+    void clickSortHappinessButtonDown();
     void clickSortButton();
     void clickSortHappinessButton();
     

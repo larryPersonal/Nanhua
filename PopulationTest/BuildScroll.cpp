@@ -238,6 +238,7 @@ void BuildScroll::onOrientationChanged()
 
 void BuildScroll::update(float deltaTime)
 {
+    CCLog("lalalalalal");
     refreshAllMenuItemValues();
 }
 

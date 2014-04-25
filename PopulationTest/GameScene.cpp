@@ -88,6 +88,8 @@ GameScene::GameScene()
     loadingLabel->setPosition(ccp(screenSize.width / 2.0f + 20.0f, screenSize.height / 2.0f - 120.0f));
     this->addChild(loadingLabel, 11);
     loadingLabel->setVisible(false);
+    
+    targetBuilding = NULL;
 }
 
 GameScene::~GameScene()
@@ -1152,7 +1154,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     }
 }
 
-void GameScene::centerCamera(Building* b)
+void GameScene::centerCamera(Building* b, bool instant)
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
@@ -1164,10 +1166,56 @@ void GameScene::centerCamera(Building* b)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    stringstream ss;
-    ss << b->buildingRep->getPositionX() << ", " << b->buildingRep->getPositionY();
+    if(instant)
+    {
+        mapHandler->moveMapBy(-xDiff, -yDiff);
+    }
+    else
+    {
+        targetBuilding = b;
+        this->schedule(schedule_selector(GameScene::scrollToCenter), 1.0f/120.0f);
+    }
+}
+
+void GameScene::scrollToCenter(float dt)
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    mapHandler->moveMapBy(-xDiff, -yDiff);
+    // get the current position
+    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    
+    // get the horizontal and vertical length difference between the screen centre and the target position!
+    float xDiff = targetBuilding->buildingRep->getPositionX() - xPos;
+    float yDiff = targetBuilding->buildingRep->getPositionY() - yPos;
+    
+    float xDis = 0;
+    float yDis = 0;
+    
+    if(xDiff >= 0)
+    {
+        xDis = 10;
+        yDis = 10.0f / xDiff * yDiff;
+        if(xPos + xDis >= targetBuilding->buildingRep->getPositionX())
+        {
+            xDis = xDiff;
+            yDis = yDiff;
+            this->unschedule(schedule_selector(GameScene::scrollToCenter));
+        }
+    }
+    else
+    {
+        xDis = -10;
+        yDis = -10.0f / xDiff * yDiff;
+        if(xPos + xDis <= targetBuilding->buildingRep->getPositionY())
+        {
+            xDis = xDiff;
+            yDis = yDiff;
+            this->unschedule(schedule_selector(GameScene::scrollToCenter));
+        }
+    }
+    
+    mapHandler->moveMapBy(-xDis, -yDis);
 }
 
 // going to finish deccelerating dragging.
@@ -1444,7 +1492,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 }
             }
             
-            centerCamera(selectedTile->building);
+            centerCamera(selectedTile->building, false);
             
             return true;
         }
@@ -1511,7 +1559,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                         }
                     }
                     
-                    centerCamera(selectedTile->building);
+                    centerCamera(selectedTile->building, false);
                     
                     return true;
                 }
