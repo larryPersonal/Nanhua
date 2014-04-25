@@ -1391,7 +1391,11 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
         
         if (ob->getSprite()->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
         {
-            mapHandler->getMap()->removeChild(ob->getSprite());
+            
+            
+           // mapHandler->getMap()->removeChild(ob->getSprite());
+           // GameHUD::getThis()->addChild(ob->getSprite());
+            ob->collect();
             allTokens->removeObjectAtIndex(i);
             
             GameHUD::getThis()->scheduleAddReputation(5);
@@ -1608,3 +1612,5 @@ void GameScene::goToMainMenu()
 {
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
+
+

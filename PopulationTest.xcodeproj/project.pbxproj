@@ -4747,7 +4747,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4782,7 +4782,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "26250477-1F09-4A28-B44D-140325995358";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -4795,7 +4795,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4829,7 +4829,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "26250477-1F09-4A28-B44D-140325995358";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

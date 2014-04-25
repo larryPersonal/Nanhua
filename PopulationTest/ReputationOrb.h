@@ -37,6 +37,7 @@ public:
     float cumulativeTime;
     float triggerTime;
     bool disappear;
+    bool collected;
     bool stopAnimation;
     
 public:
@@ -45,7 +46,10 @@ public:
     ~ReputationOrb();
     
     CCSprite* getSprite();
-    void update(float);
+    virtual void update(float);
+    
+    void collect();
+    void collectComplete();
 };
 
 #endif

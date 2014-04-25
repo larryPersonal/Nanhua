@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "650"
             endingLineNumber = "650"
-            landmarkName = "GameSprite::changeAnimation(std::string dir)"
+            landmarkName = "GameSprite::followPath(bool moveOneTile)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -681,7 +681,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "630"
             endingLineNumber = "630"
-            landmarkName = "GameSprite::setFrameCount(int idleFrames, int walkFrames)"
+            landmarkName = "GameSprite::followPath(bool moveOneTile)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -697,7 +697,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "615"
             endingLineNumber = "615"
-            landmarkName = "GameSprite::followPath()"
+            landmarkName = "GameSprite::followPath(bool moveOneTile)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -713,7 +713,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "623"
             endingLineNumber = "623"
-            landmarkName = "GameSprite::followPath()"
+            landmarkName = "GameSprite::followPath(bool moveOneTile)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -777,7 +777,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "662"
             endingLineNumber = "662"
-            landmarkName = "GameSprite::changeAnimation(std::string dir)"
+            landmarkName = "GameSprite::followPath(bool moveOneTile)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1362,7 +1362,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "659"
-            endingLineNumber = "659">
+            endingLineNumber = "659"
+            landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1709,7 +1711,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "744"
             endingLineNumber = "744"
-            landmarkName = "GameSprite::moveComplete(cocos2d::CCObject *pSender)"
+            landmarkName = "GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1724,7 +1726,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "942"
-            endingLineNumber = "942">
+            endingLineNumber = "942"
+            landmarkName = "GameSprite::Wander()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1739,7 +1743,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "948"
             endingLineNumber = "948"
-            landmarkName = "GameSprite::PathToResources()"
+            landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1755,7 +1759,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "954"
             endingLineNumber = "954"
-            landmarkName = "GameSprite::PathToResources()"
+            landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1771,7 +1775,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "934"
             endingLineNumber = "934"
-            landmarkName = "GameSprite::StopMoving()"
+            landmarkName = "GameSprite::Wander()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1801,7 +1805,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "179"
             endingLineNumber = "179"
-            landmarkName = "GameHUD::create()"
+            landmarkName = "GameHUD::~GameHUD()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2247,7 +2251,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "GameHUD::setAllStats()"
+            landmarkName = "GameHUD::create()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2414,9 +2418,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "664"
-            endingLineNumber = "664"
-            landmarkName = "GameSprite::changeAnimation(std::string dir)"
-            landmarkType = "5">
+            endingLineNumber = "664">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3214,9 +3216,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "894"
-            endingLineNumber = "894"
-            landmarkName = "MapHandler::UnBuildPreview()"
-            landmarkType = "5">
+            endingLineNumber = "894">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3515,7 +3515,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "993"
             endingLineNumber = "993"
-            landmarkName = "GameHUD::createTimeMenu()"
+            landmarkName = "GameHUD::createStatsMenu()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3531,7 +3531,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "972"
             endingLineNumber = "972"
-            landmarkName = "GameHUD::createTimeMenu()"
+            landmarkName = "GameHUD::createStatsMenu()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3547,7 +3547,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "979"
             endingLineNumber = "979"
-            landmarkName = "GameHUD::createTimeMenu()"
+            landmarkName = "GameHUD::createStatsMenu()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3563,7 +3563,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
             endingLineNumber = "983"
-            landmarkName = "GameHUD::createTimeMenu()"
+            landmarkName = "GameHUD::createStatsMenu()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3574,11 +3574,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/ReputationOrb.cpp"
-            timestampString = "418820501.85012"
+            timestampString = "420112062.915881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "ReputationOrb::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3636,6 +3636,86 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             symbolName = "*0xbfffd388">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/ReputationOrb.cpp"
+            timestampString = "420112062.915881"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "ReputationOrb::create(std::string spriteStr, float tTime)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/Sprite.cpp"
+            timestampString = "420008218.149388"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2965"
+            endingLineNumber = "2965"
+            landmarkName = "GameSprite::escape()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/ReputationOrb.cpp"
+            timestampString = "420112571.051969"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "ReputationOrb::collect()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/ReputationOrb.cpp"
+            timestampString = "420112062.915881"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "ReputationOrb::collectComplete()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/ReputationOrb.cpp"
+            timestampString = "420112062.915881"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "ReputationOrb::update(float dt)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
