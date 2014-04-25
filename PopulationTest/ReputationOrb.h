@@ -46,7 +46,7 @@ public:
     ~ReputationOrb();
     
     CCSprite* getSprite();
-    void update(float);
+    virtual void update(float);
     
     void collect();
     void collectComplete();

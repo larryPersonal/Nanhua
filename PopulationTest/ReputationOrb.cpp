@@ -8,6 +8,7 @@
 
 #include "ReputationOrb.h"
 #include "GameScene.h"
+#include "GameHUD.h"
 
 
 //REPUTATION ORB CLASS
@@ -85,7 +86,7 @@ CCSprite* ReputationOrb::getSprite()
 
 void ReputationOrb::update(float dt)
 {
-      if(!stopAnimation)
+    if(!stopAnimation)
     {
         if(!disappear)
         {
@@ -155,6 +156,10 @@ void ReputationOrb::update(float dt)
 void ReputationOrb::collectComplete()
 {
     opacity = 0;
+    GameScene::getThis()->spriteHandler->tokensOnMap->removeObject(this);
+    GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+    
+    
 }
 
 
@@ -167,12 +172,24 @@ void ReputationOrb::collect()
     CCCallFuncN* callback = CCCallFuncN::create(this, callfuncN_selector(ReputationOrb::collectComplete));
     callback->retain();
     
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    
+    
+    ccBezierConfig config;
+    config.endPosition = ccp(4000, 5000);
+    config.controlPoint_1 = ccp(2000, 3000);
+    config.controlPoint_2 = ccp(1000, 1000);
+    
+    
+    CCBezierTo* bezier = CCBezierTo::create(50.0f, config);
+    
     
     CC_SAFE_RELEASE(callback);
-    CCSequence* runAction = CCSequence::createWithTwoActions(CCMoveTo::create(1.0f, CCPointZero), callback);
+    CCSequence* runAction = CCSequence::createWithTwoActions(bezier, callback);
     runAction->retain();
     orbSprite->runAction(runAction);
     CC_SAFE_RELEASE(runAction);
     
-    
+    //CC_SAFE_RELEASE(bezier);
 }

@@ -1345,8 +1345,8 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
         {
             
             
-            //mapHandler->getMap()->removeChild(ob->getSprite());
-            //GameHUD::getThis()->addChild(ob->getSprite());
+           // mapHandler->getMap()->removeChild(ob->getSprite());
+           // GameHUD::getThis()->addChild(ob->getSprite());
             ob->collect();
             allTokens->removeObjectAtIndex(i);
             
