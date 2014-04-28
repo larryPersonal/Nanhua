@@ -3231,7 +3231,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "706"
             endingLineNumber = "706"
-            landmarkName = "Building::gainExp(int expToGain)"
+            landmarkName = "Building::leaveHouse(GameSprite* sp)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3469,7 +3469,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "828"
             endingLineNumber = "828"
-            landmarkName = "Building::AnimUpdate()"
+            landmarkName = "Building::ChangeAppearance(Building *b, bool should_completely_change_anim)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3484,7 +3484,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "825"
-            endingLineNumber = "825">
+            endingLineNumber = "825"
+            landmarkName = "Building::ChangeAppearance(Building *b, bool should_completely_change_anim)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
