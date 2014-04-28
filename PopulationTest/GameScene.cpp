@@ -1285,6 +1285,9 @@ void GameScene::FirstRunPopulate()
         
     }
     
+    // set up the animated rain!
+    animatedRain = AnimatedRain::create();
+    
      
     //check if tutorial mode is on.
     

@@ -421,6 +421,8 @@
 		36FDC98D170049E800AB1A68 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FDC98B170049E800AB1A68 /* Sprite.cpp */; };
 		36FE13BB16F1BE2800AB0528 /* PopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FE13B916F1BE2800AB0528 /* PopupMenu.cpp */; };
 		36FFC1D216F029B30045C11F /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36FFC1D116F029B30045C11F /* Building.cpp */; };
+		735DBCA4190D4E7B001B72B7 /* raining.png in Resources */ = {isa = PBXBuildFile; fileRef = 735DBCA3190D4E7B001B72B7 /* raining.png */; };
+		73FC4BC6190D5170001EA3E5 /* AnimatedRain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4BC5190D5170001EA3E5 /* AnimatedRain.cpp */; };
 		8410543618E90DA7003D88C6 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541D18E90DA7003D88C6 /* bubble.png */; };
 		8410543718E90DA7003D88C6 /* tired2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541E18E90DA7003D88C6 /* tired2.png */; };
 		8410543818E90DA7003D88C6 /* tired3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541F18E90DA7003D88C6 /* tired3.png */; };
@@ -1443,6 +1445,9 @@
 		36FE13BA16F1BE2800AB0528 /* PopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenu.h; sourceTree = "<group>"; };
 		36FFC1D016F029A60045C11F /* Building.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		36FFC1D116F029B30045C11F /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
+		735DBCA3190D4E7B001B72B7 /* raining.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = raining.png; path = ../../raining.png; sourceTree = "<group>"; };
+		735DBCA5190D4ECB001B72B7 /* AnimatedRain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedRain.h; sourceTree = "<group>"; };
+		73FC4BC5190D5170001EA3E5 /* AnimatedRain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedRain.cpp; sourceTree = "<group>"; };
 		8410541D18E90DA7003D88C6 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
 		8410541E18E90DA7003D88C6 /* tired2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tired2.png; sourceTree = "<group>"; };
 		8410541F18E90DA7003D88C6 /* tired3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tired3.png; sourceTree = "<group>"; };
@@ -3417,6 +3422,7 @@
 		8444D6B7190779DB00D5AFAC /* animation */ = {
 			isa = PBXGroup;
 			children = (
+				735DBCA3190D4E7B001B72B7 /* raining.png */,
 				842A0F43190A2EB2008B16AF /* soldierAnimationDL.png */,
 				842A0F44190A2EB2008B16AF /* soldierAnimationDR.png */,
 				842A0F45190A2EB2008B16AF /* soldierAnimationUL.png */,
@@ -3698,6 +3704,7 @@
 				844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */,
 				8410545018E91940003D88C6 /* ReputationOrb.cpp */,
 				842A0F5C190A5E43008B16AF /* BattleIcon.cpp */,
+				73FC4BC5190D5170001EA3E5 /* AnimatedRain.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3717,6 +3724,7 @@
 				84EDD27018C729D3003BAF5E /* BanditsAttackHandler.h */,
 				8410544F18E916DA003D88C6 /* ReputationOrb.h */,
 				842A0F5B190A5C28008B16AF /* BattleIcon.h */,
+				735DBCA5190D4ECB001B72B7 /* AnimatedRain.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -4077,6 +4085,7 @@
 				8412CA6218AC8D4A00AF4645 /* time_summer-bg.png in Resources */,
 				36D87D1218C5C3F500FE8B31 /* zhugeliang_c.png in Resources */,
 				847309CA18DC09AC001869C6 /* Building Info UI placeholdercircleclose.png in Resources */,
+				735DBCA4190D4E7B001B72B7 /* raining.png in Resources */,
 				84360A2F18B21FED002EC8C2 /* assign_menu_unfilled.png in Resources */,
 				3658DD7718D6F1430056B895 /* FemaleVillager.png in Resources */,
 				84CFAEE118E034E900A81C94 /* timeclock1.png in Resources */,
@@ -4558,6 +4567,7 @@
 				36041A3D1713AB7C00A14BE6 /* liolib.c in Sources */,
 				36041A3E1713AB7C00A14BE6 /* llex.c in Sources */,
 				36041A3F1713AB7C00A14BE6 /* lmathlib.c in Sources */,
+				73FC4BC6190D5170001EA3E5 /* AnimatedRain.cpp in Sources */,
 				36B190DA18A0A6AD00A8B515 /* ioapi.cpp in Sources */,
 				36041A401713AB7C00A14BE6 /* lmem.c in Sources */,
 				36B18A6118A0A6A700A8B515 /* CCActionManager.cpp in Sources */,

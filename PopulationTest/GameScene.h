@@ -21,6 +21,7 @@
 #include "BanditsAttackHandler.h"
 #include "ObjectiveHandler.h"
 #include "GlobalOutcomeModifier.h"
+#include "AnimatedRain.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -65,6 +66,7 @@ public:
     CCSprite* loadingLabel;
     
     Building* targetBuilding;
+    AnimatedRain* animatedRain;
     
 public:
     
