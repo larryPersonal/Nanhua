@@ -207,6 +207,7 @@
 		367613EC1712AEF400CD354B /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = 367613E31712AEF400CD354B /* json_valueiterator.inl */; };
 		367613ED1712AEF400CD354B /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 367613E41712AEF400CD354B /* json_writer.cpp */; };
 		3692450117AF744400F799C4 /* SystemMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84DF3ECD175349DB00B19557 /* SystemMenu.cpp */; };
+		36984AA8190E02D70081CB17 /* building2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36984AA7190E02D70081CB17 /* building2x2.png */; };
 		36AC553B18D696D600C165F5 /* Shojumaru-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36AC553A18D690C200C165F5 /* Shojumaru-Regular.ttf */; };
 		36AC555918D6981900C165F5 /* allocatebtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC553C18D6981900C165F5 /* allocatebtn.png */; };
 		36AC555A18D6981900C165F5 /* allocatebtn-press.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC553D18D6981900C165F5 /* allocatebtn-press.png */; };
@@ -235,7 +236,6 @@
 		36AC558818D69A0100C165F5 /* press_options.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557E18D69A0100C165F5 /* press_options.png */; };
 		36AC558A18D69A0100C165F5 /* options.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558018D69A0100C165F5 /* options.png */; };
 		36AC558C18D6A16600C165F5 /* building3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558B18D6A16600C165F5 /* building3x3.png */; };
-		36AC558E18D6A21C00C165F5 /* building2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558D18D6A21C00C165F5 /* building2x2.png */; };
 		36AC559018D6A31100C165F5 /* gound.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558F18D6A31100C165F5 /* gound.png */; };
 		36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */ = {isa = PBXBuildFile; fileRef = 36ACD7F518ED784D007C5306 /* main_game_buttons_cancel_build.png */; };
 		36B18A5918A0A6A700A8B515 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE118A0A69B00A8B515 /* CCAction.cpp */; };
@@ -1016,6 +1016,7 @@
 		3688F3C918A0D8E60093DD78 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		3688F3CA18A0D8E60093DD78 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
 		36912F61174E234C0010608E /* GameUnlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameUnlocks.h; sourceTree = "<group>"; };
+		36984AA7190E02D70081CB17 /* building2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building2x2.png; sourceTree = "<group>"; };
 		36AC553A18D690C200C165F5 /* Shojumaru-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shojumaru-Regular.ttf"; sourceTree = "<group>"; };
 		36AC553C18D6981900C165F5 /* allocatebtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allocatebtn.png; sourceTree = "<group>"; };
 		36AC553D18D6981900C165F5 /* allocatebtn-press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allocatebtn-press.png"; sourceTree = "<group>"; };
@@ -1054,7 +1055,6 @@
 		36AC557E18D69A0100C165F5 /* press_options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = press_options.png; sourceTree = "<group>"; };
 		36AC558018D69A0100C165F5 /* options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = options.png; sourceTree = "<group>"; };
 		36AC558B18D6A16600C165F5 /* building3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building3x3.png; sourceTree = "<group>"; };
-		36AC558D18D6A21C00C165F5 /* building2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building2x2.png; sourceTree = "<group>"; };
 		36AC558F18D6A31100C165F5 /* gound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gound.png; sourceTree = "<group>"; };
 		36ACD7F518ED784D007C5306 /* main_game_buttons_cancel_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_game_buttons_cancel_build.png; sourceTree = "<group>"; };
 		36B17AE118A0A69B00A8B515 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -1989,6 +1989,7 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				36984AA7190E02D70081CB17 /* building2x2.png */,
 				8444D6B7190779DB00D5AFAC /* animation */,
 				362CB65618EBA0B400365A12 /* app_icon.png */,
 				36D0CB4319079BFC001AEBC0 /* granary.png */,
@@ -2011,7 +2012,6 @@
 				8412CA4118AC8D3200AF4645 /* newUI */,
 				36AC558F18D6A31100C165F5 /* gound.png */,
 				36AC558B18D6A16600C165F5 /* building3x3.png */,
-				36AC558D18D6A21C00C165F5 /* building2x2.png */,
 				8458545B1892702F00824F5F /* testSheet.plist */,
 				8458545C1892702F00824F5F /* testSheet.png */,
 				848D2FE61859764C00EB9257 /* gy */,
@@ -4200,6 +4200,7 @@
 				8410543918E90DA7003D88C6 /* unhappy.png in Resources */,
 				360496E617AB49DC00CACE25 /* intelligence icon.png in Resources */,
 				36D87D1818C7269C00FE8B31 /* Default~ipad.png in Resources */,
+				36984AA8190E02D70081CB17 /* building2x2.png in Resources */,
 				360496E717AB49DC00CACE25 /* loyalty icon.png in Resources */,
 				360496E817AB49DC00CACE25 /* merchant-icon.png in Resources */,
 				3658DD7618D6F1430056B895 /* Soldier.png in Resources */,
@@ -4267,7 +4268,6 @@
 				36AC557518D6981900C165F5 /* yuanbao.png in Resources */,
 				8414BF4C18BC4875007626B2 /* worker_assign_ui_bg_03.png in Resources */,
 				8412CA6618AC8D4A00AF4645 /* build-menu_time-req.png in Resources */,
-				36AC558E18D6A21C00C165F5 /* building2x2.png in Resources */,
 				8421157A18D2C4DD00A441D0 /* leftgreen_arrowbtn.png in Resources */,
 				3604970917AB942700CACE25 /* arrow-up2.png in Resources */,
 				36B411E518D9AC5D005967EC /* border map_bush_bottomalign.png in Resources */,
