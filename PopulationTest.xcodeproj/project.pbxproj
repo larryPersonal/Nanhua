@@ -3966,6 +3966,14 @@
 				TargetAttributes = {
 					365FB99A16E5E30B00A57CF0 = {
 						DevelopmentTeam = QAT7Q4CF37;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};

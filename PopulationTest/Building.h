@@ -174,6 +174,11 @@ public:
     void updateBuilding(float);
     
     float cumulatedTimeResting;
+    
+    //animation timing checks. HARDCODED.
+    float anim_check_time;
+    float curr_anim_check_time;
+    
 };
 
 #endif
