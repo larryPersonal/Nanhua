@@ -32,9 +32,14 @@ public:
     float delay;
     
     bool isMoving;
-    CCArray* path;
+    bool isInAction;
     
+    CCArray* path;
     CCSprite* rainSprite;
+    
+    CCPoint nextPos;
+    
+    float movementSpeed;
     
 public:
     static AnimatedRain* create();
@@ -42,6 +47,11 @@ public:
     ~AnimatedRain();
     
     virtual void update(float deltaTime);
+    
+    CCPoint getWorldPosition();
+    bool CreatePath(CCPoint fromPos, CCPoint toPos);
+    
+    void move(float deltaTime);
 };
 
 

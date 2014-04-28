@@ -128,6 +128,7 @@ public:
     
     CCPoint getRandomTileLocation();
     CCPoint getRandomPathTile();
+    CCPoint getRandomTile();
     
     void update(float dt);
 };

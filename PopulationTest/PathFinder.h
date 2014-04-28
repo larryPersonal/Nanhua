@@ -39,12 +39,9 @@ public:
     CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile);
     
     CCArray* makePath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
-    
-    //CCArray* makePathEscape(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
+    CCArray* makeRainPath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     
     PathfindingNode* isOnList(CCPoint tilePos, CCArray* list);
-    
-    //void initializeWithLowestCostNode(CCPoint target, bool tryEscape);
     
     bool isReachable(CCPoint* tilePos);
 };

@@ -652,6 +652,21 @@ CCPoint MapHandler::getRandomPathTile()
     return CCPointMake(tgtTile->xpos, tgtTile->ypos);
 }
 
+// get a random tile for the rain
+CCPoint MapHandler::getRandomTile()
+{
+    if(mapTiles->count() == 0)
+    {
+        return CCPointMake(-1, -1);
+    }
+    
+    // get a random map tile
+    int targetIdx = rand() % mapTiles->count();
+    MapTile* mapTile = (MapTile*)mapTiles->objectAtIndex(targetIdx);
+    
+    return CCPointMake(mapTile->xpos, mapTile->ypos);
+}
+
 bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)
 {
     if (!building)
