@@ -1286,7 +1286,7 @@ void GameScene::FirstRunPopulate()
     }
     
     // set up the animated rain!
-    animatedRain = AnimatedRain::create();
+    //animatedRain = AnimatedRain::create();
     
      
     //check if tutorial mode is on.
@@ -1341,6 +1341,8 @@ void GameScene::update(float time)
             ObjectiveHandler::getThis()->update(time);
         }
     }
+    
+    //GameScene::getThis()->animatedRain->update(time);
     
     // check lose game
     /*

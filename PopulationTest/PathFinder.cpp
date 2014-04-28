@@ -174,6 +174,64 @@ CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
     return retrievedPath;
 }
 
+CCArray* PathFinder::makeRainPath(CCPoint* fromTile, CCPoint* toTile)
+{
+    openList = CCArray::create();
+    closedList = CCArray::create();
+    CCArray* retrievedPath = CCArray::create();
+    
+    if(fromTile->x > toTile->x)
+    {
+        for(int i = fromTile->x; i >= toTile->x; i--)
+        {
+            PathfindingNode* n = new PathfindingNode();
+            n->autorelease();
+            n->tilepos = CCPointMake(i, fromTile->y);
+            retrievedPath->addObject(n);
+        }
+    }
+    else if(fromTile->x < toTile->x)
+    {
+        for(int i = fromTile->x; i <= toTile->x; i++)
+        {
+            PathfindingNode* n = new PathfindingNode();
+            n->autorelease();
+            n->tilepos = CCPointMake(i, fromTile->y);
+            retrievedPath->addObject(n);
+        }
+    }
+    else
+    {
+        PathfindingNode* n = new PathfindingNode();
+        n->autorelease();
+        n->tilepos = CCPointMake(fromTile->x, fromTile->y);
+        retrievedPath->addObject(n);
+    }
+    
+    if(fromTile->y > toTile->y)
+    {
+        for(int i = fromTile->y - 1; i >= toTile->y; i--)
+        {
+            PathfindingNode* n = new PathfindingNode();
+            n->autorelease();
+            n->tilepos = CCPointMake(toTile->x, i);
+            retrievedPath->addObject(n);
+        }
+    }
+    else if(fromTile->y < toTile->y)
+    {
+        for(int i = fromTile->y + 1; i <= toTile->y; i++)
+        {
+            PathfindingNode* n = new PathfindingNode();
+            n->autorelease();
+            n->tilepos = CCPointMake(toTile->x, i);
+            retrievedPath->addObject(n);
+        }
+    }
+    
+    return retrievedPath;
+}
+
 /*
 CCArray* PathFinder::makePathEscape(CCPoint* fromTile, CCPoint* toTile)
 {

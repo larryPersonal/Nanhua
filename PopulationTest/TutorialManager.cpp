@@ -144,6 +144,9 @@ void TutorialManager::setupForTutorial()
         return;
     }
     
+    // animated rain is not used for this time, maybe in later time?
+    //GameScene::getThis()->animatedRain = AnimatedRain::create();
+    
     GameScene::getThis()->mapHandler->Populate(GameScene::getThis()->buildingHandler->allBuildingLayers);
     
     GameScene::getThis()->spriteHandler->initialize();
