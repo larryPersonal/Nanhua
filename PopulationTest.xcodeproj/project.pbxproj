@@ -387,6 +387,7 @@
 		36B411E718D9AC94005967EC /* river_anim_bottomalign.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E618D9AC94005967EC /* river_anim_bottomalign.png */; };
 		36B411E918D9ACFF005967EC /* greatwall2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E818D9ACFF005967EC /* greatwall2x2.png */; };
 		36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411EA18D9AD69005967EC /* plant-1x1.png */; };
+		36BC4214190F40D400F89DC5 /* market.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BC4213190F40D400F89DC5 /* market.png */; };
 		36C16E4A18D0049000C307DB /* FemaleFarmer_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4018D0049000C307DB /* FemaleFarmer_port.png */; };
 		36C16E4B18D0049000C307DB /* MaleFarmer_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4118D0049000C307DB /* MaleFarmer_port.png */; };
 		36C16E4C18D0049000C307DB /* MaleOldMan_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4218D0049000C307DB /* MaleOldMan_port.png */; };
@@ -1400,6 +1401,7 @@
 		36B411E618D9AC94005967EC /* river_anim_bottomalign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = river_anim_bottomalign.png; sourceTree = "<group>"; };
 		36B411E818D9ACFF005967EC /* greatwall2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greatwall2x2.png; sourceTree = "<group>"; };
 		36B411EA18D9AD69005967EC /* plant-1x1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plant-1x1.png"; sourceTree = "<group>"; };
+		36BC4213190F40D400F89DC5 /* market.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = market.png; sourceTree = "<group>"; };
 		36C16E4018D0049000C307DB /* FemaleFarmer_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FemaleFarmer_port.png; sourceTree = "<group>"; };
 		36C16E4118D0049000C307DB /* MaleFarmer_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MaleFarmer_port.png; sourceTree = "<group>"; };
 		36C16E4218D0049000C307DB /* MaleOldMan_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MaleOldMan_port.png; sourceTree = "<group>"; };
@@ -1989,6 +1991,7 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				36BC4213190F40D400F89DC5 /* market.png */,
 				36984AA7190E02D70081CB17 /* building2x2.png */,
 				8444D6B7190779DB00D5AFAC /* animation */,
 				362CB65618EBA0B400365A12 /* app_icon.png */,
@@ -4208,6 +4211,7 @@
 				8410543918E90DA7003D88C6 /* unhappy.png in Resources */,
 				360496E617AB49DC00CACE25 /* intelligence icon.png in Resources */,
 				36D87D1818C7269C00FE8B31 /* Default~ipad.png in Resources */,
+				36BC4214190F40D400F89DC5 /* market.png in Resources */,
 				36984AA8190E02D70081CB17 /* building2x2.png in Resources */,
 				360496E717AB49DC00CACE25 /* loyalty icon.png in Resources */,
 				360496E817AB49DC00CACE25 /* merchant-icon.png in Resources */,
