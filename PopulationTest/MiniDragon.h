@@ -47,6 +47,7 @@ public:
     int curSlide;
     
     bool clickToNext;
+    bool lockClick;
     
 public:
     MiniDragon();

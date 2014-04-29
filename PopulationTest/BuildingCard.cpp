@@ -246,6 +246,13 @@ void BuildingCard::init()
             mask->setOpacity((GLubyte) 0);
         }
     }
+    else if(TutorialManager::getThis()->teachBuildGranary)
+    {
+        if(type != 1 && type != 2 && type != 3 && building->buildingType == GRANARY && building->buildingName.compare("Granary") == 0)
+        {
+            mask->setOpacity((GLubyte) 0);
+        }
+    }
     else
     {
         if(type != 0 || available_number > 0)
@@ -453,6 +460,11 @@ void BuildingCard::tryToBuild(int tag)
             // alert player that the number of buildings has reached the limitation.
             return;
         }
+        
+        if(TutorialManager::getThis()->teachBuildGranary)
+        {
+            return;
+        }
         //buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
         
         
@@ -464,6 +476,12 @@ void BuildingCard::tryToBuild(int tag)
         {
             return;
         }
+        
+        if(TutorialManager::getThis()->teachBuildGranary && building->buildingName.compare("Market") == 0)
+        {
+            return;
+        }
+        
         if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
         {
             return;
@@ -477,6 +495,12 @@ void BuildingCard::tryToBuild(int tag)
         {
             return;
         }
+        
+        if(TutorialManager::getThis()->teachBuildGranary)
+        {
+            return;
+        }
+        
         if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
         {
             return;
@@ -488,6 +512,12 @@ void BuildingCard::tryToBuild(int tag)
         {
             return;
         }
+        
+        if(TutorialManager::getThis()->teachBuildGranary)
+        {
+            return;
+        }
+        
         if(GameScene::getThis()->buildingHandler->militaryOnMap->count() + GameScene::getThis()->buildingHandler->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
         {
             return;
@@ -496,6 +526,11 @@ void BuildingCard::tryToBuild(int tag)
     else
     {
         if(TutorialManager::getThis()->teachBuildHouse)
+        {
+            return;
+        }
+        
+        if(TutorialManager::getThis()->teachBuildGranary)
         {
             return;
         }

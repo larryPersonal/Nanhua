@@ -158,6 +158,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->clickToNext = true;
             }
+            else if(str.find("<lockClick>") != std::string::npos)
+            {
+                slide->lockClick = true;
+            }
             else if(str.find("<offY>") != std::string::npos)
             {
                 start_pos = str.find("<offY>");
@@ -327,6 +331,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->commands.push_back("teachBuildRoad:1");
             }
+            else if(str.find("<teachBuildGranary>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildGranary:1");
+            }
             else if(str.find("<pause>") != std::string::npos)
             {
                 slide->commands.push_back("pause:1");
@@ -350,6 +358,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<populationLabel>") != std::string::npos)
             {
                 slide->commands.push_back("populationLabel:1");
+            }
+            else if(str.find("<lockDropTokens>") != std::string::npos)
+            {
+                slide->commands.push_back("lockDropTokens:1");
             }
             else if(str.find("</lock>") != std::string::npos)
             {
@@ -434,6 +446,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->commands.push_back("teachBuildRoad:0");
             }
+            else if(str.find("<teachBuildGranary>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildGranary:0");
+            }
             else if(str.find("<pause>") != std::string::npos)
             {
                 slide->commands.push_back("pause:0");
@@ -457,6 +473,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<populationLabel>") != std::string::npos)
             {
                 slide->commands.push_back("populationLabel:0");
+            }
+            else if(str.find("<lockDropTokens>") != std::string::npos)
+            {
+                slide->commands.push_back("lockDropTokens:0");
             }
             else if(str.find("</unlock>") != std::string::npos)
             {

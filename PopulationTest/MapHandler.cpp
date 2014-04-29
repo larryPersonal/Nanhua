@@ -412,6 +412,17 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
     
     
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
+    if(targetTile->hasBuilding())
+    {
+        if(targetTile->building)
+        {
+            if(targetTile->building->buildingType == DECORATION)
+            {
+                return true;
+            }
+        }
+    }
+    
     if (!targetTile->isPath && !targetTile->hasBuilding()){
         return true;
     }

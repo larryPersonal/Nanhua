@@ -66,6 +66,7 @@ TutorialManager::TutorialManager()
     lockGoldLabel = true;
     lockFoodLabel = true;
     lockPopulationLabel = true;
+    lockDropTokens = true;
     
     teachBuildButton = false;
     teachBuildHouse = false;
@@ -120,6 +121,7 @@ void TutorialManager::unlockAll()
     teachBuildButton = false;
     teachBuildHouse = false;
     teachFarming = false;
+    teachBuildGranary = false;
 }
 
 void TutorialManager::setupForTutorial()
@@ -225,6 +227,10 @@ void TutorialManager::moveCamera(float dt)
         {
             GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
             this->unschedule(schedule_selector( TutorialManager::moveCamera ));
+            if(TutorialManager::getThis()->miniDragon->lockClick)
+            {
+                TutorialManager::getThis()->miniDragon->lockClick = false;
+            }
         }
     }
     else
@@ -233,6 +239,10 @@ void TutorialManager::moveCamera(float dt)
         {
             GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
             this->unschedule(schedule_selector( TutorialManager::moveCamera ));
+            if(TutorialManager::getThis()->miniDragon->lockClick)
+            {
+                TutorialManager::getThis()->miniDragon->lockClick = false;
+            }
         }
     }
     

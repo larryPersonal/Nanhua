@@ -72,6 +72,8 @@ GameScene::GameScene()
     tapped = false;
     isSwipe = false;
     
+    teachBuildRoadCheckTime = 0;
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     /* loading screen module */
@@ -629,6 +631,15 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
+    /*
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    // get the current position
+    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    CCLog("%f, %f", xPos, yPos);
+    */
+    
     if(tapped)
     {
         tapped = false;
@@ -640,8 +651,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL)
     {
-    
-        if(TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext)
+        if(TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext && !TutorialManager::getThis()->miniDragon->lockClick)
         {
             TutorialManager::getThis()->miniDragon->clickNext();
             TutorialManager::getThis()->clickable = false;
@@ -1017,6 +1027,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     GameHUD::getThis()->buyBuilding(buildPathDistance * 10);
                     
                     GameHUD::getThis()->closeAllMenuAndResetTapMode();
+                    
+                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildRoad)
+                    {
+                        checkTeachBuildRoad();
+                    }
                 }
                 else
                 {
@@ -1166,9 +1181,10 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant)
+    if(instant || true)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
+        CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
     }
     else
     {
@@ -1304,6 +1320,7 @@ void GameScene::FirstRunPopulate()
             GameManager::getThis()->UnlockAll();
     }
     this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
+    
     mapHandler->rescaleScrollLimits();
 }
 
@@ -1340,7 +1357,10 @@ void GameScene::update(float time)
         {
             ObjectiveHandler::getThis()->update(time);
         }
+        
     }
+    
+    
     
     //GameScene::getThis()->animatedRain->update(time);
     
@@ -1359,6 +1379,57 @@ void GameScene::update(float time)
     }
     */
     
+}
+
+/*
+void GameScene::checkPathValid(float time)
+{
+    //CCLog("test my bad");
+    // check for tutorial build road to connect town hall to house and farm.
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildRoad)
+    {
+        if(teachBuildRoadCheckTime >= 1.0f)
+        {
+            teachBuildRoadCheckTime = 0;
+            checkTeachBuildRoad();
+        }
+        else
+        {
+            teachBuildRoadCheckTime += time;
+        }
+    }
+}
+*/
+
+void GameScene::checkTeachBuildRoad()
+{
+    Building* house = (Building*) buildingHandler->housingOnMap->objectAtIndex(0);
+    Building* farm = (Building*) buildingHandler->amenityOnMap->objectAtIndex(0);
+    Building* townHall = (Building*) buildingHandler->specialOnMap->objectAtIndex(0);
+    
+    CCPoint housePos = house->getWorldPosition();
+    CCPoint farmPos = farm->getWorldPosition();
+    CCPoint townHallPos = townHall->getWorldPosition();
+    
+    housePos = GameScene::getThis()->mapHandler->tilePosFromLocation(housePos);
+    farmPos = GameScene::getThis()->mapHandler->tilePosFromLocation(farmPos);
+    townHallPos = GameScene::getThis()->mapHandler->tilePosFromLocation(townHallPos);
+    
+    PathFinder *p = new PathFinder();
+    p->setDestination(farmPos);
+    p->setSource(townHallPos);
+    
+    bool valid = true;
+    
+    valid = (p->hasPath(&townHallPos, &farmPos) && p->hasPath(&townHallPos, &housePos));
+    
+    if(valid)
+    {
+        TutorialManager::getThis()->miniDragon->clickNext();
+        TutorialManager::getThis()->teachBuildRoad = false;
+    }
+    
+    delete p;
 }
                          
 void GameScene::lostGame(cocos2d::CCObject *psender)

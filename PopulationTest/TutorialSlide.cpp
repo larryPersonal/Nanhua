@@ -26,6 +26,8 @@ TutorialSlide::TutorialSlide()
     target_opacity = 0;
     
     clickToNext = false;
+    lockClick = false;
+    
     offY = 0;
     addVillager = 0;
     

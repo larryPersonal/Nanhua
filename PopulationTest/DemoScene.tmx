@@ -1425,7 +1425,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1NEKgkAQBdD5EXMr1P//w5JeynahREZYzoFBuU/LZZgIAAAAAAAAgOOMz1kqc6v8Tye9sQfzD/lcyfiPnnNc4vtOrHN9y8smaw1trV2t5fZ5Pz3n0HOOIV63tcTnnS6b7zr3Mx7YKTubQ8859JxDzzn0nEPPOfQMAAAAAAAAAAB9egBlzgqg
+   eJzt0MENACAMA7FOA/tvyJcFSAXYUv7RVQEAAAAAAAAA3GtuA+Cc0X3gEzpn6Jyhc4bOGTpn6JyhMwAAAAAAAAAAvGkBjPgBpg==
   </data>
  </layer>
  <layer name="Building_House" width="90" height="60">
@@ -1434,7 +1434,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0EERAAAIw7AZwr89VHA8lijoNQEAAAAAAAAAoNl8B5TwGQAAAAAAAAAAAAAAuLK1VwBb
+   eJztzgEJAAAIA7AXsn89UxxBtgRLAAAAAAAAAAD4bK4DAAAAAAAAAAAAAAAAVC0qJwAu
   </data>
  </layer>
  <layer name="Building_1" width="90" height="60">
@@ -1443,7 +1443,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztziEBAAAIA7BLJP3TvgMGsyXYBgAAAAAAAAAAkvkOAAAAAAAAAAAAAAAAcFIriQAZ
+   eJztzjENAAAIAzBOTvyrnQkSDloFnQIAAAAAAADY09cBAAAAAAAAAAAAAAAAAHgmWakAGQ==
   </data>
  </layer>
  <layer name="Building_2" width="90" height="60">
@@ -1470,7 +1470,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1KEBAAAIw7Cdz9loJApBckFVEwAAAAAAAAAAmOo6AOA5HwYAAAAAAAAAAAAANhqTzgER
+   eJztwTENAAAAAiD73wY2hxvQAAAAAAAAAAAAAAAAAAAAAAAAAAAArwYevwCV
   </data>
  </layer>
  <layer name="Building_Border" width="90" height="60">
@@ -1497,7 +1497,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgEJAAAMA6D1D/KcjzEGmsAEAAAAAAAAoOfaAQAAAAAAAAAAAAAAAAAY93AEAKc=
+   eJztzgENAAAIA6D3b2YrW9zNQQISGuY6AAAAAAAAAAAAAAAAAAAAAAAAAADASwt85wDK
   </data>
  </layer>
  <layer name="Building_Granary" width="90" height="60">
@@ -1506,7 +1506,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6D3T2gcW9zNQQISAAAAAAAAAD6Z6wAAAAAAAAAAAAAAAAAAVQsxUgDZ
+   eJztzgENAAAIA6D3z2oIW9zNQQIS+GOuAwAAAAAAAAAAAAAAAAAAAAAAAAAAZQuJhQDt
   </data>
  </layer>
 </map>

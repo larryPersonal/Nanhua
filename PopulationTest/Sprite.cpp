@@ -18,6 +18,7 @@
 #include "GlobalHelper.h"
 #include "ReputationOrb.h"
 #include "BattleIcon.h"
+#include "TutorialManager.h"
 
 #include <cmath>
 #include <sstream>
@@ -2621,7 +2622,7 @@ Building* GameSprite::findNearestHouse()
         startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
         endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
         
-        int tempDistance = getPathDistance(startPos, endPos);
+        int tempDistance = getDistance(startPos, endPos);
         
         if(tempDistance < distance && b->memberSpriteList->count() < b->populationLimit)
         {
@@ -2906,6 +2907,11 @@ void GameSprite::updateHungry(float dt)
 
 void GameSprite::scheduleToken(float dt)
 {
+    if(TutorialManager::getThis()->lockDropTokens)
+    {
+        return;
+    }
+    
     if(is_token_drop_cooldown)
     {
         checkDropTresholdTime();

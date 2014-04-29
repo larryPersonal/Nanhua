@@ -14,14 +14,18 @@
 PathFinder::PathFinder()
 {
     lowest_h = 9999;
+    openList = CCArray::create();
+    openList->retain();
+    closedList = CCArray::create();
+    closedList->retain();
 }
 
 PathFinder::~PathFinder()
 {
     openList->removeAllObjects();
-    openList->release();
+    CC_SAFE_RELEASE(openList);
     closedList->removeAllObjects();
-    closedList->release();
+    CC_SAFE_RELEASE(closedList);
 }
 
 float PathFinder::manhattanDist(CCPoint* from, CCPoint* to)
@@ -86,10 +90,19 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos)
     
 }
 
-CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
+bool PathFinder::hasPath( CCPoint* fromTile, CCPoint* toTile )
 {
+    // should use greedy algorithms for the path finding!
+    
+    openList->removeAllObjects();
+    CC_SAFE_RELEASE(openList);
+    closedList->removeAllObjects();
+    CC_SAFE_RELEASE(closedList);
+    
     openList = CCArray::create();
+    openList->retain();
     closedList = CCArray::create();
+    closedList->retain();
     
     closestNode = NULL;
     
@@ -134,6 +147,86 @@ CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
         for (int i = 0; i < reachableTiles->count(); ++i)
         {
             PathfindingNode* reachableTile = (PathfindingNode*)reachableTiles->objectAtIndex(i);
+            if(reachableTile->tilepos.x == toTile->x && reachableTile->tilepos.y == toTile->y)
+            {
+                return true;
+            }
+            openList->addObject(reachableTile);
+        }
+        
+        if ((toTile->x == lowestCostNode->tilepos.x) && (toTile->y == lowestCostNode->tilepos.y))
+        {
+            targetNode = lowestCostNode;
+        }
+        
+        reachableTiles->removeAllObjects();
+        reachableTiles->release();
+    }
+    
+    return false;
+}
+
+CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
+{
+    openList->removeAllObjects();
+    CC_SAFE_RELEASE(openList);
+    closedList->removeAllObjects();
+    CC_SAFE_RELEASE(closedList);
+    
+    openList = CCArray::create();
+    openList->retain();
+    closedList = CCArray::create();
+    closedList->retain();
+    
+    closestNode = NULL;
+    
+    PathfindingNode* n = new PathfindingNode();
+    n->autorelease();
+    n->tilepos = CCPointMake(fromTile->x, fromTile->y);
+    n->parent = NULL;
+    n->G = 0;
+    n->H = manhattanDist(fromTile, toTile);
+    n->F = n->G + n->H;
+    openList->addObject(n);
+    
+    PathfindingNode* targetNode = NULL;
+    
+    while (openList->count() > 0)
+    {
+        PathfindingNode *lowestCostNode = NULL;
+        PathfindingNode *currNode = NULL;
+        
+        // get the node with lowest F (F = cost + heuristic)
+        for (int i = 0; i < openList->count(); i++)
+        {
+            currNode = (PathfindingNode*) openList->objectAtIndex(i);
+            if (lowestCostNode == NULL)
+            {
+                lowestCostNode = currNode;
+            }
+            else
+            {
+                if (currNode->F < lowestCostNode->F)
+                {
+                    lowestCostNode = currNode;
+                }
+                
+            }
+        }
+        
+        openList->removeObject(lowestCostNode);
+        closedList->addObject(lowestCostNode);
+        
+        CCArray *reachableTiles = getReachableTiles(lowestCostNode, toTile);
+        for (int i = 0; i < reachableTiles->count(); ++i)
+        {
+            PathfindingNode* reachableTile = (PathfindingNode*)reachableTiles->objectAtIndex(i);
+            // make the search greedy!
+            if(reachableTile->tilepos.x == toTile->x && reachableTile->tilepos.y == toTile->y)
+            {
+                targetNode = reachableTile;
+                break;
+            }
             openList->addObject(reachableTile);
         }
         

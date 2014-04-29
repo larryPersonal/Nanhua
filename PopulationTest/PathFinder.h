@@ -41,6 +41,8 @@ public:
     CCArray* makePath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     CCArray* makeRainPath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     
+    bool hasPath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
+    
     PathfindingNode* isOnList(CCPoint tilePos, CCArray* list);
     
     bool isReachable(CCPoint* tilePos);

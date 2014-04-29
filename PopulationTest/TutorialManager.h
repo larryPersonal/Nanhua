@@ -55,11 +55,13 @@ public:
     bool lockGoldLabel;
     bool lockFoodLabel;
     bool lockPopulationLabel;
+    bool lockDropTokens;
     
     bool teachBuildButton;
     bool teachBuildHouse;
     bool teachFarming;
     bool teachBuildRoad;
+    bool teachBuildGranary;
     
     bool clickable;
     Building* highlightedBuilding;

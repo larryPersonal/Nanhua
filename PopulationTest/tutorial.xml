@@ -18,6 +18,7 @@
             <buttonCancel></buttonCancel>
             <buttonClose></buttonClose>
             <manPowerSelect></manPowerSelect>
+            <lockDropTokens></lockDropTokens>
         </lock>
     </slide>
     <slide>
@@ -33,13 +34,14 @@
     </slide>
     <slide>
         <speech>Now, please let me introduce the house to you.</speech>
-        <cameraMove>6272,2048</cameraMove>
+        <cameraMove>5760,2304</cameraMove>
         <clickToNext></clickToNext>
+        <lockClick></lockClick>
         <deHighlight></deHighlight>
         <hideArrow></hideArrow>
     </slide>
     <slide>
-        <speech>This is the houses of the village. Houses are home of villagers. Villagers cannot work without home and they will become unhappy until leave the village.</speech>
+        <speech>This is the houses of the village. Houses are home of villagers. Villagers cannot work without home and they will become unhappy to be homeless until leave the village.</speech>
         <highlight>housing</highlight>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
@@ -50,8 +52,9 @@
     </slide>
     <slide>
         <speech>Now, please let me introduce the farm to you.</speech>
-        <cameraMove>6400,1984</cameraMove>
+        <cameraMove>6080,2400</cameraMove>
         <clickToNext></clickToNext>
+        <lockClick></lockClick>
         <deHighlight></deHighlight>
         <hideArrow></hideArrow>
     </slide>
@@ -66,46 +69,115 @@
         <arrowScale>1</arrowScale>
     </slide>
     <slide>
-        <speech>Now, please let me introduce the granary to you.</speech>
-        <cameraMove>6464,2144</cameraMove>
-        <clickToNext></clickToNext>
+        <speech>This is the label to show the amount of gold you currently have. Gold is generated at the first day of each month based the number of house you have in the village.</speech>
         <deHighlight></deHighlight>
+        <highlight>goldLabel</highlight>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+        <fade_out>160</fade_out>
+        <showArrow></showArrow>
+        <arrowX>-264.5</arrowX>
+        <arrowY>300</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the label to show the amount of food you currently have. Food is generated throught the farming activity and store in the granary or market.</speech>
+        <deHighlight>goldLabel</deHighlight>
+        <highlight>foodLabel</highlight>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+        <showArrow></showArrow>
+        <arrowX>-39.5</arrowX>
+        <arrowY>300</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the label to show the amount of population you currently have. The first number indicates number of villager and refugees in your village whereas the second number indicates the capacity of housing available in your village.</speech>
+        <deHighlight>foodLabel</deHighlight>
+        <highlight>populationLabel</highlight>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+        <showArrow></showArrow>
+        <arrowX>175.5</arrowX>
+        <arrowY>300</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the label to show the amount of reputation you currently awarded. You must collect more reputation to raise the population of the village and achieve success in your village.</speech>
+        <deHighlight>populationLabel</deHighlight>
+        <highlight>reputationLabel</highlight>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>-350</arrowX>
+        <arrowY>250</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the objective button, you can check the recent objective at here.</speech>
+        <deHighlight>reputationLabel</deHighlight>
+        <highlight>objectiveButton</highlight>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+        <showArrow></showArrow>
+        <arrowX>-350</arrowX>
+        <arrowY>50</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the system button, you can make changes of the game settings at here.</speech>
+        <deHighlight>objectiveButton</deHighlight>
+        <highlight>systemButton</highlight>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>-460</arrowX>
+        <arrowY>100</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the Time indicator, you can check the game time at here (year, month and week).</speech>
+        <deHighlight>systemButton</deHighlight>
+        <highlight>timeGroup</highlight>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+        <showArrow></showArrow>
+        <arrowX>400</arrowX>
+        <arrowY>250</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>This is the happiness indicator, you can check the average happiness of all the villagers in your village.</speech>
+        <deHighlight>timeGroup</deHighlight>
+        <highlight>averageHappiness</highlight>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <arrowX>480</arrowX>
+        <arrowY>180</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+    </slide>
+    <slide>
+        <speech>Now, please let me introduce the road to you.</speech>
+        <cameraMove>5734,1960</cameraMove>
+        <clickToNext></clickToNext>
+        <fade_in>0</fade_in>
+        <deHighlight>averageHappiness</deHighlight>
         <hideArrow></hideArrow>
     </slide>
     <slide>
-        <speech>This is the granary of the village. Granaries are places to store food. Food produced from farm need to be stored inside the granary, otherwise the food will be wasted.</speech>
-        <highlight>granary</highlight>
+        <speech>As you can see, a road has connected the gate and the town hall. Villagers can only access the buildings connected by roads.
         <clickToNext></clickToNext>
-        <showArrow></showArrow>
-        <arrowX>0</arrowX>
-        <arrowY>50</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
     </slide>
-    <1slide>
-        <speech>Now, please let me introduce the guard tower to you.</speech>
-        <cameraMove>6592,1888</cameraMove>
-        <clickToNext></clickToNext>
-        <deHighlight></deHighlight>
-        <hideArrow></hideArrow>
-    <1/slide>
-    <1slide>
-        <speech>This is the guard tower of the village. Guard towers are places to train villages to soldiers. In the bandits attack event, bandits will steal gold and food from you village, soldiers will help to defend the bandits during the attack.</speech>
-        <highlight>military</highlight>
-        <clickToNext></clickToNext>
-        <showArrow></showArrow>
-        <arrowX>0</arrowX>
-        <arrowY>50</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
-    <1/slide>
-    
     <slide>
-        <speech>Now, please let me tell you how to build roads.</speech>
-        <cameraMove>6016,2176</cameraMove>
-        <deHighlight></deHighlight>
+        <speech>Connect the roads to the house and the farm so that the incoming refugees are able to access home and work in the farm!
         <clickToNext></clickToNext>
-        <hideArrow></hideArrow>
+        <cameraMove>5936, 2252</cameraMove>
     </slide>
     <slide>
         <speech>Click build button to open the build scroll.</speech>
@@ -116,6 +188,7 @@
         <lock>
             <teachBuildRoad></teachBuildRoad>
         </lock>
+        <fade_out>160</fade_out>
         <showArrow></showArrow>
         <arrowX>345</arrowX>
         <arrowY>-265</arrowY>
@@ -137,41 +210,54 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>Now try to build some path in the village by click on the ground.</speech>
+        <speech>Now try to build roads to connect the house, the farm and the town hall.</speech>
         <clickToNext></clickToNext>
-        <hideArrow></hideArrow>
     </slide>
     <slide>
-        <speech>After you done, click the cancel buildButton.</speech>
+        <speech>After you have done, we will process further.</speech>
         <fade_in>0</fade_in>
         <unlock>
             <scroll></scroll>
-            <buildButton></buildButton>
-            <teachBuildRoad></teachBuildRoad>
         </unlock>
+    </slide>
+    <slide>
+        <speech>Now, two refugees have come to your village, they will become inportant part of your village, providing labor and improvements.</speech>
+        <cameraMove>5734,1960</cameraMove>
+        <addVillager>2</addVillager>
+        <clickToNext></clickToNext>
         <lock>
-            <teachBuildButton></teachBuildButton>
+            <scroll></scroll>
         </lock>
+        <unlock>
+            <pause></pause>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Now, the two villagers can help you to develop the village. 1 manpower is required to build a house or a farm and 2 manpower are required to build a granary. Now click the cancel button to open the build scroll again.</speech>
+        <cameraMove>6016,2176</cameraMove>
+        <fade_out>160</fade_out>
+        <highlight>buildButton</highlight>
         <showArrow></showArrow>
         <arrowX>345</arrowX>
         <arrowY>-265</arrowY>
         <arrowAngle>320</arrowAngle>
         <arrowScale>1</arrowScale>
         <arrowLayer>0</arrowLayer>
+        <lock>
+            <teachBuildGranary></teachBuildGranary>
+        </lock>
+        <unlock>
+            <buildButton></buildButton>
+        </unlock>
     </slide>
     <slide>
-        <speech>Now, I will indroduce you how to build a house. In tutorial, I will increase the speed of building and working with my power. Click the house button in the build scroll.</speech>
-        <addVillager>5</addVillager>
-        <fade_out>160</fade_out>
+        <speech>Now, I will teach you how to build a granary. Your village need to have a granary to store food. Click the granary button in the build scroll.</speech>
         <offY>220</offY>
         <lock>
             <buildButton></buildButton>
         </lock>
-        <unlock>
-            <pause></pause>
-        </unlock>
         <showArrow></showArrow>
-        <arrowX>465</arrowX>
+        <arrowX>1245</arrowX>
         <arrowY>20</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -180,6 +266,9 @@
     <slide>
         <speech>Tap on any empty plot of land! Red preview means cannot build there.</speech>
         <fade_in>0</fade_in>
+        <unlock>
+            <scroll></scroll>
+        </unlock>
     </slide>
     <slide>
         <speech>Tap again to confirm building location. Tap on another area to change the building location.</speech>

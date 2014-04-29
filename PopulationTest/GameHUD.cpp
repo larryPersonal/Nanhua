@@ -1192,6 +1192,11 @@ void GameHUD::scrollIn(float dt)
             this->unschedule(schedule_selector( GameHUD::scrollIn ));
             scroll_in = false;
             scrolled_in = true;
+            
+            if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->lockClick)
+            {
+                TutorialManager::getThis()->miniDragon->lockClick = false;
+            }
         }
         
         timeGroupReposition();
@@ -1383,6 +1388,11 @@ void GameHUD::fadeIn(float dt)
             opacity = 255;
             this->unschedule(schedule_selector( GameHUD::fadeIn ));
             fade_in = false;
+            
+            if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->lockClick)
+            {
+                TutorialManager::getThis()->miniDragon->lockClick = false;
+            }
         }
         objectiveMenu->setOpacity((GLubyte) opacity);
         objectiveButtonBlue->setOpacity((GLubyte) opacity);
@@ -1479,7 +1489,7 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || TutorialManager::getThis()->teachBuildRoad))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || TutorialManager::getThis()->teachBuildRoad || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->lockBuildScroll = true;
             TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
@@ -1506,7 +1516,7 @@ void GameHUD::clickBuildButton()
         
         buildScroll->cocos2d::CCNode::setZOrder(30);
         
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildRoad))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildRoad || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }
@@ -2043,6 +2053,11 @@ void GameHUD::labelBackgroundFade(float dt)
             label_fade_out = false;
             label_fade_in = false;
             this->unschedule(schedule_selector(GameHUD::labelBackgroundFade));
+            
+            if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->lockClick)
+            {
+                TutorialManager::getThis()->miniDragon->lockClick = false;
+            }
         }
     }
     else if(label_fade_out)

@@ -51,6 +51,7 @@ MiniDragon::MiniDragon()
     curSlide = 0;
     
     clickToNext = false;
+    lockClick = false;
     GameHUD::getThis()->setTutorial = true;
 }
 
@@ -125,6 +126,7 @@ bool MiniDragon::constructTutorialSlide()
     CCPoint target = ts->target;
     CCPoint moveVector = ts->moveVector;
     clickToNext = ts->clickToNext;
+    lockClick = ts->lockClick;
     TutorialManager* tm = TutorialManager::getThis();
     
     if(cameraMove)
@@ -284,6 +286,10 @@ bool MiniDragon::constructTutorialSlide()
         else if(order.compare("teachBuildRoad") == 0)
         {
             tm->teachBuildRoad = (flag == 1);
+        }
+        else if(order.compare("teachBuildGranary") == 0)
+        {
+            tm->teachBuildGranary = (flag == 1);
         }
         else if(order.compare("pause") == 0)
         {
@@ -514,10 +520,64 @@ void MiniDragon::highlightBuilding(string b)
         {
             GameHUD::getThis()->buildButton->setZOrder(30);
         }
+        else if(b.compare("goldLabel") == 0)
+        {
+            GameHUD::getThis()->infoBackground->setZOrder(30);
+            GameHUD::getThis()->moneyBackground->setZOrder(30);
+            GameHUD::getThis()->moneyIcon->setZOrder(30);
+            GameHUD::getThis()->moneyLabel->setZOrder(31);
+            GameHUD::getThis()->clickMoneyLabel();
+        }
         else if(b.compare("foodLabel") == 0)
         {
+            GameHUD::getThis()->infoBackground->setZOrder(30);
+            GameHUD::getThis()->foodBackground->setZOrder(30);
             GameHUD::getThis()->foodIcon->setZOrder(30);
             GameHUD::getThis()->foodLabel->setZOrder(31);
+            GameHUD::getThis()->clickFoodLabel();
+        }
+        else if(b.compare("populationLabel") == 0)
+        {
+            GameHUD::getThis()->infoBackground->setZOrder(30);
+            GameHUD::getThis()->populationBackground->setZOrder(30);
+            GameHUD::getThis()->populationIcon->setZOrder(30);
+            GameHUD::getThis()->populationLabel->setZOrder(31);
+            GameHUD::getThis()->clickPopulationLabel();
+        }
+        else if(b.compare("reputationLabel") == 0)
+        {
+            GameHUD::getThis()->statsMenu->setZOrder(31);
+            GameHUD::getThis()->reputationBackground->setZOrder(30);
+            GameHUD::getThis()->reputationIcon->setZOrder(32);
+            GameHUD::getThis()->achivementsLabel->setZOrder(32);
+        }
+        else if(b.compare("objectiveButton") == 0)
+        {
+            GameHUD::getThis()->objectiveButton->setZOrder(37);
+            GameHUD::getThis()->objectiveButtonBlue->setZOrder(38);
+            GameHUD::getThis()->objectiveMenu->setZOrder(36);
+            GameHUD::getThis()->clickObjectiveButton();
+        }
+        else if(b.compare("systemButton") == 0)
+        {
+            GameHUD::getThis()->systemButton->setZOrder(35);
+        }
+        else if(b.compare("timeGroup") == 0)
+        {
+            GameHUD::getThis()->timeMenu->setZOrder(32);
+            GameHUD::getThis()->timeBackground->setZOrder(31);
+            GameHUD::getThis()->firstWeekLabel->setZOrder(33);
+            GameHUD::getThis()->secondWeekLabel->setZOrder(33);
+            GameHUD::getThis()->thirdWeekLabel->setZOrder(33);
+            GameHUD::getThis()->lastWeekLabel->setZOrder(33);
+            GameHUD::getThis()->timeLabel_1->setZOrder(33);
+            GameHUD::getThis()->timeLabel_2->setZOrder(33);
+            GameHUD::getThis()->scheduleScrollIn();
+        }
+        else if(b.compare("averageHappiness") == 0)
+        {
+            CCLog("test!!!");
+            GameHUD::getThis()->happinessIcon->setZOrder(35);
         }
         return;
     }
@@ -547,10 +607,68 @@ void MiniDragon::deHighlightBuilding(string b)
         GameHUD::getThis()->buildButton->setZOrder(2);
         return;
     }
+    else if(b.compare("goldLabel") == 0)
+    {
+        GameHUD::getThis()->infoBackground->setZOrder(3);
+        GameHUD::getThis()->moneyBackground->setZOrder(1);
+        GameHUD::getThis()->moneyIcon->setZOrder(2);
+        GameHUD::getThis()->moneyLabel->setZOrder(2);
+        return;
+    }
     else if(b.compare("foodLabel") == 0)
     {
+        GameHUD::getThis()->infoBackground->setZOrder(3);
+        GameHUD::getThis()->foodBackground->setZOrder(1);
         GameHUD::getThis()->foodIcon->setZOrder(2);
         GameHUD::getThis()->foodLabel->setZOrder(2);
+        return;
+    }
+    else if(b.compare("populationLabel") == 0)
+    {
+        GameHUD::getThis()->infoBackground->setZOrder(3);
+        GameHUD::getThis()->populationBackground->setZOrder(1);
+        GameHUD::getThis()->populationIcon->setZOrder(2);
+        GameHUD::getThis()->populationLabel->setZOrder(2);
+        GameHUD::getThis()->clickPopulationLabel();
+        return;
+    }
+    else if(b.compare("reputationLabel") == 0)
+    {
+        GameHUD::getThis()->statsMenu->setZOrder(2);
+        GameHUD::getThis()->reputationBackground->setZOrder(1);
+        GameHUD::getThis()->reputationIcon->setZOrder(3);
+        GameHUD::getThis()->achivementsLabel->setZOrder(2);
+        return;
+    }
+    else if(b.compare("objectiveButton") == 0)
+    {
+        GameHUD::getThis()->objectiveButton->setZOrder(7);
+        GameHUD::getThis()->objectiveButtonBlue->setZOrder(8);
+        GameHUD::getThis()->objectiveMenu->setZOrder(6);
+        GameHUD::getThis()->clickObjectiveButton();
+        return;
+    }
+    else if(b.compare("systemButton") == 0)
+    {
+        GameHUD::getThis()->systemButton->setZOrder(5);
+        return;
+    }
+    else if(b.compare("timeGroup") == 0)
+    {
+        GameHUD::getThis()->timeMenu->setZOrder(2);
+        GameHUD::getThis()->timeBackground->setZOrder(1);
+        GameHUD::getThis()->firstWeekLabel->setZOrder(3);
+        GameHUD::getThis()->secondWeekLabel->setZOrder(3);
+        GameHUD::getThis()->thirdWeekLabel->setZOrder(3);
+        GameHUD::getThis()->lastWeekLabel->setZOrder(3);
+        GameHUD::getThis()->timeLabel_1->setZOrder(3);
+        GameHUD::getThis()->timeLabel_2->setZOrder(3);
+        GameHUD::getThis()->scheduleScrollOut();
+        return;
+    }
+    else if(b.compare("averageHappiness") == 0)
+    {
+        GameHUD::getThis()->happinessIcon->setZOrder(5);
         return;
     }
     

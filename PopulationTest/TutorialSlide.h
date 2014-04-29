@@ -34,6 +34,8 @@ public:
     float target_opacity;
     
     bool clickToNext;
+    bool lockClick;
+    
     float offY;
     int addVillager;
     
