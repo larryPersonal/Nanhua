@@ -150,6 +150,17 @@ void BuildScroll::createMenuItems()
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+        if(tempBuilding->buildingType == MARKET)
+        {
+            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            numberOfBuildingCards++;
+            buildingCards->addObject(bc);
+        }
+    }
+    
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == MILITARY)
         {
             bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);

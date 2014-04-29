@@ -55,6 +55,17 @@ public:
     float arrowScale;
     int arrowLayer;
     
+    float contentOffX;
+    float contentOffY;
+    
+    bool stopScroll;
+    bool resumeScroll;
+    int hideScroll;
+    int showScroll;
+    
+    bool checkGranary;
+    bool notFirst;
+    
 public:
     TutorialSlide();
     ~TutorialSlide();

@@ -46,6 +46,17 @@ TutorialSlide::TutorialSlide()
     arrowY = 0;
     arrowScale = 0;
     arrowLayer = 0;
+    
+    contentOffX = 0;
+    contentOffY = 0;
+    
+    stopScroll = false;
+    resumeScroll = false;
+    hideScroll = -1;
+    showScroll = -1;
+    
+    checkGranary = false;
+    notFirst = false;
 }
 
 TutorialSlide::~TutorialSlide()

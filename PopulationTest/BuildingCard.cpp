@@ -352,6 +352,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
         return;
     }
     
+    if (TutorialManager::getThis()->lockBuildScroll)
+    {
+        return;
+    }
+    
     //cardBG->setScaleX(cardBG->getScaleX() * 1.0f / 0.95f);
     //cardBG->setScaleY(cardBG->getScaleY() * 1.0f / 0.95f);
     
@@ -361,7 +366,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
     {
         case -1 : //build path
         {
-            if(TutorialManager::getThis()->teachBuildHouse)
+            if(TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary)
             {
                 return;
             }
@@ -371,7 +376,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             GameHUD::getThis()->buildScroll->scheduleScrollOut();
             GameHUD::getThis()->buildButton->setVisible(true);
             
-            if(TutorialManager::getThis()->teachBuildRoad)
+            if(TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst)
             {
                 GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
                 TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
@@ -387,6 +392,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             }
             
             if(TutorialManager::getThis()->teachBuildRoad)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
             {
                 return;
             }
@@ -410,6 +420,12 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 return;
             }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
             //I'll need to set tap mode to demolish. TODO
             GameScene::getThis()->isThisTapCounted = true;
             
@@ -471,13 +487,13 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == GRANARY)
     {
+        if(TutorialManager::getThis()->teachBuildGranary)
+        {
+            TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
        
         if(TutorialManager::getThis()->teachBuildHouse)
-        {
-            return;
-        }
-        
-        if(TutorialManager::getThis()->teachBuildGranary && building->buildingName.compare("Market") == 0)
         {
             return;
         }

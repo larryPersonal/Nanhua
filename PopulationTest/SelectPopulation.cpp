@@ -535,6 +535,11 @@ void SelectPopulation::scheduleConstruction()
         
         gameSprite->saySpeech(BUILDER_EMOTION, 5.0f);
     }
+    
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->teachBuildGranary)
+    {
+        TutorialManager::getThis()->miniDragon->clickNext();
+    }
 }
 
 void SelectPopulation::scheduleFarming()
@@ -746,7 +751,7 @@ void SelectPopulation::update(float deltaTime){
     if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->isCurrentConstructing && !building->isCurrentWorking)
     {
         buttonOk->setVisible(true);
-        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }

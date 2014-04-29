@@ -232,12 +232,56 @@ void TutorialReader::parseXMLFile(string xml)
                 content = str.substr(start_pos + 12, end_pos - start_pos - 12);
                 slide->arrowScale = ::atof(content.c_str());
             }
-            else if(str.find("<arrowLayer") != std::string::npos)
+            else if(str.find("<arrowLayer>") != std::string::npos)
             {
                 start_pos = str.find("<arrowLayer>");
                 end_pos = str.find("</arrowLayer>");
                 content = str.substr(start_pos + 12, end_pos - start_pos - 12);
                 slide->arrowLayer = ::atoi(content.c_str());
+            }
+            else if(str.find("<contentOffX>") != std::string::npos)
+            {
+                start_pos = str.find("<contentOffX>");
+                end_pos = str.find("</contentOffX>");
+                content = str.substr(start_pos + 13, end_pos - start_pos - 13);
+                slide->contentOffX = ::atof(content.c_str());
+            }
+            else if(str.find("<contentOffY>") != std::string::npos)
+            {
+                start_pos = str.find("<contentOffY>");
+                end_pos = str.find("</contentOffY>");
+                content = str.substr(start_pos + 13, end_pos - start_pos - 13);
+                slide->contentOffY = ::atof(content.c_str());
+            }
+            else if(str.find("<stopScroll>") != std::string::npos)
+            {
+                slide->stopScroll = true;
+            }
+            else if(str.find("<resumeScroll>") != std::string::npos)
+            {
+                slide->resumeScroll = true;
+            }
+            else if(str.find("<hideScroll>") != std::string::npos)
+            {
+                start_pos = str.find("<hideScroll>");
+                end_pos = str.find("</hideScroll>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->hideScroll = ::atoi(content.c_str());
+            }
+            else if(str.find("<showScroll>") != std::string::npos)
+            {
+                start_pos = str.find("<showScroll>");
+                end_pos = str.find("</showScroll>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->showScroll = ::atoi(content.c_str());
+            }
+            else if(str.find("<checkGranary>") != std::string::npos)
+            {
+                slide->checkGranary = true;
+            }
+            else if(str.find("<notFirst>") != std::string::npos)
+            {
+                slide->notFirst = true;
             }
             else if(str.find("<lock>") != std::string::npos)
             {

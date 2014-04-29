@@ -53,6 +53,8 @@ public:
     CCArray* specialGhostOnMap;
     CCArray* decorationOnMap;
     CCArray* decorationGhostOnMap;
+    CCArray* marketOnMap;
+    CCArray* marketGhostOnMap;
     
     Building* getBuildingOnMapWithID(int withID);
     Building* getBuildingOnMapWithName(std::string name);

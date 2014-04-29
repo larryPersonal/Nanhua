@@ -57,6 +57,7 @@ CCScrollView::CCScrollView()
 , m_fMinScale(0.0f)
 , m_fMaxScale(0.0f)
 {
+    canScroll = true;
 }
 
 CCScrollView::~CCScrollView()
@@ -602,6 +603,11 @@ void CCScrollView::visit()
 
 bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
+    if (!this->canScroll)
+    {
+        return false;
+    }
+    
     if (!this->isVisible())
     {
         return false;
@@ -643,6 +649,11 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
+    if (!this->canScroll)
+    {
+        return;
+    }
+    
     if (!this->isVisible())
     {
         return;
@@ -726,6 +737,11 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
 void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
+    if (!this->canScroll)
+    {
+        return;
+    }
+    
     if (!this->isVisible())
     {
         return;
@@ -755,6 +771,11 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 
 void CCScrollView::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 {
+    if (!this->canScroll)
+    {
+        return;
+    }
+    
     CCLog("try my best");
     if (!this->isVisible())
     {

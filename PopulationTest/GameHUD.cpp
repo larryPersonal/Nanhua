@@ -1489,7 +1489,7 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || TutorialManager::getThis()->teachBuildRoad || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst) || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->lockBuildScroll = true;
             TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
@@ -1516,7 +1516,7 @@ void GameHUD::clickBuildButton()
         
         buildScroll->cocos2d::CCNode::setZOrder(30);
         
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildRoad || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst) || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }

@@ -48,6 +48,7 @@ public:
     
     bool clickToNext;
     bool lockClick;
+    bool notFirst;
     
 public:
     MiniDragon();

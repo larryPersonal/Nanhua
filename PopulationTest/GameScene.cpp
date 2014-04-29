@@ -460,7 +460,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             }
         }
         
-        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL && !(TutorialManager::getThis()->lockBuildScroll))
+        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL && !(TutorialManager::getThis()->lockBuildScroll || TutorialManager::getThis()->lockScroll))
         {
             if(GameHUD::getThis()->buildScroll->buildMenu->boundingBox().containsPoint(touchLoc))
             {
@@ -835,7 +835,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
                 else
                 {
-                    if(!(TutorialManager::getThis()->lockBuildScroll))
+                    if(!TutorialManager::getThis()->lockBuildScroll && !TutorialManager::getThis()->lockScroll)
                     {
                         GameHUD::getThis()->buildScroll->scheduleScrollOut();
                     }
@@ -1117,7 +1117,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
                 else
                 {
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
                     {
                         if(mapHandler->currBuildingPreview == NULL)
                         {
@@ -1406,14 +1406,28 @@ void GameScene::checkTeachBuildRoad()
     Building* house = (Building*) buildingHandler->housingOnMap->objectAtIndex(0);
     Building* farm = (Building*) buildingHandler->amenityOnMap->objectAtIndex(0);
     Building* townHall = (Building*) buildingHandler->specialOnMap->objectAtIndex(0);
+    Building* granGhost = NULL;
+    if(TutorialManager::getThis()->miniDragon->notFirst)
+    {
+        granGhost = (Building*) buildingHandler->granaryGhostOnMap->objectAtIndex(0);
+    }
     
     CCPoint housePos = house->getWorldPosition();
     CCPoint farmPos = farm->getWorldPosition();
     CCPoint townHallPos = townHall->getWorldPosition();
+    CCPoint granGPos = CCPointZero;
+    if(TutorialManager::getThis()->miniDragon->notFirst)
+    {
+        granGPos = granGhost->getWorldPosition();
+    }
     
     housePos = GameScene::getThis()->mapHandler->tilePosFromLocation(housePos);
     farmPos = GameScene::getThis()->mapHandler->tilePosFromLocation(farmPos);
     townHallPos = GameScene::getThis()->mapHandler->tilePosFromLocation(townHallPos);
+    if(TutorialManager::getThis()->miniDragon->notFirst)
+    {
+        granGPos = GameScene::getThis()->mapHandler->tilePosFromLocation(granGPos);
+    }
     
     PathFinder *p = new PathFinder();
     p->setDestination(farmPos);
@@ -1421,12 +1435,27 @@ void GameScene::checkTeachBuildRoad()
     
     bool valid = true;
     
-    valid = (p->hasPath(&townHallPos, &farmPos) && p->hasPath(&townHallPos, &housePos));
+    if(!TutorialManager::getThis()->miniDragon->notFirst)
+    {
+        valid = (p->hasPath(&townHallPos, &farmPos) && p->hasPath(&townHallPos, &housePos));
+    }
+    else
+    {
+        valid = (p->hasPath(&townHallPos, &granGPos));
+    }
     
     if(valid)
     {
         TutorialManager::getThis()->miniDragon->clickNext();
         TutorialManager::getThis()->teachBuildRoad = false;
+        TutorialManager::getThis()->miniDragon->notFirst = false;
+        TutorialManager::getThis()->teachBuildGranary = true;
+        
+        //Building* gran = () buildingHandler->granaryGhostOnMap->objectAtIndex(0)
+        
+        //PopupMenu::backupCurrentPopupMenu();
+        //SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+        //selectPopulation->useAsTopmostPopupMenu();
     }
     
     delete p;

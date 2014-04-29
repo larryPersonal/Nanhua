@@ -15,6 +15,7 @@
 #include "Senario.h"
 #include "Building.h"
 #include "FloatingArraw.h"
+#include "BuildingCard.h"
 
 MiniDragon::MiniDragon()
 {
@@ -53,6 +54,8 @@ MiniDragon::MiniDragon()
     clickToNext = false;
     lockClick = false;
     GameHUD::getThis()->setTutorial = true;
+    
+    notFirst = false;
 }
 
 MiniDragon::~MiniDragon()
@@ -110,6 +113,43 @@ bool MiniDragon::constructTutorialSlide()
     
     TutorialSlide* ts = (TutorialSlide*) slidesList->objectAtIndex(curSlide);
     
+    if(ts->checkGranary)
+    {
+        CCLog("test");
+        
+        CCArray* allGranaryGhost = GameScene::getThis()->buildingHandler->granaryGhostOnMap;
+        if(allGranaryGhost->count() > 0)
+        {
+            Building* gran = (Building*) allGranaryGhost->objectAtIndex(0);
+            CCPoint granPos = gran->getWorldPosition();
+            granPos = GameScene::getThis()->mapHandler->tilePosFromLocation(granPos);
+            
+            Building* townhall = (Building*) GameScene::getThis()->buildingHandler->specialOnMap->objectAtIndex(0);
+            CCPoint townHallPos = townhall->getWorldPosition();
+            townHallPos = GameScene::getThis()->mapHandler->tilePosFromLocation(townHallPos);
+            
+            PathFinder *p = new PathFinder();
+            p->setDestination(granPos);
+            p->setSource(townHallPos);
+            
+            bool valid = true;
+            
+            valid = p->hasPath(&townHallPos, &granPos);
+            
+            if(valid)
+            {
+                curSlide += 2;
+                if(curSlide >= slidesList->count())
+                {
+                    return false;
+                }
+                ts = (TutorialSlide*) slidesList->objectAtIndex(curSlide);
+            }
+            
+            delete p;
+        }
+    }
+    
     TutorialManager::getThis()->clickable = false;
     clickToNext = false;
     
@@ -159,6 +199,8 @@ bool MiniDragon::constructTutorialSlide()
         highlightBuilding(ts->highlightBuilding);
     }
     
+    notFirst = ts->notFirst;
+    
     if(TutorialManager::getThis()->show)
     {
         GameHUD::getThis()->removeChild(dragon);
@@ -204,6 +246,34 @@ bool MiniDragon::constructTutorialSlide()
         FloatingArraw::getThis()->hideArrow();
     }
     
+    if(BuildScroll::getThis() != NULL)
+    {
+        if(ts->contentOffX != 0 || ts->contentOffY != 0)
+        {
+            BuildScroll::getThis()->scrollArea->setScrollContentOffset(ccp(-ts->contentOffX, ts->contentOffY));
+        }
+        
+        if(ts->stopScroll)
+        {
+            BuildScroll::getThis()->scrollArea->stopScroll();
+        }
+        
+        if(ts->stopScroll)
+        {
+            BuildScroll::getThis()->scrollArea->resumeScroll();
+        }
+        
+        if(ts->hideScroll >= 0)
+        {
+            ((BuildingCard*)BuildScroll::getThis()->buildingCards->objectAtIndex(ts->hideScroll))->mask->setOpacity((GLubyte) 120);
+        }
+        
+        if(ts->showScroll >= 0)
+        {
+            ((BuildingCard*)BuildScroll::getThis()->buildingCards->objectAtIndex(ts->showScroll))->mask->setOpacity((GLubyte) 0);
+        }
+    }
+    
     for(int i = 0; i < ts->commands.size(); i++)
     {
         string command = ts->commands.at(i);
@@ -246,6 +316,17 @@ bool MiniDragon::constructTutorialSlide()
         else if(order.compare("lockBuildScroll") == 0)
         {
             tm->lockBuildScroll = (flag == 1);
+            if(BuildScroll::getThis() != NULL)
+            {
+                if(tm->lockBuildScroll)
+                {
+                    BuildScroll::getThis()->scrollArea->scrollView->setTouchEnabled(false);
+                }
+                else
+                {
+                    BuildScroll::getThis()->scrollArea->scrollView->setTouchEnabled(true);
+                }
+            }
         }
         else if(order.compare("lockBuildingButton") == 0)
         {

@@ -202,6 +202,9 @@
         <lock>
             <buildButton></buildButton>
         </lock>
+        <unlock>
+            <buildScroll></buildScroll>
+        </unlock>
         <showArrow></showArrow>
         <arrowX>65</arrowX>
         <arrowY>20</arrowY>
@@ -251,13 +254,74 @@
         </unlock>
     </slide>
     <slide>
-        <speech>Now, I will teach you how to build a granary. Your village need to have a granary to store food. Click the granary button in the build scroll.</speech>
+        <speech>Granary is the place for the villages to store food after they harvest food from the farming process. Villages can eat food in the granary when they are hungry in order to restore %60 to 80% of hunger and 10% to 20% of energy.</speech>
         <offY>220</offY>
+        <deHighlight>buildButton</deHighlight>
+        <contentOffX>1000</contentOffX>
+        <hideScroll>5</hideScroll>
+        <hideArrow></hideArrow>
+        <clickToNext></clickToNext>
         <lock>
             <buildButton></buildButton>
+            <buildScroll></buildScroll>
         </lock>
+    </slide>
+    <slide>
+        <speech>This is the label to show the gold cost to build a granary.</speech>
+        <showScroll>5</showScroll>
+        <clickToNext></clickToNext>
+        <offY>220</offY>
         <showArrow></showArrow>
-        <arrowX>1245</arrowX>
+        <arrowX>985</arrowX>
+        <arrowY>125</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the label to show the population that the granary could provide.</speech>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <offY>220</offY>
+        <arrowX>1045</arrowX>
+        <arrowY>125</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the estimated time to build a granary.</speech>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <offY>220</offY>
+        <arrowX>1102</arrowX>
+        <arrowY>125</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the number left available to build for granary.</speech>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <offY>220</offY>
+        <arrowX>1115</arrowX>
+        <arrowY>105</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>Now, I will teach you how to build a granary. Your village need to have a granary to store food. Click the granary button in the build scroll, pay the gold required and build the granary.</speech>
+        <offY>220</offY>
+        <lock>
+            <scroll></scroll>
+        </lock>
+        <unlock>
+            <buildScroll></buildScroll>
+        </unlock>
+        <showArrow></showArrow>
+        <arrowX>1040</arrowX>
         <arrowY>20</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -274,12 +338,61 @@
         <speech>Tap again to confirm building location. Tap on another area to change the building location.</speech>
     </slide>
     <slide>
-        <speech>In order to build, or work, you need to allocate manpower for the activity. Tap on the villagers to allocate them and tap again to deallocate them.</speech>
+        <speech>In order to build, or work, you need to allocate manpower for the activity. These are the available villagers that can be assigned to perform the task!</speech>
         <fade_out>160</fade_out>
+        <clickToNext></clickToNext>
         <hide></hide>
         <lock>
             <scroll></scroll>
         </lock>
+        <showArrow></showArrow>
+        <arrowX>-200</arrowX>
+        <arrowY>5</arrowY>
+        <arrowAngle>90</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>0</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the happiness indicator to indicate the villager's happiness level.</speech>
+        <clickToNext></clickToNext>
+        <show></show>
+        <hide></hide>
+        <showArrow></showArrow>
+        <arrowX>-380</arrowX>
+        <arrowY>30</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>0</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the energy bar to indicate the villager's current energy.</speech>
+        <clickToNext></clickToNext>
+        <show></show>
+        <hide></hide>
+        <showArrow></showArrow>
+        <arrowX>-360</arrowX>
+        <arrowY>65</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>0</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the sort button to sort all the available villagers in a desired order.</speech>
+        <clickToNext></clickToNext>
+        <show></show>
+        <hide></hide>
+        <showArrow></showArrow>
+        <arrowX>-390</arrowX>
+        <arrowY>50</arrowY>
+        <arrowAngle>180</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>0</arrowLayer>
+    </slide>
+    <slide>
+        <speech>Tap on the villagers to allocate them and tap again to deallocate them.</speech>
+        <show></show>
+        <hide></hide>
+        <hideArrow></hideArrow>
         <unlock>
             <manpowerSelect></manpowerSelect>
         </unlock>
@@ -295,10 +408,35 @@
         </unlock>
     </slide>
     <slide>
-        <speech>Wait for building to be completed, the remaining refugee will find the new home.</speech>
+        <speech>Your granary is not attached to the road so that the villagers cannot go there, try to build road to connect the granary.</speech>
+        <checkGranary></checkGranary>
+        <fade_in>0</fade_in>
+        <notFirst></notFirst>
+        <unlock>
+            <scroll></scroll>
+            <buildButton></buildButton>
+            <buildScroll></buildScroll>
+            <manpowerSelect></manpowerSelect>
+            <teachBuildGranary></teachBuildGranary>
+        </unlock>
+        <lock>
+            <teachBuildRoad></teachBuildRoad>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Now your granary are attached to the road, re-assigned the villagers to build the granary.</speech>
+        <lock>
+            <scroll></scroll>
+            <buildButton></buildButton>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Wait for granary to be completed, the remaining refugee will find the new home.</speech>
         <fade_in>0</fade_in>
         <lock>
             <buttonOk></buttonOk>
+            <buildButton></buildButton>
+            <manpowerSelect></manpowerSelect>
         </lock>
         <unlock>
             <scroll></scroll>
