@@ -172,10 +172,6 @@ void ReputationOrb::collect()
     CCCallFuncN* callback = CCCallFuncN::create(this, callfuncN_selector(ReputationOrb::collectComplete));
     callback->retain();
     
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    
-    
-    
     ccBezierConfig config;
     config.endPosition = ccp(4000, 5000);
     config.controlPoint_1 = ccp(2000, 3000);

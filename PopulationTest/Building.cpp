@@ -16,6 +16,7 @@
 #include <iterator>
 #include "TutorialManager.h"
 
+
 Building::Building()
 {
     farmState = WAITING;
@@ -76,8 +77,14 @@ Building::Building()
     anim_random = false;
     anim_random_chance = 1.0f; //1.0 is 100%, 0 is 0%;
     
+    anim_check_time = 1.0f;
+    curr_anim_check_time = 1.0f;
+    
     anim_triggered = true;
     cumulatedTimeResting = 0;
+    
+    
+    
 }
 Building::~Building()
 {
@@ -874,11 +881,22 @@ void Building::AnimUpdate()
     if (buildingRep == NULL) return;
     if (!GameScene::getThis()) return;
     
+    
     if (anim_random && !anim_triggered)
     {
-        anim_curr_chance = float(rand()) / RAND_MAX;
-        if (anim_curr_chance >= anim_random_chance) anim_triggered = true;
-        else anim_triggered = false;
+        if (curr_anim_check_time > 0)
+            curr_anim_check_time -= 0.1f;
+        else
+        {
+            anim_curr_chance = float(rand()) / RAND_MAX;
+            if (anim_curr_chance >= anim_random_chance)
+                anim_triggered = true;
+            else
+            {
+                curr_anim_check_time = anim_check_time;
+                anim_triggered = false;
+            }
+        }
     }
     
     if ((anim_random && anim_triggered) || !anim_random)
@@ -888,6 +906,7 @@ void Building::AnimUpdate()
         else
         {
             currGID = baseGID;
+            curr_anim_check_time = anim_check_time;
             anim_triggered = false;
         }
         ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
