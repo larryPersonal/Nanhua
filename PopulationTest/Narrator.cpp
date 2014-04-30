@@ -12,6 +12,7 @@
 #include "AnimatedString.h"
 #include "GameScene.h"
 #include "GameHUD.h"
+#include "Senario.h"
 
 Narrator::Narrator()
 {
@@ -62,8 +63,8 @@ void Narrator::display()
     switch (ns)
     {
         case C1T1:
-            str = "Now you have completed the basic part of the tutorial, good job!";
-            TutorialManager::getThis()->scheduleFadeIn(120.0f, 2);
+            str = "A group of refugees come to our village!";
+            TutorialManager::getThis()->scheduleFadeIn(160.0f, 2);
             TutorialManager::getThis()->active = true;
             GameHUD::getThis()->pause = false;
             break;
@@ -73,6 +74,7 @@ void Narrator::display()
             textBackground->setVisible(false);
             TutorialManager::getThis()->scheduleFadeIn(0.0f, 2);
             TutorialManager::getThis()->active = false;
+            setupForScenario();
             break;
         default:
             str = "end";
@@ -204,4 +206,13 @@ void Narrator::activateSprite(float dt)
         
         sp->spriteRep->setPosition(target);
     }
+}
+
+void Narrator::setupForScenario()
+{
+    TutorialManager::getThis()->unlockAll();
+    GameHUD::getThis()->pause = true;
+    std::string filename = "tutorial.xml";
+    Senario::getThis()->playSenario(filename.c_str());
+    TutorialManager::getThis()->miniDragon->clearSprites();
 }

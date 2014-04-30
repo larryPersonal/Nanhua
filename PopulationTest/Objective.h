@@ -14,7 +14,7 @@
 using namespace cocos2d;
 
 enum ObjectiveType {
-    DefaultGoal, PopulationGoal, ReputationGoal, BuildBuilding, GoldGoal, FoodGoal
+    DefaultGoal, PopulationGoal, ReputationGoal, BuildBuilding, GoldGoal, FoodGoal, DisplayGoal
 };
 
 class Objective : public CCObject
@@ -33,6 +33,10 @@ public:
     int reputationReward;
     
     bool complete;
+    
+    std::string title;
+    std::string content;
+    std::string progress;
     
 public:
     static Objective* create();

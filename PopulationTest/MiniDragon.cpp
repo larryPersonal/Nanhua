@@ -45,6 +45,8 @@ MiniDragon::MiniDragon()
     
     delay = 0;
     
+    dropToken = false;
+    
     ds = Dragon_Start;
     
     slidesList = CCArray::create();
@@ -56,6 +58,15 @@ MiniDragon::MiniDragon()
     GameHUD::getThis()->setTutorial = true;
     
     notFirst = false;
+    
+    connectHouse = false;
+    connectGranary = false;
+    
+    highlightSprite = NULL;
+    waitForVillager = false;
+    finalObjective = false;
+    
+    down = true;
 }
 
 MiniDragon::~MiniDragon()
@@ -75,6 +86,7 @@ void MiniDragon::playMiniDraggon()
     curSlide = 0;
     readTutorialFile();
     constructTutorialSlide();
+    //setupScenario();
 }
 
 void MiniDragon::readTutorialFile()
@@ -113,12 +125,12 @@ bool MiniDragon::constructTutorialSlide()
     
     TutorialSlide* ts = (TutorialSlide*) slidesList->objectAtIndex(curSlide);
     
-    if(ts->checkGranary)
+    if(ts->checkGranary || ts->checkFarm)
     {
-        CCLog("test");
-        
         CCArray* allGranaryGhost = GameScene::getThis()->buildingHandler->granaryGhostOnMap;
-        if(allGranaryGhost->count() > 0)
+        CCArray* allFarmGhost = GameScene::getThis()->buildingHandler->amenityGhostOnMap;
+        
+        if(allGranaryGhost->count() > 0 && ts->checkGranary)
         {
             Building* gran = (Building*) allGranaryGhost->objectAtIndex(0);
             CCPoint granPos = gran->getWorldPosition();
@@ -135,6 +147,37 @@ bool MiniDragon::constructTutorialSlide()
             bool valid = true;
             
             valid = p->hasPath(&townHallPos, &granPos);
+            
+            if(valid)
+            {
+                curSlide += 2;
+                if(curSlide >= slidesList->count())
+                {
+                    return false;
+                }
+                ts = (TutorialSlide*) slidesList->objectAtIndex(curSlide);
+            }
+            
+            delete p;
+        }
+        
+        if(ts->checkFarm && allFarmGhost->count() > 0)
+        {
+            Building* farm = (Building*) allFarmGhost->objectAtIndex(0);
+            CCPoint farmPos = farm->getWorldPosition();
+            farmPos = GameScene::getThis()->mapHandler->tilePosFromLocation(farmPos);
+            
+            Building* townhall = (Building*) GameScene::getThis()->buildingHandler->specialOnMap->objectAtIndex(0);
+            CCPoint townHallPos = townhall->getWorldPosition();
+            townHallPos = GameScene::getThis()->mapHandler->tilePosFromLocation(townHallPos);
+            
+            PathFinder *p = new PathFinder();
+            p->setDestination(farmPos);
+            p->setSource(townHallPos);
+            
+            bool valid = true;
+            
+            valid = p->hasPath(&townHallPos, &farmPos);
             
             if(valid)
             {
@@ -194,12 +237,16 @@ bool MiniDragon::constructTutorialSlide()
         deHighlightBuilding(ts->deHighlightBuilding);
     }
     
-    if(ts->highlight)
+    if(ts->highlight && !cameraMove)
     {
         highlightBuilding(ts->highlightBuilding);
     }
     
     notFirst = ts->notFirst;
+    connectHouse = ts->connectHouse;
+    connectGranary = ts->connectGranary;
+    connectFarm = ts->connectFarm;
+    waitForVillager = ts->waitForVillager;
     
     if(TutorialManager::getThis()->show)
     {
@@ -219,7 +266,7 @@ bool MiniDragon::constructTutorialSlide()
             GameSprite* gs = (GameSprite*) sprites->objectAtIndex(i);
             gs->dropToken(true);
         }
-
+        dropToken = true;
     }
     
     if(ts->unlockAll)
@@ -233,7 +280,8 @@ bool MiniDragon::constructTutorialSlide()
     {
         bubble->setVisible(false);
         dragon->setVisible(false);
-        TutorialManager::getThis()->setupNarrator();
+        //TutorialManager::getThis()->setupNarrator();
+        finalObjective = true;
     }
     
     if(ts->showArrow)
@@ -272,6 +320,17 @@ bool MiniDragon::constructTutorialSlide()
         {
             ((BuildingCard*)BuildScroll::getThis()->buildingCards->objectAtIndex(ts->showScroll))->mask->setOpacity((GLubyte) 0);
         }
+    }
+    
+    if(ts->hideObjective)
+    {
+        GameHUD::getThis()->clickObjectiveButton();
+    }
+    
+    if(ts->showObjective)
+    {
+        ObjectiveHandler::getThis()->playObjective(false);
+        GameHUD::getThis()->clickObjectiveButton();
     }
     
     for(int i = 0; i < ts->commands.size(); i++)
@@ -371,6 +430,10 @@ bool MiniDragon::constructTutorialSlide()
         else if(order.compare("teachBuildGranary") == 0)
         {
             tm->teachBuildGranary = (flag == 1);
+        }
+        else if(order.compare("teachBuildFarm") == 0)
+        {
+            tm->teachBuildFarm = (flag == 1);
         }
         else if(order.compare("pause") == 0)
         {
@@ -555,11 +618,26 @@ void MiniDragon::move(CCPoint vec)
     }
     //dragon->setPosition(ccp(dragon->getPositionX() + vec.x, dragon->getPositionY() + vec.y));
     //bubble->setPosition(ccp(bubble->getPositionX() + vec.x, bubble->getPositionY() + vec.y));
+    bool up = false;
     for(int i = 0; i < animatedStringList->count(); i++)
     {
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
-        as->getLabel()->setPosition(ccp(as->getLabel()->getPositionX() + vec.x, as->getLabel()->getPositionY() + vec.y));
+        if(vec.y > 0 && down)
+        {
+            as->getLabel()->setPosition(ccp(as->getLabel()->getPositionX() + vec.x, as->getLabel()->getPositionY() + vec.y));
+            up = true;
+        }
+        else if(vec.y < 0 && !down)
+        {
+            as->getLabel()->setPosition(ccp(as->getLabel()->getPositionX() + vec.x, as->getLabel()->getPositionY() + vec.y));
+            up = false;
+        }
+        else
+        {
+            up = !down;
+        }
     }
+    down = !up;
 }
 
 void MiniDragon::fadeInScreen(float targetOpacity)
@@ -667,17 +745,19 @@ void MiniDragon::highlightBuilding(string b)
     {
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         TutorialManager::getThis()->highlightedBuilding = (Building*) buildingsOnMap->objectAtIndex(0);
-        TutorialManager::getThis()->highlightedBuildingPos = TutorialManager::getThis()->highlightedBuilding->buildingRep->getPosition();
-        TutorialManager::getThis()->highlightedBuildingZOrder = TutorialManager::getThis()->highlightedBuilding->buildingRep->getZOrder();
         
-        TutorialManager::getThis()->highlightedBuilding->EndAnim();
-        TutorialManager::getThis()->highlightedBuilding->buildingRep->retain();
-        GameScene::getThis()->mapHandler->getMap()->removeChild(TutorialManager::getThis()->highlightedBuilding->buildingRep);
+        if(highlightSprite != NULL)
+        {
+            TutorialManager::getThis()->removeChild(highlightSprite);
+        }
         
-        TutorialManager::getThis()->highlightedBuilding->buildingRep->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        TutorialManager::getThis()->addChild(TutorialManager::getThis()->highlightedBuilding->buildingRep);
-        
-        TutorialManager::getThis()->highlightedBuilding->buildingRep->setZOrder(0);
+        CCTexture2D* tex = TutorialManager::getThis()->highlightedBuilding->buildingRep->getTexture();
+        CCRect rec = TutorialManager::getThis()->highlightedBuilding->buildingRep->getTextureRect();
+        highlightSprite = CCSprite::createWithTexture(tex);
+        highlightSprite->setTextureRect(rec);
+        highlightSprite->setAnchorPoint(ccp(0.5f, 0.5f));
+        highlightSprite->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        TutorialManager::getThis()->addChild(highlightSprite);
     }
 }
 
@@ -753,17 +833,11 @@ void MiniDragon::deHighlightBuilding(string b)
         return;
     }
     
-    TutorialManager::getThis()->highlightedBuilding->buildingRep->setPosition(TutorialManager::getThis()->highlightedBuildingPos);
-    TutorialManager::getThis()->highlightedBuilding->buildingRep->setZOrder((int) TutorialManager::getThis()->highlightedBuildingZOrder);
-    TutorialManager::getThis()->removeChild(TutorialManager::getThis()->highlightedBuilding->buildingRep);
-    GameScene::getThis()->mapHandler->getMap()->addChild(TutorialManager::getThis()->highlightedBuilding->buildingRep);
-    
-    TutorialManager::getThis()->highlightedBuilding->buildingRep->autorelease();
-    TutorialManager::getThis()->highlightedBuilding->BeginAnim();
-    
-    TutorialManager::getThis()->highlightedBuilding = NULL;
-    TutorialManager::getThis()->highlightedBuildingPos = CCPointZero;
-    TutorialManager::getThis()->highlightedBuildingZOrder = 0;
+    if (highlightSprite != NULL)
+    {
+        TutorialManager::getThis()->removeChild(highlightSprite);
+        highlightSprite = NULL;
+    }
 }
 
 void MiniDragon::clickNext()
@@ -773,5 +847,54 @@ void MiniDragon::clickNext()
     {
         
     }
+}
+
+void MiniDragon::setupScenario()
+{
+    GameHUD::getThis()->pause = true;
+    finalObjective = false;
+    ObjectiveHandler::getThis()->playObjective(false);
+    TutorialManager::getThis()->lockAll();
+    moveCamera(ccp(5400.0f, 1600.0f));
+    
+    spritesArray = CCArray::create();
+    spritesArray->retain();
+    
+    CCPoint target = CCPointMake(30,39);
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.y += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x -= 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x -= 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x -= 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    TutorialManager::getThis()->goNarr = true;
+}
+
+void MiniDragon::clearSprites()
+{
+    for(int i = 0; i < spritesArray->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesArray->objectAtIndex(i);
+        GameScene::getThis()->spriteHandler->removeSpriteFromMap(gs);
+    }
+    spritesArray->removeAllObjects();
+    CC_SAFE_RELEASE(spritesArray);
 }
 

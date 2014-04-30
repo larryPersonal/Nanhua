@@ -253,6 +253,13 @@ void BuildingCard::init()
             mask->setOpacity((GLubyte) 0);
         }
     }
+    else if(TutorialManager::getThis()->teachBuildFarm)
+    {
+        if(type != 1 && type != 2 && type != 3 && building->buildingType == AMENITY)
+        {
+            mask->setOpacity((GLubyte) 0);
+        }
+    }
     else
     {
         if(type != 0 || available_number > 0)
@@ -352,9 +359,17 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
         return;
     }
     
-    if (TutorialManager::getThis()->lockBuildScroll)
+    if (GameHUD::getThis()->buildScroll != NULL && (GameHUD::getThis()->buildScroll->scroll_in || GameHUD::getThis()->buildScroll->scroll_out))
     {
         return;
+    }
+    
+    if(TutorialManager::getThis()->active)
+    {
+        if (TutorialManager::getThis()->lockBuildScroll)
+        {
+            return;
+        }
     }
     
     //cardBG->setScaleX(cardBG->getScaleX() * 1.0f / 0.95f);
@@ -366,43 +381,62 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
     {
         case -1 : //build path
         {
-            if(TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary)
+            if(TutorialManager::getThis()->active)
             {
-                return;
+                if(TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary || TutorialManager::getThis()->teachBuildFarm)
+                {
+                    return;
+                }
             }
         
             GameHUD::getThis()->setTapMode(3);
-            GameScene::getThis()->isThisTapCounted = true;
+            GameHUD::getThis()->isThisTapCounted = false;
             GameHUD::getThis()->buildScroll->scheduleScrollOut();
             GameHUD::getThis()->buildButton->setVisible(true);
             
-            if(TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst)
+            if(TutorialManager::getThis()->active)
             {
-                GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
-                TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
-                TutorialManager::getThis()->miniDragon->clickNext();
+                if(TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm)
+                {
+                    GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
+                    TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                    TutorialManager::getThis()->miniDragon->clickNext();
+                }
+                
+                if(TutorialManager::getThis()->miniDragon->connectGranary || TutorialManager::getThis()->miniDragon->connectFarm)
+                {
+                    TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                }
             }
         }
             break;
         case -2 : //unbuild path
         {
-            if(TutorialManager::getThis()->teachBuildHouse)
+            if(TutorialManager::getThis()->active)
             {
-                return;
-            }
-            
-            if(TutorialManager::getThis()->teachBuildRoad)
-            {
-                return;
-            }
-            
-            if(TutorialManager::getThis()->teachBuildGranary)
-            {
-                return;
+                if(TutorialManager::getThis()->teachBuildHouse)
+                {
+                    return;
+                }
+                
+                if(TutorialManager::getThis()->teachBuildRoad)
+                {
+                    return;
+                }
+                
+                if(TutorialManager::getThis()->teachBuildGranary)
+                {
+                    return;
+                }
+                
+                if(TutorialManager::getThis()->teachBuildFarm)
+                {
+                    return;
+                }
             }
             
             GameHUD::getThis()->setTapMode(4);
-            GameScene::getThis()->isThisTapCounted = true;
+            GameHUD::getThis()->isThisTapCounted = false;
             
             GameHUD::getThis()->buildScroll->scheduleScrollOut();
             GameHUD::getThis()->buildButton->setVisible(true);
@@ -411,23 +445,31 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             break;
         case -3: //destory building
         {
-            if(TutorialManager::getThis()->teachBuildHouse)
+            if(TutorialManager::getThis()->active)
             {
-                return;
-            }
-            
-            if(TutorialManager::getThis()->teachBuildRoad)
-            {
-                return;
-            }
-            
-            if(TutorialManager::getThis()->teachBuildGranary)
-            {
-                return;
+                if(TutorialManager::getThis()->teachBuildHouse)
+                {
+                    return;
+                }
+                
+                if(TutorialManager::getThis()->teachBuildRoad)
+                {
+                    return;
+                }
+                
+                if(TutorialManager::getThis()->teachBuildGranary)
+                {
+                    return;
+                }
+                
+                if(TutorialManager::getThis()->teachBuildFarm)
+                {
+                    return;
+                }
             }
             
             //I'll need to set tap mode to demolish. TODO
-            GameScene::getThis()->isThisTapCounted = true;
+            GameHUD::getThis()->isThisTapCounted = false;
             
             GameHUD::getThis()->buildScroll->scheduleScrollOut();
             
@@ -436,9 +478,12 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             break;
         default:
         {
-            if(TutorialManager::getThis()->teachBuildRoad)
+            if(TutorialManager::getThis()->active)
             {
-                return;
+                if(TutorialManager::getThis()->teachBuildRoad)
+                {
+                    return;
+                }
             }
             
             if(GameHUD::getThis()->getTapMode() != 0)
@@ -446,10 +491,13 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
                 return;
             }
             
-            if(TutorialManager::getThis()->teachBuildHouse)
+            if(TutorialManager::getThis()->active)
             {
-                TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
-                TutorialManager::getThis()->miniDragon->clickNext();
+                if(TutorialManager::getThis()->teachBuildHouse)
+                {
+                    TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                    TutorialManager::getThis()->miniDragon->clickNext();
+                }
             }
             
             tryToBuild(tag);
@@ -477,9 +525,17 @@ void BuildingCard::tryToBuild(int tag)
             return;
         }
         
-        if(TutorialManager::getThis()->teachBuildGranary)
+        if(TutorialManager::getThis()->active)
         {
-            return;
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                return;
+            }
         }
         //buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
         
@@ -487,15 +543,23 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == GRANARY)
     {
-        if(TutorialManager::getThis()->teachBuildGranary)
+        if(TutorialManager::getThis()->active)
         {
-            TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
-            TutorialManager::getThis()->miniDragon->clickNext();
-        }
-       
-        if(TutorialManager::getThis()->teachBuildHouse)
-        {
-            return;
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                TutorialManager::getThis()->miniDragon->clickNext();
+            }
+            
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                return;
+            }
         }
         
         if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
@@ -507,14 +571,22 @@ void BuildingCard::tryToBuild(int tag)
     {
        // buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
         
-        if(TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active)
         {
-            return;
-        }
-        
-        if(TutorialManager::getThis()->teachBuildGranary)
-        {
-            return;
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+            }
         }
         
         if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
@@ -524,14 +596,22 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == MILITARY)
     {
-        if(TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active)
         {
-            return;
-        }
-        
-        if(TutorialManager::getThis()->teachBuildGranary)
-        {
-            return;
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                return;
+            }
         }
         
         if(GameScene::getThis()->buildingHandler->militaryOnMap->count() + GameScene::getThis()->buildingHandler->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
@@ -541,14 +621,22 @@ void BuildingCard::tryToBuild(int tag)
     }
     else
     {
-        if(TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active)
         {
-            return;
-        }
-        
-        if(TutorialManager::getThis()->teachBuildGranary)
-        {
-            return;
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                return;
+            }
         }
     }
     
@@ -558,7 +646,7 @@ void BuildingCard::tryToBuild(int tag)
         GameHUD::getThis()->setTapMode(1);
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
     }
-    GameScene::getThis()->isThisTapCounted = true;
+    GameHUD::getThis()->isThisTapCounted = false;
     
     GameHUD::getThis()->buildScroll->scheduleScrollOut();
     /*

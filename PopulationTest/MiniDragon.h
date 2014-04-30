@@ -29,6 +29,8 @@ public:
     CCSprite* dragon;
     CCSprite* bubble;
     
+    CCSprite* highlightSprite;
+    
     Dragon_State ds;
     
     float startX;
@@ -49,6 +51,19 @@ public:
     bool clickToNext;
     bool lockClick;
     bool notFirst;
+    
+    bool connectHouse;
+    bool connectGranary;
+    bool connectFarm;
+    
+    bool waitForVillager;
+    
+    bool dropToken;
+    bool finalObjective;
+    
+    CCArray* spritesArray;
+    
+    bool down;
     
 public:
     MiniDragon();
@@ -75,6 +90,10 @@ public:
     
     void showAllSpeech();
     void hideDragonGroup();
+    
+    void setupScenario();
+    
+    void clearSprites();
 };
 
 #endif

@@ -23,6 +23,10 @@ Objective::Objective()
     reputationReward = 0;
     
     complete = false;
+    
+    title = "";
+    content = "";
+    progress = "";
 }
 
 Objective::~Objective()

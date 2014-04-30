@@ -4,14 +4,33 @@
 
 <objective>
     <id>1</id>
-    <type>GOLD</type>
-    <value>1600</value>
+    <type>DISPLAY</type>
+    <title>Road Builder 1</title>
+    <content>Build a road linking the town hall and home.</content>
     <next>2</next>
 </objective>
 
 <objective>
     <id>2</id>
-    <type>POPULATION</type>
-    <value>5</value>
+    <type>DISPLAY</type>
+    <title>Road Builder 2</title>
+    <content>Build a road linking the town hall and granary.</content>
     <next>3</next>
 </objective>
+
+<objective>
+    <id>3</id>
+    <type>DISPLAY</type>
+    <title>Architect</title>
+    <content>Build a farm.</content>
+    <next>4</next>
+</objective>
+
+<objective>
+    <id>4</id>
+    <type>DISPLAY</type>
+    <title>Growth</title>
+    <content>Raise the population to 8.</content>
+    <next>5</next>
+</objective>
+

@@ -101,6 +101,11 @@ public:
     float token_drop_cooldown_treshold;
     float token_drop_rate;
     
+    bool goToTownHall;
+    
+    bool hasAssigned;
+    float cumulativeCheckTime;
+    
 public:
     SpriteAppearanceType appearanceType;
     VillagerClass villagerClass;

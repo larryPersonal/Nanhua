@@ -279,9 +279,37 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->checkGranary = true;
             }
+            else if(str.find("<checkFarm>") != std::string::npos)
+            {
+                slide->checkFarm = true;
+            }
             else if(str.find("<notFirst>") != std::string::npos)
             {
                 slide->notFirst = true;
+            }
+            else if(str.find("<showObjective>") != std::string::npos)
+            {
+                slide->showObjective = true;
+            }
+            else if(str.find("<hideObjective>") != std::string::npos)
+            {
+                slide->hideObjective = true;
+            }
+            else if(str.find("<connectHouse>") != std::string::npos)
+            {
+                slide->connectHouse = true;
+            }
+            else if(str.find("<connectGranary>") != std::string::npos)
+            {
+                slide->connectGranary = true;
+            }
+            else if(str.find("<connectFarm>") != std::string::npos)
+            {
+                slide->connectFarm = true;
+            }
+            else if(str.find("<waitForVillager>") != std::string::npos)
+            {
+                slide->waitForVillager = true;
             }
             else if(str.find("<lock>") != std::string::npos)
             {
@@ -378,6 +406,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<teachBuildGranary>") != std::string::npos)
             {
                 slide->commands.push_back("teachBuildGranary:1");
+            }
+            else if(str.find("<teachBuildFarm>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildFarm:1");
             }
             else if(str.find("<pause>") != std::string::npos)
             {
@@ -493,6 +525,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<teachBuildGranary>") != std::string::npos)
             {
                 slide->commands.push_back("teachBuildGranary:0");
+            }
+            else if(str.find("<teachBuildFarm>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildFarm:0");
             }
             else if(str.find("<pause>") != std::string::npos)
             {

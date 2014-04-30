@@ -22,6 +22,7 @@
 #include "NameGenerator.h"
 #include "GlobalHelper.h"
 #include "ReputationOrb.h"
+#include "TutorialManager.h"
 
 #include <json/json.h>
 
@@ -341,7 +342,7 @@ GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
     return (GameSprite*) allSprites->objectAtIndex(idList.at(temp));
 }
 
-void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass villagerClass)
+void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass villagerClass, bool tutorial)
 {
     GameSprite* targetSprite = getSpriteByVillagerClass(villagerClass);
     SpriteClass* spriteClass = GlobalHelper::getSpriteClassByVillagerClass(villagerClass);
@@ -362,6 +363,15 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     
     GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && tutorial)
+    {
+        TutorialManager::getThis()->miniDragon->spritesArray->addObject(newSprite);
+    }
+    
+    if(TutorialManager::getThis()->active)
+    {
+        newSprite->getPossessions()->happinessRating = 100;
+    }
 }
 
 void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, std::string details)
@@ -498,7 +508,7 @@ void SpriteHandler::update(float dt)
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
             GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-            gs->getPossessions()->happinessRating = 2;
+            gs->getPossessions()->happinessRating = 100;
         }
     }
     else

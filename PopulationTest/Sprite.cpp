@@ -114,6 +114,11 @@ GameSprite::GameSprite()
     
     battleIconArray = CCArray::create();
     battleIconArray->retain();
+    
+    goToTownHall = true;
+    
+    hasAssigned = false;
+    cumulativeCheckTime = 0;
 }
 
 void GameSprite::initAI(bool isUpgrade)
@@ -897,6 +902,30 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
 
 bool GameSprite::Wander()
 {
+    if(GameHUD::getThis()->pause)
+    {
+        return false;
+    }
+    
+    if(TutorialManager::getThis()->active)
+    {
+        if(villagerClass != V_BANDIT && villagerClass != V_CLASS_END && goToTownHall)
+        {
+            goToTownHall = false;
+            Building* th = (Building*) GameScene::getThis()->buildingHandler->specialOnMap->objectAtIndex(0);
+            hasAssigned = true;
+            setTargetLocation(th);
+            GoBuilding(th);
+            return true;
+        }
+    }
+    
+    if(hasAssigned)
+    {
+        saySpeech(STUCK, 5.0f);
+        return true;
+    }
+    
     // if the sprite is in combat, the combat manager will take over to control the sprite.
     if(isInCombat)
     {
@@ -1030,6 +1059,23 @@ bool GameSprite::PathToResources()
 void GameSprite::updateSprite(float dt)
 {
     updateZIndex();
+    
+    if(hasAssigned)
+    {
+        if(currAction == IDLE)
+        {
+            cumulativeCheckTime += dt;
+            if(cumulativeCheckTime > 1)
+            {
+                if(getTargetLocation() != NULL)
+                {
+                    GoBuilding(getTargetLocation());
+                }
+                cumulativeCheckTime = 0;
+            }
+        }
+        return;
+    }
     
     if(isInAttackAction)
     {
@@ -2573,6 +2619,7 @@ void GameSprite::goToOccupyHome(Building* b)
         {
             saySpeech("I want to find a home!", 5.0f);
             setTargetLocation(b);
+            hasAssigned = true;
             GoHome(b);
         }
         isDoingJob = false;

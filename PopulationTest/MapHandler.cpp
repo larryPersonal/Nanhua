@@ -777,12 +777,12 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         SelectPopulation* selectPopulation = SelectPopulation::create(cloneBuilding);
         selectPopulation->useAsTopmostPopupMenu();
         
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary || TutorialManager::getThis()->teachBuildFarm))
         {
             selectPopulation->setZOrder(35);
         }
         
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary || TutorialManager::getThis()->teachBuildFarm))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }

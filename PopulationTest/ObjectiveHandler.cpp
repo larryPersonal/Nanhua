@@ -22,6 +22,8 @@ ObjectiveHandler::ObjectiveHandler()
     objectiveStrs = CCArray::create();
     objectiveStrs->retain();
     
+    obj = NULL;
+    
     nextID = 0;
     progressNumber = 0;
 }
@@ -62,10 +64,17 @@ void ObjectiveHandler::loadObjective()
     objectives->removeAllObjects();
     objectives->release();
     
-    objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
+    if(GameManager::getThis()->getLevel() == 0)
+    {
+        objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
+    }
+    else
+    {
+        objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
+    }
 }
 
-void ObjectiveHandler::playObjective()
+void ObjectiveHandler::playObjective(bool showNotification)
 {
     if(objectives->count() <= 0)
     {
@@ -83,6 +92,8 @@ void ObjectiveHandler::playObjective()
     objectiveStrs = CCArray::create();
     objectiveStrs->retain();
     
+    CCLog("nextID: %d", nextID);
+    
     if(nextID == 0)
     {
         obj = (Objective*) objectives->objectAtIndex(0);
@@ -93,8 +104,10 @@ void ObjectiveHandler::playObjective()
         for(int i = 0; i < objectives->count(); i++)
         {
             Objective* temp = (Objective*) objectives->objectAtIndex(i);
+            CCLog("tempID: %d, nextID: %d", temp->oid, nextID);
             if(temp->oid == nextID)
             {
+                CCLog("oh yah!");
                 obj = temp;
             }
         }
@@ -154,6 +167,12 @@ void ObjectiveHandler::playObjective()
         ss2 << "(Build: Incomplete)";
         progressNumber = 0;
     }
+    else if(obj->oType == DisplayGoal)
+    {
+        ss << obj->title;
+        ss1 << obj->content;
+        ss2 << obj->progress;
+    }
     else
     {
         ss << "OBJECTIVE";
@@ -167,7 +186,10 @@ void ObjectiveHandler::playObjective()
     GameHUD::getThis()->objectiveProgress->setString(ss2.str().c_str());
     nextID = obj->nid;
     
-    GameHUD::getThis()->scheduleShowNewObjectiveNotification();
+    if(showNotification)
+    {
+        GameHUD::getThis()->scheduleShowNewObjectiveNotification();
+    }
 }
 
 void ObjectiveHandler::update(float dt)
@@ -278,6 +300,10 @@ void ObjectiveHandler::update(float dt)
         {
             completeObjective = true;
         }
+    }
+    else if(obj->oType == DisplayGoal)
+    {
+        
     }
     else
     {

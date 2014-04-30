@@ -182,7 +182,7 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="2000"/>
+    <property name="build_uint_required" value="200"/>
     <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>

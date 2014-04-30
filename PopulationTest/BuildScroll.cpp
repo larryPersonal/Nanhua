@@ -290,6 +290,7 @@ void BuildScroll::scrollOut(float dt)
             
             CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
             GameHUD::getThis()->buildButton->setPosition(ccp(screenSize.width, 0));
+            GameHUD::getThis()->isThisTapCounted = true;
         }
         else
         {

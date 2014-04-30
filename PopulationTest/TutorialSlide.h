@@ -64,7 +64,17 @@ public:
     int showScroll;
     
     bool checkGranary;
+    bool checkFarm;
     bool notFirst;
+    
+    bool showObjective;
+    bool hideObjective;
+    
+    bool connectHouse;
+    bool connectGranary;
+    bool connectFarm;
+    
+    bool waitForVillager;
     
 public:
     TutorialSlide();

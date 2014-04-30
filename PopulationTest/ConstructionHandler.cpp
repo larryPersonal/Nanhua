@@ -219,10 +219,18 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
         GameScene::getThis()->buildingHandler->decorationGhostOnMap->removeObject(building);
     }
 
-    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+    if(TutorialManager::getThis()->active)
     {
-        TutorialManager::getThis()->miniDragon->clickNext();
-        TutorialManager::getThis()->teachBuildHouse = false;
+        if(TutorialManager::getThis()->teachBuildHouse && building->buildingType == HOUSING)
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+            TutorialManager::getThis()->teachBuildHouse = false;
+        }
+        
+        if(TutorialManager::getThis()->teachBuildFarm && building->buildingType == AMENITY)
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
     }
     
 }

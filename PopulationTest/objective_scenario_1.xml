@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<total_objectives>3</total_objectives>
+
+<objective>
+    <id>1</id>
+    <type>GOLD</type>
+    <value>1600</value>
+    <next>2</next>
+</objective>
+
+<objective>
+    <id>2</id>
+    <type>POPULATION</type>
+    <value>5</value>
+    <next>3</next>
+</objective>

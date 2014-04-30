@@ -56,7 +56,17 @@ TutorialSlide::TutorialSlide()
     showScroll = -1;
     
     checkGranary = false;
+    checkFarm = false;
     notFirst = false;
+    
+    showObjective = false;
+    hideObjective = false;
+    
+    connectHouse = false;
+    connectGranary = false;
+    connectFarm = false;
+    
+    waitForVillager = false;
 }
 
 TutorialSlide::~TutorialSlide()

@@ -173,11 +173,11 @@ struct SettingsLevel
         
         global_hungry_decay = 60; // decay 60 of the hungry in one month;
         
-        hungry_happiness_veryHappy_decay = 4;
-        hungry_happiness_happy_decay = 3;
-        hungry_happiness_normal_decay = 2;
-        hungry_happiness_unhappy_decay = 1;
-        hungry_happiness_angry_decay = 0.5;
+        hungry_happiness_veryHappy_decay = 1;
+        hungry_happiness_happy_decay = 0.75;
+        hungry_happiness_normal_decay = 0.5;
+        hungry_happiness_unhappy_decay = 0.25;
+        hungry_happiness_angry_decay = 0.125;
         quit_happiness = 0.01;
         
         energy_decay_rate = 0.5; // decay 1 of the energy in one real second.

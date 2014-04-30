@@ -275,6 +275,8 @@ void GameHUD::update(float deltaTime)
     
     if(!pause)
     {
+        checkReputaionPopulation();
+        
         // update date
         cumulatedTime += deltaTime;
         
@@ -1489,7 +1491,7 @@ void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst) || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm) || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->lockBuildScroll = true;
             TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
@@ -1498,6 +1500,11 @@ void GameHUD::clickBuildButton()
                 TutorialManager::getThis()->teachBuildButton = false;
                 TutorialManager::getThis()->teachBuildHouse = true;
             }
+        }
+        
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->connectGranary || TutorialManager::getThis()->teachBuildFarm || TutorialManager::getThis()->miniDragon->connectFarm))
+        {
+            TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
         }
         
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -1516,7 +1523,7 @@ void GameHUD::clickBuildButton()
         
         buildScroll->cocos2d::CCNode::setZOrder(30);
         
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst) || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm) || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }
@@ -1527,30 +1534,6 @@ void GameHUD::clickBuildButton()
         buildScroll = NULL;
     }
 }
-
-/*
- PS: reputation max is associated to the population growth, need to settle how to raise the growth of population and the reputation max with kris again.
- 
-void GameHUD::addReputation(int incre)
-{
-    reputation += incre;
-    if(reputation >= reputationMax)
-    {
-        reputation = reputationMax;
-    }
-    
-    int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
-    float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
-    
-    int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
-    
-    if(growthPopulation < projectedPopulation)
-    {
-        growthPopulation++;
-        addPopulation();
-    }
-}
-*/
 
 void GameHUD::addPopulation(){
     CCPoint target = CCPointMake(29,33);
@@ -2321,6 +2304,44 @@ void GameHUD::addMoney(float dt)
     }
 }
 
+/*
+ PS: reputation max is associated to the population growth, need to settle how to raise the growth of population and the reputation max with kris again.
+ 
+ void GameHUD::addReputation(int incre)
+ {
+ reputation += incre;
+ if(reputation >= reputationMax)
+ {
+ reputation = reputationMax;
+ }
+ 
+ int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
+ float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
+ 
+ int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
+ 
+ if(growthPopulation < projectedPopulation)
+ {
+ growthPopulation++;
+ addPopulation();
+ }
+ }
+ */
+
+void GameHUD::checkReputaionPopulation()
+{
+    int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
+    float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
+    
+    int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
+    
+    if(growthPopulation < projectedPopulation)
+    {
+        growthPopulation++;
+        addPopulation();
+    }
+}
+
 void GameHUD::scheduleAddReputation(int re)
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -2344,6 +2365,15 @@ void GameHUD::scheduleAddReputation(int re)
     {
         isAddingReputation = true;
         this->schedule(schedule_selector(GameHUD::addReputation));
+    }
+    
+    if(TutorialManager::getThis()->active)
+    {
+        if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->dropToken)
+        {
+            TutorialManager::getThis()->miniDragon->dropToken = false;
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
     }
 }
 

@@ -382,6 +382,8 @@ public:
     void showNewObjectiveNotification(float);
     void hideNewObjectiveNotification(float);
     
+    void checkReputaionPopulation();
+    
     void addNewNotification(std::string);
 };
 
