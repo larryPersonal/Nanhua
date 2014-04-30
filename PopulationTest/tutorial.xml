@@ -249,7 +249,7 @@
         <clickToNext></clickToNext>
     </slide>
     <slide>
-        <speech>Reputation tokens are the marks you should gain through the game, try to collect more reputation tokens.</speech>
+        <speech>Reputation tokens are the marks you should gain through the game, the more reputation you have, the more villagers will be attracted to your village, try to collect more reputation tokens.</speech>
         <clickToNext></clickToNext>
     </slide>
     <slide>
@@ -264,7 +264,7 @@
         <addVillager>1</addVillager>
     </slide>
     <slide>
-        <speech>Try to expan the village to have 8 citizens (villagers have home).</speech>
+        <speech>Try to expand the village to have 8 citizens (villagers have home).</speech>
         <showObjective></showObjective>
         <clickToNext></clickToNext>
     </slide>
