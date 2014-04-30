@@ -26,6 +26,7 @@ BuildingHandler::BuildingHandler()
     socialOnMap = NULL;
     specialOnMap = NULL;
     decorationOnMap = NULL;
+    marketOnMap = NULL;
     
     housingGhostOnMap = NULL;
     granaryGhostOnMap = NULL;
@@ -36,6 +37,7 @@ BuildingHandler::BuildingHandler()
     socialGhostOnMap = NULL;
     specialGhostOnMap = NULL;
     decorationGhostOnMap = NULL;
+    marketGhostOnMap = NULL;
 }
 
 BuildingHandler::~BuildingHandler()
@@ -49,6 +51,7 @@ BuildingHandler::~BuildingHandler()
     socialOnMap->removeAllObjects();
     specialOnMap->removeAllObjects();
     decorationOnMap->removeAllObjects();
+    marketOnMap->removeAllObjects();
     
     housingOnMap->release();
     amenityOnMap->release();
@@ -59,6 +62,7 @@ BuildingHandler::~BuildingHandler()
     socialOnMap->release();
     specialOnMap->release();
     CC_SAFE_RELEASE(decorationOnMap);
+    CC_SAFE_RELEASE(marketOnMap);
     
     housingGhostOnMap->removeAllObjects();
     granaryGhostOnMap->removeAllObjects();
@@ -69,6 +73,7 @@ BuildingHandler::~BuildingHandler()
     socialGhostOnMap->removeAllObjects();
     specialGhostOnMap->removeAllObjects();
     decorationGhostOnMap->removeAllObjects();
+    marketGhostOnMap->removeAllObjects();
     
     CC_SAFE_RELEASE(housingGhostOnMap);
     CC_SAFE_RELEASE(granaryGhostOnMap);
@@ -79,6 +84,7 @@ BuildingHandler::~BuildingHandler()
     CC_SAFE_RELEASE(socialGhostOnMap);
     CC_SAFE_RELEASE(specialGhostOnMap);
     CC_SAFE_RELEASE(decorationGhostOnMap);
+    CC_SAFE_RELEASE(marketGhostOnMap);
     
     if (allBuildingsOnMap)
     {
@@ -444,53 +450,57 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     currProperty = properties->valueForKey("building_type");
                     if (currProperty)
                     {
-                        
-                             /*I don't have a way to shorten this. Fortunately I only need to do this at the beginning of the game.*/
-                            std::string type = currProperty->getCString();
-                            if (type == "housing")
-                            {
-                                b->buildingType = HOUSING;
-                            }
-                            if (type == "granary")
-                            {
-                                b->buildingType = GRANARY;
-                            }
-                            if (type == "amenity")
-                            {
-                                b->buildingType = AMENITY;
-                            }
-                            if (type == "commerce")
-                            {
-                                b->buildingType = COMMERCE;
-                            }
-                            if (type == "military")
-                            {
-                                b->buildingType = MILITARY;
-                            }
-                            if (type == "education")
-                            {
-                                b->buildingType = EDUCATION;
-                            }
-                            if (type == "social")
-                            {
-                                b->buildingType = SOCIAL;
-                            }
-                            if (type == "special")
-                            {
-                                b->buildingType = SPECIAL;
-                            }
-                            if (type == "decoration")
-                            {
-                                b->buildingType = DECORATION;
-                            }
-                            if (type == "")
-                                b->buildingType = BUILDINGCATEGORYMAX;
-                        
+                        /*I don't have a way to shorten this. Fortunately I only need to do this at the beginning of the game.*/
+                        std::string type = currProperty->getCString();
+                        if (type == "housing")
+                        {
+                            b->buildingType = HOUSING;
+                        }
+                        else if (type == "granary")
+                        {
+                            b->buildingType = GRANARY;
+                        }
+                        else if (type == "amenity")
+                        {
+                            b->buildingType = AMENITY;
+                        }
+                        else if (type == "commerce")
+                        {
+                            b->buildingType = COMMERCE;
+                        }
+                        else if (type == "military")
+                        {
+                            b->buildingType = MILITARY;
+                        }
+                        else if (type == "education")
+                        {
+                            b->buildingType = EDUCATION;
+                        }
+                        else if (type == "social")
+                        {
+                            b->buildingType = SOCIAL;
+                        }
+                        else if (type == "special")
+                        {
+                            b->buildingType = SPECIAL;
+                        }
+                        else if (type == "decoration")
+                        {
+                            b->buildingType = DECORATION;
+                        }
+                        else if (type == "market")
+                        {
+                            b->buildingType = MARKET;
+                        }
+                        else if (type == "")
+                        {
+                            b->buildingType = BUILDINGCATEGORYMAX;
+                        }
                     }
                     else
                     {
                         b->buildingType = BUILDINGCATEGORYMAX;
-                    }                    
+                    }
                     
                     
                     /*requirements*/
@@ -650,6 +660,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     socialOnMap= CCArray::create();
     specialOnMap= CCArray::create();
     decorationOnMap = CCArray::create();
+    marketOnMap = CCArray::create();
     
     housingOnMap->retain();
     granaryOnMap->retain();
@@ -660,6 +671,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     socialOnMap->retain();
     specialOnMap->retain();
     decorationOnMap->retain();
+    marketOnMap->retain();
     
     housingGhostOnMap = CCArray::create();
     granaryGhostOnMap = CCArray::create();
@@ -670,6 +682,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     socialGhostOnMap = CCArray::create();
     specialGhostOnMap = CCArray::create();
     decorationGhostOnMap = CCArray::create();
+    marketGhostOnMap = CCArray::create();
     
     housingGhostOnMap->retain();
     granaryGhostOnMap->retain();
@@ -680,6 +693,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     socialGhostOnMap->retain();
     specialGhostOnMap->retain();
     decorationGhostOnMap->retain();
+    marketGhostOnMap->retain();
 }
 
 void BuildingHandler::addBuildingToMap(Building *b)
@@ -725,6 +739,8 @@ void BuildingHandler::addBuildingToMap(Building *b)
             break;
         case DECORATION:
             decorationOnMap->addObject(b);
+        case MARKET:
+            marketOnMap->addObject(b);
         default:
             decorationOnMap->addObject(b);
             break;
@@ -770,6 +786,10 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
             break;
         case DECORATION:
             decorationOnMap->removeObject(b);
+            break;
+        case MARKET:
+            marketOnMap->removeObject(b);
+            break;
         default:
             decorationOnMap->removeObject(b);
             break;

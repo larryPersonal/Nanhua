@@ -2,9 +2,10 @@
 
 <tutorial>
     <slide>
-        <speech>Hello, welcome to 'Hope of San Guo' Village! My name is Mini Dragon, nice to meet you. From now, you are the governor of the village. Your responsibility is to direct the village to high prosperity.</speech>
+        <speech>Hello! My name is Mini Dragon - nice to meet you. I will be your guide and assist you in rebuilding your village.</speech>
         <cameraMove>6016,2176</cameraMove>
         <clickToNext></clickToNext>
+        <lockClick></lockClick>
         <lock>
             <villager></villager>
             <buildButton></buildButton>
@@ -14,14 +15,15 @@
             <buildScroll></buildScroll>
             <buildingButton></buildingButton>
             <popup></popup>
-            <buttonOk></buttonOK>
+            <buttonOk></buttonOk>
             <buttonCancel></buttonCancel>
             <buttonClose></buttonClose>
-            <manPowerSelect></manPowerSelect>
+            <manpowerSelect></manpowerSelect>
+            <lockDropTokens></lockDropTokens>
         </lock>
     </slide>
     <slide>
-        <speech>Now, please let me introduce the village to you. This is the town hall of the village. Town hall will be responsible to support the whole village and provide updagrading service.</speech>
+        <speech>This is your town hall, the heart of the village. The town hall controls how many buildings you can build in your village. You may upgrade your town hall once you have obtained enough resources to unlock new buildings.</speech>
         <fade_out>160</fade_out>
         <highlight>special</highlight>
         <clickToNext></clickToNext>
@@ -32,15 +34,28 @@
         <arrowScale>1</arrowScale>
     </slide>
     <slide>
-        <speech>Now, please let me introduce the house to you.</speech>
-        <cameraMove>6272,2048</cameraMove>
+        <speech>Look! Two refugees have just arrived at the city gates.</speech>
+        <cameraMove>5600, 1800</cameraMove>
         <clickToNext></clickToNext>
-        <deHighlight></deHighlight>
+        <lockClick></lockClick>
+        <addVillager>2</addVillager>
+        <fade_in>0</fade_in>
         <hideArrow></hideArrow>
+        <deHighlight></deHighlight>
+        <unlock>
+            <pause></pause>
+        </unlock>
     </slide>
     <slide>
-        <speech>This is the houses of the village. Houses are home of villagers. Villagers cannot work without home and they will become unhappy until leave the village.</speech>
+        <speech>They are most likely villagers displaced by the war. You will have to provide them with food and shelter if you want them to remain in your village.</speech>
+        <cameraMove>5504,2048</cameraMove>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+    </slide>
+    <slide>
+        <speech>Luckily, we have an empty home ready. Let us build a road to the home so that the refugees can get to it.</speech>
         <highlight>housing</highlight>
+        <fade_out>160</fade_out>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <arrowX>0</arrowX>
@@ -49,66 +64,8 @@
         <arrowScale>1</arrowScale>
     </slide>
     <slide>
-        <speech>Now, please let me introduce the farm to you.</speech>
-        <cameraMove>6400,1984</cameraMove>
-        <clickToNext></clickToNext>
+        <speech>To build a road, first tap on the build button.</speech>
         <deHighlight></deHighlight>
-        <hideArrow></hideArrow>
-    </slide>
-    <slide>
-        <speech>This is the farm of the village. Farm are places to produce food. Villagers must eat food periodically to sustain their life in the village and maintain their happiness.</speech>
-        <highlight>amenity</highlight>
-        <clickToNext></clickToNext>
-        <showArrow></showArrow>
-        <arrowX>0</arrowX>
-        <arrowY>50</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
-    </slide>
-    <slide>
-        <speech>Now, please let me introduce the granary to you.</speech>
-        <cameraMove>6464,2144</cameraMove>
-        <clickToNext></clickToNext>
-        <deHighlight></deHighlight>
-        <hideArrow></hideArrow>
-    </slide>
-    <slide>
-        <speech>This is the granary of the village. Granaries are places to store food. Food produced from farm need to be stored inside the granary, otherwise the food will be wasted.</speech>
-        <highlight>granary</highlight>
-        <clickToNext></clickToNext>
-        <showArrow></showArrow>
-        <arrowX>0</arrowX>
-        <arrowY>50</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
-    </slide>
-    <1slide>
-        <speech>Now, please let me introduce the guard tower to you.</speech>
-        <cameraMove>6592,1888</cameraMove>
-        <clickToNext></clickToNext>
-        <deHighlight></deHighlight>
-        <hideArrow></hideArrow>
-    <1/slide>
-    <1slide>
-        <speech>This is the guard tower of the village. Guard towers are places to train villages to soldiers. In the bandits attack event, bandits will steal gold and food from you village, soldiers will help to defend the bandits during the attack.</speech>
-        <highlight>military</highlight>
-        <clickToNext></clickToNext>
-        <showArrow></showArrow>
-        <arrowX>0</arrowX>
-        <arrowY>50</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
-    <1/slide>
-    
-    <slide>
-        <speech>Now, please let me tell you how to build roads.</speech>
-        <cameraMove>6016,2176</cameraMove>
-        <deHighlight></deHighlight>
-        <clickToNext></clickToNext>
-        <hideArrow></hideArrow>
-    </slide>
-    <slide>
-        <speech>Click build button to open the build scroll.</speech>
         <highlight>buildButton</highlight>
         <unlock>
             <buildButton></buildButton>
@@ -116,6 +73,7 @@
         <lock>
             <teachBuildRoad></teachBuildRoad>
         </lock>
+        <fade_out>160</fade_out>
         <showArrow></showArrow>
         <arrowX>345</arrowX>
         <arrowY>-265</arrowY>
@@ -123,12 +81,15 @@
         <arrowScale>1</arrowScale>
     </slide>
     <slide>
-        <speech>Click the build path to launch the path building mode.</speech>
+        <speech>Now, tap on build path.</speech>
         <deHighlight>buildButton</deHighlight>
         <offY>220</offY>
         <lock>
             <buildButton></buildButton>
         </lock>
+        <unlock>
+            <buildScroll></buildScroll>
+        </unlock>
         <showArrow></showArrow>
         <arrowX>65</arrowX>
         <arrowY>20</arrowY>
@@ -137,154 +98,178 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>Now try to build some path in the village by click on the ground.</speech>
-        <clickToNext></clickToNext>
-        <hideArrow></hideArrow>
-    </slide>
-    <slide>
-        <speech>After you done, click the cancel buildButton.</speech>
+        <speech>Next, tap where you want the road to start. Then tap on where you want the road to end. The road path will be highlighted. Tap again on the end of the road to confirm and build the road.</speech>
         <fade_in>0</fade_in>
         <unlock>
             <scroll></scroll>
+        </unlock>
+        <showObjective></showObjective>
+        <connectHouse></connectHouse>
+    </slide>
+    <slide>
+        <speech>Great work! Now the refugees will move into their new home. Once they have settled in, they will officially become villagers. You may assign villagers to do various tasks like building and farming.</speech>
+        <fade_out>160</fade_out>
+        <lock>
+            <scroll></scroll>
+        </lock>
+        <hideObjective></hideObjective>
+        <cameraMove>5504,2048</cameraMove>
+        <highlight>housing</highlight>
+        <lockClick></lockClick>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>This is a home. Homes provide shelter for your villagers and are where they go to replenish their energy. Occupied homes also provide you with gold through taxes. Wait for the villagers to find home.</speech>
+        <waitForVillager></waitForVillager>
+    </slide>
+    <slide>
+        <speech>The refugees appear to have settled in nicely, but now they’re hungry! Luckily, we also have a granary ready.</speech>
+        <cameraMove>5952,1888</cameraMove>
+        <deHighlight></deHighlight>
+        <highlight>granary</highlight>
+        <clickToNext></clickToNext>
+        <lockClick></lockClick>
+    </slide>
+    <slide>
+        <speech>This is a granary. Granaries store food and feed your villagers when they are hungry. Link the granary so that your villagers can eat!</speech>
+        <fade_in>0</fade_in>
+        <deHighlight></deHighlight>
+        <unlock>
+            <scroll></scroll>
             <buildButton></buildButton>
+            <buildScroll></buildScroll>
+        </unlock>
+        <showObjective></showObjective>
+        <connectGranary></connectGranary>
+    </slide>
+    <slide>
+        <speech>Great! Now your villagers have food and shelter. However, it looks like your food supply is running low. Let us remedy that.</speech>
+        <hideObjective></hideObjective>
+        <lock>
+            <scroll></scroll>
+            <buildButton></buildButton>
+            <buildScroll></buildScroll>
+        </lock>
+        <unlock>
             <teachBuildRoad></teachBuildRoad>
         </unlock>
-        <lock>
-            <teachBuildButton></teachBuildButton>
-        </lock>
-        <showArrow></showArrow>
-        <arrowX>345</arrowX>
-        <arrowY>-265</arrowY>
-        <arrowAngle>320</arrowAngle>
-        <arrowScale>1</arrowScale>
-        <arrowLayer>0</arrowLayer>
+        <clickToNext></clickToNext>
     </slide>
     <slide>
-        <speech>Now, I will indroduce you how to build a house. In tutorial, I will increase the speed of building and working with my power. Click the house button in the build scroll.</speech>
-        <addVillager>5</addVillager>
-        <fade_out>160</fade_out>
-        <offY>220</offY>
-        <lock>
+        <speech>Tap on the build menu again. This time, select farm and choose a location to build it.</speech>
+        <showObjective></showObjective>
+        <unlock>
+            <scroll></scroll>
             <buildButton></buildButton>
-        </lock>
-        <unlock>
-            <pause></pause>
+            <buildScroll></buildScroll>
         </unlock>
-        <showArrow></showArrow>
-        <arrowX>465</arrowX>
-        <arrowY>20</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
-        <arrowLayer>1</arrowLayer>
-    </slide>
-    <slide>
-        <speech>Tap on any empty plot of land! Red preview means cannot build there.</speech>
-        <fade_in>0</fade_in>
-    </slide>
-    <slide>
-        <speech>Tap again to confirm building location. Tap on another area to change the building location.</speech>
-    </slide>
-    <slide>
-        <speech>In order to build, or work, you need to allocate manpower for the activity. Tap on the villagers to allocate them and tap again to deallocate them.</speech>
-        <fade_out>160</fade_out>
-        <hide></hide>
         <lock>
-            <scroll></scroll>
+            <teachBuildFarm></teachBuildFarm>
         </lock>
-        <unlock>
-            <manpowerSelect></manpowerSelect>
-        </unlock>
     </slide>
     <slide>
-        <speech>Tap on the allocate button to confirm the allocation and commerce the activity.</speech>
-        <lock>
-            <manpowerSelect></manpowerSelect>
-        </lock>
-        <show></show>
-        <unlock>
-            <buttonOk></buttonOk>
-        </unlock>
-    </slide>
-    <slide>
-        <speech>Wait for building to be completed, the remaining refugee will find the new home.</speech>
-        <fade_in>0</fade_in>
-        <lock>
-            <buttonOk></buttonOk>
-        </lock>
-        <unlock>
-            <scroll></scroll>
-        </unlock>
-    </slide>
-    
-    <slide>
-        <speech>Now you need to produce food to sustain your population.</speech>
-        <cameraMove>6400,1984</cameraMove>
+        <speech>When constructing a building, you have to assign villagers to work on it. The left screen shows your available villagers and their happiness and energy levels.</speech>
         <fade_out>160</fade_out>
         <clickToNext></clickToNext>
-        <highlight>foodLabel</highlight>
+        <lock>
+            <scroll></scroll>
+            <buildButton></buildBUtton>
+            <buildScroll></buildScroll>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Working takes energy that can be replenished by sleeping or eating. Happier villagers will work faster.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>For now, just allocate one villager and tap on the green tick to confirm.</speech>
+        <hide></hide>
+        <unlock>
+            <manpowerSelect></manpowerSelect>
+            <buttonOk></buttonOk>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Remember to link the location to your village or construction cannot start!</speech>
+        <checkFarm></checkFarm>
+        <fade_in>0</fade_in>
+        <notFirst></notFirst>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Ensure the farm is connected.</speech>
+        <connectFarm></connectFarm>
+        <unlock>
+            <scroll></scroll>
+            <buildButton></buildButton>
+            <buildScroll></buildScroll>
+            <teachBuildFarm></teachBuildFarm>
+        </unlock>
+        <lock>
+            <teachBuildRoad></teachBuildRoad>
+        </lock>
+    </slide>
+    <slide>
+        <speech>Wait for the farm to finish construction.</speech>
+        <fade_in>0</fade_in>
+        <lock>
+            <buildButton></buildButton>
+            <buildScroll></buildScroll>
+            <teachBuildFarm></teachBuildFarm>
+        </lock>
+        <unlock>
+            <scroll></scroll>
+            <teachBuildRoad></teachBuildRoad>
+        </unlock>
+    </slide>
+    <slide>
+        <speech>Great work! Now we have a farm ready. In order to begin farming, tap on the farm to allocate a villager to work on it.</speech>
+        <hideObjective></hideObjective>
+        <unlock>
+            <manpowerSelect></manpowerSelect>
+            <buttonOk></buttonOk>
+            <teachBuildFarm></teachBuildFarm>
+            <popup></popup>
+        </unlock>
         <lock>
             <teachFarming></teachFarming>
         </lock>
-        <unlock>
-            <pause></pause>
-        </unlock>
     </slide>
     <slide>
-        <speech>Tap on the farm to see the stats of the farm.</speech>
-        <deHighlight>foodLabel</deHighlight>
-        <fade_in>0</fade_in>
-        <unlock>
-            <popup></popup>
-            <scroll></scroll>
-        </unlock>
-    </slide>
-    <slide>
-        <speech>Tap on Allocate to open up the allocate screen.</speech>
-        <fade_out>160</fade_out>
-        <hide></hide>
+        <speech>Once farming begins, the villager will automatically bring the food generated to the granary.</speech>
         <lock>
             <popup></popup>
-            <scroll></scroll>
         </lock>
     </slide>
     <slide>
-        <speech>Allocate manpower for the farming process.</speech>
-        <show></show>
-        <hide></hide>
+        <speech>Villagers have transport the food to the granary already. After a job is done, villagers will gain happiness. Also happy villagers will be able to drop reputation tokens.</speech>
         <unlock>
-            <manpowerSelect></manpowerSelect>
-            <buttonOk></buttonOk>
+            <teachFarming></teachFarming>
         </unlock>
-    </slide>
-    <slide>
-        <speech>After farming is completed, food will be transported to the granary.</speech>
-        <show></show>
-        <fade_in>0</fade_in>
-        <lock>
-            <manpowerSelect></manpowerSelect>
-            <buttonOk></buttonOk>
-        </lock>
-        <unlock>
-            <scroll></scroll>
-            <buttonClose></buttonClose>
-        </unlock>
-    </slide>
-    <slide>
-        <speech>if the villages keep happy, they will have chance to drop reputatoin tokens, collect them by tapping on them.</speech>
         <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Reputation tokens are the marks you should gain through the game, the more reputation you have, the more villagers will be attracted to your village, try to collect more reputation tokens.</speech>
+        <clickToNext></clickToNext>
+    </slide>
+    <slide>
+        <speech>Look, villagers are dropping reputation tokens, collect them before they disappear!</speech>
         <triggerDropToken></triggerDropToken>
     </slide>
     <slide>
-        <speech>Be careful, reputation tokens will disappear after a period of time, collect them as soon as possible.</speech>
+        <speech>Look! More refugees have arrived. Let us get to work on expanding the village.</speech>
+        <cameraMove>5600, 1800</cameraMove>
         <clickToNext></clickToNext>
+        <lockClick></lockClick>
+        <addVillager>1</addVillager>
     </slide>
     <slide>
-        <speech>Well done, now you know how to build our village already, keep it.</speech>
+        <speech>Try to expand the village to have 8 citizens (villagers have home).</speech>
+        <showObjective></showObjective>
         <clickToNext></clickToNext>
     </slide>
     <slide>
         <hideBubble></hideBubble>
         <unlockAll><unlockAll>
-        <clickToNext></clickToNext>
     </slide>
 </tutorial>

@@ -34,7 +34,7 @@ public:
     static ObjectiveHandler* getThis();
     
     void loadObjective();
-    void playObjective();
+    void playObjective(bool showNotification = true);
     
     void update(float);
     

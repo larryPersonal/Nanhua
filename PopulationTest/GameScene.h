@@ -68,6 +68,8 @@ public:
     Building* targetBuilding;
     AnimatedRain* animatedRain;
     
+    float teachBuildRoadCheckTime;
+    
 public:
     
     CCNode* screenCenter;
@@ -137,6 +139,8 @@ public:
     
     void enableLoadingScreen();
     void goToMainMenu();
+    
+    void checkTeachBuildRoad();
     
     CREATE_FUNC(GameScene);
 };

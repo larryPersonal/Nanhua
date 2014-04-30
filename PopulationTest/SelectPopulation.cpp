@@ -385,7 +385,7 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             // button ok -> to construct
             if(!TutorialManager::getThis()->lockButtonOk)
             {
-                if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachFarming) && TutorialManager::getThis()->miniDragon != NULL)
+                if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse) && TutorialManager::getThis()->miniDragon != NULL)
                 {
                     TutorialManager::getThis()->miniDragon->clickNext();
                 }
@@ -484,6 +484,7 @@ void SelectPopulation::prepareJob(GameSprite* gameSprite)
     gameSprite->setJobLocation(building);
     gameSprite->setTargetLocation(building);
     gameSprite->path->removeAllObjects();
+    gameSprite->hasAssigned = true;
     gameSprite->GoBuilding(building);
     
     gameSprite->futureAction1 = EATING;
@@ -534,6 +535,19 @@ void SelectPopulation::scheduleConstruction()
         prepareJob(gameSprite);
         
         gameSprite->saySpeech(BUILDER_EMOTION, 5.0f);
+    }
+    
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL)
+    {
+        if(TutorialManager::getThis()->teachBuildGranary)
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
+        
+        if(TutorialManager::getThis()->teachBuildFarm)
+        {
+            TutorialManager::getThis()->miniDragon->clickNext();
+        }
     }
 }
 
@@ -746,7 +760,7 @@ void SelectPopulation::update(float deltaTime){
     if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->isCurrentConstructing && !building->isCurrentWorking)
     {
         buttonOk->setVisible(true);
-        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }

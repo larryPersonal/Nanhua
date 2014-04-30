@@ -12,7 +12,7 @@
     <property name="anim_frames" value="3"/>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="3"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
@@ -91,7 +91,7 @@
     <property name="anim_frames" value="4"/>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="3"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="amenity"/>
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
@@ -182,8 +182,8 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="2000"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="200"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
     <property name="cost" value="200"/>
     <property name="description" value="A house of brick"/>
@@ -924,7 +924,7 @@
     <property name="anim_frames" value="14"/>
     <property name="build_time" value="30"/>
     <property name="build_uint_required" value="100"/>
-    <property name="builder_limit" value="3"/>
+    <property name="builder_limit" value="2"/>
     <property name="building_type" value="military"/>
     <property name="cost" value="300"/>
     <property name="description" value="Protect Your Town"/>
@@ -1308,7 +1308,7 @@
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="10"/>
     <property name="build_uint_required" value="1000"/>
-    <property name="builder_limit" value="3"/>
+    <property name="builder_limit" value="2"/>
     <property name="building_type" value="granary"/>
     <property name="cost" value="100"/>
     <property name="description" value="Granary for storing food!"/>
@@ -1335,13 +1335,13 @@
   </tile>
  </tileset>
  <tileset firstgid="248" name="market" tilewidth="128" tileheight="128">
-  <image source="market.png" width="128" height="128"/>
+  <image source="market.png" width="256" height="128"/>
   <tile id="0">
    <properties>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="10000"/>
-    <property name="builder_limit" value="0"/>
-    <property name="building_type" value="amenity"/>
+    <property name="build_uint_required" value="2000"/>
+    <property name="builder_limit" value="2"/>
+    <property name="building_type" value="market"/>
     <property name="cost" value="200"/>
     <property name="description" value="Shops"/>
     <property name="food_consumption_rate" value="0"/>
@@ -1399,7 +1399,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1NEKgkAQBdD5EXMr1P//w5JeynahREZYzoFBuU/LZZgIAAAAAAAAgOOMz1kqc6v8Tye9sQfzD/lcyfiPnnNc4vtOrHN9y8smaw1trV2t5fZ5Pz3n0HOOIV63tcTnnS6b7zr3Mx7YKTubQ8859JxDzzn0nEPPOfQMAAAAAAAAAAB9egBlzgqg
+   eJzt0MENACAMA7FOA/tvyJcFSAXYUv7RVQEAAAAAAAAA3GtuA+Cc0X3gEzpn6Jyhc4bOGTpn6JyhMwAAAAAAAAAAvGkBjPgBpg==
   </data>
  </layer>
  <layer name="Building_House" width="90" height="60">
@@ -1408,7 +1408,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0EERAAAIw7AZwr89VHA8lijoNQEAAAAAAAAAoNl8B5TwGQAAAAAAAAAAAAAAuLK1VwBb
+   eJztzjEBAAAIA6AVsn89Q+zwEBKQAAAAAAAAAAAAAEBvrgMAAAAAAAAAAAAATy2s8QAu
   </data>
  </layer>
  <layer name="Building_1" width="90" height="60">
@@ -1417,7 +1417,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztziEBAAAIA7BLJP3TvgMGsyXYBgAAAAAAAAAAkvkOAAAAAAAAAAAAAAAAcFIriQAZ
+   eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
   </data>
  </layer>
  <layer name="Building_2" width="90" height="60" visible="0">
@@ -1444,7 +1444,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1KEBAAAIw7Cdz9loJApBckFVEwAAAAAAAAAAmOo6AOA5HwYAAAAAAAAAAAAANhqTzgER
+   eJztwTENAAAAAiD73wY2hxvQAAAAAAAAAAAAAAAAAAAAAAAAAAAArwYevwCV
   </data>
  </layer>
  <layer name="Building_Border" width="90" height="60">
@@ -1471,7 +1471,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgEJAAAMA6D1D/KcjzEGmsAEAAAAAAAAoOfaAQAAAAAAAAAAAAAAAAAY93AEAKc=
+   eJztzgENAAAIA6D3b2YrW9zNQQISGuY6AAAAAAAAAAAAAAAAAAAAAAAAAADASwt85wDK
   </data>
  </layer>
  <layer name="Building_Granary" width="90" height="60">
@@ -1480,7 +1480,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6D3T2gcW9zNQQISAAAAAAAAAD6Z6wAAAAAAAAAAAAAAAAAAVQsxUgDZ
+   eJztzgENAAAEADD9EwohhBI2Y3+CR8AftR0AAAAAAAAAAADglNwOAAAAAAAAAAAAAMCABufhAcU=
   </data>
  </layer>
  <layer name="Building_Market" width="90" height="60">
@@ -1489,7 +1489,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztziEBAAAIA7D3T4wkxAWCLcESAAAAAAAAAKAx1wEAAAAAAAAAAAAAAADgtQWUPQD5
+   eJztwTENAAAAAiD7N/YzhxvQAAAAAAAAAAAAAAAAAAAAAAAAAAAArwZqjgD6
   </data>
  </layer>
 </map>

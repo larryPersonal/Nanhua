@@ -66,6 +66,9 @@ class CCScrollView : public CCLayer
 {
     
 public:
+    
+    bool canScroll;
+    
     /**
      *  @js ctor
      */

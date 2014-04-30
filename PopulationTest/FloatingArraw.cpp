@@ -87,7 +87,6 @@ void FloatingArraw::update(float dt)
 
 void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLayer)
 {
-    CCLog("arrow mode: %d", arrowLayer);
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     float hw = screenSize.width / 2.0f;
     float hh = screenSize.height / 2.0f;

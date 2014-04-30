@@ -140,6 +140,9 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+    void stopScroll();
+    void resumeScroll();
+    
     // jerry added
     CCLayer* getLayer();
 };

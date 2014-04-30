@@ -34,6 +34,8 @@ public:
     float target_opacity;
     
     bool clickToNext;
+    bool lockClick;
+    
     float offY;
     int addVillager;
     
@@ -52,6 +54,27 @@ public:
     float arrowAngle;
     float arrowScale;
     int arrowLayer;
+    
+    float contentOffX;
+    float contentOffY;
+    
+    bool stopScroll;
+    bool resumeScroll;
+    int hideScroll;
+    int showScroll;
+    
+    bool checkGranary;
+    bool checkFarm;
+    bool notFirst;
+    
+    bool showObjective;
+    bool hideObjective;
+    
+    bool connectHouse;
+    bool connectGranary;
+    bool connectFarm;
+    
+    bool waitForVillager;
     
 public:
     TutorialSlide();

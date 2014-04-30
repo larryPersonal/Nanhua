@@ -72,6 +72,8 @@ GameScene::GameScene()
     tapped = false;
     isSwipe = false;
     
+    teachBuildRoadCheckTime = 0;
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     /* loading screen module */
@@ -142,7 +144,10 @@ CCScene* GameScene::scene()
     
     ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
     objectiveHandler->loadObjective();
-    objectiveHandler->playObjective();
+    if(GameManager::getThis()->getLevel() > 0)
+    {
+        objectiveHandler->playObjective();
+    }
     
     scene->addChild(senlayer, 1);
     scene->addChild(tm, 1);
@@ -458,7 +463,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             }
         }
         
-        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL && !(TutorialManager::getThis()->lockBuildScroll))
+        if(GameHUD::getThis()->buildScroll != NULL && GameHUD::getThis()->buildScroll->buildMenu != NULL && !(TutorialManager::getThis()->lockBuildScroll || TutorialManager::getThis()->lockScroll))
         {
             if(GameHUD::getThis()->buildScroll->buildMenu->boundingBox().containsPoint(touchLoc))
             {
@@ -629,6 +634,15 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
+    /*
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    // get the current position
+    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    CCLog("%f, %f", xPos, yPos);
+    */
+    
     if(tapped)
     {
         tapped = false;
@@ -640,8 +654,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL)
     {
-    
-        if(TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext)
+        if(TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext && !TutorialManager::getThis()->miniDragon->lockClick)
         {
             TutorialManager::getThis()->miniDragon->clickNext();
             TutorialManager::getThis()->clickable = false;
@@ -825,7 +838,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
                 else
                 {
-                    if(!(TutorialManager::getThis()->lockBuildScroll))
+                    if(!TutorialManager::getThis()->lockBuildScroll && !TutorialManager::getThis()->lockScroll)
                     {
                         GameHUD::getThis()->buildScroll->scheduleScrollOut();
                     }
@@ -1017,6 +1030,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     GameHUD::getThis()->buyBuilding(buildPathDistance * 10);
                     
                     GameHUD::getThis()->closeAllMenuAndResetTapMode();
+                    
+                    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->connectHouse || TutorialManager::getThis()->miniDragon->connectGranary || TutorialManager::getThis()->miniDragon->connectFarm))
+                    {
+                        checkTeachBuildRoad();
+                    }
                 }
                 else
                 {
@@ -1102,7 +1120,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
                 else
                 {
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                    if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
                     {
                         if(mapHandler->currBuildingPreview == NULL)
                         {
@@ -1166,9 +1184,10 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant)
+    if(instant || true)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
+        CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
     }
     else
     {
@@ -1304,6 +1323,7 @@ void GameScene::FirstRunPopulate()
             GameManager::getThis()->UnlockAll();
     }
     this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
+    
     mapHandler->rescaleScrollLimits();
 }
 
@@ -1340,7 +1360,47 @@ void GameScene::update(float time)
         {
             ObjectiveHandler::getThis()->update(time);
         }
+        
     }
+    
+    if(TutorialManager::getThis()->active)
+    {
+        if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->waitForVillager)
+        {
+            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+            for(int i = 0; i < allSprites->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+                if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_REFUGEE && gs->villagerClass != V_CLASS_END)
+                {
+                    TutorialManager::getThis()->miniDragon->waitForVillager = false;
+                    TutorialManager::getThis()->miniDragon->clickNext();
+                    break;
+                }
+            }
+        }
+        
+        if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->finalObjective)
+        {
+            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+            int temp = 0;
+            for(int i = 0; i < allSprites->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+                if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_REFUGEE && gs->villagerClass != V_CLASS_END)
+                {
+                    temp++;
+                }
+            }
+            
+            if(temp >= 8)
+            {
+                TutorialManager::getThis()->miniDragon->setupScenario();
+            }
+        }
+    }
+    
+    
     
     //GameScene::getThis()->animatedRain->update(time);
     
@@ -1359,6 +1419,104 @@ void GameScene::update(float time)
     }
     */
     
+}
+
+/*
+void GameScene::checkPathValid(float time)
+{
+    //CCLog("test my bad");
+    // check for tutorial build road to connect town hall to house and farm.
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildRoad)
+    {
+        if(teachBuildRoadCheckTime >= 1.0f)
+        {
+            teachBuildRoadCheckTime = 0;
+            checkTeachBuildRoad();
+        }
+        else
+        {
+            teachBuildRoadCheckTime += time;
+        }
+    }
+}
+*/
+
+void GameScene::checkTeachBuildRoad()
+{
+    Building* house = NULL;
+    Building* granary = NULL;
+    Building* farm = NULL;
+    Building* townHall = (Building*) buildingHandler->specialOnMap->objectAtIndex(0);
+    
+    CCPoint housePos = CCPointZero;
+    CCPoint granaryPos = CCPointZero;
+    CCPoint farmPos = CCPointZero;
+    CCPoint townHallPos = CCPointZero;
+    
+    if(TutorialManager::getThis()->miniDragon->connectHouse)
+    {
+        house = (Building*) buildingHandler->housingOnMap->objectAtIndex(0);
+        housePos = house->getWorldPosition();
+        housePos = GameScene::getThis()->mapHandler->tilePosFromLocation(housePos);
+    }
+    else if(TutorialManager::getThis()->miniDragon->connectGranary)
+    {
+        granary = (Building*) buildingHandler->granaryOnMap->objectAtIndex(0);
+        granaryPos = granary->getWorldPosition();
+        granaryPos = GameScene::getThis()->mapHandler->tilePosFromLocation(granaryPos);
+    }
+    else if(TutorialManager::getThis()->miniDragon->connectFarm)
+    {
+        farm = (Building*) buildingHandler->amenityGhostOnMap->objectAtIndex(0);
+        farmPos = farm->getWorldPosition();
+        farmPos = GameScene::getThis()->mapHandler->tilePosFromLocation(farmPos);
+    }
+    
+    townHallPos = townHall->getWorldPosition();
+    townHallPos = GameScene::getThis()->mapHandler->tilePosFromLocation(townHallPos);
+    
+    
+    Building* granGhost = NULL;
+    CCPoint granGPos = CCPointZero;
+    if(TutorialManager::getThis()->miniDragon->notFirst)
+    {
+        granGhost = (Building*) buildingHandler->granaryGhostOnMap->objectAtIndex(0);
+        granGPos = granGhost->getWorldPosition();
+        granGPos = GameScene::getThis()->mapHandler->tilePosFromLocation(granGPos);
+    }
+    
+    PathFinder *p = new PathFinder();
+    p->setDestination(granaryPos);
+    p->setSource(townHallPos);
+    
+    bool valid = true;
+    
+    if(TutorialManager::getThis()->miniDragon->connectHouse)
+    {
+        valid = p->hasPath(&townHallPos, &housePos);
+    }
+    else if(TutorialManager::getThis()->miniDragon->connectGranary)
+    {
+        valid = p->hasPath(&townHallPos, &granaryPos);
+    }
+    else if(TutorialManager::getThis()->miniDragon->connectFarm)
+    {
+        valid = p->hasPath(&townHallPos, &farmPos);
+    }
+    else
+    {
+        valid = (p->hasPath(&townHallPos, &granGPos));
+    }
+    
+    if(valid)
+    {
+        TutorialManager::getThis()->miniDragon->clickNext();
+        TutorialManager::getThis()->miniDragon->notFirst = false;
+        
+        GameHUD::getThis()->setTapMode(0);
+    }
+    
+    delete p;
 }
                          
 void GameScene::lostGame(cocos2d::CCObject *psender)
@@ -1491,13 +1649,6 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     PopupMenu::backupCurrentPopupMenu();
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                     buildingInfoMenu->useAsTopmostPopupMenu();
-                    
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
-                    {
-                        TutorialManager::getThis()->miniDragon->clickNext();
-                        buildingInfoMenu->setZOrder(35);
-                        TutorialManager::getThis()->lockPopup = true;
-                    }
                 }
             }
             
@@ -1558,13 +1709,6 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                             PopupMenu::backupCurrentPopupMenu();
                             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
                             buildingInfoMenu->useAsTopmostPopupMenu();
-                            
-                            if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
-                            {
-                                TutorialManager::getThis()->miniDragon->clickNext();
-                                buildingInfoMenu->setZOrder(35);
-                                TutorialManager::getThis()->lockPopup = true;
-                            }
                         }
                     }
                     

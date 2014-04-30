@@ -420,6 +420,12 @@ CCLayer* ScrollArea::getLayer()
     return layer;
 }
 
+void ScrollArea::stopScroll()
+{
+    scrollView->canScroll = false;
+}
 
-
-
+void ScrollArea::resumeScroll()
+{
+    scrollView->canScroll = true;
+}

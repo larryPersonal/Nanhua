@@ -498,6 +498,7 @@
 		8418C39618D8399D00C8C9B9 /* objective_tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8418C39518D8399D00C8C9B9 /* objective_tutorial.xml */; };
 		8418C39A18D83E1A00C8C9B9 /* Objective.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39918D83E1A00C8C9B9 /* Objective.cpp */; };
 		8418C39D18D8474500C8C9B9 /* ObjectiveManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */; };
+		841D0366190FC4E300E34ACB /* tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 841D0365190FC4E300E34ACB /* tutorial.xml */; };
 		8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155618D2C4DD00A441D0 /* dialogbox.png */; };
 		8421157818D2C4DD00A441D0 /* info_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155B18D2C4DD00A441D0 /* info_btn.png */; };
 		8421157A18D2C4DD00A441D0 /* leftgreen_arrowbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155D18D2C4DD00A441D0 /* leftgreen_arrowbtn.png */; };
@@ -561,7 +562,7 @@
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
 		843B18D818F2910600C00490 /* housedetailred.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D718F2910600C00490 /* housedetailred.png */; };
 		843B18DA18F2A4FA00C00490 /* infor display ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D918F2A4FA00C00490 /* infor display ui.png */; };
-		843BE2B018F7EB2600682E5B /* tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AF18F7EB2600682E5B /* tutorial.xml */; };
+		843BE2B018F7EB2600682E5B /* tutorialBackup.xml in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2AF18F7EB2600682E5B /* tutorialBackup.xml */; };
 		843BE2B218F7F1BA00682E5B /* speechdialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 843BE2B118F7F1BA00682E5B /* speechdialog.png */; };
 		843E972818DA94F100DBB48D /* FemaleBandit_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E972218DA94F100DBB48D /* FemaleBandit_port.png */; };
 		843E972918DA94F100DBB48D /* FemaleVillager_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 843E972318DA94F100DBB48D /* FemaleVillager_port.png */; };
@@ -605,6 +606,7 @@
 		84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */ = {isa = PBXBuildFile; fileRef = 84589CDF1896655500AA9E1C /* conversation_textbox_girl.png */; };
 		84589CE41896655500AA9E1C /* conversation_textbox_zhugeliang.png in Resources */ = {isa = PBXBuildFile; fileRef = 84589CE01896655500AA9E1C /* conversation_textbox_zhugeliang.png */; };
 		84589CE61896758900AA9E1C /* nextButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 84589CE51896758900AA9E1C /* nextButton.png */; };
+		8459756D19109D560093709B /* objective_scenario_1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8459756C19109D560093709B /* objective_scenario_1.xml */; };
 		845A9EDD18F78CB50074EF77 /* tutorial1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 845A9EDC18F78CB50074EF77 /* tutorial1.xml */; };
 		845A9EDF18F7CAC50074EF77 /* tutorial2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 845A9EDE18F7CAC50074EF77 /* tutorial2.xml */; };
 		8467C80118EAB3DC0038AC2E /* TutorialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8467C80018EAB3DC0038AC2E /* TutorialManager.cpp */; };
@@ -1530,6 +1532,7 @@
 		8418C39918D83E1A00C8C9B9 /* Objective.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Objective.cpp; sourceTree = "<group>"; };
 		8418C39B18D8467900C8C9B9 /* ObjectiveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveManager.h; sourceTree = "<group>"; };
 		8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectiveManager.cpp; sourceTree = "<group>"; };
+		841D0365190FC4E300E34ACB /* tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial.xml; sourceTree = "<group>"; };
 		8421154E18D2B9A100A441D0 /* HousingLimit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HousingLimit.h; sourceTree = "<group>"; };
 		8421155018D2C4DD00A441D0 /* allocatebtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allocatebtn.png; sourceTree = "<group>"; };
 		8421155218D2C4DD00A441D0 /* blackscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackscreen.png; sourceTree = "<group>"; };
@@ -1614,7 +1617,7 @@
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
 		843B18D718F2910600C00490 /* housedetailred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = housedetailred.png; sourceTree = "<group>"; };
 		843B18D918F2A4FA00C00490 /* infor display ui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infor display ui.png"; sourceTree = "<group>"; };
-		843BE2AF18F7EB2600682E5B /* tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial.xml; sourceTree = "<group>"; };
+		843BE2AF18F7EB2600682E5B /* tutorialBackup.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorialBackup.xml; sourceTree = "<group>"; };
 		843BE2B118F7F1BA00682E5B /* speechdialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speechdialog.png; sourceTree = "<group>"; };
 		843E972218DA94F100DBB48D /* FemaleBandit_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FemaleBandit_port.png; sourceTree = "<group>"; };
 		843E972318DA94F100DBB48D /* FemaleVillager_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FemaleVillager_port.png; sourceTree = "<group>"; };
@@ -1661,6 +1664,7 @@
 		84589CDF1896655500AA9E1C /* conversation_textbox_girl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conversation_textbox_girl.png; sourceTree = "<group>"; };
 		84589CE01896655500AA9E1C /* conversation_textbox_zhugeliang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conversation_textbox_zhugeliang.png; sourceTree = "<group>"; };
 		84589CE51896758900AA9E1C /* nextButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextButton.png; sourceTree = "<group>"; };
+		8459756C19109D560093709B /* objective_scenario_1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = objective_scenario_1.xml; sourceTree = "<group>"; };
 		845A9EDC18F78CB50074EF77 /* tutorial1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial1.xml; sourceTree = "<group>"; };
 		845A9EDE18F7CAC50074EF77 /* tutorial2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial2.xml; sourceTree = "<group>"; };
 		8467C7FF18EAB34E0038AC2E /* TutorialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialManager.h; sourceTree = "<group>"; };
@@ -3379,6 +3383,7 @@
 			isa = PBXGroup;
 			children = (
 				8418C39518D8399D00C8C9B9 /* objective_tutorial.xml */,
+				8459756C19109D560093709B /* objective_scenario_1.xml */,
 			);
 			name = Objective;
 			sourceTree = "<group>";
@@ -3444,7 +3449,8 @@
 				8476EB9818F644B90004DE79 /* tutorial0.xml */,
 				845A9EDC18F78CB50074EF77 /* tutorial1.xml */,
 				845A9EDE18F7CAC50074EF77 /* tutorial2.xml */,
-				843BE2AF18F7EB2600682E5B /* tutorial.xml */,
+				843BE2AF18F7EB2600682E5B /* tutorialBackup.xml */,
+				841D0365190FC4E300E34ACB /* tutorial.xml */,
 			);
 			name = TutorialFiles;
 			sourceTree = "<group>";
@@ -4025,6 +4031,7 @@
 				3632864318CEC503002C58D3 /* houses.png in Resources */,
 				843E973718DB18E700DBB48D /* BuildingInfoUI.png in Resources */,
 				844AC8EC18C8301F005166FD /* peace.png in Resources */,
+				8459756D19109D560093709B /* objective_scenario_1.xml in Resources */,
 				36325C1A18D7FAC20008227D /* closebutton-down.png in Resources */,
 				3608CB001704343E00AB65A3 /* FemaleFarmer.plist in Resources */,
 				8444D6BE190779E500D5AFAC /* banditAttackRightUp.png in Resources */,
@@ -4147,7 +4154,7 @@
 				843E973318DAEB2F00DBB48D /* studentgirl_c.png in Resources */,
 				36D87CF518C5BA5200FE8B31 /* villager_c.png in Resources */,
 				36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */,
-				843BE2B018F7EB2600682E5B /* tutorial.xml in Resources */,
+				843BE2B018F7EB2600682E5B /* tutorialBackup.xml in Resources */,
 				36AC553B18D696D600C165F5 /* Shojumaru-Regular.ttf in Resources */,
 				8421158B18D2F02D00A441D0 /* upgrade.png in Resources */,
 				8410543C18E90DA7003D88C6 /* stuck.png in Resources */,
@@ -4341,6 +4348,7 @@
 				36B411E718D9AC94005967EC /* river_anim_bottomalign.png in Resources */,
 				843B18D818F2910600C00490 /* housedetailred.png in Resources */,
 				36AC558118D69A0100C165F5 /* student.png in Resources */,
+				841D0366190FC4E300E34ACB /* tutorial.xml in Resources */,
 				36AC559018D6A31100C165F5 /* gound.png in Resources */,
 				36AC558318D69A0100C165F5 /* splash1.png in Resources */,
 				8410545D18E94ECB003D88C6 /* restartbtn.png in Resources */,

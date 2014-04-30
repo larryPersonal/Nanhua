@@ -108,11 +108,11 @@ struct ConfigSettings
         token_drop_treshold_time_angry_min = 100;
         token_drop_treshold_time_angry_max = 300;
         
-        token_drop_rate_veryHappy = 90; // 60 by default
-        token_drop_rate_happy = 90;     // 45 by default
-        token_drop_rate_normal = 90;    // 30 by default
-        token_drop_rate_unhappy = 90;   // 15 by default
-        token_drop_rate_angry = 90;      // 0  by default
+        token_drop_rate_veryHappy = 60; // 60 by default
+        token_drop_rate_happy = 45;     // 45 by default
+        token_drop_rate_normal = 30;    // 30 by default
+        token_drop_rate_unhappy = 15;   // 15 by default
+        token_drop_rate_angry = 0;      // 0  by default
         
         token_disappear_time = 15;
     }
@@ -173,11 +173,11 @@ struct SettingsLevel
         
         global_hungry_decay = 60; // decay 60 of the hungry in one month;
         
-        hungry_happiness_veryHappy_decay = 4;
-        hungry_happiness_happy_decay = 3;
-        hungry_happiness_normal_decay = 2;
-        hungry_happiness_unhappy_decay = 1;
-        hungry_happiness_angry_decay = 0.5;
+        hungry_happiness_veryHappy_decay = 1;
+        hungry_happiness_happy_decay = 0.75;
+        hungry_happiness_normal_decay = 0.5;
+        hungry_happiness_unhappy_decay = 0.25;
+        hungry_happiness_angry_decay = 0.125;
         quit_happiness = 0.01;
         
         energy_decay_rate = 0.5; // decay 1 of the energy in one real second.

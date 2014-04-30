@@ -93,6 +93,10 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 {
                     objective->oType = FoodGoal;
                 }
+                else if(content.compare("DISPLAY") == 0)
+                {
+                    objective->oType = DisplayGoal;
+                }
                 else
                 {
                     objective->oType = DefaultGoal;
@@ -114,6 +118,27 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 temp = ::atoi(content.c_str());
                 objective->nid = temp;
             }
+            else if(str.find("<title>") != std::string::npos)
+            {
+                startPos = str.find("<title>");
+                endPos = str.find("</title>");
+                content = str.substr(startPos + 7, endPos - startPos - 7);
+                objective->title = content;
+            }
+            else if(str.find("<content>") != std::string::npos)
+            {
+                startPos = str.find("<content>");
+                endPos = str.find("</content>");
+                content = str.substr(startPos + 9, endPos - startPos - 9);
+                objective->content = content;
+            }
+            else if(str.find("<progress>") != std::string::npos)
+            {
+                startPos = str.find("<progress>");
+                endPos = str.find("</progress>");
+                content = str.substr(startPos + 10, endPos - startPos - 10);
+                objective->progress = content;
+            }
             else if(str.find("<reward>") != std::string::npos)
             {
                 isInReward = true;
@@ -122,6 +147,7 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             {
                 isInObjective = false;
                 objectives->addObject(objective);
+                CCLog("***********************yah");
             }
         }
         else
@@ -170,5 +196,6 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
         }
     }
     
+    CCLog("%d", objectives->count());
     return objectives;
 }

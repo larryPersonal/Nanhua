@@ -44,6 +44,7 @@ public:
     void update(float);
     
     void activateSprite(float dt);
+    void setupForScenario();
 };
 
 #endif

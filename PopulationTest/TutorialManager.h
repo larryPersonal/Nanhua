@@ -55,22 +55,25 @@ public:
     bool lockGoldLabel;
     bool lockFoodLabel;
     bool lockPopulationLabel;
+    bool lockDropTokens;
     
     bool teachBuildButton;
     bool teachBuildHouse;
     bool teachFarming;
     bool teachBuildRoad;
+    bool teachBuildGranary;
+    bool teachBuildFarm;
     
     bool clickable;
     Building* highlightedBuilding;
-    CCPoint highlightedBuildingPos;
-    float highlightedBuildingZOrder;
     
     int villagersToBeAdded;
     float cumulativeTime;
     
     bool show;
     bool hide;
+    
+    bool goNarr;
     
 public:
     TutorialManager();
@@ -93,6 +96,7 @@ public:
     
     void setupMiniDragon();
     
+    void lockAll();
     void unlockAll();
     
     void addVillagers(int);

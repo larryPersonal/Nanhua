@@ -412,6 +412,17 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
     
     
     MapTile* targetTile = getTileAt(tilePos.x, tilePos.y);
+    if(targetTile->hasBuilding())
+    {
+        if(targetTile->building)
+        {
+            if(targetTile->building->buildingType == DECORATION)
+            {
+                return true;
+            }
+        }
+    }
+    
     if (!targetTile->isPath && !targetTile->hasBuilding()){
         return true;
     }
@@ -766,12 +777,12 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         SelectPopulation* selectPopulation = SelectPopulation::create(cloneBuilding);
         selectPopulation->useAsTopmostPopupMenu();
         
-        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary || TutorialManager::getThis()->teachBuildFarm))
         {
             selectPopulation->setZOrder(35);
         }
         
-        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary || TutorialManager::getThis()->teachBuildFarm))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }

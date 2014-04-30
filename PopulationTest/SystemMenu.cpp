@@ -55,13 +55,13 @@ bool SystemMenu::init(CCLayer* layer)
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-    layer->addChild(blackScreen, 5);
+    layer->addChild(blackScreen, 31);
     
     systemMenu_background = CCSprite::create("PauseMenu.png");
     systemMenu_background->setScale(1.0f);
     systemMenu_background->setAnchorPoint(ccp(0.5, 0.5));
     systemMenu_background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-    layer->addChild(systemMenu_background, 6);
+    layer->addChild(systemMenu_background, 32);
     
     systemMenu_resumeButton = CCMenuItemImage::create("resumebtn.png", "resumepressbtn.png", this, menu_selector( SystemMenu::clickResumeButton ));
     systemMenu_resumeButton->setScale((systemMenu_background->boundingBox().size.width / systemMenu_resumeButton->boundingBox().size.width) * 0.6f, systemMenu_background->boundingBox().size.height / systemMenu_resumeButton->boundingBox().size.height * 0.15f);

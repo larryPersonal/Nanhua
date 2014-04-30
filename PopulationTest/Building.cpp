@@ -227,6 +227,11 @@ void Building::ArriveHandler(GameSprite* sp)
 
     sp->setAction(sp->nextAction);
     
+    if(sp->getTargetLocation() == this)
+    {
+        sp->hasAssigned = false;
+    }
+    
     if(sp->getJobLocation() == this)
     {
         sp->setIsDoingJob(true);
@@ -311,7 +316,6 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         sp->getPossessions()->targetHomeLocation = NULL;
         if(memberSpriteList->count() < populationLimit)
         {
-            
             sp->setHome(this);
             sp->setIsDoingJob(false);
             sp->spriteClass = "citizen";
@@ -453,12 +457,6 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     
                     this->isCurrentWorking = false;
                     this->isCurrentHarvest = false;
-                    
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming)
-                    {
-                        PopupMenu::closeAllPopupMenu();
-                        TutorialManager::getThis()->miniDragon->clickNext();
-                    }
                 }
                 else
                 {
@@ -522,6 +520,14 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->setTargetLocation(NULL);
                 sp->changeToCitizen();
                 sp->movementSpeed = sp->getPossessions()->default_movement_speed;
+                
+                if(TutorialManager::getThis()->active)
+                {
+                    if(TutorialManager::getThis()->teachFarming && TutorialManager::getThis()->miniDragon != NULL)
+                    {
+                        TutorialManager::getThis()->miniDragon->clickNext();
+                    }
+                }
             }
         }
         else
@@ -550,6 +556,14 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->setTargetLocation(NULL);
                 sp->changeToCitizen();
                 sp->movementSpeed = sp->getPossessions()->default_movement_speed;
+                
+                if(TutorialManager::getThis()->active)
+                {
+                    if(TutorialManager::getThis()->teachFarming && TutorialManager::getThis()->miniDragon != NULL)
+                    {
+                        TutorialManager::getThis()->miniDragon->clickNext();
+                    }
+                }
             }
         }
     }

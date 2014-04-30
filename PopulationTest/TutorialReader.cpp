@@ -158,6 +158,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->clickToNext = true;
             }
+            else if(str.find("<lockClick>") != std::string::npos)
+            {
+                slide->lockClick = true;
+            }
             else if(str.find("<offY>") != std::string::npos)
             {
                 start_pos = str.find("<offY>");
@@ -228,12 +232,84 @@ void TutorialReader::parseXMLFile(string xml)
                 content = str.substr(start_pos + 12, end_pos - start_pos - 12);
                 slide->arrowScale = ::atof(content.c_str());
             }
-            else if(str.find("<arrowLayer") != std::string::npos)
+            else if(str.find("<arrowLayer>") != std::string::npos)
             {
                 start_pos = str.find("<arrowLayer>");
                 end_pos = str.find("</arrowLayer>");
                 content = str.substr(start_pos + 12, end_pos - start_pos - 12);
                 slide->arrowLayer = ::atoi(content.c_str());
+            }
+            else if(str.find("<contentOffX>") != std::string::npos)
+            {
+                start_pos = str.find("<contentOffX>");
+                end_pos = str.find("</contentOffX>");
+                content = str.substr(start_pos + 13, end_pos - start_pos - 13);
+                slide->contentOffX = ::atof(content.c_str());
+            }
+            else if(str.find("<contentOffY>") != std::string::npos)
+            {
+                start_pos = str.find("<contentOffY>");
+                end_pos = str.find("</contentOffY>");
+                content = str.substr(start_pos + 13, end_pos - start_pos - 13);
+                slide->contentOffY = ::atof(content.c_str());
+            }
+            else if(str.find("<stopScroll>") != std::string::npos)
+            {
+                slide->stopScroll = true;
+            }
+            else if(str.find("<resumeScroll>") != std::string::npos)
+            {
+                slide->resumeScroll = true;
+            }
+            else if(str.find("<hideScroll>") != std::string::npos)
+            {
+                start_pos = str.find("<hideScroll>");
+                end_pos = str.find("</hideScroll>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->hideScroll = ::atoi(content.c_str());
+            }
+            else if(str.find("<showScroll>") != std::string::npos)
+            {
+                start_pos = str.find("<showScroll>");
+                end_pos = str.find("</showScroll>");
+                content = str.substr(start_pos + 12, end_pos - start_pos - 12);
+                slide->showScroll = ::atoi(content.c_str());
+            }
+            else if(str.find("<checkGranary>") != std::string::npos)
+            {
+                slide->checkGranary = true;
+            }
+            else if(str.find("<checkFarm>") != std::string::npos)
+            {
+                slide->checkFarm = true;
+            }
+            else if(str.find("<notFirst>") != std::string::npos)
+            {
+                slide->notFirst = true;
+            }
+            else if(str.find("<showObjective>") != std::string::npos)
+            {
+                slide->showObjective = true;
+            }
+            else if(str.find("<hideObjective>") != std::string::npos)
+            {
+                slide->hideObjective = true;
+            }
+            else if(str.find("<connectHouse>") != std::string::npos)
+            {
+                slide->connectHouse = true;
+            }
+            else if(str.find("<connectGranary>") != std::string::npos)
+            {
+                slide->connectGranary = true;
+            }
+            else if(str.find("<connectFarm>") != std::string::npos)
+            {
+                slide->connectFarm = true;
+            }
+            else if(str.find("<waitForVillager>") != std::string::npos)
+            {
+                slide->waitForVillager = true;
             }
             else if(str.find("<lock>") != std::string::npos)
             {
@@ -327,6 +403,14 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->commands.push_back("teachBuildRoad:1");
             }
+            else if(str.find("<teachBuildGranary>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildGranary:1");
+            }
+            else if(str.find("<teachBuildFarm>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildFarm:1");
+            }
             else if(str.find("<pause>") != std::string::npos)
             {
                 slide->commands.push_back("pause:1");
@@ -350,6 +434,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<populationLabel>") != std::string::npos)
             {
                 slide->commands.push_back("populationLabel:1");
+            }
+            else if(str.find("<lockDropTokens>") != std::string::npos)
+            {
+                slide->commands.push_back("lockDropTokens:1");
             }
             else if(str.find("</lock>") != std::string::npos)
             {
@@ -434,6 +522,14 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->commands.push_back("teachBuildRoad:0");
             }
+            else if(str.find("<teachBuildGranary>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildGranary:0");
+            }
+            else if(str.find("<teachBuildFarm>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildFarm:0");
+            }
             else if(str.find("<pause>") != std::string::npos)
             {
                 slide->commands.push_back("pause:0");
@@ -457,6 +553,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<populationLabel>") != std::string::npos)
             {
                 slide->commands.push_back("populationLabel:0");
+            }
+            else if(str.find("<lockDropTokens>") != std::string::npos)
+            {
+                slide->commands.push_back("lockDropTokens:0");
             }
             else if(str.find("</unlock>") != std::string::npos)
             {

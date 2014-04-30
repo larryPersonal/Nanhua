@@ -26,6 +26,8 @@ TutorialSlide::TutorialSlide()
     target_opacity = 0;
     
     clickToNext = false;
+    lockClick = false;
+    
     offY = 0;
     addVillager = 0;
     
@@ -44,6 +46,27 @@ TutorialSlide::TutorialSlide()
     arrowY = 0;
     arrowScale = 0;
     arrowLayer = 0;
+    
+    contentOffX = 0;
+    contentOffY = 0;
+    
+    stopScroll = false;
+    resumeScroll = false;
+    hideScroll = -1;
+    showScroll = -1;
+    
+    checkGranary = false;
+    checkFarm = false;
+    notFirst = false;
+    
+    showObjective = false;
+    hideObjective = false;
+    
+    connectHouse = false;
+    connectGranary = false;
+    connectFarm = false;
+    
+    waitForVillager = false;
 }
 
 TutorialSlide::~TutorialSlide()
