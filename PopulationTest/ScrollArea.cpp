@@ -176,6 +176,14 @@ void ScrollArea::addItem(CCNode* node, CCPoint position)
     node->setPosition(position);
 }
 
+void ScrollArea::setPos(CCNode* node, CCPoint position)
+{
+    CCLog("test my butterfly");
+    position.y = layer->getContentSize().height - position.y;
+    node->setPosition(position);
+    node->setVisible(true);
+}
+
 void ScrollArea::removeI(CCNode* node)
 {
     layer->removeChild(node);

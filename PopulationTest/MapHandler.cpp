@@ -155,11 +155,18 @@ MapTile* MapHandler::getTileAt(int X, int Y)
 
 void MapHandler::initTiles(const char* mapName)
 {
-    if (!mapName) return;
-    mapPtr = CCTMXTiledMap::create(mapName);
-    CCTMXLayer* metaLayer = mapPtr->layerNamed("Metadata");
-    if (metaLayer) metaLayer->setVisible(false);
+    // As we are going to load a map from map file, a valid map name is required.
+    if (!mapName){
+        return;
+    }
     
+    mapPtr = CCTMXTiledMap::create(mapName);
+    
+    CCTMXLayer* metaLayer = mapPtr->layerNamed("Metadata");
+    
+    if (metaLayer){
+        metaLayer->setVisible(false);
+    }
     
     playarea_min = GameManager::getThis()->getMinArea();
     playarea_max = GameManager::getThis()->getMaxArea();
@@ -167,7 +174,6 @@ void MapHandler::initTiles(const char* mapName)
     setupTiles();
     
     scalePanLayer = CCLayer::create();
-    
     
     currBuildingPreview = NULL;
     previewTileHighlight = NULL;
@@ -304,27 +310,11 @@ void MapHandler::originateMapToTile()
 
 void MapHandler::rescaleScrollLimits()
 {
-    // Some complex instructions here...
-    if (mapPtr == NULL) return;
+    // first, make sure map is existed, game will crash?
+    if (mapPtr == NULL){
+        return;
+    }
     
-    //The next person who decides to ngeh ngeh lai and cannot explain his code will get it from me mmmmkay? - Larry
-    /*
-     
-    float qScreenW = CCDirector::sharedDirector()->getWinSize().width * 0.25f;
-    float qScreenH = CCDirector::sharedDirector()->getWinSize().height * 0.25f;
-    
-    float halfTileW = mapPtr->getTileSize().width / 2.0f * scalePanLayer->getScale();
-    float halfTileH = mapPtr->getTileSize().height / 2.0f * scalePanLayer->getScale();
-    
-    float maxH = (playarea_max.x + playarea_max.y) * halfTileH;
-    float minH = (playarea_min.x + playarea_min.y) * halfTileH;
-    
-    float halfW = ((playarea_max.x - playarea_min.x) + (playarea_max.y - playarea_min.y)) * halfTileW / 2.0f;
-    float offsetW = (((playarea_max.x + playarea_min.x) / 2) - ((playarea_max.y + playarea_min.y) / 2)) * halfTileW;
-    
-    mapScroll_max = CCPointMake(halfW - offsetW - qScreenW, maxH - qScreenH);
-    mapScroll_min = CCPointMake(-halfW - offsetW + qScreenW, minH + qScreenH);
-    */
     //center map first! Or it will take the wrong position values.
     int centerW = mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
     int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();

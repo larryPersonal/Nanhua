@@ -236,6 +236,28 @@ void Building::ArriveHandler(GameSprite* sp)
     {
         sp->setIsDoingJob(true);
     }
+    
+    if(sp->currAction == EATING && sp->getTargetLocation() == this)
+    {
+        if(this->buildingType == GRANARY)
+        {
+            sp->targetEnergy = (sp->getPossessions()->energyRating + 20 + rand() % 20);
+            sp->targetEnergy = sp->targetEnergy > 100 ? 100 : sp->targetEnergy;
+            sp->targetHungry = (sp->getPossessions()->currentHungry + 60 + rand() % 20);
+            sp->targetHungry = sp->targetHungry > 100 ? 100 : sp->targetHungry;
+            sp->targetHappiness = (sp->getPossessions()->happinessRating + 5 + rand() % 5);
+            sp->targetHappiness = sp->targetHappiness > 100 ? 100 : sp->targetHappiness;
+        }
+        else if(this->buildingType == MARKET)
+        {
+            sp->targetEnergy = (sp->getPossessions()->energyRating + 30 + rand() % 30);
+            sp->targetEnergy = sp->targetEnergy > 100 ? 100 : sp->targetEnergy;
+            sp->targetHungry = (sp->getPossessions()->currentHungry + 80 + rand() % 20);
+            sp->targetHungry = sp->targetHungry > 100 ? 100 : sp->targetHungry;
+            sp->targetHappiness = (sp->getPossessions()->happinessRating + 10 + rand() % 10);
+            sp->targetHappiness = sp->targetHappiness > 100 ? 100 : sp->targetHappiness;
+        }
+    }
 }
 
 // when a villager performs a task in a building, this will direct the villager's behavior
@@ -330,25 +352,31 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         if(hasFood())
         {
             // if the sprite is still hungry
-            if (sp->isHungry())
+            if (sp->getPossessions()->currentHungry < sp->getPossessions()->targetHungry || sp->getPossessions()->energyRating < sp->targetEnergy || sp->getPossessions()->happinessRating < sp->targetHappiness)
             {
-                int gainVal = sp->getPossessions()->EatFood();
-                
-                if(gainVal > 0)
+                if(sp->getPossessions()->currentHungry < sp->getPossessions()->targetHungry)
                 {
-                    //this->currentStorage -= food_consumption_rate;
-                    sp->getPossessions()->currentHungry += gainVal;
-                    if(sp->getPossessions()->currentHungry > sp->getPossessions()->default_hungry_limit + sp->getPossessions()->bonus_hungry_limit)
-                    {
-                        sp->getPossessions()->currentHungry = sp->getPossessions()->default_hungry_limit + sp->getPossessions()->bonus_hungry_limit;
-                    }
-                    sp->updateIdleDelay(0.1f);
+                    sp->getPossessions()->currentHungry++;
+                    sp->getPossessions()->currentHungry = sp->getPossessions()->currentHungry > 100 ? 100 : sp->getPossessions()->currentHungry;
                 }
+                
+                if(sp->getPossessions()->energyRating < sp->targetEnergy)
+                {
+                    sp->getPossessions()->energyRating++;
+                    sp->getPossessions()->energyRating = sp->getPossessions()->energyRating > 100 ? 100 : sp->getPossessions()->energyRating;
+                }
+                
+                if(sp->getPossessions()->happinessRating < sp->targetHappiness)
+                {
+                    sp->getPossessions()->happinessRating++;
+                    sp->getPossessions()->happinessRating = sp->getPossessions()->happinessRating > 100 ? 100 : sp->getPossessions()->happinessRating;
+                }
+                
+                sp->updateIdleDelay(0.1f);
             }
             else
-                // the sprite has finished eating the food, the villagers will leave the building and become idle
+            // the sprite has finished eating the food, the villagers will leave the building and become idle
             {
-                //sp->getPossessions()->energyRating = sp->getPossessions()->targetHungry;
                 this->currentStorage--;
                 leaveGranuary(sp);
             }

@@ -1523,7 +1523,7 @@ void GameHUD::clickBuildButton()
         
         buildScroll->cocos2d::CCNode::setZOrder(30);
         
-        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm) || TutorialManager::getThis()->teachBuildGranary))
+        if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildFarm || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm) || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->miniDragon->clickNext();
         }

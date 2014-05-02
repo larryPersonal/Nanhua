@@ -76,12 +76,12 @@ GameSprite::GameSprite()
     mGameWarMode = false;
     
     barHP = new ProgressBar();
-    barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
-                             CCRectMake(5, 5, 70, 10),
+    barHP->createProgressBar(CCRectMake(0, 0, 76, 16),
+                             CCRectMake(3, 3, 70, 10),
                              "Energy_brown bar.png",
                              "NONE",
                              "NONE",
-                             "Energybar.png", true);
+                             "Energybarblue.png", true);
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     hpLabels = CCArray::create();
@@ -119,6 +119,10 @@ GameSprite::GameSprite()
     
     hasAssigned = false;
     cumulativeCheckTime = 0;
+    
+    targetHungry = 0;
+    targetEnergy = 0;
+    targetHappiness = 0;
 }
 
 void GameSprite::initAI(bool isUpgrade)
@@ -2285,12 +2289,12 @@ void GameSprite::ReplaceSpriteRep()
     battleIconArray->addObject(battleIcon);
     
     barHP = new ProgressBar();
-    barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
-                             CCRectMake(5, 5, 70, 10),
+    barHP->createProgressBar(CCRectMake(0, 0, 76, 16),
+                             CCRectMake(3, 3, 70, 10),
                              "Energy_brown bar.png",
                              "NONE",
                              "NONE",
-                             "Energybar.png", true);
+                             "Energybarblue.png", true);
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
@@ -3357,12 +3361,12 @@ void GameSprite::playAttackAction()
     battleIconArray->addObject(battleIcon);
     
     barHP = new ProgressBar();
-    barHP->createProgressBar(CCRectMake(0, 0, 80, 20),
-                             CCRectMake(5, 5, 70, 10),
+    barHP->createProgressBar(CCRectMake(0, 0, 76, 16),
+                             CCRectMake(3, 3, 70, 10),
                              "Energy_brown bar.png",
                              "NONE",
                              "NONE",
-                             "Energybar.png", true);
+                             "Energybarblue.png", true);
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);

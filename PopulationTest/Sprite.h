@@ -106,6 +106,10 @@ public:
     bool hasAssigned;
     float cumulativeCheckTime;
     
+    float targetHungry;
+    float targetEnergy;
+    float targetHappiness;
+    
 public:
     SpriteAppearanceType appearanceType;
     VillagerClass villagerClass;

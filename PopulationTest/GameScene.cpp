@@ -53,7 +53,7 @@ GameScene::GameScene()
         case 1:
             CCLog("l1");
             settingsLevel->setLevel0();
-            systemConfig->skipSenario = true;
+            systemConfig->skipSenario = false;
             systemConfig->skipTutorial = true;
             break;
         case 2:
@@ -294,8 +294,8 @@ void GameScene::onOrientationChanged()
 {
     //CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     //screenCenter->setPosition(screenSize.width * -4.0f, screenSize.height * 1.2f);
-    //mapHandler->rescaleScrollLimits();
-    //mapHandler->moveMapBy(0.0f, 0.0f);
+    mapHandler->rescaleScrollLimits();
+    mapHandler->moveMapBy(0.0f, 0.0f);
 }
 
 void GameScene::enableTouch()
@@ -883,6 +883,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     {
                         PopupMenu::closeAllPopupMenu();
                     }
+                    skip = true;
                 }
             }
             
@@ -906,6 +907,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     {
                         PopupMenu::closeAllPopupMenu();
                     }
+                    skip = true;
                 }
             }
             
@@ -926,6 +928,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     {
                         PopupMenu::closeAllPopupMenu();
                     }
+                    skip = true;
                 }
             }
             
@@ -1184,7 +1187,7 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant || true)
+    if(instant || false)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
         CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
@@ -1628,7 +1631,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         {
             if(selectedTile->building->isUnderConstruction())
             {
-                if((TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || !TutorialManager::getThis()->active)
+                if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding)) || !TutorialManager::getThis()->active)
                 {
                     PopupMenu::backupCurrentPopupMenu();
                     SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
@@ -1644,7 +1647,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
             }
             else
             {
-                if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY))
+                if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY) || TutorialManager::getThis()->freeBuilding)))
                 {
                     PopupMenu::backupCurrentPopupMenu();
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
@@ -1688,7 +1691,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 {
                     if(selectedTile->building->isUnderConstruction())
                     {
-                        if((TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || !TutorialManager::getThis()->active)
+                        if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding)) || !TutorialManager::getThis()->active)
                         {
                             PopupMenu::backupCurrentPopupMenu();
                             SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
@@ -1704,7 +1707,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     }
                     else
                     {
-                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY))
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY) || TutorialManager::getThis()->freeBuilding)))
                         {
                             PopupMenu::backupCurrentPopupMenu();
                             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);

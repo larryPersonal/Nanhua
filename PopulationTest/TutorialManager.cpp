@@ -84,6 +84,8 @@ TutorialManager::TutorialManager()
     hide = false;
     
     goNarr = false;
+    
+    freeBuilding = false;
 }
 
 TutorialManager::~TutorialManager()
@@ -123,6 +125,8 @@ void TutorialManager::unlockAll()
     teachBuildHouse = false;
     teachFarming = false;
     teachBuildGranary = false;
+    
+    freeBuilding = true;
 }
 
 void TutorialManager::lockAll()
@@ -147,6 +151,8 @@ void TutorialManager::lockAll()
     lockPopulationLabel = true;
     lockBuildingInfo = true;
     lockDropTokens = true;
+    
+    freeBuilding = false;
 }
 
 void TutorialManager::setupForTutorial()
@@ -162,6 +168,7 @@ void TutorialManager::setupForTutorial()
     {
         GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
         unlockAll();
+        active = false;
         if(!GameScene::getThis()->systemConfig->skipSenario)
         {
             GameHUD::getThis()->pause = true;
@@ -257,12 +264,15 @@ void TutorialManager::moveCamera(float dt)
                 TutorialManager::getThis()->miniDragon->lockClick = false;
             }
             
-            if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
+            if(!miniDragon->debug)
             {
-                TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
-                if(ts->highlight)
+                if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
                 {
-                    TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                    TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
+                    if(ts->highlight)
+                    {
+                        TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                    }
                 }
             }
             
@@ -284,12 +294,15 @@ void TutorialManager::moveCamera(float dt)
                 TutorialManager::getThis()->miniDragon->lockClick = false;
             }
             
-            if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
+            if(!miniDragon->debug)
             {
-                TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
-                if(ts->highlight)
+                if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
                 {
-                    TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                    TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
+                    if(ts->highlight)
+                    {
+                        TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                    }
                 }
             }
             

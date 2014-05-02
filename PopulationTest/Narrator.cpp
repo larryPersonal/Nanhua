@@ -21,14 +21,14 @@ Narrator::Narrator()
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    textBackground = CCSprite::create("workers_menu_unselectedBG.png");
+    textBackground = CCSprite::create("popup_dialogbox.png");
     textBackground->setScale(screenSize.width / textBackground->boundingBox().size.width * 0.75f);
     textBackground->setAnchorPoint(ccp(0.5, 0.5));
     textBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     TutorialManager::getThis()->addChild(textBackground);
     
-    startX = (screenSize.width - textBackground->boundingBox().size.width) / 2.0f + 20.0f;
-    startY = (screenSize.height + textBackground->boundingBox().size.height) / 2.0f - 30.0f;
+    startX = (screenSize.width - textBackground->boundingBox().size.width) / 2.0f + 80.0f;
+    startY = (screenSize.height + textBackground->boundingBox().size.height) / 2.0f - 120.0f;
     
     offX = 0;
     offY = 0;
@@ -84,7 +84,7 @@ void Narrator::display()
     if(goDisplay)
     {
         TutorialManager::getThis()->inText = true;
-        ccColor3B color = ccc3(0, 0, 0);
+        ccColor3B color = ccc3(255, 255, 255);
         
         vector<std::string> tokens = GlobalHelper::split(str, ' ');
         
@@ -94,7 +94,7 @@ void Narrator::display()
         for (int i = 0; i < tokens.size(); i++)
         {
             std::string tokenStr = tokens.at(i);
-            CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "Shojumaru-Regular", 20);
+            CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 28);
             tempLabel->retain();
             
             if (startX + offX + tempLabel->boundingBox().size.width > 860.0f)
@@ -108,7 +108,7 @@ void Narrator::display()
             for (int j = 0; j < tokenStr.length(); j++)
             {
                 string tempStr = tokenStr.substr(j, 1);
-                AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "Shojumaru-Regular", 20, 80.0f);
+                AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 28, 80.0f);
                 as->getLabel()->setColor(color);
                 as->getLabel()->setAnchorPoint(ccp(0, 1));
                 

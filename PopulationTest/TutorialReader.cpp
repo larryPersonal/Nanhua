@@ -180,6 +180,13 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->hide = true;
             }
+            else if(str.find("<delay>") != std::string::npos)
+            {
+                start_pos = str.find("<delay>");
+                end_pos = str.find("</delay>");
+                content = str.substr(start_pos + 7, end_pos - start_pos - 7);
+                slide->delay = ::atof(content.c_str());
+            }
             else if(str.find("<show>") != std::string::npos)
             {
                 slide->show = true;

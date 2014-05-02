@@ -76,6 +76,8 @@ public:
     
     bool waitForVillager;
     
+    float delay;
+    
 public:
     TutorialSlide();
     ~TutorialSlide();

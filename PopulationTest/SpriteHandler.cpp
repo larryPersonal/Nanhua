@@ -463,7 +463,7 @@ void SpriteHandler::update(float dt)
      */
     cumulatedTime += dt;
     
-    if(cumulatedTime >= (1.0f / (GameScene::getThis()->settingsLevel->global_hungry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio * (float) 4))))
+    if(cumulatedTime >= (GameScene::getThis()->settingsLevel->global_hungry_decay / 100.0f))
     {
         for(int i = 0; i < spritesOnMap->count(); i++)
         {

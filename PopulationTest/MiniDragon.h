@@ -65,6 +65,8 @@ public:
     
     bool down;
     
+    bool debug;
+    
 public:
     MiniDragon();
     ~MiniDragon();

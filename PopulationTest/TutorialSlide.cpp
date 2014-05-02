@@ -67,6 +67,8 @@ TutorialSlide::TutorialSlide()
     connectFarm = false;
     
     waitForVillager = false;
+    
+    delay = 0;
 }
 
 TutorialSlide::~TutorialSlide()
