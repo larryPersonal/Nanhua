@@ -9,6 +9,7 @@
 #include "ReputationOrb.h"
 #include "GameScene.h"
 #include "GameHUD.h"
+#include "SoundtrackManager.h"
 
 
 //REPUTATION ORB CLASS
@@ -187,5 +188,6 @@ void ReputationOrb::collect()
     orbSprite->runAction(runAction);
     CC_SAFE_RELEASE(runAction);
     
+    SoundtrackManager::PlaySFX("coin pickup.wav");
     //CC_SAFE_RELEASE(bezier);
 }
