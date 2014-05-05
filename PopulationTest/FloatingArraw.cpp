@@ -35,7 +35,7 @@ FloatingArraw::FloatingArraw()
     //assume left to right. ALWAYS make the leftmost frame the first frame.
     //hopefully the artist will not try to make
     x_frameno = 0;
-    x_maxframeno = 8;
+    x_maxframeno = 11;
     
     layer = 0;
     
@@ -104,14 +104,11 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
         {
             if(layer == 0)
             {
-                arrow->retain();
                 TutorialManager::getThis()->removeChild(arrow);
                 BuildScroll::getThis()->scrollArea->addItem(arrow, ccp(pos.x, pos.y));
             }
             else
             {
-                //arrow->retain();
-                TutorialManager::getThis()->removeChild(arrow);
                 BuildScroll::getThis()->scrollArea->removeI(arrow);
                 BuildScroll::getThis()->scrollArea->addItem(arrow, ccp(pos.x, pos.y));
             }
@@ -124,7 +121,6 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
         {
             if(BuildScroll::getThis() != NULL)
             {
-                arrow->retain();
                 BuildScroll::getThis()->scrollArea->removeI(arrow);
                 TutorialManager::getThis()->addChild(arrow);
             }

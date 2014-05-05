@@ -633,6 +633,7 @@ void SelectPopulation::onOrientationChanged(){
 }
 
 void SelectPopulation::update(float deltaTime){
+    
     refreshAllMenuItemValues();
     
     if(isUnderConstruction != building->isUnderConstruction())

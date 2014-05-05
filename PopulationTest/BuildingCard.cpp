@@ -586,6 +586,7 @@ void BuildingCard::tryToBuild(int tag)
             if(TutorialManager::getThis()->teachBuildFarm)
             {
                 TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
+                TutorialManager::getThis()->lockScroll = false;
             }
         }
         

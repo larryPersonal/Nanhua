@@ -487,7 +487,7 @@ bool MiniDragon::constructTutorialSlide()
     for (int i = 0; i < tokens.size(); i++)
     {
         std::string tokenStr = tokens.at(i);
-        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 16);
+        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 18);
         tempLabel->retain();
         
         if (startX + offX + tempLabel->boundingBox().size.width > 420.0f)
@@ -501,7 +501,7 @@ bool MiniDragon::constructTutorialSlide()
         for (int j = 0; j < tokenStr.length(); j++)
         {
             string tempStr = tokenStr.substr(j, 1);
-            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 16, 80.0f);
+            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 18, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             

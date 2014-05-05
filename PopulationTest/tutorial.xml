@@ -100,6 +100,7 @@
     <slide>
         <speech>Next, tap where you want the road to start. Then tap on where you want the road to end. The road path will be highlighted. Tap again on the end of the road to confirm and build the road.</speech>
         <fade_in>0</fade_in>
+        <hideArrow></hideArrow>
         <unlock>
             <scroll></scroll>
         </unlock>
@@ -123,7 +124,7 @@
         <waitForVillager></waitForVillager>
     </slide>
     <slide>
-        <speech>The refugees appear to have settled in nicely, but now they’re hungry! Luckily, we also have a granary ready.</speech>
+        <speech>The refugees appear to have settled in nicely, but now they are hungry! Luckily, we also have a granary ready.</speech>
         <cameraMove>5952,1888</cameraMove>
         <deHighlight></deHighlight>
         <highlight>granary</highlight>
@@ -141,10 +142,17 @@
         </unlock>
         <showObjective></showObjective>
         <connectGranary></connectGranary>
+        <showArrow></showArrow>
+        <arrowX>65</arrowX>
+        <arrowY>20</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
         <speech>Great! Now your villagers have food and shelter. However, it looks like your food supply is running low. Let us remedy that.</speech>
         <hideObjective></hideObjective>
+        <hideArrow></hideArrow>
         <lock>
             <scroll></scroll>
             <buildButton></buildButton>
@@ -156,21 +164,95 @@
         <clickToNext></clickToNext>
     </slide>
     <slide>
-        <speech>Tap on the build menu again. This time, select farm and choose a location to build it.</speech>
+        <speech>Tap on the build menu again.</speech>
         <showObjective></showObjective>
         <unlock>
-            <scroll></scroll>
             <buildButton></buildButton>
-            <buildScroll></buildScroll>
         </unlock>
         <lock>
             <teachBuildFarm></teachBuildFarm>
         </lock>
     </slide>
     <slide>
+        <speech>Farm is the place for the villages to produce food through farming activity. These food will be stored in granary or market.</speech>
+        <offY>220</offY>
+        <contentOffX>200</contentOffX>
+        <hideArrow></hideArrow>
+        <clickToNext></clickToNext>
+        <lock>
+            <buildButton></buildButton>
+            <buildScroll></buildScroll>
+        </lock>
+        <showArrow></showArrow>
+        <arrowX>650</arrowX>
+        <arrowY>20</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the label to show the gold cost to build a granary.</speech>
+        <clickToNext></clickToNext>
+        <offY>220</offY>
+        <showArrow></showArrow>
+        <arrowX>595</arrowX>
+        <arrowY>125</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the label to show the population that the granary could provide.</speech>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <offY>220</offY>
+        <arrowX>655</arrowX>
+        <arrowY>125</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the estimated time to build a granary.</speech>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <offY>220</offY>
+        <arrowX>712</arrowX>
+        <arrowY>125</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This is the number left available to build for granary.</speech>
+        <clickToNext></clickToNext>
+        <showArrow></showArrow>
+        <offY>220</offY>
+        <arrowX>725</arrowX>
+        <arrowY>105</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
+        <speech>This time, select farm and choose a location to build it.</speech>
+        <offY>220</offY>
+        <lock>
+            <scroll></scroll>
+        </lock>
+        <unlock>
+            <buildScroll></buildScroll>
+        </unlock>
+        <showArrow></showArrow>
+        <arrowX>650</arrowX>
+        <arrowY>20</arrowY>
+        <arrowAngle>0</arrowAngle>
+        <arrowScale>1</arrowScale>
+        <arrowLayer>1</arrowLayer>
+    </slide>
+    <slide>
         <speech>When constructing a building, you have to assign villagers to work on it. The left screen shows your available villagers and their happiness and energy levels.</speech>
         <fade_out>160</fade_out>
-        <offY>220</offY>
         <clickToNext></clickToNext>
         <lock>
             <scroll></scroll>

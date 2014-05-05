@@ -320,14 +320,15 @@ void MapHandler::rescaleScrollLimits()
     int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
     
     CCPoint mapPos = mapPtr->getPosition();
+    
     //Note: 30 and 5 are offsets in tile amounts. A scroll position based on tiles will mean the maximum places a tile at the edge of a screen.
     //offsetting tries to solve the issue by putting a limit at X tiles before the edge. 
     int playAreaW = ((playarea_max.x - playarea_min.x) - 30) * mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
     int playAreaH = ((playarea_max.y - playarea_min.y) - 5) * mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
+    
     //HARDCODE ALERT -5736, -1592, based on the stuff in centerMap
     mapScroll_max = ccp(mapPos.x + playAreaW, mapPos.y + playAreaH);
     mapScroll_min = ccp(mapPos.x - playAreaW, mapPos.y - playAreaH);
-    
 }
 
 CCPoint MapHandler::forceBoundsConstraints(CCPoint &tilePos)

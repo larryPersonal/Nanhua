@@ -9,32 +9,7 @@
   </tile>
   <tile id="1">
    <properties>
-    <property name="anim_frames" value="3"/>
-    <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="1"/>
-    <property name="building_type" value="amenity"/>
-    <property name="cost" value="300"/>
-    <property name="description" value="Farmland"/>
-    <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="3"/>
-    <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
-    <property name="level_gain_cost" value="2:50, 4:50"/>
-    <property name="level_gain_population_limit" value="3:1, 5:1"/>
-    <property name="name" value="Farm"/>
-    <property name="population_limit" value="0"/>
-    <property name="prereqs" value=""/>
-    <property name="recovery_rate" value="0"/>
-    <property name="req_building_count" value="15"/>
-    <property name="req_capita" value="0"/>
-    <property name="req_population" value="15"/>
-    <property name="research_cost" value="300"/>
-    <property name="storage" value="0"/>
-    <property name="storage_limit" value="2000"/>
-    <property name="unlocked_at_start" value="yes"/>
-    <property name="upgrade_unit" value="0"/>
-    <property name="work_unit" value="0"/>
-    <property name="work_unit_required" value="4000"/>
+    <property name="ignore_this_blank" value=""/>
    </properties>
   </tile>
   <tile id="2">

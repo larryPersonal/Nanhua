@@ -514,6 +514,7 @@ void SpriteRow::refreshAllMenuItems()
         yOffset = 1;
     }
     
+    /*
     int row = (int) (index / 4);
     int column = (int) (index % 4);
     
@@ -526,6 +527,7 @@ void SpriteRow::refreshAllMenuItems()
     emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
     
     scrollArea->addItem(emotionFace, ccp(52.0f + 100.0f * column, 58.0f + 100.0f * row));
+    */
 }
 
 CCSprite* SpriteRow::getMask()

@@ -12,6 +12,7 @@
 #include "GlobalHelper.h"
 #include "GameHUD.h"
 #include "TutorialManager.h"
+#include "FloatingArraw.h"
 
 BuildScroll* BuildScroll::SP;
 
@@ -283,6 +284,11 @@ void BuildScroll::scrollOut(float dt)
             leftPos = 0;
             this->unschedule(schedule_selector( BuildScroll::scrollOut ));
             scroll_out = false;
+            
+            if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && FloatingArraw::getThis() != NULL && FloatingArraw::getThis()->arrow != NULL)
+            {
+                this->scrollArea->removeI(FloatingArraw::getThis()->arrow);
+            }
             
             GameHUD::getThis()->buildScroll->closeMenu(true);
             GameHUD::getThis()->buildScroll = NULL;

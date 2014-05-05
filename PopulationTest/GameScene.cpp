@@ -47,20 +47,20 @@ GameScene::GameScene()
         case 0:
             CCLog("l0");
             settingsLevel->setLevel0();
-            systemConfig->skipSenario = false;
-            systemConfig->skipTutorial = false;
+            systemConfig->skipSenario = systemConfig->skipSenario_tutorial;
+            systemConfig->skipTutorial = systemConfig->skipTutorial_tutorial;
             break;
         case 1:
             CCLog("l1");
             settingsLevel->setLevel0();
-            systemConfig->skipSenario = false;
-            systemConfig->skipTutorial = true;
+            systemConfig->skipSenario = systemConfig->skipSenario_level1;
+            systemConfig->skipTutorial = systemConfig->skipTutorial_level1;
             break;
         case 2:
             CCLog("l2");
             settingsLevel->setLevel0();
-            systemConfig->skipSenario = true;
-            systemConfig->skipTutorial = true;
+            systemConfig->skipSenario = systemConfig->skipSenario_level2;
+            systemConfig->skipTutorial = systemConfig->skipTutorial_level2;
         default:
             break;
     }
@@ -1214,26 +1214,87 @@ void GameScene::scrollToCenter(float dt)
     float xDis = 0;
     float yDis = 0;
     
-    if(xDiff >= 0)
+    if(xDiff == 0 && yDiff == 0)
     {
-        xDis = 10;
-        yDis = 10.0f / xDiff * yDiff;
-        if(xPos + xDis >= targetBuilding->buildingRep->getPositionX())
+        this->unschedule(schedule_selector(GameScene::scrollToCenter));
+    }
+    else if(xDiff == 0)
+    {
+        xDis = 0;
+        if(yDis >= 0)
         {
-            xDis = xDiff;
-            yDis = yDiff;
-            this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            yDis = 10;
+            if(yPos + yDis >= targetBuilding->buildingRep->getPositionY())
+            {
+                xDis = 0;
+                yDis = yDiff;
+                this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            }
+        }
+        else
+        {
+            yDis = -10;
+            if(yPos + yDis <= targetBuilding->buildingRep->getPositionY())
+            {
+                xDis = 0;
+                yDis = yDiff;
+                this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            }
+        }
+    }
+    else if(yDiff == 0)
+    {
+        yDis = 0;
+        if(xDis >= 0)
+        {
+            xDis = 10;
+            if(xPos + xDis >= targetBuilding->buildingRep->getPositionX())
+            {
+                xDis = xDiff;
+                yDis = 0;
+                this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            }
+        }
+        else
+        {
+            xDis = -10;
+            if(xPos + xDis <= targetBuilding->buildingRep->getPositionX())
+            {
+                xDis = xDiff;
+                yDis = 0;
+                this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            }
         }
     }
     else
     {
-        xDis = -10;
-        yDis = -10.0f / xDiff * yDiff;
-        if(xPos + xDis <= targetBuilding->buildingRep->getPositionY())
+        // x^2 + y^2 = 10^2, x/y = xDiff/yDiff => x^2 = 10^2 * xDiff^2 / (xDiff^2 + yDiff^2), y^2 = 10^2 * yDiff^2 / (xDiff^2 + yDiff^2)
+        xDis = sqrt(100.0f * xDiff * xDiff / (xDiff * xDiff + yDiff * yDiff));
+        
+        if(xDiff < 0)
         {
-            xDis = xDiff;
-            yDis = yDiff;
-            this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            xDis = -xDis;
+        }
+        
+        yDis = xDis * yDiff / xDiff;
+        
+        if(xDiff >= 0)
+        {
+            if(xPos + xDis >= targetBuilding->buildingRep->getPositionX())
+            {
+                xDis = xDiff;
+                yDis = yDiff;
+                this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            }
+        }
+        else
+        {
+            if(xPos + xDis <= targetBuilding->buildingRep->getPositionX())
+            {
+                xDis = xDiff;
+                yDis = yDiff;
+                this->unschedule(schedule_selector(GameScene::scrollToCenter));
+            }
         }
     }
     

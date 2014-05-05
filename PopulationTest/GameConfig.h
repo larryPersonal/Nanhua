@@ -15,13 +15,30 @@ struct SystemConfig
 {
     bool skipSenario;
     bool skipTutorial;
+    
+    bool skipSenario_tutorial;
+    bool skipTutorial_tutorial;
+    
+    bool skipSenario_level1;
+    bool skipTutorial_level1;
+    
+    bool skipSenario_level2;
+    bool skipTutorial_level2;
+    
     bool hideSkipButton;
     bool debugMode;
     
     SystemConfig()
     {
-        skipSenario = true;
-        skipTutorial = true;
+        skipSenario_tutorial = false;
+        skipTutorial_tutorial = false;
+        
+        skipSenario_level1 = true;
+        skipTutorial_level1 = true;
+        
+        skipSenario_level2 = false;
+        skipTutorial_level2 = false;
+        
         hideSkipButton = true;
         debugMode = true;
     }
