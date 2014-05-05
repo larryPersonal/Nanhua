@@ -655,7 +655,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 else
                     // if the sprite is not fully recharged, it will recharge energy.
                 {
-                    cumulatedTimeResting += dt;
+                    cumulatedTimeResting += dt * 3;
                     
                     if(cumulatedTimeResting >= (1.0f / GameScene::getThis()->configSettings->default_energy_recovery))
                     {

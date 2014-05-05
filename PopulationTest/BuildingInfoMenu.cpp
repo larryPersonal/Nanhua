@@ -773,7 +773,7 @@ void BuildingInfoMenu::reposition()
         spp->setPosition(ccp(-halfWidth * 3.0f / 4.0f + hw + 5.0f + (((CCSprite*)spritePopulationSlot->objectAtIndex(0))->boundingBox().size.width + 5.0f) * i, -62.0f + hh));
     }
     
-    selectWorkerButton->setPosition(ccp(150.0f + hw, -halfHeight + 132.0f + hh));
+    selectWorkerButton->setPosition(ccp(120.0f + hw, -halfHeight + 117.0f + hh));
 }
 
 void BuildingInfoMenu::refreshAllMenuItemValues()

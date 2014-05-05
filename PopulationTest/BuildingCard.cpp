@@ -185,7 +185,7 @@ void BuildingCard::init()
     else
     {
         ss.str(std::string());
-        ss << building->populationLimit;
+        ss << building->builderLimit;
         populationLimit = ss.str();
     }
     populationLabel = CCLabelTTF::create(populationLimit.c_str(), "Shojumaru-Regular", 24);

@@ -191,7 +191,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the label to show the gold cost to build a granary.</speech>
+        <speech>This is the label to show the gold cost to build a farm.</speech>
         <clickToNext></clickToNext>
         <offY>220</offY>
         <showArrow></showArrow>
@@ -202,7 +202,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the label to show the population that the granary could provide.</speech>
+        <speech>This is the label to show the number of workers required to build the farm.</speech>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
@@ -213,7 +213,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the estimated time to build a granary.</speech>
+        <speech>This is the estimated time to build a farm.</speech>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
@@ -224,7 +224,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the number left available to build for granary.</speech>
+        <speech>This is the number left available to build for farm.</speech>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
@@ -267,7 +267,6 @@
     <slide>
         <speech>For now, just allocate one villager and tap on the green tick to confirm.</speech>
         <hide></hide>
-        <delay>3</delay>
         <unlock>
             <manpowerSelect></manpowerSelect>
             <buttonOk></buttonOk>
