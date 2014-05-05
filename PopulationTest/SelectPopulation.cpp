@@ -141,7 +141,7 @@ void SelectPopulation::createMenuItems()
     buttonOk->setTag(-2);
     buttonOk->setAnchorPoint(ccp(1, 1));
     
-    buttonCancel = CCMenuItemImage::create("Building Info UI placeholdercircleclose.png", "Building Info UI placeholdercircleclose.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
+    buttonCancel = CCMenuItemImage::create("stopsign.png", "stopsign.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
     //buttonCancel->setScale(buttonClose->boundingBox().size.width / buttonCancel->boundingBox().size.width);
     buttonCancel->setScale(buttonOk->boundingBox().size.width / buttonCancel->boundingBox().size.width);
     buttonCancel->setTag(-4);

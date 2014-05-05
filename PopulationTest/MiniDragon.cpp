@@ -37,8 +37,8 @@ MiniDragon::MiniDragon()
     bubble->setPosition(ccp(dragon->boundingBox().size.width * 1.0f / 5.0f, dragon->boundingBox().size.height * 8.0f / 5.0f));
     TutorialManager::getThis()->addChild(bubble, 1);
     
-    startX = dragon->boundingBox().size.width * 1.0f / 5.0f + 65.0f;
-    startY = dragon->boundingBox().size.height * 7.5f / 5.0f - 30.0f;
+    startX = dragon->boundingBox().size.width * 1.0f / 10.0f + 65.0f;
+    startY = dragon->boundingBox().size.height * 7.5f / 5.0f - 10.0f;
     
     offX = 0;
     offY = 0;
@@ -67,6 +67,8 @@ MiniDragon::MiniDragon()
     finalObjective = false;
     
     down = true;
+    
+    debug = false;
 }
 
 MiniDragon::~MiniDragon()
@@ -84,9 +86,15 @@ MiniDragon::~MiniDragon()
 void MiniDragon::playMiniDraggon()
 {
     curSlide = 0;
-    readTutorialFile();
-    constructTutorialSlide();
-    //setupScenario();
+    if(!debug)
+    {
+        readTutorialFile();
+        constructTutorialSlide();
+    }
+    else
+    {
+        setupScenario();
+    }
 }
 
 void MiniDragon::readTutorialFile()
@@ -211,6 +219,7 @@ bool MiniDragon::constructTutorialSlide()
     clickToNext = ts->clickToNext;
     lockClick = ts->lockClick;
     TutorialManager* tm = TutorialManager::getThis();
+    delay = ts->delay;
     
     if(cameraMove)
     {
@@ -284,14 +293,14 @@ bool MiniDragon::constructTutorialSlide()
         finalObjective = true;
     }
     
-    if(ts->showArrow)
-    {
-        FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale, ts->arrowLayer);
-    }
-    
     if(ts->hideArrow)
     {
         FloatingArraw::getThis()->hideArrow();
+    }
+    
+    if(ts->showArrow)
+    {
+        FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale, ts->arrowLayer);
     }
     
     if(BuildScroll::getThis() != NULL)
@@ -478,12 +487,12 @@ bool MiniDragon::constructTutorialSlide()
     for (int i = 0; i < tokens.size(); i++)
     {
         std::string tokenStr = tokens.at(i);
-        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "Shojumaru-Regular", 12);
+        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 16);
         tempLabel->retain();
         
-        if (startX + offX + tempLabel->boundingBox().size.width > 400.0f)
+        if (startX + offX + tempLabel->boundingBox().size.width > 420.0f)
         {
-            offY = offY + 15.0f;
+            offY = offY + 18.0f;
             offX = 0;
         }
         
@@ -492,7 +501,7 @@ bool MiniDragon::constructTutorialSlide()
         for (int j = 0; j < tokenStr.length(); j++)
         {
             string tempStr = tokenStr.substr(j, 1);
-            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "Shojumaru-Regular", 12, 80.0f);
+            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 16, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             
@@ -550,12 +559,12 @@ void MiniDragon::update(float dt)
     
     if(end)
     {
-        if(delay > 0)
+        if(TutorialManager::getThis()->miniDragon->delay > 0)
         {
-            delay -= dt;
-            if(delay < 0)
+            TutorialManager::getThis()->miniDragon->delay -= dt;
+            if(TutorialManager::getThis()->miniDragon->delay < 0)
             {
-                delay = 0;
+                TutorialManager::getThis()->miniDragon->delay = 0;
                 TutorialManager::getThis()->unschedule( schedule_selector( MiniDragon::update ) );
                 TutorialManager::getThis()->clickable = true;
                 if(TutorialManager::getThis()->hide)
@@ -853,7 +862,10 @@ void MiniDragon::setupScenario()
 {
     GameHUD::getThis()->pause = true;
     finalObjective = false;
-    ObjectiveHandler::getThis()->playObjective(false);
+    if(!debug)
+    {
+        ObjectiveHandler::getThis()->playObjective(false);
+    }
     TutorialManager::getThis()->lockAll();
     moveCamera(ccp(5400.0f, 1600.0f));
     

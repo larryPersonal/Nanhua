@@ -134,12 +134,12 @@ void SpriteInfoMenu::createMenuItems()
     
     // Energy Bar
     barEnergy = new ProgressBar();
-    barEnergy->createProgressBar(CCRectMake(0, 0, 125, 20),
-                                 CCRectMake(5, 5, 125, 10),
+    barEnergy->createProgressBar(CCRectMake(0, 0, 126, 16),
+                                 CCRectMake(3, 3, 120, 10),
                                  "Energy_brown bar.png",
                                  "NONE",
                                  "NONE",
-                                 "Energybar.png",
+                                 "Energybarblue.png",
                                  true);
     barEnergy->setValue(mGameSpriteEnergy / (float)mGameSpriteEnergyMax);
     
@@ -191,12 +191,12 @@ void SpriteInfoMenu::createMenuItems()
     hungryTitleLabel->setColor(colorYellow);
     
     barHungry = new ProgressBar();
-    barHungry->createProgressBar(CCRectMake(0, 0, 80, 20),
-                                 CCRectMake(5, 5, 70, 10),
+    barHungry->createProgressBar(CCRectMake(0, 0, 76, 16),
+                                 CCRectMake(3, 3, 70, 10),
                                  "Energy_brown bar.png",
                                  "NONE",
                                  "NONE",
-                                 "Energybar.png",
+                                 "Energybarblue.png",
                                  true);
     barHungry->setValue((float)gameSprite->getPossessions()->currentHungry / (float)gameSprite->getPossessions()->default_hungry_limit);
     
@@ -212,12 +212,12 @@ void SpriteInfoMenu::createMenuItems()
     foodCarriageTitleLabel->setColor(colorYellow);
     
     barFoodCarriage = new ProgressBar();
-    barFoodCarriage->createProgressBar(CCRectMake(0, 0, 80, 20),
-                                 CCRectMake(5, 5, 70, 10),
+    barFoodCarriage->createProgressBar(CCRectMake(0, 0, 76, 16),
+                                 CCRectMake(3, 3, 70, 10),
                                  "Energy_brown bar.png",
                                  "NONE",
                                  "NONE",
-                                 "Energybar.png",
+                                 "Energybarblue.png",
                                 true);
     barFoodCarriage->setValue((float)gameSprite->getFoodCarried() / (float)gameSprite->getPossessions()->default_food_carriage_limit);
     

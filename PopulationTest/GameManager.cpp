@@ -97,7 +97,9 @@ void GameManager::initMapUnlocks()
         {
             std::string name = root["items"].operator[](i)["unlock_name"].asString();
             std::size_t found = name.find("area_");
-            if (found==std::string::npos) continue;
+            if (found==std::string::npos){
+                continue;
+            }
            
             AreaUnlock a;
             a.min = ccp(root["items"].operator[](i)["unlock_min_x"].asInt(), root["items"].operator[](i)["unlock_min_y"].asInt());

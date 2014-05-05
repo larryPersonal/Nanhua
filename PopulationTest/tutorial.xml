@@ -170,6 +170,7 @@
     <slide>
         <speech>When constructing a building, you have to assign villagers to work on it. The left screen shows your available villagers and their happiness and energy levels.</speech>
         <fade_out>160</fade_out>
+        <offY>220</offY>
         <clickToNext></clickToNext>
         <lock>
             <scroll></scroll>
@@ -184,6 +185,7 @@
     <slide>
         <speech>For now, just allocate one villager and tap on the green tick to confirm.</speech>
         <hide></hide>
+        <delay>3</delay>
         <unlock>
             <manpowerSelect></manpowerSelect>
             <buttonOk></buttonOk>

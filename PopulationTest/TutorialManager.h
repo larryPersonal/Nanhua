@@ -75,6 +75,8 @@ public:
     
     bool goNarr;
     
+    bool freeBuilding;
+    
 public:
     TutorialManager();
     ~TutorialManager();

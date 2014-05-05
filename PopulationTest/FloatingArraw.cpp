@@ -96,9 +96,10 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
     arrow->setScale(scale);
     arrow->setVisible(true);
     
+    CCLog("oh ha yoh");
+    
     if(arrowLayer == 1)
     {
-        CCLog("test my bad");
         if(BuildScroll::getThis() != NULL)
         {
             if(layer == 0)
@@ -109,7 +110,8 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
             }
             else
             {
-                arrow->retain();
+                //arrow->retain();
+                TutorialManager::getThis()->removeChild(arrow);
                 BuildScroll::getThis()->scrollArea->removeI(arrow);
                 BuildScroll::getThis()->scrollArea->addItem(arrow, ccp(pos.x, pos.y));
             }
@@ -126,8 +128,10 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
                 BuildScroll::getThis()->scrollArea->removeI(arrow);
                 TutorialManager::getThis()->addChild(arrow);
             }
+            /*
             else
             {
+                CCLog("test4");
                 //set the thing to the first frame.
                 arrow = CCSprite::createWithTexture(arrowTexture, arrowRect);
                 arrow->setAnchorPoint(ccp(0.5, 0.5));
@@ -138,6 +142,7 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
                 TutorialManager::getThis()->addChild(arrow, 5);
                 TutorialManager::getThis()->schedule(schedule_selector(FloatingArraw::update), 1.0f/120.0f);
             }
+            */
             layer = arrowLayer;
         }
     }

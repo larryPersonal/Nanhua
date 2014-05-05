@@ -171,7 +171,7 @@ struct SettingsLevel
         default_max_reputation = 400;
         projected_population_growth = 20;
         
-        global_hungry_decay = 60; // decay 60 of the hungry in one month;
+        global_hungry_decay = 60; // decay 100 hungry in 60 seconds.
         
         hungry_happiness_veryHappy_decay = 1;
         hungry_happiness_happy_decay = 0.75;

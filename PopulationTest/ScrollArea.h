@@ -127,6 +127,8 @@ public:
     void setScrollContentSize(CCSize scrollContentSize, bool resetContentOffset = false);
     void setScrollContentOffset(CCPoint scrollContentOffset);
     
+    void setPos(CCNode* node, CCPoint position);
+    
     CCSize getViewSize();
     CCSize getScrollContentSize();
     CCPoint getScrollContentOffset();

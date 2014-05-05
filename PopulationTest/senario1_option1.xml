@@ -19,7 +19,7 @@
 			<width>60</width>
 			<left>-10</left>
 			<top>90</top>
-			<src>studentboy_c.png</src>
+			<src>Studentboy_left.png</src>
             <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
@@ -39,7 +39,7 @@
 			<width>60</width>
 			<left>-10</left>
 			<top>90</top>
-			<src>studentboy_c.png</src>
+			<src>Studentboy_left.png</src>
             <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
@@ -80,7 +80,7 @@
 			<width>60</width>
 			<left>-10</left>
 			<top>90</top>
-			<src>studentboy_c.png</src>
+			<src>Studentboy_left.png</src>
             <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
@@ -100,7 +100,7 @@
 			<width>60</width>
 			<left>-10</left>
 			<top>90</top>
-			<src>studentboy_c.png</src>
+			<src>Studentboy_left.png</src>
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
@@ -119,7 +119,7 @@
 			<width>60</width>
 			<left>-10</left>
 			<top>90</top>
-			<src>studentboy_c.png</src>
+			<src>Studentboy_left.png</src>
             <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
@@ -160,7 +160,7 @@
 			<width>60</width>
 			<left>-10</left>
 			<top>90</top>
-			<src>studentboy_c.png</src>
+			<src>Studentboy_left.png</src>
             <fade_in>yes</fade_in>
             <fade_out>yes</fade_out>
 		</sprite>
