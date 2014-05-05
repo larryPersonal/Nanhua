@@ -67,13 +67,16 @@ void SpeechBubble::addContent(CCNode* node, CCPoint offset)
     rescale();
 }
 
-void SpeechBubble::addContent(std::string texture, CCPoint offset, int maxFrameNo, int numberOfFrame, int startID)
+void SpeechBubble::addContent(std::string texture, CCPoint offset, int maxFrameNo, int numberOfFrame, int startID, float frameW, float frameH)
 {
     bubbleTexture = CCTextureCache::sharedTextureCache()->addImage(texture.c_str());
     
     x_maxframeno = maxFrameNo;
     numberOfElementInOneRow = numberOfFrame;
     startElementId = startID;
+    
+    frameWidth = frameW;
+    frameHeight = frameH;
     
     x_frameno = 0;
     hasAnimation = true;

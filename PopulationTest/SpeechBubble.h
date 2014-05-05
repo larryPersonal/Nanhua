@@ -72,7 +72,7 @@ public:
     void createSpeechBubble();
     
     void addContent(CCNode* node, CCPoint offset);
-    void addContent(std::string, CCPoint, int, int, int);
+    void addContent(std::string texture, CCPoint offset, int maxFrameNo, int numberOfFrames, int startID, float frameW = 64, float frameH = 64);
     void clearContent();
     
     void show(float time=5.0f);

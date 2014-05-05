@@ -24,6 +24,8 @@ SpriteRow::SpriteRow(GameSprite* gs, ScrollArea* sa, Building* building, int ind
     this->building = building;
     this->index = ind;
     
+    currentHappyState = Normal;
+    
     mi = CCArray::create();
     mi->retain();
     
@@ -102,26 +104,31 @@ bool SpriteRow::init()
     
     if(happinessRate >= 80)
     {
+        currentHappyState = VeryHappy;
         xOffset = 2;
         yOffset = 0;
     }
     else if(happinessRate >= 60)
     {
+        currentHappyState = Happy;
         xOffset = 1;
         yOffset = 0;
     }
     else if(happinessRate >= 40)
     {
+        currentHappyState = Normal;
         xOffset = 0;
         yOffset = 0;
     }
     else if(happinessRate >= 10)
     {
+        currentHappyState = Not_Happy;
         xOffset = 3;
         yOffset = 0;
     }
     else
     {
+        currentHappyState = Angry;
         xOffset = 0;
         yOffset = 1;
     }
@@ -487,47 +494,57 @@ void SpriteRow::refreshAllMenuItems()
     
     xOffset = 0;
     yOffset = 0;
+    HappyState tempState;
     
     if(happinessRate >= 80)
     {
         xOffset = 2;
         yOffset = 0;
+        tempState = VeryHappy;
     }
     else if(happinessRate >= 60)
     {
         xOffset = 1;
         yOffset = 0;
+        tempState = Happy;
     }
     else if(happinessRate >= 40)
     {
         xOffset = 0;
         yOffset = 0;
+        tempState = Normal;
     }
     else if(happinessRate >= 10)
     {
         xOffset = 3;
         yOffset = 0;
+        tempState = Not_Happy;
     }
     else
     {
         xOffset = 0;
         yOffset = 1;
+        tempState = Angry;
     }
     
-    /*
-    int row = (int) (index / 4);
-    int column = (int) (index % 4);
-    
-    emotionRect = CCRectMake(xOffset * frameWidth, yOffset * frameHeight,  frameWidth, frameHeight);
-    CCSprite* temp = CCSprite::createWithTexture(emotionTexture, emotionRect);
-    
-    scrollArea->removeChild(emotionFace);
-    
-    emotionFace = temp;
-    emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
-    
-    scrollArea->addItem(emotionFace, ccp(52.0f + 100.0f * column, 58.0f + 100.0f * row));
-    */
+    if(currentHappyState != tempState)
+    {
+        CCLog("This is to test whether the changing of emotion face of sprite row will cause the program to kill the cpu usage!");
+        currentHappyState = tempState;
+        
+        int row = (int) (index / 4);
+        int column = (int) (index % 4);
+        
+        emotionRect = CCRectMake(xOffset * frameWidth, yOffset * frameHeight,  frameWidth, frameHeight);
+        CCSprite* temp = CCSprite::createWithTexture(emotionTexture, emotionRect);
+        
+        scrollArea->removeChild(emotionFace);
+        
+        emotionFace = temp;
+        emotionFace->setScale(spriteRowBackground->boundingBox().size.width / emotionFace->boundingBox().size.width * 0.3f);
+        
+        scrollArea->addItem(emotionFace, ccp(52.0f + 100.0f * column, 58.0f + 100.0f * row));
+    }
 }
 
 CCSprite* SpriteRow::getMask()

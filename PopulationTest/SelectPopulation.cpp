@@ -122,7 +122,14 @@ void SelectPopulation::createMenuItems()
     // Sprite
     CCSprite* tempSprite = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
     spriteBuilding = CCMenuItemSprite::create(tempSprite, tempSprite, this, menu_selector(SelectPopulation::onMenuItemSelected));
-    spriteBuilding->setScale(200.0f / spriteBuilding->boundingBox().size.width);
+    if(building->buildingType == MILITARY)
+    {
+        spriteBuilding->setScale(200.0f / spriteBuilding->boundingBox().size.width);
+    }
+    else if(building->buildingType == AMENITY)
+    {
+        spriteBuilding->setScale(140.0f / spriteBuilding->boundingBox().size.width);
+    }
     spriteBuilding->setAnchorPoint(ccp(0.5, 0.5));
     spriteBuilding->setTag(-3);
     
@@ -143,7 +150,7 @@ void SelectPopulation::createMenuItems()
     
     buttonCancel = CCMenuItemImage::create("stopsign.png", "stopsign.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
     //buttonCancel->setScale(buttonClose->boundingBox().size.width / buttonCancel->boundingBox().size.width);
-    buttonCancel->setScale(buttonOk->boundingBox().size.width / buttonCancel->boundingBox().size.width);
+    buttonCancel->setScale(buttonOk->boundingBox().size.width / buttonCancel->boundingBox().size.width * 0.85f);
     buttonCancel->setTag(-4);
     buttonCancel->setAnchorPoint(ccp(1, 1));
     
@@ -155,7 +162,7 @@ void SelectPopulation::createMenuItems()
     
     labelBuildingName = CCLabelTTF::create(ss.str().c_str(), "Helvetica", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
     labelBuildingName->setColor(colorWhite);
-    labelBuildingName->setAnchorPoint(ccp(0.5, 0.5));
+    labelBuildingName->setAnchorPoint(ccp(0, 0.5));
     this->addChild(labelBuildingName, 4);
     
     isCurrentlyUnderConstruction = building->isCurrentConstructing;
@@ -292,12 +299,12 @@ void SelectPopulation::createMenuItems()
     sortHappinessButtonUp = CCMenuItemImage::create("sortbyhappiness_up.png", "sortbyhappiness_uppress.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortHappinessButtonUp));
     sortHappinessButtonUp->setScale(0.6f);
     sortHappinessButtonUp->setAnchorPoint(ccp(0, 1));
-    sortHappinessButtonUp->setPosition(ccp(200, 515));
+    sortHappinessButtonUp->setPosition(ccp(75, 515));
     
     sortHappinessButtonDown = CCMenuItemImage::create("sortbyhappiness_down.png", "sortbyhappiness_downpress.png", NULL, this, NULL, menu_selector(SelectPopulation::clickSortHappinessButtonDown));
     sortHappinessButtonDown->setScale(0.6f);
     sortHappinessButtonDown->setAnchorPoint(ccp(0, 1));
-    sortHappinessButtonDown->setPosition(ccp(200, 515));
+    sortHappinessButtonDown->setPosition(ccp(75, 515));
     
     sortButtonUp->setVisible(true);
     sortButtonDown->setVisible(false);
@@ -474,7 +481,7 @@ void SelectPopulation::performTask()
             scheduleFarming();
         }
     }
-    this->closeMenu(true);
+    this->closeMenu(false);
     GameScene::getThis()->setTouchEnabled(true);
 }
 
@@ -585,15 +592,22 @@ void SelectPopulation::reposition(){
     
     spriteBackground->setPosition(ccp(hw, hh));
     
-    spriteBuilding->setPosition(ccp(240.0f + hw, 40.0f + hh));
+    if(building->buildingType == AMENITY)
+    {
+        spriteBuilding->setPosition(ccp(240.0f + hw, 40.0f + hh));
+    }
+    else
+    {
+        spriteBuilding->setPosition(ccp(240.0f + hw, 40.0f + hh));
+    }
     
     // Anchored top right
     buttonClose->setPosition(ccp(halfWidth - 50.0f + hw, halfHeight -25.0f + hh));
     
-    buttonOk->setPosition(halfWidth - 125.0f + hw, -halfHeight + 80.0f + hh);
-    buttonCancel->setPosition(halfWidth - 70.0f + hw, -halfHeight + 75.0f + hh);
+    buttonOk->setPosition(halfWidth - 125.0f + hw, -halfHeight + 90.0f + hh);
+    buttonCancel->setPosition(halfWidth - 75.0f + hw, -halfHeight + 85.0f + hh);
     
-    labelBuildingName->CCNode::setPosition(285.0f + hw, -100.0f + hh);
+    labelBuildingName->CCNode::setPosition(50.0f + hw, -90.0f + hh);
     
     workerLabel->setPosition(ccp(-halfWidth / 2.0f + 40.0f + hw, halfHeight - 40.0f + hh));
     taskLabel->setPosition(ccp(halfWidth / 2.0f + 40.0f + hw, halfHeight - 40.0f + hh));

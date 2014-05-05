@@ -125,6 +125,8 @@ GameSprite::GameSprite()
     targetHungry = 0;
     targetEnergy = 0;
     targetHappiness = 0;
+    
+    
 }
 
 void GameSprite::initAI(bool isUpgrade)
@@ -367,7 +369,7 @@ GameSprite* GameSprite::create()
      speechBubble = new SpeechBubble();
      speechBubble->createSpeechBubble();
      
-     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
+     speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 1.2f,
                                    spriteRep->boundingBox().size.height * 1.5f));
      spriteRep->addChild(speechBubble);
      
@@ -965,7 +967,14 @@ bool GameSprite::Wander()
     wanderFlag = !wanderFlag;
     if (wanderFlag)
     {
-        saySpeech(IDLING, 5.0f);
+        if(villagerClass == V_REFUGEE)
+        {
+            saySpeech(HOMELESS, 5.0f);
+        }
+        else
+        {
+            saySpeech(IDLING, 5.0f);
+        }
         
         CCPoint tgt = GameScene::getThis()->mapHandler->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
         if (tgt.x == -1 && tgt.y == -1)
@@ -1802,8 +1811,8 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             
             break;
         case HOMELESS:
-            label = CCSprite::create("stuck2.png");
-            
+            speechBubble->addContent("homeless_anim.png", CCPointZero, 10, 4, 0, 128, 128);
+            show = false;
             break;
         case FIND_BANDIT:
             speechBubble->addContent("findingbandit.png", CCPointZero, 10, 4, 0);
@@ -1822,7 +1831,7 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             show = false;
             break;
         case FARMER_EMOTION:
-            speechBubble->addContent("goingToWork.png", CCPointZero, 4, 2, 0);
+            speechBubble->addContent("goingToWork.png", CCPointZero, 4, 4, 0, 66.5, 68);
             show = false;
             break;
         case TRANSPORT_EMOTION:
@@ -2284,7 +2293,7 @@ void GameSprite::ReplaceSpriteRep()
     speechBubble->createSpeechBubble();
     
     
-    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
+    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 1.2f,
                                   spriteRep->boundingBox().size.height * 1.5f));
     
     spriteRep->addChild(speechBubble);
@@ -2625,7 +2634,7 @@ void GameSprite::goToOccupyHome(Building* b)
         }
         else
         {
-            saySpeech("I want to find a home!", 5.0f);
+            saySpeech(HOMELESS, 5.0f);
             setTargetLocation(b);
             hasAssigned = true;
             GoHome(b);
@@ -3360,7 +3369,7 @@ void GameSprite::playAttackAction()
     speechBubble->createSpeechBubble();
     
     
-    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 0.8f,
+    speechBubble->setPosition(ccp(spriteRep->boundingBox().size.width * 1.2f,
                                   spriteRep->boundingBox().size.height * 1.5f));
     
     spriteRep->addChild(speechBubble);

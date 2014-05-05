@@ -1512,6 +1512,7 @@ void GameHUD::clickBuildButton()
         {
             GameHUD::getThis()->scheduleAddMoney(GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost);
         }
+        
         buildButton->setVisible(false);
         currTapMode = Normal;
         GameScene::getThis()->buildingHandler->selectedBuilding = NULL;

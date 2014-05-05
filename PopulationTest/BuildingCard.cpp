@@ -282,7 +282,11 @@ void BuildingCard::init()
         }
         else if(building->buildingType == AMENITY)
         {
-            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 90));
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 85));
+        }
+        else if(building->buildingType == MARKET)
+        {
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 80));
         }
         else if(building->buildingType == GRANARY)
         {

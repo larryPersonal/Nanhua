@@ -40,7 +40,7 @@ struct SystemConfig
         skipTutorial_level2 = false;
         
         hideSkipButton = true;
-        debugMode = true;
+        debugMode = false;
     }
 };
 
@@ -114,21 +114,21 @@ struct ConfigSettings
         secondToDayRatio = 5; // x means x seconds for a day in the game, 7x seconds for a week and 28x seconds for a month;
         
         // token drop treshold time, x seconds per checking
-        token_drop_treshold_time_veryHappy_min = 15;
-        token_drop_treshold_time_veryHappy_max = 30;
-        token_drop_treshold_time_happy_min = 25;
-        token_drop_treshold_time_happy_max = 50;
+        token_drop_treshold_time_veryHappy_min = 20;
+        token_drop_treshold_time_veryHappy_max = 40;
+        token_drop_treshold_time_happy_min = 30;
+        token_drop_treshold_time_happy_max = 55;
         token_drop_treshold_time_normal_min = 40;
-        token_drop_treshold_time_normal_max = 75;
+        token_drop_treshold_time_normal_max = 70;
         token_drop_treshold_time_unhappy_min = 60;
         token_drop_treshold_time_unhappy_max = 120;
         token_drop_treshold_time_angry_min = 100;
         token_drop_treshold_time_angry_max = 300;
         
-        token_drop_rate_veryHappy = 60; // 60 by default
-        token_drop_rate_happy = 45;     // 45 by default
-        token_drop_rate_normal = 30;    // 30 by default
-        token_drop_rate_unhappy = 15;   // 15 by default
+        token_drop_rate_veryHappy = 40; // 60 by default
+        token_drop_rate_happy = 30;     // 45 by default
+        token_drop_rate_normal = 20;    // 30 by default
+        token_drop_rate_unhappy = 10;   // 15 by default
         token_drop_rate_angry = 0;      // 0  by default
         
         token_disappear_time = 15;

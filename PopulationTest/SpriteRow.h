@@ -16,6 +16,11 @@
 #include "ProgressBar.h"
 using namespace cocos2d;
 
+enum HappyState
+{
+    Angry = 0, Not_Happy, Normal, Happy, VeryHappy = 4
+};
+
 class SpriteRow : CCLayer
 {
 private:
@@ -49,6 +54,8 @@ private:
     
     int xOffset;
     int yOffset;
+    
+    HappyState currentHappyState;
 
 public:
     CCArray* mi;
