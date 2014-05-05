@@ -23,6 +23,7 @@ public:
     static void PlayBGM(std::string bgmName);
     
     static void StopBGM();
+    static void PlaySFX(std::string sfxName);
 };
 
 

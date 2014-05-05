@@ -19,6 +19,8 @@
 #include "ReputationOrb.h"
 #include "BattleIcon.h"
 #include "TutorialManager.h"
+#include "SoundtrackManager.h"
+
 
 #include <cmath>
 #include <sstream>
@@ -1435,6 +1437,8 @@ void GameSprite::updateSprite(float dt)
                         int random_number = rand() % diff;
                         int damage = possessions->attack_power_min + random_number;
                         enermy->damaged(damage);
+                        
+                        
                         
                         playAttackAction();
                     }
@@ -3116,6 +3120,14 @@ void GameSprite::damaged(int damage)
             }
             enermy = NULL;
         }
+        
+        SoundtrackManager::PlaySFX("hurt sfx.wav");
+    }
+    else
+    {
+        
+        SoundtrackManager::PlaySFX("hit sfx.wav");
+        
     }
 }
 

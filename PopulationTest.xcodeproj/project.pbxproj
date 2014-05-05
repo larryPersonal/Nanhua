@@ -109,6 +109,9 @@
 		36325C1B18D7FAC20008227D /* closebutton-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 36325C1918D7FAC20008227D /* closebutton-up.png */; };
 		3632864318CEC503002C58D3 /* houses.png in Resources */ = {isa = PBXBuildFile; fileRef = 3632864218CEC503002C58D3 /* houses.png */; };
 		3641C539172F5E9900655E25 /* Job.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3641C537172F5E9900655E25 /* Job.cpp */; };
+		36423C271917258200975B4C /* coin pickup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 36423C241917258200975B4C /* coin pickup.wav */; };
+		36423C281917258200975B4C /* hit sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = 36423C251917258200975B4C /* hit sfx.wav */; };
+		36423C291917258200975B4C /* hurt sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = 36423C261917258200975B4C /* hurt sfx.wav */; };
 		3647C7E817C1D98C008FA626 /* path-destroy.png in Resources */ = {isa = PBXBuildFile; fileRef = 3647C7E617C1D98C008FA626 /* path-destroy.png */; };
 		3647C7E917C1D98C008FA626 /* path.png in Resources */ = {isa = PBXBuildFile; fileRef = 3647C7E717C1D98C008FA626 /* path.png */; };
 		3647C7F317C1D9D3008FA626 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3647C7F217C1D9D3008FA626 /* Icon.png */; };
@@ -847,6 +850,9 @@
 		3636E0F917460D7900B1B012 /* Requirements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Requirements.h; sourceTree = "<group>"; };
 		3641C537172F5E9900655E25 /* Job.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Job.cpp; sourceTree = "<group>"; };
 		3641C538172F5E9900655E25 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Job.h; sourceTree = "<group>"; };
+		36423C241917258200975B4C /* coin pickup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "coin pickup.wav"; sourceTree = "<group>"; };
+		36423C251917258200975B4C /* hit sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "hit sfx.wav"; sourceTree = "<group>"; };
+		36423C261917258200975B4C /* hurt sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "hurt sfx.wav"; sourceTree = "<group>"; };
 		3647C7E617C1D98C008FA626 /* path-destroy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path-destroy.png"; sourceTree = "<group>"; };
 		3647C7E717C1D98C008FA626 /* path.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = path.png; sourceTree = "<group>"; };
 		3647C7F217C1D9D3008FA626 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1935,6 +1941,9 @@
 		3647C7FA17C20BB0008FA626 /* Soundtrack */ = {
 			isa = PBXGroup;
 			children = (
+				36423C241917258200975B4C /* coin pickup.wav */,
+				36423C251917258200975B4C /* hit sfx.wav */,
+				36423C261917258200975B4C /* hurt sfx.wav */,
 				84F9B76618D9415200579060 /* Ishikari Lore.mp3 */,
 				3624032617C308AD005BED27 /* Tikopia.mp3 */,
 				3624032717C308AD005BED27 /* Rite of Passage.mp3 */,
@@ -4125,6 +4134,7 @@
 				84EB328418684185003B5CEB /* addPicture.png in Resources */,
 				8412CA6218AC8D4A00AF4645 /* time_summer-bg.png in Resources */,
 				36D87D1218C5C3F500FE8B31 /* zhugeliang_c.png in Resources */,
+				36423C281917258200975B4C /* hit sfx.wav in Resources */,
 				847309CA18DC09AC001869C6 /* Building Info UI placeholdercircleclose.png in Resources */,
 				84360A2F18B21FED002EC8C2 /* assign_menu_unfilled.png in Resources */,
 				3658DD7718D6F1430056B895 /* FemaleVillager.png in Resources */,
@@ -4218,6 +4228,7 @@
 				8414CF2E18FFEB250052CA91 /* guardtower anim.png in Resources */,
 				36AC556A18D6981900C165F5 /* population_amount.png in Resources */,
 				84589CE21896655500AA9E1C /* conversation_textbox_empty_right.png in Resources */,
+				36423C291917258200975B4C /* hurt sfx.wav in Resources */,
 				842B84D319066AC600D43E2E /* springtimeclock.png in Resources */,
 				3658DD7818D6F1430056B895 /* MaleYoungVillager.png in Resources */,
 				84509B7D18879C2900EF8BD8 /* cancel.png in Resources */,
@@ -4297,6 +4308,7 @@
 				8421157C18D2C4DD00A441D0 /* objective_content.png in Resources */,
 				8412CA6118AC8D4A00AF4645 /* time_spring-bg.png in Resources */,
 				842B84DB190674DE00D43E2E /* money_label.png in Resources */,
+				36423C271917258200975B4C /* coin pickup.wav in Resources */,
 				3604970617AB942700CACE25 /* arrow-down.png in Resources */,
 				3604970717AB942700CACE25 /* arrow-down2.png in Resources */,
 				8412CA6018AC8D4A00AF4645 /* time-indicator-week-1.png in Resources */,

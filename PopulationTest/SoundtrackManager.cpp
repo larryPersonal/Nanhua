@@ -45,3 +45,16 @@ void SoundtrackManager::StopBGM()
 {
     SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(true);
 }
+
+
+void SoundtrackManager::PlaySFX(std::string sfxName)
+{
+    SimpleAudioEngine::sharedEngine()->playEffect(sfxName.c_str(), false);
+    
+}
+/*
+void SoundtrackManager::StopSFX()
+{
+    
+    
+}*/
