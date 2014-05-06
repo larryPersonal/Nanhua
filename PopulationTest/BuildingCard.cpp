@@ -54,13 +54,21 @@ void BuildingCard::init()
     
     std::string buildingname;
     if (type == 1)
+    {
         buildingname = "Build Path";
+    }
     else if (type == 2)
+    {
        buildingname = "Destroy Path";
+    }
     else if (type == 3)
+    {
        buildingname = "Demolish";
+    }
     else
+    {
        buildingname = building->buildingName;
+    }
     
     // display the name of the building
     //std::stringstream ss;
@@ -95,11 +103,21 @@ void BuildingCard::init()
      //   CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
         CCSprite* menuImage;
         if (type == 1)
+        {
             menuImage = CCSprite::create("path.png");
+        }
         else if (type == 2)
+        {
             menuImage = CCSprite::create("path-destroy.png");
+        }
+        else if (type == 3)
+        {
+            menuImage = CCSprite::create("demolish.png");
+        }
         else
+        {
             menuImage = CCSprite::create("path.png");
+        }
        
         menuImage->setScale(192.0f / menuImage->boundingBox().size.width);
         buildingImage = menuImage;
@@ -114,11 +132,17 @@ void BuildingCard::init()
     
     std::string buildingcost;
     if (type == 1)
+    {
         buildingcost = "0";
+    }
     else if (type == 2)
+    {
         buildingcost = "0";
+    }
     else if (type == 3)
+    {
         buildingcost = "0";
+    }
     else
     {
         ss.str(std::string());
@@ -181,7 +205,10 @@ void BuildingCard::init()
     populationImage->setAnchorPoint(ccp(0, 1));
     
     std::string populationLimit;
-    if (type != 0) populationLimit = "0";
+    if (type != 0)
+    {
+        populationLimit = "0";
+    }
     else
     {
         ss.str(std::string());
@@ -198,7 +225,10 @@ void BuildingCard::init()
     buildingTimeImage->setAnchorPoint(ccp(0, 1));
     
     std::string buildTime;
-    if (type != 0) buildTime = "0";
+    if (type != 0)
+    {
+        buildTime = "0";
+    }
     else
     {
         ss.str(std::string());
@@ -296,6 +326,10 @@ void BuildingCard::init()
         {
             buildingImage->setPosition(ccp(cardBG->boundingBox().size.width - 20, cardBG->boundingBox().size.height + 0));
         }
+    }
+    else if(type == 3)
+    {
+        buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 60));
     }
     else
     {
@@ -473,6 +507,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             }
             
             //I'll need to set tap mode to demolish. TODO
+            GameHUD::getThis()->setTapMode(2);
             GameHUD::getThis()->isThisTapCounted = false;
             
             GameHUD::getThis()->buildScroll->scheduleScrollOut();

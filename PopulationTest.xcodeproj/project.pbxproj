@@ -600,6 +600,8 @@
 		844AC8E818C81954005166FD /* BanditsAttackHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */; };
 		844AC8EB18C8301F005166FD /* war.png in Resources */ = {isa = PBXBuildFile; fileRef = 844AC8E918C8301F005166FD /* war.png */; };
 		844AC8EC18C8301F005166FD /* peace.png in Resources */ = {isa = PBXBuildFile; fileRef = 844AC8EA18C8301F005166FD /* peace.png */; };
+		844ACE791918903800505F01 /* banditicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 844ACE781918903800505F01 /* banditicon.png */; };
+		844ACE7B1918904000505F01 /* guardtower.png in Resources */ = {isa = PBXBuildFile; fileRef = 844ACE7A1918904000505F01 /* guardtower.png */; };
 		844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */ = {isa = PBXBuildFile; fileRef = 844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */; };
 		844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */ = {isa = PBXBuildFile; fileRef = 844D728D18AC750D008E0AD3 /* senario_h.xml */; };
 		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
@@ -1672,6 +1674,8 @@
 		844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BanditsAttackHandler.cpp; sourceTree = "<group>"; };
 		844AC8E918C8301F005166FD /* war.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = war.png; sourceTree = "<group>"; };
 		844AC8EA18C8301F005166FD /* peace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = peace.png; sourceTree = "<group>"; };
+		844ACE781918903800505F01 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditicon.png; sourceTree = "<group>"; };
+		844ACE7A1918904000505F01 /* guardtower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guardtower.png; sourceTree = "<group>"; };
 		844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workers_menu_buttonCollider.png; sourceTree = "<group>"; };
 		844D728D18AC750D008E0AD3 /* senario_h.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = senario_h.xml; sourceTree = "<group>"; };
 		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
@@ -2026,6 +2030,8 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				844ACE7A1918904000505F01 /* guardtower.png */,
+				844ACE781918903800505F01 /* banditicon.png */,
 				84EF1F4E191770F1002D64D9 /* roads.png */,
 				36BC4213190F40D400F89DC5 /* market.png */,
 				36984AA7190E02D70081CB17 /* building2x2.png */,
@@ -4184,6 +4190,7 @@
 				36C38C7C176ED60B00CE0F8D /* tutorial.txt in Resources */,
 				8412CA5C18AC8D4A00AF4645 /* main-info-menu-bg_01.png in Resources */,
 				8421158518D2C4DD00A441D0 /* ticksign.png in Resources */,
+				844ACE7B1918904000505F01 /* guardtower.png in Resources */,
 				3619CADF17A6596600B59924 /* button-side.png in Resources */,
 				84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */,
 				8444D6BF190779E500D5AFAC /* banditAttackLeftUp.png in Resources */,
@@ -4430,6 +4437,7 @@
 				8410545E18E94ECB003D88C6 /* optionspressbtn.png in Resources */,
 				84589CDC1896653F00AA9E1C /* senario1_option2.xml in Resources */,
 				3647C80917C213CE008FA626 /* Default-568h@2x.png in Resources */,
+				844ACE791918903800505F01 /* banditicon.png in Resources */,
 				841845211884DF9000895275 /* job.png in Resources */,
 				8412CA6B18AC8D5E00AF4645 /* Sample Nanhua UI v1 - Kris.png in Resources */,
 				8421157D18D2C4DD00A441D0 /* objective.png in Resources */,

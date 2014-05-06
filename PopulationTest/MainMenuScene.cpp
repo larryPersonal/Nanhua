@@ -71,7 +71,7 @@ bool MainMenuScene::init()
 
     buttonStart = CCMenuItemImage::create("start.png", "press_start.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
     buttonOptions = CCMenuItemImage::create("options.png", "press_options.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
-   // buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
+    // buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
     
     
     CCLabelTTF* startLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonStart->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
@@ -231,6 +231,7 @@ void MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
     
 }
+
 void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     //CCDirector::sharedDirector()->pushScene(OptionsScene::scene());
 }
@@ -262,7 +263,7 @@ void MainMenuScene::onOrientationChanged(){
 
         buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.375));
         buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.225));
-      //  buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.075));
+        // buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.075));
     }
     else
     {
@@ -271,8 +272,7 @@ void MainMenuScene::onOrientationChanged(){
 
         buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.65));
         buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.45));
-       // buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
-        
+        // buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
     }
 }
 
