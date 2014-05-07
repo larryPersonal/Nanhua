@@ -55,6 +55,7 @@ bool SystemMenu::init(CCLayer* layer)
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    blackScreen->setOpacity((GLubyte) 0);
     layer->addChild(blackScreen, 31);
     
     systemMenu_background = CCSprite::create("PauseMenu.png");
@@ -113,7 +114,9 @@ void SystemMenu::clickResumeButton()
         GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
         sp->followPath();
     }
-    releaseAll();
+    
+    scheduleHideSystemMenu();
+    //releaseAll();
 }
 
 void SystemMenu::clickOptionButton()
@@ -174,6 +177,10 @@ void SystemMenu::showSystemMenu(float dt)
         SystemMenu::getThis()->show = false;
         GameHUD::getThis()->unschedule(schedule_selector(SystemMenu::showSystemMenu));
     }
+    
+    float opacity = 255.0f * (scale / 1.0f);
+    
+    SystemMenu::getThis()->blackScreen->setOpacity((GLubyte) opacity);
     SystemMenu::getThis()->systemMenu_background->setScale(scale);
 }
 
@@ -190,6 +197,9 @@ void SystemMenu::hideSystemMenu(float dt)
     }
     else
     {
+        float opacity = 255.0f * (scale / 1.0f);
+        
+        SystemMenu::getThis()->blackScreen->setOpacity((GLubyte) opacity);
         SystemMenu::getThis()->systemMenu_background->setScale(scale);
     }
 }

@@ -158,6 +158,8 @@ GameHUD::GameHUD()
     slideOut = false;
     
     genderMale = true;
+    
+    hasTimer = false;
 }
 
 GameHUD::~GameHUD()
@@ -1304,14 +1306,14 @@ void GameHUD::createObjectiveMenu()
     objectiveDescription = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
     objectiveDescription->setAnchorPoint(ccp(0, 1));
     objectiveDescription->setColor(colorBlack);
-    objectiveDescription->setPosition(ccp(screenSize.width * 0.14f, screenSize.height - 540));
+    objectiveDescription->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 540));
     
     ss.str(std::string());
     ss << "Progress";
     objectiveProgress = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
     objectiveProgress->setAnchorPoint(ccp(0, 1));
     objectiveProgress->setColor(colorBlack);
-    objectiveProgress->setPosition(ccp(screenSize.width * 0.14f, screenSize.height - 600));
+    objectiveProgress->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 600));
     
     objectiveMenu->addChild(objectiveTitle);
     objectiveMenu->addChild(objectiveDescription);
@@ -1329,6 +1331,15 @@ void GameHUD::createObjectiveMenu()
     objectiveNotificationLabel->setColor(colorBlack);
     objectiveNotificationLabel->setOpacity((GLubyte) 0);
     this->addChild(objectiveNotificationLabel, 4);
+    
+    ss.str(std::string());
+    ss << "00:00";
+    objectiveTime = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16);
+    objectiveTime->setAnchorPoint(ccp(0, 1));
+    objectiveTime->setPosition(ccp(100, screenSize.height - 125));
+    objectiveTime->setColor(colorBlack);
+    objectiveTime->setOpacity((GLubyte) 255);
+    this->addChild(objectiveTime, 4);
 }
 
 void GameHUD::scheduleShowNewObjectiveNotification()

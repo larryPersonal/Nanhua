@@ -899,6 +899,25 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             SelectPopulation::getThis()->closeMenu(true);
                         }
                     }
+                    else if(SelectPopulation::getThis()->buttonOk->boundingBox().containsPoint(touchLoc))
+                    {
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonOk))
+                        {
+                            if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse) && TutorialManager::getThis()->miniDragon != NULL)
+                            {
+                                TutorialManager::getThis()->miniDragon->clickNext();
+                            }
+                            SelectPopulation::getThis()->performTask();
+                        }
+                    }
+                    else if(SelectPopulation::getThis()->buttonCancel->boundingBox().containsPoint(touchLoc))
+                    {
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonCancel))
+                        {
+                            SelectPopulation::getThis()->cancelTask();
+                        }
+                    }
+                    
                     skip = true;
                 }
                 else

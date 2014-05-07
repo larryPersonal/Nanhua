@@ -24,6 +24,8 @@ Objective::Objective()
     
     complete = false;
     
+    timeLimit = -1;
+    
     title = "";
     content = "";
     progress = "";

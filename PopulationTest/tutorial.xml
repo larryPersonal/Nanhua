@@ -184,7 +184,7 @@
             <buildScroll></buildScroll>
         </lock>
         <showArrow></showArrow>
-        <arrowX>650</arrowX>
+        <arrowX>845</arrowX>
         <arrowY>20</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -195,7 +195,7 @@
         <clickToNext></clickToNext>
         <offY>220</offY>
         <showArrow></showArrow>
-        <arrowX>595</arrowX>
+        <arrowX>790</arrowX>
         <arrowY>125</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -206,7 +206,7 @@
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
-        <arrowX>655</arrowX>
+        <arrowX>850</arrowX>
         <arrowY>125</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -217,7 +217,7 @@
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
-        <arrowX>712</arrowX>
+        <arrowX>907</arrowX>
         <arrowY>125</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -228,7 +228,7 @@
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
-        <arrowX>725</arrowX>
+        <arrowX>920</arrowX>
         <arrowY>105</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -244,7 +244,7 @@
             <buildScroll></buildScroll>
         </unlock>
         <showArrow></showArrow>
-        <arrowX>650</arrowX>
+        <arrowX>845</arrowX>
         <arrowY>20</arrowY>
         <arrowAngle>0</arrowAngle>
         <arrowScale>1</arrowScale>
@@ -267,6 +267,7 @@
     <slide>
         <speech>For now, just allocate one villager and tap on the green tick to confirm.</speech>
         <hide></hide>
+        <delay>3</delay>
         <unlock>
             <manpowerSelect></manpowerSelect>
             <buttonOk></buttonOk>

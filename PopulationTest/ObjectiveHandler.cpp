@@ -68,6 +68,10 @@ void ObjectiveHandler::loadObjective()
     {
         objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
     }
+    else if(GameManager::getThis()->getLevel() == 1)
+    {
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_1.xml");
+    }
     else
     {
         objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");

@@ -67,6 +67,8 @@ public:
     
     bool debug;
     
+    bool setButtonOkForDelay;
+    
 public:
     MiniDragon();
     ~MiniDragon();

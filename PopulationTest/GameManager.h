@@ -146,6 +146,7 @@ struct HousingLimit
     vector<int> food_required;
     vector<int> housing_limits;
     vector<int> granary_limits;
+    vector<int> market_limits;
     vector<int> farm_limits;
     vector<int> guard_tower_limits;
     

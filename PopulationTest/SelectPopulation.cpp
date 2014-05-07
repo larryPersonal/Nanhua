@@ -143,16 +143,15 @@ void SelectPopulation::createMenuItems()
     buttonClose->setAnchorPoint(ccp(1, 1));
     this->addChild(buttonClose, 4);
     
-    buttonOk = CCMenuItemImage::create("assign_menu_accept.png", "assign_menu_accept.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
+    buttonOk = CCSprite::create("assign_menu_accept.png");
     buttonOk->setScale(0.4);
-    buttonOk->setTag(-2);
     buttonOk->setAnchorPoint(ccp(1, 1));
+    this->addChild(buttonOk, 4);
     
-    buttonCancel = CCMenuItemImage::create("stopsign.png", "stopsign.png", this, menu_selector(SelectPopulation::onMenuItemSelected));
-    //buttonCancel->setScale(buttonClose->boundingBox().size.width / buttonCancel->boundingBox().size.width);
+    buttonCancel = CCSprite::create("stopsign.png");
     buttonCancel->setScale(buttonOk->boundingBox().size.width / buttonCancel->boundingBox().size.width * 0.85f);
-    buttonCancel->setTag(-4);
     buttonCancel->setAnchorPoint(ccp(1, 1));
+    this->addChild(buttonCancel, 4);
     
     buttonOk->setVisible(false);
     
@@ -311,8 +310,6 @@ void SelectPopulation::createMenuItems()
     sortHappinessButtonUp->setVisible(false);
     sortHappinessButtonDown->setVisible(false);
     
-    menuItems->addObject(buttonCancel);
-    menuItems->addObject(buttonOk);
     menuItems->addObject(spriteBuilding);
     menuItems->addObject(sortButtonUp);
     menuItems->addObject(sortButtonDown);
@@ -604,8 +601,8 @@ void SelectPopulation::reposition(){
     // Anchored top right
     buttonClose->setPosition(ccp(halfWidth - 50.0f + hw, halfHeight -25.0f + hh));
     
-    buttonOk->setPosition(halfWidth - 125.0f + hw, -halfHeight + 90.0f + hh);
-    buttonCancel->setPosition(halfWidth - 75.0f + hw, -halfHeight + 85.0f + hh);
+    buttonOk->setPosition(ccp(halfWidth - 125.0f + hw, -halfHeight + 90.0f + hh));
+    buttonCancel->setPosition(ccp(halfWidth - 75.0f + hw, -halfHeight + 85.0f + hh));
     
     labelBuildingName->CCNode::setPosition(50.0f + hw, -90.0f + hh);
     

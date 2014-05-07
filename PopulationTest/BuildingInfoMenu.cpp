@@ -212,14 +212,14 @@ void BuildingInfoMenu::createMenuItems()
     labelStatus = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     labelStatus->setAnchorPoint(ccp(0, 1));
     labelStatus->setColor(colorYellow);
-    labelStatus->CCNode::setPosition(30.0f + hw, 100.0f + hh);
+    labelStatus->CCNode::setPosition(20.0f + hw, 100.0f + hh);
     
     ss.str(std::string());
     ss << building->build_uint_current << "/" << building->build_uint_required;
     unitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     unitLabel->setAnchorPoint(ccp(0, 1));
     unitLabel->setColor(colorYellow);
-    unitLabel->CCNode::setPosition(130.0f + hw, 70.0f + hh);
+    unitLabel->CCNode::setPosition(120.0f + hw, 70.0f + hh);
     
     unitBar = new ProgressBar();
     unitBar->createProgressBar(
@@ -233,7 +233,7 @@ void BuildingInfoMenu::createMenuItems()
     );
     unitBar->setValue((float)building->build_uint_current / (float)building->build_uint_required);
     unitBar->setAnchorPoint(ccp(0, 1));
-    unitBar->CCNode::setPosition(30.0f + hw, 70.0f + hh);
+    unitBar->CCNode::setPosition(20.0f + hw, 70.0f + hh);
     
     // recovery rate
     ss.str(std::string());
@@ -241,14 +241,14 @@ void BuildingInfoMenu::createMenuItems()
     recoveryRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     recoveryRateTitleLabel->setAnchorPoint(ccp(0, 1));
     recoveryRateTitleLabel->setColor(colorYellow);
-    recoveryRateTitleLabel->CCNode::setPosition(30.0f + hw, 40.0f + hh);
+    recoveryRateTitleLabel->CCNode::setPosition(20.0f + hw, 40.0f + hh);
     
     ss.str(std::string());
     ss << building->recovery_rate;
     recoveryRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     recoveryRateLabel->setAnchorPoint(ccp(0, 1));
     recoveryRateLabel->setColor(colorYellow);
-    recoveryRateLabel->CCNode::setPosition(130.0f + hw, 40.0f + hh);
+    recoveryRateLabel->CCNode::setPosition(120.0f + hw, 40.0f + hh);
     
     // food consumption rate
     ss.str(std::string());
@@ -256,7 +256,7 @@ void BuildingInfoMenu::createMenuItems()
     foodConsumptionRateTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     foodConsumptionRateTitleLabel->setAnchorPoint(ccp(0, 1));
     foodConsumptionRateTitleLabel->setColor(colorYellow);
-    foodConsumptionRateTitleLabel->CCNode::setPosition(30.0f + hw, 10.0f + hh);
+    foodConsumptionRateTitleLabel->CCNode::setPosition(20.0f + hw, 10.0f + hh);
     
     
     ss.str(std::string());
@@ -265,7 +265,7 @@ void BuildingInfoMenu::createMenuItems()
     foodConsumptionRateLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     foodConsumptionRateLabel->setAnchorPoint(ccp(0, 1));
     foodConsumptionRateLabel->setColor(colorYellow);
-    foodConsumptionRateLabel->CCNode::setPosition(130.0f + hw, 10.0f + hh);
+    foodConsumptionRateLabel->CCNode::setPosition(120.0f + hw, 10.0f + hh);
     
     // food storage limit
     ss.str(std::string());
@@ -273,7 +273,7 @@ void BuildingInfoMenu::createMenuItems()
     foodStorageTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     foodStorageTitleLabel->setAnchorPoint(ccp(0, 1));
     foodStorageTitleLabel->setColor(colorYellow);
-    foodStorageTitleLabel->CCNode::setPosition(30.0f + hw, -20.0f + hh);
+    foodStorageTitleLabel->CCNode::setPosition(20.0f + hw, -20.0f + hh);
     
     // food storage
     foodStorageBar = new ProgressBar();
@@ -288,14 +288,14 @@ void BuildingInfoMenu::createMenuItems()
                                );
     foodStorageBar->setValue((float)building->currentStorage / (float)building->storageLimit);
     foodStorageBar->setAnchorPoint(ccp(0, 1));
-    foodStorageBar->CCNode::setPosition(30.0f + hw, -50.0f + hh);
+    foodStorageBar->CCNode::setPosition(20.0f + hw, -50.0f + hh);
     
     ss.str(std::string());
     ss << building->currentStorage << "/" << building->storageLimit;
     foodStorageLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     foodStorageLabel->setAnchorPoint(ccp(0, 1));
     foodStorageLabel->setColor(colorYellow);
-    foodStorageLabel->CCNode::setPosition(130.0f + hw, -50.0f + hh);
+    foodStorageLabel->CCNode::setPosition(120.0f + hw, -50.0f + hh);
     
     // work unit done
     ss.str(std::string());
@@ -304,7 +304,7 @@ void BuildingInfoMenu::createMenuItems()
     workCompleteTitleLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     workCompleteTitleLabel->setAnchorPoint(ccp(0, 1));
     workCompleteTitleLabel->setColor(colorYellow);
-    workCompleteTitleLabel->CCNode::setPosition(30.0f + hw, -80.0f + hh);
+    workCompleteTitleLabel->CCNode::setPosition(20.0f + hw, -80.0f + hh);
     
     workCompleteBar = new ProgressBar();
     workCompleteBar->createProgressBar(
@@ -318,14 +318,14 @@ void BuildingInfoMenu::createMenuItems()
                                       );
     workCompleteBar->setValue((float)building->work_unit_current / (float)building->work_unit_required);
     workCompleteBar->setAnchorPoint(ccp(0, 1));
-    workCompleteBar->CCNode::setPosition(30.0f + hw, -110.0f + hh);
+    workCompleteBar->CCNode::setPosition(20.0f + hw, -110.0f + hh);
     
     ss.str(std::string());
     ss << (int) building->work_unit_current << "/" << (int) building->work_unit_required;
     workCompleteLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     workCompleteLabel->setAnchorPoint(ccp(0, 1));
     workCompleteLabel->setColor(colorYellow);
-    workCompleteLabel->CCNode::setPosition(130.0f + hw, -110.0f + hh);
+    workCompleteLabel->CCNode::setPosition(120.0f + hw, -110.0f + hh);
     
     // Menu items
     menuItems = CCArray::create();
@@ -471,10 +471,10 @@ void BuildingInfoMenu::createMenuItems()
     upgradeButton->setPosition(ccp(150 + hw, -145 + hh));
     
     cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
-    cancelUpgradeButton->setScale(0.25f);
-  //  cancelUpgradeButton->setScale(cancelUpgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, cancelUpgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
+    cancelUpgradeButton->setScale(0.18f);
+    //  cancelUpgradeButton->setScale(cancelUpgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, cancelUpgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
     cancelUpgradeButton->setAnchorPoint(ccp(0, 1));
-    cancelUpgradeButton->setPosition(ccp(160 + hw, -165 + hh));
+    cancelUpgradeButton->setPosition(ccp(160 + hw, -175 + hh));
     
     menuItemsUpgrade = CCArray::create();
     menuItemsUpgrade->retain();
@@ -499,15 +499,15 @@ void BuildingInfoMenu::createMenuItems()
                                        );
     upgradeBar->setValue((float)building->current_upgrade_unit / (float)building->upgrade_unit_max);
     upgradeBar->setAnchorPoint(ccp(0, 1));
-    upgradeBar->setPosition(ccp(-230 + hw, -90 + hh));
+    upgradeBar->setPosition(ccp(-230 + hw, -93 + hh));
     this->addChild(upgradeBar);
     
     mGameUpgradeUnit = building->current_upgrade_unit;
     ss.str(string());
     ss << building->current_upgrade_unit << "/" << building->upgrade_unit_max;
     upgradeBarLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
-    upgradeBarLabel->setAnchorPoint(ccp(0, 1));
-    upgradeBarLabel->setPosition(ccp(-120 + hw, -90 + hh));
+    upgradeBarLabel->setAnchorPoint(ccp(1, 1));
+    upgradeBarLabel->setPosition(ccp(-30 + hw, -90 + hh));
     upgradeBarLabel->setColor(colorYellow);
     this->addChild(upgradeBarLabel);
     
@@ -515,7 +515,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << "HOUSE:";
     houseLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     houseLimitTitle->setAnchorPoint(ccp(0, 1));
-    houseLimitTitle->setPosition(ccp(30 + hw, 100 + hh));
+    houseLimitTitle->setPosition(ccp(20 + hw, 100 + hh));
     houseLimitTitle->setColor(colorYellow);
     this->addChild(houseLimitTitle);
     
@@ -526,7 +526,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << allHouse->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(level);
     houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     houseLimitLabel->setAnchorPoint(ccp(0, 1));
-    houseLimitLabel->setPosition(ccp(210 + hw, 100 + hh));
+    houseLimitLabel->setPosition(ccp(200 + hw, 100 + hh));
     houseLimitLabel->setColor(colorYellow);
     this->addChild(houseLimitLabel);
     
@@ -534,7 +534,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << "GRANARY:";
     granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     granaryLimitTitle->setAnchorPoint(ccp(0, 1));
-    granaryLimitTitle->setPosition(ccp(30 + hw, 70 + hh));
+    granaryLimitTitle->setPosition(ccp(20 + hw, 70 + hh));
     granaryLimitTitle->setColor(colorYellow);
     this->addChild(granaryLimitTitle);
     
@@ -545,7 +545,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << allGranary->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(level);
     granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     granaryLimitLabel->setAnchorPoint(ccp(0, 1));
-    granaryLimitLabel->setPosition(ccp(210 + hw, 70 + hh));
+    granaryLimitLabel->setPosition(ccp(200 + hw, 70 + hh));
     granaryLimitLabel->setColor(colorYellow);
     this->addChild(granaryLimitLabel);
     
@@ -553,7 +553,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << "FARM:";
     farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     farmLimitTitle->setAnchorPoint(ccp(0, 1));
-    farmLimitTitle->setPosition(ccp(30 + hw, 40 + hh));
+    farmLimitTitle->setPosition(ccp(20 + hw, 40 + hh));
     farmLimitTitle->setColor(colorYellow);
     this->addChild(farmLimitTitle);
     
@@ -564,7 +564,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << allFarm->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(level);
     farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     farmLimitLabel->setAnchorPoint(ccp(0, 1));
-    farmLimitLabel->setPosition(ccp(210 + hw, 40 + hh));
+    farmLimitLabel->setPosition(ccp(200 + hw, 40 + hh));
     farmLimitLabel->setColor(colorYellow);
     this->addChild(farmLimitLabel);
     
@@ -572,7 +572,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << "GUARD TOWER:";
     guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     guardTowerLimitTitle->setAnchorPoint(ccp(0, 1));
-    guardTowerLimitTitle->setPosition(ccp(30 + hw, 10 + hh));
+    guardTowerLimitTitle->setPosition(ccp(20 + hw, 10 + hh));
     guardTowerLimitTitle->setColor(colorYellow);
     this->addChild(guardTowerLimitTitle);
     
@@ -583,7 +583,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << allTower->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(level);
     guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
-    guardTowerLimitLabel->setPosition(ccp(210 + hw, 10 + hh));
+    guardTowerLimitLabel->setPosition(ccp(200 + hw, 10 + hh));
     guardTowerLimitLabel->setColor(colorYellow);
     this->addChild(guardTowerLimitLabel);
     
