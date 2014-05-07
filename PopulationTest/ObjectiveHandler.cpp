@@ -190,6 +190,22 @@ void ObjectiveHandler::playObjective(bool showNotification)
     GameHUD::getThis()->objectiveProgress->setString(ss2.str().c_str());
     nextID = obj->nid;
     
+    if(obj->timeLimit > 0)
+    {
+        ss.str(std::string());
+        if(obj->timeLimit < 10)
+        {
+            ss << "0";
+        }
+        ss << obj->timeLimit << ":" << "00";
+        
+        GameHUD::getThis()->objectiveTime->setString(ss.str().c_str());
+        GameHUD::getThis()->objectiveTime->setVisible(true);
+        GameHUD::getThis()->targetTime = obj->timeLimit * 60.0f;
+        GameHUD::getThis()->currentTime = 0;
+        GameHUD::getThis()->hasTimer = true;
+    }
+    
     if(showNotification)
     {
         GameHUD::getThis()->scheduleShowNewObjectiveNotification();

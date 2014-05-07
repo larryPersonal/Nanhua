@@ -160,6 +160,8 @@ GameHUD::GameHUD()
     genderMale = true;
     
     hasTimer = false;
+    targetTime = 0;
+    currentTime = 0;
 }
 
 GameHUD::~GameHUD()
@@ -230,6 +232,41 @@ void GameHUD::setAllStats()
 
 void GameHUD::update(float deltaTime)
 {
+    // update the timer if the timer is enabled
+    if(hasTimer)
+    {
+        currentTime += deltaTime;
+        
+        float timeLeft = targetTime - currentTime;
+        if(timeLeft > 0)
+        {
+            int minutes = (int) (timeLeft / 60);
+            int seconds = ((int) timeLeft) % 60;
+            
+            stringstream ss;
+            if(minutes < 10)
+            {
+                ss << "0";
+            }
+            ss << minutes << ":";
+            if(seconds < 10)
+            {
+                ss << "0";
+            }
+            ss << seconds;
+            
+            objectiveTime->setString(ss.str().c_str());
+        }
+        else
+        {
+            objectiveTime->setString("00:00");
+            objectiveTime->setVisible(false);
+            hasTimer = false;
+            
+            // withdraw the objective. TODO: play the next objective
+        }
+    }
+    
     if (delay_curr > 0)
     {
         delay_curr -= deltaTime;
@@ -1338,7 +1375,7 @@ void GameHUD::createObjectiveMenu()
     objectiveTime->setAnchorPoint(ccp(0, 1));
     objectiveTime->setPosition(ccp(100, screenSize.height - 125));
     objectiveTime->setColor(colorBlack);
-    objectiveTime->setOpacity((GLubyte) 255);
+    objectiveTime->setVisible(false);
     this->addChild(objectiveTime, 4);
 }
 

@@ -1779,31 +1779,31 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     switch (s)
     {
         case IDLING:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 1, 4, 7);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 1, 4, 1);
             show = false;
             break;
         case HAPPY:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 8);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 3, 4, 0);
             show = false;
             break;
         case HUNGRY:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 3, 4, 4);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 4, 4, 14);
             show = false;
             break;
         case TIRED:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 3, 4, 14);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 3, 4, 5);
             show = false;
             break;
         case UNHAPPY:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 17);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 18);
             show = false;
             break;
         case STUCK:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 4, 4, 10);
+            speechBubble->addContent("unabletogo.png", CCPointZero, 10, 4, 0);
             show = false;
             break;
         case STUCK_FOOD:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 4, 4, 10);
+            speechBubble->addContent("nofood_64.png", CCPointZero, 10, 4, 0);
             show = false;
             break;
         case FIND_HOME:
@@ -1811,7 +1811,7 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             
             break;
         case HOMELESS:
-            speechBubble->addContent("homeless_anim.png", CCPointZero, 10, 4, 0, 128, 128);
+            speechBubble->addContent("homeless_anim.png", CCPointZero, 10, 4, 0);
             show = false;
             break;
         case FIND_BANDIT:
@@ -1819,23 +1819,23 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             show = false;
             break;
         case BATTLE:
-            speechBubble->addContent("defending.png", CCPointZero, 17, 4, 0);
+            speechBubble->addContent("defending.png", CCPointZero, 16, 4, 0);
             show = false;
             break;
         case GUARD_EMOTION:
-            speechBubble->addContent("defending.png", CCPointZero, 17, 4, 0);
+            speechBubble->addContent("defending.png", CCPointZero, 16, 4, 0);
             show = false;
             break;
         case BUILDER_EMOTION:
-            speechBubble->addContent("buildinganim.png", CCPointZero, 5, 2, 0);
+            speechBubble->addContent("building_safety helmet2.png", CCPointZero, 5, 2, 0);
             show = false;
             break;
         case FARMER_EMOTION:
-            speechBubble->addContent("goingToWork.png", CCPointZero, 4, 4, 0, 66.5, 68);
+            speechBubble->addContent("goingToWork.png", CCPointZero, 4, 2, 0);
             show = false;
             break;
         case TRANSPORT_EMOTION:
-            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 0);
+            speechBubble->addContent("emotionicon_anima.png", CCPointZero, 2, 4, 3);
             show = false;
             break;
         case STEAL_MONEY:
@@ -1851,12 +1851,12 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             
     }
     
-    if (label == NULL) return;
-    
     if(show){
+        if (label == NULL) return;
         speechBubble->addContent(label, CCPointZero );
-        speechBubble->show(timeInSeconds);
     }
+    
+    speechBubble->show(timeInSeconds * 2);
 }
 
 
