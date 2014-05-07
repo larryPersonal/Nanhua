@@ -177,6 +177,8 @@ public:
     CCSprite* objectiveButtonBlue;
     CCLabelTTF* objectiveTime;
     bool hasTimer;
+    float targetTime;
+    float currentTime;
     
     CCLabelTTF* objectiveTitle;
     CCLabelTTF* objectiveDescription;
