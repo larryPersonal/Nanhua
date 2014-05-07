@@ -4758,7 +4758,7 @@
 		365FBC6016E5E31000A57CF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -4786,7 +4786,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-llua";
-				PROVISIONING_PROFILE = "AA44C71C-0262-4D83-BEFF-ECE61F051BB4";
+				PROVISIONING_PROFILE = "26250477-1F09-4A28-B44D-140325995358";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -4796,7 +4796,7 @@
 		365FBC6116E5E31000A57CF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (3WR7XC26A9)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -4822,7 +4822,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-llua";
-				PROVISIONING_PROFILE = "AA44C71C-0262-4D83-BEFF-ECE61F051BB4";
+				PROVISIONING_PROFILE = "26250477-1F09-4A28-B44D-140325995358";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
