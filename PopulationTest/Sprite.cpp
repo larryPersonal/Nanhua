@@ -586,7 +586,7 @@ void GameSprite::followPath(bool moveOneTile)
             {
                 if (spriteRep != NULL)
                 {
-                    //spriteRep->setVisible(false);
+                    spriteRep->setVisible(false);
                 }
             }
             else
