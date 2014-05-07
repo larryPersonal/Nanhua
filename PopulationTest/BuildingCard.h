@@ -20,7 +20,7 @@ public:
     Building* building;
     ScrollArea* scrollArea;
     
-    CCMenuItemImage* cardBG;
+    CCSprite* cardBG;
     
     CCLabelTTF* buildingNameLabel;
     CCSprite* buildingImage;
@@ -52,6 +52,7 @@ public:
     CCArray* menuItemsArray;
     
     CCSprite* mask;
+    CCMenuItemImage* eventTrigger;
     
 public:
     BuildingCard(Building*, ScrollArea*, int, int);

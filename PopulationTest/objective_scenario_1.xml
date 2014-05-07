@@ -6,6 +6,7 @@
     <id>1</id>
     <type>GOLD</type>
     <value>1600</value>
+    <time>10</time>
     <next>2</next>
 </objective>
 
@@ -13,5 +14,6 @@
     <id>2</id>
     <type>POPULATION</type>
     <value>5</value>
+    <time>10</time>
     <next>3</next>
 </objective>

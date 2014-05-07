@@ -101,6 +101,10 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     {
         GameScene::getThis()->buildingHandler->granaryGhostOnMap->addObject(building);
     }
+    else if(building->buildingType == MARKET)
+    {
+        GameScene::getThis()->buildingHandler->marketGhostOnMap->addObject(building);
+    }
     else if(building->buildingType == AMENITY)
     {
         GameScene::getThis()->buildingHandler->amenityGhostOnMap->addObject(building);
@@ -142,6 +146,10 @@ void ConstructionHandler::removeConstructingBuilding(Building *building)
     else if(building->buildingType == GRANARY)
     {
         GameScene::getThis()->buildingHandler->granaryGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == MARKET)
+    {
+        GameScene::getThis()->buildingHandler->marketGhostOnMap->removeObject(building);
     }
     else if(building->buildingType == AMENITY)
     {
@@ -189,6 +197,10 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     else if(building->buildingType == GRANARY)
     {
         GameScene::getThis()->buildingHandler->granaryGhostOnMap->removeObject(building);
+    }
+    else if(building->buildingType == MARKET)
+    {
+        GameScene::getThis()->buildingHandler->marketGhostOnMap->removeObject(building);
     }
     else if(building->buildingType == AMENITY)
     {

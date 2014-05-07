@@ -105,6 +105,10 @@ void BuildScroll::createMenuItems()
     numberOfBuildingCards++;
     buildingCards->addObject(bc);
     
+    bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 3);
+    numberOfBuildingCards++;
+    buildingCards->addObject(bc);
+    
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
@@ -112,8 +116,6 @@ void BuildScroll::createMenuItems()
         {
             if (!nameExists(tempBuilding->buildingName))
             {
-            
-            
                 bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
                 numberOfBuildingCards++;
                 buildingCards->addObject(bc);

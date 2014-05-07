@@ -166,12 +166,15 @@ void ScrollArea::enableScrollVertical(float thickness, const char* trackFileName
     }
 }
 
-void ScrollArea::addItem(CCNode* node, CCPoint position)
+void ScrollArea::addItem(CCNode* node, CCPoint position, bool changeAnchorPoint)
 {
     // Add items with (0, 0) being top left,
     // and going towards bottom right with increasing values
     layer->addChild(node);
-    node->setAnchorPoint(ccp(0, 1));
+    if (changeAnchorPoint)
+    {
+        node->setAnchorPoint(ccp(0, 1));
+    }
     position.y = layer->getContentSize().height - position.y;
     node->setPosition(position);
 }

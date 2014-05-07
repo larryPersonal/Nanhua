@@ -69,6 +69,8 @@ MiniDragon::MiniDragon()
     down = true;
     
     debug = false;
+    
+    setButtonOkForDelay = false;
 }
 
 MiniDragon::~MiniDragon()
@@ -406,7 +408,21 @@ bool MiniDragon::constructTutorialSlide()
         }
         else if(order.compare("lockButtonOk") == 0)
         {
-            tm->lockButtonOk = (flag == 1);
+            if(flag == 1)
+            {
+                tm->lockButtonOk = true;
+            }
+            else
+            {
+                if(delay > 0)
+                {
+                    setButtonOkForDelay = true;
+                }
+                else
+                {
+                    tm->lockButtonOk = false;
+                }
+            }
         }
         else if(order.compare("lockButtonCancel") == 0)
         {
@@ -487,7 +503,8 @@ bool MiniDragon::constructTutorialSlide()
     for (int i = 0; i < tokens.size(); i++)
     {
         std::string tokenStr = tokens.at(i);
-        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 18);
+        //CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 18);
+        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "Shojumaru-Regular", 16);
         tempLabel->retain();
         
         if (startX + offX + tempLabel->boundingBox().size.width > 420.0f)
@@ -501,7 +518,8 @@ bool MiniDragon::constructTutorialSlide()
         for (int j = 0; j < tokenStr.length(); j++)
         {
             string tempStr = tokenStr.substr(j, 1);
-            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 18, 80.0f);
+            //AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 18, 80.0f);
+            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "Shojumaru-Regular", 16, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             
@@ -600,6 +618,12 @@ void MiniDragon::hideDragonGroup()
         temp->retain();
         TutorialManager::getThis()->removeChild(temp);
         GameHUD::getThis()->addChild(temp, 33);
+    }
+    
+    if(TutorialManager::getThis()->miniDragon->setButtonOkForDelay)
+    {
+        TutorialManager::getThis()->lockButtonOk = false;
+        TutorialManager::getThis()->miniDragon->setButtonOkForDelay = false;
     }
 }
 

@@ -10,7 +10,7 @@
 #include "GameScene.h"
 #include "GameHUD.h"
 #include "SoundtrackManager.h"
-
+#include "TutorialManager.h"
 
 //REPUTATION ORB CLASS
 ReputationOrb* ReputationOrb::create(std::string spriteStr, float tTime)
@@ -87,7 +87,7 @@ CCSprite* ReputationOrb::getSprite()
 
 void ReputationOrb::update(float dt)
 {
-    if(!stopAnimation)
+    if(!stopAnimation && (!TutorialManager::getThis()->active || (TutorialManager::getThis()->miniDragon != NULL && !TutorialManager::getThis()->miniDragon->dropToken)))
     {
         if(!disappear)
         {
@@ -109,8 +109,15 @@ void ReputationOrb::update(float dt)
                     stopAnimation = true;
                     GameScene::getThis()->spriteHandler->tokensOnMap->removeObject(this);
                     GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+                    
+                    // check whether to proceed to next;
+                    //if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->dropToken)
+                    //{
+                        //TutorialManager::getThis()->miniDragon->clickNext();
+                    //}
                 }
-                else {
+                else
+                {
                     orbSprite->setOpacity((GLubyte) opacity);
                 }
             }

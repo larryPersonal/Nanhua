@@ -899,6 +899,25 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             SelectPopulation::getThis()->closeMenu(true);
                         }
                     }
+                    else if(SelectPopulation::getThis()->buttonOk->boundingBox().containsPoint(touchLoc))
+                    {
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonOk))
+                        {
+                            if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse) && TutorialManager::getThis()->miniDragon != NULL)
+                            {
+                                TutorialManager::getThis()->miniDragon->clickNext();
+                            }
+                            SelectPopulation::getThis()->performTask();
+                        }
+                    }
+                    else if(SelectPopulation::getThis()->buttonCancel->boundingBox().containsPoint(touchLoc))
+                    {
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonCancel))
+                        {
+                            SelectPopulation::getThis()->cancelTask();
+                        }
+                    }
+                    
                     skip = true;
                 }
                 else
@@ -1089,7 +1108,45 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
                 if (selectedTile->hasBuilding())
                 {
-                   // buildingHandler->buildingsOnMap->removeObject(selectedTile->building);
+                    // buildingHandler->buildingsOnMap->removeObject(selectedTile->building);
+                    Building* bui = selectedTile->building;
+                    if(bui == NULL)
+                    {
+                        bui = selectedTile->master->building;
+                    }
+                    
+                    if(bui->buildingType == SPECIAL)
+                    {
+                        return;
+                    }
+                    
+                    CCArray* allSprites = spriteHandler->spritesOnMap;
+                    for (int i = 0; i < allSprites->count(); i++)
+                    {
+                        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+                        if(gs->getTargetLocation() == bui)
+                        {
+                            gs->setTargetLocation(NULL);
+                            gs->currAction = IDLE;
+                        }
+                        
+                        if(gs->getJobLocation() == bui)
+                        {
+                            gs->setJobLocation(NULL);
+                            gs->changeToCitizen();
+                            gs->currAction = IDLE;
+                        }
+                        
+                        if(gs->getHome() == bui)
+                        {
+                            gs->setHome(NULL);
+                            SpriteClass* sc = new SpriteClass();
+                            gs->changeClassTo(sc);
+                            gs->currAction = IDLE;
+                        }
+                    }
+                    
+                    bui->memberSpriteList->removeAllObjects();
                     
                     mapHandler->UnBuild(tilePos);
                     GameHUD::getThis()->closeAllMenuAndResetTapMode();

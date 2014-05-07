@@ -121,7 +121,7 @@ public:
     void hideScroll();
     
     // ScrollArea functions
-    void addItem(CCNode* node, CCPoint position);
+    void addItem(CCNode* node, CCPoint position, bool changeAnchorPoint = true);
     void removeI(CCNode* node);
     void setViewSize(CCSize viewSize);
     void setScrollContentSize(CCSize scrollContentSize, bool resetContentOffset = false);

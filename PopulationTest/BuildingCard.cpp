@@ -54,13 +54,21 @@ void BuildingCard::init()
     
     std::string buildingname;
     if (type == 1)
+    {
         buildingname = "Build Path";
+    }
     else if (type == 2)
+    {
        buildingname = "Destroy Path";
+    }
     else if (type == 3)
+    {
        buildingname = "Demolish";
+    }
     else
+    {
        buildingname = building->buildingName;
+    }
     
     // display the name of the building
     //std::stringstream ss;
@@ -95,11 +103,21 @@ void BuildingCard::init()
      //   CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
         CCSprite* menuImage;
         if (type == 1)
+        {
             menuImage = CCSprite::create("path.png");
+        }
         else if (type == 2)
+        {
             menuImage = CCSprite::create("path-destroy.png");
+        }
+        else if (type == 3)
+        {
+            menuImage = CCSprite::create("demolish.png");
+        }
         else
+        {
             menuImage = CCSprite::create("path.png");
+        }
        
         menuImage->setScale(192.0f / menuImage->boundingBox().size.width);
         buildingImage = menuImage;
@@ -114,11 +132,17 @@ void BuildingCard::init()
     
     std::string buildingcost;
     if (type == 1)
+    {
         buildingcost = "0";
+    }
     else if (type == 2)
+    {
         buildingcost = "0";
+    }
     else if (type == 3)
+    {
         buildingcost = "0";
+    }
     else
     {
         ss.str(std::string());
@@ -151,6 +175,12 @@ void BuildingCard::init()
             CCArray* allGhostGranary = GameScene::getThis()->buildingHandler->granaryGhostOnMap;
             available_number = GameManager::getThis()->housingLimitation->granary_limits.at(level) - allGranary->count() - allGhostGranary->count();
         }
+        else if(building->buildingType == MARKET)
+        {
+            CCArray* allMarket = GameScene::getThis()->buildingHandler->marketOnMap;
+            CCArray* allGhostMarket = GameScene::getThis()->buildingHandler->marketGhostOnMap;
+            available_number = GameManager::getThis()->housingLimitation->market_limits.at(level) - allMarket->count() - allGhostMarket->count();
+        }
         else if(building->buildingType == MILITARY)
         {
             CCArray* allMimitary = GameScene::getThis()->buildingHandler->militaryOnMap;
@@ -181,7 +211,10 @@ void BuildingCard::init()
     populationImage->setAnchorPoint(ccp(0, 1));
     
     std::string populationLimit;
-    if (type != 0) populationLimit = "0";
+    if (type != 0)
+    {
+        populationLimit = "0";
+    }
     else
     {
         ss.str(std::string());
@@ -198,7 +231,10 @@ void BuildingCard::init()
     buildingTimeImage->setAnchorPoint(ccp(0, 1));
     
     std::string buildTime;
-    if (type != 0) buildTime = "0";
+    if (type != 0)
+    {
+        buildTime = "0";
+    }
     else
     {
         ss.str(std::string());
@@ -210,7 +246,7 @@ void BuildingCard::init()
     buildingTimeLabel->setAnchorPoint(ccp(0.5, 0.5));
     
     
-    cardBG = CCMenuItemImage::create("buildmenu.png", NULL, NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
+    cardBG = CCSprite::create("buildmenu.png");
     if(type == 0)
     {
         cardBG->setTag(building->ID);
@@ -222,11 +258,6 @@ void BuildingCard::init()
     cardBG->setAnchorPoint(ccp(0.5, 0.5));
     cardBG->setScaleY(screenSize.height / cardBG->boundingBox().size.height * 0.325f);
     cardBG->setScaleX(screenSize.width / cardBG->boundingBox().size.width * 0.18f);
-    
-    menuItemsArray = CCArray::create();
-    menuItemsArray->retain();
-    menuItemsArray->addObject(cardBG);
-    menu = CCMenu::createWithArray(menuItemsArray);
     
     mask = CCSprite::create("black.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
@@ -268,6 +299,23 @@ void BuildingCard::init()
         }
     }
     
+    eventTrigger = CCMenuItemImage::create("black.png", NULL, NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
+    if(type == 0)
+    {
+        eventTrigger->setTag(building->ID);
+    }
+    else
+    {
+        eventTrigger->setTag(-type);
+    }
+    eventTrigger->setOpacity((GLubyte) 0);
+    
+    menuItemsArray = CCArray::create();
+    menuItemsArray->retain();
+    menuItemsArray->addObject(eventTrigger);
+    menu = CCMenu::createWithArray(menuItemsArray);
+    menu->setAnchorPoint(ccp(0, 0));
+    
     cardBG->addChild(available_number_label);
     
     cardBG->addChild(buildingNameLabel);
@@ -296,6 +344,10 @@ void BuildingCard::init()
         {
             buildingImage->setPosition(ccp(cardBG->boundingBox().size.width - 20, cardBG->boundingBox().size.height + 0));
         }
+    }
+    else if(type == 3)
+    {
+        buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 60));
     }
     else
     {
@@ -326,8 +378,18 @@ void BuildingCard::init()
     cardBG->addChild(buildingTimeLabel);
     buildingTimeLabel->setPosition(ccp(305, 45));
     
-    scrollArea->addItem(menu, ccp(100.0f + screenSize.width * 0.19f * index, 126));
-    scrollArea->addItem(mask, ccp(8.0f + screenSize.width * 0.19f * index, 0.0f));
+    cardBG->addChild(menu);
+    eventTrigger->setAnchorPoint(ccp(0, 0));
+    eventTrigger->cocos2d::CCNode::setScale(0.358f, 0.54f);
+    eventTrigger->setPosition(ccp(0, 0));
+    menu->setPosition(ccp(0, 0));
+    
+    cardBG->addChild(mask);
+    mask->cocos2d::CCNode::setScale(mask->getScaleX() / cardBG->getScaleX(), mask->getScaleY() / cardBG->getScaleY());
+    mask->setAnchorPoint(ccp(0, 0));
+    mask->setPosition(ccp(0.0f, 0.0f));
+    
+    scrollArea->addItem(cardBG, ccp(100.0f + screenSize.width * 0.19f * index, 126), false);
 }
 
 void BuildingCard::refreshAllMenuItems()
@@ -352,12 +414,15 @@ void BuildingCard::pressBuildingCard()
     {
         return;
     }
-    //cardBG->setScaleX(cardBG->getScaleX() * 0.95f / 1.0f);
-    //cardBG->setScaleY(cardBG->getScaleY() * 0.95f / 1.0f);
+    cardBG->setScaleX(cardBG->getScaleX() * 0.95f / 1.0f);
+    cardBG->setScaleY(cardBG->getScaleY() * 0.95f / 1.0f);
 }
 
 void BuildingCard::onMenuItemSelected(CCObject* pSender)
 {
+    cardBG->setScaleX(cardBG->getScaleX() * 1.0f / 0.95f);
+    cardBG->setScaleY(cardBG->getScaleY() * 1.0f / 0.95f);
+    
     if (!GameHUD::getThis()->isThisTapCounted)
     {
         return;
@@ -473,6 +538,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             }
             
             //I'll need to set tap mode to demolish. TODO
+            GameHUD::getThis()->setTapMode(2);
             GameHUD::getThis()->isThisTapCounted = false;
             
             GameHUD::getThis()->buildScroll->scheduleScrollOut();
@@ -595,6 +661,33 @@ void BuildingCard::tryToBuild(int tag)
         }
         
         if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
+        {
+            return;
+        }
+    }
+    else if(type == MARKET)
+    {
+        if(TutorialManager::getThis()->active)
+        {
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                return;
+            }
+        }
+        
+        CCLog("market_no: %d,    market_ghost_no: %d,    market_limit_no: %d", GameScene::getThis()->buildingHandler->marketOnMap->count(), GameScene::getThis()->buildingHandler->marketGhostOnMap->count(), GameManager::getThis()->housingLimitation->market_limits.at(level));
+        
+        if(GameScene::getThis()->buildingHandler->marketOnMap->count() + GameScene::getThis()->buildingHandler->marketGhostOnMap->count() >= GameManager::getThis()->housingLimitation->market_limits.at(level))
         {
             return;
         }

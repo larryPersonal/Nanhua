@@ -32,6 +32,8 @@ public:
     int populationReward;
     int reputationReward;
     
+    float timeLimit;
+    
     bool complete;
     
     std::string title;

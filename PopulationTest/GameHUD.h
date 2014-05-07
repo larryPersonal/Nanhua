@@ -175,6 +175,8 @@ public:
     CCSprite* objectiveMenu;
     CCSprite* objectiveButton;
     CCSprite* objectiveButtonBlue;
+    CCLabelTTF* objectiveTime;
+    bool hasTimer;
     
     CCLabelTTF* objectiveTitle;
     CCLabelTTF* objectiveDescription;

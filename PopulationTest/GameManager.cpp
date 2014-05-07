@@ -927,6 +927,15 @@ void GameManager::loadHousingLimit()
             housingLimitation->granary_limits.push_back(atoi(hl[ss.str().c_str()]["granary"].asString().c_str()));
         }
         
+        if(hl[ss.str().c_str()]["granary"].asString().compare("unlimited") == 0)
+        {
+            housingLimitation->market_limits.push_back(999999);
+        }
+        else
+        {
+            housingLimitation->market_limits.push_back(atoi(hl[ss.str().c_str()]["market"].asString().c_str()));
+        }
+        
         if(hl[ss.str().c_str()]["guard_tower"].asString().compare("unlimited") == 0)
         {
             housingLimitation->guard_tower_limits.push_back(999999);

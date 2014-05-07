@@ -17,8 +17,6 @@ ObjectiveManager::~ObjectiveManager()
 {
 }
 
-
-
 CCArray* ObjectiveManager::parseXMLFile(string xml)
 {
     CCArray* objectives = CCArray::create();
@@ -109,6 +107,14 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 content = str.substr(startPos + 7, endPos - startPos - 7);
                 temp = ::atoi(content.c_str());
                 objective->value = temp;
+            }
+            else if(str.find("<time>") != std::string::npos)
+            {
+                startPos = str.find("<time>");
+                endPos = str.find("</time>");
+                content = str.substr(startPos + 6, endPos - startPos - 6);
+                temp = ::atof(content.c_str());
+                objective->timeLimit = temp;
             }
             else if(str.find("<next>") != std::string::npos)
             {

@@ -71,7 +71,7 @@
     <property name="cost" value="300"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
-    <property name="jobs_available" value="2"/>
+    <property name="jobs_available" value="1"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>

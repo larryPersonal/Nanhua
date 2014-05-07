@@ -70,8 +70,12 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos)
         if (destination.x == tilePos->x &&
             destination.y == tilePos->y)
         {
-            //the destination must always be reachable, in case someone wants to enter a building. 
-            return true;
+            //the destination must always be reachable, in case someone wants to enter a building.
+            MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(tilePos->x, tilePos->y);
+            if((targetTile->hasBuilding() && targetTile->building->buildingType != DECORATION) || targetTile->isPath)
+            {
+                return true;
+            }
         }
         
         if (source.x == tilePos->x &&
@@ -83,7 +87,37 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos)
         
         if (!handler->isTileBlocked(*tilePos))
         {
-            return true;
+            MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(tilePos->x, tilePos->y);
+            
+            if(targetTile->hasBuilding())
+            {
+                if(targetTile->building == NULL)
+                {
+                    if(targetTile->master == NULL || targetTile->master->building == NULL || (targetTile->master->building->buildingType == DECORATION))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if(targetTile->building->buildingType == DECORATION)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                return true;
+            }
         }
     }
     return false;

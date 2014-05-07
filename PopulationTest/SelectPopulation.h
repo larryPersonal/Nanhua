@@ -38,8 +38,8 @@ public:
     Building* building;
     
     CCSprite* buttonClose;
-    CCMenuItemImage* buttonOk;
-    CCMenuItemImage* buttonCancel;
+    CCSprite* buttonOk;
+    CCSprite* buttonCancel;
     
     CCSprite* spriteBackground;
     

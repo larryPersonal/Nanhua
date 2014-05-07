@@ -543,11 +543,13 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                             b->upgrade_unit_max = atof(upgrade_unit->getCString());
                         }
                         else
-                            b->upgrade_unit_max = 10.0f;
+                        {
+                            b->upgrade_unit_max = 1000.0f;
+                        }
                     }
                     else
                     {
-                        b->upgrade_unit_max = 10.0f;
+                        b->upgrade_unit_max = 1000.0f;
                     }
                     
                     
@@ -565,10 +567,14 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
 
                         }
                         else
+                        {
                             b->build_uint_required = 0;
+                        }
                     }
                     else
+                    {
                         b->build_uint_required = 0;
+                    }
                     
                     currProperty = properties->valueForKey("anim_random");
                     if (currProperty)
@@ -739,8 +745,10 @@ void BuildingHandler::addBuildingToMap(Building *b)
             break;
         case DECORATION:
             decorationOnMap->addObject(b);
+            break;
         case MARKET:
             marketOnMap->addObject(b);
+            break;
         default:
             decorationOnMap->addObject(b);
             break;
@@ -861,12 +869,15 @@ Building* BuildingHandler::getBuilding(std::string& buildingName)
     {
         currBuilding = (Building*)allBuildings->objectAtIndex(i);
         if (currBuilding->buildingName.length() == 0 ||
-            currBuilding->buildingName.compare("No Name") == 0) continue;
-        
+            currBuilding->buildingName.compare("No Name") == 0)
+        {
+            continue;
+        }
         
         if (currBuilding->buildingName.compare(buildingName) == 0)
-            
+        {
             return currBuilding;
+        }
     }
     return NULL;
 }
