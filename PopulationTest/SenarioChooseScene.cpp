@@ -60,7 +60,7 @@ bool SenarioChooseScene::init()
     CCRect exitrect = CCRectMake(0,0, screenSize.width * 0.15f, screenSize.width * 0.15f);
     
     
-    backgroundImage = CCSprite::create("Level Select Screen.png");
+    backgroundImage = CCSprite::create("screenlevelselect.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
     
     senarioButtonTutorial = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseTutorial));
@@ -149,12 +149,12 @@ bool SenarioChooseScene::init()
     //onOrientateChange();
     
     backgroundImage->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.5));
-    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.30, screenSize.height * 0.625));
-    senarioButtonS1->setPosition(ccp(screenSize.width * 0.30, screenSize.height * 0.4));
-    senarioButtonS2->setPosition(ccp(screenSize.width * 0.30, screenSize.height * 0.175));
-    senarioButtonS3->setPosition(ccp(screenSize.width * 0.70, screenSize.height * 0.625));
-    senarioButtonS4->setPosition(ccp(screenSize.width * 0.70, screenSize.height * 0.4));
-    senarioButtonS5->setPosition(ccp(screenSize.width * 0.70, screenSize.height * 0.175));
+    senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.29, screenSize.height * 0.68));
+    senarioButtonS1->setPosition(ccp(screenSize.width * 0.29, screenSize.height * 0.43));
+    senarioButtonS2->setPosition(ccp(screenSize.width * 0.29, screenSize.height * 0.185));
+    senarioButtonS3->setPosition(ccp(screenSize.width * 0.72, screenSize.height * 0.68));
+    senarioButtonS4->setPosition(ccp(screenSize.width * 0.72, screenSize.height * 0.43));
+    senarioButtonS5->setPosition(ccp(screenSize.width * 0.72, screenSize.height * 0.185));
     senarioButtonS6->setPosition(ccp(screenSize.width * 0.95, screenSize.height * 0.05));
     
     CCMenu* menu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, NULL);
