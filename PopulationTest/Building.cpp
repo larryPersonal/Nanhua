@@ -377,7 +377,11 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             else
             // the sprite has finished eating the food, the villagers will leave the building and become idle
             {
-                this->currentStorage--;
+                this->currentStorage -= 5;
+                if(this->currentStorage < 0)
+                {
+                    this->currentStorage = 0;
+                }
                 leaveGranuary(sp);
             }
         }

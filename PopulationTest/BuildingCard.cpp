@@ -259,6 +259,9 @@ void BuildingCard::init()
     cardBG->setScaleY(screenSize.height / cardBG->boundingBox().size.height * 0.325f);
     cardBG->setScaleX(screenSize.width / cardBG->boundingBox().size.width * 0.18f);
     
+    largeScale = ccp(cardBG->getScaleX(), cardBG->getScaleY());
+    smallScale = largeScale * 0.98f;
+    
     mask = CCSprite::create("black.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
     mask->setOpacity((GLubyte) 120);
@@ -414,14 +417,14 @@ void BuildingCard::pressBuildingCard()
     {
         return;
     }
-    cardBG->setScaleX(cardBG->getScaleX() * 0.95f / 1.0f);
-    cardBG->setScaleY(cardBG->getScaleY() * 0.95f / 1.0f);
+    cardBG->setScaleX(smallScale.x);
+    cardBG->setScaleY(smallScale.y);
 }
 
 void BuildingCard::onMenuItemSelected(CCObject* pSender)
 {
-    cardBG->setScaleX(cardBG->getScaleX() * 1.0f / 0.95f);
-    cardBG->setScaleY(cardBG->getScaleY() * 1.0f / 0.95f);
+    cardBG->setScaleX(largeScale.x);
+    cardBG->setScaleY(largeScale.y);
     
     if (!GameHUD::getThis()->isThisTapCounted)
     {

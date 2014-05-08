@@ -865,7 +865,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             
             if(BuildingInfoMenu::getThis() != NULL)
             {
-                CCLog("test");
                 if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
                 {
                     // check whether has clicked the close button
@@ -1484,6 +1483,8 @@ void GameScene::update(float time)
         }
         
     }
+    
+    CCLog("building Info Menu: %s", BuildingInfoMenu::getThis() == NULL ? "NULL" : "NOT NULL");
     
     if(TutorialManager::getThis()->active)
     {

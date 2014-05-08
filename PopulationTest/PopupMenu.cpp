@@ -32,9 +32,9 @@ void PopupMenu::cleanup()
 {
     if (this->getChildrenCount() > 0)
     {
-      
         this->removeAllChildren();
     }
+    
     CCLayer::cleanup();
     CCLog("Menu Items Uncreated");
     
@@ -134,28 +134,40 @@ void PopupMenu::closeMenu(bool openPreviousMenu)
             
             if(pm->pmt == BuInfoMenu)
             {
+                CCLog("test1");
                 BuildingInfoMenu* bim = BuildingInfoMenu::create(pm->b);
-                bim->autorelease();
+                //bim->autorelease();
                 bim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SpInfoMenu)
             {
+                CCLog("test2");
                 SpriteInfoMenu* sim = new SpriteInfoMenu(pm->gs);
-                sim->autorelease();
+                //sim->autorelease();
                 sim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SePopulationMenu)
             {
+                CCLog("test3");
                 SelectPopulation* sp = SelectPopulation::create(pm->b);
-                sp->autorelease();
+                //sp->autorelease();
                 sp->useAsTopmostPopupMenu();
             }
             else
             {
+                CCLog("test4");
                 closeMenu(openPreviousMenu);
                 return;
             }
         }
+        else
+        {
+            CCLog("test5");
+        }
+    }
+    else
+    {
+        CCLog("test6");
     }
     this->cleanup();
 }
@@ -168,6 +180,7 @@ void PopupMenu::scrollY(float scrollBy)
 
 void PopupMenu::willChangeOrientation()
 {
+    /*
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     for (int x = 0; x < menuItems->count(); x++) {
         CCMenuItemSprite* thatItemImage = (CCMenuItemSprite*)menuItems->objectAtIndex(x);
@@ -182,11 +195,14 @@ void PopupMenu::willChangeOrientation()
             menuItemPositions->getControlPointAtIndex(x).setPoint(newPosition.x, newPosition.y);
         }
     }
+    */
 }
 
 void PopupMenu::onOrientationChanged()
 {
+    /*
     this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+    */
 }
 
 void PopupMenu::registerWithTouchDispatcher()

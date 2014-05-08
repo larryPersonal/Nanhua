@@ -301,10 +301,12 @@ void SpriteInfoMenu::createMenuItems()
     buttonHome = CCMenuItemImage::create("homebutton.png", "homebutton_pressed.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
     buttonHome->setScale(0.75);
     buttonHome->setTag(1);
+    buttonHome->setVisible(false);
 
     buttonWorkPlace = CCMenuItemImage::create("jobbutton.png", "jobbutton_pressed.png", this, menu_selector(SpriteInfoMenu::onMenuItemSelected));
     buttonWorkPlace->setScale(0.75);
     buttonWorkPlace->setTag(2);
+    buttonWorkPlace->setVisible(false);
     
     menuItems->addObject(buttonWorkPlace);
     menuItems->addObject(buttonHome);
@@ -445,6 +447,8 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
             {
                 if (gameSprite->getPossessions()->homeLocation != NULL)
                 {
+                    GameScene::getThis()->tapped = true;
+                    PopupMenu::backupCurrentPopupMenu();
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(gameSprite->getPossessions()->homeLocation);//new BuildingInfoMenu(selectedTile->building);
                     buildingInfoMenu->useAsTopmostPopupMenu();
                 }
@@ -456,12 +460,13 @@ void SpriteInfoMenu::onMenuItemSelected(CCObject *pSender)
             //job location
             if (gameSprite != NULL)
             {
-               /*
-                if (gameSprite->getPossessions()->hasJob)
+                if (gameSprite->getPossessions()->jobLocation != NULL)
                 {
+                    GameScene::getThis()->tapped = true;
+                    PopupMenu::backupCurrentPopupMenu();
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(gameSprite->getPossessions()->jobLocation);//new BuildingInfoMenu(selectedTile->building);
                     buildingInfoMenu->useAsTopmostPopupMenu();
-                }*/
+                }
             }
         }
             break;
