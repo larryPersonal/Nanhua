@@ -543,6 +543,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->nextAction = IDLE;
                 sp->setIsDoingJob(false);
                 sp->spriteClass = "citizen";
+                sp->getJobLocation()->memberSpriteList->removeObject(sp);
                 sp->setJob(NONE);
                 sp->setJobLocation(NULL);
                 sp->setTargetLocation(NULL);
@@ -579,6 +580,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 sp->nextAction = IDLE;
                 sp->setIsDoingJob(false);
                 sp->spriteClass = "citizen";
+                sp->getJobLocation()->memberSpriteList->removeObject(sp);
                 sp->setJob(NONE);
                 sp->setJobLocation(NULL);
                 sp->setTargetLocation(NULL);

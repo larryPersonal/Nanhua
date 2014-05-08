@@ -66,7 +66,7 @@ void Narrator::display()
             str = "A group of refugees come to our village!";
             TutorialManager::getThis()->scheduleFadeIn(160.0f, 2);
             TutorialManager::getThis()->active = true;
-            GameHUD::getThis()->pause = false;
+            GameHUD::getThis()->pause = true;
             break;
         case C1T2:
             goDisplay = false;
@@ -214,5 +214,5 @@ void Narrator::setupForScenario()
     GameHUD::getThis()->pause = true;
     std::string filename = "tutorial.xml";
     Senario::getThis()->playSenario(filename.c_str());
-    TutorialManager::getThis()->miniDragon->clearSprites();
+    TutorialManager::getThis()->clearSprites();
 }

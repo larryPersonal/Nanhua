@@ -893,8 +893,8 @@ void MiniDragon::setupScenario()
     TutorialManager::getThis()->lockAll();
     moveCamera(ccp(5400.0f, 1600.0f));
     
-    spritesArray = CCArray::create();
-    spritesArray->retain();
+    TutorialManager::getThis()->spritesArray = CCArray::create();
+    TutorialManager::getThis()->spritesArray->retain();
     
     CCPoint target = CCPointMake(30,39);
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
@@ -921,16 +921,5 @@ void MiniDragon::setupScenario()
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
     
     TutorialManager::getThis()->goNarr = true;
-}
-
-void MiniDragon::clearSprites()
-{
-    for(int i = 0; i < spritesArray->count(); i++)
-    {
-        GameSprite* gs = (GameSprite*) spritesArray->objectAtIndex(i);
-        GameScene::getThis()->spriteHandler->removeSpriteFromMap(gs);
-    }
-    spritesArray->removeAllObjects();
-    CC_SAFE_RELEASE(spritesArray);
 }
 

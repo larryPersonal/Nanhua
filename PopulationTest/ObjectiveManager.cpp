@@ -153,7 +153,6 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             {
                 isInObjective = false;
                 objectives->addObject(objective);
-                CCLog("***********************yah");
             }
         }
         else

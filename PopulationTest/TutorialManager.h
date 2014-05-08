@@ -77,6 +77,8 @@ public:
     
     bool freeBuilding;
     
+    CCArray* spritesArray;
+    
 public:
     TutorialManager();
     ~TutorialManager();
@@ -104,6 +106,10 @@ public:
     void addVillagers(int);
     
     void scheduleVillagers(float);
+    
+    void clearSprites();
+    
+    void setupForScenario();
     
     //void saySpeech(std::string());
 };

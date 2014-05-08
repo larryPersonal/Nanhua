@@ -135,6 +135,7 @@ void PopupMenu::closeMenu(bool openPreviousMenu)
             if(pm->pmt == BuInfoMenu)
             {
                 BuildingInfoMenu* bim = BuildingInfoMenu::create(pm->b);
+                bim->autorelease();
                 bim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SpInfoMenu)
@@ -146,6 +147,7 @@ void PopupMenu::closeMenu(bool openPreviousMenu)
             else if(pm->pmt == SePopulationMenu)
             {
                 SelectPopulation* sp = SelectPopulation::create(pm->b);
+                sp->autorelease();
                 sp->useAsTopmostPopupMenu();
             }
             else
