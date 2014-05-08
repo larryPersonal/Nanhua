@@ -1484,8 +1484,6 @@ void GameScene::update(float time)
         
     }
     
-    CCLog("building Info Menu: %s", BuildingInfoMenu::getThis() == NULL ? "NULL" : "NOT NULL");
-    
     if(TutorialManager::getThis()->active)
     {
         if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->waitForVillager)
