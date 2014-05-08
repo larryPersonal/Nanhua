@@ -863,8 +863,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            if(BuildingInfoMenu::getThis() != NULL && BuildingInfoMenu::getThis()->spriteBackground != NULL)
+            if(BuildingInfoMenu::getThis() != NULL)
             {
+                CCLog("test");
                 if(BuildingInfoMenu::getThis()->spriteBackground->boundingBox().containsPoint(touchLoc))
                 {
                     // check whether has clicked the close button
@@ -899,7 +900,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             SelectPopulation::getThis()->closeMenu(true);
                         }
                     }
-                    else if(SelectPopulation::getThis()->buttonOk->boundingBox().containsPoint(touchLoc))
+                    else if(SelectPopulation::getThis()->buttonOk->boundingBox().containsPoint(touchLoc) && SelectPopulation::getThis()->buttonOk->isVisible())
                     {
                         if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockButtonOk))
                         {
@@ -1752,14 +1753,23 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding)) || !TutorialManager::getThis()->active)
                 {
                     PopupMenu::backupCurrentPopupMenu();
-                    SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
-                    selectPopulation->useAsTopmostPopupMenu();
                     
-                    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                    if(selectedTile->building->isCurrentConstructing)
                     {
-                        TutorialManager::getThis()->miniDragon->clickNext();
-                        selectPopulation->setZOrder(35);
-                        TutorialManager::getThis()->lockPopup = true;
+                        BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);
+                        buildingInfoMenu->useAsTopmostPopupMenu();
+                    }
+                    else
+                    {
+                        SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                        selectPopulation->useAsTopmostPopupMenu();
+                        
+                        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                        {
+                            TutorialManager::getThis()->miniDragon->clickNext();
+                            selectPopulation->setZOrder(35);
+                            TutorialManager::getThis()->lockPopup = true;
+                        }
                     }
                 }
             }
@@ -1812,14 +1822,23 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                         if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding)) || !TutorialManager::getThis()->active)
                         {
                             PopupMenu::backupCurrentPopupMenu();
-                            SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
-                            selectPopulation->useAsTopmostPopupMenu();
                             
-                            if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                            if(selectedTile->building->isCurrentConstructing)
                             {
-                                TutorialManager::getThis()->miniDragon->clickNext();
-                                selectPopulation->setZOrder(35);
-                                TutorialManager::getThis()->lockPopup = true;
+                                BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);
+                                buildingInfoMenu->useAsTopmostPopupMenu();
+                            }
+                            else
+                            {
+                                SelectPopulation* selectPopulation = SelectPopulation::create(selectedTile->building);
+                                selectPopulation->useAsTopmostPopupMenu();
+                                
+                                if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildHouse)
+                                {
+                                    TutorialManager::getThis()->miniDragon->clickNext();
+                                    selectPopulation->setZOrder(35);
+                                    TutorialManager::getThis()->lockPopup = true;
+                                }
                             }
                         }
                     }

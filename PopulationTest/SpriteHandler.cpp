@@ -346,8 +346,10 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
 {
     GameSprite* targetSprite = getSpriteByVillagerClass(villagerClass);
     SpriteClass* spriteClass = GlobalHelper::getSpriteClassByVillagerClass(villagerClass);
-    
-    if (!targetSprite) return;
+     
+    if (!targetSprite){
+        return;
+    }
     
     GameSprite* newSprite = (GameSprite*)targetSprite->copy();
     newSprite->retain();
@@ -363,9 +365,9 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     
     GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
-    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && tutorial)
+    if(TutorialManager::getThis()->active && tutorial)
     {
-        TutorialManager::getThis()->miniDragon->spritesArray->addObject(newSprite);
+        TutorialManager::getThis()->spritesArray->addObject(newSprite);
     }
     
     if(TutorialManager::getThis()->active)

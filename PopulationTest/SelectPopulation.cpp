@@ -398,12 +398,14 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             break;
         case -3:
         {
+            /*
             if(!TutorialManager::getThis()->lockBuildingInfo)
             {
                 PopupMenu::backupCurrentPopupMenu();
                 BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(building);
                 buildingInfoMenu->useAsTopmostPopupMenu();
             }
+            */
         }
             break;
         case -4:
@@ -996,6 +998,7 @@ void SelectPopulation::cancelSprite(CCObject *pSender)
         return;
     }
     
+    /*
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     int tag = pMenuItem->getTag();
     
@@ -1004,7 +1007,7 @@ void SelectPopulation::cancelSprite(CCObject *pSender)
     PopupMenu::backupCurrentPopupMenu();
     SpriteInfoMenu* spriteInfoMenu = SpriteInfoMenu::create(gameSprite);
     spriteInfoMenu->useAsTopmostPopupMenu();
-    
+    */
 }
 
 void SelectPopulation::adjustZIndex(bool tutorial)

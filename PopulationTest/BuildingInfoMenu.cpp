@@ -345,7 +345,7 @@ void BuildingInfoMenu::createMenuItems()
     selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
-    if(!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY)
+    if((!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY) || building->memberSpriteList->count() > 0)
     {
         selectWorkerButton->setVisible(false);
     }
@@ -1253,6 +1253,7 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
         return;
     }
     
+    /*
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     int tag = pMenuItem->getTag();
     
@@ -1265,6 +1266,7 @@ void BuildingInfoMenu::showSprite(CCObject *pSender)
         SpriteInfoMenu* spriteInfoMenu = SpriteInfoMenu::create(gameSprite);
         spriteInfoMenu->useAsTopmostPopupMenu();
     }
+    */
 }
 
 void BuildingInfoMenu::selectPop()

@@ -168,12 +168,15 @@ void TutorialManager::setupForTutorial()
     {
         GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
         unlockAll();
-        active = false;
+        
         if(!GameScene::getThis()->systemConfig->skipSenario)
         {
             GameHUD::getThis()->pause = true;
-            std::string filename = "tutorial.xml";
-            Senario::getThis()->playSenario(filename.c_str());
+            this->scheduleOnce(schedule_selector(TutorialManager::setupForScenario), 1.0f);
+        }
+        else
+        {
+            active = false;
         }
         return;
     }
@@ -196,6 +199,43 @@ void TutorialManager::setupForTutorial()
     setupMiniDragon();
     
     FloatingArraw* fa = new FloatingArraw();
+}
+
+void TutorialManager::setupForScenario()
+{
+    lockAll();
+    target = ccp(5400.0f, 1600.0f);
+    this->schedule(schedule_selector(TutorialManager::moveCamera), 1.0f / 120.0f);
+    
+    spritesArray = CCArray::create();
+    spritesArray->retain();
+    
+    CCPoint target = CCPointMake(30,39);
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.y += 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x -= 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x -= 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    target.x -= 1;
+    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    
+    goNarr = true;
+    active = false;
 }
 
 void TutorialManager::addVillagers(int num)
@@ -259,19 +299,23 @@ void TutorialManager::moveCamera(float dt)
         {
             GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
             this->unschedule(schedule_selector( TutorialManager::moveCamera ));
-            if(TutorialManager::getThis()->miniDragon->lockClick)
-            {
-                TutorialManager::getThis()->miniDragon->lockClick = false;
-            }
             
-            if(!miniDragon->debug)
+            if(TutorialManager::getThis()->miniDragon != NULL)
             {
-                if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
+                if(TutorialManager::getThis()->miniDragon->lockClick)
                 {
-                    TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
-                    if(ts->highlight)
+                    TutorialManager::getThis()->miniDragon->lockClick = false;
+                }
+                
+                if(!miniDragon->debug)
+                {
+                    if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
                     {
-                        TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                        TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
+                        if(ts->highlight)
+                        {
+                            TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                        }
                     }
                 }
             }
@@ -289,19 +333,23 @@ void TutorialManager::moveCamera(float dt)
         {
             GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
             this->unschedule(schedule_selector( TutorialManager::moveCamera ));
-            if(TutorialManager::getThis()->miniDragon->lockClick)
-            {
-                TutorialManager::getThis()->miniDragon->lockClick = false;
-            }
             
-            if(!miniDragon->debug)
+            if(TutorialManager::getThis()->miniDragon != NULL)
             {
-                if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
+                if(TutorialManager::getThis()->miniDragon->lockClick)
                 {
-                    TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
-                    if(ts->highlight)
+                    TutorialManager::getThis()->miniDragon->lockClick = false;
+                }
+                
+                if(!miniDragon->debug)
+                {
+                    if(TutorialManager::getThis()->miniDragon->slidesList != NULL && TutorialManager::getThis()->miniDragon->curSlide < TutorialManager::getThis()->miniDragon->slidesList->count())
                     {
-                        TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                        TutorialSlide* ts = (TutorialSlide*)TutorialManager::getThis()->miniDragon->slidesList->objectAtIndex(TutorialManager::getThis()->miniDragon->curSlide);
+                        if(ts->highlight)
+                        {
+                            TutorialManager::getThis()->miniDragon->highlightBuilding(ts->highlightBuilding);
+                        }
                     }
                 }
             }
@@ -373,4 +421,15 @@ void TutorialManager::setupMiniDragon()
     miniDragon->playMiniDraggon();
 }
 
-
+void TutorialManager::clearSprites()
+{
+    CCLog("lololo");
+    CCLog("length of spritesArray: %d", TutorialManager::getThis()->spritesArray->count());
+    for(int i = 0; i < spritesArray->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesArray->objectAtIndex(i);
+        GameScene::getThis()->spriteHandler->removeSpriteFromMap(gs);
+    }
+    spritesArray->removeAllObjects();
+    CC_SAFE_RELEASE(spritesArray);
+}

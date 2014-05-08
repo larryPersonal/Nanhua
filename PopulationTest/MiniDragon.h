@@ -61,8 +61,6 @@ public:
     bool dropToken;
     bool finalObjective;
     
-    CCArray* spritesArray;
-    
     bool down;
     
     bool debug;
@@ -96,8 +94,6 @@ public:
     void hideDragonGroup();
     
     void setupScenario();
-    
-    void clearSprites();
 };
 
 #endif
