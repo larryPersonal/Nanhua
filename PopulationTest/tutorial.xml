@@ -176,7 +176,7 @@
     <slide>
         <speech>Farm is the place for the villages to produce food through farming activity. These food will be stored in granary or market.</speech>
         <offY>220</offY>
-        <contentOffX>200</contentOffX>
+        <contentOffX>400</contentOffX>
         <hideArrow></hideArrow>
         <clickToNext></clickToNext>
         <lock>
