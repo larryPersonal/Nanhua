@@ -54,6 +54,9 @@ public:
     CCSprite* mask;
     CCMenuItemImage* eventTrigger;
     
+    CCPoint smallScale;
+    CCPoint largeScale;
+    
 public:
     BuildingCard(Building*, ScrollArea*, int, int);
     ~BuildingCard();

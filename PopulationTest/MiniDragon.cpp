@@ -284,7 +284,7 @@ bool MiniDragon::constructTutorialSlide()
     {
         cumulativeTime = 0;
         TutorialManager::getThis()->unlockAll();
-        TutorialManager::getThis()->scheduleOnce(schedule_selector( MiniDragon::scheduleSenario ), 360);
+        //TutorialManager::getThis()->scheduleOnce(schedule_selector( MiniDragon::scheduleSenario ), 360);
     }
     
     if(ts->hideBubble)
@@ -768,7 +768,6 @@ void MiniDragon::highlightBuilding(string b)
         }
         else if(b.compare("averageHappiness") == 0)
         {
-            CCLog("test!!!");
             GameHUD::getThis()->happinessIcon->setZOrder(35);
         }
         return;
