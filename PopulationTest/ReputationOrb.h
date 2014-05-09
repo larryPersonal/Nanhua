@@ -48,7 +48,7 @@ public:
     CCSprite* getSprite();
     virtual void update(float);
     
-    void collect();
+    void collect(CCPoint touchLoc);
     void collectComplete();
 };
 

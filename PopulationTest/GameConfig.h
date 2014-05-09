@@ -36,8 +36,8 @@ struct SystemConfig
         skipSenario_level1 = false;
         skipTutorial_level1 = true;
         
-        skipSenario_level2 = false;
-        skipTutorial_level2 = false;
+        skipSenario_level2 = true;
+        skipTutorial_level2 = true;
         
         hideSkipButton = true;
         debugMode = false;

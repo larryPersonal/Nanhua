@@ -81,7 +81,7 @@ bool SenarioChooseScene::init()
     senarioButtonS5 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario5));
     senarioButtonS5->setContentSize(boxrect.size);
     
-    senarioButtonS6 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario6));
+    senarioButtonS6 = CCMenuItemImage::create("back_icon.png", "back_icon.png", this, menu_selector(SenarioChooseScene::chooseSenario6));
     senarioButtonS6->setContentSize(exitrect.size);
     
     CCLabelTTF* tutorialLabel = CCLabelTTF::create("Tutorial", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter,kCCVerticalTextAlignmentCenter);
@@ -120,11 +120,11 @@ bool SenarioChooseScene::init()
     senarioButtonS5->addChild(senarioLabel5);
     senarioLabel5->setColor(ccc3(255,189,68));
     
-   // CCLabelTTF* senarioLabel6 = CCLabelTTF::create("B", "Shojumaru-Regular" ,28, exitrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    // CCLabelTTF* senarioLabel6 = CCLabelTTF::create("B", "Shojumaru-Regular" ,28, exitrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     // senarioLabel6->setAnchorPoint(ccp(0.5f, 0.5));
-  //  senarioLabel6->setPosition( ccp(senarioButtonS6->boundingBox().size.width * 0.5f, senarioButtonS6->boundingBox().size.height * 0.5f));
-   // senarioButtonS6->addChild(senarioLabel6);
-   // senarioLabel6->setColor(ccc3(255,189,68));
+    // senarioLabel6->setPosition( ccp(senarioButtonS6->boundingBox().size.width * 0.5f, senarioButtonS6->boundingBox().size.height * 0.5f));
+    // senarioButtonS6->addChild(senarioLabel6);
+    // senarioLabel6->setColor(ccc3(255,189,68));
 
     
     //2 is retina, 1 is normal
@@ -269,17 +269,18 @@ void SenarioChooseScene::loadingSenario5()
 //THIS IS ACTUALLY THE GO BACK BUTTON.
 void SenarioChooseScene::chooseSenario6()
 {
-   // CCDirector::sharedDirector()->popScene();
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCDirector::sharedDirector()->pushScene(MainMenuScene::scene());
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario6), 0.1f);
 }
 
 void SenarioChooseScene::loadingSenario6()
 {
+    // CCDirector::sharedDirector()->popScene();
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
     
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 
 void SenarioChooseScene::enableLoadingScreen()

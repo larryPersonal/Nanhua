@@ -1301,7 +1301,7 @@
     <property name="req_population" value="0"/>
     <property name="research_cost" value=""/>
     <property name="storage" value="50"/>
-    <property name="storage_limit" value="200"/>
+    <property name="storage_limit" value="500"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value=""/>
@@ -1334,7 +1334,7 @@
     <property name="research_cost" value="150"/>
     <property name="research_time" value="20"/>
     <property name="storage" value="0"/>
-    <property name="storage_limit" value="0"/>
+    <property name="storage_limit" value="200"/>
     <property name="unlocked_at_start" value="yes"/>
     <property name="work_unit" value="0"/>
     <property name="work_unit_required" value="1000"/>
@@ -1395,7 +1395,7 @@
    eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
   </data>
  </layer>
- <layer name="Building_2" width="90" height="60" visible="0">
+ <layer name="Building_2" width="90" height="60">
   <properties>
    <property name="number_of_tiles" value="1"/>
    <property name="start_tile_offset" value="0"/>

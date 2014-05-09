@@ -142,12 +142,6 @@
         </unlock>
         <showObjective></showObjective>
         <connectGranary></connectGranary>
-        <showArrow></showArrow>
-        <arrowX>65</arrowX>
-        <arrowY>20</arrowY>
-        <arrowAngle>0</arrowAngle>
-        <arrowScale>1</arrowScale>
-        <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
         <speech>Great! Now your villagers have food and shelter. However, it looks like your food supply is running low. Let us remedy that.</speech>

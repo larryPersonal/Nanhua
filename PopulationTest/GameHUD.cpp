@@ -263,7 +263,12 @@ void GameHUD::update(float deltaTime)
             objectiveTime->setVisible(false);
             hasTimer = false;
             
+            stringstream sss;
+            sss << "Your current objective has been failed!";
+            GameHUD::getThis()->addNewNotification(sss.str());
+            
             // withdraw the objective. TODO: play the next objective
+            ObjectiveHandler::getThis()->playObjective();
         }
     }
     
@@ -663,6 +668,7 @@ void GameHUD::update(float deltaTime)
     happinessIcon = tempIcon;
     this->addChild(happinessIcon, 5);
     
+    /* control the notification panel */
     if(notificationToBeScheduled.size() > 0)
     {
         if(!slideIn)

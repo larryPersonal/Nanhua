@@ -31,17 +31,24 @@ ReputationOrb* ReputationOrb::create(std::string spriteStr, float tTime)
 ReputationOrb::ReputationOrb(std::string spriteStr, float tTime)
 {
     if (spriteStr.compare("REN"))
-        y_offset = 0;
+    {
+        y_offset = 3;
+    }
         
     if (spriteStr.compare("XUN"))
-        y_offset = 1;
-    
-        
-    if (spriteStr.compare("ZHONG"))
+    {
         y_offset = 2;
+    }
+    
+    if (spriteStr.compare("ZHONG"))
+    {
+        y_offset = 1;
+    }
         
     if (spriteStr.compare("AI"))
-        y_offset = 3;
+    {
+        y_offset = 0;
+    }
     
     delay_animFrame = 0.1f;
     delay_curr = 0.1f;
@@ -51,7 +58,6 @@ ReputationOrb::ReputationOrb(std::string spriteStr, float tTime)
     //change frame here
     frameHeight = 64;
     frameWidth = 64;
-    
     
     // orbSprite = CCSprite::create(spriteStr.c_str());
     orbTexture = CCTextureCache::sharedTextureCache()->addImage("tokenanim.png");
@@ -64,7 +70,6 @@ ReputationOrb::ReputationOrb(std::string spriteStr, float tTime)
     
     //set the thing to the first frame.
     orbSprite = CCSprite::createWithTexture(orbTexture, orbRect);
-    
     
     targetOpacity = 0;
     fadeSpeed = 5;
@@ -130,7 +135,7 @@ void ReputationOrb::update(float dt)
         if (orbSprite) orbSprite = NULL;
         if (orbTexture) orbTexture = NULL;
         // CC_SAFE_RELEASE(orbSprite);
-       // CC_SAFE_RELEASE(orbTexture);
+        // CC_SAFE_RELEASE(orbTexture);
     }
     else
     {
@@ -164,29 +169,31 @@ void ReputationOrb::update(float dt)
 void ReputationOrb::collectComplete()
 {
     opacity = 0;
+    
     GameScene::getThis()->spriteHandler->tokensOnMap->removeObject(this);
     GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
-    
-    
 }
 
 
-void ReputationOrb::collect()
+void ReputationOrb::collect(CCPoint touchLoc)
 {
     collected = true;
     stopAnimation = true;
     
+    orbSprite->retain();
+    // TODO
+    GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+    GameHUD::getThis()->addChild(orbSprite);
+    orbSprite->setPosition(touchLoc);
+    orbSprite->autorelease();
     
     CCCallFuncN* callback = CCCallFuncN::create(this, callfuncN_selector(ReputationOrb::collectComplete));
     callback->retain();
     
     ccBezierConfig config;
-    config.endPosition = ccp(4000, 5000);
-    config.controlPoint_1 = ccp(2000, 3000);
-    config.controlPoint_2 = ccp(1000, 1000);
+    config.endPosition = ccp(-1000, 800);
     
-    
-    CCBezierTo* bezier = CCBezierTo::create(50.0f, config);
+    CCBezierTo* bezier = CCBezierTo::create(5.0f, config);
     
     
     CC_SAFE_RELEASE(callback);
