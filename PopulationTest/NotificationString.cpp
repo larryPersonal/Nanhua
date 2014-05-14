@@ -32,7 +32,7 @@ NotificationString::NotificationString(std::string input, float startY)
     
     isUp = false;
     
-    notificationLabel = CCLabelTTF::create(input.c_str(), "Arial", 24);
+    notificationLabel = CCLabelTTF::create(input.c_str(), "Arial", 16);
     notificationLabel->setAnchorPoint(ccp(1, 1));
     notificationLabel->setOpacity((GLubyte) 0);
     GameHUD::getThis()->addChild(notificationLabel);

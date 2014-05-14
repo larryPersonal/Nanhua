@@ -36,6 +36,8 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
         // get the line first
         string str = fr->mFileContents.at(i);
         
+        CCLog("### %s", str.c_str());
+        
         // if a line contains "<?xml", then this line is the xml header, ignore it and continue;
         if(str.find("<?xml") != std::string::npos)
         {
@@ -49,6 +51,7 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             {
                 objective = Objective::create();
                 isInObjective = true;
+                CCLog("###     new objective");
             }
         }
         else if(!isInReward)
@@ -153,6 +156,7 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             {
                 isInObjective = false;
                 objectives->addObject(objective);
+                CCLog("###     objective end");
             }
         }
         else

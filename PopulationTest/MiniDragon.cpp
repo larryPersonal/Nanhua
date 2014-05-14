@@ -302,6 +302,7 @@ bool MiniDragon::constructTutorialSlide()
     
     if(ts->showArrow)
     {
+        CCLog("try0");
         FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale, ts->arrowLayer);
     }
     

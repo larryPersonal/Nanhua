@@ -1679,7 +1679,7 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
             
            // mapHandler->getMap()->removeChild(ob->getSprite());
            // GameHUD::getThis()->addChild(ob->getSprite());
-            ob->collect();
+            ob->collect(touchLoc);
             allTokens->removeObjectAtIndex(i);
             
             GameHUD::getThis()->scheduleAddReputation(5);

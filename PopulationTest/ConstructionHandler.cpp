@@ -29,7 +29,10 @@ ConstructionHandler::~ConstructionHandler()
 void ConstructionHandler::update(float deltaTime)
 {
     if (constructingBuildings->count() <= 0)
+    {
         return;
+    }
+    
     /*
     float currentTime = GameManager::getThis()->getCurrentTime();
     
@@ -45,7 +48,8 @@ void ConstructionHandler::update(float deltaTime)
             if (progressBar != NULL)
             progressBar->setValue(1.0f - ((building->constructionEndTime - currentTime) /building->constructionTime)); //TODO: get building construct time
         }
-    }*/
+    }
+    */
     
     for (int i = getConstructingBuildingCount() - 1; i >= 0; i-- )
     {

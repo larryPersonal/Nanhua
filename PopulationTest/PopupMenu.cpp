@@ -134,35 +134,35 @@ void PopupMenu::closeMenu(bool openPreviousMenu)
             
             if(pm->pmt == BuInfoMenu)
             {
-                CCLog("test1");
+                //CCLog("test1");
                 BuildingInfoMenu* bim = BuildingInfoMenu::create(pm->b);
                 //bim->autorelease();
                 bim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SpInfoMenu)
             {
-                CCLog("test2");
+                //CCLog("test2");
                 SpriteInfoMenu* sim = new SpriteInfoMenu(pm->gs);
                 //sim->autorelease();
                 sim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SePopulationMenu)
             {
-                CCLog("test3");
+                //CCLog("test3");
                 SelectPopulation* sp = SelectPopulation::create(pm->b);
                 //sp->autorelease();
                 sp->useAsTopmostPopupMenu();
             }
             else
             {
-                CCLog("test4");
+                //CCLog("test4");
                 closeMenu(openPreviousMenu);
                 return;
             }
         }
         else
         {
-            CCLog("test5");
+            //CCLog("test5");
         }
     }
     else

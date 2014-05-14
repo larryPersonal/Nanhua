@@ -80,6 +80,8 @@ void ObjectiveHandler::loadObjective()
 
 void ObjectiveHandler::playObjective(bool showNotification)
 {
+    CCLog("new objective received!");
+    CCLog("number of objectives: %d", objectives->count());
     if(objectives->count() <= 0)
     {
         return;
@@ -205,6 +207,10 @@ void ObjectiveHandler::playObjective(bool showNotification)
         GameHUD::getThis()->currentTime = 0;
         GameHUD::getThis()->hasTimer = true;
     }
+    
+    stringstream sss;
+    sss << "You receive a new objective!";
+    GameHUD::getThis()->addNewNotification(sss.str());
     
     if(showNotification)
     {

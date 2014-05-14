@@ -96,12 +96,14 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
     arrow->setScale(scale);
     arrow->setVisible(true);
     
-    CCLog("oh ha yoh");
+    CCLog("try1");
     
     if(arrowLayer == 1)
     {
+        CCLog("try2");
         if(BuildScroll::getThis() != NULL)
         {
+            CCLog("try3");
             if(layer == 0)
             {
                 TutorialManager::getThis()->removeChild(arrow);
@@ -109,6 +111,7 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
             }
             else
             {
+                CCLog("try4");
                 BuildScroll::getThis()->scrollArea->removeI(arrow);
                 BuildScroll::getThis()->scrollArea->addItem(arrow, ccp(pos.x, pos.y));
             }
