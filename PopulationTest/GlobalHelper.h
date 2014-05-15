@@ -14,6 +14,7 @@ using namespace std;
 
 #include "SpriteHandler.h"
 #include "cocos2d.h"
+#include <wchar.h>
 using namespace cocos2d;
 
 class GlobalHelper
@@ -45,9 +46,23 @@ public:
     static GameSprite* getSpriteByVillagerClass(GameSprite*, VillagerClass);
     
     static vector<std::string> split(std::string, char);
+    static vector<wchar_t*> split(const char*);
     static bool compareCCPoint(CCPoint, CCPoint);
     
     static float getDirectDistance(CCPoint startPos, CCPoint endPos);
+    
+    /* mbcs conversion */
+    static wchar_t * MBCS2Unicode(wchar_t * buff, const char * str);
+    static char * Unicode2MBCS(char * buff, const wchar_t * str);
+    static wstring str2wstr(string str);
+    static string wstr2str(wstring wstr);
+    static int wputs(wstring wstr);
+    static int wputs(const wchar_t * wstr);
+    
+    /*
+    static wchar_t * UTF8ToUnicode( const char* str );
+    static char * UnicodeToUTF8( const wchar_t* str );
+    */
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

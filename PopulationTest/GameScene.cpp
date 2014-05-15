@@ -320,6 +320,15 @@ void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
             CCLog("I clicked the money icon.");
         }
     }
+    
+    if(BuildingInfoMenu::getThis() != NULL)
+    {
+        if(BuildingInfoMenu::getThis()->selectWorkerButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->selectWorkerButton->isVisible())
+        {
+            CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("allocatebtn-press.png");
+            BuildingInfoMenu::getThis()->selectWorkerButton->setTexture(tex);
+        }
+    }
 }
 
 void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
@@ -821,11 +830,14 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
+            /* click the build button in the bottom right corner to open the build scroll if it is not disable in the tutorial mode */
             if(GameHUD::getThis()->buildButton != NULL && !(TutorialManager::getThis()->lockBuildButton))
             {
+                /* the click point must locate in the actual build button */
                 if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
                 {
                     GameHUD::getThis()->clickBuildButton();
+                    /* do not trigger map interaction. (return before that stage) */
                     skip = true;
                 }
             }
@@ -875,6 +887,21 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             BuildingInfoMenu::getThis()->closeMenu(true);
                         }
                     }
+                    else if(BuildingInfoMenu::getThis()->selectWorkerButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->selectWorkerButton->isVisible())
+                    {
+                        CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("allocatebtn.png");
+                        BuildingInfoMenu::getThis()->selectWorkerButton->setTexture(tex);
+                        BuildingInfoMenu::getThis()->selectPop();
+                    }
+                    else if(BuildingInfoMenu::getThis()->upgradeButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->upgradeButton->isVisible())
+                    {
+                        BuildingInfoMenu::getThis()->upgrade();
+                    }
+                    else if(BuildingInfoMenu::getThis()->cancelUpgradeButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->cancelUpgradeButton->isVisible())
+                    {
+                        BuildingInfoMenu::getThis()->upgrade();
+                    }
+                    
                     skip = true;
                 }
                 else

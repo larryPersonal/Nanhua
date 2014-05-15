@@ -40,7 +40,7 @@ struct SystemConfig
         skipTutorial_level2 = true;
         
         hideSkipButton = true;
-        debugMode = false;
+        debugMode = true;
     }
 };
 
@@ -184,7 +184,7 @@ struct SettingsLevel
     
     void setLevel0()
     {
-        default_start_money = 1200;
+        default_start_money = 120000;
         default_max_reputation = 400;
         projected_population_growth = 20;
         

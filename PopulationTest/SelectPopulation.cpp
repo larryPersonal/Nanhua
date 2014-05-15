@@ -398,6 +398,7 @@ void SelectPopulation::onMenuItemSelected(CCObject* pSender){
             break;
         case -3:
         {
+            return;
             if(!TutorialManager::getThis()->lockBuildingInfo)
             {
                 PopupMenu::backupCurrentPopupMenu();
@@ -986,6 +987,8 @@ void SelectPopulation::unselectSprite(GameSprite* gameSprite, SpriteRow* spriteR
 
 void SelectPopulation::cancelSprite(CCObject *pSender)
 {
+    return;
+    
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->lockSpriteInfo)
     {
         return;

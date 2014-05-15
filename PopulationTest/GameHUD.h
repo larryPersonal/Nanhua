@@ -369,6 +369,12 @@ public:
     bool foodLabelDirectionUp;
     bool storageLabelDirectionUp;
     
+    bool playCharacterSmileAnimation;
+    float playCharacterSmileCountDown;
+    
+    bool playDragonAnimation;
+    float playDragonCountDown;
+    
 public:
     void scheduleAddMoney(int);
     void addMoney(float);

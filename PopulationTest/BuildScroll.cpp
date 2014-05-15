@@ -96,6 +96,7 @@ void BuildScroll::createMenuItems()
     // create all building references for all building categories.
     CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
     // list down all the buildings
+    
     numberOfBuildingCards = 0;
     BuildingCard* bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
     numberOfBuildingCards++;
@@ -274,6 +275,7 @@ void BuildScroll::scrollIn(float dt)
     }
 }
 
+// The memory leak issue may caused by it never clear the cache clearly after scroll out.
 void BuildScroll::scrollOut(float dt)
 {
     if(scroll_out)
@@ -292,7 +294,7 @@ void BuildScroll::scrollOut(float dt)
                 this->scrollArea->removeI(FloatingArraw::getThis()->arrow);
             }
             
-            GameHUD::getThis()->buildScroll->closeMenu(true);
+            this->closeMenu(false);
             GameHUD::getThis()->buildScroll = NULL;
             GameHUD::getThis()->buildButton->setVisible(true);
             
@@ -304,6 +306,10 @@ void BuildScroll::scrollOut(float dt)
         {
             reposition();
         }
+    }
+    else
+    {
+        CCLog("my very bad test ");
     }
 }
 

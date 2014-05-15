@@ -125,12 +125,13 @@ public:
     
     float calcZIndex(CCPoint &tilePos, int offset = 0, bool isSprite = false, GameSprite* = NULL); //I ASSUME BUILDING CAN BE PLACED.
     
-    
     CCPoint getRandomTileLocation();
     CCPoint getRandomPathTile();
     CCPoint getRandomTile();
     
     void update(float dt);
+    
+    CCPoint getNearestNoneBuildingTile(CCPoint sourcePos);
 };
 
 

@@ -132,18 +132,20 @@ void ReputationOrb::update(float dt)
     
     if (opacity == 0)
     {
-        if (orbSprite) orbSprite = NULL;
-        if (orbTexture) orbTexture = NULL;
-        // CC_SAFE_RELEASE(orbSprite);
-        // CC_SAFE_RELEASE(orbTexture);
+        if (orbSprite)
+        {
+            orbSprite = NULL;
+        }
+        
+        if (orbTexture)
+        {
+            orbTexture = NULL;
+        }
     }
     else
     {
         if (!collected)
         {
-        
-       
-        
             if (delay_curr > 0)
             {
                 delay_curr -= dt;
@@ -168,10 +170,8 @@ void ReputationOrb::update(float dt)
 
 void ReputationOrb::collectComplete()
 {
-    opacity = 0;
-    
     GameScene::getThis()->spriteHandler->tokensOnMap->removeObject(this);
-    GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+    GameHUD::getThis()->removeChild(orbSprite);
 }
 
 
@@ -181,7 +181,7 @@ void ReputationOrb::collect(CCPoint touchLoc)
     stopAnimation = true;
     
     orbSprite->retain();
-    // TODO
+    
     GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
     GameHUD::getThis()->addChild(orbSprite);
     orbSprite->setPosition(touchLoc);
@@ -190,17 +190,15 @@ void ReputationOrb::collect(CCPoint touchLoc)
     CCCallFuncN* callback = CCCallFuncN::create(this, callfuncN_selector(ReputationOrb::collectComplete));
     callback->retain();
     
-    ccBezierConfig config;
-    config.endPosition = ccp(-1000, 800);
+    CCPoint diff = ccpSub(ccp(100, 686), touchLoc);
+    float dist = sqrt(diff.x * diff.x + diff.y * diff.y);
+    float movementSpeed = 600.0f;
     
-    CCBezierTo* bezier = CCBezierTo::create(5.0f, config);
-    
-    
-    CC_SAFE_RELEASE(callback);
-    CCSequence* runAction = CCSequence::createWithTwoActions(bezier, callback);
+    CCSequence* runAction = CCSequence::createWithTwoActions(CCMoveBy::create(dist / movementSpeed, diff), callback);
     runAction->retain();
     orbSprite->runAction(runAction);
     CC_SAFE_RELEASE(runAction);
+    CC_SAFE_RELEASE(callback);
     
     SoundtrackManager::PlaySFX("coin pickup.wav");
     //CC_SAFE_RELEASE(bezier);

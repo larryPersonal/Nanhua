@@ -27,8 +27,8 @@ Narrator::Narrator()
     textBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     TutorialManager::getThis()->addChild(textBackground);
     
-    startX = (screenSize.width - textBackground->boundingBox().size.width) / 2.0f + 80.0f;
-    startY = (screenSize.height + textBackground->boundingBox().size.height) / 2.0f - 120.0f;
+    startX = (screenSize.width - textBackground->boundingBox().size.width) / 2.0f + 110.0f;
+    startY = (screenSize.height + textBackground->boundingBox().size.height) / 2.0f - 160.0f;
     
     offX = 0;
     offY = 0;
@@ -94,7 +94,7 @@ void Narrator::display()
         for (int i = 0; i < tokens.size(); i++)
         {
             std::string tokenStr = tokens.at(i);
-            CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 28);
+            CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), "TooneyLoons", 36);
             tempLabel->retain();
             
             if (startX + offX + tempLabel->boundingBox().size.width > 860.0f)
@@ -108,7 +108,7 @@ void Narrator::display()
             for (int j = 0; j < tokenStr.length(); j++)
             {
                 string tempStr = tokenStr.substr(j, 1);
-                AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 28, 80.0f);
+                AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 36, 80.0f);
                 as->getLabel()->setColor(color);
                 as->getLabel()->setAnchorPoint(ccp(0, 1));
                 

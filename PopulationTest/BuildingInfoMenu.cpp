@@ -328,20 +328,14 @@ void BuildingInfoMenu::createMenuItems()
     workCompleteLabel->CCNode::setPosition(120.0f + hw, -110.0f + hh);
     
     // Menu items
-    menuItems = CCArray::create();
-    menuItems->retain();
-    menuItemPositions = CCPointArray::create(menuItems->capacity());
-    menuItemPositions->retain();
     
     buttonClose = CCSprite::create("Closebtn_Sq.png");
     buttonClose->setTag(-1);
     buttonClose->setAnchorPoint(ccp(1, 1));
     this->addChild(buttonClose);
     
-    /*
-    menuItems->addObject(buttonClose);
-    */
-    selectWorkerButton = CCMenuItemImage::create("allocatebtn.png", "allocatebtn-press.png", this, menu_selector(BuildingInfoMenu::selectPop));
+    //selectWorkerButton = CCMenuItemImage::create("allocatebtn.png", "allocatebtn-press.png", this, menu_selector(BuildingInfoMenu::selectPop));
+    selectWorkerButton = CCSprite::create("allocatebtn.png");
     selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
@@ -350,16 +344,11 @@ void BuildingInfoMenu::createMenuItems()
         selectWorkerButton->setVisible(false);
     }
     
-    menuItems->addObject(selectWorkerButton);
-    
-    menu = CCMenu::createWithArray(menuItems);
-    menu->setPosition(CCPointZero);
-    
     // Add children
     this->addChild(spPrice);
     this->addChild(textName);
     this->addChild(textPrice);
-    this->addChild(menu, 3);
+    this->addChild(selectWorkerButton, 3);
     
     this->addChild(spriteBuilding);
     this->addChild(labelLevel);
@@ -465,17 +454,20 @@ void BuildingInfoMenu::createMenuItems()
     foodLabel->setColor(colorYellow);
     this->addChild(foodLabel);
     
-    upgradeButton = CCMenuItemImage::create("upgrade.png", "upgrade.png", this, menu_selector(BuildingInfoMenu::upgrade));
+    //upgradeButton = CCMenuItemImage::create("upgrade.png", "upgrade.png", this, menu_selector(BuildingInfoMenu::upgrade));
+    upgradeButton = CCSprite::create("upgrade.png");
     upgradeButton->setScale(0.6f);
     upgradeButton->setAnchorPoint(ccp(0, 1));
     upgradeButton->setPosition(ccp(150 + hw, -145 + hh));
     
-    cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
+    //cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
+    cancelUpgradeButton = CCSprite::create("cancel.png");
     cancelUpgradeButton->setScale(0.18f);
     //  cancelUpgradeButton->setScale(cancelUpgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, cancelUpgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
     cancelUpgradeButton->setAnchorPoint(ccp(0, 1));
     cancelUpgradeButton->setPosition(ccp(160 + hw, -175 + hh));
     
+    /*
     menuItemsUpgrade = CCArray::create();
     menuItemsUpgrade->retain();
     
@@ -484,8 +476,10 @@ void BuildingInfoMenu::createMenuItems()
     
     upgradeMenu = CCMenu::createWithArray(menuItemsUpgrade);
     upgradeMenu->setPosition(CCPointZero);
+    */
     
-    this->addChild(upgradeMenu);
+    this->addChild(upgradeButton);
+    this->addChild(cancelUpgradeButton);
     
     upgradeBar = new ProgressBar();
     upgradeBar->createProgressBar(
@@ -1248,6 +1242,7 @@ void BuildingInfoMenu::upgrade()
 
 void BuildingInfoMenu::showSprite(CCObject *pSender)
 {
+    return;
     /*
     if(building->isCurrentConstructing)
     {

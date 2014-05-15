@@ -12,6 +12,7 @@
 #include "GlobalHelper.h"
 #include "SelectPopulation.h"
 #include "TutorialManager.h"
+#include "PathFinder.h"
 
 MapHandler::MapHandler()
 {
@@ -1239,11 +1240,10 @@ void MapHandler::update(float dt)
     */
 }
 
-
-
-
-
-
-
-
-
+CCPoint MapHandler::getNearestNoneBuildingTile(CCPoint sourcePos)
+{
+    PathFinder* pf = new PathFinder();
+    CCPoint targetPos = pf->getNearestNoneBuildingPos(&sourcePos);
+    delete pf;
+    return targetPos;
+}

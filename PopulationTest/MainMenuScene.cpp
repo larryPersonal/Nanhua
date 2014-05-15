@@ -230,6 +230,8 @@ void MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)
     //GameManager::getThis()->newGameData();
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
     
+    //CCDirector::sharedDirector()->pushScene(GameScene::scene());
+    
 }
 
 void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){

@@ -18,6 +18,9 @@ PathFinder::PathFinder()
     openList->retain();
     closedList = CCArray::create();
     closedList->retain();
+    
+    tileOpenList = CCArray::create();
+    tileClosedList = CCArray::create();
 }
 
 PathFinder::~PathFinder()
@@ -26,6 +29,10 @@ PathFinder::~PathFinder()
     CC_SAFE_RELEASE(openList);
     closedList->removeAllObjects();
     CC_SAFE_RELEASE(closedList);
+    tileOpenList->removeAllObjects();
+    CC_SAFE_RELEASE(tileOpenList);
+    tileClosedList->removeAllObjects();
+    CC_SAFE_RELEASE(tileClosedList);
 }
 
 float PathFinder::manhattanDist(CCPoint* from, CCPoint* to)
@@ -198,6 +205,81 @@ bool PathFinder::hasPath( CCPoint* fromTile, CCPoint* toTile )
     }
     
     return false;
+}
+
+CCPoint PathFinder::getNearestNoneBuildingPos( CCPoint* sourcePos )
+{
+    tileOpenList->removeAllObjects();
+    CC_SAFE_RELEASE(tileOpenList);
+    tileClosedList->removeAllObjects();
+    CC_SAFE_RELEASE(tileClosedList);
+    
+    tileOpenList = CCArray::create();
+    tileOpenList->retain();
+    tileClosedList = CCArray::create();
+    tileClosedList->retain();
+    
+    PathfindingNode* n = new PathfindingNode();
+    n->autorelease();
+    n->tilepos = CCPointMake(sourcePos->x, sourcePos->y);
+    n->parent = NULL;
+    n->G = 0;
+    n->H = 0;
+    n->F = n->G + n->H;
+    tileOpenList->addObject(n);
+    
+    while (tileOpenList->count() > 0)
+    {
+        PathfindingNode* lowestCostNode = NULL;
+        PathfindingNode* currNode = NULL;
+        for (int i = 0; i < tileOpenList->count(); i++)
+        {
+            currNode = (PathfindingNode*) tileOpenList->objectAtIndex(i);
+            if (lowestCostNode == NULL)
+            {
+                lowestCostNode = currNode;
+            }
+            else
+            {
+                if (currNode->F < lowestCostNode->F)
+                {
+                    lowestCostNode = currNode;
+                }
+            }
+        }
+        
+        MapTile* currTile = GameScene::getThis()->mapHandler->getTileAt(lowestCostNode->tilepos.x, lowestCostNode->tilepos.y);
+        
+        if(currTile->hasBuilding())
+        {
+            tileOpenList->removeObject(lowestCostNode);
+            tileClosedList->removeObject(lowestCostNode);
+            
+            CCPoint pointsToCheck[4];
+            pointsToCheck[0] = CCPointMake(lowestCostNode->tilepos.x -1, lowestCostNode->tilepos.y);
+            pointsToCheck[1] = CCPointMake(lowestCostNode->tilepos.x +1, lowestCostNode->tilepos.y);
+            pointsToCheck[2] = CCPointMake(lowestCostNode->tilepos.x, lowestCostNode->tilepos.y -1);
+            pointsToCheck[3] = CCPointMake(lowestCostNode->tilepos.x, lowestCostNode->tilepos.y +1);
+            
+            for(int i = 0; i < 4; i++)
+            {
+                CCPoint adjacentTile = pointsToCheck[i];
+                
+                PathfindingNode *node = new PathfindingNode();
+                node->autorelease();
+                node->tilepos = CCPointMake(adjacentTile.x, adjacentTile.y);
+                
+                tileOpenList->addObject(node);
+            }
+        }
+        else
+        {
+            CCPoint targetPos = ccp(currTile->xpos, currTile->ypos);
+            return targetPos;
+        }
+    }
+    
+    return CCPointZero;
 }
 
 CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)

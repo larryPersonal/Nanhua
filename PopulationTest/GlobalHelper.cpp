@@ -230,6 +230,27 @@ vector<std::string> GlobalHelper::split(std::string text, char delimiter)
     return tokens;
 }
 
+vector<wchar_t*> GlobalHelper::split(const char* myString)
+{
+    vector<wchar_t*> tokens;
+    char * p = (char *) myString;
+    while(*p)
+    {
+        if(*p & 0x80)
+        {
+            tokens.push_back((wchar_t*) p);
+            p++;
+        }
+        else
+        {
+            wchar_t temp = (wchar_t) *p;
+            tokens.push_back(&temp);
+        }
+        p++;
+    }
+    return tokens;
+}
+
 bool GlobalHelper::compareCCPoint(CCPoint ccp1, CCPoint ccp2)
 {
     stringstream ss;
@@ -255,3 +276,106 @@ float GlobalHelper::getDirectDistance(CCPoint startPos, CCPoint endPos)
     
     return (float) sqrt(width * width + height * height);
 }
+
+wchar_t * GlobalHelper::MBCS2Unicode(wchar_t * buff, const char * str)
+{
+    wchar_t * wp = buff;
+    char * p = (char *)str;
+    while(*p)
+    {
+        if(*p & 0x80)
+        {
+            *wp = *(wchar_t *)p;
+            p++;
+        }
+        else{
+            *wp = (wchar_t) *p;
+        }
+        wp++;
+        p++;
+    }
+    *wp = 0x0000;
+    return buff;
+}
+
+char * GlobalHelper::Unicode2MBCS(char * buff, const wchar_t * str)
+{
+    wchar_t * wp = (wchar_t *)str;
+    char * p = buff, * tmp;
+    while(*wp){
+        tmp = (char *)wp;
+        if(*wp & 0xFF00){
+            *p = *tmp;
+            p++;tmp++;
+            *p = *tmp;
+            p++;
+        }
+        else{
+            *p = *tmp;
+            p++;
+        }
+        wp++;
+    }
+    *p = 0x00;
+    return buff;
+}
+
+wstring GlobalHelper::str2wstr(string str)
+{
+    size_t len = str.size();
+    wchar_t * b = (wchar_t *)malloc((len+1)*sizeof(wchar_t));
+    MBCS2Unicode(b,str.c_str());
+    wstring r(b);
+    free(b);
+    return r;
+}
+
+string GlobalHelper::wstr2str(wstring wstr)
+{
+    size_t len = wstr.size();
+    char * b = (char *)malloc((2*len+1)*sizeof(char));
+    Unicode2MBCS(b,wstr.c_str());
+    string r(b);
+    free(b);
+    return r;
+}
+
+int GlobalHelper::wputs(wstring wstr)
+{
+    wputs(wstr.c_str());
+    return 0;
+}
+
+int GlobalHelper::wputs(const wchar_t * wstr)
+{
+    int len = wcslen(wstr);
+    char * buff = (char *)malloc((len * 2 + 1)*sizeof(char));
+    Unicode2MBCS(buff,wstr);
+    printf("%s",buff);
+    free(buff);
+    return 0;
+}
+
+/*
+wchar_t * GlobalHelper::UTF8ToUnicode( const char* str )
+{
+    int textlen ;
+    wchar_t * result;
+    textlen = MultiByteToWideChar( CP_UTF8, 0, str,-1, NULL,0 );
+    result = (wchar_t *)malloc((textlen+1)*sizeof(wchar_t));
+    memset(result,0,(textlen+1)*sizeof(wchar_t));
+    MultiByteToWideChar(CP_UTF8, 0,str,-1,(LPWSTR)result,textlen );
+    return result;
+}
+
+char * GlobalHelper::UnicodeToUTF8( const wchar_t* str )
+{
+    char* result;
+    int textlen;
+    textlen = WideCharToMultiByte( CP_UTF8, 0, str, -1, NULL, 0, NULL, NULL );
+    result =(char *)malloc((textlen+1)*sizeof(char));
+    memset(result, 0, sizeof(char) * ( textlen + 1 ) );
+    WideCharToMultiByte( CP_UTF8, 0, str, -1, result, textlen, NULL, NULL );
+    return result;
+}
+*/

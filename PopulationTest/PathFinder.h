@@ -18,6 +18,9 @@ class PathFinder
     CCArray* openList;
     CCArray* closedList;
     
+    CCArray* tileOpenList;
+    CCArray* tileClosedList;
+    
     CCPoint destination;
     CCPoint source;
     
@@ -46,6 +49,8 @@ public:
     PathfindingNode* isOnList(CCPoint tilePos, CCArray* list);
     
     bool isReachable(CCPoint* tilePos);
+    
+    CCPoint getNearestNoneBuildingPos(CCPoint* sourcePos);
 };
 
 #endif /* defined(__PopulationTest__PathFinder__) */

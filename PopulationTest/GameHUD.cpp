@@ -162,6 +162,12 @@ GameHUD::GameHUD()
     hasTimer = false;
     targetTime = 0;
     currentTime = 0;
+    
+    playCharacterSmileAnimation = false;
+    playCharacterSmileCountDown = 0.0f;
+    
+    playDragonAnimation = false;
+    playDragonCountDown = 0.0f;
 }
 
 GameHUD::~GameHUD()
@@ -272,49 +278,86 @@ void GameHUD::update(float deltaTime)
         }
     }
     
-    if (delay_curr > 0)
+    /* play the dragon animation */
+    if(!playDragonAnimation)
     {
-        delay_curr -= deltaTime;
+        if(playDragonCountDown <= 0)
+        {
+            playDragonAnimation = true;
+            x_frameNo = -1;
+        }
+        else
+        {
+            playDragonCountDown -= deltaTime;
+        }
     }
     else
     {
-        x_frameNo++;
-        if (x_frameNo >= x_maxFrameNo)
+        if (delay_curr > 0)
         {
-            x_frameNo = 0;
+            delay_curr -= deltaTime;
         }
-        
-        xOffset = x_frameNo % 5;
-        yOffset = x_frameNo / 5;
-        
-        objectiveButtonRect.setRect(xOffset * dragonFrameWidth, yOffset * dragonFrameHeight, dragonFrameWidth, dragonFrameHeight);
-        objectiveButton->setTextureRect(objectiveButtonRect);
-        
-        objectiveButtonBlueRect.setRect(xOffset * dragonFrameWidth, yOffset * dragonFrameHeight, dragonFrameWidth, dragonFrameHeight);
-        objectiveButtonBlue->setTextureRect(objectiveButtonBlueRect);
-        
-        delay_curr = delay_animFrame;
+        else
+        {
+            x_frameNo++;
+            if (x_frameNo >= x_maxFrameNo)
+            {
+                x_frameNo = 0;
+                playDragonAnimation = false;
+                playDragonCountDown = rand() % 20;
+            }
+            
+            xOffset = x_frameNo % 5;
+            yOffset = x_frameNo / 5;
+            
+            objectiveButtonRect.setRect(xOffset * dragonFrameWidth, yOffset * dragonFrameHeight, dragonFrameWidth, dragonFrameHeight);
+            objectiveButton->setTextureRect(objectiveButtonRect);
+            
+            objectiveButtonBlueRect.setRect(xOffset * dragonFrameWidth, yOffset * dragonFrameHeight, dragonFrameWidth, dragonFrameHeight);
+            objectiveButtonBlue->setTextureRect(objectiveButtonBlueRect);
+            
+            delay_curr = delay_animFrame;
+        }
+
     }
     
-    if (character_delay_curr > 0)
+    /* play the character avatar smile animation */
+    if(!playCharacterSmileAnimation)
     {
-        character_delay_curr -= deltaTime;
+        if (playCharacterSmileCountDown <= 0)
+        {
+            playCharacterSmileAnimation = true;
+            character_frameNo = -1;
+        }
+        else
+        {
+            playCharacterSmileCountDown -= deltaTime;
+        }
     }
     else
     {
-        character_frameNo++;
-        if (character_frameNo >= character_maxFrameNo)
+        if (character_delay_curr > 0)
         {
-            character_frameNo = 0;
+            character_delay_curr -= deltaTime;
         }
-        
-        characterXOffset = character_frameNo % 4;
-        characterYOffset = character_frameNo / 4;
-        
-        characterRect.setRect(characterXOffset * characterFrameWidth, characterYOffset * characterFrameHeight, characterFrameWidth, characterFrameHeight);
-        statsMenu->setTextureRect(characterRect);
-        
-        character_delay_curr = character_delay_animFrame;
+        else
+        {
+            character_frameNo++;
+            if (character_frameNo >= character_maxFrameNo)
+            {
+                character_frameNo = 0;
+                playCharacterSmileAnimation = false;
+                playCharacterSmileCountDown = rand() % 20;
+            }
+            
+            characterXOffset = character_frameNo % 4;
+            characterYOffset = character_frameNo / 4;
+            
+            characterRect.setRect(characterXOffset * characterFrameWidth, characterYOffset * characterFrameHeight, characterFrameWidth, characterFrameHeight);
+            statsMenu->setTextureRect(characterRect);
+            
+            character_delay_curr = character_delay_animFrame;
+        }
     }
     
     if(!pause)
@@ -1538,13 +1581,14 @@ void GameHUD::createBuildMenu()
     this->addChild(mask, 10);
 }
 
-
-
-
+/*
+ * function to handle the event - click the build button / cancel build button
+ */
 void GameHUD::clickBuildButton()
 {
     if(BuildScroll::getThis() == NULL)
     {
+        /* In tutorial mode, click build button will forward the tutorial stage / control the position of the guide dragon */
         if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildButton || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm) || TutorialManager::getThis()->teachBuildGranary))
         {
             TutorialManager::getThis()->lockBuildScroll = true;
@@ -1560,6 +1604,7 @@ void GameHUD::clickBuildButton()
         {
             TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
         }
+        
         
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)

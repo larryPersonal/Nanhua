@@ -115,14 +115,16 @@ public:
     CCLabelTTF* moneyLabel;
     CCLabelTTF* foodLabel;
     
-    CCMenuItemImage* upgradeButton;
-    CCMenuItemImage* cancelUpgradeButton;
+    CCSprite* upgradeButton;
+    CCSprite* cancelUpgradeButton;
     
     ProgressBar* upgradeBar;
     CCLabelTTF* upgradeBarLabel;
     
+    /*
     CCArray* menuItemsUpgrade;
     CCMenu* upgradeMenu;
+    */
     
     CCLabelTTF* houseLimitTitle;
     CCLabelTTF* houseLimitLabel;
@@ -136,7 +138,7 @@ public:
     CCLabelTTF* guardTowerLimitTitle;
     CCLabelTTF* guardTowerLimitLabel;
     
-    CCMenuItemImage* selectWorkerButton;
+    CCSprite* selectWorkerButton;
     
 protected:
     

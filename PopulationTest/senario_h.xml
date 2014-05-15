@@ -3,7 +3,7 @@
     <slide>
         <dialogue>
             <name></name>
-            <text>Background information: In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt.</text>
+            <text>Background information: In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt. (黄金之乱)</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -65,7 +65,7 @@
             <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
-            <name>Xiao Hua</name>
+            <name>小华</name>
             <text>Ever since the agrarian crisis that resulted in a large-scale famine, many farmers in the north were forced to seek employment in the south.</text>
 			<width>85</width>
 			<left>15</left>

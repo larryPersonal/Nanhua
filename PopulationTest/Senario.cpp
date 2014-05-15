@@ -296,7 +296,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
     
     for (int i = 0; i < tokens.size(); i++)
     {
-                std::string tokenStr = tokens.at(i);
+        std::string tokenStr = tokens.at(i);
         CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
         tempLabel->retain();
         
@@ -308,10 +308,15 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
         
         CC_SAFE_RELEASE(tempLabel);
         
-        for (int j = 0; j < tokenStr.length(); j++)
+        vector<wchar_t*> simpleTokens = GlobalHelper::split(tokenStr.c_str());
+        
+        for (int j = 0; j < simpleTokens.size(); j++)
         {
-            string tempStr = tokenStr.substr(j, 1);
-            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
+            wchar_t* tempStr = simpleTokens.at(i);
+            char* buff;
+            char* myTempStr = GlobalHelper::Unicode2MBCS(buff, tempStr);
+            
+            AnimatedString* as = AnimatedString::create(myTempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             
@@ -322,7 +327,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
             animatedStringList->addObject(as);
         }
         
-        flashGapCount += tokenStr.size();
+        flashGapCount += simpleTokens.size();
         offX += 10;
     }
 }

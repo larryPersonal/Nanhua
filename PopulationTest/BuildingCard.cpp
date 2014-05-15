@@ -48,8 +48,6 @@ void BuildingCard::init()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
-  //  ccColor3B colorYellow = ccc3(225, 219, 108);
- //   ccColor3B colorGreen = ccc3(81, 77, 2);
     stringstream ss;
     
     std::string buildingname;
@@ -90,39 +88,35 @@ void BuildingCard::init()
     // display the picture of the building
     if (type == 0)
     {
-        CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-        menuImage->setScale(192.0f / menuImage->boundingBox().size.width);
-        buildingImage = menuImage;
+        buildingImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
+        buildingImage->setScale(192.0f / buildingImage->boundingBox().size.width);
         buildingImage->setAnchorPoint(ccp(0.5, 0.5));
-        buildingImage->setContentSize(menuImage->boundingBox().size);
+        buildingImage->setContentSize(buildingImage->boundingBox().size);
     }
     else
     {
         //building is likely to be NULL here! use hardcoded stuff. sorry.
         
-     //   CCSprite* menuImage = CCSprite::createWithTexture(building->buildingTexture, building->buildingRect);
-        CCSprite* menuImage;
         if (type == 1)
         {
-            menuImage = CCSprite::create("path.png");
+            buildingImage = CCSprite::create("path.png");
         }
         else if (type == 2)
         {
-            menuImage = CCSprite::create("path-destroy.png");
+            buildingImage = CCSprite::create("path-destroy.png");
         }
         else if (type == 3)
         {
-            menuImage = CCSprite::create("demolish.png");
+            buildingImage = CCSprite::create("demolish.png");
         }
         else
         {
-            menuImage = CCSprite::create("path.png");
+            buildingImage = CCSprite::create("path.png");
         }
        
-        menuImage->setScale(192.0f / menuImage->boundingBox().size.width);
-        buildingImage = menuImage;
+        buildingImage->setScale(192.0f / buildingImage->boundingBox().size.width);
         buildingImage->setAnchorPoint(ccp(0.5, 0.5));
-        buildingImage->setContentSize(menuImage->boundingBox().size);
+        buildingImage->setContentSize(buildingImage->boundingBox().size);
     }
     
     // cost
@@ -616,6 +610,11 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == GRANARY)
     {
+        if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
+        {
+            return;
+        }
+        
         if(TutorialManager::getThis()->active)
         {
             if(TutorialManager::getThis()->teachBuildGranary)
@@ -634,15 +633,14 @@ void BuildingCard::tryToBuild(int tag)
                 return;
             }
         }
-        
-        if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
-        {
-            return;
-        }
     }
     else if(type == AMENITY)
     {
-       // buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
+        // buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
+        if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
+        {
+            return;
+        }
         
         if(TutorialManager::getThis()->active)
         {
@@ -662,41 +660,14 @@ void BuildingCard::tryToBuild(int tag)
                 TutorialManager::getThis()->lockScroll = false;
             }
         }
-        
-        if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
-        {
-            return;
-        }
     }
     else if(type == MARKET)
     {
-        if(TutorialManager::getThis()->active)
-        {
-            if(TutorialManager::getThis()->teachBuildHouse)
-            {
-                return;
-            }
-            
-            if(TutorialManager::getThis()->teachBuildGranary)
-            {
-                return;
-            }
-            
-            if(TutorialManager::getThis()->teachBuildFarm)
-            {
-                return;
-            }
-        }
-        
-        CCLog("market_no: %d,    market_ghost_no: %d,    market_limit_no: %d", GameScene::getThis()->buildingHandler->marketOnMap->count(), GameScene::getThis()->buildingHandler->marketGhostOnMap->count(), GameManager::getThis()->housingLimitation->market_limits.at(level));
-        
         if(GameScene::getThis()->buildingHandler->marketOnMap->count() + GameScene::getThis()->buildingHandler->marketGhostOnMap->count() >= GameManager::getThis()->housingLimitation->market_limits.at(level))
         {
             return;
         }
-    }
-    else if(type == MILITARY)
-    {
+        
         if(TutorialManager::getThis()->active)
         {
             if(TutorialManager::getThis()->teachBuildHouse)
@@ -714,10 +685,30 @@ void BuildingCard::tryToBuild(int tag)
                 return;
             }
         }
-        
+    }
+    else if(type == MILITARY)
+    {
         if(GameScene::getThis()->buildingHandler->militaryOnMap->count() + GameScene::getThis()->buildingHandler->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
         {
             return;
+        }
+        
+        if(TutorialManager::getThis()->active)
+        {
+            if(TutorialManager::getThis()->teachBuildHouse)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildGranary)
+            {
+                return;
+            }
+            
+            if(TutorialManager::getThis()->teachBuildFarm)
+            {
+                return;
+            }
         }
     }
     else

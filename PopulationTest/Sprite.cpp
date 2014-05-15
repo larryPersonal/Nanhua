@@ -3054,7 +3054,9 @@ void GameSprite::dropToken(bool tutorial)
         
         GameScene::getThis()->mapHandler->getMap()->addChild(newToken, 99999);
         
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&currPos);
+        CCPoint targetPos = GameScene::getThis()->mapHandler->getNearestNoneBuildingTile(currPos);
+        
+        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&targetPos);
         
         newToken->setPosition(target);
     }

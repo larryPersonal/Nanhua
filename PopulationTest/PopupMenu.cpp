@@ -32,6 +32,7 @@ void PopupMenu::cleanup()
 {
     if (this->getChildrenCount() > 0)
     {
+        CCLog(" children number > 0 ");
         this->removeAllChildren();
     }
     
@@ -157,18 +158,18 @@ void PopupMenu::closeMenu(bool openPreviousMenu)
             {
                 //CCLog("test4");
                 closeMenu(openPreviousMenu);
-                return;
             }
         }
         else
         {
-            //CCLog("test5");
+            pOpenPopupMenu.clear();
         }
     }
     else
     {
-        CCLog("test6");
+        pOpenPopupMenu.clear();
     }
+    
     this->cleanup();
 }
 

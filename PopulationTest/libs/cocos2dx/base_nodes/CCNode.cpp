@@ -712,6 +712,10 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 
                 if (cleanup)
                 {
+                    if (pNode->getChildrenCount() > 0)
+                    {
+                        pNode->removeAllChildren();
+                    }
                     pNode->cleanup();
                 }
                 // set parent nil at the end
