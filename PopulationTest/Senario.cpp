@@ -308,15 +308,10 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
         
         CC_SAFE_RELEASE(tempLabel);
         
-        vector<wchar_t*> simpleTokens = GlobalHelper::split(tokenStr.c_str());
-        
-        for (int j = 0; j < simpleTokens.size(); j++)
+        for (int j = 0; j < tokenStr.length(); j++)
         {
-            wchar_t* tempStr = simpleTokens.at(i);
-            char* buff;
-            char* myTempStr = GlobalHelper::Unicode2MBCS(buff, tempStr);
-            
-            AnimatedString* as = AnimatedString::create(myTempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
+            string tempStr = tokenStr.substr(j, 1);
+            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             
@@ -327,7 +322,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
             animatedStringList->addObject(as);
         }
         
-        flashGapCount += simpleTokens.size();
+        flashGapCount += tokenStr.size();
         offX += 10;
     }
 }
