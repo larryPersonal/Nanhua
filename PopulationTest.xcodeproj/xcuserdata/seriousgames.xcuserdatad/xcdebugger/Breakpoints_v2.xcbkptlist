@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
             endingLineNumber = "208"
-            landmarkName = "MapHandler::centerMap()"
+            landmarkName = "MapHandler::moveMapBy(float moveX, float moveY)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,7 +95,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "181"
             endingLineNumber = "181"
-            landmarkName = "MapHandler::getScaleLayer()"
+            landmarkName = "MapHandler::initTiles(const char* mapName)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1345,7 +1345,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "780"
             endingLineNumber = "780"
-            landmarkName = "MapHandler::BuildPreview(cocos2d::CCPoint &amp;target, Building* building)"
+            landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1361,7 +1361,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "659"
             endingLineNumber = "659"
-            landmarkName = "MapHandler::Build(cocos2d::CCPoint &amp;target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)"
+            landmarkName = "MapHandler::getRandomTile()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3218,7 +3218,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "894"
-            endingLineNumber = "894">
+            endingLineNumber = "894"
+            landmarkName = "MapHandler::UnBuildPreview()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

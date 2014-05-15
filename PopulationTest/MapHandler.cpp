@@ -923,6 +923,8 @@ SpriteSolidPoly* MapHandler::createTileHighlight(CCPoint& pos)
 void MapHandler::Path(cocos2d::CCPoint &target)
 {
     MapTile* targetTile = getTileAt(target.x, target.y);
+    if (targetTile->hasBuilding() || targetTile->isOccupied()) return;
+    
     targetTile->pathHere();
     pathTiles->addObject(targetTile); //I assume we only need to declare this new tile a path.
     CCTMXLayer* groundpath = mapPtr->layerNamed("Ground_Road");
