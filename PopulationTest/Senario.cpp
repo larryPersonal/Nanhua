@@ -248,8 +248,6 @@ bool Senario::constructSenarioStage(bool skip)
     return true;
 }
 
-
-
 void Senario::selectButtonPressed(CCObject* pSender)
 {
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
@@ -308,10 +306,46 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
         
         CC_SAFE_RELEASE(tempLabel);
         
+        bool hasChinese = false;
         for (int j = 0; j < tokenStr.length(); j++)
         {
-            string tempStr = tokenStr.substr(j, 1);
-            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
+            if(tokenStr.at(j) == '^')
+            {
+                hasChinese = true;
+                break;
+            }
+        }
+        
+        //if(tokenStr.at(0) == '(' && tokenStr.at(tokenStr.length() - 1) == ')')
+        if (hasChinese)
+        {
+            /*
+            string str = tokenStr.substr(1, tokenStr.length() - 2);
+            */
+            int startIndex = 0;
+            for (int j = 0; j < tokenStr.length(); j++)
+            {
+                if(tokenStr.at(j) == '^')
+                {
+                    string str = tokenStr.substr(startIndex, j - startIndex);
+                    AnimatedString* as = AnimatedString::create(str, flashTimeGap * flashGapCount, font, fontSize, 80.0f);
+                    as->getLabel()->setColor(color);
+                    as->getLabel()->setAnchorPoint(ccp(0, 1));
+                    
+                    as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
+                    offX += as->label->boundingBox().size.width;
+                    
+                    this->addChild(as->getLabel(), 20);
+                    animatedStringList->addObject(as);
+                    
+                    flashGapCount += 1;
+                    
+                    startIndex = j + 1;
+                }
+            }
+            
+            string str = tokenStr.substr(startIndex, tokenStr.length() - startIndex);
+            AnimatedString* as = AnimatedString::create(str, flashTimeGap * flashGapCount, font, fontSize, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             
@@ -320,10 +354,30 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
             
             this->addChild(as->getLabel(), 20);
             animatedStringList->addObject(as);
+            
+            flashGapCount += 1;
+            
+            offX += 10;
         }
-        
-        flashGapCount += tokenStr.size();
-        offX += 10;
+        else
+        {
+            for (int j = 0; j < tokenStr.length(); j++)
+            {
+                string tempStr = tokenStr.substr(j, 1);
+                AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), font, fontSize, 80.0f);
+                as->getLabel()->setColor(color);
+                as->getLabel()->setAnchorPoint(ccp(0, 1));
+                
+                as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
+                offX += as->label->boundingBox().size.width;
+                
+                this->addChild(as->getLabel(), 20);
+                animatedStringList->addObject(as);
+            }
+            
+            flashGapCount += tokenStr.size();
+            offX += 10;
+        }
     }
 }
 

@@ -13,6 +13,11 @@ using namespace cocos2d;
 #ifndef PopulationTest_ReputationOrb_h
 #define PopulationTest_ReputationOrb_h
 
+enum OrbStatus
+{
+    APPEAR, EXIST, DISAPPEAR
+};
+
 class ReputationOrb : public CCObject
 {
 public:
@@ -40,6 +45,8 @@ public:
     bool collected;
     bool stopAnimation;
     
+    OrbStatus orbStatus;
+    
 public:
     static ReputationOrb* create(std::string, float);
     ReputationOrb(std::string, float);
@@ -50,6 +57,9 @@ public:
     
     void collect(CCPoint touchLoc);
     void collectComplete();
+    
+    void appearAnimation(float deltaTime);
+    void disappearAnimation(float deltaTime);
 };
 
 #endif

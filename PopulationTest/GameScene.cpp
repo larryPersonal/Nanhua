@@ -1702,12 +1702,12 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
         
         if (ob->getSprite()->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
         {
+            if(ob->orbStatus != EXIST)
+            {
+                return false;
+            }
             
-            
-           // mapHandler->getMap()->removeChild(ob->getSprite());
-           // GameHUD::getThis()->addChild(ob->getSprite());
             ob->collect(touchLoc);
-            allTokens->removeObjectAtIndex(i);
             
             GameHUD::getThis()->scheduleAddReputation(5);
             return true;

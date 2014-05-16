@@ -356,6 +356,20 @@ int GlobalHelper::wputs(const wchar_t * wstr)
     return 0;
 }
 
+std::wstring GlobalHelper::stringToWstring( std::string str )
+{
+    std::wstring wStr( str.length(), L' ' );
+    std::copy( str.begin(), str.end(), wStr.begin() );
+    return wStr;
+}
+
+std::string GlobalHelper::WstringTostring( std::wstring wStr )
+{
+    std::string str( wStr.length(), ' ' );
+    std::copy( wStr.begin(), wStr.end(), str.begin() );
+    return str;
+}
+
 /*
 wchar_t * GlobalHelper::UTF8ToUnicode( const char* str )
 {

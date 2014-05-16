@@ -656,6 +656,8 @@
 		84CFAEE218E034E900A81C94 /* timeclockred.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CFAEDC18E034E900A81C94 /* timeclockred.png */; };
 		84CFAEE318E034E900A81C94 /* timeclockgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CFAEDD18E034E900A81C94 /* timeclockgreen.png */; };
 		84CFAEE418E034E900A81C94 /* timeclockbrown.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CFAEDE18E034E900A81C94 /* timeclockbrown.png */; };
+		84D4EFDF1925EF5A00B5E67A /* disappear.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D4EFDD1925EF5A00B5E67A /* disappear.png */; };
+		84D4EFE01925EF5A00B5E67A /* appear.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D4EFDE1925EF5A00B5E67A /* appear.png */; };
 		84DA68C6191A3281002B459D /* unabletogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA68C5191A3280002B459D /* unabletogo.png */; };
 		84DA68C8191A338F002B459D /* homeless_anim.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA68C7191A338F002B459D /* homeless_anim.png */; };
 		84DA68CA191A339F002B459D /* findingbandit.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA68C9191A339F002B459D /* findingbandit.png */; };
@@ -1754,6 +1756,8 @@
 		84CFAEDD18E034E900A81C94 /* timeclockgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeclockgreen.png; sourceTree = "<group>"; };
 		84CFAEDE18E034E900A81C94 /* timeclockbrown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeclockbrown.png; sourceTree = "<group>"; };
 		84CFAEE518E04A7300A81C94 /* BRITANIC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BRITANIC.TTF; sourceTree = "<group>"; };
+		84D4EFDD1925EF5A00B5E67A /* disappear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disappear.png; sourceTree = "<group>"; };
+		84D4EFDE1925EF5A00B5E67A /* appear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appear.png; sourceTree = "<group>"; };
 		84DA68C5191A3280002B459D /* unabletogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unabletogo.png; sourceTree = "<group>"; };
 		84DA68C7191A338F002B459D /* homeless_anim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeless_anim.png; sourceTree = "<group>"; };
 		84DA68C9191A339F002B459D /* findingbandit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = findingbandit.png; sourceTree = "<group>"; };
@@ -2033,6 +2037,7 @@
 		365FB9AF16E5E30B00A57CF0 /* PopulationTest */ = {
 			isa = PBXGroup;
 			children = (
+				84D4EFDC1925EF4A00B5E67A /* RGBA4444 */,
 				365FBC5716E5E31000A57CF0 /* Supporting Files */,
 				365FB9B016E5E30B00A57CF0 /* Resources */,
 				365FB9C816E5E30B00A57CF0 /* ios */,
@@ -3825,6 +3830,15 @@
 			name = timeClock;
 			sourceTree = "<group>";
 		};
+		84D4EFDC1925EF4A00B5E67A /* RGBA4444 */ = {
+			isa = PBXGroup;
+			children = (
+				84D4EFDD1925EF5A00B5E67A /* disappear.png */,
+				84D4EFDE1925EF5A00B5E67A /* appear.png */,
+			);
+			name = RGBA4444;
+			sourceTree = "<group>";
+		};
 		84EB327F1867FB6E003B5CEB /* xml */ = {
 			isa = PBXGroup;
 			children = (
@@ -4213,6 +4227,7 @@
 				844ACE7B1918904000505F01 /* guardtower.png in Resources */,
 				3619CADF17A6596600B59924 /* button-side.png in Resources */,
 				84589CE31896655500AA9E1C /* conversation_textbox_girl.png in Resources */,
+				84D4EFE01925EF5A00B5E67A /* appear.png in Resources */,
 				8444D6BF190779E500D5AFAC /* banditAttackLeftUp.png in Resources */,
 				8410544618E90DA7003D88C6 /* hungry3.png in Resources */,
 				848DDAFA19050B4A001229B8 /* arrowupanddown.png in Resources */,
@@ -4432,6 +4447,7 @@
 				8421158418D2C4DD00A441D0 /* stopsign.png in Resources */,
 				36AC558C18D6A16600C165F5 /* building3x3.png in Resources */,
 				36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */,
+				84D4EFDF1925EF5A00B5E67A /* disappear.png in Resources */,
 				36C3A80518F77E7200C93E6B /* tokenanim.png in Resources */,
 				843E973B18DB18FE00DBB48D /* Closebtn_Sq.png in Resources */,
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,

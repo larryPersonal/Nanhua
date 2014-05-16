@@ -59,6 +59,9 @@ public:
     static int wputs(wstring wstr);
     static int wputs(const wchar_t * wstr);
     
+    static std::wstring stringToWstring( std::string str );
+    static std::string WstringTostring( std::wstring wStr );
+    
     /*
     static wchar_t * UTF8ToUnicode( const char* str );
     static char * UnicodeToUTF8( const wchar_t* str );
