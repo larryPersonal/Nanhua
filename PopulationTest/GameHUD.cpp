@@ -1002,7 +1002,7 @@ void GameHUD::createStatsMenu()
     moneyBackground = CCSprite::create("amount_ui.png");
     moneyBackground->setScale(0.4f);
     moneyBackground->setAnchorPoint(ccp(0, 1));
-    moneyBackground->setPosition(ccp(170, screenSize.height - 2));
+    moneyBackground->setPosition(ccp(185, screenSize.height - 9));
     this->addChild(moneyBackground, 1);
     
     std::stringstream ss;
@@ -1023,7 +1023,7 @@ void GameHUD::createStatsMenu()
     foodBackground = CCSprite::create("amount_ui.png");
     foodBackground->setScale(moneyBackground->boundingBox().size.width / foodBackground->boundingBox().size.width);
     foodBackground->setAnchorPoint(ccp(0, 1));
-    foodBackground->setPosition(ccp(380, screenSize.height - 2));
+    foodBackground->setPosition(ccp(400, screenSize.height - 9));
     this->addChild(foodBackground, 1);
     
     mGameCurrentFood = 0;
@@ -1053,7 +1053,7 @@ void GameHUD::createStatsMenu()
     populationBackground = CCSprite::create("amount_ui.png");
     populationBackground->setScale(moneyBackground->boundingBox().size.width / populationBackground->boundingBox().size.width);
     populationBackground->setAnchorPoint(ccp(0, 1));
-    populationBackground->setPosition(ccp(600, screenSize.height - 2));
+    populationBackground->setPosition(ccp(615, screenSize.height - 9));
     this->addChild(populationBackground, 1);
     
     mGameCurrentPopulation = 0;
@@ -1173,7 +1173,7 @@ void GameHUD::createTimeMenu()
     spriteSize = timeBackground->getContentSize();
     timeBackground->setAnchorPoint(ccp(1, 1));
     timeBackground->setScale(screenSize.width / spriteSize.width * 0.18f);
-    timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height));
+    timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height - 7.0f));
     
     this->addChild(timeBackground, 1);
     
@@ -1181,28 +1181,28 @@ void GameHUD::createTimeMenu()
     firstWeekLabel = CCSprite::create("timeclock_week1.png");
     firstWeekLabel->setAnchorPoint(ccp(1, 1));
     firstWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
-    firstWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    firstWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
 
     this->addChild(firstWeekLabel, 3);
     
     secondWeekLabel = CCSprite::create("timeclock_week2.png");
     secondWeekLabel->setAnchorPoint(ccp(1, 1));
     secondWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
-    secondWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    secondWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
 
     this->addChild(secondWeekLabel, 3);
     
     thirdWeekLabel = CCSprite::create("timeclock_week3.png");
     thirdWeekLabel->setAnchorPoint(ccp(1, 1));
     thirdWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
-    thirdWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    thirdWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
 
     this->addChild(thirdWeekLabel, 3);
     
     lastWeekLabel = CCSprite::create("timeclock_week4.png");
     lastWeekLabel->setAnchorPoint(ccp(1, 1));
     lastWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
-    lastWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    lastWeekLabel->setPosition(ccp(screenSize.width + 15.0f - leftPos, screenSize.height - 7.1f));
 
     this->addChild(lastWeekLabel, 3);
     
@@ -1243,11 +1243,11 @@ void GameHUD::timeGroupReposition()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     timeMenu->setPosition(ccp(screenSize.width - leftPos, screenSize.height - 2.0f));
-    timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height));
-    firstWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
-    secondWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
-    thirdWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
-    lastWeekLabel->setPosition(ccp(screenSize.width + 1.5f - leftPos, screenSize.height - 0.5f));
+    timeBackground->setPosition(ccp(screenSize.width + maxPos - leftPos, screenSize.height - 7.0f));
+    firstWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
+    secondWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
+    thirdWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
+    lastWeekLabel->setPosition(ccp(screenSize.width + 15.0f - leftPos, screenSize.height - 7.1f));
     timeLabel_1->CCNode::setPosition(screenSize.width - 30.0f + maxPos - leftPos, screenSize.height - 25.0f);
     timeLabel_2->CCNode::setPosition(screenSize.width - 28.0f + maxPos - leftPos, screenSize.height - 55.0f);
     
