@@ -212,7 +212,7 @@ void Narrator::setupForScenario()
 {
     TutorialManager::getThis()->unlockAll();
     GameHUD::getThis()->pause = true;
-    std::string filename = "tutorial.xml";
+    std::string filename = "senario_h.xml";
     Senario::getThis()->playSenario(filename.c_str());
     TutorialManager::getThis()->clearSprites();
 }

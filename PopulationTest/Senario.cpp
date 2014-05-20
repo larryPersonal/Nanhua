@@ -13,6 +13,9 @@
 #include "AnimatedString.h"
 #include "AnimatedSprite.h"
 #include "GameHUD.h"
+#include "WrapperClass.h"
+#include "Config.h"
+#include "TutorialManager.h"
 
 Senario* Senario::SP;
 
@@ -35,6 +38,10 @@ Senario::Senario()
     skipButton = NULL;
     skipSlide = false;
     notJump = false;
+    
+    backgroundImage = "interiorhouse.png";
+    
+    scenarioState = Introduction;
 }
 
 Senario::~Senario()
@@ -89,20 +96,21 @@ void Senario::playSenario(const char* senario)
     }
     else
     {
-        readSenarioFile();
+        readSenarioFile(senario);
         constructSenarioStage(false);
-        createGUI();
         GameScene::getThis()->mapHandler->centerMap();
     }
 }
 
-void Senario::readSenarioFile()
+void Senario::readSenarioFile(const char* senario)
 {
+    //Config *c = Config::getConfig();
+    
     slidesList->removeAllObjects();
     slidesList->release();
     
     SenarioManager* sm = new SenarioManager();
-    sm->parseXMLFile("senario_h.xml");
+    sm->parseXMLFile(senario);
     
     slidesList = sm->slidesList;
     delete sm;
@@ -125,7 +133,13 @@ bool Senario::constructSenarioStage(bool skip)
     
     CCArray* elementArray = slide->elementList;
     
-    CCSprite* blackScreen = CCSprite::create("interiorhouse.png");
+    if(slide->isScene)
+    {
+        CCTextureCache::sharedTextureCache()->removeAllTextures();
+        backgroundImage = slide->scene_src;
+    }
+    
+    CCSprite* blackScreen = CCSprite::create(backgroundImage.c_str());
     blackScreen->setScale(screenSize.width / blackScreen->boundingBox().size.width);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -139,6 +153,15 @@ bool Senario::constructSenarioStage(bool skip)
     skipButton->setPosition(ccp(screenSize.width, screenSize.height));
     this->addChild(skipButton, 2);
     spriteList.push_back(skipButton);
+    
+    if(slide->hasVideo)
+    {
+        //Config *c = Config::getConfig();
+        if(slide->video_clip.compare("") != 0)
+        {
+            WrapperClass::getShared()->playVideo(slide->video_clip.c_str());
+        }
+    }
     
     if(GameScene::getThis()->systemConfig->hideSkipButton)
     {
@@ -197,7 +220,7 @@ bool Senario::constructSenarioStage(bool skip)
                 continue;
             }
             
-            float heightOff = 70.0f;
+            float heightOff = 80.0f;
             float widthOff = 80.0f;
             
             displayTexts(ele->text, screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff, ele->font.c_str(), (float)ele->fontSize, colorBlack);
@@ -295,16 +318,6 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
     for (int i = 0; i < tokens.size(); i++)
     {
         std::string tokenStr = tokens.at(i);
-        CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
-        tempLabel->retain();
-        
-        if (startX + offX + tempLabel->boundingBox().size.width > 1000.0f)
-        {
-            offY = offY + 30.0f;
-            offX = 0;
-        }
-        
-        CC_SAFE_RELEASE(tempLabel);
         
         bool hasChinese = false;
         for (int j = 0; j < tokenStr.length(); j++)
@@ -328,6 +341,18 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
                 if(tokenStr.at(j) == '^')
                 {
                     string str = tokenStr.substr(startIndex, j - startIndex);
+                    
+                    CCLabelTTF* tempLabel = CCLabelTTF::create(str.c_str(), font.c_str(), fontSize);
+                    tempLabel->retain();
+                    
+                    if (startX + offX + tempLabel->boundingBox().size.width > 1000.0f)
+                    {
+                        offY = offY + 30.0f;
+                        offX = 0;
+                    }
+                    
+                    CC_SAFE_RELEASE(tempLabel);
+                    
                     AnimatedString* as = AnimatedString::create(str, flashTimeGap * flashGapCount, font, fontSize, 80.0f);
                     as->getLabel()->setColor(color);
                     as->getLabel()->setAnchorPoint(ccp(0, 1));
@@ -361,6 +386,17 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
         }
         else
         {
+            CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
+            tempLabel->retain();
+            
+            if (startX + offX + tempLabel->boundingBox().size.width > 1000.0f)
+            {
+                offY = offY + 30.0f;
+                offX = 0;
+            }
+            
+            CC_SAFE_RELEASE(tempLabel);
+            
             for (int j = 0; j < tokenStr.length(); j++)
             {
                 string tempStr = tokenStr.substr(j, 1);
@@ -502,47 +538,29 @@ void Senario::clearElements()
     }
 }
 
-void Senario::createGUI(){
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    
-    /*
-    character = CCSprite::create("exit_pressed.png", CCRectMake(0, 0, 125, 154) );
-    character->setPosition( ccp(character->getContentSize().width/2, screenSize.height/2) );
-    this->addChild(character);
-    */
-    
-    chatbox = CCMenuItemImage::create("text_box.jpg", "text_box.jpg", this, menu_selector(Senario::buttonSelect));
-    chatbox->setScale(0.2f);
-    
-    std::stringstream ss;
-    ss << "Start Game!";
-  // CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
-   //
-    CCLabelTTF* chatboxLabel = CCLabelTTF::create(ss.str().c_str(), "TooneyLoons" , 128, CCSizeMake(ss.str().length() * 100.0f, 5.0f), kCCTextAlignmentLeft);
-
-    chatboxLabel->setAnchorPoint(ccp(0, 0));
-    chatboxLabel->setPosition( ccp(chatbox->boundingBox().size.width / 2.0f, chatbox->boundingBox().size.height));
-    chatbox->addChild(chatboxLabel);
-    chatboxLabel->setColor(ccc3(255,189,68));
-    
-    startGameMenu = CCMenu::create(chatbox, NULL);
-    startGameMenu->setAnchorPoint(ccp(0.5f, 0.5f));
-    startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
-    startGameMenu->setVisible(false);
-    this->addChild(startGameMenu, 1);
-}
-
 void Senario::buttonSelect()
 {
     active = false;
-    this->setVisible(false);
     GameScene::getThis()->enableTouch();
-    GameHUD::getThis()->pause = false;
     cumulativeTime = 0;
     lastTime = 0;
-    if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
+    
+    if(scenarioState == Introduction)
     {
-        this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
+        clearElements();
+        CCTextureCache::sharedTextureCache()->removeAllTextures();
+        TutorialManager::getThis()->setupForTutorial();
+        this->scenarioState = Tutorial;
+        //GameScene::getThis()->removeChild(this);
+    }
+    else
+    {
+        CCTextureCache::sharedTextureCache()->removeAllTextures();
+        GameHUD::getThis()->pause = false;
+        if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
+        {
+            this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
+        }
     }
 }
 

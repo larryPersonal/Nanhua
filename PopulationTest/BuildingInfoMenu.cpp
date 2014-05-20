@@ -155,10 +155,6 @@ void BuildingInfoMenu::createMenuItems()
     textName->setAnchorPoint(ccp(0.5f, 1));
     textName->setColor(colorYellow);
     
-    spLoy = CCSprite::create("loyalty icon.png");
-    spLoy->setScale(0.75);
-    spHap = CCSprite::create("happiness icon.png");
-    spHap->setScale(0.75);
     spPrice = CCSprite::create("yuanbao.png");
     spPrice->setScale(0.75);
     spCash = CCSprite::create("yuanbao.png");

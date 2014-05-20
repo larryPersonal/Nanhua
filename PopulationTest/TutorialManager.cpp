@@ -158,6 +158,7 @@ void TutorialManager::lockAll()
 void TutorialManager::setupForTutorial()
 {
     active = true;
+    lockDropTokens = true;
     
     GameHUD* hudlayer = GameHUD::create();
     GameScene::getThis()->setTouchEnabled(true);

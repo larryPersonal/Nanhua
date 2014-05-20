@@ -132,7 +132,7 @@ CCScene* GameScene::scene()
     scene->addChild(layer, 0);
     
     Senario* senlayer = Senario::create();
-    std::string filename = "tutorial.xml";
+    std::string filename = "senario_h.xml";
     
     /*
     senlayer->playSenario(filename.c_str());
@@ -140,7 +140,18 @@ CCScene* GameScene::scene()
     
     TutorialManager* tm = TutorialManager::create();
     CCLog("Level is %d", GameManager::getThis()->getLevel());
-    tm->setupForTutorial();
+    
+    if(GameManager::getThis()->getLevel() == 0)
+    {
+        filename = "introduction.xml";
+        senlayer->scenarioState = Introduction;
+        senlayer->playSenario(filename.c_str());
+    }
+    else
+    {
+        senlayer->scenarioState = Tutorial;
+        tm->setupForTutorial();
+    }
     
     ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
     objectiveHandler->loadObjective();
@@ -718,7 +729,10 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             }
             else
             {
-                Senario::getThis()->nextButtonPressed(false);
+                if(((Slide*)Senario::getThis()->slidesList->objectAtIndex(Senario::getThis()->curSlide))->clickToNext)
+                {
+                    Senario::getThis()->nextButtonPressed(false);
+                }
             }
         }
         

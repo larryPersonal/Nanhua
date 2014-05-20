@@ -1,6 +1,7 @@
 <?xml encoding="ISO-8859-1"?>
 <project>
 	<slide>
+        <clickToNext></clickToNext>
         <dialogue>
             <name></name>
             <text>Xiao Hua decides that he would build new house to accommodate the refuges.</text>
@@ -15,6 +16,7 @@
         </dialogue>
     </slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -35,6 +37,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -55,6 +58,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -76,6 +80,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -96,6 +101,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -115,6 +121,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -135,6 +142,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-5</left>
@@ -156,6 +164,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -177,6 +186,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>
@@ -197,6 +207,7 @@
 		</dialogue>
 	</slide>
     <slide>
+        <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>
 			<left>-10</left>

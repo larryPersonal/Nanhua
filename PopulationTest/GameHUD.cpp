@@ -402,7 +402,7 @@ void GameHUD::update(float deltaTime)
         {
             mGameMoney = money;
             stringstream ss;
-            ss << mGameMoney << "g";
+            ss << mGameMoney;
             moneyLabel->setString(ss.str().c_str());
         }
         
@@ -1006,7 +1006,7 @@ void GameHUD::createStatsMenu()
     this->addChild(moneyBackground, 1);
     
     std::stringstream ss;
-    ss << money << "G";
+    ss << money;
     moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     moneyLabel->setColor(colorWhite);
     moneyLabel->setAnchorPoint(ccp(0.5, 1));
@@ -1382,21 +1382,21 @@ void GameHUD::createObjectiveMenu()
     // create the objective title and objective strings!
     stringstream ss;
     ss << "Objective";
-    objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
+    objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 32);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
     objectiveTitle->setColor(colorBlack);
     objectiveTitle->setPosition(ccp(screenSize.width * 0.22f + objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 480));
     
     ss.str(std::string());
     ss << "Description";
-    objectiveDescription = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    objectiveDescription = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28);
     objectiveDescription->setAnchorPoint(ccp(0, 1));
     objectiveDescription->setColor(colorBlack);
     objectiveDescription->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 540));
     
     ss.str(std::string());
     ss << "Progress";
-    objectiveProgress = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
+    objectiveProgress = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28);
     objectiveProgress->setAnchorPoint(ccp(0, 1));
     objectiveProgress->setColor(colorBlack);
     objectiveProgress->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 600));

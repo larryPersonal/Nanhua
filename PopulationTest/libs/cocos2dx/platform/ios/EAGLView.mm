@@ -71,6 +71,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCIMEDispatcher.h"
 #import "OpenGL_Internal.h"
 #import "CCEGLView.h"
+#import "SimpleAudioEngine.h"
+#import "SoundtrackManager.h"
+#import "Senario.h"
+
 //CLASS IMPLEMENTATIONS:
 
 #define IOS_MAX_TOUCHES_COUNT     10
@@ -396,6 +400,28 @@ static EAGLView *view = 0;
     if (isKeyboardShown_)
     {
         [self handleTouchesAfterKeyboardShow];
+        return;
+    }
+    
+    if (player) {
+        
+        NSLog(@"stoping player");
+        
+        [player                     stop];
+        [player.view                removeFromSuperview];
+        [player                     release];
+        player                  =   nil;
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMoviePlayerPlaybackStateDidChangeNotification
+                                                      object:nil];
+        
+        if (cocos2d::CCDirector::sharedDirector()->isPaused()) {
+            cocos2d::CCDirector::sharedDirector()->resume();
+        }
+        
+        Senario::getThis()->nextButtonPressed(false);
+        
         return;
     }
     
@@ -910,6 +936,64 @@ static EAGLView *view = 0;
     if (self.keyboardShowNotification != nil)
     {
         [[NSNotificationCenter defaultCenter]postNotification:self.keyboardShowNotification];
+    }
+}
+
+- (void) playTutorialVideo:(NSString *)path {
+    
+    NSLog(@"Play Video");
+    
+    NSURL                           *url;
+    
+    url                         =   [NSURL fileURLWithPath:path];
+    player                      =   [[MPMoviePlayerController alloc] initWithContentURL:url]; // LEAK HERE
+    player.view.frame           =   CGRectMake(0, 0, self.frame.size.height, self.frame.size.width);
+    player.fullscreen           =   YES;
+    player.scalingMode          =   MPMovieScalingModeNone;
+    player.controlStyle         =   MPMovieControlStyleNone;
+    [self                           addSubview:player.view];
+    
+    /*
+    UIButton *myButton          =   [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.height - 100, 0, 100, 100)];
+    myButton.backgroundColor    =   [UIColor blueColor];
+    
+    [self                           addSubview:myButton];
+    */
+    
+    [player                         prepareToPlay];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(removeVideo)
+                                                 name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+    
+    NSLog(@"rect %@", NSStringFromCGRect(self.frame));
+    
+    //soundVolume                 =   [[MPMusicPlayerController applicationMusicPlayer] volume];
+}
+
+- (void) removeVideo {
+    
+    //NSLog(@"playback %d", player.playbackState);
+    
+    if (player.playbackState == MPMoviePlaybackStatePaused || player.playbackState == MPMoviePlaybackStateStopped) {
+        
+        NSLog(@"Remove Video");
+        
+        [player.view                removeFromSuperview];
+        [player                     release];
+        player                  =   nil;
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMoviePlayerPlaybackStateDidChangeNotification
+                                                      object:nil];
+        
+        if (cocos2d::CCDirector::sharedDirector()->isPaused()) {
+            cocos2d::CCDirector::sharedDirector()->resume();
+        }
+        
+        Senario::getThis()->nextButtonPressed(false);
+        
+        //AudioManager::sharedManager()->playBG();
     }
 }
 

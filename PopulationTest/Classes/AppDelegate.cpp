@@ -10,7 +10,9 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+#include "Config.h"
 #include "SplashScene.h" //change to splash.h when finalised
+#include "HelloWorldScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -55,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 
     // turn off display FPS
-    pDirector->setDisplayStats(false);
+    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);

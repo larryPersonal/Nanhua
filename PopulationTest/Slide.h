@@ -18,6 +18,14 @@ class Slide: public CCObject
 public:
     CCArray* elementList;
     
+    bool isScene;
+    std::string scene_src;
+    
+    bool hasVideo;
+    std::string video_clip;
+    
+    bool clickToNext;
+    
 public:
     Slide();
     ~Slide();

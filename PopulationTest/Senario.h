@@ -15,12 +15,15 @@
 
 using namespace cocos2d;
 
+enum ScenarioState
+{
+    Introduction, Tutorial
+};
+
 class Senario : public CCLayer
 {
 public:
     static Senario* SP;
-    
-    CCMenuItem* chatbox;
     
     char* text;
     
@@ -40,12 +43,14 @@ public:
     CCArray* animatedStringList;
     CCArray* animatedSpriteList;
     
-    CCMenu* startGameMenu;
-    
     bool skipSlide;
     
     float cumulativeTime;
     int lastTime;
+    
+    std::string backgroundImage;
+    
+    ScenarioState scenarioState;
     
 public:
     Senario();
@@ -58,9 +63,7 @@ public:
     
     void playSenario(const char* senario);
     
-    void readSenarioFile();
-    
-    void createGUI();
+    void readSenarioFile(const char* senario);
     
     void buttonSelect();
     

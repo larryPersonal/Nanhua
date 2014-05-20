@@ -12,6 +12,14 @@
 Slide::Slide(){
     elementList = CCArray::create();
     elementList->retain();
+    
+    isScene = false;
+    scene_src = "";
+    
+    hasVideo = false;
+    video_clip = "";
+    
+    clickToNext = false;
 }
 
 Slide::~Slide(){

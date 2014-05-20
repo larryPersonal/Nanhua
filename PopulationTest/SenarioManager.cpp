@@ -90,7 +90,29 @@ void SenarioManager::parseXMLFile(string xml)
         }
         else if(!inSprite && !inDialogue && !inOption)
         {
-            if(str.find("<sprite>") != std::string::npos)
+            if(str.find("<scene>") != std::string::npos)
+            {
+                int start_pos = -1;
+                int end_pos = -1;
+                start_pos = str.find("<scene>");
+                end_pos = str.find("</scene>");
+                string content = str.substr(start_pos + 7, end_pos - start_pos - 7);
+                slide->isScene = true;
+                slide->scene_src = content;
+            }
+            else if(str.find("<video>") != std::string::npos)
+            {
+                int start_pos = str.find("<video>");
+                int end_pos = str.find("</video>");
+                string content = str.substr(start_pos + 7, end_pos - start_pos - 7);
+                slide->hasVideo = true;
+                slide->video_clip = content;
+            }
+            else if(str.find("<clickToNext>") != std::string::npos && str.find("</clickToNext>") != std::string::npos)
+            {
+                slide->clickToNext = true;
+            }
+            else if(str.find("<sprite>") != std::string::npos)
             {
                 element = new Element();
                 element->updateSpriteType();
@@ -116,8 +138,8 @@ void SenarioManager::parseXMLFile(string xml)
         }
         else if(inOutcome)
         {
-            unsigned start_pos = -1;
-            unsigned end_pos = -1;
+            int start_pos = -1;
+            int end_pos = -1;
             string content = "";
             float temp;
             

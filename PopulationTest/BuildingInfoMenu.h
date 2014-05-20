@@ -60,8 +60,6 @@ public:
     CCArray* spritePopulationMenu;
     
     CCSprite* spPrice;
-    CCSprite* spLoy;
-    CCSprite* spHap;
     CCSprite* spCash;
     
     CCLabelTTF* labelLevel;

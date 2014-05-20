@@ -966,8 +966,20 @@ void Building::updateBuilding(float dt)
 {
     if(buildingType == AMENITY)
     {
-      //  int number_of_phase = maxGID - baseGID + 1;
-        currGID = ((int)((int)(work_unit_current * 4)) / work_unit_required) + baseGID;
+        //  int number_of_phase = maxGID - baseGID + 1;
+        if(work_unit_current == 0)
+        {
+            currGID = baseGID;
+        }
+        else if(work_unit_current >= work_unit_required)
+        {
+            currGID = baseGID + 4;
+        }
+        else
+        {
+            currGID = ((int)((int)(work_unit_current * 4)) / work_unit_required) + baseGID + 1;
+        }
+        
         if(lastGID != currGID)
         {
             lastGID = currGID;
