@@ -559,6 +559,7 @@ void SelectPopulation::scheduleConstruction()
 void SelectPopulation::scheduleFarming()
 {
     building->farmState = FARM;
+    building->taskType = FarmActivity;
     for (int i = 0; i < memberArray->count(); i++)
     {
         GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);

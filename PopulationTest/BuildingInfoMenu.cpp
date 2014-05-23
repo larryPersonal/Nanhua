@@ -1201,6 +1201,8 @@ void BuildingInfoMenu::upgrade()
         cancelUpgradeButton->setVisible(false);
         building->isCurrentUpgrading = false;
         building->current_upgrade_unit = 0;
+        building->removeProgressiveBar();
+        building->taskType = NoActivity;
     }
     else
     {
@@ -1233,6 +1235,7 @@ void BuildingInfoMenu::upgrade()
             b->currentStorage = 0;
         }
 
+        building->taskType = UpgradeActivity;
     }
 }
 

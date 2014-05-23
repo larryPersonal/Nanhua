@@ -12,6 +12,8 @@
 #include "cocos2d.h"
 //#include "SimpleAudioEngine.h"
 
+#include "ProgressBar.h"
+
 using namespace cocos2d;
 //using namespace CocosDenshion;
 using namespace std;
@@ -38,6 +40,15 @@ enum FarmState {
     HARVEST
 };
 
+enum TaskType {
+    NoActivity,
+    Construction,
+    FarmActivity,
+    UpgradeActivity,
+    FoodStorage,
+    HomeActivity
+};
+
 
 class Building: public CCObject
 {
@@ -60,6 +71,9 @@ public:
     FarmState farmState;
     int populationLimit;
     int builderLimit;
+    
+    TaskType taskType;
+    ProgressBar* progressBar;
     
     // for food, one for the current storage amount, the other for the limitation of storage.
     int currentStorage;
@@ -179,6 +193,9 @@ public:
     //animation timing checks. HARDCODED.
     float anim_check_time;
     float curr_anim_check_time;
+    
+    void addProgressiveBar();
+    void removeProgressiveBar();
     
 };
 

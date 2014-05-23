@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" width="90" height="60" tilewidth="128" tileheight="64">
+<map version="1.0" orientation="isometric" width="67" height="60" tilewidth="128" tileheight="64">
  <tileset firstgid="1" name="plant-1x1" tilewidth="128" tileheight="128">
   <image source="plant-1x1.png" width="512" height="640"/>
   <tile id="0">
@@ -1341,130 +1341,130 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Ground_0" width="90" height="60">
+ <layer name="Ground_0" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwwEJAAAMBKH7/qWXY6Dgqqmqqqqqqqqqqqqqqqqqqqqqqqqqqi8flzYVGQ==
+   eJztw0ENAAAMA6Grf9MzsSckrJqqqqqqqqqqqqqqqqqqqqo+P6g7D7U=
   </data>
  </layer>
- <layer name="Ground_1" width="90" height="60">
+ <layer name="Ground_1" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="16"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
+   eJztwSEBAAAAAiAn+H+tJ4xAAwAAAAAAAAAAAAAAAAAAAH8DLAwAEQ==
   </data>
  </layer>
- <layer name="Building_River" width="90" height="60">
+ <layer name="Building_River" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="5"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1iEBACAQwMDvH4C8SBzMYe7sCmzmbj06AABw+GcAAOj8MwAAdP4ZAAA6/wwAAJ1/BgCAzj8DAEDnnwH+2LquBLE=
+   eJzt1jENACAQwMD3LwC9TKwQko53aw105m49OgDAL38BANT8BQBQ8xcAQM1fAAA1fwEA1PwFAFDzF8CxAbn0BLE=
   </data>
  </layer>
- <layer name="Ground_Road" width="90" height="60">
+ <layer name="Ground_Road" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="12"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0MENACAMA7FOA/tvyJcFSAXYUv7RVQEAAAAAAAAA3GtuA+Cc0X3gEzpn6Jyhc4bOGTpn6JyhMwAAAAAAAAAAvGkBjPgBpg==
+   eJzt0MEJACAQA8GrRvvv0GfswIAzkH/YGQAAAAAAgA77GvCX9fpAES1Ci9AitAgtQovQAgAAAAAAgDYHy68Bpg==
   </data>
  </layer>
- <layer name="Building_House" width="90" height="60">
+ <layer name="Building_House" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="40"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjEBAAAIA6AVsn89Q+zwEBKQAAAAAAAAAAAAAEBvrgMAAAAAAAAAAAAATy2s8QAu
+   eJztzjENAAAIA7AZwr89TCyBo1XQBAAAAAAAAAD4Zq4DAAAAAAAAAFCwshsALg==
   </data>
  </layer>
- <layer name="Building_1" width="90" height="60">
+ <layer name="Building_1" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="11"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwQEJAAAAAqAm9H9tOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2aqwAR
+   eJztwSEBAAAAAiAn+H+tJ4xAAwAAAAAAAAAAAAAAAAAAAH8DLAwAEQ==
   </data>
  </layer>
- <layer name="Building_2" width="90" height="60">
+ <layer name="Building_2" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="1"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwQEJAAAAAqCG9H9nOwK1AQAAAAAAAAAAAAAAAAAAAAAAAAAAXg2PZwAd
+   eJztwSEBAAAAAiCH+H+nJ4xAAwAAAAAAAAAAAAAAAAAAAH8DHfkAHQ==
   </data>
  </layer>
- <layer name="Building_3" width="90" height="60">
+ <layer name="Building_3" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="3"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7Apxv+JiSUctAqaAAAAAAAAAADwyVwHAAAAAAAAAAAAAAAAqFrmOwBv
+   eJztzjENAAAMA6Aqnv9zKpo+oIAEAAAAAACAplsHAAAAAAAAAAAARh5BQABv
   </data>
  </layer>
- <layer name="Building_GuardTower" width="90" height="60">
+ <layer name="Building_GuardTower" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="14"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwTENAAAAAiD73wY2hxvQAAAAAAAAAAAAAAAAAAAAAAAAAAAArwYevwCV
+   eJztwSEBAAAAAiD/Zwd7wgg0AAAAAAAAAAAAAAAAAAAA8DeRLACV
   </data>
  </layer>
- <layer name="Building_Border" width="90" height="60">
+ <layer name="Building_Border" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="1"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt27ENADAIAzBe7v8LDzBSUFV7zx5FSgQvOPIAAAAAANDO/gwAAAAAwC02aAAA4Ffbn9LtPADABJ0FAACASgKIRQVN
+   eJzt2kENAAAIAzEs4/+DCRIItP+bgkXQJYf7rg0AAAAAAAAAAAAAuG7D9xcAAADggwLBiAI2
   </data>
  </layer>
- <layer name="Building_Wall" width="90" height="60">
+ <layer name="Building_Wall" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="10"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1DEKgEAMBMB7t4KgftxGH6BEIutMkypkiyVjAAAAAADAv+3dAaDQ3B0ACukzSfSZJGt3ACjkP5NEn0mizyTRZ960nXO6OZeHe9c9AAAAAAAAAADgmw56TAuc
+   eJzt1DEKgEAMBMB7t4KgftxGu22Ug0SYaVKFbLFkDAAAAABmOasD0NJaHYCW9IJEL0j26gC05F+Q6AWJXpDoxT8c91xezu3j3nMPAAAAAAAAZrsAGZgLnA==
   </data>
  </layer>
- <layer name="Building_School" width="90" height="60">
+ <layer name="Building_School" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="34"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6D3b2YrW9zNQQISGuY6AAAAAAAAAAAAAAAAAAAAAAAAAADASwt85wDK
+   eJztzjENAAAIA7D5d4YrrmkgIa2CJtRcBwAAAAAAAAAAAAAAAAAAAB5ZwIQAyg==
   </data>
  </layer>
- <layer name="Building_Granary" width="90" height="60">
+ <layer name="Building_Granary" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="20"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAEADD9EwohhBI2Y3+CR8AftR0AAAAAAAAAAADglNwOAAAAAAAAAAAAAMCABufhAcU=
+   eJztziENAAAIADD6JyQEIbBsOAzmT/AI2Oo7AAAAAAAAADDkdwAAAAAAAAAAOGkzLQHF
   </data>
  </layer>
- <layer name="Building_Market" width="90" height="60">
+ <layer name="Building_Market" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="1"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwTENAAAAAiD7N/YzhxvQAAAAAAAAAAAAAAAAAAAAAAAAAAAArwZqjgD6
+   eJztwSEBAAAAAiD/P7Z5wgg0AAAAAAAAAAAAAAAAAAAA8DdaswD6
   </data>
  </layer>
 </map>

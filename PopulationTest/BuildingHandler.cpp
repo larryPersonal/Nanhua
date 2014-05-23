@@ -28,6 +28,7 @@ BuildingHandler::BuildingHandler()
     decorationOnMap = NULL;
     marketOnMap = NULL;
     
+    allBuildingsGhostOnMap = NULL;
     housingGhostOnMap = NULL;
     granaryGhostOnMap = NULL;
     amenityGhostOnMap = NULL;
@@ -95,6 +96,15 @@ BuildingHandler::~BuildingHandler()
 
     allBuildingLayers->removeAllObjects();
     allBuildingLayers->release();
+    
+    if (allBuildingsGhostOnMap)
+    {
+        if (allBuildingsGhostOnMap->count() > 0)
+        {
+            allBuildingsGhostOnMap->removeAllObjects();
+        }
+        CC_SAFE_RELEASE(allBuildingsGhostOnMap);
+    }
     
     if (allBuildings)
     {
@@ -656,6 +666,8 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     allBuildingLayers->retain();
     allBuildingsOnMap = CCArray::create();
     allBuildingsOnMap->retain();
+    allBuildingsGhostOnMap = CCArray::create();
+    allBuildingsGhostOnMap->retain();
     
     housingOnMap= CCArray::create();
     granaryOnMap= CCArray::create();

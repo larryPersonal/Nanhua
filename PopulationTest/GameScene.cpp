@@ -1499,15 +1499,15 @@ void GameScene::update(float time)
             sp->updateSprite(time);
         }
         
-        for (int i = 0; i < buildingHandler->specialOnMap->count(); i++)
+        for (int i = 0; i < buildingHandler->allBuildingsOnMap->count(); i++)
         {
-            Building* b = (Building*) buildingHandler->specialOnMap->objectAtIndex(i);
+            Building* b = (Building*) buildingHandler->allBuildingsOnMap->objectAtIndex(i);
             b->updateBuilding(time);
         }
         
-        for (int i = 0; i < buildingHandler->amenityOnMap->count(); i++)
+        for (int i = 0; i < buildingHandler->allBuildingsGhostOnMap->count(); i++)
         {
-            Building* b = (Building*) buildingHandler->amenityOnMap->objectAtIndex(i);
+            Building* b = (Building*) buildingHandler->allBuildingsGhostOnMap->objectAtIndex(i);
             b->updateBuilding(time);
         }
         

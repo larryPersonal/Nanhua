@@ -32,6 +32,7 @@ public:
     //Ok, I think its simpler if I also had this so i can get the pointer immediately from ID.
     /*update: getters implemented due to possibility of demolishing buildings screwing with array order*/
     CCArray * allBuildingsOnMap;
+    CCArray * allBuildingsGhostOnMap;
     
     /*it'd probably be easier on the search and the head if I kept them as separate CCArrays.*/
     /*I'm not sure whether I still need any of these categories, but I'll leave them alone.*/

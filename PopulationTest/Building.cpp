@@ -16,7 +16,6 @@
 #include <iterator>
 #include "TutorialManager.h"
 
-
 Building::Building()
 {
     farmState = WAITING;
@@ -83,8 +82,9 @@ Building::Building()
     anim_triggered = true;
     cumulatedTimeResting = 0;
     
+    taskType = NoActivity;
     
-    
+    progressBar = NULL;
 }
 Building::~Building()
 {
@@ -149,6 +149,8 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->buildingName = this->buildingName;
         pCopy->buildingDesc = this->buildingDesc;
         pCopy->targetLayerName = this->targetLayerName;
+        
+        pCopy->taskType = this->taskType;
       
         pCopy->width = this->width;
         pCopy->height = this->height;
@@ -422,6 +424,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     work_unit_current = 0;
                     currentStorage = storageLimit;
                     isCurrentHarvest = true;
+                    taskType = NoActivity;
                 }
                 
                 if(sp->getPossessions()->energyRating < 0)
@@ -896,6 +899,13 @@ void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
     //Because ::Create was used the old one should garbage collect on its own. TO MONITOR.
     buildingRep = newRep;
     
+    if(!isUnderConstruction())
+    {
+        if(taskType == FarmActivity)
+        {
+            addProgressiveBar();
+        }
+    }
     
     GameScene::getThis()->mapHandler->getMap()->addChild(buildingRep, z);
     
@@ -999,6 +1009,51 @@ void Building::updateBuilding(float dt)
                 current_upgrade_unit = 0;
                 GameManager::getThis()->town_hall_level++;
                 isCurrentUpgrading = false;
+                taskType = NoActivity;
+                removeProgressiveBar();
+            }
+        }
+    }
+    
+    /*
+     * update the side information for all the activities of the building
+     */
+    if(isUnderConstruction())
+    {
+        if(taskType == Construction)
+        {
+            if(progressBar == NULL)
+            {
+                addProgressiveBar();
+            }
+            else
+            {
+                progressBar->setValue((float)build_uint_current / (float)build_uint_required);
+            }
+        }
+    }
+    else
+    {
+        if(taskType == FarmActivity)
+        {
+            if(progressBar == NULL)
+            {
+                addProgressiveBar();
+            }
+            else
+            {
+                progressBar->setValue((float)work_unit_current / (float)work_unit_required);
+            }
+        }
+        else if(taskType == UpgradeActivity)
+        {
+            if(progressBar == NULL)
+            {
+                addProgressiveBar();
+            }
+            else
+            {
+                progressBar->setValue((float)current_upgrade_unit / (float) upgrade_unit_max);
             }
         }
     }
@@ -1007,4 +1062,50 @@ void Building::updateBuilding(float dt)
     {
         inProgress = (memberSpriteList->count() > 0);
     }
+}
+
+void Building::addProgressiveBar()
+{
+    progressBar = ProgressBar::create();
+    progressBar->createProgressBar(CCRectMake(0, 0, buildingRep->boundingBox().size.width + 6, 16),
+                                   CCRectMake(3, 3, buildingRep->boundingBox().size.width, 10),
+                                   "Energy_brown bar.png",
+                                   "NONE",
+                                   "NONE",
+                                   "Energybarblue.png",
+                                   true);
+    progressBar->setAnchorPoint(ccp(0, 1));
+    buildingRep->addChild(progressBar);
+    progressBar->setPosition(0, buildingRep->boundingBox().size.height);
+    
+    if(taskType == Construction)
+    {
+        CCSprite* taskIcon = CCSprite::create("main-game-buttons_build.png");
+        taskIcon->setAnchorPoint(ccp(0, 1));
+        taskIcon->setScale(progressBar->boundingBox().size.height / taskIcon->boundingBox().size.height * 3.0f);
+        progressBar->addChild(taskIcon);
+        taskIcon->setPosition(ccp(0, progressBar->boundingBox().size.height + taskIcon->boundingBox().size.height * 0.6f));
+    }
+    else if(taskType == FarmActivity)
+    {
+        CCSprite* taskIcon = CCSprite::create("rice_icon.png");
+        taskIcon->setAnchorPoint(ccp(0, 1));
+        taskIcon->setScale(progressBar->boundingBox().size.height / taskIcon->boundingBox().size.height * 1.5f);
+        progressBar->addChild(taskIcon);
+        taskIcon->setPosition(ccp(0, progressBar->boundingBox().size.height + taskIcon->boundingBox().size.height * 1.1f));
+    }
+    else if(taskType == UpgradeActivity)
+    {
+        CCSprite* taskIcon = CCSprite::create("upgrade.png");
+        taskIcon->setAnchorPoint(ccp(0, 1));
+        taskIcon->setScale(progressBar->boundingBox().size.height / taskIcon->boundingBox().size.height * 2.0f);
+        progressBar->addChild(taskIcon);
+        taskIcon->setPosition(ccp(0, progressBar->boundingBox().size.height + taskIcon->boundingBox().size.height * 1.0f));
+    }
+}
+
+void Building::removeProgressiveBar()
+{
+    buildingRep->removeChild(progressBar, true);
+    progressBar = NULL;
 }

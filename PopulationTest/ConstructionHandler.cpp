@@ -12,8 +12,6 @@
 #include "ProgressBar.h"
 #include "TutorialManager.h"
 
-static const int PROGRESSBAR_TAG = (int)"constructionProgressBar";
-
 ConstructionHandler::ConstructionHandler()
 {
     constructingBuildings = CCArray::create();
@@ -60,38 +58,13 @@ void ConstructionHandler::update(float deltaTime)
            CCLog("%i", building->build_uint_current);
            completeConstructingBuilding(building);
        }
-       else
-       {
-           ProgressBar* progressBar = (ProgressBar*)building->buildingRep->getChildByTag(PROGRESSBAR_TAG);
-           if (progressBar != NULL)
-           {
-               float newVal = (building->build_uint_current/(float)building->build_uint_required);
-               
-               progressBar->setValue(newVal);
-           }
-           else
-           {
-               //PROGRESSBAR IS NULL
-           }
-       }
     }
     
 }
 
 void ConstructionHandler::addConstructingBuilding(Building* building)
 {
-    ProgressBar* progressBar = ProgressBar::create();
-    progressBar->createProgressBar(CCRectMake(0, 0, building->buildingRep->boundingBox().size.width + 6, 16),
-                                   CCRectMake(3, 3, building->buildingRep->boundingBox().size.width, 10),
-                                   "Energy_brown bar.png",
-                                   "NONE",
-                                   "NONE",
-                                   "Energybarblue.png",
-                                   true);
-    progressBar->setAnchorPoint(ccp(0, 1));
-    progressBar->setTag(PROGRESSBAR_TAG);
-    building->buildingRep->addChild(progressBar);
-    progressBar->setPosition(0, building->buildingRep->boundingBox().size.height);
+    building->taskType = Construction;
     
     building->buildingRep->setOpacity(150);
     
@@ -137,6 +110,8 @@ void ConstructionHandler::addConstructingBuilding(Building* building)
     {
         GameScene::getThis()->buildingHandler->decorationGhostOnMap->addObject(building);
     }
+    
+    GameScene::getThis()->buildingHandler->allBuildingsGhostOnMap->addObject(building);
 }
 
 void ConstructionHandler::removeConstructingBuilding(Building *building)
@@ -183,11 +158,15 @@ void ConstructionHandler::removeConstructingBuilding(Building *building)
     {
         GameScene::getThis()->buildingHandler->decorationGhostOnMap->removeObject(building);
     }
+    
+    GameScene::getThis()->buildingHandler->allBuildingsGhostOnMap->removeObject(building);
 }
 
 void ConstructionHandler::completeConstructingBuilding(Building* building)
 {
-    building->buildingRep->removeChildByTag(PROGRESSBAR_TAG);
+    building->taskType = NoActivity;
+    building->removeProgressiveBar();
+    
     building->buildingRep->setOpacity(255);
     building->ID = GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
  
@@ -234,6 +213,8 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     {
         GameScene::getThis()->buildingHandler->decorationGhostOnMap->removeObject(building);
     }
+    
+    GameScene::getThis()->buildingHandler->allBuildingsGhostOnMap->removeObject(building);
 
     if(TutorialManager::getThis()->active)
     {
