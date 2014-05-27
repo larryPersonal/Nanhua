@@ -142,6 +142,8 @@ public:
     
     void checkTeachBuildRoad();
     
+    void clearCache();
+    
     CREATE_FUNC(GameScene);
 };
 

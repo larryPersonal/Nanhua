@@ -20,7 +20,6 @@ using namespace CocosDenshion;
 
 MainMenuScene* MainMenuScene::SP;
 
-
 MainMenuScene::MainMenuScene()
 {
     MainMenuScene::SP = this;
@@ -187,6 +186,7 @@ void MainMenuScene::loadSenarioChooseScene()
     
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     
+    CCDirector::sharedDirector()->purgeCachedData();
     CCDirector::sharedDirector()->replaceScene(SenarioChooseScene::scene());
 }
 
@@ -259,7 +259,6 @@ void MainMenuScene::onOrientationChanged(){
     
     if (screenSize.width < screenSize.height) //i.e portrait
     {
-    
         backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.1));
         backgroundDeco2->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.1));
 

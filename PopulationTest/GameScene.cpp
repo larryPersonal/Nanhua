@@ -254,6 +254,11 @@ void GameScene::setupScene()
     
     banditsAttackHandler = new BanditsAttackHandler();
     
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->purgeCachedData();
+    
     initOrientationChange();
 }
 
@@ -1088,6 +1093,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 if (tilePos.x == lastPathPosPreview.x &&
                     tilePos.y == lastPathPosPreview.y)
                 {
+                    // confirm
                     mapHandler->UnPathPreview();
                     mapHandler->PathLine(firstPathPosPreview, lastPathPosPreview);
                     GameHUD::getThis()->buyBuilding(buildPathDistance * 10);
@@ -1101,6 +1107,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
                 else
                 {
+                    // modify
                     mapHandler->UnPathPreviewLineExtend();
                     lastPathPosPreview = mapHandler->PathPreviewLineExtend(touchLoc, 10);
                     
@@ -1285,7 +1292,7 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant || false)
+    if(instant || true)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
         CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
@@ -1942,4 +1949,7 @@ void GameScene::goToMainMenu()
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 
-
+void GameScene::clearCache()
+{
+    
+}

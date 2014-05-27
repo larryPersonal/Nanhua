@@ -168,6 +168,9 @@ GameHUD::GameHUD()
     
     playDragonAnimation = false;
     playDragonCountDown = 0.0f;
+    
+    objectiveDescriptions = CCArray::create();
+    objectiveDescriptions->retain();
 }
 
 GameHUD::~GameHUD()
@@ -190,6 +193,9 @@ GameHUD::~GameHUD()
     
     eventLabels->removeAllObjects();
     CC_SAFE_RELEASE(eventLabels);
+    
+    objectiveDescriptions->removeAllObjects();
+    CC_SAFE_RELEASE(objectiveDescriptions);
     
     GameHUD::SP = NULL;
 }
@@ -1388,13 +1394,6 @@ void GameHUD::createObjectiveMenu()
     objectiveTitle->setPosition(ccp(screenSize.width * 0.22f + objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 480));
     
     ss.str(std::string());
-    ss << "Description";
-    objectiveDescription = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28);
-    objectiveDescription->setAnchorPoint(ccp(0, 1));
-    objectiveDescription->setColor(colorBlack);
-    objectiveDescription->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 540));
-    
-    ss.str(std::string());
     ss << "Progress";
     objectiveProgress = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28);
     objectiveProgress->setAnchorPoint(ccp(0, 1));
@@ -1402,7 +1401,6 @@ void GameHUD::createObjectiveMenu()
     objectiveProgress->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 600));
     
     objectiveMenu->addChild(objectiveTitle);
-    objectiveMenu->addChild(objectiveDescription);
     objectiveMenu->addChild(objectiveProgress);
     
     this->addChild(objectiveMenu, 6);
@@ -1496,8 +1494,13 @@ void GameHUD::fadeIn(float dt)
         objectiveMenu->setOpacity((GLubyte) opacity);
         objectiveButtonBlue->setOpacity((GLubyte) opacity);
         objectiveTitle->setOpacity((GLubyte) opacity);
-        objectiveDescription->setOpacity((GLubyte) opacity);
         objectiveProgress->setOpacity((GLubyte) opacity);
+        
+        for(int i = 0; i < objectiveDescriptions->count(); i++)
+        {
+            CCLabelTTF* objectiveDescription = (CCLabelTTF*) objectiveDescriptions->objectAtIndex(i);
+            objectiveDescription->setOpacity((GLubyte) opacity);
+        }
     }
 }
 
@@ -1521,8 +1524,13 @@ void GameHUD::fadeOut(float dt)
         objectiveMenu->setOpacity((GLubyte) opacity);
         objectiveButtonBlue->setOpacity((GLubyte) opacity);
         objectiveTitle->setOpacity((GLubyte) opacity);
-        objectiveDescription->setOpacity((GLubyte) opacity);
         objectiveProgress->setOpacity((GLubyte) opacity);
+        
+        for(int i = 0; i < objectiveDescriptions->count(); i++)
+        {
+            CCLabelTTF* objectiveDescription = (CCLabelTTF*) objectiveDescriptions->objectAtIndex(i);
+            objectiveDescription->setOpacity((GLubyte) opacity);
+        }
     }
 }
 
@@ -1536,8 +1544,14 @@ void GameHUD::clickObjectiveButton()
             objectiveMenu->setOpacity((GLubyte) 255);
             objectiveButtonBlue->setOpacity((GLubyte) 255);
             objectiveTitle->setOpacity((GLubyte) 255);
-            objectiveDescription->setOpacity((GLubyte) 255);
             objectiveProgress->setOpacity((GLubyte) 255);
+            
+            for(int i = 0; i < objectiveDescriptions->count(); i++)
+            {
+                CCLabelTTF* objectiveDescription = (CCLabelTTF*) objectiveDescriptions->objectAtIndex(i);
+                objectiveDescription->setOpacity((GLubyte) 255);
+            }
+            
             fade_out = true;
             this->schedule(schedule_selector( GameHUD::fadeOut ), 1.0f / 240.0f);
         }
@@ -1548,8 +1562,14 @@ void GameHUD::clickObjectiveButton()
             objectiveButtonBlue->setOpacity((GLubyte) 0);
             objectiveTitle->setOpacity((GLubyte) 0);
             objectiveTitle->setVisible(true);
-            objectiveDescription->setOpacity((GLubyte) 0);
             objectiveProgress->setOpacity((GLubyte) 0);
+            
+            for(int i = 0; i < objectiveDescriptions->count(); i++)
+            {
+                CCLabelTTF* objectiveDescription = (CCLabelTTF*) objectiveDescriptions->objectAtIndex(i);
+                objectiveDescription->setOpacity((GLubyte) 0);
+            }
+            
             objectiveMenu->setPosition(ccp(screenSize.width * 0.04f, screenSize.height - 145.0f));
             fade_in = true;
             this->schedule(schedule_selector( GameHUD::fadeIn ), 1.0f / 240.0f);

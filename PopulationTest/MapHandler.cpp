@@ -975,36 +975,49 @@ TileType MapHandler::PathTileUpdate(cocos2d::CCPoint &target, int propogate, CCT
     tiles[2] = PathTileUpdate(SW, propogate, groundpath);
     tiles[3] = PathTileUpdate(NW, propogate, groundpath);
     
-    int total = 0;
-    for (int i = 0; i < 4; ++i)
-    {
-        if (tiles[i] != N)
-        {
-            switch (i)
-            {
-                case 0: total += 1;
-                    break;
-                case 1: total += 2;
-                    break;
-                case 2: total += 4;
-                    break;
-                case 3: total += 8;
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    //4-way
-   // CCLog("TOTAL %d", total);
+    MapTile* NWTile = getTileAt(NW.x, NW.y);
+    MapTile* SWTile = getTileAt(SW.x, SW.y);
+    MapTile* NETile = getTileAt(NE.x, NE.y);
+    MapTile* SETile = getTileAt(SE.x, SE.y);
     
+    MapTile* currentTile = getTileAt(target.x, target.y);
+    
+    int total = 0;
+    
+    if(NETile->isPath || NETile->hasBuilding())
+    {
+        total += 1;
+    }
+    
+    if(SETile->isPath || SETile->hasBuilding())
+    {
+        total += 2;
+    }
+    
+    if(SWTile->isPath || SWTile->hasBuilding())
+    {
+        total += 4;
+    }
+    
+    if(NWTile->isPath || NWTile->hasBuilding())
+    {
+        total += 8;
+    }
+    
+    if(total <= 0)
+    {
+        return (TileType)currentTile->tileGID;
+    }
+    
+    
+    //4-way
+    // CCLog("TOTAL %d", total);
     TileType ttile = NESW;
     if (destroymode)
         ttile = N;
     
     if (total == 15) //there are exits everywhere.
     {
-        
         ttile = NESESWNW;
     }
     

@@ -181,7 +181,7 @@ public:
     float currentTime;
     
     CCLabelTTF* objectiveTitle;
-    CCLabelTTF* objectiveDescription;
+    CCArray* objectiveDescriptions;
     CCLabelTTF* objectiveProgress;
     
     CCLabelTTF* objectiveNotificationLabel;

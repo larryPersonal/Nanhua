@@ -9,6 +9,7 @@
 #include "ObjectiveHandler.h"
 #include "ObjectiveManager.h"
 #include "GameHUD.h"
+#include "GlobalHelper.h"
 
 ObjectiveHandler* ObjectiveHandler::SP;
 
@@ -18,9 +19,6 @@ ObjectiveHandler::ObjectiveHandler()
     
     objectives = CCArray::create();
     objectives->retain();
-    
-    objectiveStrs = CCArray::create();
-    objectiveStrs->retain();
     
     obj = NULL;
     
@@ -34,9 +32,6 @@ ObjectiveHandler::~ObjectiveHandler()
     
     objectives->removeAllObjects();
     CC_SAFE_RELEASE(objectives);
-    
-    objectiveStrs->removeAllObjects();
-    CC_SAFE_RELEASE(objectiveStrs);
 }
 
 ObjectiveHandler* ObjectiveHandler::getThis()
@@ -80,23 +75,18 @@ void ObjectiveHandler::loadObjective()
 
 void ObjectiveHandler::playObjective(bool showNotification)
 {
-    CCLog("new objective received!");
-    CCLog("number of objectives: %d", objectives->count());
+    //CCLog("new objective received!");
+    //CCLog("number of objectives: %d", objectives->count());
     if(objectives->count() <= 0)
     {
         return;
     }
     
-    for(int i = 0; i < objectiveStrs->count(); i++)
+    for(int i = 0; i < GameHUD::getThis()->objectiveDescriptions->count(); i++)
     {
-        CCLabelTTF* tempLabel = (CCLabelTTF*) objectiveStrs->objectAtIndex(i);
-        GameHUD::getThis()->removeChild(tempLabel);
+        CCLabelTTF* tempLabel = (CCLabelTTF*) GameHUD::getThis()->objectiveDescriptions->objectAtIndex(i);
+        GameHUD::getThis()->objectiveMenu->removeChild(tempLabel, true);
     }
-    objectiveStrs->removeAllObjects();
-    CC_SAFE_RELEASE(objectiveStrs);
-    
-    objectiveStrs = CCArray::create();
-    objectiveStrs->retain();
     
     CCLog("nextID: %d", nextID);
     
@@ -113,7 +103,6 @@ void ObjectiveHandler::playObjective(bool showNotification)
             CCLog("tempID: %d, nextID: %d", temp->oid, nextID);
             if(temp->oid == nextID)
             {
-                CCLog("oh yah!");
                 obj = temp;
             }
         }
@@ -188,8 +177,55 @@ void ObjectiveHandler::playObjective(bool showNotification)
     }
     
     GameHUD::getThis()->objectiveTitle->setString(ss.str().c_str());
-    GameHUD::getThis()->objectiveDescription->setString(ss1.str().c_str());
     GameHUD::getThis()->objectiveProgress->setString(ss2.str().c_str());
+    
+    string objectiveDescription = ss1.str();
+    vector<string> objectiveDescriptionTokens = GlobalHelper::split(objectiveDescription, ' ');
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorBlack = ccc3(0, 0, 0);
+    
+    float startX = screenSize.width * 0.11f;
+    float startY = screenSize.height - 510;
+    float offX = 0;
+    float offY = 0;
+    float limit = 700;
+    
+    
+    string tempString = "";
+    string previousString = "";
+    for (int i = 0; i < objectiveDescriptionTokens.size(); i++)
+    {
+        previousString = tempString;
+        string temp = objectiveDescriptionTokens.at(i);
+        if (i > 0)
+        {
+            tempString = tempString + " ";
+        }
+        tempString = tempString + temp;
+        CCLabelTTF* tempLabel = CCLabelTTF::create(tempString.c_str(), "Shojumaru-Regular", 28);
+        tempLabel->retain();
+        if(startX + tempLabel->boundingBox().size.width > limit)
+        {
+            CCLabelTTF* theLabel = CCLabelTTF::create(previousString.c_str(), "Shojumaru-Regular", 28);
+            theLabel->setAnchorPoint(ccp(0, 1));
+            theLabel->setPosition(ccp(startX + offX, startY + offY));
+            theLabel->setColor(colorBlack);
+            GameHUD::getThis()->objectiveDescriptions->addObject(theLabel);
+            GameHUD::getThis()->objectiveMenu->addChild(theLabel);
+            tempString = temp;
+            offY -= 25;
+        }
+        CC_SAFE_RELEASE(tempLabel);
+    }
+    
+    CCLabelTTF* tempLabel = CCLabelTTF::create(tempString.c_str(), "Shojumaru-Regular", 28);
+    tempLabel->setAnchorPoint(ccp(0, 1));
+    tempLabel->setPosition(ccp(startX + offX, startY + offY));
+    tempLabel->setColor(colorBlack);
+    GameHUD::getThis()->objectiveDescriptions->addObject(tempLabel);
+    GameHUD::getThis()->objectiveMenu->addChild(tempLabel);
+    
     nextID = obj->nid;
     
     if(obj->timeLimit > 0)

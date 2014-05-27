@@ -17,7 +17,6 @@ class ObjectiveHandler : public CCLayer
 {
 public:
     CCArray* objectives;
-    CCArray* objectiveStrs;
     
     int nextID;
     

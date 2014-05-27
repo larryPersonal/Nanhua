@@ -84,7 +84,6 @@ bool SplashScene::init()
     return true;
 }
 
-
 void SplashScene::update(float dt){
     float alpha = this->getOpacity();
     switch (transitionState) {
@@ -97,8 +96,10 @@ void SplashScene::update(float dt){
         case 1:
             alpha += 5;
             if (alpha >= 255) {
+                CCTextureCache::sharedTextureCache()->removeAllTextures();
                 CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-
+                CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+                this->unschedule(schedule_selector(SplashScene::update));
                 CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
             }
             break;
@@ -112,8 +113,6 @@ void SplashScene::update(float dt){
 
 void SplashScene::onOrientationChanged()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    splashImage->setPosition(ccp(screenSize.width/2, screenSize.height/2));
 }
 
 

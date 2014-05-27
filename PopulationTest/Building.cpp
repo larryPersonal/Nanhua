@@ -85,6 +85,8 @@ Building::Building()
     taskType = NoActivity;
     
     progressBar = NULL;
+    
+    targetWorkUnit = 0;
 }
 Building::~Building()
 {
@@ -404,19 +406,29 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             if(sp->getPossessions()->energyRating >= 0)
             {
                 sp->setCumulativeTime(sp->getCumulativeTime() + dt);
+                
+                if(work_unit_current < targetWorkUnit)
+                {
+                    work_unit_current += 1.0f;
+                    
+                    if(work_unit_current > targetWorkUnit)
+                    {
+                        work_unit_current = targetWorkUnit;
+                    }
+                }
+                
                 if(sp->getCumulativeTime() >= 0.33333333f)
                 {
                     sp->getPossessions()->energyRating -= 0.1f;
+                    sp->setCumulativeTime(0.0f);
                     if(TutorialManager::getThis()->active)
                     {
-                        work_unit_current += sp->getPossessions()->default_work_unit_per_day / 12.0f * 10;
+                        targetWorkUnit += sp->getPossessions()->default_work_unit_per_day / 12.0f * 10;
                     }
                     else
                     {
-                        work_unit_current += sp->getPossessions()->default_work_unit_per_day / 12.0f;
+                        targetWorkUnit += sp->getPossessions()->default_work_unit_per_day / 12.0f;
                     }
-                    
-                    sp->setCumulativeTime(0.0f);
                 }
                 
                 if(work_unit_current >= work_unit_required)
@@ -425,6 +437,8 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                     currentStorage = storageLimit;
                     isCurrentHarvest = true;
                     taskType = NoActivity;
+                    targetWorkUnit = 0;
+                    removeProgressiveBar();
                 }
                 
                 if(sp->getPossessions()->energyRating < 0)
@@ -1106,6 +1120,9 @@ void Building::addProgressiveBar()
 
 void Building::removeProgressiveBar()
 {
-    buildingRep->removeChild(progressBar, true);
-    progressBar = NULL;
+    if(progressBar != NULL)
+    {
+        buildingRep->removeChild(progressBar, true);
+        progressBar = NULL;
+    }
 }

@@ -142,6 +142,7 @@ void ReputationOrb::disappearAnimation(float deltaTime)
         {
             GameScene::getThis()->spriteHandler->tokensOnMap->removeObject(this);
             GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+            GameHUD::getThis()->removeChild(orbSprite);
         }
         else
         {

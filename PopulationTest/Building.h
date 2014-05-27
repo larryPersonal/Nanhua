@@ -74,6 +74,9 @@ public:
     
     TaskType taskType;
     ProgressBar* progressBar;
+    CCSprite* progressIcon;
+    
+    float targetWorkUnit;
     
     // for food, one for the current storage amount, the other for the limitation of storage.
     int currentStorage;

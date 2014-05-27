@@ -280,6 +280,7 @@ void SenarioChooseScene::loadingSenario6()
     
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->purgeCachedData();
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 

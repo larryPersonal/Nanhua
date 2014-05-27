@@ -36,7 +36,7 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
         // get the line first
         string str = fr->mFileContents.at(i);
         
-        CCLog("### %s", str.c_str());
+        // CCLog("### %s", str.c_str());
         
         // if a line contains "<?xml", then this line is the xml header, ignore it and continue;
         if(str.find("<?xml") != std::string::npos)

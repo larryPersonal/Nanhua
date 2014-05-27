@@ -326,7 +326,7 @@
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
-            <text>Please don’t turn us away! We really have nowhere else to go.</text>
+            <text>Please do not turn us away! We really have nowhere else to go.</text>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
