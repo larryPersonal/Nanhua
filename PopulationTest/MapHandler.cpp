@@ -213,7 +213,7 @@ void MapHandler::moveMapBy(float moveX, float moveY)
 
 void MapHandler::centerMap()
 {
-    CCPoint pos = CCPointMake(-5736, -1592);
+    CCPoint pos = CCPointMake(-4044, -1700);
     mapPtr->setPosition(pos.x, pos.y);
 }
 

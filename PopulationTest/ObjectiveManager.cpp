@@ -51,7 +51,6 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             {
                 objective = Objective::create();
                 isInObjective = true;
-                CCLog("###     new objective");
             }
         }
         else if(!isInReward)
@@ -156,7 +155,6 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
             {
                 isInObjective = false;
                 objectives->addObject(objective);
-                CCLog("###     objective end");
             }
         }
         else

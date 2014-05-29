@@ -124,6 +124,8 @@ public:
     BuildScroll* buildScroll;
     
     bool getMoney;
+    bool increasePopulation;
+    
     int money;
     int reputation;
     int reputationMax;
@@ -274,6 +276,8 @@ public:
     
     bool genderMale;
     
+    CCSprite* scoreButton;
+    
 public:
     
     GameHUD();
@@ -322,6 +326,7 @@ public:
     void clickObjectiveButton();
     void clickBuildButton();
     void clickSystemButton();
+    void clickScoreButton();
     
     void clickMoneyLabel();
     void clickFoodLabel();
@@ -348,6 +353,9 @@ public:
     
     void UpdateBuildButton();
     void labelBackgroundFade(float);
+    
+    int getCurrentTime();
+    void setCurrentTime(int time);
     
 public:
     

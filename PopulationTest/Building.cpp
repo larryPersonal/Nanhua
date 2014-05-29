@@ -705,6 +705,14 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         if(sp->villagerClass == V_CITIZEN)
         {
             sp->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(sp, V_SOLDIER), GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
+            
+            if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachSoldier)
+            {
+                if(TutorialManager::getThis()->miniDragon != NULL)
+                {
+                    TutorialManager::getThis()->miniDragon->clickNext();
+                }
+            }
         }
     }
     else

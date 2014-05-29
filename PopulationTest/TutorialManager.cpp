@@ -125,6 +125,8 @@ void TutorialManager::unlockAll()
     teachBuildHouse = false;
     teachFarming = false;
     teachBuildGranary = false;
+    teachBuildGuardTower = false;
+    teachSoldier = false;
     
     freeBuilding = true;
 }

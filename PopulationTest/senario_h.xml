@@ -10,7 +10,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -21,11 +21,11 @@
             <name></name>
             <text>Although the Han Empire gained a glorious victory, the cost was very high. Many innocent people had been left homeless or destitute by the wars, leaving great parts of the empire in ruins and without resources.</text>
             <width>85</width>
-			<left>15/left>
+			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -40,7 +40,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -49,13 +49,13 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>小^华 is in the village centre, cracking his brains over how to utilize limited resources to develop the village.</text>
+            <text>Xiao Hua is in the village centre, cracking his brains over how to utilize limited resources to develop the village.</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -70,14 +70,14 @@
             <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
-            <name>小华</name>
+            <name>Xiao Hua</name>
             <text>Ever since the agrarian crisis that resulted in a large-scale famine, many farmers in the north were forced to seek employment in the south.</text>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -97,7 +97,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -117,7 +117,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -137,7 +137,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -157,7 +157,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -177,7 +177,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -197,7 +197,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -218,7 +218,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -232,7 +232,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -248,14 +248,14 @@
             <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
-            <name>Mini dragons</name>
+            <name>Mini dragon</name>
             <text>Master, another group of refuges have just arrived. Oh no, what should we do? They are now waiting outside, hoping to speak to you.</text>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -269,7 +269,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -291,7 +291,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -311,7 +311,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -332,7 +332,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -346,7 +346,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -361,7 +361,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -375,7 +375,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
             <background>yes<background>
@@ -384,7 +384,7 @@
             <src>acceptbtn.png</src>
             <srcp>acceptpressbtn.png</srcp>
             <file>senario1_option1.xml</file>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <left>25</left>
 			<top>18</top>
@@ -396,7 +396,7 @@
             <src>rejectbtn.png</src>
             <srcp>rejectpressbtn.png</src>
             <file>senario1_option2.xml</file>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <left>25</left>
 			<top>10</top>

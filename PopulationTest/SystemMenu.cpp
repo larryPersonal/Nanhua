@@ -9,6 +9,7 @@
 #include "SystemMenu.h"
 #include "GameHUD.h"
 #include "MainMenuScene.h"
+#include "GameManagement.h"
 
 SystemMenu* SystemMenu::SP;
 SystemMenu* SystemMenu::create(CCLayer* layer)
@@ -122,6 +123,7 @@ void SystemMenu::clickResumeButton()
 void SystemMenu::clickOptionButton()
 {
     CCLog("Option Button: Under Construction!");
+    GameManagement::saveGameToFile();
 }
 
 void SystemMenu::clickExitButton()
@@ -140,6 +142,7 @@ void SystemMenu::clickExitButton()
 void SystemMenu::clickRestartButton()
 {
     CCLog("Restart Button: Under Construction!");
+    GameManagement::loadGameFile();
 }
 
 void SystemMenu::releaseAll()

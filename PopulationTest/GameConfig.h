@@ -37,7 +37,7 @@ struct SystemConfig
         skipTutorial_level1 = true;
         
         skipSenario_level2 = true;
-        skipTutorial_level2 = true;
+        skipTutorial_level2 = false;
         
         hideSkipButton = true;
         debugMode = true;
@@ -89,6 +89,10 @@ struct ConfigSettings
     
     float token_disappear_time;
     
+    /* guard tower cost */
+    int guard_tower_money_cost;
+    int guard_tower_food_cost;
+    
     ConfigSettings()
     {
         // related to sprite
@@ -132,6 +136,9 @@ struct ConfigSettings
         token_drop_rate_angry = 20;      // 0  by default
         
         token_disappear_time = 15;
+        
+        guard_tower_money_cost = 200;
+        guard_tower_food_cost = 10;
     }
 };
 

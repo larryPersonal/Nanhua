@@ -69,7 +69,7 @@ void ObjectiveHandler::loadObjective()
     }
     else
     {
-        objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_1.xml");
     }
 }
 
@@ -88,8 +88,6 @@ void ObjectiveHandler::playObjective(bool showNotification)
         GameHUD::getThis()->objectiveMenu->removeChild(tempLabel, true);
     }
     
-    CCLog("nextID: %d", nextID);
-    
     if(nextID == 0)
     {
         obj = (Objective*) objectives->objectAtIndex(0);
@@ -100,7 +98,6 @@ void ObjectiveHandler::playObjective(bool showNotification)
         for(int i = 0; i < objectives->count(); i++)
         {
             Objective* temp = (Objective*) objectives->objectAtIndex(i);
-            CCLog("tempID: %d, nextID: %d", temp->oid, nextID);
             if(temp->oid == nextID)
             {
                 obj = temp;

@@ -17,7 +17,7 @@ using namespace cocos2d;
 
 enum ScenarioState
 {
-    Introduction, Tutorial
+    Introduction, Tutorial, Scenario2, Tutorial2
 };
 
 class Senario : public CCLayer
@@ -86,6 +86,8 @@ public:
     void goNextSlide();
     
     void activateRefugee(float);
+    
+    void clearCache();
 };
 
 #endif

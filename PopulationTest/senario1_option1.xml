@@ -10,7 +10,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
         </dialogue>
@@ -32,7 +32,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -53,7 +53,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -75,7 +75,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -96,7 +96,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -116,7 +116,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -137,7 +137,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -159,7 +159,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -181,7 +181,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -202,7 +202,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>
@@ -223,7 +223,7 @@
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
-            <font>TooneyLoons</font>
+            <font>GillSansMT</font>
             <fontSize>24</fontSize>
 		</dialogue>
 	</slide>

@@ -69,6 +69,8 @@ public:
     AnimatedRain* animatedRain;
     
     float teachBuildRoadCheckTime;
+    float clearCacheTime;
+    float clearCacheTimeLimit;
     
 public:
     

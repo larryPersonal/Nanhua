@@ -158,6 +158,7 @@ struct HousingLimit
 
 class GameManager
 {
+public:
     static GameManager* SP;
     
     /* section that will consider to retain or discard */
@@ -179,6 +180,7 @@ class GameManager
     void initMenuUnlocks();
     
     int level;
+    std::string gameMap;
     
 public:
     void UnlockAll();

@@ -192,6 +192,14 @@ void ConstructionHandler::completeConstructingBuilding(Building* building)
     else if(building->buildingType == MILITARY)
     {
         GameScene::getThis()->buildingHandler->militaryGhostOnMap->removeObject(building);
+        
+        if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildGuardTower)
+        {
+            if(TutorialManager::getThis()->miniDragon != NULL)
+            {
+                TutorialManager::getThis()->miniDragon->clickNext();
+            }
+        }
     }
     else if(building->buildingType == COMMERCE)
     {

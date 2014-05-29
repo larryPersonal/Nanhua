@@ -162,7 +162,22 @@ void BuildingInfoMenu::createMenuItems()
     spCash->setScale(0.75);
     
     std::stringstream ss;
-    ss << "Yearly: " << mBuildingPrice << "G";
+    ss << "Monthly: ";
+    
+    if(building->buildingType == HOUSING)
+    {
+        ss << building->memberSpriteList->count() * 100;
+    }
+    else if(building->buildingType == MARKET)
+    {
+        ss << "500";
+    }
+    else
+    {
+        ss << "0";
+    }
+    
+    ss << "G";
     textPrice = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
     textPrice->setAnchorPoint(ccp(0.0f, 1));
     textPrice->setColor(colorYellow);
@@ -665,12 +680,20 @@ void BuildingInfoMenu::createMenuItems()
             
             recoveryRateTitleLabel->setVisible(false);
             recoveryRateLabel->setVisible(false);
+            
+            spPrice->setVisible(false);
+            spCash->setVisible(false);
+            textPrice->setVisible(false);
         }
         else if(building->buildingType == GRANARY)
         {
             workCompleteTitleLabel->setVisible(false);
             workCompleteBar->setVisible(false);
             workCompleteLabel->setVisible(false);
+            
+            spPrice->setVisible(false);
+            spCash->setVisible(false);
+            textPrice->setVisible(false);
         }
         else if(building->buildingType == MILITARY)
         {
@@ -684,6 +707,16 @@ void BuildingInfoMenu::createMenuItems()
             foodStorageBar->setVisible(false);
             foodStorageLabel->setVisible(false);
             
+            workCompleteTitleLabel->setVisible(false);
+            workCompleteBar->setVisible(false);
+            workCompleteLabel->setVisible(false);
+            
+            spPrice->setVisible(false);
+            spCash->setVisible(false);
+            textPrice->setVisible(false);
+        }
+        else if(building->buildingType == MARKET)
+        {
             workCompleteTitleLabel->setVisible(false);
             workCompleteBar->setVisible(false);
             workCompleteLabel->setVisible(false);
@@ -1029,6 +1062,13 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
                 newMenu->setPosition(CCPointZero);
                 this->addChild(newMenu, 4);
                 spritePopulationMenu->addObject(newMenu);
+            }
+            
+            if(building->buildingType == HOUSING)
+            {
+                stringstream ss;
+                ss << "Monthly: " << building->memberSpriteList->count() * 100 << "G";
+                textPrice->setString(ss.str().c_str());
             }
         }
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();

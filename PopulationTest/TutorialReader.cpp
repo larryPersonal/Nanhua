@@ -418,6 +418,14 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->commands.push_back("teachBuildFarm:1");
             }
+            else if(str.find("<teachBuildGuardTower>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildGuardTower:1");
+            }
+            else if(str.find("<teachSoldier>") != std::string::npos)
+            {
+                slide->commands.push_back("teachSoldier:1");
+            }
             else if(str.find("<pause>") != std::string::npos)
             {
                 slide->commands.push_back("pause:1");
@@ -536,6 +544,14 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<teachBuildFarm>") != std::string::npos)
             {
                 slide->commands.push_back("teachBuildFarm:0");
+            }
+            else if(str.find("<teachBuildGuardTower>") != std::string::npos)
+            {
+                slide->commands.push_back("teachBuildGuardTower:0");
+            }
+            else if(str.find("<teachSoldier>") != std::string::npos)
+            {
+                slide->commands.push_back("teachSoldier:0");
             }
             else if(str.find("<pause>") != std::string::npos)
             {

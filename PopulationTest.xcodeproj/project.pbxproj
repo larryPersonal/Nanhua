@@ -421,6 +421,7 @@
 		8418C39A18D83E1A00C8C9B9 /* Objective.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39918D83E1A00C8C9B9 /* Objective.cpp */; };
 		8418C39D18D8474500C8C9B9 /* ObjectiveManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */; };
 		841D0366190FC4E300E34ACB /* tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 841D0365190FC4E300E34ACB /* tutorial.xml */; };
+		841F1F121936FD79004C4C04 /* tutorialBandits.xml in Resources */ = {isa = PBXBuildFile; fileRef = 841F1F111936FD79004C4C04 /* tutorialBandits.xml */; };
 		8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155618D2C4DD00A441D0 /* dialogbox.png */; };
 		8421157818D2C4DD00A441D0 /* info_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155B18D2C4DD00A441D0 /* info_btn.png */; };
 		8421157C18D2C4DD00A441D0 /* objective_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421155F18D2C4DD00A441D0 /* objective_content.png */; };
@@ -499,6 +500,13 @@
 		844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */ = {isa = PBXBuildFile; fileRef = 844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */; };
 		844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */ = {isa = PBXBuildFile; fileRef = 844D728D18AC750D008E0AD3 /* senario_h.xml */; };
 		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
+		8450A16C193582C00051F90C /* GameManagement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8450A16B193582C00051F90C /* GameManagement.cpp */; };
+		8450A16E19359A480051F90C /* sangumaolu.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8450A16D19359A480051F90C /* sangumaolu.mp4 */; };
+		8450A1711935CFDF0051F90C /* ScoreMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8450A1701935CFDF0051F90C /* ScoreMenu.cpp */; };
+		8450A1731935D7080051F90C /* achievementscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 8450A1721935D7080051F90C /* achievementscreen.png */; };
+		8450A1751935D8970051F90C /* score.png in Resources */ = {isa = PBXBuildFile; fileRef = 8450A1741935D8970051F90C /* score.png */; };
+		8450A1771935F65B0051F90C /* ScenarioScene2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8450A1761935F65B0051F90C /* ScenarioScene2.tmx */; };
+		8450A1791935F70D0051F90C /* scenario2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8450A1781935F70D0051F90C /* scenario2.xml */; };
 		845854781892702F00824F5F /* testSheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8458545B1892702F00824F5F /* testSheet.plist */; };
 		845854791892702F00824F5F /* testSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 8458545C1892702F00824F5F /* testSheet.png */; };
 		84589CDC1896653F00AA9E1C /* senario1_option2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 84589CDB1896653F00AA9E1C /* senario1_option2.xml */; };
@@ -1373,6 +1381,7 @@
 		8418C39B18D8467900C8C9B9 /* ObjectiveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveManager.h; sourceTree = "<group>"; };
 		8418C39C18D8474500C8C9B9 /* ObjectiveManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectiveManager.cpp; sourceTree = "<group>"; };
 		841D0365190FC4E300E34ACB /* tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial.xml; sourceTree = "<group>"; };
+		841F1F111936FD79004C4C04 /* tutorialBandits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorialBandits.xml; sourceTree = "<group>"; };
 		8421154E18D2B9A100A441D0 /* HousingLimit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HousingLimit.h; sourceTree = "<group>"; };
 		8421155018D2C4DD00A441D0 /* allocatebtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allocatebtn.png; sourceTree = "<group>"; };
 		8421155218D2C4DD00A441D0 /* blackscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackscreen.png; sourceTree = "<group>"; };
@@ -1473,6 +1482,15 @@
 		844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workers_menu_buttonCollider.png; sourceTree = "<group>"; };
 		844D728D18AC750D008E0AD3 /* senario_h.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = senario_h.xml; sourceTree = "<group>"; };
 		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
+		8450A16A193582B10051F90C /* GameManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManagement.h; sourceTree = "<group>"; };
+		8450A16B193582C00051F90C /* GameManagement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManagement.cpp; sourceTree = "<group>"; };
+		8450A16D19359A480051F90C /* sangumaolu.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sangumaolu.mp4; sourceTree = "<group>"; };
+		8450A16F1935CD510051F90C /* ScoreMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenu.h; sourceTree = "<group>"; };
+		8450A1701935CFDF0051F90C /* ScoreMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreMenu.cpp; sourceTree = "<group>"; };
+		8450A1721935D7080051F90C /* achievementscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = achievementscreen.png; sourceTree = "<group>"; };
+		8450A1741935D8970051F90C /* score.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score.png; sourceTree = "<group>"; };
+		8450A1761935F65B0051F90C /* ScenarioScene2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ScenarioScene2.tmx; sourceTree = "<group>"; };
+		8450A1781935F70D0051F90C /* scenario2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = scenario2.xml; sourceTree = "<group>"; };
 		8458545B1892702F00824F5F /* testSheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = testSheet.plist; sourceTree = "<group>"; };
 		8458545C1892702F00824F5F /* testSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testSheet.png; sourceTree = "<group>"; };
 		84589CDB1896653F00AA9E1C /* senario1_option2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = senario1_option2.xml; sourceTree = "<group>"; };
@@ -1704,6 +1722,7 @@
 		3615BCB116E8727100AB7077 /* GameSystem */ = {
 			isa = PBXGroup;
 			children = (
+				8450A1671935826A0051F90C /* GameManagement */,
 				84DBDDA11929C5A800EEDFB9 /* VideoPlayer */,
 				FFB89C1B18EB181B0001E588 /* Tutorial */,
 				8476EB9118F63E650004DE79 /* TutorialFiles */,
@@ -1827,7 +1846,10 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8450A1761935F65B0051F90C /* ScenarioScene2.tmx */,
+				8450A1741935D8970051F90C /* score.png */,
 				84F5F344192B58C200EF8ED8 /* bar.png */,
+				8450A1721935D7080051F90C /* achievementscreen.png */,
 				84F5F33C192B43A100EF8ED8 /* splash0.png */,
 				84DBDD981929AE7C00EEDFB9 /* Introduction */,
 				84D4EFDC1925EF4A00B5E67A /* RGBA4444 */,
@@ -2063,7 +2085,6 @@
 		365FBC5716E5E31000A57CF0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8418C39318D8396D00C8C9B9 /* Objective */,
 				8421154B18D29FA100A441D0 /* settings */,
 				84360A2118B2170D002EC8C2 /* GameConfig.h */,
 				3647C7FA17C20BB0008FA626 /* Soundtrack */,
@@ -3144,6 +3165,7 @@
 		8418C38C18D82E9F00C8C9B9 /* Objectives */ = {
 			isa = PBXGroup;
 			children = (
+				8418C39318D8396D00C8C9B9 /* Objective */,
 				8418C38E18D82EB800C8C9B9 /* Source */,
 				8418C38D18D82EAA00C8C9B9 /* Header */,
 			);
@@ -3226,6 +3248,31 @@
 			name = animation;
 			sourceTree = "<group>";
 		};
+		8450A1671935826A0051F90C /* GameManagement */ = {
+			isa = PBXGroup;
+			children = (
+				8450A169193582900051F90C /* Source */,
+				8450A168193582870051F90C /* Header */,
+			);
+			name = GameManagement;
+			sourceTree = "<group>";
+		};
+		8450A168193582870051F90C /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				8450A16A193582B10051F90C /* GameManagement.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		8450A169193582900051F90C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8450A16B193582C00051F90C /* GameManagement.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
 		8476EB9118F63E650004DE79 /* TutorialFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -3234,6 +3281,7 @@
 				845A9EDE18F7CAC50074EF77 /* tutorial2.xml */,
 				843BE2AF18F7EB2600682E5B /* tutorialBackup.xml */,
 				841D0365190FC4E300E34ACB /* tutorial.xml */,
+				841F1F111936FD79004C4C04 /* tutorialBandits.xml */,
 			);
 			name = TutorialFiles;
 			sourceTree = "<group>";
@@ -3322,6 +3370,7 @@
 				843AFFB8187FE7DD0053546B /* SelectPopulation.h */,
 				8412CA6E18ACCFE200AF4645 /* BuildScroll.h */,
 				848DDAFE19052B8E001229B8 /* NotificationString.h */,
+				8450A16F1935CD510051F90C /* ScoreMenu.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -3341,6 +3390,7 @@
 				843AFFBA187FEC530053546B /* SelectPopulation.cpp */,
 				8412CA6F18ACD1DB00AF4645 /* BuildScroll.cpp */,
 				848DDAFF19052CBB001229B8 /* NotificationString.cpp */,
+				8450A1701935CFDF0051F90C /* ScoreMenu.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -3551,6 +3601,7 @@
 		84DBDDB41929C60B00EEDFB9 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				8450A16D19359A480051F90C /* sangumaolu.mp4 */,
 				84DBDDBD1929F9C900EEDFB9 /* 123.mp4 */,
 				84DBDDBB1929F6B600EEDFB9 /* redCliff.mp4 */,
 				84DBDDB51929C61300EEDFB9 /* backgroundMusic.mp3 */,
@@ -3566,6 +3617,7 @@
 				84EB32801867FB7A003B5CEB /* senario1_option1.xml */,
 				844D728D18AC750D008E0AD3 /* senario_h.xml */,
 				84DBDD961929A9FF00EEDFB9 /* introduction.xml */,
+				8450A1781935F70D0051F90C /* scenario2.xml */,
 			);
 			name = xml;
 			sourceTree = "<group>";
@@ -3754,6 +3806,7 @@
 				844AC8EB18C8301F005166FD /* war.png in Resources */,
 				84F56BD11859C72600E7512B /* text_box.jpg in Resources */,
 				842A0F47190A2EB2008B16AF /* soldierAnimationDL.png in Resources */,
+				8450A16E19359A480051F90C /* sangumaolu.mp4 in Resources */,
 				842A0F57190A494A008B16AF /* sortbyhappiness_uppress.png in Resources */,
 				8414CF2218FF9AB80052CA91 /* Happinessicon.png in Resources */,
 				365FB9C616E5E30B00A57CF0 /* iTunesArtwork in Resources */,
@@ -3910,6 +3963,7 @@
 				84360A3718B22150002EC8C2 /* worker_assign_sample_ui.png in Resources */,
 				84F9B76B18D94ADD00579060 /* Girl.plist in Resources */,
 				847309C918DC09AC001869C6 /* assigntaskicon.png in Resources */,
+				8450A1791935F70D0051F90C /* scenario2.xml in Resources */,
 				3658DD7D18D6F1430056B895 /* char2MMC.png in Resources */,
 				36AC558518D69A0100C165F5 /* quit.png in Resources */,
 				8410546518E94ECB003D88C6 /* resumebtn.png in Resources */,
@@ -3926,6 +3980,7 @@
 				84589CE61896758900AA9E1C /* nextButton.png in Resources */,
 				8402BBE0191351C500005700 /* popup_dialogbox.png in Resources */,
 				842A0F5F190A6423008B16AF /* swordAnimation.png in Resources */,
+				8450A1771935F65B0051F90C /* ScenarioScene2.tmx in Resources */,
 				842B84D219066AC600D43E2E /* summertimeclock.png in Resources */,
 				36B18A8118A0A6A700A8B515 /* CMakeLists.txt in Resources */,
 				84CFAEDF18E034E900A81C94 /* timeclock0.png in Resources */,
@@ -3938,6 +3993,7 @@
 				84360A3318B21FED002EC8C2 /* workers_menu_unselectedBG.png in Resources */,
 				842A0F56190A494A008B16AF /* sortbyenergy_down.png in Resources */,
 				84DBDDB71929C61300EEDFB9 /* backgroundMusic.mp3 in Resources */,
+				8450A1731935D7080051F90C /* achievementscreen.png in Resources */,
 				8421157318D2C4DD00A441D0 /* dialogbox.png in Resources */,
 				36C3A80B18F8000700C93E6B /* toony_loons.ttf in Resources */,
 				8490C6C2191C949100037973 /* NANHUA_TESTFLIGHT.mobileprovision in Resources */,
@@ -3976,6 +4032,7 @@
 				8402BBEA191394E700005700 /* Studentboy_left.png in Resources */,
 				84DA68D6191A35EB002B459D /* defending.png in Resources */,
 				84360A2D18B21FED002EC8C2 /* workers_menu_selectedBG_overlay.png in Resources */,
+				8450A1751935D8970051F90C /* score.png in Resources */,
 				8402BBDE1913435900005700 /* Building Info UI placeholder_dialog.png in Resources */,
 				36AC555B18D6981900C165F5 /* blackscreen.png in Resources */,
 				3658DD8518D6F78A0056B895 /* FemaleBandit.plist in Resources */,
@@ -4012,6 +4069,7 @@
 				36AC558C18D6A16600C165F5 /* building3x3.png in Resources */,
 				36D87A7B17BB3F1D00C41D54 /* FMW_port.png in Resources */,
 				84D4EFDF1925EF5A00B5E67A /* disappear.png in Resources */,
+				841F1F121936FD79004C4C04 /* tutorialBandits.xml in Resources */,
 				36C3A80518F77E7200C93E6B /* tokenanim.png in Resources */,
 				843E973B18DB18FE00DBB48D /* Closebtn_Sq.png in Resources */,
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,
@@ -4216,6 +4274,7 @@
 				367613ED1712AEF400CD354B /* json_writer.cpp in Sources */,
 				36B190C218A0A6AD00A8B515 /* CCShaderCache.cpp in Sources */,
 				36B190F618A0A6AD00A8B515 /* CocosDenshion.m in Sources */,
+				8450A16C193582C00051F90C /* GameManagement.cpp in Sources */,
 				36041A321713AB7C00A14BE6 /* lapi.c in Sources */,
 				36B18A8E18A0A6A700A8B515 /* CCKeypadDelegate.cpp in Sources */,
 				36B190F818A0A6AD00A8B515 /* SimpleAudioEngine_objc.m in Sources */,
@@ -4339,6 +4398,7 @@
 				8444D6C51907A76000D5AFAC /* BattlePair.cpp in Sources */,
 				848BD5B61754A65000D5346A /* InfoMenu.cpp in Sources */,
 				36B18A5F18A0A6A700A8B515 /* CCActionInstant.cpp in Sources */,
+				8450A1711935CFDF0051F90C /* ScoreMenu.cpp in Sources */,
 				84EB32781867D717003B5CEB /* Slide.cpp in Sources */,
 				36B18A9018A0A6A700A8B515 /* CCLabelAtlas.cpp in Sources */,
 				848DDAFD19050CCE001229B8 /* FloatingArraw.cpp in Sources */,

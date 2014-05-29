@@ -79,7 +79,7 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos)
         {
             //the destination must always be reachable, in case someone wants to enter a building.
             MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(tilePos->x, tilePos->y);
-            if((targetTile->hasBuilding() && targetTile->building->buildingType != DECORATION) || targetTile->isPath)
+            if((targetTile->hasBuilding() && (targetTile->building != NULL && targetTile->building->buildingType != DECORATION)) || targetTile->isPath)
             {
                 return true;
             }

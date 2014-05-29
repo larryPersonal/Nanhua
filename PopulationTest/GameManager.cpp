@@ -45,6 +45,8 @@ GameManager::GameManager()
     level = 0;
     town_hall_level = 0;
     
+    gameMap = "";
+    
     housingLimitation = new HousingLimit();
     parseHousingLimitation();
     

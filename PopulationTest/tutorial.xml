@@ -317,12 +317,14 @@
         <speech>Once farming begins, the villager will automatically bring the food generated to the granary.</speech>
         <lock>
             <popup></popup>
+            <scroll></scroll>
         </lock>
     </slide>
     <slide>
         <speech>Villagers have transport the food to the granary already. After a job is done, villagers will gain happiness. Also happy villagers will be able to drop reputation tokens.</speech>
         <unlock>
             <teachFarming></teachFarming>
+            <scroll></scroll>
         </unlock>
         <clickToNext></clickToNext>
     </slide>

@@ -16,6 +16,7 @@
 #include "Building.h"
 #include "FloatingArraw.h"
 #include "BuildingCard.h"
+#include "Senario.h"
 
 MiniDragon::MiniDragon()
 {
@@ -105,7 +106,22 @@ void MiniDragon::readTutorialFile()
     CC_SAFE_RELEASE(slidesList);
     
     TutorialReader* tr = new TutorialReader();
-    tr->parseXMLFile("tutorial.xml");
+    
+    stringstream ss;
+    if(Senario::getThis()->scenarioState == Tutorial)
+    {
+        ss << "tutorial.xml";
+    }
+    else if(Senario::getThis()->scenarioState == Tutorial2)
+    {
+        ss << "tutorialBandits.xml";
+    }
+    else
+    {
+        ss << "tutorial.xml";
+    }
+    
+    tr->parseXMLFile(ss.str().c_str());
     
     slidesList = tr->slidesList;
     delete tr;
@@ -302,7 +318,6 @@ bool MiniDragon::constructTutorialSlide()
     
     if(ts->showArrow)
     {
-        CCLog("try0");
         FloatingArraw::getThis()->showArrow(ccp(ts->arrowX, ts->arrowY), ts->arrowAngle, ts->arrowScale, ts->arrowLayer);
     }
     
@@ -341,7 +356,7 @@ bool MiniDragon::constructTutorialSlide()
     
     if(ts->showObjective)
     {
-        ObjectiveHandler::getThis()->playObjective(false);
+        ObjectiveHandler::getThis()->playObjective(true);
         GameHUD::getThis()->clickObjectiveButton();
     }
     
@@ -460,6 +475,14 @@ bool MiniDragon::constructTutorialSlide()
         else if(order.compare("teachBuildFarm") == 0)
         {
             tm->teachBuildFarm = (flag == 1);
+        }
+        else if(order.compare("teachBuildGuardTower") == 0)
+        {
+            tm->teachBuildGuardTower = (flag == 1);
+        }
+        else if(order.compare("teachSoldier") == 0)
+        {
+            tm->teachSoldier = (flag == 1);
         }
         else if(order.compare("pause") == 0)
         {
@@ -876,6 +899,10 @@ void MiniDragon::deHighlightBuilding(string b)
 void MiniDragon::clickNext()
 {
     curSlide++;
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->purgeCachedData();
     if(constructTutorialSlide())
     {
         

@@ -24,6 +24,7 @@
 #include "TutorialManager.h"
 #include "BuildingCard.h"
 #include "MainMenuScene.h"
+#include "ScoreMenu.h"
 
 #include <cmath>
 
@@ -92,6 +93,9 @@ GameScene::GameScene()
     loadingLabel->setVisible(false);
     
     targetBuilding = NULL;
+    
+    clearCacheTime = 0;
+    clearCacheTimeLimit = 60;
 }
 
 GameScene::~GameScene()
@@ -147,6 +151,12 @@ CCScene* GameScene::scene()
         senlayer->scenarioState = Introduction;
         senlayer->playSenario(filename.c_str());
     }
+    else if(GameManager::getThis()->getLevel() == 2)
+    {
+        filename = "scenario2.xml";
+        senlayer->scenarioState = Scenario2;
+        senlayer->playSenario(filename.c_str());
+    }
     else
     {
         senlayer->scenarioState = Tutorial;
@@ -157,12 +167,14 @@ CCScene* GameScene::scene()
     objectiveHandler->loadObjective();
     if(GameManager::getThis()->getLevel() > 0)
     {
-        objectiveHandler->playObjective();
+        //objectiveHandler->playObjective();
     }
     
     scene->addChild(senlayer, 1);
     scene->addChild(tm, 1);
     scene->addChild(objectiveHandler, 1);
+    
+    
      
     return scene;
 }
@@ -192,65 +204,52 @@ bool GameScene::init()
     setupScene();
     
     mapHandler->centerMap();
+    
     return true;
 }
 
 void GameScene::setupScene()
 {
+    /* load game maps */
     int level = GameManager::getThis()->getLevel();
     if(level == 0)
     {
         mapHandler->initTiles("DemoScene.tmx");
+        GameManager::getThis()->gameMap = "DemoScene.tmx";
     }
     else if(level == 1)
     {
         mapHandler->initTiles("DemoScene.tmx");
+        GameManager::getThis()->gameMap = "DemoScene.tmx";
     }
     else
     {
-        mapHandler->initTiles("Full_Scene.tmx");
+        mapHandler->initTiles("ScenarioScene2.tmx");
+        GameManager::getThis()->gameMap = "ScenarioScene2.tmx";
     }
         
-        if (mapHandler->getMap())
-        {
-            
-            jobCollection = new JobCollection();
-            buildingHandler = new BuildingHandler();
-            buildingHandler->init(mapHandler->getMap(), jobCollection);
-    
-            
-        //    gameBG = CCSprite::create("background.jpg");
-         //   gameBG->setAnchorPoint(ccp(0,0));
-           // CCSize spriteSize = gameBG->getContentSize();
-           // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-
-          //  gameBG->setScaleX(screenSize.width / spriteSize.width * 10) ;
-          //  gameBG->setScaleY(screenSize.height / spriteSize.height * 10) ;
-           // CCSize newSize = gameBG->boundingBox().size;
-            
-       ///     gameBG->setPosition(ccp(mapHandler->getMap()->getPositionX() +spriteSize.width +screenSize.width,
-          //                          mapHandler->getMap()->getPositionY() +spriteSize.height/2));
-            
-         //   mapHandler->getMap()->addChild(gameBG, -3);
-            
-            screenCenter = CCNode::create();
-            
-            screenCenter->setAnchorPoint(ccp(0.5, 0.5));
-            
-            screenCenter->addChild(mapHandler->getScaleLayer(), -1);
-            
-            mapHandler->getScaleLayer()->setPosition(CCPointZero);
-            
-            mapHandler->getScaleLayer()->addChild(mapHandler->getMap(), 0);
-            this->addChild(screenCenter);
-
-            mapHandler->originateMapToTile();
-            
-           
-        }
+    if (mapHandler->getMap())
+    {
+        jobCollection = new JobCollection();
+        buildingHandler = new BuildingHandler();
+        buildingHandler->init(mapHandler->getMap(), jobCollection);
         
-        spriteHandler = new SpriteHandler();
-        constructionHandler = new ConstructionHandler();
+        screenCenter = CCNode::create();
+        
+        screenCenter->setAnchorPoint(ccp(0.5, 0.5));
+        
+        screenCenter->addChild(mapHandler->getScaleLayer(), -1);
+        
+        mapHandler->getScaleLayer()->setPosition(CCPointZero);
+        
+        mapHandler->getScaleLayer()->addChild(mapHandler->getMap(), 0);
+        this->addChild(screenCenter);
+        
+        mapHandler->originateMapToTile();
+    }
+    
+    spriteHandler = new SpriteHandler();
+    constructionHandler = new ConstructionHandler();
     
     banditsAttackHandler = new BanditsAttackHandler();
     
@@ -485,6 +484,18 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
             {
                 skip = true;
+            }
+        }
+        
+        if(ScoreMenu::getThis() != NULL && ScoreMenu::getThis()->background != NULL)
+        {
+            if(ScoreMenu::getThis()->background->boundingBox().containsPoint(touchLoc))
+            {
+                skip = true;
+            }
+            else
+            {
+                ScoreMenu::getThis()->scheduleHideScoreMenu();
             }
         }
         
@@ -837,6 +848,27 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 {
                     GameHUD::getThis()->pauseGame();
                     skip = true;
+                }
+            }
+            
+            if(GameHUD::getThis()->scoreButton != NULL)
+            {
+                if(GameHUD::getThis()->scoreButton->boundingBox().containsPoint(touchLoc))
+                {
+                    GameHUD::getThis()->clickScoreButton();
+                    skip = true;
+                }
+            }
+            
+            if(ScoreMenu::getThis() != NULL && ScoreMenu::getThis()->background != NULL)
+            {
+                if(ScoreMenu::getThis()->background->boundingBox().containsPoint(touchLoc))
+                {
+                    skip = true;
+                }
+                else
+                {
+                    ScoreMenu::getThis()->scheduleHideScoreMenu();
                 }
             }
             
@@ -1292,7 +1324,7 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant || true)
+    if(instant)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
         CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
@@ -1569,25 +1601,14 @@ void GameScene::update(float time)
         }
     }
     
-    
+    clearCacheTime += time;
+    if(clearCacheTime >= clearCacheTimeLimit)
+    {
+        clearCache();
+        clearCacheTime = 0;
+    }
     
     //GameScene::getThis()->animatedRain->update(time);
-    
-    // check lose game
-    /*
-    if (GameManager::getThis()->hasLostGame())
-    {
-        this->unschedule(schedule_selector(GameScene::update));
-        
-        AlertBox* alert = AlertBox::create();
-        alert->useAsTopmostPopupMenu();
-        alert->useAsExclusivePopupMenu();
-        alert->setDisplayText("Your people have had enough of your mismanagement! Furious citizens drag you from your office...");
-        
-        alert->addButton(0, "DOH!", this, callfuncO_selector(GameScene::lostGame), this);
-    }
-    */
-    
 }
 
 /*
@@ -1951,5 +1972,8 @@ void GameScene::goToMainMenu()
 
 void GameScene::clearCache()
 {
-    
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->purgeCachedData();
 }

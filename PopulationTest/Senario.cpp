@@ -136,6 +136,9 @@ bool Senario::constructSenarioStage(bool skip)
     if(slide->isScene)
     {
         CCTextureCache::sharedTextureCache()->removeAllTextures();
+        CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+        CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+        CCDirector::sharedDirector()->purgeCachedData();
         backgroundImage = slide->scene_src;
     }
     
@@ -545,23 +548,36 @@ void Senario::buttonSelect()
     cumulativeTime = 0;
     lastTime = 0;
     
+    clearCache();
+    clearElements();
     if(scenarioState == Introduction)
     {
-        clearElements();
-        CCTextureCache::sharedTextureCache()->removeAllTextures();
+        
         TutorialManager::getThis()->setupForTutorial();
         this->scenarioState = Tutorial;
         //GameScene::getThis()->removeChild(this);
     }
+    else if(scenarioState == Scenario2)
+    {
+        scenarioState = Tutorial2;
+        TutorialManager::getThis()->setupForTutorial();
+    }
     else
     {
-        CCTextureCache::sharedTextureCache()->removeAllTextures();
         GameHUD::getThis()->pause = false;
         if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
         {
             this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
         }
     }
+}
+
+void Senario::clearCache()
+{
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->purgeCachedData();
 }
 
 void Senario::activateRefugee(float dt)
