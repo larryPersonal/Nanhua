@@ -573,7 +573,6 @@ void GameSprite::followPath(bool moveOneTile)
     int squares = path->count();
     if (squares > 0)
     {
-        
         if (squares > 1)
         {
             setAction(WALKING);
@@ -1075,6 +1074,7 @@ void GameSprite::updateSprite(float dt)
 {
     updateZIndex();
     
+    /* if one villager has been assigned to one target building and he cannot reach there, keep trying to there before he finally reach the target */
     if(hasAssigned)
     {
         if(currAction == IDLE)
@@ -1092,6 +1092,7 @@ void GameSprite::updateSprite(float dt)
         return;
     }
     
+    /* In attack, change the animation sprite of bandits and soldiers */
     if(isInAttackAction)
     {
         if (delay_curr > 0)
@@ -1119,6 +1120,7 @@ void GameSprite::updateSprite(float dt)
     
     lastFrameAction = currAction;
     
+    /* a bandit will try to attack the village when he is in idle state (always) */
     if(villagerClass == V_BANDIT)
     {
         if(currAction == IDLE)
@@ -1127,10 +1129,21 @@ void GameSprite::updateSprite(float dt)
         }
     }
     
+    /*
+     
+    if(!GameScene::getThis()->banditsAttackHandler->warMode)
+    {
+        if(villagerClass == V_SOLDIER && currAction == IDLE)
+        {
+            GoBuilding(getJobLocation());
+        }
+    }
+    */
+        
     /****************************************************
      * This part is only for the combating in the game! *
      ****************************************************/
-    if(GameScene::getThis()->banditsAttackHandler->warMode)
+    if(GameScene::getThis()->banditsAttackHandler->warMode || true)
     {
         // move and fade out the damage label
         for (int i = 0; i < hpLabels->count(); i++)
@@ -1406,7 +1419,7 @@ void GameSprite::updateSprite(float dt)
             }
             
             // only soldiers and bandits are involved in the combat.
-            if((villagerClass == V_SOLDIER || villagerClass == V_BANDIT) && !tryEscape)
+            if((villagerClass == V_SOLDIER || villagerClass == V_BANDIT) && !tryEscape && combatState == C_COMBAT)
             {
                 bool hasEnermy = false;
                 
@@ -1540,6 +1553,14 @@ void GameSprite::updateSprite(float dt)
                             }
                         }
                     }
+                }
+            }
+            
+            if (villagerClass == V_SOLDIER)
+            {
+                if(currAction == IDLE)
+                {
+                    GoBuilding(getJobLocation());
                 }
             }
         }
@@ -2032,7 +2053,7 @@ bool GameSprite::GoLocation(CCPoint endPos)
     
     if(tempDistance <= 0)
     {
-        return true;
+        return false;
     }
     
     bool hasPath = CreatePath(startPos, endPos);
@@ -3090,7 +3111,7 @@ void GameSprite::checkDropRate()
 bool GameSprite::escape()
 {
     CCPoint target = CCPointMake(29,33);
-    if(GoLocation(target))
+    if(!GoLocation(target))
     {
         isLeavingNextUpdate = true;
         return true;
@@ -3130,6 +3151,12 @@ void GameSprite::damaged(int damage)
                 enermy->enermy = NULL;
             }
             enermy = NULL;
+        }
+        
+        for(int i = 0; i < battleIconArray->count(); i++)
+        {
+            BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(i);
+            bi->hide();
         }
         
         SoundtrackManager::PlaySFX("hurt sfx.wav");

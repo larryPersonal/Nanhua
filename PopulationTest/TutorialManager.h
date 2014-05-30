@@ -65,6 +65,7 @@ public:
     bool teachBuildFarm;
     bool teachBuildGuardTower;
     bool teachSoldier;
+    bool teachFighting;
     
     bool clickable;
     Building* highlightedBuilding;

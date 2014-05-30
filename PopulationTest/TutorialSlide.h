@@ -38,6 +38,7 @@ public:
     
     float offY;
     int addVillager;
+    int addBandit;
     
     bool hide;
     bool show;

@@ -20,6 +20,7 @@ Slide::Slide(){
     video_clip = "";
     
     clickToNext = false;
+    isNarration = false;
 }
 
 Slide::~Slide(){

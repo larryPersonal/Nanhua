@@ -130,6 +130,10 @@ void SenarioManager::parseXMLFile(string xml)
                 element->updateOptionType();
                 inOption = true;
             }
+            else if(str.find("<narration>") != std::string::npos)
+            {
+                slide->isNarration = true;
+            }
             else if(str.find("</slide>") != std::string::npos)
             {
                 slidesList->addObject(slide);

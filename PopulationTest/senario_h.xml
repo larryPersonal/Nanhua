@@ -4,7 +4,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>Background information: In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt. (^黄^巾^之^乱^)</text>
+            <text>In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt. (^黄^巾^之^乱^)</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -226,7 +226,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>The mini dragons rush in.</text>
+            <text>Xiao Long rushes in.</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -248,7 +248,7 @@
             <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
-            <name>Mini dragon</name>
+            <name>Xiao Long</name>
             <text>Master, another group of refuges have just arrived. Oh no, what should we do? They are now waiting outside, hoping to speak to you.</text>
 			<width>85</width>
 			<left>15</left>
@@ -341,21 +341,6 @@
         <dialogue>
             <name></name>
             <text>Xiao Hua would decide if he wants to build new house to accommodate the refuges.</text>
-            <width>85</width>
-			<left>15</left>
-			<top>28</top>
-			<src>scroller.png</src>
-            <dir>left</dir>
-            <font>GillSansMT</font>
-            <fontSize>24</fontSize>
-            <color>white</color>
-        </dialogue>
-    </slide>
-    <slide>
-        <clickToNext></clickToNext>
-        <dialogue>
-            <name></name>
-            <text>(Outcome: Build the houses to house the refuges. If there are not enough houses to house the refuges, they will become bandit and rob the village unless they are given accommodation within a certain period of time.)</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>

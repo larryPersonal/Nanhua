@@ -127,6 +127,7 @@ void TutorialManager::unlockAll()
     teachBuildGranary = false;
     teachBuildGuardTower = false;
     teachSoldier = false;
+    teachFighting = false;
     
     freeBuilding = true;
 }

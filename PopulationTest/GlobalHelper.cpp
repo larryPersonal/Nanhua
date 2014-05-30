@@ -163,9 +163,22 @@ GameSprite* GlobalHelper::getSpriteByVillagerClass(GameSprite* gameSprite, Villa
     for (int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-        if (gs->villagerClass == villagerClass && (isMale == (gs->gender == 'm')))
+        if (gs->villagerClass == villagerClass)
         {
-            return gs;
+            if(gs->villagerClass != V_SOLDIER)
+            {
+                if(isMale == (gs->gender == 'm'))
+                {
+                    return gs;
+                }
+            }
+            else
+            {
+                if(gs->gender == 'm')
+                {
+                    return gs;
+                }
+            }
         }
     }
     return NULL;

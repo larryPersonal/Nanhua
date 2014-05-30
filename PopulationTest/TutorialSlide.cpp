@@ -30,6 +30,7 @@ TutorialSlide::TutorialSlide()
     
     offY = 0;
     addVillager = 0;
+    addBandit = 0;
     
     hide = false;
     show = false;

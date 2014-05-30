@@ -484,6 +484,10 @@ bool MiniDragon::constructTutorialSlide()
         {
             tm->teachSoldier = (flag == 1);
         }
+        else if(order.compare("teachFighting") == 0)
+        {
+            tm->teachFighting = (flag == 1);
+        }
         else if(order.compare("pause") == 0)
         {
             GameHUD::getThis()->pause = (flag == 1);
@@ -513,6 +517,11 @@ bool MiniDragon::constructTutorialSlide()
     if(ts->addVillager > 0)
     {
         TutorialManager::getThis()->addVillagers(ts->addVillager);
+    }
+    
+    if(ts->addBandit > 0)
+    {
+        GameHUD::getThis()->banditsAttack(ts->addBandit);
     }
     
     ccColor3B color = ccc3(0, 0, 0);

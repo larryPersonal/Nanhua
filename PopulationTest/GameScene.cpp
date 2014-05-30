@@ -1324,7 +1324,7 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant)
+    if(instant || true)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
         CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
@@ -1607,6 +1607,32 @@ void GameScene::update(float time)
         clearCache();
         clearCacheTime = 0;
     }
+    
+    /* check for teach fighting */
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFighting)
+    {
+        CCArray* allSpritesOnMap = spriteHandler->spritesOnMap;
+        bool teachFightingSuccess = true;
+        
+        for(int i = 0; i < allSpritesOnMap->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) allSpritesOnMap->objectAtIndex(i);
+            if(gs->villagerClass == V_BANDIT && !gs->tryEscape)
+            {
+                teachFightingSuccess = false;
+            }
+        }
+        
+        if(teachFightingSuccess)
+        {
+            if(TutorialManager::getThis()->miniDragon != NULL)
+            {
+                GameHUD::getThis()->banditsAttack();
+                TutorialManager::getThis()->miniDragon->clickNext();
+            }
+        }
+    }
+    
     
     //GameScene::getThis()->animatedRain->update(time);
 }

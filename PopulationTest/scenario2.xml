@@ -4,7 +4,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>Background information: In 200 AD, Liu Bei（^刘^备^）fought a losing battle against Cao Cao（^曹^操^）at Xu Province（^徐^州^）and had to seek refuge under the northern warlord Yuan Shao（^袁^绍^）.</text>
+            <text>In 200 AD, Liu Bei（^刘^备^）fought a losing battle against Cao Cao（^曹^操^）at Xu Province（^徐^州^）and had to seek refuge under the northern warlord Yuan Shao（^袁^绍^）.</text>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -144,8 +144,8 @@
             <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
-            <name>Mini dragon</name>
-            <text>Our messengers had reported that Cao Cao is planning to invade our borders at “Bowang”.</text>
+            <name>Xiao Long</name>
+            <text>Our messengers reported that Cao Cao is planning to invade our borders at “Bowang”.</text>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -164,7 +164,7 @@
 			<src>dragon_c.png</src>
 		</sprite>
 		<dialogue>
-            <name>Mini dragon</name>
+            <name>Xiao Long</name>
             <text>Therefore, Liu Biao ordered our lord to organize a troop within one month to fight against Cao Cao^’^s army.</text>
 			<width>85</width>
 			<left>15</left>
@@ -185,7 +185,7 @@
             <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
-            <name>Mini dragon</name>
+            <name>Xiao Long</name>
             <text>But the previous battles had already depleted our resources and we are lacking soldiers.</text>
 			<width>85</width>
 			<left>15</left>
@@ -348,7 +348,7 @@
             <fade_in>yes</fade_in>
 		</sprite>
 		<dialogue>
-            <name>Mini dragon</name>
+            <name>Xiao Long</name>
             <text>I think this is a good idea!</text>
 			<width>85</width>
 			<left>15</left>
@@ -369,7 +369,7 @@
             <fade_out>yes</fade_out>
 		</sprite>
 		<dialogue>
-            <name>Mini dragon</name>
+            <name>Xiao Long</name>
             <text>But the villagers are not trained to be soldiers …^…</text>
 			<width>85</width>
 			<left>15</left>

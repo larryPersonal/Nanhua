@@ -995,9 +995,9 @@
   <image source="river_anim_w_fish.png" width="4096" height="4096"/>
   <tile id="0">
    <properties>
-    <property name="anim_frames" value="7"/>
-    <property name="anim_random" value="true"/>
-    <property name="anim_random_chance" value="0.95"/>
+    <property name="anim_frames" value="8"/>
+    <property name="anim_random" value="false"/>
+    <property name="anim_random_chance" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="name" value="river1"/>
    </properties>
@@ -1383,7 +1383,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7AZwr89TCyBo1XQBAAAAAAAAAD4Zq4DAAAAAAAAAFCwshsALg==
+   eJztzjENAAAIA7AZwr89LOwjJK2CJgAAAAAANOY6AAAAAAAAAAAAAPDMAoq5AC4=
   </data>
  </layer>
  <layer name="Building_1" width="67" height="60">
@@ -1455,7 +1455,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztziENAAAIADD6JyQEIbBsOAzmT/AI2Oo7AAAAAAAAADDkdwAAAAAAAAAAOGkzLQHF
+   eJztzgENAAAEADD9EwohhAACYPsTPAKm2g4AAAAAwFO5HQAAAAAAAAAAAAA4pAEjZQHF
   </data>
  </layer>
  <layer name="Building_Market" width="67" height="60">

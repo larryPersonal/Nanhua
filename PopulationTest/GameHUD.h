@@ -334,7 +334,7 @@ public:
     
     void pauseGame();
     void stickGameHappiness();
-    void banditsAttack();
+    void banditsAttack(int banditsNumber = 1);
     void alertBanditsAttackFade(float);
     void alertBanditsAttackText(float);
     

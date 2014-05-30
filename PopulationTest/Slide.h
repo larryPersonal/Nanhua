@@ -26,6 +26,8 @@ public:
     
     bool clickToNext;
     
+    bool isNarration;
+    
 public:
     Slide();
     ~Slide();

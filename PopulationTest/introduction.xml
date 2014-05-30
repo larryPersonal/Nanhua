@@ -23,22 +23,23 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
         <scene>classroom.png</scene>
         <clickToNext></clickToNext>
+        <narration></narration>
         <dialogue>
             <name></name>
             <text>（^正^在^上^课^中^……^）</text>
 			<width>85</width>
-			<left>15</left>
+			<left>5</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -52,7 +53,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -66,7 +67,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -80,7 +81,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -94,7 +95,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -108,7 +109,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -122,7 +123,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -139,7 +140,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -161,12 +162,13 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
         <clickToNext></clickToNext>
         <scene>book.png</scene>
+        <narration></narration>
         <dialogue>
             <name></name>
             <text>《^三^国^演^义^》^。</text>
@@ -176,7 +178,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -197,7 +199,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -218,12 +220,13 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
         <clickToNext></clickToNext>
         <scene>flippingbook.png</scene>
+        <narration></narration>
         <dialogue>
             <name></name>
             <text>（^正^当^小^华^沉^醉^于^三^国^故^事^的^时^候^，^突^然^一^阵^怪^风^吹^起^）</text>
@@ -233,7 +236,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -255,12 +258,13 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
         <scene>warScene.png</scene>
         <clickToNext></clickToNext>
+        <narration></narration>
         <dialogue>
             <name></name>
             <text>(^当^小^华^再^次^醒^了^过^来^，^只^见^眼^前^两^支^身^着^奇^怪^服^装^的^人^马^相^互^对^峙^着^。^)</text>
@@ -270,7 +274,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -292,7 +296,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -314,7 +318,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -336,7 +340,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -358,7 +362,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -379,7 +383,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -400,7 +404,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -422,7 +426,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -437,14 +441,14 @@
 		</sprite>
         <dialogue>
             <name>刘备</name>
-            <text>曹^操^，^你^竟^在^这^里^为^难^一^个^小^孩^，^怎^算^得^上^是^英^雄^好^汉^（^不^是^笑^死^人^吗^）^？</text>
+            <text>曹^操^，^你^竟^在^这^里^为^难^一^个^小^孩^，^怎^算^得^上^是^英^雄^好^汉^？</text>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -466,12 +470,13 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
         <scene>warScene.png</scene>
         <clickToNext></clickToNext>
+        <narration></narration>
         <dialogue>
             <name></name>
             <text>（^小^华^跟^随^刘^备^返^回^了^刘^备^军^的^军^帐^……^）</text>
@@ -481,7 +486,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -503,7 +508,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -525,7 +530,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -547,7 +552,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -569,7 +574,7 @@
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
     <slide>
@@ -591,7 +596,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -613,7 +618,7 @@
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
     </slide>
     <slide>
@@ -635,7 +640,7 @@
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>GillSansMT</font>
-            <fontSize>24</fontSize>
+            <fontSize>28</fontSize>
 		</dialogue>
 	</slide>
 </project>

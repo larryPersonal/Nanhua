@@ -391,7 +391,7 @@ void GameHUD::update(float deltaTime)
         }
         
         // if it's the first day of the month, update money;
-        if (date->day == 0 && date->week == 0 && getMoney)
+        if (date->day == 0 && date->week == 0 && getMoney && !GameScene::getThis()->banditsAttackHandler->warMode)
         {
             int moneyAdded = 0;
             CCArray* housingsOnMap = GameScene::getThis()->buildingHandler->housingOnMap;
@@ -519,7 +519,7 @@ void GameHUD::update(float deltaTime)
         }
         
         // if it's the first day of the month, update population growth;
-        if (date->day == 0 && date->week == 0 && increasePopulation)
+        if (date->day == 0 && date->week == 0 && increasePopulation && !GameScene::getThis()->banditsAttackHandler->warMode)
         {
             checkReputaionPopulation();
             increasePopulation = false;
@@ -1931,7 +1931,7 @@ void GameHUD::createSystemMenu()
     this->addChild(scoreButton, 5);
 }
 
-void GameHUD::banditsAttack()
+void GameHUD::banditsAttack(int banditsNo)
 {
     if(!isAlerting && !isAlertingText)
     {
@@ -1987,6 +1987,7 @@ void GameHUD::banditsAttack()
             warButton->setVisible(false);
             warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
             GameScene::getThis()->banditsAttackHandler->startWar();
+            GameScene::getThis()->banditsAttackHandler->banditsLeft = banditsNo;
             
             CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
             for (int i = 0; i < allSprites->count(); i++)
@@ -2536,7 +2537,6 @@ void GameHUD::scheduleAddMoney(int mon)
 
 void GameHUD::addMoney(float dt)
 {
-    CCLog("test my very bad");
     bool stop = true;
     
     if(money < targetMoney)

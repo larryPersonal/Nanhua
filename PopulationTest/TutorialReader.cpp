@@ -176,6 +176,13 @@ void TutorialReader::parseXMLFile(string xml)
                 content = str.substr(start_pos + 13, end_pos - start_pos - 13);
                 slide->addVillager = ::atoi(content.c_str());
             }
+            else if(str.find("<addBandit>") != std::string::npos)
+            {
+                start_pos = str.find("<addBandit>");
+                end_pos = str.find("</addBandit>");
+                content = str.substr(start_pos + 11, end_pos - start_pos - 11);
+                slide->addBandit = ::atoi(content.c_str());
+            }
             else if(str.find("<hide>") != std::string::npos)
             {
                 slide->hide = true;
@@ -426,6 +433,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->commands.push_back("teachSoldier:1");
             }
+            else if(str.find("<teachFighting>") != std::string::npos)
+            {
+                slide->commands.push_back("teachFighting:1");
+            }
             else if(str.find("<pause>") != std::string::npos)
             {
                 slide->commands.push_back("pause:1");
@@ -552,6 +563,10 @@ void TutorialReader::parseXMLFile(string xml)
             else if(str.find("<teachSoldier>") != std::string::npos)
             {
                 slide->commands.push_back("teachSoldier:0");
+            }
+            else if(str.find("<teachFighting>") != std::string::npos)
+            {
+                slide->commands.push_back("teachFighting:0");
             }
             else if(str.find("<pause>") != std::string::npos)
             {
