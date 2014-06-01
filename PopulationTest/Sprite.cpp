@@ -583,7 +583,7 @@ void GameSprite::followPath(bool moveOneTile)
             MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(node->tilepos.x, node->tilepos.y);
             if (tile->hasBuilding())
             {
-                if (spriteRep != NULL)
+                if (spriteRep != NULL && villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
                 {
                     spriteRep->setVisible(false);
                 }

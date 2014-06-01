@@ -33,8 +33,9 @@
         <dialogue>
             <name></name>
             <text>（^正^在^上^课^中^……^）</text>
+            <textOffY>30</textOffY>
 			<width>85</width>
-			<left>5</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -172,8 +173,9 @@
         <dialogue>
             <name></name>
             <text>《^三^国^演^义^》^。</text>
+            <textOffY>30</textOffY>
 			<width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -230,8 +232,9 @@
         <dialogue>
             <name></name>
             <text>（^正^当^小^华^沉^醉^于^三^国^故^事^的^时^候^，^突^然^一^阵^怪^风^吹^起^）</text>
+            <textOffY>30</textOffY>
 			<width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -262,14 +265,15 @@
 		</dialogue>
     </slide>
     <slide>
-        <scene>warScene.png</scene>
+        <scene>scenario2Background.png</scene>
         <clickToNext></clickToNext>
         <narration></narration>
         <dialogue>
             <name></name>
             <text>(^当^小^华^再^次^醒^了^过^来^，^只^见^眼^前^两^支^身^着^奇^怪^服^装^的^人^马^相^互^对^峙^着^。^)</text>
+            <textOffY>30</textOffY>
 			<width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -480,8 +484,9 @@
         <dialogue>
             <name></name>
             <text>（^小^华^跟^随^刘^备^返^回^了^刘^备^军^的^军^帐^……^）</text>
+            <textOffY>30</textOffY>
 			<width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>

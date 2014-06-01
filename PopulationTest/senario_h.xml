@@ -1,18 +1,21 @@
 <?xml encoding="ISO-8859-1"?>
 <project>
     <slide>
+        <scene>scenario2Background.png</scene>
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
             <text>In 184 AD, the large-scale agrarian crisis and high taxes resulted in a peasant revolt. (^黄^巾^之^乱^)</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_in>yes</fade_in>
         </dialogue>
     </slide>
     <slide>
@@ -20,8 +23,9 @@
         <dialogue>
             <name></name>
             <text>Although the Han Empire gained a glorious victory, the cost was very high. Many innocent people had been left homeless or destitute by the wars, leaving great parts of the empire in ruins and without resources.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -35,8 +39,9 @@
         <dialogue>
             <name></name>
             <text>Unrest remained and bandits appeared in every district, with the government in no position to put down all social disturbances.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -46,18 +51,21 @@
         </dialogue>
     </slide>
     <slide>
+        <scene>interiorhouse.png</scene>
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
             <text>Xiao Hua is in the village centre, cracking his brains over how to utilize limited resources to develop the village.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_out>yes</fade_out>
         </dialogue>
     </slide>
 	<slide>
@@ -79,6 +87,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
 	</slide>
 	<slide>
@@ -220,6 +229,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -227,14 +237,17 @@
         <dialogue>
             <name></name>
             <text>Xiao Long rushes in.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
         </dialogue>
     </slide>
     <slide>
@@ -257,6 +270,8 @@
             <dir>right</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -264,14 +279,16 @@
         <dialogue>
             <name></name>
             <text>Xiao Hua goes outside to meet the refuges.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_in>yes</fade_in>
         </dialogue>
     </slide>
     <slide>
@@ -334,6 +351,7 @@
             <dir>right</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -341,14 +359,16 @@
         <dialogue>
             <name></name>
             <text>Xiao Hua would decide if he wants to build new house to accommodate the refuges.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_in></fade_in>
         </dialogue>
     </slide>
     <slide>
@@ -356,7 +376,7 @@
             <name>Do you want to take in the Refugees?</name>
             <text></text>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -366,25 +386,25 @@
             <background>yes<background>
         </dialogue>
         <option>
-            <src>acceptbtn.png</src>
-            <srcp>acceptpressbtn.png</srcp>
+            <src>accept.png</src>
+            <srcp>accept_press.png</srcp>
             <file>senario1_option1.xml</file>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
-            <left>25</left>
-			<top>18</top>
+            <left>17</left>
+			<top>15</top>
             <outcome>
                 <refugee>5</refugee>
             </outcome>
         </option>
         <option>
-            <src>rejectbtn.png</src>
-            <srcp>rejectpressbtn.png</src>
+            <src>reject.png</src>
+            <srcp>reject_press.png</src>
             <file>senario1_option2.xml</file>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
-            <left>25</left>
-			<top>10</top>
+            <left>32</left>
+			<top>15</top>
             <outcome>
                 <bandit>5</bandit>
             </outcome>

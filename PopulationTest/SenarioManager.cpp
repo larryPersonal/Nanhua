@@ -266,6 +266,13 @@ void SenarioManager::parseXMLFile(string xml)
                 int tmp = ::atoi(content.c_str());
                 element->fontSize = tmp;
             }
+            else if(str.find("<textOffY>") != std::string::npos)
+            {
+                start_pos = str.find("<textOffY>");
+                end_pos = str.find("</textOffY>");
+                content = str.substr(start_pos + 10, end_pos - start_pos - 10);
+                element->textOffY = ::atof(content.c_str());
+            }
             else if(str.find("<text>") != std::string::npos)
             {
                 start_pos = str.find("<text>");

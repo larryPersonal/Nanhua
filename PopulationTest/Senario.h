@@ -42,6 +42,7 @@ public:
     CCArray* slidesList;
     CCArray* animatedStringList;
     CCArray* animatedSpriteList;
+    CCArray* animatedDialogueList;
     
     bool skipSlide;
     

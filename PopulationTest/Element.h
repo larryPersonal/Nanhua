@@ -25,6 +25,7 @@ public:
     float width;
     float left;
     float top;
+    float textOffY;
     
     std::string src;
     std::string srcp;

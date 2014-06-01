@@ -16,6 +16,7 @@
 #include "WrapperClass.h"
 #include "Config.h"
 #include "TutorialManager.h"
+#include "AnimatedDialogue.h"
 
 Senario* Senario::SP;
 
@@ -34,6 +35,9 @@ Senario::Senario()
     
     animatedSpriteList = CCArray::create();
     animatedSpriteList->retain();
+    
+    animatedDialogueList = CCArray::create();
+    animatedDialogueList->retain();
     
     skipButton = NULL;
     skipSlide = false;
@@ -58,6 +62,9 @@ Senario::~Senario()
     
     animatedSpriteList->removeAllObjects();
     CC_SAFE_RELEASE(animatedSpriteList);
+    
+    animatedDialogueList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedDialogueList);
 }
 
 Senario* Senario::getThis()
@@ -210,7 +217,8 @@ bool Senario::constructSenarioStage(bool skip)
              * Future: may include dialogue functionalities like save, load, auto proceed, text jumper, etc....
              */
             
-            CCSprite* chbox = CCSprite::create(ele->src.c_str());
+            AnimatedDialogue* ad = AnimatedDialogue::create(ele->src.c_str(), ele->fadeIn, ele->fadeOut);
+            CCSprite* chbox = ad->getSprite();
             CCSize boxSize = chbox->getContentSize();
             chbox->setScale(screenSize.width / boxSize.width * ele->width / 100.0f);
             chbox->setAnchorPoint(ccp(0, 1));
@@ -220,10 +228,11 @@ bool Senario::constructSenarioStage(bool skip)
             {
                 this->addChild(chbox, 3);
                 spriteList.push_back(chbox);
+                animatedDialogueList->addObject(ad);
                 continue;
             }
             
-            float heightOff = 80.0f;
+            float heightOff = 80.0f - ele->textOffY;
             float widthOff = 80.0f;
             
             displayTexts(ele->text, screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff, ele->font.c_str(), (float)ele->fontSize, colorBlack);
@@ -245,6 +254,7 @@ bool Senario::constructSenarioStage(bool skip)
             this->addChild(chboxName, 4);
             spriteList.push_back(chbox);
             labelList.push_back(chboxName);
+            animatedDialogueList->addObject(ad);
         }
         else if(ele->type == Element::option)
         {
@@ -348,9 +358,9 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
                     CCLabelTTF* tempLabel = CCLabelTTF::create(str.c_str(), font.c_str(), fontSize);
                     tempLabel->retain();
                     
-                    if (startX + offX + tempLabel->boundingBox().size.width > 1000.0f)
+                    if (startX + offX + tempLabel->boundingBox().size.width > 970.0f)
                     {
-                        offY = offY + 30.0f;
+                        offY = offY + 35.0f;
                         offX = 0;
                     }
                     
@@ -392,9 +402,9 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
             CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
             tempLabel->retain();
             
-            if (startX + offX + tempLabel->boundingBox().size.width > 1000.0f)
+            if (startX + offX + tempLabel->boundingBox().size.width > 970.0f)
             {
-                offY = offY + 30.0f;
+                offY = offY + 35.0f;
                 offX = 0;
             }
             
@@ -450,6 +460,23 @@ void Senario::nextButtonPressed(bool skip)
                 hasFade = true;
             }
         }
+        
+        /*
+        for (int i = 0; i < animatedDialogueList->count(); i++){
+            AnimatedDialogue* ad = (AnimatedDialogue*) animatedDialogueList->objectAtIndex(i);
+            
+            if(ad->fadeOut || ad->fadeIn)
+            {
+                hasFade = true;
+            }
+            else if(ad->hasFadeOutAnimation)
+            {
+                ad->triggerFadeOut();
+                hasFade = true;
+            }
+        }
+        */
+        
         skipSlide = skip;
         
         if(!hasFade){
@@ -622,6 +649,15 @@ void Senario::update(float time)
         {
             AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);
             as->update(time);
+        }
+    }
+    
+    if(animatedDialogueList != NULL)
+    {
+        for (int i = 0; i < animatedDialogueList->count(); i++)
+        {
+            AnimatedDialogue* ad = (AnimatedDialogue*) animatedDialogueList->objectAtIndex(i);
+            ad->update(time);
         }
     }
 }

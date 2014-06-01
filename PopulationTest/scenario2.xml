@@ -1,12 +1,14 @@
 <?xml encoding="ISO-8859-1"?>
 <project>
     <slide>
+        <scene>scenario2Background.png</scene>
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
             <text>In 200 AD, Liu Bei（^刘^备^）fought a losing battle against Cao Cao（^曹^操^）at Xu Province（^徐^州^）and had to seek refuge under the northern warlord Yuan Shao（^袁^绍^）.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -20,8 +22,9 @@
         <dialogue>
             <name></name>
             <text>However, Yuan Shao was also defeated by Cao Cao in the same year and Liu Bei went to Jing Province（^荆^州^）to seek shelter under the governor, Liu Biao（^刘^表^）.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -35,8 +38,9 @@
         <dialogue>
             <name></name>
             <text>Liu Biao initially welcomed Liu Bei but gradually grew suspicious as the latter became increasingly influential.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -50,8 +54,9 @@
         <dialogue>
             <name></name>
             <text>As a result, Liu Biao sent Liu Bei to the northen border at “Bowang”（^博^望^）to defend against an invasion by Cao Cao.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
@@ -61,12 +66,14 @@
         </dialogue>
     </slide>
     <slide>
+        <scene>interiorhouse.png</scene>
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
             <text>Xiao Hua is in the village centre, cracking his brains over how to utilize limited resources to develop the village.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
             <top>28</top>
             <src>scroller.png</src>
             <dir>left</dir>
@@ -80,8 +87,9 @@
         <dialogue>
             <name></name>
             <text>The mini dragon rushes in.</text>
+            <textOffY>30</textOffY>
             <width>85</width>
-			<left>15</left>
+			<left>7</left>
             <top>28</top>
             <src>scroller.png</src>
             <dir>left</dir>
@@ -432,8 +440,9 @@
 		<dialogue>
             <name></name>
             <text>(Xiao Hua goes outside to meet the refuges.)</text>
+            <textOffY>30</textOffY>
 			<width>85</width>
-			<left>15</left>
+			<left>7</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>

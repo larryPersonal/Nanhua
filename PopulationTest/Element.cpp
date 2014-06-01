@@ -20,6 +20,8 @@ Element::Element(){
     foodModifier = 0;
     goldModifier = 0;
     populationModifier = 0;
+    
+    textOffY = 0;
 }
 
 Element::~Element(){
