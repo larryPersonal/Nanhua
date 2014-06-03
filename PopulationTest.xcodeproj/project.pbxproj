@@ -4508,7 +4508,7 @@
 		365FBC6016E5E31000A57CF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (W3EYCT2ME5)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -4546,7 +4546,7 @@
 		365FBC6116E5E31000A57CF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (QAT7Q4CF37)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (W3EYCT2ME5)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
