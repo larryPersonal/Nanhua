@@ -70,12 +70,12 @@ bool SenarioChooseScene::init()
     senarioButtonS1 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario1));
     senarioButtonS1->setContentSize(boxrect.size);
     bool value = CCUserDefault::sharedUserDefault()->getBoolForKey("level_1_open");
-    //senarioButtonS1->setVisible(value);
+    senarioButtonS1->setVisible(value);
     
     senarioButtonS2 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario2));
     senarioButtonS2->setContentSize(boxrect.size);
     value = CCUserDefault::sharedUserDefault()->getBoolForKey("level_2_open");
-    //senarioButtonS2->setVisible(value);
+    senarioButtonS2->setVisible(value);
     
     senarioButtonS3 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario3));
     senarioButtonS3->setContentSize(boxrect.size);
