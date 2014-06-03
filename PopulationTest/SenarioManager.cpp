@@ -134,6 +134,22 @@ void SenarioManager::parseXMLFile(string xml)
             {
                 slide->isNarration = true;
             }
+            else if(str.find("<playBGM>") != std::string::npos)
+            {
+                int start_pos = str.find("<playBGM>");
+                int end_pos = str.find("</playBGM>");
+                string content = str.substr(start_pos + 9, end_pos - start_pos - 9);
+                slide->playBGM = true;
+                slide->bgm_clip = content;
+            }
+            else if(str.find("<playSFX>") != std::string::npos)
+            {
+                int start_pos = str.find("<playSFX>");
+                int end_pos = str.find("</playSFX>");
+                string content = str.substr(start_pos + 9, end_pos - start_pos - 9);
+                slide->playSFX = true;
+                slide->sfx_clip = content;
+            }
             else if(str.find("</slide>") != std::string::npos)
             {
                 slidesList->addObject(slide);
@@ -324,6 +340,13 @@ void SenarioManager::parseXMLFile(string xml)
                 } else {
                     element->fadeOut = false;
                 }
+            }
+            else if(str.find("<limitX>") != std::string::npos)
+            {
+                start_pos = str.find("<limitX>");
+                end_pos = str.find("</limitX>");
+                content = str.substr(start_pos + 8, end_pos - start_pos - 8);
+                element->limitX = ::atof(content.c_str());
             }
             else if(str.find("<outcome>") != std::string::npos)
             {

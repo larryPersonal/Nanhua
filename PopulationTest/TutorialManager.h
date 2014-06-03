@@ -114,6 +114,8 @@ public:
     
     void setupForScenario();
     
+    void scheduleForScenario(float time);
+    
     //void saySpeech(std::string());
 };
 

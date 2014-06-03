@@ -21,6 +21,12 @@ Slide::Slide(){
     
     clickToNext = false;
     isNarration = false;
+    
+    playBGM = false;
+    playSFX = false;
+    
+    bgm_clip = "";
+    sfx_clip = "";
 }
 
 Slide::~Slide(){

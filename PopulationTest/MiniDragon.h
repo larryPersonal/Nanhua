@@ -94,6 +94,8 @@ public:
     void hideDragonGroup();
     
     void setupScenario();
+    
+    void clearMiniDragon();
 };
 
 #endif

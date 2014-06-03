@@ -22,6 +22,8 @@ Element::Element(){
     populationModifier = 0;
     
     textOffY = 0;
+    
+    limitX = -1;
 }
 
 Element::~Element(){

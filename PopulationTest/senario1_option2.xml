@@ -5,15 +5,17 @@
         <dialogue>
             <name></name>
             <text>Xiao Hua decides that he would not build new house to accommodate the refuges.</text>
+            <limitX>900</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_out>yes</fade_out>
         </dialogue>
     </slide>
     <slide>
@@ -28,13 +30,15 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I know you have come a long way to reach our village and we really wanted to help you.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
 	</slide>
     <slide>
@@ -48,7 +52,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>But the war left us with limited resources. Building more houses to accommodate all of you requires money and manpower, which we are now lacking in.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -68,7 +73,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>The village has enough problems of its own and simply cannot afford to help you right now. Please try to understand our situation. </text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -89,7 +95,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>Here are some food and water for you to continue your journey and hope that you would find shelter soon. I am sorry.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -111,7 +118,8 @@
 		<dialogue>
             <name>Refugees</name>
             <text>What? No! Not again! It can’t be!</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -133,13 +141,15 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I am really sorry.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -147,15 +157,18 @@
         <dialogue>
             <name></name>
             <text>The refuges left the village and soon became bandits who would occasionally raid your village, resulting in loss of resources.</text>
+            <limitX>900</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
         </dialogue>
     </slide>
 </project>

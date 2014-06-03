@@ -34,20 +34,34 @@ Narrator::Narrator()
     offY = 0;
     
     ns = NS_START;
+    
+    clickToNext = false;
 }
 
 Narrator::~Narrator()
 {
+    for (int i = 0; i < animatedStringList->count(); i++)
+    {
+        AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+        TutorialManager::getThis()->removeChild(as->getLabel());
+    }
+    
     animatedStringList->removeAllObjects();
     CC_SAFE_RELEASE(animatedStringList);
     
     TutorialManager::getThis()->removeChild(textBackground);
+    
+    ns = NS_START;
+    
+    clickToNext = false;
 }
 
 void Narrator::display()
 {
     offX = 0;
     offY = 0;
+    
+    clickToNext = false;
     
     for(int i = 0; i < animatedStringList->count(); i++)
     {
@@ -67,6 +81,7 @@ void Narrator::display()
             TutorialManager::getThis()->scheduleFadeIn(160.0f, 2);
             TutorialManager::getThis()->active = true;
             GameHUD::getThis()->pause = true;
+            clickToNext = true;
             break;
         case C1T2:
             goDisplay = false;
@@ -75,6 +90,8 @@ void Narrator::display()
             TutorialManager::getThis()->scheduleFadeIn(0.0f, 2);
             TutorialManager::getThis()->active = false;
             setupForScenario();
+            clickToNext = false;
+            delete this;
             break;
         default:
             str = "end";
@@ -210,6 +227,7 @@ void Narrator::activateSprite(float dt)
 
 void Narrator::setupForScenario()
 {
+    
     TutorialManager::getThis()->unlockAll();
     GameHUD::getThis()->pause = true;
     std::string filename = "senario_h.xml";

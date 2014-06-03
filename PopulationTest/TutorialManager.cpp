@@ -166,14 +166,19 @@ void TutorialManager::setupForTutorial()
     GameHUD* hudlayer = GameHUD::create();
     GameScene::getThis()->setTouchEnabled(true);
     GameScene::getThis()->addChild(hudlayer, 1);
-    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
+    SoundtrackManager::PlayBGM("in-game_1.wav");
+    
+    if(GameManager::getThis()->getLevel() == 2)
+    {
+        GameHUD::getThis()->setupForGuardTowerBar();
+    }
     
     if(GameScene::getThis()->systemConfig->skipTutorial)
     {
         GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
         unlockAll();
         
-        if(!GameScene::getThis()->systemConfig->skipSenario)
+        if(!GameScene::getThis()->systemConfig->skipSenario && Senario::getThis()->scenarioState != Scenario1)
         {
             GameHUD::getThis()->pause = true;
             this->scheduleOnce(schedule_selector(TutorialManager::setupForScenario), 1.0f);
@@ -182,6 +187,9 @@ void TutorialManager::setupForTutorial()
         {
             active = false;
         }
+        
+        ObjectiveHandler::getThis()->playObjective();
+        
         return;
     }
     
@@ -207,8 +215,10 @@ void TutorialManager::setupForTutorial()
 
 void TutorialManager::setupForScenario()
 {
+    GameManager::getThis()->setLevel(1);
+    
     lockAll();
-    target = ccp(5400.0f, 1600.0f);
+    target = ccp(4128.0f, 1800.0f);
     this->schedule(schedule_selector(TutorialManager::moveCamera), 1.0f / 120.0f);
     
     spritesArray = CCArray::create();
@@ -427,8 +437,6 @@ void TutorialManager::setupMiniDragon()
 
 void TutorialManager::clearSprites()
 {
-    CCLog("lololo");
-    CCLog("length of spritesArray: %d", TutorialManager::getThis()->spritesArray->count());
     for(int i = 0; i < spritesArray->count(); i++)
     {
         GameSprite* gs = (GameSprite*) spritesArray->objectAtIndex(i);
@@ -436,4 +444,9 @@ void TutorialManager::clearSprites()
     }
     spritesArray->removeAllObjects();
     CC_SAFE_RELEASE(spritesArray);
+}
+
+void TutorialManager::scheduleForScenario(float time)
+{
+    this->scheduleOnce(schedule_selector(TutorialManager::setupForScenario), time);
 }

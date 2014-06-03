@@ -13,6 +13,7 @@
 #include "SelectPopulation.h"
 #include "TutorialManager.h"
 #include "PathFinder.h"
+#include "SoundtrackManager.h"
 
 MapHandler::MapHandler()
 {
@@ -514,6 +515,7 @@ void MapHandler::Populate(CCArray* layers)
             tile->tileGID = pLayer->tileGIDAt(ccp(i,j));
             if (tile->tileGID > 0)
             {
+                CCLog("%d", tile->tileGID);
                 tile->pathHere();
                 pathTiles->addObject(tile);
             }
@@ -758,7 +760,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
         //GameHUD::getThis()->buyBuilding(cloneBuilding->buildingCost);
         //GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
         
-        
+        SoundtrackManager::PlaySFX("construction.wav");
         
         GameScene::getThis()->constructionHandler->addConstructingBuilding(cloneBuilding);
     }

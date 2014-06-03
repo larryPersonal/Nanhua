@@ -29,6 +29,11 @@ Objective::Objective()
     title = "";
     content = "";
     progress = "";
+    
+    scenarioTime = 0;
+    scheduleScenario = false;
+    
+    finalObjective = false;
 }
 
 Objective::~Objective()

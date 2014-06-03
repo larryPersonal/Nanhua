@@ -95,7 +95,9 @@ GameScene::GameScene()
     targetBuilding = NULL;
     
     clearCacheTime = 0;
-    clearCacheTimeLimit = 60;
+    clearCacheTimeLimit = 10;
+    
+    mGameGuardTowerScore = 0;
 }
 
 GameScene::~GameScene()
@@ -142,6 +144,13 @@ CCScene* GameScene::scene()
     senlayer->playSenario(filename.c_str());
     */
     
+    ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
+    objectiveHandler->loadObjective();
+    if(GameManager::getThis()->getLevel() > 0)
+    {
+        //objectiveHandler->playObjective();
+    }
+    
     TutorialManager* tm = TutorialManager::create();
     CCLog("Level is %d", GameManager::getThis()->getLevel());
     
@@ -159,15 +168,9 @@ CCScene* GameScene::scene()
     }
     else
     {
-        senlayer->scenarioState = Tutorial;
+        senlayer->scenarioState = Scenario1;
         tm->setupForTutorial();
-    }
-    
-    ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
-    objectiveHandler->loadObjective();
-    if(GameManager::getThis()->getLevel() > 0)
-    {
-        //objectiveHandler->playObjective();
+        //objectiveHandler->playObjective(true);
     }
     
     scene->addChild(senlayer, 1);
@@ -320,7 +323,7 @@ void GameScene::enableTouch()
     //GameHUD* hudlayer = GameHUD::create();
     //this->addChild(hudlayer, 1);
     //this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
-    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
+    //SoundtrackManager::PlayBGM("in-game_1.wav");
 }
 
 void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
@@ -714,7 +717,10 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             }
             else
             {
-                TutorialManager::getThis()->narrator->display();
+                if(TutorialManager::getThis()->narrator->clickToNext)
+                {
+                    TutorialManager::getThis()->narrator->display();
+                }
             }
         }
         
@@ -864,11 +870,14 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             {
                 if(ScoreMenu::getThis()->background->boundingBox().containsPoint(touchLoc))
                 {
+                    /*
+                    if(ScoreMenu::getThis()->scoreMenuButton->boundingBox().containsPoint(touchLoc))
+                    {
+                        ScoreMenu::getThis()->clickScoreMenuButton();
+                    }
+                    */
+                    
                     skip = true;
-                }
-                else
-                {
-                    ScoreMenu::getThis()->scheduleHideScoreMenu();
                 }
             }
             
@@ -1130,6 +1139,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     mapHandler->PathLine(firstPathPosPreview, lastPathPosPreview);
                     GameHUD::getThis()->buyBuilding(buildPathDistance * 10);
                     
+                    SoundtrackManager::PlaySFX("construction.wav");
+                    
                     GameHUD::getThis()->closeAllMenuAndResetTapMode();
                     
                     if(TutorialManager::getThis()->active && (TutorialManager::getThis()->miniDragon->connectHouse || TutorialManager::getThis()->miniDragon->connectGranary || TutorialManager::getThis()->miniDragon->connectFarm))
@@ -1324,7 +1335,7 @@ void GameScene::centerCamera(Building* b, bool instant)
     float xDiff = b->buildingRep->getPositionX() - xPos;
     float yDiff = b->buildingRep->getPositionY() - yPos;
     
-    if(instant || true)
+    if(instant)
     {
         mapHandler->moveMapBy(-xDiff, -yDiff);
         CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
@@ -1483,7 +1494,7 @@ void GameScene::FirstRunPopulate()
     else
     {
         CCLOG("GameManager::getLoadedGame is false!");
-        CCPoint target = CCPointMake(25,23);
+        CCPoint target = CCPointMake(24,23);
         
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
         
@@ -1562,6 +1573,48 @@ void GameScene::update(float time)
             ObjectiveHandler::getThis()->update(time);
         }
         
+        clearCacheTime += time;
+        if(clearCacheTime >= clearCacheTimeLimit)
+        {
+            clearCache();
+            clearCacheTime = 0;
+        }
+        
+        if(GameManager::getThis()->getLevel() == 2)
+        {
+            float totalScore = 0;
+            CCArray* soldiersOnMap = spriteHandler->spritesOnMap;
+            for (int i = 0; i < soldiersOnMap->count(); i++)
+            {
+                GameSprite* gs = (GameSprite*)soldiersOnMap->objectAtIndex(i);
+                if(gs->villagerClass == V_SOLDIER)
+                {
+                    totalScore += 100.0f;
+                }
+            }
+            
+            if(mGameGuardTowerScore != totalScore)
+            {
+                mGameGuardTowerScore = totalScore;
+                GameHUD::getThis()->guardTowerScore = totalScore;
+                GameHUD::getThis()->guardTowerScoreBar->setValue((GameHUD::getThis()->guardTowerScore > 1000.0f) ? 1000.0: GameHUD::getThis()->guardTowerScore);
+                
+                stringstream ss;
+                if(GameHUD::getThis()->guardTowerScore > 1000)
+                {
+                    ss << "1000";
+                }
+                else
+                {
+                    ss << GameHUD::getThis()->guardTowerScore;
+                }
+                ss << "/1000";
+                
+                
+                GameHUD::getThis()->guardTowerScoreLabel->setString(ss.str().c_str());
+                
+            }
+        }
     }
     
     if(TutorialManager::getThis()->active)
@@ -1596,16 +1649,9 @@ void GameScene::update(float time)
             
             if(temp >= 8)
             {
-                TutorialManager::getThis()->miniDragon->setupScenario();
+                TutorialManager::getThis()->miniDragon->clickNext();
             }
         }
-    }
-    
-    clearCacheTime += time;
-    if(clearCacheTime >= clearCacheTimeLimit)
-    {
-        clearCache();
-        clearCacheTime = 0;
     }
     
     /* check for teach fighting */

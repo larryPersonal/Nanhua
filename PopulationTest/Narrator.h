@@ -35,6 +35,8 @@ public:
     
     float cumulativeTime;
     
+    bool clickToNext;
+    
 public:
     Narrator();
     ~Narrator();

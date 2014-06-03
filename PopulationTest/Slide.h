@@ -28,6 +28,12 @@ public:
     
     bool isNarration;
     
+    bool playBGM;
+    bool playSFX;
+    
+    std::string bgm_clip;
+    std::string sfx_clip;
+    
 public:
     Slide();
     ~Slide();

@@ -108,6 +108,8 @@ public:
     bool label_fade_in;
     bool label_fade_out;
     
+    ProgressBar* guardTowerScoreBar;
+    
     float leftPos;
     float maxPos;
     
@@ -278,6 +280,8 @@ public:
     
     CCSprite* scoreButton;
     
+    bool finalObjective;
+    
 public:
     
     GameHUD();
@@ -362,7 +366,6 @@ public:
     CCArray* addMoneyLabelArray;
     int targetMoney;
     bool isAddingMoney;
-    bool moneyLabelDirectionUp;
     
     CCArray* addReputationLabelArray;
     int targetReputation;
@@ -382,6 +385,9 @@ public:
     
     bool playDragonAnimation;
     float playDragonCountDown;
+    
+    CCLabelTTF* guardTowerScoreLabel;
+    float guardTowerScore;
     
 public:
     void scheduleAddMoney(int);
@@ -403,6 +409,9 @@ public:
     void checkReputaionPopulation();
     
     void addNewNotification(std::string);
+    
+    void setupForGuardTowerBar();
+    void clearGuardTowerBar();
 };
 
 #endif

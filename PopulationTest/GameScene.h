@@ -72,6 +72,8 @@ public:
     float clearCacheTime;
     float clearCacheTimeLimit;
     
+    float mGameGuardTowerScore;
+    
 public:
     
     CCNode* screenCenter;

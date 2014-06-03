@@ -87,6 +87,9 @@ Building::Building()
     progressBar = NULL;
     
     targetWorkUnit = 0;
+    
+    labelArray = CCArray::create();
+    labelArray->retain();
 }
 Building::~Building()
 {
@@ -117,6 +120,9 @@ Building::~Building()
     
     memberSpriteList->removeAllObjects();
     memberSpriteList->release();
+    
+    labelArray->removeAllObjects();
+    CC_SAFE_RELEASE(labelArray);
 }
 
 Building* Building::create()
@@ -381,7 +387,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             else
             // the sprite has finished eating the food, the villagers will leave the building and become idle
             {
-                this->currentStorage -= 5;
+                this->currentStorage -= 20;
                 if(this->currentStorage < 0)
                 {
                     this->currentStorage = 0;
@@ -1084,6 +1090,34 @@ void Building::updateBuilding(float dt)
     {
         inProgress = (memberSpriteList->count() > 0);
     }
+    
+    /* update for building labels */
+    for (int i = 0; i < labelArray->count(); i++)
+    {
+        CCLabelTTF* label = (CCLabelTTF*) labelArray->objectAtIndex(i);
+        label->setPosition(ccp(label->getPositionX(), label->getPositionY() + 1.0f));
+        float alpha = (float)label->getOpacity();
+        alpha -= 4.0f;
+        if(alpha < 0)
+        {
+            labelArray->removeObject(label);
+            buildingRep->removeChild(label, true);
+        }
+        else
+        {
+            label->setOpacity((GLubyte) alpha);
+        }
+    }
+}
+
+void Building::addNotificationLabel(std::string notificationStr, ccColor3B color)
+{
+    CCLabelTTF* label = CCLabelTTF::create(notificationStr.c_str(), "GillSansMT", 24);
+    label->setPosition(ccp(buildingRep->boundingBox().size.width / 2.0f, buildingRep->boundingBox().size.height / 2.0f));
+    label->setAnchorPoint(ccp(0.5, 0.5));
+    label->setColor(color);
+    buildingRep->addChild(label);
+    labelArray->addObject(label);
 }
 
 void Building::addProgressiveBar()

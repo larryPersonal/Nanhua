@@ -17,6 +17,7 @@
 #include "Config.h"
 #include "TutorialManager.h"
 #include "AnimatedDialogue.h"
+#include "SoundtrackManager.h"
 
 Senario* Senario::SP;
 
@@ -173,6 +174,22 @@ bool Senario::constructSenarioStage(bool skip)
         }
     }
     
+    if(slide->playBGM)
+    {
+        if(slide->bgm_clip.compare("") != 0)
+        {
+            SoundtrackManager::PlayBGM(slide->bgm_clip);
+        }
+    }
+    
+    if(slide->playSFX)
+    {
+        if(slide->sfx_clip.compare("") != 0)
+        {
+            SoundtrackManager::PlaySFX(slide->sfx_clip);
+        }
+    }
+    
     if(GameScene::getThis()->systemConfig->hideSkipButton)
     {
         skipButton->setAnchorPoint(ccp(0, 1));
@@ -235,7 +252,7 @@ bool Senario::constructSenarioStage(bool skip)
             float heightOff = 80.0f - ele->textOffY;
             float widthOff = 80.0f;
             
-            displayTexts(ele->text, screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff, ele->font.c_str(), (float)ele->fontSize, colorBlack);
+            displayTexts(ele->text, screenSize.width * (ele->left / 100.0f) + widthOff, screenSize.height * (ele->top / 100.0f) - heightOff, ele->font.c_str(), (float)ele->fontSize, colorBlack, ele->limitX);
             
             std::stringstream ss;
             ss << ele->text;
@@ -320,7 +337,7 @@ void Senario::selectButtonPressed(CCObject* pSender)
     }
 }
 
-void Senario::displayTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color)
+void Senario::displayTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color, float limitX)
 {
     vector<std::string> tokens = GlobalHelper::split(str, ' ');
     float offX = 0;
@@ -358,7 +375,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
                     CCLabelTTF* tempLabel = CCLabelTTF::create(str.c_str(), font.c_str(), fontSize);
                     tempLabel->retain();
                     
-                    if (startX + offX + tempLabel->boundingBox().size.width > 970.0f)
+                    if (startX + offX + tempLabel->boundingBox().size.width > limitX)
                     {
                         offY = offY + 35.0f;
                         offX = 0;
@@ -402,7 +419,7 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
             CCLabelTTF* tempLabel = CCLabelTTF::create(tokenStr.c_str(), font.c_str(), fontSize);
             tempLabel->retain();
             
-            if (startX + offX + tempLabel->boundingBox().size.width > 970.0f)
+            if (startX + offX + tempLabel->boundingBox().size.width > limitX)
             {
                 offY = offY + 35.0f;
                 offX = 0;
@@ -436,6 +453,24 @@ void Senario::nextButtonPressed(bool skip)
     {
         return;
     }
+    
+    bool stopFadeIn = true;
+    for (int i = 0; i < animatedDialogueList->count(); i++)
+    {
+        AnimatedDialogue* ad = (AnimatedDialogue*) animatedDialogueList->objectAtIndex(i);
+        
+        if(ad->fadeIn)
+        {
+            stopFadeIn = false;
+            break;
+        }
+    }
+    
+    if(!stopFadeIn)
+    {
+        return;
+    }
+    
     bool allStopFade = true;
     for (int i = 0; i < animatedStringList->count(); i++){
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
@@ -575,8 +610,8 @@ void Senario::buttonSelect()
     cumulativeTime = 0;
     lastTime = 0;
     
-    clearCache();
-    clearElements();
+    clearScenario();
+    
     if(scenarioState == Introduction)
     {
         
@@ -605,6 +640,23 @@ void Senario::clearCache()
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCDirector::sharedDirector()->purgeCachedData();
+}
+
+void Senario::clearScenario()
+{
+    active = false;
+    inOption = false;
+    notJump = false;
+    
+    curSlide = 0;
+    
+    clearCache();
+    clearElements();
+    
+    slidesList->removeAllObjects();
+    
+    skipSlide = false;
+    cumulativeTime = 0;
 }
 
 void Senario::activateRefugee(float dt)

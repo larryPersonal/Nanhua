@@ -59,38 +59,24 @@ bool MainMenuScene::init()
         return false;
     }
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    CCRect boxrect = CCRectMake(0,0, screenSize.width * 0.8f,  screenSize.width * 0.1f);
     
-    
-    backgroundImage = CCSprite::create("splash0.png");
+    backgroundImage = CCSprite::create("newsplashpage2.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
     
-    backgroundDeco = CCSprite::create("splash1.png");
+    buttonStart = CCMenuItemImage::create("", "", this, menu_selector(MainMenuScene::onButtonStartPressed));
+    buttonOptions = CCMenuItemImage::create("", "", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
     
-    backgroundDeco2 = CCSprite::create("student.png");
-
-    buttonStart = CCMenuItemImage::create("start.png", "press_start.png", this, menu_selector(MainMenuScene::onButtonStartPressed));
-    buttonOptions = CCMenuItemImage::create("options.png", "press_options.png", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
+    buttonStart->setContentSize(boxrect.size);
+    buttonOptions->setContentSize(boxrect.size);
+    
+    buttonStart->setAnchorPoint(ccp(0.5f, 0.5f));
+    buttonStart->setPosition(ccp(0, -120));
+    
+    buttonOptions->setAnchorPoint(ccp(0.5f, 0.5f));
+    buttonOptions->setPosition(0, -220);
+    
     // buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
-    
-    
-    CCLabelTTF* startLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonStart->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
-    startLabel->setPosition( ccp(buttonStart->boundingBox().size.width * 0.5f, buttonStart->boundingBox().size.height * 0.5f));
-    buttonStart->addChild(startLabel);
-    startLabel->setColor(ccc3(255,189,68));
-    
-    CCLabelTTF* optionsLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonOptions->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
-    optionsLabel->setPosition( ccp(buttonOptions->boundingBox().size.width * 0.5f, buttonOptions->boundingBox().size.height * 0.5f));
-    buttonOptions->addChild(optionsLabel);
-    optionsLabel->setColor(ccc3(255,189,68));
-    /*
-    CCLabelTTF* creditsLabel = CCLabelTTF::create("", "Shojumaru-Regular" ,128, buttonCredits->boundingBox().size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // menuLabel->setAnchorPoint(ccp(0.5f, 0.5));
-    creditsLabel->setPosition( ccp(buttonCredits->boundingBox().size.width * 0.5f, buttonCredits->boundingBox().size.height * 0.5f));
-    buttonCredits->addChild(creditsLabel);
-    creditsLabel->setColor(ccc3(255,189,68));
-    */
     
     /* loading screen module */
     loadingScreen = CCSprite::create("loading screen.png");
@@ -110,8 +96,6 @@ bool MainMenuScene::init()
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
         backgroundImage->setScale(0.5);
-        backgroundDeco->setScale(0.5);
-        backgroundDeco2->setScale(0.5);
         buttonStart->setScale(0.5);
         buttonOptions->setScale(0.5);
     //    buttonCredits->setScale(0.5);
@@ -123,11 +107,8 @@ bool MainMenuScene::init()
     
     //Create menu, it's an autorelease object
     CCMenu* menu = CCMenu::create(buttonStart, buttonOptions, NULL);
-    menu->setPosition( CCPointZero );
     this->addChild(menu, 1);
     this->addChild(backgroundImage, 0);
-    this->addChild(backgroundDeco, 0);
-    this->addChild(backgroundDeco2, 0);
     
 
     SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
@@ -152,6 +133,7 @@ void MainMenuScene::onButtonStartPressed(CCObject* pSender){
         onNewGame(NULL);
     }
     */
+    SoundtrackManager::PlaySFX("Button_press.wav");
     
     onNewGame(NULL);
 }
@@ -193,8 +175,6 @@ void MainMenuScene::loadSenarioChooseScene()
 void MainMenuScene::enableLoadingScreen()
 {
     this->removeChild(backgroundImage);
-    this->removeChild(backgroundDeco);
-    this->removeChild(backgroundDeco2);
     this->removeChild(buttonStart);
     this->removeChild(buttonOptions);
     
@@ -236,6 +216,7 @@ void MainMenuScene::onAcceptTutorial(cocos2d::CCObject *pSender)
 
 void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     //CCDirector::sharedDirector()->pushScene(OptionsScene::scene());
+    SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
 void MainMenuScene::onButtonCreditsPressed(CCObject* pSender){
@@ -256,25 +237,6 @@ void MainMenuScene::onOrientationChanged(){
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     backgroundImage->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.5));
-    
-    if (screenSize.width < screenSize.height) //i.e portrait
-    {
-        backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.1));
-        backgroundDeco2->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.1));
-
-        buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.375));
-        buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.225));
-        // buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.075));
-    }
-    else
-    {
-        backgroundDeco->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.5));
-        backgroundDeco2->setPosition(ccp(screenSize.width*0.5, screenSize.height * 0.5));
-
-        buttonStart->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.65));
-        buttonOptions->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.45));
-        // buttonCredits->setPosition(ccp(screenSize.width*0.5, screenSize.height*0.275));
-    }
 }
 
 void MainMenuScene::onOrientationChangedToPortrait(){

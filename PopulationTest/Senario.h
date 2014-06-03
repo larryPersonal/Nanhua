@@ -17,7 +17,7 @@ using namespace cocos2d;
 
 enum ScenarioState
 {
-    Introduction, Tutorial, Scenario2, Tutorial2
+    Introduction, Tutorial, Scenario1, Scenario2, Tutorial2
 };
 
 class Senario : public CCLayer
@@ -80,7 +80,7 @@ public:
     
     void selectButtonPressed(CCObject* pSender);
     
-    void displayTexts(std::string, float, float, string, float, ccColor3B);
+    void displayTexts(std::string, float, float, string, float, ccColor3B, float);
     
     void update(float time);
     
@@ -89,6 +89,8 @@ public:
     void activateRefugee(float);
     
     void clearCache();
+    
+    void clearScenario();
 };
 
 #endif

@@ -70,6 +70,8 @@ TutorialSlide::TutorialSlide()
     waitForVillager = false;
     
     delay = 0;
+    
+    clear = false;
 }
 
 TutorialSlide::~TutorialSlide()

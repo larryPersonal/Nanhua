@@ -6,15 +6,17 @@
         <dialogue>
             <name></name>
             <text>In 200 AD, Liu Bei（^刘^备^）fought a losing battle against Cao Cao（^曹^操^）at Xu Province（^徐^州^）and had to seek refuge under the northern warlord Yuan Shao（^袁^绍^）.</text>
+            <limitX>870</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_in>yes</fade_in>
         </dialogue>
     </slide>
     <slide>
@@ -22,11 +24,12 @@
         <dialogue>
             <name></name>
             <text>However, Yuan Shao was also defeated by Cao Cao in the same year and Liu Bei went to Jing Province（^荆^州^）to seek shelter under the governor, Liu Biao（^刘^表^）.</text>
+            <limitX>880</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
@@ -38,11 +41,12 @@
         <dialogue>
             <name></name>
             <text>Liu Biao initially welcomed Liu Bei but gradually grew suspicious as the latter became increasingly influential.</text>
+            <limitX>900</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
@@ -54,11 +58,12 @@
         <dialogue>
             <name></name>
             <text>As a result, Liu Biao sent Liu Bei to the northen border at “Bowang”（^博^望^）to defend against an invasion by Cao Cao.</text>
+            <limitX>870</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
@@ -71,11 +76,12 @@
         <dialogue>
             <name></name>
             <text>Xiao Hua is in the village centre, cracking his brains over how to utilize limited resources to develop the village.</text>
+            <limitX>900</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
             <top>28</top>
-            <src>scroller.png</src>
+            <src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
@@ -87,15 +93,17 @@
         <dialogue>
             <name></name>
             <text>The mini dragon rushes in.</text>
+            <limitX>960</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
 			<left>7</left>
             <top>28</top>
-            <src>scroller.png</src>
+            <src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_out>yes</fade_out>
         </dialogue>
     </slide>
     <slide>
@@ -111,13 +119,15 @@
 		<dialogue>
             <name>Mini dragon</name>
             <text>Oh no!</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
 	</slide>
     <slide>
@@ -133,6 +143,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>What is the matter?</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -154,6 +165,7 @@
 		<dialogue>
             <name>Xiao Long</name>
             <text>Our messengers reported that Cao Cao is planning to invade our borders at “Bowang”.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -174,6 +186,7 @@
 		<dialogue>
             <name>Xiao Long</name>
             <text>Therefore, Liu Biao ordered our lord to organize a troop within one month to fight against Cao Cao^’^s army.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -195,6 +208,7 @@
 		<dialogue>
             <name>Xiao Long</name>
             <text>But the previous battles had already depleted our resources and we are lacking soldiers.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -216,6 +230,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>That is terrible!</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -236,6 +251,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We have many injured soldiers to tend to and they are in no state to fight against Cao Cao^’^s army.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -256,6 +272,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>Liu Biao will also never lend us his troops as he is afraid that we will usurp his position as the Governor.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -276,6 +293,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>What should we do to come up with a troop to fight against Cao Cao^’^s army? (Thinking …^)</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -296,6 +314,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I have an idea!</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -316,6 +335,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We have accepted many refugees into our village.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -337,6 +357,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>What do you think if I appeal to our villagers to help us?</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -358,6 +379,7 @@
 		<dialogue>
             <name>Xiao Long</name>
             <text>I think this is a good idea!</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -379,6 +401,7 @@
 		<dialogue>
             <name>Xiao Long</name>
             <text>But the villagers are not trained to be soldiers …^…</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -400,6 +423,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We can build a training school for them and the injured soldiers can help by becoming their instructors.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -420,6 +444,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>Let me talk to the villagers now.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -427,6 +452,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -440,14 +466,17 @@
 		<dialogue>
             <name></name>
             <text>(Xiao Hua goes outside to meet the refuges.)</text>
+            <limitX>960</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -461,6 +490,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>Cao Cao will invade our border in one month^’^s time so Liu Biao has ordered our lord to muster a troop to defend against the invasion.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -468,6 +498,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
 	</slide>
     <slide>
@@ -482,6 +513,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>As we have too many injured soldiers, we can^’^t form a troop without your help.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -504,6 +536,7 @@
 		<dialogue>
             <name>Villager</name>
             <text>How do you want us to help you?</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -525,6 +558,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We understand that you are not trained to fight against our enemies, so we will build a school and get the injured soldiers to train you.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -545,6 +579,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>The soldiers in training can also defend against the bandits that have been raiding villages lately.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -565,6 +600,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>If you wouldn^’^t help us, Liu Biao will definitely take the opportunity to chase us out of Jing Province.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -586,6 +622,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We will surely lose our village again!</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -607,6 +644,7 @@
 		<dialogue>
             <name>Villager</name>
             <text>You have provided us with shelter and food so that we can survive till now.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -627,6 +665,7 @@
 		<dialogue>
             <name>Villager</name>
             <text>Without the village, no one can survive. </text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -648,6 +687,7 @@
 		<dialogue>
             <name>Villager</name>
             <text>We will repay your kindness.</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -670,6 +710,7 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>Thank you!</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -677,6 +718,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
 </project>

@@ -65,10 +65,10 @@
    <properties>
     <property name="anim_frames" value="4"/>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="500"/>
+    <property name="build_uint_required" value="750"/>
     <property name="builder_limit" value="1"/>
     <property name="building_type" value="amenity"/>
-    <property name="cost" value="300"/>
+    <property name="cost" value="400"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="1"/>
@@ -88,7 +88,7 @@
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value="0"/>
-    <property name="work_unit_required" value="1000"/>
+    <property name="work_unit_required" value="1250"/>
    </properties>
   </tile>
   <tile id="8">
@@ -127,29 +127,10 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="21" name="buildings2x2" tilewidth="256" tileheight="256">
-  <tileoffset x="-64" y="64"/>
-  <image source="building2x2.png" width="1024" height="512"/>
-  <tile id="0">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
-  <tile id="2">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="29" name="roads" tilewidth="128" tileheight="128">
+ <tileset firstgid="21" name="roads" tilewidth="128" tileheight="128">
   <image source="roads.png" width="512" height="512"/>
  </tileset>
- <tileset firstgid="45" name="Houses" tilewidth="128" tileheight="128">
+ <tileset firstgid="37" name="Houses" tilewidth="128" tileheight="128">
   <image source="houses.png" width="512" height="2048"/>
   <tile id="0">
    <properties>
@@ -157,10 +138,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="500"/>
+    <property name="build_uint_required" value="750"/>
     <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -234,10 +215,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="2000"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="750"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -311,10 +292,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="750"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -388,10 +369,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="750"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -460,7 +441,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="109" name="buildings3x3" tilewidth="384" tileheight="384">
+ <tileset firstgid="101" name="buildings3x3" tilewidth="384" tileheight="384">
   <tileoffset x="-128" y="128"/>
   <image source="building3x3.png" width="768" height="768"/>
   <tile id="0">
@@ -551,53 +532,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="113" name="border map_bush_bottomalign" tilewidth="2048" tileheight="2048">
-  <tileoffset x="-960" y="960"/>
-  <image source="border map_bush_bottomalign.png" width="2048" height="2048"/>
-  <tile id="0">
-   <properties>
-    <property name="building_type" value="decoration"/>
-    <property name="name" value="shrubbery"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="114" name="river_anim_bottomalign" tilewidth="1024" tileheight="1024">
-  <tileoffset x="-460" y="460"/>
-  <image source="river_anim_bottomalign.png" width="2048" height="4096"/>
-  <tile id="0">
-   <properties>
-    <property name="anim_frames" value="5"/>
-    <property name="building_type" value="decoration"/>
-    <property name="name" value="river"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
-  <tile id="2">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
-  <tile id="4">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
-  <tile id="5">
-   <properties>
-    <property name="ignore_this_blank" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="122" name="latestgreatwall" tilewidth="256" tileheight="512">
+ <tileset firstgid="105" name="latestgreatwall" tilewidth="256" tileheight="512">
   <tileoffset x="-64" y="128"/>
   <image source="greatwall-256x512.png" width="1024" height="1536"/>
   <tile id="0">
@@ -891,17 +826,17 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="134" name="guardtower-anim" tilewidth="256" tileheight="256">
+ <tileset firstgid="117" name="guardtower-anim" tilewidth="256" tileheight="256">
   <tileoffset x="-64" y="64"/>
   <image source="guardtower anim.png" width="1024" height="1024"/>
   <tile id="0">
    <properties>
     <property name="anim_frames" value="14"/>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="100"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="2"/>
     <property name="building_type" value="military"/>
-    <property name="cost" value="300"/>
+    <property name="cost" value="800"/>
     <property name="description" value="Protect Your Town"/>
     <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="1"/>
@@ -990,7 +925,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="150" name="river_anim_w_fish" tilewidth="1024" tileheight="1024">
+ <tileset firstgid="133" name="river_anim_w_fish" tilewidth="1024" tileheight="1024">
   <tileoffset x="-454" y="454"/>
   <image source="river_anim_w_fish.png" width="4096" height="4096"/>
   <tile id="0">
@@ -1072,7 +1007,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="166" name="SchoolAnimDog" tilewidth="384" tileheight="384">
+ <tileset firstgid="149" name="SchoolAnimDog" tilewidth="384" tileheight="384">
   <tileoffset x="-128" y="128"/>
   <image source="school_anim_dog.png" width="2048" height="4096"/>
   <tile id="0">
@@ -1273,7 +1208,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="216" name="Granary" tilewidth="256" tileheight="256">
+ <tileset firstgid="199" name="Granary" tilewidth="256" tileheight="256">
   <tileoffset x="-64" y="64"/>
   <image source="granary.png" width="1024" height="2048"/>
   <tile id="0">
@@ -1282,10 +1217,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="1000"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="2"/>
     <property name="building_type" value="granary"/>
-    <property name="cost" value="100"/>
+    <property name="cost" value="800"/>
     <property name="description" value="Granary for storing food!"/>
     <property name="food_consumption_rate" value="1"/>
     <property name="jobs_available" value="0"/>
@@ -1309,7 +1244,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="248" name="market" tilewidth="128" tileheight="128">
+ <tileset firstgid="231" name="market" tilewidth="128" tileheight="128">
   <image source="market.png" width="256" height="128"/>
   <tile id="0">
    <properties>
@@ -1317,10 +1252,10 @@
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="2"/>
     <property name="building_type" value="market"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="800"/>
     <property name="description" value="Shops"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value="0"/>
+    <property name="jobs_available" value="2"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
@@ -1338,6 +1273,16 @@
     <property name="unlocked_at_start" value="yes"/>
     <property name="work_unit" value="0"/>
     <property name="work_unit_required" value="1000"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="233" name="bordermap1024" tilewidth="1024" tileheight="1024">
+  <tileoffset x="-408" y="408"/>
+  <image source="bordermap1024.png" width="1024" height="1024"/>
+  <tile id="0">
+   <properties>
+    <property name="building_type" value="decoration"/>
+    <property name="name" value="shruppy"/>
    </properties>
   </tile>
  </tileset>
@@ -1365,7 +1310,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1jENACAQwMD3LwC9TKwQko53aw105m49OgDAL38BANT8BQBQ8xcAQM1fAAA1fwEA1PwFAFDzF8CxAbn0BLE=
+   eJzt1qENACAQwMBfnr1RWAhJ5Z3tAp25W48OAPDLXwAANX8BANT8BQBQ8xcAQM1fAAA1fwEA1PwFcGz95gQp
   </data>
  </layer>
  <layer name="Ground_Road" width="67" height="60">
@@ -1374,7 +1319,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0MEJACAQA8GrRvvv0GfswIAzkH/YGQAAAAAAgA77GvCX9fpAES1Ci9AitAgtQovQAgAAAAAAgDYHy68Bpg==
+   eJzt0MEJACAQA8GrRPvv0mfswIAzkH/YGQAAAAAAgA77GvCX9fpAES1Ci9AitAgtQovQAgAAAAAAgDYHnaoBTg==
   </data>
  </layer>
  <layer name="Building_House" width="67" height="60">
@@ -1383,7 +1328,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7AZwr89LOwjJK2CJgAAAAAANOY6AAAAAAAAAAAAAPDMAoq5AC4=
+   eJztzjENAAAIA7CZwb9FTCyBo1XQBAAAAAAAgLa5DgAAAAAAAAAAADywoxcAJg==
   </data>
  </layer>
  <layer name="Building_1" width="67" height="60">
@@ -1395,13 +1340,13 @@
    eJztwSEBAAAAAiAn+H+tJ4xAAwAAAAAAAAAAAAAAAAAAAH8DLAwAEQ==
   </data>
  </layer>
- <layer name="Building_2" width="67" height="60">
+ <layer name="Building_2" width="67" height="60" visible="0">
   <properties>
    <property name="number_of_tiles" value="1"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwSEBAAAAAiCH+H+nJ4xAAwAAAAAAAAAAAAAAAAAAAH8DHfkAHQ==
+   eJztwTEBAAAAwqD1T20JT6AAAAAAAAAAAAAAAAAAAADgbz7QAAE=
   </data>
  </layer>
  <layer name="Building_3" width="67" height="60">
@@ -1410,7 +1355,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAMA6Aqnv9zKpo+oIAEAAAAAACAplsHAAAAAAAAAAAARh5BQABv
+   eJztzkERAAAMAiDTrn+EpfD8QAISAAAAAAAAmm4dAAAAAAAAAAAAGHkXMQBn
   </data>
  </layer>
  <layer name="Building_GuardTower" width="67" height="60">
@@ -1419,7 +1364,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwSEBAAAAAiD/Zwd7wgg0AAAAAAAAAAAAAAAAAAAA8DeRLACV
+   eJztwSEBAAAAAiC/e9wTRqABAAAAAAAAAAAAAAAAAACAvwFlIACE
   </data>
  </layer>
  <layer name="Building_Border" width="67" height="60">
@@ -1428,7 +1373,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2kENAAAIAzEs4/+DCRIItP+bgkXQJYf7rg0AAAAAAAAAAAAAuG7D9xcAAADggwLBiAI2
+   eJzt2jERADAIBEH8O42LWKAgE2B22zdwxUcAAPR3mu8AAFm6AwB4SUsAANX0BQBQTV8AwC6//5vaAgAAZrgCDA2o
   </data>
  </layer>
  <layer name="Building_Wall" width="67" height="60">
@@ -1437,7 +1382,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1DEKgEAMBMB7t4KgftxGu22Ug0SYaVKFbLFkDAAAAABmOasD0NJaHYCW9IJEL0j26gC05F+Q6AWJXpDoxT8c91xezu3j3nMPAAAAAAAAZrsAGZgLnA==
+   eJzt1DEKgEAMBMD7roKg/r+w0W4b5SARZppUIVssGQMAAACAWc7qALS0VgegJb0g0QuSvToALfkXJHpBohckevEPxz2Xl3P7uPfcAwAAAAAAgNkuThkKBA==
   </data>
  </layer>
  <layer name="Building_School" width="67" height="60">
@@ -1446,7 +1391,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7D5d4YrrmkgIa2CJtRcBwAAAAAAAAAAAAAAAAAAAB5ZwIQAyg==
+   eJztzjENAAAIA7D5V4Q8rmkgIa2CJtRcBwAAAAAAAAAAAAAAAAAAAB5ZpkQAuQ==
   </data>
  </layer>
  <layer name="Building_Granary" width="67" height="60">
@@ -1455,7 +1400,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAEADD9EwohhAACYPsTPAKm2g4AAAAAwFO5HQAAAAAAAAAAAAA4pAEjZQHF
+   eJztzkERAAAEADD9iwmhjADezsOWYBEw1XUAAAAAAAAeyOsAAAAAAAAAAADAsgYXDwGj
   </data>
  </layer>
  <layer name="Building_Market" width="67" height="60">
@@ -1464,7 +1409,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwSEBAAAAAiD/P7Z5wgg0AAAAAAAAAAAAAAAAAAAA8DdaswD6
+   eJztwSEBAAAAAiD/L3WGJ4xAAwAAAAAAAAAAAAAAAAAAAH8DLqcA6Q==
   </data>
  </layer>
 </map>

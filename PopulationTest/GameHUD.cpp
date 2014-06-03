@@ -83,9 +83,7 @@ GameHUD::GameHUD()
     label_fade_in = false;
     label_fade_out = false;
     
-    targetMoney = 0;
-    isAddingMoney = false;
-    moneyLabelDirectionUp = false;
+    targetMoney = GameScene::getThis()->settingsLevel->default_start_money;
     
     targetReputation = 0;
     isAddingReputation = false;
@@ -173,6 +171,8 @@ GameHUD::GameHUD()
     
     objectiveDescriptions = CCArray::create();
     objectiveDescriptions->retain();
+    
+    finalObjective = false;
 }
 
 GameHUD::~GameHUD()
@@ -277,11 +277,21 @@ void GameHUD::update(float deltaTime)
             objectiveTime->setVisible(false);
             hasTimer = false;
             
-            stringstream sss;
-            sss << "Your current objective has been failed!";
-            GameHUD::getThis()->addNewNotification(sss.str());
+            if(!finalObjective)
+            {
+                stringstream sss;
+                sss << "Your current objective has been failed!";
+                GameHUD::getThis()->addNewNotification(sss.str());
             
-            // withdraw the objective. TODO: play the next objective
+                // withdraw the objective. TODO: play the next objective
+                
+            }
+            else
+            {
+                finalObjective = false;
+                pause = true;
+                clickScoreButton();
+            }
             ObjectiveHandler::getThis()->playObjective();
         }
     }
@@ -370,6 +380,9 @@ void GameHUD::update(float deltaTime)
     
     if(!pause)
     {
+        ccColor3B colorGreen = ccc3(0, 255, 0);
+        ccColor3B colorRed = ccc3(255, 0, 0);
+        
         // update date
         cumulatedTime += deltaTime;
         
@@ -378,7 +391,7 @@ void GameHUD::update(float deltaTime)
             date->addDay();
             cumulatedTime = 0;
             
-            if(date->week == 0 && date->day == 0)
+            if((date->week == 0 || date->week == 2) && date->day == 0)
             {
                 CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
                 for(int i = 0; i < spritesOnMap->count(); i++)
@@ -390,6 +403,8 @@ void GameHUD::update(float deltaTime)
             }
         }
         
+        stringstream ss;
+        
         // if it's the first day of the month, update money;
         if (date->day == 0 && date->week == 0 && getMoney && !GameScene::getThis()->banditsAttackHandler->warMode)
         {
@@ -400,12 +415,24 @@ void GameHUD::update(float deltaTime)
             for(int i = 0; i < housingsOnMap->count(); i++)
             {
                 Building* tempB = (Building*) housingsOnMap->objectAtIndex(i);
-                moneyAdded += tempB->memberSpriteList->count() * 100;
+                moneyAdded += tempB->memberSpriteList->count() * GameScene::getThis()->settingsLevel->gold_from_house;
+                
+                ss.str(std::string());
+                ss << "+" << tempB->memberSpriteList->count() * GameScene::getThis()->settingsLevel->gold_from_house;
+                tempB->addNotificationLabel(ss.str(), colorGreen);
             }
             
-            moneyAdded += marketsOnMap->count() * 500;
+            moneyAdded += marketsOnMap->count() * GameScene::getThis()->settingsLevel->gold_from_market;
             
-            stringstream ss;
+            for(int i = 0; i < marketsOnMap->count(); i++)
+            {
+                Building* tempB = (Building*) marketsOnMap->objectAtIndex(i);
+                ss.str(std::string());
+                ss << "+" << GameScene::getThis()->settingsLevel->gold_from_market;
+                tempB->addNotificationLabel(ss.str(), colorGreen);
+            }
+            
+            ss.str(std::string());
             ss << "You have collected " << moneyAdded << " gold for the month from the village.";
             
             addNewNotification(ss.str());
@@ -481,11 +508,17 @@ void GameHUD::update(float deltaTime)
                     if(foodSupportGuardTower < tempB->currentStorage)
                     {
                         tempB->currentStorage -= foodSupportGuardTower;
+                        ss.str(std::string());
+                        ss << "-" << foodSupportGuardTower;
+                        tempB->addNotificationLabel(ss.str(), colorRed);
                         foodSupportGuardTower = 0;
                     }
                     else
                     {
                         foodSupportGuardTower -= tempB->currentStorage;
+                        ss.str(std::string());
+                        ss << "-" << tempB->currentStorage;
+                        tempB->addNotificationLabel(ss.str(), colorRed);
                         tempB->currentStorage = 0;
                     }
                 }
@@ -499,11 +532,17 @@ void GameHUD::update(float deltaTime)
                         if(foodSupportGuardTower < tempB->currentStorage)
                         {
                             tempB->currentStorage -= foodSupportGuardTower;
+                            ss.str(std::string());
+                            ss << "-" << foodSupportGuardTower;
+                            tempB->addNotificationLabel(ss.str(), colorRed);
                             foodSupportGuardTower = 0;
                         }
                         else
                         {
                             foodSupportGuardTower -= tempB->currentStorage;
+                            ss.str(std::string());
+                            ss << "-" << tempB->currentStorage;
+                            tempB->addNotificationLabel(ss.str(), colorRed);
                             tempB->currentStorage = 0;
                         }
                     }
@@ -519,7 +558,7 @@ void GameHUD::update(float deltaTime)
         }
         
         // if it's the first day of the month, update population growth;
-        if (date->day == 0 && date->week == 0 && increasePopulation && !GameScene::getThis()->banditsAttackHandler->warMode)
+        if (((date->day == 0 && date->week == 0) || (date->day == 3 && date->week == 1) || (date->day == 5 && date->week == 2)) && increasePopulation && !GameScene::getThis()->banditsAttackHandler->warMode)
         {
             checkReputaionPopulation();
             increasePopulation = false;
@@ -529,6 +568,10 @@ void GameHUD::update(float deltaTime)
         if (date->day == 6 && date->week == 3)
         {
             getMoney = true;
+        }
+        
+        if ((date->day == 6 && date->week == 3) || (date->day == 2 && date->week == 1) || (date->day == 4 && date->week == 2))
+        {
             increasePopulation = true;
         }
         
@@ -930,6 +973,8 @@ void GameHUD::update(float deltaTime)
             }
         }
     }
+    
+    addMoney(deltaTime);
 }
 
 void GameHUD::createInitialGUI(){
@@ -1290,6 +1335,40 @@ void GameHUD::createStatsMenu()
     }
 }
 
+void GameHUD::setupForGuardTowerBar()
+{
+    guardTowerScore = 0;
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    guardTowerScoreBar = new ProgressBar();
+    guardTowerScoreBar->createProgressBar(
+                               CCRectMake(0, 0, 186, 16),
+                               CCRectMake(3, 3, 180, 10),
+                               "Energy_brown bar.png",
+                               "NONE",
+                               "NONE",
+                               "Energybarblue.png",
+                               true
+                               );
+    guardTowerScoreBar->setValue(0);
+    guardTowerScoreBar->setAnchorPoint(ccp(0, 1));
+    guardTowerScoreBar->CCNode::setPosition(260.0f, screenSize.height - 90.0f);
+    this->addChild(guardTowerScoreBar, 2);
+    
+    stringstream ss;
+    ss << (guardTowerScore > 1000.0f ? 1000.0f : guardTowerScore) << "/1000";
+    guardTowerScoreLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
+    guardTowerScoreLabel->setAnchorPoint(ccp(0, 1));
+    guardTowerScoreLabel->setPosition(ccp(260.0f, screenSize.height - 60.0f));
+    this->addChild(guardTowerScoreLabel, 3);
+}
+
+void GameHUD::clearGuardTowerBar()
+{
+    
+}
+
 void GameHUD::createTimeMenu()
 {
     // set common variables
@@ -1496,6 +1575,7 @@ void GameHUD::createObjectiveMenu()
 {
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorWhite = ccc3(255, 255, 255);
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
     // create the objective group background
@@ -1536,14 +1616,14 @@ void GameHUD::createObjectiveMenu()
     ss << "Objective";
     objectiveTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 32);
     objectiveTitle->setAnchorPoint(ccp(0.5, 0));
-    objectiveTitle->setColor(colorBlack);
+    objectiveTitle->setColor(colorWhite);
     objectiveTitle->setPosition(ccp(screenSize.width * 0.22f + objectiveMenu->boundingBox().size.width / 2.0f, screenSize.height - 480));
     
     ss.str(std::string());
     ss << "Progress";
     objectiveProgress = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 28);
     objectiveProgress->setAnchorPoint(ccp(0, 1));
-    objectiveProgress->setColor(colorBlack);
+    objectiveProgress->setColor(colorWhite);
     objectiveProgress->setPosition(ccp(screenSize.width * 0.11f, screenSize.height - 600));
     
     objectiveMenu->addChild(objectiveTitle);
@@ -2502,11 +2582,10 @@ void GameHUD::scheduleAddMoney(int mon)
     if(mon >= 0)
     {
         ss << "+";
-        moneyLabelDirectionUp = true;
     }
     else
     {
-        moneyLabelDirectionUp = false;
+        ss << "-";
     }
     
     ss << mon << "G";
@@ -2527,27 +2606,17 @@ void GameHUD::scheduleAddMoney(int mon)
     addMoneyLabel->setScale(0.01f);
     this->addChild(addMoneyLabel, 10);
     addMoneyLabelArray->addObject(addMoneyLabel);
-    
-    if(!isAddingMoney)
-    {
-        isAddingMoney = true;
-        this->schedule(schedule_selector(GameHUD::addMoney), 1.0f / 120.0f);
-    }
 }
 
 void GameHUD::addMoney(float dt)
 {
-    bool stop = true;
-    
     if(money < targetMoney)
     {
         money++;
-        stop = false;
     }
     else if(money > targetMoney)
     {
         money--;
-        stop = false;
     }
     
     for(int i = 0; i < addMoneyLabelArray->count(); i++)
@@ -2562,33 +2631,20 @@ void GameHUD::addMoney(float dt)
         }
         temp->setScale(scale);
         
-        if(moneyLabelDirectionUp)
-        {
-            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() + 0.2f));
-        }
-        else
-        {
-            temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() - 0.2f));
-        }
+        temp->setPosition(ccp(temp->getPositionX(), temp->getPositionY() + 0.2f));
         
         float opacity = (float) temp->getOpacity();
         opacity -= 1.5f;
         if(opacity <= 0)
         {
             addMoneyLabelArray->removeObject(temp);
+            this->removeChild(temp);
             i--;
         }
         else
         {
             temp->setOpacity((GLubyte) opacity);
         }
-        stop = false;
-    }
-    
-    if(stop)
-    {
-        isAddingMoney = false;
-        this->unschedule(schedule_selector(GameHUD::addMoney));
     }
 }
 

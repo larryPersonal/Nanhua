@@ -50,6 +50,8 @@ public:
     int populationModifier;
     bool outcome;
     
+    float limitX;
+    
 public:
     Element();
     ~Element();

@@ -23,7 +23,7 @@
         </lock>
     </slide>
     <slide>
-        <speech>This is your town hall, the heart of the village. The town hall controls how many buildings you can build in your village. You may upgrade your town hall once you have obtained enough resources to unlock new buildings.</speech>
+        <speech>This is your town hall, the heart of the village. The town hall controls how many buildings you can build in your village. You may upgrade your town hall once you have obtained enough resources to unlock more buildings.</speech>
         <fade_out>160</fade_out>
         <highlight>special</highlight>
         <clickToNext></clickToNext>
@@ -48,7 +48,7 @@
     </slide>
     <slide>
         <speech>They are most likely villagers displaced by the war. You will have to provide them with food and shelter if you want them to remain in your village.</speech>
-        <cameraMove>4544,2432</cameraMove>
+        <cameraMove>4352,2272</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
     </slide>
@@ -114,7 +114,7 @@
             <scroll></scroll>
         </lock>
         <hideObjective></hideObjective>
-        <cameraMove>4544,2432</cameraMove>
+        <cameraMove>4352,2272</cameraMove>
         <highlight>housing</highlight>
         <lockClick></lockClick>
         <clickToNext></clickToNext>
@@ -125,7 +125,7 @@
     </slide>
     <slide>
         <speech>The refugees appear to have settled in nicely, but now they are hungry! Luckily, we also have a granary ready.</speech>
-        <cameraMove>5120,2144</cameraMove>
+        <cameraMove>4928,1984</cameraMove>
         <deHighlight></deHighlight>
         <highlight>granary</highlight>
         <clickToNext></clickToNext>
@@ -185,7 +185,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the label to show the gold cost to build a farm.</speech>
+        <speech>This shows the gold cost of the building.</speech>
         <clickToNext></clickToNext>
         <offY>220</offY>
         <showArrow></showArrow>
@@ -196,7 +196,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the label to show the number of workers required to build the farm.</speech>
+        <speech>This shows the number of workers needed to build the building.</speech>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
@@ -207,7 +207,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the estimated time to build a farm.</speech>
+        <speech>This is the estimated time to build the building.</speech>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
@@ -218,7 +218,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This is the number left available to build for farm.</speech>
+        <speech>This shows how many more of this type of building you can build.</speech>
         <clickToNext></clickToNext>
         <showArrow></showArrow>
         <offY>220</offY>
@@ -229,7 +229,7 @@
         <arrowLayer>1</arrowLayer>
     </slide>
     <slide>
-        <speech>This time, select farm and choose a location to build it.</speech>
+        <speech>For now, select the farm and choose a location to build it.</speech>
         <offY>220</offY>
         <lock>
             <scroll></scroll>
@@ -314,14 +314,14 @@
         </lock>
     </slide>
     <slide>
-        <speech>Once farming begins, the villager will automatically bring the food generated to the granary.</speech>
+        <speech>Farming will begin once you have allocated a villager. Harvested food will be brought to the granary automatically.</speech>
         <lock>
             <popup></popup>
             <scroll></scroll>
         </lock>
     </slide>
     <slide>
-        <speech>Villagers have transport the food to the granary already. After a job is done, villagers will gain happiness. Also happy villagers will be able to drop reputation tokens.</speech>
+        <speech>When villagers complete a task, they will gain happiness. Happy villagers will be more likely to drop reputation tokens that will increase your 仁.</speech>
         <unlock>
             <teachFarming></teachFarming>
             <scroll></scroll>
@@ -329,7 +329,7 @@
         <clickToNext></clickToNext>
     </slide>
     <slide>
-        <speech>Reputation tokens are the marks you should gain through the game, the more reputation you have, the more villagers will be attracted to your village, try to collect more reputation tokens.</speech>
+        <speech>The higher your 仁, the more renowned your village will become. Certain unlocks become available after a certain amount of 仁 is earned.</speech>
         <clickToNext></clickToNext>
     </slide>
     <slide>
@@ -351,5 +351,9 @@
     <slide>
         <hideBubble></hideBubble>
         <unlockAll><unlockAll>
+    </slide>
+    <slide>
+        <showObjective></showObjective>
+        <clear></clear>
     </slide>
 </tutorial>

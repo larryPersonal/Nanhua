@@ -5,15 +5,18 @@
         <dialogue>
             <name></name>
             <text>Xiao Hua decides that he would build new house to accommodate the refuges.</text>
+            <limitX>900</limitX>
             <textOffY>30</textOffY>
+            <limitX>900</limitX>
             <width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
             <color>white</color>
+            <fade_out>yes</fade_out>
         </dialogue>
     </slide>
     <slide>
@@ -28,13 +31,15 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>We should not turn a blind eye to people in need. But what can we do? (Thinking)</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
 	</slide>
     <slide>
@@ -49,7 +54,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I got an idea! We could cut rations for everyone in the village for the time being until your house is built.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -70,6 +76,7 @@
 		</sprite>
 		<dialogue>
             <name>Refugees</name>
+            <limitX>960</limitX>
             <text>Would the villagers really agree to it?</text>
 			<width>85</width>
 			<left>15</left>
@@ -91,6 +98,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
+            <limitX>960</limitX>
             <text>I believe that they would agree to it.</text>
 			<width>85</width>
 			<left>15</left>
@@ -112,7 +120,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>All of us have survived the war and knew how life could be hopeless if no one is willing to lend a helping hand.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -133,7 +142,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>I am sure that they could empathize with your plight.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -155,7 +165,8 @@
 		<dialogue>
             <name>Refugees</name>
             <text>Really?! That is the best piece of news that we have heard since we left our hometown a few years ago.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -177,7 +188,8 @@
 		<dialogue>
             <name>Xiao Hua</name>
             <text>But in order to fund the building of your houses and cope with the rationing of food, you would need to farm and harvest crops for us.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -198,7 +210,8 @@
 		<dialogue>
             <name>Refugees</name>
             <text>Sure, this is the least that we could do to support the development of the village.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
@@ -219,13 +232,15 @@
 		<dialogue>
             <name>Refugees</name>
             <text>Thank you! We will never forget your kindness.</text>
-			<width>85</width>
+			<limitX>960</limitX>
+            <width>85</width>
 			<left>15</left>
 			<top>28</top>
 			<src>scroller.png</src>
             <dir>right</dir>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
 </project>

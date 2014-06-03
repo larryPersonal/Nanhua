@@ -393,6 +393,15 @@
 		840813B5193AECBE0085EAFC /* reject_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 840813B1193AECBE0085EAFC /* reject_press.png */; };
 		840813B6193AECBE0085EAFC /* accept_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 840813B2193AECBE0085EAFC /* accept_press.png */; };
 		840813B7193AECBE0085EAFC /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 840813B3193AECBE0085EAFC /* accept.png */; };
+		840813C1193B1E510085EAFC /* guardhouse_training.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813B8193B1E510085EAFC /* guardhouse_training.wav */; };
+		840813C2193B1E510085EAFC /* in-game_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813B9193B1E510085EAFC /* in-game_2.wav */; };
+		840813C3193B1E510085EAFC /* construction.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813BA193B1E510085EAFC /* construction.wav */; };
+		840813C4193B1E510085EAFC /* Button_press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813BB193B1E510085EAFC /* Button_press.wav */; };
+		840813C5193B1E510085EAFC /* Cheerful_Music_at_Library.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813BC193B1E510085EAFC /* Cheerful_Music_at_Library.wav */; };
+		840813C6193B1E510085EAFC /* in-game_bandit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 840813BD193B1E510085EAFC /* in-game_bandit.mp3 */; };
+		840813C7193B1E510085EAFC /* Clash_of_Battles.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813BE193B1E510085EAFC /* Clash_of_Battles.wav */; };
+		840813C8193B1E510085EAFC /* in-game_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813BF193B1E510085EAFC /* in-game_1.wav */; };
+		840813C9193B1E510085EAFC /* Reputation_sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840813C0193B1E510085EAFC /* Reputation_sfx.wav */; };
 		8410543618E90DA7003D88C6 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410541D18E90DA7003D88C6 /* bubble.png */; };
 		8410545118E91940003D88C6 /* ReputationOrb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8410545018E91940003D88C6 /* ReputationOrb.cpp */; };
 		8410545D18E94ECB003D88C6 /* restartbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8410545318E94ECB003D88C6 /* restartbtn.png */; };
@@ -480,6 +489,11 @@
 		84360A3718B22150002EC8C2 /* worker_assign_sample_ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 84360A3618B22150002EC8C2 /* worker_assign_sample_ui.png */; };
 		843689F918DBF1A200FA08FF /* Full_Scene.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 843689F818DBF1A200FA08FF /* Full_Scene.tmx */; };
 		843689FD18DC007600FA08FF /* guardtower.png in Resources */ = {isa = PBXBuildFile; fileRef = 843689FC18DC007600FA08FF /* guardtower.png */; };
+		8436BCEB193C2B4700FC2243 /* fullScroller.png in Resources */ = {isa = PBXBuildFile; fileRef = 8436BCEA193C2B4700FC2243 /* fullScroller.png */; };
+		8436BCED193C46A200FC2243 /* Howling_Wind.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8436BCEC193C46A200FC2243 /* Howling_Wind.wav */; };
+		8436BCEF193C7BD400FC2243 /* bordermap1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 8436BCEE193C7BD400FC2243 /* bordermap1024.png */; };
+		8436BCF1193C8B1700FC2243 /* warscene.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8436BCF0193C8B1700FC2243 /* warscene.mp3 */; };
+		8436BCF3193C8C7600FC2243 /* newsplashpage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8436BCF2193C8C7600FC2243 /* newsplashpage2.png */; };
 		843AFFBB187FEC530053546B /* SelectPopulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 843AFFBA187FEC530053546B /* SelectPopulation.cpp */; };
 		843B18D818F2910600C00490 /* housedetailred.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D718F2910600C00490 /* housedetailred.png */; };
 		843B18DA18F2A4FA00C00490 /* infor display ui.png in Resources */ = {isa = PBXBuildFile; fileRef = 843B18D918F2A4FA00C00490 /* infor display ui.png */; };
@@ -1356,6 +1370,15 @@
 		840813B1193AECBE0085EAFC /* reject_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reject_press.png; sourceTree = "<group>"; };
 		840813B2193AECBE0085EAFC /* accept_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accept_press.png; sourceTree = "<group>"; };
 		840813B3193AECBE0085EAFC /* accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accept.png; sourceTree = "<group>"; };
+		840813B8193B1E510085EAFC /* guardhouse_training.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = guardhouse_training.wav; sourceTree = "<group>"; };
+		840813B9193B1E510085EAFC /* in-game_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "in-game_2.wav"; sourceTree = "<group>"; };
+		840813BA193B1E510085EAFC /* construction.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = construction.wav; sourceTree = "<group>"; };
+		840813BB193B1E510085EAFC /* Button_press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Button_press.wav; sourceTree = "<group>"; };
+		840813BC193B1E510085EAFC /* Cheerful_Music_at_Library.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Cheerful_Music_at_Library.wav; sourceTree = "<group>"; };
+		840813BD193B1E510085EAFC /* in-game_bandit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "in-game_bandit.mp3"; sourceTree = "<group>"; };
+		840813BE193B1E510085EAFC /* Clash_of_Battles.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Clash_of_Battles.wav; sourceTree = "<group>"; };
+		840813BF193B1E510085EAFC /* in-game_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "in-game_1.wav"; sourceTree = "<group>"; };
+		840813C0193B1E510085EAFC /* Reputation_sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Reputation_sfx.wav; sourceTree = "<group>"; };
 		8410541D18E90DA7003D88C6 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
 		8410544F18E916DA003D88C6 /* ReputationOrb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReputationOrb.h; sourceTree = "<group>"; };
 		8410545018E91940003D88C6 /* ReputationOrb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReputationOrb.cpp; sourceTree = "<group>"; };
@@ -1465,6 +1488,11 @@
 		84360A3618B22150002EC8C2 /* worker_assign_sample_ui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = worker_assign_sample_ui.png; sourceTree = "<group>"; };
 		843689F818DBF1A200FA08FF /* Full_Scene.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Full_Scene.tmx; sourceTree = "<group>"; };
 		843689FC18DC007600FA08FF /* guardtower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guardtower.png; sourceTree = "<group>"; };
+		8436BCEA193C2B4700FC2243 /* fullScroller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullScroller.png; sourceTree = "<group>"; };
+		8436BCEC193C46A200FC2243 /* Howling_Wind.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Howling_Wind.wav; sourceTree = "<group>"; };
+		8436BCEE193C7BD400FC2243 /* bordermap1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bordermap1024.png; sourceTree = "<group>"; };
+		8436BCF0193C8B1700FC2243 /* warscene.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warscene.mp3; sourceTree = "<group>"; };
+		8436BCF2193C8C7600FC2243 /* newsplashpage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newsplashpage2.png; sourceTree = "<group>"; };
 		843AFFB8187FE7DD0053546B /* SelectPopulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPopulation.h; sourceTree = "<group>"; };
 		843AFFBA187FEC530053546B /* SelectPopulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectPopulation.cpp; sourceTree = "<group>"; };
 		843B18D718F2910600C00490 /* housedetailred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = housedetailred.png; sourceTree = "<group>"; };
@@ -1788,6 +1816,17 @@
 		3647C7FA17C20BB0008FA626 /* Soundtrack */ = {
 			isa = PBXGroup;
 			children = (
+				8436BCF0193C8B1700FC2243 /* warscene.mp3 */,
+				8436BCEC193C46A200FC2243 /* Howling_Wind.wav */,
+				840813B8193B1E510085EAFC /* guardhouse_training.wav */,
+				840813B9193B1E510085EAFC /* in-game_2.wav */,
+				840813BA193B1E510085EAFC /* construction.wav */,
+				840813BB193B1E510085EAFC /* Button_press.wav */,
+				840813BC193B1E510085EAFC /* Cheerful_Music_at_Library.wav */,
+				840813BD193B1E510085EAFC /* in-game_bandit.mp3 */,
+				840813BE193B1E510085EAFC /* Clash_of_Battles.wav */,
+				840813BF193B1E510085EAFC /* in-game_1.wav */,
+				840813C0193B1E510085EAFC /* Reputation_sfx.wav */,
 				36423C241917258200975B4C /* coin pickup.wav */,
 				36423C251917258200975B4C /* hit sfx.wav */,
 				36423C261917258200975B4C /* hurt sfx.wav */,
@@ -1863,6 +1902,8 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8436BCF2193C8C7600FC2243 /* newsplashpage2.png */,
+				8436BCEE193C7BD400FC2243 /* bordermap1024.png */,
 				840813A9193ADA8D0085EAFC /* scrollermiddle.png */,
 				840813AA193ADA8D0085EAFC /* scroller1.png */,
 				8450A1761935F65B0051F90C /* ScenarioScene2.tmx */,
@@ -3591,6 +3632,7 @@
 		84DBDD981929AE7C00EEDFB9 /* Introduction */ = {
 			isa = PBXGroup;
 			children = (
+				8436BCEA193C2B4700FC2243 /* fullScroller.png */,
 				840813B0193AECBE0085EAFC /* reject.png */,
 				840813B1193AECBE0085EAFC /* reject_press.png */,
 				840813B2193AECBE0085EAFC /* accept_press.png */,
@@ -3839,14 +3881,18 @@
 				3658DD8018D6F1430056B895 /* char1MMC_currentlyinworking.png in Resources */,
 				843689F918DBF1A200FA08FF /* Full_Scene.tmx in Resources */,
 				36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */,
+				840813C3193B1E510085EAFC /* construction.wav in Resources */,
+				8436BCEF193C7BD400FC2243 /* bordermap1024.png in Resources */,
 				842B84DF1906881C00D43E2E /* school_anim_dog.png in Resources */,
 				3658DD8218D6F31E0056B895 /* Soldier.plist in Resources */,
 				3608CAFE1704343E00AB65A3 /* YoungGirl.plist in Resources */,
+				840813C5193B1E510085EAFC /* Cheerful_Music_at_Library.wav in Resources */,
 				8414CF2618FFC5EB0052CA91 /* buildmenu.png in Resources */,
 				8414CF2A18FFC6240052CA91 /* scroller_side.png in Resources */,
 				8414CF2718FFC5EB0052CA91 /* scrollermiddle_b.png in Resources */,
 				84F9B76918D949D900579060 /* MaleVillager.plist in Resources */,
 				840813AC193ADA8D0085EAFC /* scroller1.png in Resources */,
+				840813C4193B1E510085EAFC /* Button_press.wav in Resources */,
 				3632864318CEC503002C58D3 /* houses.png in Resources */,
 				843E973718DB18E700DBB48D /* BuildingInfoUI.png in Resources */,
 				8459756D19109D560093709B /* objective_scenario_1.xml in Resources */,
@@ -3868,6 +3914,8 @@
 				3608CB071704343E00AB65A3 /* FemaleFarmer.png in Resources */,
 				84360A3018B21FED002EC8C2 /* assign_menu_accept.png in Resources */,
 				842B84C81906599800D43E2E /* ingamedragonanimwhite.png in Resources */,
+				8436BCED193C46A200FC2243 /* Howling_Wind.wav in Resources */,
+				840813C7193B1E510085EAFC /* Clash_of_Battles.wav in Resources */,
 				36AC556F18D6981900C165F5 /* scroller.png in Resources */,
 				84F2912318FE307D0045F834 /* timeclock_week4.png in Resources */,
 				3608CB081704343E00AB65A3 /* MaleBandit.plist in Resources */,
@@ -3945,6 +3993,7 @@
 				84DBDDBE1929F9C900EEDFB9 /* 123.mp4 in Resources */,
 				843E973518DAEB3A00DBB48D /* dragon_c.png in Resources */,
 				843E973318DAEB2F00DBB48D /* studentgirl_c.png in Resources */,
+				840813C8193B1E510085EAFC /* in-game_1.wav in Resources */,
 				36D87CF518C5BA5200FE8B31 /* villager_c.png in Resources */,
 				36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */,
 				843BE2B018F7EB2600682E5B /* tutorialBackup.xml in Resources */,
@@ -3987,9 +4036,11 @@
 				843E972F18DA95AC00DBB48D /* MaleBandit_port.png in Resources */,
 				8421158018D2C4DD00A441D0 /* rice_icon.png in Resources */,
 				84E5F0361923766900F5AB67 /* border map_bush.png in Resources */,
+				8436BCF1193C8B1700FC2243 /* warscene.mp3 in Resources */,
 				84F2912118FE307D0045F834 /* timeclock_week2.png in Resources */,
 				847309CE18DC0A23001869C6 /* peaceicon.png in Resources */,
 				3658DD7518D6F1430056B895 /* Girl.png in Resources */,
+				840813C6193B1E510085EAFC /* in-game_bandit.mp3 in Resources */,
 				842A0F55190A494A008B16AF /* sortbyenergy_downpress.png in Resources */,
 				84360A3718B22150002EC8C2 /* worker_assign_sample_ui.png in Resources */,
 				84F9B76B18D94ADD00579060 /* Girl.plist in Resources */,
@@ -4012,6 +4063,7 @@
 				8402BBE0191351C500005700 /* popup_dialogbox.png in Resources */,
 				842A0F5F190A6423008B16AF /* swordAnimation.png in Resources */,
 				8450A1771935F65B0051F90C /* ScenarioScene2.tmx in Resources */,
+				840813C2193B1E510085EAFC /* in-game_2.wav in Resources */,
 				842B84D219066AC600D43E2E /* summertimeclock.png in Resources */,
 				36B18A8118A0A6A700A8B515 /* CMakeLists.txt in Resources */,
 				84CFAEDF18E034E900A81C94 /* timeclock0.png in Resources */,
@@ -4042,6 +4094,7 @@
 				84F5F33B192B03D000EF8ED8 /* warScene.png in Resources */,
 				8421157C18D2C4DD00A441D0 /* objective_content.png in Resources */,
 				842B84DB190674DE00D43E2E /* money_label.png in Resources */,
+				8436BCF3193C8C7600FC2243 /* newsplashpage2.png in Resources */,
 				36423C271917258200975B4C /* coin pickup.wav in Resources */,
 				3604970617AB942700CACE25 /* arrow-down.png in Resources */,
 				84DBDDBC1929F6B600EEDFB9 /* redCliff.mp4 in Resources */,
@@ -4054,6 +4107,7 @@
 				8410543618E90DA7003D88C6 /* bubble.png in Resources */,
 				842BAFFD18EBB0B5006FE297 /* black.png in Resources */,
 				36AC557518D6981900C165F5 /* yuanbao.png in Resources */,
+				840813C9193B1E510085EAFC /* Reputation_sfx.wav in Resources */,
 				8414BF4C18BC4875007626B2 /* worker_assign_ui_bg_03.png in Resources */,
 				84DBDD9B1929AE8900EEDFB9 /* school_student.png in Resources */,
 				8402BBE8191393F500005700 /* Studentboy_right.png in Resources */,
@@ -4061,6 +4115,7 @@
 				3604970917AB942700CACE25 /* arrow-up2.png in Resources */,
 				36B411E518D9AC5D005967EC /* border map_bush_bottomalign.png in Resources */,
 				36AC557318D6981900C165F5 /* yuanbao_amount.png in Resources */,
+				8436BCEB193C2B4700FC2243 /* fullScroller.png in Resources */,
 				8402BBEA191394E700005700 /* Studentboy_left.png in Resources */,
 				84DA68D6191A35EB002B459D /* defending.png in Resources */,
 				84360A2D18B21FED002EC8C2 /* workers_menu_selectedBG_overlay.png in Resources */,
@@ -4129,6 +4184,7 @@
 				843E972818DA94F100DBB48D /* FemaleBandit_port.png in Resources */,
 				8410545E18E94ECB003D88C6 /* optionspressbtn.png in Resources */,
 				84589CDC1896653F00AA9E1C /* senario1_option2.xml in Resources */,
+				840813C1193B1E510085EAFC /* guardhouse_training.wav in Resources */,
 				84DA68D2191A3424002B459D /* thiefStealingMoney.png in Resources */,
 				84DBDD9C1929AE8900EEDFB9 /* classroom.png in Resources */,
 				3624032817C308AD005BED27 /* Tikopia.mp3 in Resources */,

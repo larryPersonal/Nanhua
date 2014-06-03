@@ -284,6 +284,6 @@ void ReputationOrb::collect(CCPoint touchLoc)
     CC_SAFE_RELEASE(runAction);
     CC_SAFE_RELEASE(callback);
     
-    SoundtrackManager::PlaySFX("coin pickup.wav");
+    SoundtrackManager::PlaySFX("Reputation_sfx.wav");
     //CC_SAFE_RELEASE(bezier);
 }

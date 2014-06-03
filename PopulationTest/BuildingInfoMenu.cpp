@@ -444,7 +444,14 @@ void BuildingInfoMenu::createMenuItems()
     ss.str(string());
     int level = GameManager::getThis()->town_hall_level;
     mGameLevel = level;
-    ss << GameManager::getThis()->housingLimitation->gold_required.at(level) << "Y";
+    if(GameManager::getThis()->housingLimitation->gold_required.at(level) > 99999)
+    {
+        ss << "N.A.";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->gold_required.at(level);
+    }
     moneyLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
     moneyLabel->setAnchorPoint(ccp(0, 1));
     moneyLabel->setPosition(ccp(-120 + hw, -190 + hh));
@@ -458,7 +465,14 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(foodIcon);
     
     ss.str(string());
-    ss << GameManager::getThis()->housingLimitation->food_required.at(level);
+    if(GameManager::getThis()->housingLimitation->food_required.at(level) > 99999)
+    {
+        ss << "N.A.";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->food_required.at(level);
+    }
     foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 20);
     foodLabel->setAnchorPoint(ccp(0, 1));
     foodLabel->setPosition(ccp(60 + hw, -190 + hh));
@@ -528,7 +542,15 @@ void BuildingInfoMenu::createMenuItems()
     mGameHouseNumber = allHouse->count();
     
     ss.str(string());
-    ss << allHouse->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(level);
+    ss << allHouse->count() << "/";
+    if(GameManager::getThis()->housingLimitation->housing_limits.at(level) > 99999)
+    {
+        ss << "~";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->housing_limits.at(level);
+    }
     houseLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     houseLimitLabel->setAnchorPoint(ccp(0, 1));
     houseLimitLabel->setPosition(ccp(200 + hw, 100 + hh));
@@ -547,7 +569,15 @@ void BuildingInfoMenu::createMenuItems()
     mGameGranaryNumber = allGranary->count();
     
     ss.str(string());
-    ss << allGranary->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(level);
+    ss << allHouse->count() << "/";
+    if(GameManager::getThis()->housingLimitation->granary_limits.at(level) > 99999)
+    {
+        ss << "~";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->granary_limits.at(level);
+    }
     granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     granaryLimitLabel->setAnchorPoint(ccp(0, 1));
     granaryLimitLabel->setPosition(ccp(200 + hw, 70 + hh));
@@ -566,7 +596,15 @@ void BuildingInfoMenu::createMenuItems()
     mGameFarmNumber = allFarm->count();
     
     ss.str(string());
-    ss << allFarm->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(level);
+    ss << allHouse->count() << "/";
+    if(GameManager::getThis()->housingLimitation->farm_limits.at(level) > 99999)
+    {
+        ss << "~";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->farm_limits.at(level);
+    }
     farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     farmLimitLabel->setAnchorPoint(ccp(0, 1));
     farmLimitLabel->setPosition(ccp(200 + hw, 40 + hh));
@@ -585,7 +623,15 @@ void BuildingInfoMenu::createMenuItems()
     mGameTowerNumber = allTower->count();
     
     ss.str(string());
-    ss << allTower->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(level);
+    ss << allHouse->count() << "/";
+    if(GameManager::getThis()->housingLimitation->guard_tower_limits.at(level) > 99999)
+    {
+        ss << "~";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->guard_tower_limits.at(level);
+    }
     guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
     guardTowerLimitLabel->setPosition(ccp(200 + hw, 10 + hh));
@@ -1260,19 +1306,34 @@ void BuildingInfoMenu::upgrade()
             return;
         }
         
+        int foodReq = GameManager::getThis()->housingLimitation->food_required.at(level);
+        
         upgradeButton->setVisible(false);
         cancelUpgradeButton->setVisible(true);
         building->isCurrentUpgrading = true;
-        GameHUD::getThis()->money -= GameManager::getThis()->housingLimitation->gold_required.at(level);
+        GameHUD::getThis()->scheduleAddMoney(-GameManager::getThis()->housingLimitation->gold_required.at(level));
+        stringstream ss;
+        ss << "-" << GameManager::getThis()->housingLimitation->gold_required.at(level);
+        ccColor3B colorRed = ccc3(255, 0, 0);
+        building->addNotificationLabel(ss.str(), colorRed);
         for (int i = 0; i < allGranary->count(); i++)
         {
             Building* b = (Building*) allGranary->objectAtIndex(i);
-            if(food <= 0)
+            if(foodReq <= 0)
             {
                 break;
             }
-            food -= b->currentStorage;
-            b->currentStorage = 0;
+            
+            if(foodReq > b->currentStorage)
+            {
+                foodReq -= b->currentStorage;
+                b->currentStorage = 0;
+            }
+            else
+            {
+                b->currentStorage -= foodReq;
+                foodReq = 0;
+            }
         }
 
         building->taskType = UpgradeActivity;

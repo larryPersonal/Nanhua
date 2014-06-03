@@ -2,6 +2,7 @@
 <project>
     <slide>
         <scene>school_student.png</scene>
+        <playBGM>Cheerful_Music_at_Library.wav</playBGM>
         <clickToNext></clickToNext>
     </slide>
     <slide>
@@ -17,6 +18,7 @@
         <dialogue>
             <name>小华</name>
             <text>耶^，^等^下^又^要^上^文^史^课^了^，^上^次^老^师^说^会^在^今^天^跟^我^们^上^有^关^三^国^的^故^事^，^实^在^令^人^期^待^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -24,6 +26,8 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -33,14 +37,17 @@
         <dialogue>
             <name></name>
             <text>（^正^在^上^课^中^……^）</text>
+            <limitX>960</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -48,6 +55,7 @@
 		<dialogue>
             <name>老师</name>
             <text>同^学^们^，^说^到^“^三^国^时^代^”^，^你^们^会^想^到^什^么^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -55,6 +63,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
 	</slide>
     <slide>
@@ -62,6 +71,7 @@
 		<dialogue>
             <name>学生一</name>
             <text>战^争^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -76,6 +86,7 @@
 		<dialogue>
             <name>学生二</name>
             <text>赤^壁^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -90,6 +101,7 @@
 		<dialogue>
             <name>学生三</name>
             <text>曹^操^、^孙^权^和^刘^备^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -104,6 +116,7 @@
 		<dialogue>
             <name>学生四</name>
             <text>还^有^诸^葛^亮^、^周^瑜^、^关^羽^、^张^飞^、^赵^云^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -118,6 +131,7 @@
 		<dialogue>
             <name>老师</name>
             <text>很^好^，^看^来^同^学^们^对^“^三^国^时^代^”^的^事^迹^都^挺^感^兴^趣^的^！^让^我^们^来^看^看^《^三^顾^茅^庐^》^，^看^刘^备^怎^么^礼^贤^下^士^，^感^动^诸^葛^亮^来^辅^佐^他^吧^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -125,6 +139,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
     <slide>
@@ -132,9 +147,11 @@
     </slide>
     <slide>
         <clickToNext></clickToNext>
+        <playBGM>Cheerful_Music_at_Library.wav</playBGM>
         <dialogue>
             <name>老师</name>
             <text>今^天^的^课^就^上^到^这^里^。^请^各^位^同^学^在^课^后^到^图^书^馆^或^上^网^查^询^有^关^“^三^国^时^代^”^的^资^料^，^下^节^课^再^继^续^讨^论^。</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -142,6 +159,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
     </slide>
     <slide>
@@ -157,6 +175,7 @@
         <dialogue>
             <name>小华</name>
             <text>三^国^历^史^真^有^趣^，^快^去^图^书^馆^看^看^三^国^资^料^吧^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -164,6 +183,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -173,14 +193,17 @@
         <dialogue>
             <name></name>
             <text>《^三^国^演^义^》^。</text>
+            <limitX>960</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -195,6 +218,7 @@
         <dialogue>
             <name>小华</name>
             <text>要^想^了^解^“^三^国^时^代^“^，^怎^能^不^读^中^国^四^大^名^著^之^一^的^《^三^国^演^义^》^呢^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -202,6 +226,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
     </slide>
     <slide>
@@ -216,6 +241,7 @@
         <dialogue>
             <name>小华</name>
             <text>能^让^刘^备^三^顾^茅^庐^，^诸^葛^亮^果^然^是^个^不^简^单^的^人^物^。^如^果^我^活^在^“^三^国^时^期^”^，^我^一^定^要^与^这^位^谋^略^非^凡^的^军^师^见^上^一^面^。</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -223,23 +249,28 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
         <clickToNext></clickToNext>
         <scene>flippingbook.png</scene>
         <narration></narration>
+        <playBGM>Howling_Wind.wav</playBGM>
         <dialogue>
             <name></name>
             <text>（^正^当^小^华^沉^醉^于^三^国^故^事^的^时^候^，^突^然^一^阵^怪^风^吹^起^）</text>
+            <limitX>960</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -255,6 +286,7 @@
         <dialogue>
             <name>小华</name>
             <text>这^是^怎^么^一^回^事^？^！^为^什^么^书^里^竟^然^出^现^了^龙^卷^风^？^救^命^啊^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -262,23 +294,30 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
         <scene>scenario2Background.png</scene>
         <clickToNext></clickToNext>
         <narration></narration>
+        <playBGM>warscene.mp3</playBGM>
         <dialogue>
             <name></name>
             <text>(^当^小^华^再^次^醒^了^过^来^，^只^见^眼^前^两^支^身^着^奇^怪^服^装^的^人^马^相^互^对^峙^着^。^)</text>
+            <limitX>880</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
+            <fade_
 		</dialogue>
     </slide>
     <slide>
@@ -294,6 +333,7 @@
         <dialogue>
             <name>小华</name>
             <text>这^是^哪^里^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -301,6 +341,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
     </slide>
     <slide>
@@ -316,6 +357,7 @@
         <dialogue>
             <name>曹操</name>
             <text>你^这^小^子^，^从^何^而^来^？^还^不^速^速^报^上^姓^名^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -338,6 +380,7 @@
         <dialogue>
             <name>小华</name>
             <text>我^……^我^……^叫^小^华^，^是^……^是^南^华^中^学^的^学^生^。</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -360,6 +403,7 @@
         <dialogue>
             <name>曹操</name>
             <text>连^话^都^说^不^清^楚^的^小^孩^，^竟^能^成^为^刘^备^的^军^师^！^他^何^德^何^能^，^能^取^代^诸^葛^亮^的^位^置^啊^？^哈^哈^哈^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -379,8 +423,31 @@
             <fade_in>yes</fade_in>
 		</sprite>
         <dialogue>
-            <name>Xiao Hua</name>
-            <text>（^慢^着^，^那^位^大^叔^刚^刚^提^到^了^刘^备^和^诸^葛^亮^，^难^道^我^穿^越^到^了^“^三^国^时^代^”^？^看^他^能^统^领^大^军^，^显^然^不^是^泛^泛^之^辈^。^再^看^他^那^一^副^与^刘^备^过^不^去^的^样^子^，^难^道^他^就^是^一^代^枭^雄^曹^操^？^！^）</text>
+            <name>小华</name>
+            <text>（^慢^着^，^那^位^大^叔^刚^刚^提^到^了^刘^备^和^诸^葛^亮^，^难^道^我^穿^越^到^了^“^三^国^时^代^”^？^）</text>
+            <limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>28</fontSize>
+		</dialogue>
+    </slide>
+    <slide>
+        <clickToNext></clickToNext>
+        <sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_in>yes</fade_in>
+		</sprite>
+        <dialogue>
+            <name>小华</name>
+            <text>（^看^他^能^统^领^大^军^，^显^然^不^是^泛^泛^之^辈^。^再^看^他^那^一^副^与^刘^备^过^不^去^的^样^子^，^难^道^他^就^是^一^代^枭^雄^曹^操^？^！^）</text>
+            <limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -402,6 +469,7 @@
         <dialogue>
             <name>小华</name>
             <text>请^问^，^你^是^曹^操^吗^？</text>
+            <limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -424,6 +492,7 @@
         <dialogue>
             <name>曹操</name>
             <text>你^这^小^孩^，^连^本^丞^相^都^不^认^识^，^还^配^做^刘^备^的^军^师^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -445,7 +514,8 @@
 		</sprite>
         <dialogue>
             <name>刘备</name>
-            <text>曹^操^，^你^竟^在^这^里^为^难^一^个^小^孩^，^怎^算^得^上^是^英^雄^好^汉^？</text>
+            <text>曹^操^，^你^这^样^为^难^一^个^孩^子^，^不^是^笑^死^人^吗^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -468,6 +538,7 @@
         <dialogue>
             <name>曹操</name>
             <text>刘^备^，^就^凭^一^个^小^孩^，^你^还^奢^望^能^战^胜^本^丞^相^，^简^直^是^异^想^天^开^。^今^天^我^就^放^你^一^马^，^暂^且^退^兵^。^待^你^重^整^大^军^，^我^们^再^来^交^锋^，^但^我^相^信^你^还^会^是^我^的^手^下^败^将^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -475,6 +546,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -484,14 +556,17 @@
         <dialogue>
             <name></name>
             <text>（^小^华^跟^随^刘^备^返^回^了^刘^备^军^的^军^帐^……^）</text>
+            <limitX>960</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>
 			<left>7</left>
 			<top>28</top>
-			<src>scroller.png</src>
+			<src>fullScroller.png</src>
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
 		</dialogue>
     </slide>
     <slide>
@@ -507,6 +582,7 @@
         <dialogue>
             <name>刘备</name>
             <text>刚^才^是^怎^么^一^回^事^？^你^怎^么^会^凭^空^出^现^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -514,6 +590,7 @@
             <dir>left</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_in>yes</fade_in>
 		</dialogue>
     </slide>
     <slide>
@@ -529,6 +606,7 @@
         <dialogue>
             <name>小华</name>
             <text>我^也^不^知^道^发^生^么^了^什^么^事^。^我^只^记^得^在^图^书^馆^查^资^料^，^突^然^莫^名^其^妙^被^怪^风^卷^走^，^不^知^怎^么^就^到^这^里^了^。</text>
+            <limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -551,6 +629,7 @@
         <dialogue>
             <name>刘备</name>
             <text>就^如^曹^操^所^说^，^我^也^觉^得^你^无^法^助^我^一^臂^之^力^。^诸^葛^先^生^如^今^还^卧^病^在^床^，^昏^迷^不^醒^，^我^军^该^如^何^是^好^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -573,6 +652,7 @@
 		<dialogue>
             <name>小龙</name>
             <text>主^公^！^小^华^的^确^是^我^们^一^直^苦^苦^寻^找^的^栋^梁^，^他^不^仅^能^代^替^诸^葛^先^生^出^谋^献^策^，^还^能^助^我^们^战^胜^曹^操^。^为^了^考^验^他^的^能^力^，^不如^，^我^们^暂^且^把^村^子^交^给^他^打^理^？^如^何^？</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -595,6 +675,7 @@
         <dialogue>
             <name>刘备</name>
             <text>好^，^就^听^你^的^话^，^让^他^暂^时^管^理^村^子^。^小^华^，^请^你^切^记^，^处^理^村^子^的^事^项^是^要^存^着^一^颗^仁^义^之^心^，^善^待^每^一^位^村^民^。</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -617,6 +698,7 @@
         <dialogue>
             <name>小华</name>
             <text>诸^葛^亮^如^此^聪^明^，^我^怎^么^能^与^他^相^提^并^论^，^甚^至^还^要^接^替^他^的^工^作^？</text>
+            <limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -639,6 +721,7 @@
 		<dialogue>
             <name>小龙</name>
             <text>放^心^吧^，^有^我^在^，^保^证^没^问^题^！</text>
+            <limitX>960</limitX>
 			<width>85</width>
 			<left>15</left>
 			<top>28</top>
@@ -646,6 +729,7 @@
             <dir>right</dir>
             <font>GillSansMT</font>
             <fontSize>28</fontSize>
+            <fade_out>yes</fade_out>
 		</dialogue>
 	</slide>
 </project>

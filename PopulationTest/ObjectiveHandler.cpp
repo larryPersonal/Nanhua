@@ -10,6 +10,7 @@
 #include "ObjectiveManager.h"
 #include "GameHUD.h"
 #include "GlobalHelper.h"
+#include "TutorialManager.h"
 
 ObjectiveHandler* ObjectiveHandler::SP;
 
@@ -180,7 +181,7 @@ void ObjectiveHandler::playObjective(bool showNotification)
     vector<string> objectiveDescriptionTokens = GlobalHelper::split(objectiveDescription, ' ');
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor3B colorBlack = ccc3(0, 0, 0);
+    ccColor3B colorWhite = ccc3(255, 255, 255);
     
     float startX = screenSize.width * 0.11f;
     float startY = screenSize.height - 510;
@@ -207,7 +208,7 @@ void ObjectiveHandler::playObjective(bool showNotification)
             CCLabelTTF* theLabel = CCLabelTTF::create(previousString.c_str(), "Shojumaru-Regular", 28);
             theLabel->setAnchorPoint(ccp(0, 1));
             theLabel->setPosition(ccp(startX + offX, startY + offY));
-            theLabel->setColor(colorBlack);
+            theLabel->setColor(colorWhite);
             GameHUD::getThis()->objectiveDescriptions->addObject(theLabel);
             GameHUD::getThis()->objectiveMenu->addChild(theLabel);
             tempString = temp;
@@ -219,7 +220,7 @@ void ObjectiveHandler::playObjective(bool showNotification)
     CCLabelTTF* tempLabel = CCLabelTTF::create(tempString.c_str(), "Shojumaru-Regular", 28);
     tempLabel->setAnchorPoint(ccp(0, 1));
     tempLabel->setPosition(ccp(startX + offX, startY + offY));
-    tempLabel->setColor(colorBlack);
+    tempLabel->setColor(colorWhite);
     GameHUD::getThis()->objectiveDescriptions->addObject(tempLabel);
     GameHUD::getThis()->objectiveMenu->addChild(tempLabel);
     
@@ -248,6 +249,16 @@ void ObjectiveHandler::playObjective(bool showNotification)
     if(showNotification)
     {
         GameHUD::getThis()->scheduleShowNewObjectiveNotification();
+    }
+    
+    if(obj->scheduleScenario)
+    {
+        TutorialManager::getThis()->scheduleForScenario(obj->scenarioTime);
+    }
+    
+    if(obj->finalObjective)
+    {
+        GameHUD::getThis()->finalObjective = true;
     }
 }
 

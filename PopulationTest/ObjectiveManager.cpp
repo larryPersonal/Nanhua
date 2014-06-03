@@ -147,6 +147,18 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 content = str.substr(startPos + 10, endPos - startPos - 10);
                 objective->progress = content;
             }
+            else if(str.find("<scenario>") != std::string::npos)
+            {
+                startPos = str.find("<scenario>");
+                endPos = str.find("</scenario>");
+                content = str.substr(startPos + 10, endPos - startPos - 10);
+                objective->scenarioTime = ::atof(content.c_str()) * 60.0f;
+                objective->scheduleScenario = true;
+            }
+            else if(str.find("<finalObjective>") != std::string::npos)
+            {
+                objective->finalObjective = true;
+            }
             else if(str.find("<reward>") != std::string::npos)
             {
                 isInReward = true;

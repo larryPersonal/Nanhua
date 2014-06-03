@@ -19,8 +19,6 @@ class MainMenuScene : public cocos2d::CCLayer
     static MainMenuScene* SP;
     
     CCSprite* backgroundImage;
-    CCSprite* backgroundDeco;
-    CCSprite* backgroundDeco2;
     CCMenuItemImage* buttonStart;
     CCMenuItemImage* buttonOptions;
     CCMenuItemImage* buttonCredits;

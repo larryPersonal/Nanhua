@@ -350,7 +350,7 @@ GameSprite* GameSprite::create()
      
      // Progressive bar
      barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
-     barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f, spriteRep->boundingBox().size.height * 1.0f));
+     barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 1.0f, spriteRep->boundingBox().size.height * 2.0f));
      spriteRep->addChild(barHP);
      
      mGameCurrentEndurance = getPossessions()->current_endurance;
@@ -1077,7 +1077,7 @@ void GameSprite::updateSprite(float dt)
     /* if one villager has been assigned to one target building and he cannot reach there, keep trying to there before he finally reach the target */
     if(hasAssigned)
     {
-        if(currAction == IDLE)
+        if(currAction == IDLE || currAction == GET_HOME)
         {
             cumulativeCheckTime += dt;
             if(cumulativeCheckTime > 1)
@@ -1635,8 +1635,16 @@ void GameSprite::updateZIndex()
     if (path == NULL) return; //not necessary to update Z if there isn't a path, implies sprite isn't moving
     if (path->count() == 0) return; //same reason
     
-    spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
-    speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+    if(villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
+    {
+        spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+        speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+    }
+    else
+    {
+        spriteRep->setZOrder( 99999 );
+        speechBubble->setZOrder( 99999 );
+    }
     /*
     for(int i = 0; i < battleIconArray->count(); i++)
     {
@@ -2332,7 +2340,7 @@ void GameSprite::ReplaceSpriteRep()
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
-    barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f, spriteRep->boundingBox().size.height * 1.0f));
+    barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 1.0f, spriteRep->boundingBox().size.height * 2.0f));
     spriteRep->addChild(barHP);
     
     mGameCurrentEndurance = getPossessions()->current_endurance;
@@ -3420,7 +3428,7 @@ void GameSprite::playAttackAction()
     barHP->setAnchorPoint(ccp(0.5, 0.5));
     
     barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
-    barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 0.5f, spriteRep->boundingBox().size.height * 1.0f));
+    barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 1.0f, spriteRep->boundingBox().size.height * 2.0f));
     spriteRep->addChild(barHP);
     
     mGameCurrentEndurance = getPossessions()->current_endurance;

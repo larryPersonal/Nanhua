@@ -10,6 +10,7 @@
 #include "GameScene.h"
 #include "GameManager.h"
 #include "MainMenuScene.h"
+#include "SoundtrackManager.h"
 
 using namespace cocos2d;
 
@@ -183,6 +184,7 @@ bool SenarioChooseScene::init()
 
 void SenarioChooseScene::chooseTutorial()
 {
+    SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
 }
@@ -202,6 +204,7 @@ void SenarioChooseScene::loadingTutorial()
 
 void SenarioChooseScene::chooseSenario1()
 {
+    SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario1), 0.1f);
 }
@@ -221,6 +224,7 @@ void SenarioChooseScene::loadingSenario1()
 
 void SenarioChooseScene::chooseSenario2()
 {
+    SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario2), 0.1f);
 }
@@ -238,7 +242,7 @@ void SenarioChooseScene::loadingSenario2()
 
 void SenarioChooseScene::chooseSenario3()
 {
-    
+    SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
 void SenarioChooseScene::loadingSenario3()
@@ -248,7 +252,7 @@ void SenarioChooseScene::loadingSenario3()
 
 void SenarioChooseScene::chooseSenario4()
 {
-    
+    SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
 void SenarioChooseScene::loadingSenario4()
@@ -258,7 +262,7 @@ void SenarioChooseScene::loadingSenario4()
 
 void SenarioChooseScene::chooseSenario5()
 {
-    
+    SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
 void SenarioChooseScene::loadingSenario5()
@@ -269,6 +273,7 @@ void SenarioChooseScene::loadingSenario5()
 //THIS IS ACTUALLY THE GO BACK BUTTON.
 void SenarioChooseScene::chooseSenario6()
 {
+    SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario6), 0.1f);
 }

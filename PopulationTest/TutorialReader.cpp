@@ -325,6 +325,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->waitForVillager = true;
             }
+            else if(str.find("<clear>") != std::string::npos)
+            {
+                slide->clear = true;
+            }
             else if(str.find("<lock>") != std::string::npos)
             {
                 inLock = true;

@@ -76,10 +76,8 @@ MiniDragon::MiniDragon()
 
 MiniDragon::~MiniDragon()
 {
+    clearMiniDragon();
     animatedStringList->removeAllObjects();
-    
-    TutorialManager::getThis()->removeChild(dragon);
-    TutorialManager::getThis()->removeChild(bubble);
     CC_SAFE_RELEASE(animatedStringList);
     
     slidesList->removeAllObjects();
@@ -96,7 +94,10 @@ void MiniDragon::playMiniDraggon()
     }
     else
     {
-        setupScenario();
+        if(Senario::getThis()->scenarioState == Tutorial)
+        {
+            setupScenario();
+        }
     }
 }
 
@@ -143,6 +144,10 @@ bool MiniDragon::constructTutorialSlide()
         }
     }
     animatedStringList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedStringList);
+    
+    animatedStringList = CCArray::create();
+    animatedStringList->retain();
     
     if(curSlide >= slidesList->count())
     {
@@ -568,6 +573,7 @@ bool MiniDragon::constructTutorialSlide()
     }
     
     TutorialManager::getThis()->schedule( schedule_selector( MiniDragon::update ), 1.0f / 120.0f );
+    
     return true;
 }
 
@@ -914,7 +920,10 @@ void MiniDragon::clickNext()
     CCDirector::sharedDirector()->purgeCachedData();
     if(constructTutorialSlide())
     {
-        
+    }
+    else
+    {
+        clearMiniDragon();
     }
 }
 
@@ -927,7 +936,7 @@ void MiniDragon::setupScenario()
         ObjectiveHandler::getThis()->playObjective(false);
     }
     TutorialManager::getThis()->lockAll();
-    moveCamera(ccp(5400.0f, 1600.0f));
+    moveCamera(ccp(4128.0f, 1800.0f));
     
     TutorialManager::getThis()->spritesArray = CCArray::create();
     TutorialManager::getThis()->spritesArray->retain();
@@ -957,5 +966,18 @@ void MiniDragon::setupScenario()
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
     
     TutorialManager::getThis()->goNarr = true;
+}
+
+void MiniDragon::clearMiniDragon()
+{
+    TutorialManager::getThis()->removeChild(dragon);
+    TutorialManager::getThis()->removeChild(bubble);
+    for (int i = 0; i < animatedStringList->count(); i++)
+    {
+        AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+        TutorialManager::getThis()->removeChild(as->getLabel());
+    }
+    animatedStringList->removeAllObjects();
+    slidesList->removeAllObjects();
 }
 

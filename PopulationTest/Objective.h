@@ -40,6 +40,11 @@ public:
     std::string content;
     std::string progress;
     
+    float scenarioTime;
+    bool scheduleScenario;
+    
+    bool finalObjective;
+    
 public:
     static Objective* create();
     

@@ -79,6 +79,8 @@ public:
     
     float delay;
     
+    bool clear;
+    
 public:
     TutorialSlide();
     ~TutorialSlide();

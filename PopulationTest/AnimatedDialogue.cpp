@@ -8,6 +8,7 @@
 
 #include "AnimatedDialogue.h"
 #include "Senario.h"
+#include "AnimatedString.h"
 
 AnimatedDialogue* AnimatedDialogue::create(std::string spritePicture, bool hasFadeIn, bool hasFadeOut)
 {
@@ -69,7 +70,10 @@ void AnimatedDialogue::update(float dt)
                 currentAlpha = 255;
                 fadeIn = false;
             }
-            sprite->setOpacity((GLubyte) currentAlpha);
+            else
+            {
+                sprite->setOpacity((GLubyte) currentAlpha);
+            }
         }
         
         if(fadeOut){
@@ -78,10 +82,22 @@ void AnimatedDialogue::update(float dt)
             {
                 currentAlpha = 0;
                 sprite->setOpacity((GLubyte) currentAlpha);
+                CCArray* animatedStringList = Senario::getThis()->animatedStringList;
+                for (int i = 0; i < animatedStringList->count(); i++)
+                {
+                    AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+                    as->getLabel()->setOpacity((GLubyte) currentAlpha);
+                }
                 fadeOut = false;
-                Senario::getThis()->goNextSlide();
+                //Senario::getThis()->goNextSlide();
             } else {
                 sprite->setOpacity((GLubyte) currentAlpha);
+                CCArray* animatedStringList = Senario::getThis()->animatedStringList;
+                for (int i = 0; i < animatedStringList->count(); i++)
+                {
+                    AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+                    as->getLabel()->setOpacity((GLubyte) currentAlpha);
+                }
             }
         }
     }

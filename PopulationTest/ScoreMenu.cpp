@@ -9,6 +9,7 @@
 #include "ScoreMenu.h"
 #include "GameHUD.h"
 #include "GameManager.h"
+#include "Senario.h"
 
 ScoreMenu* ScoreMenu::SP;
 
@@ -90,6 +91,21 @@ bool ScoreMenu::init(CCLayer* layer)
     ss.str(std::string());
     ss << GameHUD::getThis()->targetReputation;
     
+    float total = 0;
+    for (int i = 0; i < GameScene::getThis()->spriteHandler->spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(i);
+        if(gs->villagerClass == V_SOLDIER)
+        {
+            total += 100.0f;
+        }
+    }
+    
+    if(GameManager::getThis()->getLevel() == 2)
+    {
+        ss << " + " << total;
+    }
+    
     renTokenLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 44);
     renTokenLabel->setAnchorPoint(ccp(0.5, 0.5));
     renTokenLabel->setColor(colorBlack);
@@ -148,6 +164,23 @@ bool ScoreMenu::init(CCLayer* layer)
     congratsLabel->setColor(colorBlack);
     background->addChild(congratsLabel);
     congratsLabel->setPosition(ccp(screenSize.width, screenSize.height / 2.0f - 10.0f));
+    
+    scoreMenuButton = CCMenuItemImage::create("accept.png", "", this, menu_selector( ScoreMenu::clickScoreMenuButton ));
+    scoreMenuButton->setScale(1.5f);
+    scoreMenuButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    scoreMenuButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
+    
+    CCArray* menuItems = CCArray::create();
+    menuItems->retain();
+    
+    menuItems->addObject(scoreMenuButton);
+    
+    menu = CCMenu::createWithArray(menuItems);
+    
+    background->addChild(menu);
+    
+    menuItems->removeAllObjects();
+    CC_SAFE_RELEASE(menuItems);
     
     return true;
 }
@@ -219,4 +252,19 @@ void ScoreMenu::removeScoreMenu()
     releaseAll();
 }
 
+void ScoreMenu::clickScoreMenuButton()
+{
+    if(GameManager::getThis()->getLevel() == 1)
+    {
+        /*
+        GameManager::getThis()->setLevel(2);
+        
+        std::string filename = "scenario2.xml";
+        Senario::getThis()->scenarioState = Scenario2;
+        Senario::getThis()->playSenario(filename.c_str());
+        */
+        int reputation = GameHUD::getThis()->targetReputation;
+        CCUserDefault::sharedUserDefault()->setFloatForKey("level_1_score", (float) reputation);
+    }
+}
 

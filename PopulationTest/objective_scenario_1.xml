@@ -1,29 +1,16 @@
 <?xml version="1.0"?>
 
-<total_objectives>3</total_objectives>
+<total_objectives>1</total_objectives>
 
 <objective>
     <id>1</id>
-    <type>GOLD</type>
-    <value>1600</value>
-    <time>1</time>
-    <next>2</next>
-</objective>
-
-<objective>
-    <id>2</id>
-    <type>POPULATION</type>
-    <value>5</value>
-    <time>10</time>
-    <next>3</next>
-</objective>
-
-<objective>
-    <id>3</id>
     <type>DISPLAY</type>
-    <title>No Objective</title>
-    <content>Congratulations! You have finished all your objectives already!</content>
-    <next>4</next>
+    <tittle>Governor</title>
+    <content>Try to raise your village in 15 minutes!</content>
+    <next>2</next>
+    <time>2</time>
+    <scenario>1</scenario>
+    <finalObjective></finalObjective>
 </objective>
 
 PS: remember to leave at least two lines at the bottom.

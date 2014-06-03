@@ -62,6 +62,8 @@ public:
     
     virtual Building* copyWithZone(CCZone *pZone);
     
+    CCArray* labelArray;
+    
     int ID;
     
     bool inProgress;
@@ -200,6 +202,7 @@ public:
     void addProgressiveBar();
     void removeProgressiveBar();
     
+    void addNotificationLabel(std::string notificationStr, ccColor3B);
 };
 
 #endif
