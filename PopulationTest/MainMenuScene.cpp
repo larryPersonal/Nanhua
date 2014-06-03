@@ -102,14 +102,10 @@ bool MainMenuScene::init()
     
     cancelButton = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(MainMenuScene::closeScoreScreen));
     cancelButton->setAnchorPoint(ccp(0, 1));
-    cancelButton->setPosition(ccp(screenSize.width /2.0f, screenSize.height /2.0f));
+    cancelButton->setPosition(ccp(screenSize.width / 2.0f - 200.0f, screenSize.height / 2.0f - 90.0f));
     cancelButton->setScale(1.0f);
     
-    CCArray* menuItems = CCArray::create();
-    menuItems->retain();
-    menuItems->addObject(cancelButton);
-    
-    CCMenu* menu1 = CCMenu::createWithArray(menuItems);
+    CCMenu* menu1 = CCMenu::create(cancelButton, NULL);
     this->addChild(menu1, 10);
     
     //menuItems->removeAllObjects();
@@ -117,18 +113,24 @@ bool MainMenuScene::init()
     
     level1ScoreLabel = CCLabelTTF::create("Level 1 high score is: 0", "GillSansMT", 24);
     level1ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
-    level1ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 50.0f));
+    level1ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 60.0f));
     this->addChild(level1ScoreLabel, 10);
     
     level2ScoreLabel = CCLabelTTF::create("Level 2 high score is: 0", "GillSansMT", 24);
     level2ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
-    level2ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 50.0f));
+    level2ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 20.0f));
     this->addChild(level2ScoreLabel, 10);
+    
+    totalScoreLabel = CCLabelTTF::create("Total score is: 0", "GillSansMT", 24);
+    totalScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
+    totalScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
+    this->addChild(totalScoreLabel, 10);
     
     highScoreScreen->setVisible(false);
     cancelButton->setVisible(false);
     level1ScoreLabel->setVisible(false);
     level2ScoreLabel->setVisible(false);
+    totalScoreLabel->setVisible(false);
     
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
@@ -267,24 +269,34 @@ void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     cancelButton->setVisible(true);
     level1ScoreLabel->setVisible(true);
     level2ScoreLabel->setVisible(true);
+    totalScoreLabel->setVisible(true);
     
-    float value = CCUserDefault::sharedUserDefault()->getFloatForKey("level_1_score");
+    float value1 = CCUserDefault::sharedUserDefault()->getFloatForKey("level_1_score");
     stringstream ss;
-    ss << "Level 1 high score is: " << value;
+    ss << "Level 1 high score is: " << value1;
     level1ScoreLabel->setString(ss.str().c_str());
     
-    value = CCUserDefault::sharedUserDefault()->getFloatForKey("level_2_score");
+    float value = CCUserDefault::sharedUserDefault()->getFloatForKey("level_2_score");
     ss.str(std::string());
     ss << "Level 2 high score is: " << value;
     level2ScoreLabel->setString(ss.str().c_str());
+    
+    value += value1;
+    
+    ss.str(std::string());
+    ss << "Total high score is: " << value;
+    totalScoreLabel->setString(ss.str().c_str());
+    
 }
 
 void MainMenuScene::closeScoreScreen()
 {
+    SoundtrackManager::PlaySFX("Button_press.wav");
     highScoreScreen->setVisible(false);
     cancelButton->setVisible(false);
     level1ScoreLabel->setVisible(false);
     level2ScoreLabel->setVisible(false);
+    totalScoreLabel->setVisible(false);
 }
 
 void MainMenuScene::onButtonCreditsPressed(CCObject* pSender){

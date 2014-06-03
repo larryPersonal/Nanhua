@@ -170,6 +170,13 @@ bool ScoreMenu::init(CCLayer* layer)
     scoreMenuButton->setAnchorPoint(ccp(0.5f, 0.5f));
     scoreMenuButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
     
+    noticeLabel = CCLabelTTF::create("Re-launch the game to play the next level!", "GillSansMT", 32);
+    noticeLabel->setColor(colorBlack);
+    noticeLabel->setAnchorPoint(ccp(0.5, 1));
+    noticeLabel->setPosition(ccp(screenSize.width, screenSize.height / 2.0f + 200.0f));
+    background->addChild(noticeLabel);
+    noticeLabel->setVisible(false);
+    
     CCArray* menuItems = CCArray::create();
     menuItems->retain();
     
@@ -265,6 +272,44 @@ void ScoreMenu::clickScoreMenuButton()
         */
         int reputation = GameHUD::getThis()->targetReputation;
         CCUserDefault::sharedUserDefault()->setFloatForKey("level_1_score", (float) reputation);
+        CCUserDefault::sharedUserDefault()->setBoolForKey("level_2_open", true);
+        
+        scoreMenuButton->setVisible(false);
+        noticeLabel->setVisible(true);
+    }
+    else if(GameManager::getThis()->getLevel() == 2)
+    {
+        /*
+         GameManager::getThis()->setLevel(2);
+         
+         std::string filename = "scenario2.xml";
+         Senario::getThis()->scenarioState = Scenario2;
+         Senario::getThis()->playSenario(filename.c_str());
+         */
+        int reputation = GameHUD::getThis()->targetReputation;
+        CCArray* sprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+        float total = 0;
+        for (int i = 0; i < sprites->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) sprites->objectAtIndex(i);
+            if(gs->villagerClass == V_SOLDIER)
+            {
+                total += 100;
+            }
+        }
+        
+        if(total > 1000)
+        {
+            total = 1000;
+        }
+        
+        reputation += total;
+        
+        CCUserDefault::sharedUserDefault()->setFloatForKey("level_2_score", (float) reputation);
+        CCUserDefault::sharedUserDefault()->setBoolForKey("level_3_open", true);
+        
+        scoreMenuButton->setVisible(false);
+        noticeLabel->setVisible(true);
     }
 }
 

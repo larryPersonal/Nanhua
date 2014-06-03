@@ -924,6 +924,10 @@ void MiniDragon::clickNext()
     else
     {
         clearMiniDragon();
+        stringstream ss;
+        ss << "Congratulations! You have complete the tutorial, please re-launch the game to play the scenario 1.";
+        GameHUD::getThis()->addNewNotification(ss.str());
+        CCUserDefault::sharedUserDefault()->setBoolForKey("level_1_open", true);
     }
 }
 

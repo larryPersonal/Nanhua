@@ -30,6 +30,7 @@ class MainMenuScene : public cocos2d::CCLayer
     CCSprite* highScoreScreen;
     CCLabelTTF* level1ScoreLabel;
     CCLabelTTF* level2ScoreLabel;
+    CCLabelTTF* totalScoreLabel;
     CCMenuItemImage* cancelButton;
     
     

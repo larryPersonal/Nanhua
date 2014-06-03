@@ -1597,7 +1597,7 @@ void GameScene::update(float time)
             {
                 mGameGuardTowerScore = totalScore;
                 GameHUD::getThis()->guardTowerScore = totalScore;
-                GameHUD::getThis()->guardTowerScoreBar->setValue((GameHUD::getThis()->guardTowerScore > 1000.0f) ? 1000.0: GameHUD::getThis()->guardTowerScore);
+                GameHUD::getThis()->guardTowerScoreBar->setValue(((GameHUD::getThis()->guardTowerScore > 1000.0f) ? 1000.0: GameHUD::getThis()->guardTowerScore) / 1000.0);
                 
                 stringstream ss;
                 if(GameHUD::getThis()->guardTowerScore > 1000)

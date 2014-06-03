@@ -69,18 +69,25 @@ bool SenarioChooseScene::init()
 
     senarioButtonS1 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario1));
     senarioButtonS1->setContentSize(boxrect.size);
+    bool value = CCUserDefault::sharedUserDefault()->getBoolForKey("level_1_open");
+    //senarioButtonS1->setVisible(value);
     
     senarioButtonS2 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario2));
     senarioButtonS2->setContentSize(boxrect.size);
+    value = CCUserDefault::sharedUserDefault()->getBoolForKey("level_2_open");
+    //senarioButtonS2->setVisible(value);
     
     senarioButtonS3 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario3));
     senarioButtonS3->setContentSize(boxrect.size);
+    senarioButtonS3->setVisible(false);
     
     senarioButtonS4 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario4));
     senarioButtonS4->setContentSize(boxrect.size);
+    senarioButtonS4->setVisible(false);
     
     senarioButtonS5 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario5));
     senarioButtonS5->setContentSize(boxrect.size);
+    senarioButtonS5->setVisible(false);
     
     senarioButtonS6 = CCMenuItemImage::create("back_icon.png", "back_icon.png", this, menu_selector(SenarioChooseScene::chooseSenario6));
     senarioButtonS6->setContentSize(exitrect.size);
@@ -204,6 +211,10 @@ void SenarioChooseScene::loadingTutorial()
 
 void SenarioChooseScene::chooseSenario1()
 {
+    if(!senarioButtonS1->isVisible())
+    {
+        return;
+    }
     SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario1), 0.1f);
@@ -224,6 +235,10 @@ void SenarioChooseScene::loadingSenario1()
 
 void SenarioChooseScene::chooseSenario2()
 {
+    if(!senarioButtonS2->isVisible())
+    {
+        return;
+    }
     SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario2), 0.1f);
@@ -242,6 +257,10 @@ void SenarioChooseScene::loadingSenario2()
 
 void SenarioChooseScene::chooseSenario3()
 {
+    if(!senarioButtonS3->isVisible())
+    {
+        return;
+    }
     SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
@@ -252,6 +271,10 @@ void SenarioChooseScene::loadingSenario3()
 
 void SenarioChooseScene::chooseSenario4()
 {
+    if(!senarioButtonS4->isVisible())
+    {
+        return;
+    }
     SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
@@ -262,6 +285,10 @@ void SenarioChooseScene::loadingSenario4()
 
 void SenarioChooseScene::chooseSenario5()
 {
+    if(!senarioButtonS5->isVisible())
+    {
+        return;
+    }
     SoundtrackManager::PlaySFX("Button_press.wav");
 }
 

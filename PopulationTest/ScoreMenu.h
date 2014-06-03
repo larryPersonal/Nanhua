@@ -44,6 +44,8 @@ public:
     
     float scaleLimit;
     
+    CCLabelTTF* noticeLabel;;
+    
 public:
     static ScoreMenu* create(CCLayer*);
     static ScoreMenu* getThis();
