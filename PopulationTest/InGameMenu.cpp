@@ -291,7 +291,7 @@ void InGameMenu::exitGame(CCObject* pSender)
 {
     closeAllPopupMenu();
     
-    SoundtrackManager::PlayBGM("Tikopia.mp3");
+  //  SoundtrackManager::PlayBGM("Tikopia.mp3");
     
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }

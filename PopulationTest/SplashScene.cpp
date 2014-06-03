@@ -56,7 +56,7 @@ bool SplashScene::init()
     
     bool isHori = GlobalHelper::isHorizontal();
     
-    splashImage = CCSprite::create("newsplashpage.png");
+    splashImage = CCSprite::create("newsplashpage2.png");
     CCSize spriteSize = splashImage->getContentSize();
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     

@@ -143,10 +143,12 @@ bool Senario::constructSenarioStage(bool skip)
     
     if(slide->isScene)
     {
+        
         CCTextureCache::sharedTextureCache()->removeAllTextures();
         CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
         CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
         CCDirector::sharedDirector()->purgeCachedData();
+        
         backgroundImage = slide->scene_src;
     }
     
@@ -213,7 +215,7 @@ bool Senario::constructSenarioStage(bool skip)
              */
             
             //CCSprite* cha = CCSprite::create(ele->src.c_str(), CCRectMake(0, 0, screenSize.width * ele->width / 100.0f, screenSize.height * ele->height / 100.0f));
-            AnimatedSprite* as = AnimatedSprite::create(ele->src.c_str(), ele->fadeIn, ele->fadeOut);
+            AnimatedSprite* as = AnimatedSprite::create(ele->src.c_str(), ele->fadeIn, ele->fadeOut, true);
             stringstream ss;
             CCSprite* cha = as->getSprite();
             CCSize spriteSize = cha->getContentSize();
@@ -650,7 +652,8 @@ void Senario::clearScenario()
     
     curSlide = 0;
     
-    clearCache();
+    clearCache(); //The GameHUD uses the sprite cache now. This will cause stuff in the gameHUD to disappear during the tutorial.
+    //Do this on gameEnd instead.
     clearElements();
     
     slidesList->removeAllObjects();

@@ -148,6 +148,10 @@ public:
     
     void clearCache();
     
+    void initSharedTextureCache();
+    
+    
+    
     CREATE_FUNC(GameScene);
 };
 

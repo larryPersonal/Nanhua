@@ -34,6 +34,7 @@ CCObject* SenarioManager::getSlide(int index){
 void SenarioManager::releaseSlides()
 {
     slidesList->removeAllObjects();
+    slidesList->release();
 }
 
 void SenarioManager::parseXMLFile(string xml)

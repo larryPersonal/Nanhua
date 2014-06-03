@@ -2298,11 +2298,11 @@ void GameSprite::ReplaceSpriteRep()
     
     GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
     
-    spriteRep = CCSprite::create();
     
     std::string initName = spriteName;
     initName+= "_IDL001.png";
-    spriteRep->initWithSpriteFrameName(initName.c_str());
+    
+    spriteRep = CCSprite::createWithSpriteFrameName(initName.c_str());
     spriteRep->setAnchorPoint(ccp(0.5, 0.75));
     spriteRep->setScale(0.5f);
 

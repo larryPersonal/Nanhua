@@ -16,7 +16,9 @@ TutorialReader::TutorialReader(){
 }
 
 TutorialReader::~TutorialReader(){
+    
     delete fr;
+    
 }
 
 
@@ -32,6 +34,7 @@ CCObject* TutorialReader::getSlide(int index){
 void TutorialReader::releaseSlides()
 {
     slidesList->removeAllObjects();
+    slidesList->release();
 }
 
 void TutorialReader::parseXMLFile(string xml)

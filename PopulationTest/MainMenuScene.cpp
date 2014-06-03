@@ -63,7 +63,6 @@ bool MainMenuScene::init()
     
     backgroundImage = CCSprite::create("newsplashpage2.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
-    
     buttonStart = CCMenuItemImage::create("", "", this, menu_selector(MainMenuScene::onButtonStartPressed));
     buttonOptions = CCMenuItemImage::create("", "", this, menu_selector(MainMenuScene::onButtonOptionsPressed));
     
@@ -134,7 +133,7 @@ bool MainMenuScene::init()
     
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
-        backgroundImage->setScale(0.5);
+       // backgroundImage->setScale(0.5);
         buttonStart->setScale(0.5);
         buttonOptions->setScale(0.5);
     //    buttonCredits->setScale(0.5);

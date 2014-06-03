@@ -25,7 +25,12 @@ MiniDragon::MiniDragon()
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    dragon = CCSprite::create("dragon_c.png");
+    //dragon = CCSprite::create("dragon_c.png");
+    
+    
+    dragon = CCSprite::createWithSpriteFrameName("dragon_c.png");
+    
+    
     dragon->setScale(screenSize.width / dragon->boundingBox().size.width * 0.2f);
     dragon->setAnchorPoint(ccp(0, 0));
     dragon->setPosition(ccp(0, 0));
@@ -914,6 +919,7 @@ void MiniDragon::deHighlightBuilding(string b)
 void MiniDragon::clickNext()
 {
     curSlide++;
+    
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
