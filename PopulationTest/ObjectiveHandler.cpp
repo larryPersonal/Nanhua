@@ -57,6 +57,7 @@ ObjectiveHandler* ObjectiveHandler::create()
 
 void ObjectiveHandler::loadObjective()
 {
+    
     objectives->removeAllObjects();
     objectives->release();
     

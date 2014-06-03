@@ -33,6 +33,11 @@ CCObject* TutorialReader::getSlide(int index){
 
 void TutorialReader::releaseSlides()
 {
+    for (int i = 0; i < slidesList->count(); ++i)
+    {
+        delete slidesList->objectAtIndex(i);
+        
+    }
     slidesList->removeAllObjects();
     slidesList->release();
 }
