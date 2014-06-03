@@ -27,6 +27,12 @@ class MainMenuScene : public cocos2d::CCLayer
     CCSprite* loadingScreen;
     CCSprite* loadingLabel;
     
+    CCSprite* highScoreScreen;
+    CCLabelTTF* level1ScoreLabel;
+    CCLabelTTF* level2ScoreLabel;
+    CCMenuItemImage* cancelButton;
+    
+    
 public:
     
     CCSize sz; 
@@ -56,6 +62,9 @@ public:
     
     void enableLoadingScreen();
     void loadSenarioChooseScene();
+    
+    void closeScoreScreen();
+    void openScoreScreen();
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(MainMenuScene);
