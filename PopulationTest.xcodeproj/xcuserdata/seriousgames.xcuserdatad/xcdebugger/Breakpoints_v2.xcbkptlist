@@ -1360,9 +1360,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "659"
-            endingLineNumber = "659"
-            landmarkName = "MapHandler::getRandomTile()"
-            landmarkType = "5">
+            endingLineNumber = "659">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3052,7 +3050,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
-            endingLineNumber = "144">
+            endingLineNumber = "144"
+            landmarkName = "MapHandler::getInverseScale()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3219,7 +3219,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "894"
             endingLineNumber = "894"
-            landmarkName = "MapHandler::UnBuildPreview()"
+            landmarkName = "MapHandler::UnBuild(cocos2d::CCPoint &amp;target)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3425,7 +3425,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "151"
             endingLineNumber = "151"
-            landmarkName = "MainMenuScene::onButtonStartPressed(CCObject* pSender)"
+            landmarkName = "MainMenuScene::init()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3441,14 +3441,14 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
-            landmarkName = "MainMenuScene::onLoadGame(cocos2d::CCObject *pSender)"
+            landmarkName = "MainMenuScene::onButtonStartPressed(CCObject* pSender)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MainMenuScene.cpp"
@@ -3457,7 +3457,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "209"
             endingLineNumber = "209"
-            landmarkName = "MainMenuScene::onRejectTutorial(cocos2d::CCObject *pSender)"
+            landmarkName = "MainMenuScene::loadSenarioChooseScene()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
