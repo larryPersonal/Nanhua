@@ -76,7 +76,8 @@ void BuildingCard::init()
     buildingNameLabel->setAnchorPoint(ccp(0, 1));
     
     // display the building info button
-    buildingInfoButton = CCMenuItemImage::create( "build-menu_info.png", "build-menu_info.png", NULL, this, menu_selector(BuildingCard::pressDownInfo), menu_selector(BuildingCard::showBuildingInfo) );
+    buildingInfoButton = CCMenuItemImage::create();
+    buildingInfoButton->initWithNormalImage("build-menu_info.png", "build-menu_info.png", NULL, this, menu_selector(BuildingCard::pressDownInfo), menu_selector(BuildingCard::showBuildingInfo) );
     buildingInfoButton->setScale(64.0f / buildingInfoButton->boundingBox().size.width);
     buildingInfoButton->setAnchorPoint(ccp(0.5, 0.5));
     
@@ -99,19 +100,19 @@ void BuildingCard::init()
         
         if (type == 1)
         {
-            buildingImage = CCSprite::create("path.png");
+            buildingImage = CCSprite::createWithSpriteFrameName("path.png");
         }
         else if (type == 2)
         {
-            buildingImage = CCSprite::create("path-destroy.png");
+            buildingImage = CCSprite::createWithSpriteFrameName("path-destroy.png");
         }
         else if (type == 3)
         {
-            buildingImage = CCSprite::create("demolish.png");
+            buildingImage = CCSprite::createWithSpriteFrameName("demolish.png");
         }
         else
         {
-            buildingImage = CCSprite::create("path.png");
+            buildingImage = CCSprite::createWithSpriteFrameName("path.png");
         }
        
         buildingImage->setScale(192.0f / buildingImage->boundingBox().size.width);
@@ -120,7 +121,7 @@ void BuildingCard::init()
     }
     
     // cost
-    costImage = CCSprite::create("build-menu_goldreq.png");
+    costImage = CCSprite::createWithSpriteFrameName("build-menu_goldreq.png");
     costImage->setScale(42.0f / costImage->boundingBox().size.width);
     costImage->setAnchorPoint(ccp(0, 1));
     
@@ -200,7 +201,7 @@ void BuildingCard::init()
     available_number_label->setPosition(ccp(340, 130));
     
     // population
-    populationImage = CCSprite::create("population_icon.png");
+    populationImage = CCSprite::createWithSpriteFrameName("population_icon.png");
     populationImage->setScale(42.0f / populationImage->boundingBox().size.width);
     populationImage->setAnchorPoint(ccp(0, 1));
     
@@ -220,7 +221,7 @@ void BuildingCard::init()
     populationLabel->setAnchorPoint(ccp(0.5, 0.5));
     
     // building time
-    buildingTimeImage = CCSprite::create("build-menu_time-req.png");
+    buildingTimeImage = CCSprite::createWithSpriteFrameName("build-menu_time-req.png");
     buildingTimeImage->setScale(42.0f / buildingTimeImage->boundingBox().size.width);
     buildingTimeImage->setAnchorPoint(ccp(0, 1));
     
@@ -240,7 +241,7 @@ void BuildingCard::init()
     buildingTimeLabel->setAnchorPoint(ccp(0.5, 0.5));
     
     
-    cardBG = CCSprite::create("buildmenu.png");
+    cardBG = CCSprite::createWithSpriteFrameName("buildmenu.png");
     if(type == 0)
     {
         cardBG->setTag(building->ID);
@@ -296,7 +297,8 @@ void BuildingCard::init()
         }
     }
     
-    eventTrigger = CCMenuItemImage::create("black.png", NULL, NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
+    eventTrigger = CCMenuItemImage::create();
+    eventTrigger->initWithNormalImage("black.png", "black.png", NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
     if(type == 0)
     {
         eventTrigger->setTag(building->ID);
@@ -464,7 +466,12 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 if(TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm)
                 {
-                    GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
+                    //GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage());
+                    CCSpriteFrame * l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache() -> spriteFrameByName("main-game-buttons_cancel_build.png");
+                    
+                    GameHUD::getThis()->buildButton -> setTexture( l_SpriteFrame -> getTexture() );
+                    GameHUD::getThis()->buildButton -> setTextureRect( l_SpriteFrame -> getRect( ) );
+                    
                     TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
                     TutorialManager::getThis()->miniDragon->clickNext();
                 }

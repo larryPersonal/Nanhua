@@ -2051,6 +2051,10 @@ void GameScene::initSharedTextureCache()
     CCSpriteBatchNode* HUDNode = CCSpriteBatchNode::create("GameHUD.png");
     this->addChild(HUDNode);
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("GameHUD.plist");
-    
+
+    CCSpriteBatchNode* ScrollNode = CCSpriteBatchNode::create("BuildScrollUI.png");
+    this->addChild(ScrollNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("BuildScrollUI.plist");
+
     
 }

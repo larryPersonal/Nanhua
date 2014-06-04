@@ -621,32 +621,52 @@ void GameHUD::update(float deltaTime)
         }
         
         // if month has been changed
+        
+        
         if(mGameMonth != date->month)
         {
+            CCSpriteFrame * l_SpriteFrame;
+            
+          
             if(date->month < 3)
             {
+                l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("springtimeclock.png");
+                
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("springtimeclock.png"));
+            //    timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("springtimeclock.png"));
                 
             }
             else if(date->month < 6)
             {
+                l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("summertimeclock.png");
+                
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("summertimeclock.png"));
+              //  timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("summertimeclock.png"));
                 
             }
             else if(date->month < 9)
             {
+                l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("autumtimeclock.png");
+                
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("autumtimeclock.png"));
+               // timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("autumtimeclock.png"));
                 
             }
             else
             {
+                l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("timeclock0.png");
+                
                 //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
-                timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
+               // timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
                 
             }
+            
+            if (l_SpriteFrame != NULL)
+                
+            
+            timeMenu -> setTexture( l_SpriteFrame -> getTexture() );
+            timeMenu -> setTextureRect( l_SpriteFrame -> getRect( ) );
+            
             
             std::stringstream ss;
             ss << "Month: " << (date->month + 1);
@@ -1813,7 +1833,7 @@ void GameHUD::createBuildMenu()
     // create the build button
     buildButton = CCSprite::createWithSpriteFrameName("main-game-buttons_build.png");
     buildButton->setScale(0.3f);
-
+    
     buildButton->setAnchorPoint(ccp(1, 0));
     buildButton->setPosition(ccp(screenSize.width, -screenSize.height * 0.025f));
     
@@ -2252,18 +2272,26 @@ void GameHUD::UpdateBuildButton()
     if (buildButton == NULL) return;
    // CCTextureCache::sharedTextureCache()->purgeSharedTextureCache(); //don't do this here!!!
     
-    CCTexture2D* tex;
+   // CCTexture2D* tex;
+    CCSpriteFrame * l_SpriteFrame;
+    
     if (getTapMode() == 0)
     {
-        tex = CCTextureCache::sharedTextureCache()->addImage("main-game-buttons_build.png");
+        l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("main-game-buttons_build.png");
+        
+        //   tex = CCTextureCache::sharedTextureCache()->addImage("main-game-buttons_build.png");
     }
     else
     {
-        tex = CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png");
+        l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("main-game-buttons_cancel_build.png");
+        
+        //     tex = CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png");
         
     }
-    buildButton->setTexture(tex);
-//    CC_SAFE_RELEASE(tex);
+    
+    buildButton -> setTexture( l_SpriteFrame -> getTexture() );
+    buildButton -> setTextureRect( l_SpriteFrame -> getRect( ) );
+
 }
 
 void GameHUD::createSoldierHelper()

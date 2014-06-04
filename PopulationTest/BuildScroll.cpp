@@ -74,14 +74,14 @@ void BuildScroll::createMenuItems()
     
     // create the build group background
     string buildBackground = "scrollermiddle_b.png";
-    buildMenu = CCSprite::create(buildBackground.c_str());
+    buildMenu = CCSprite::createWithSpriteFrameName(buildBackground.c_str());
     CCSize spriteSize = buildMenu->getContentSize();
     buildMenu->setAnchorPoint(ccp(0, 0));
     buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
     buildMenu->setPosition(ccp(screenSize.width * (1.01f - leftPos), 25));
     this->addChild(buildMenu, 1);
     
-    scrollerBar = CCSprite::create("scroller_side.png");
+    scrollerBar = CCSprite::createWithSpriteFrameName("scroller_side.png");
     scrollerBar->setAnchorPoint(ccp(0, 0));
     scrollerBar->setScale(screenSize.width / spriteSize.width * 0.98f);
     scrollerBar->setPosition(ccp(screenSize.width * (1.0f - leftPos), 0));

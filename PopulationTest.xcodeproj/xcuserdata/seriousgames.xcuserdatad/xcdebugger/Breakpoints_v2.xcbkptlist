@@ -3294,11 +3294,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "418010228.089867"
+            timestampString = "423555632.071462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
             landmarkName = "BuildingInfoMenu::createMenuItems()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3310,11 +3310,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/BuildingInfoMenu.cpp"
-            timestampString = "418270478.783334"
+            timestampString = "423555632.071462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "880"
-            endingLineNumber = "880"
+            startingLineNumber = "881"
+            endingLineNumber = "881"
             landmarkName = "BuildingInfoMenu::refreshAllMenuItemValues()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3516,11 +3516,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423556801.313433"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "993"
-            endingLineNumber = "993"
+            startingLineNumber = "1013"
+            endingLineNumber = "1013"
             landmarkName = "GameHUD::createInitialGUI()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3532,11 +3532,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423556801.313433"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "972"
-            endingLineNumber = "972"
+            startingLineNumber = "992"
+            endingLineNumber = "992"
             landmarkName = "GameHUD::update(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3548,11 +3548,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423556801.313433"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "979"
-            endingLineNumber = "979">
+            startingLineNumber = "999"
+            endingLineNumber = "999">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3562,11 +3562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423556801.313433"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "983"
-            endingLineNumber = "983"
+            startingLineNumber = "1003"
+            endingLineNumber = "1003"
             landmarkName = "GameHUD::createInitialGUI()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3583,7 +3583,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
-            landmarkName = "ReputationOrb::update(float dt)"
+            landmarkName = "ReputationOrb::disappearAnimation(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3686,7 +3686,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "185"
             endingLineNumber = "185"
-            landmarkName = "ReputationOrb::collect()"
+            landmarkName = "ReputationOrb::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3702,7 +3702,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "159"
             endingLineNumber = "159"
-            landmarkName = "ReputationOrb::collectComplete()"
+            landmarkName = "ReputationOrb::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3718,7 +3718,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
             endingLineNumber = "109"
-            landmarkName = "ReputationOrb::update(float dt)"
+            landmarkName = "ReputationOrb::appearAnimation(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3799,6 +3799,38 @@
             startingLineNumber = "27"
             endingLineNumber = "27"
             landmarkName = "SenarioManager::addSlide(Slide* slide)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/ScrollArea.cpp"
+            timestampString = "423550295.40922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "ScrollArea::enableScrollVertical(float thickness, const char* trackFileName, const char* thumbFileName)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/BuildingCard.cpp"
+            timestampString = "423554086.423312"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "BuildingCard::init()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
