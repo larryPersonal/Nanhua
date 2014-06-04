@@ -464,7 +464,12 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
             {
                 if(TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm)
                 {
-                    GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png"));
+                    //GameHUD::getThis()->buildButton->setTexture(CCTextureCache::sharedTextureCache()->addImage());
+                    CCSpriteFrame * l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache() -> spriteFrameByName("main-game-buttons_cancel_build.png");
+                    
+                    GameHUD::getThis()->buildButton -> setTexture( l_SpriteFrame -> getTexture() );
+                    GameHUD::getThis()->buildButton -> setTextureRect( l_SpriteFrame -> getRect( ) );
+                    
                     TutorialManager::getThis()->miniDragon->move(ccp(0, -220));
                     TutorialManager::getThis()->miniDragon->clickNext();
                 }

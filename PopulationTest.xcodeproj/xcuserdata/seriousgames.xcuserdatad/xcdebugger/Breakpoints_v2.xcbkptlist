@@ -3516,11 +3516,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423542821.388408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "993"
-            endingLineNumber = "993"
+            startingLineNumber = "1010"
+            endingLineNumber = "1010"
             landmarkName = "GameHUD::createInitialGUI()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3532,11 +3532,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423542821.388408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "972"
-            endingLineNumber = "972"
+            startingLineNumber = "989"
+            endingLineNumber = "989"
             landmarkName = "GameHUD::update(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3548,11 +3548,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423542821.388408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "979"
-            endingLineNumber = "979">
+            startingLineNumber = "996"
+            endingLineNumber = "996">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3562,11 +3562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "419834218.259811"
+            timestampString = "423542821.388408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "983"
-            endingLineNumber = "983"
+            startingLineNumber = "1000"
+            endingLineNumber = "1000"
             landmarkName = "GameHUD::createInitialGUI()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3583,7 +3583,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
-            landmarkName = "ReputationOrb::update(float dt)"
+            landmarkName = "ReputationOrb::disappearAnimation(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3686,7 +3686,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "185"
             endingLineNumber = "185"
-            landmarkName = "ReputationOrb::collect()"
+            landmarkName = "ReputationOrb::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3702,7 +3702,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "159"
             endingLineNumber = "159"
-            landmarkName = "ReputationOrb::collectComplete()"
+            landmarkName = "ReputationOrb::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3718,7 +3718,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
             endingLineNumber = "109"
-            landmarkName = "ReputationOrb::update(float dt)"
+            landmarkName = "ReputationOrb::appearAnimation(float deltaTime)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
