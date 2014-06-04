@@ -661,8 +661,11 @@ void GameHUD::update(float deltaTime)
                 
             }
             
-            buildButton -> setTexture( l_SpriteFrame -> getTexture() );
-            buildButton -> setTextureRect( l_SpriteFrame -> getRect( ) );
+            if (l_SpriteFrame != NULL)
+                
+            
+            timeMenu -> setTexture( l_SpriteFrame -> getTexture() );
+            timeMenu -> setTextureRect( l_SpriteFrame -> getRect( ) );
             
             
             std::stringstream ss;
@@ -1830,7 +1833,7 @@ void GameHUD::createBuildMenu()
     // create the build button
     buildButton = CCSprite::createWithSpriteFrameName("main-game-buttons_build.png");
     buildButton->setScale(0.3f);
-
+    
     buildButton->setAnchorPoint(ccp(1, 0));
     buildButton->setPosition(ccp(screenSize.width, -screenSize.height * 0.025f));
     
@@ -2288,8 +2291,7 @@ void GameHUD::UpdateBuildButton()
     
     buildButton -> setTexture( l_SpriteFrame -> getTexture() );
     buildButton -> setTextureRect( l_SpriteFrame -> getRect( ) );
- //   buildButton->setTexture(tex);
-    //CC_SAFE_RELEASE(l_SpriteFrame);
+
 }
 
 void GameHUD::createSoldierHelper()

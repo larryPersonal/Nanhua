@@ -113,13 +113,14 @@ void BuildingInfoMenu::createMenuItems()
     ccColor3B colorYellow = ccc3(225, 219, 108);
     
     // Create constant menu items
-    spriteBackground = CCSprite::create("Building Info UI placeholder_dialog.png");
+    spriteBackground = CCSprite::createWithSpriteFrameName("Building Info UI placeholder_dialog.png");
     spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width);
     spriteBackground->setAnchorPoint(ccp(0, 1));
     spriteBackground->setPosition(ccp(screenSize.width / 2.0f - spriteBackground->boundingBox().size.width / 2.0f, screenSize.height / 2.0f + spriteBackground->boundingBox().size.height / 2.0f));
     this->addChild(spriteBackground);
     
-    spriteBackgroundInner = CCSprite::create("blackscreen.png");
+//    spriteBackgroundInner = CCSprite::create("blackscreen.png");
+    spriteBackgroundInner=CCSprite::createWithSpriteFrameName("black.png");
     spriteBackgroundInner->setScale(spriteBackground->getScale());
     
     // Set variables which may become dirty
@@ -155,9 +156,9 @@ void BuildingInfoMenu::createMenuItems()
     textName->setAnchorPoint(ccp(0.5f, 1));
     textName->setColor(colorYellow);
     
-    spPrice = CCSprite::create("yuanbao.png");
+    spPrice = CCSprite::createWithSpriteFrameName("yuanbao.png");
     spPrice->setScale(0.75);
-    spCash = CCSprite::create("yuanbao.png");
+    spCash = CCSprite::createWithSpriteFrameName("yuanbao.png");
     //spCash = CCSprite::create("happiness icon.png");
     spCash->setScale(0.75);
     
@@ -340,13 +341,13 @@ void BuildingInfoMenu::createMenuItems()
     
     // Menu items
     
-    buttonClose = CCSprite::create("Closebtn_Sq.png");
+    buttonClose = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
     buttonClose->setTag(-1);
     buttonClose->setAnchorPoint(ccp(1, 1));
     this->addChild(buttonClose);
     
     //selectWorkerButton = CCMenuItemImage::create("allocatebtn.png", "allocatebtn-press.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton = CCSprite::create("allocatebtn.png");
+    selectWorkerButton = CCSprite::createWithSpriteFrameName("allocatebtn.png");
     selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
@@ -399,7 +400,7 @@ void BuildingInfoMenu::createMenuItems()
     // Create population icons
     for (int i = 0; i < mBuildingVacancy; i++)
     {
-        CCSprite* vacancySlot = CCSprite::create("assign_menu_unfilled.png");
+        CCSprite* vacancySlot = CCSprite::createWithSpriteFrameName("assign_menu_unfilled.png");
         vacancySlot->setScale(70.0f / vacancySlot->boundingBox().size.width);
         vacancySlot->setAnchorPoint(ccp(0, 1));
         this->addChild(vacancySlot);
@@ -410,7 +411,7 @@ void BuildingInfoMenu::createMenuItems()
     {
         GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(i);
         
-        CCSprite* currentMemberBackground = CCSprite::create("assign_menu_filled.png");
+        CCSprite* currentMemberBackground = CCSprite::createWithSpriteFrameName("assign_menu_filled.png");
         currentMemberBackground->setScale(70.0f / currentMemberBackground->boundingBox().size.width);
         currentMemberBackground->setAnchorPoint(ccp(0, 1));
         this->addChild(currentMemberBackground);
@@ -435,7 +436,7 @@ void BuildingInfoMenu::createMenuItems()
     hw = screenSize.width / 2.0f;
     hh = screenSize.height / 2.0f;
     
-    moneyIcon = CCSprite::create("yuanbao_icon.png");
+    moneyIcon = CCSprite::createWithSpriteFrameName("yuanbao_icon.png");
     moneyIcon->setScale(0.4f);
     moneyIcon->setAnchorPoint(ccp(0, 1));
     moneyIcon->setPosition(ccp(-220 + hw, -180 + hh));
@@ -458,7 +459,7 @@ void BuildingInfoMenu::createMenuItems()
     moneyLabel->setColor(colorYellow);
     this->addChild(moneyLabel);
     
-    foodIcon = CCSprite::create("rice_icon.png");
+    foodIcon = CCSprite::createWithSpriteFrameName("rice_icon.png");
     foodIcon->setScale(0.4f);
     foodIcon->setAnchorPoint(ccp(0, 1));
     foodIcon->setPosition(ccp(-20.0f + hw, -175 + hh));
@@ -480,13 +481,13 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(foodLabel);
     
     //upgradeButton = CCMenuItemImage::create("upgrade.png", "upgrade.png", this, menu_selector(BuildingInfoMenu::upgrade));
-    upgradeButton = CCSprite::create("upgrade.png");
+    upgradeButton = CCSprite::createWithSpriteFrameName("upgrade.png");
     upgradeButton->setScale(0.6f);
     upgradeButton->setAnchorPoint(ccp(0, 1));
     upgradeButton->setPosition(ccp(150 + hw, -145 + hh));
     
     //cancelUpgradeButton = CCMenuItemImage::create("cancel.png", "cancel.png", this, menu_selector(BuildingInfoMenu::upgrade));
-    cancelUpgradeButton = CCSprite::create("cancel.png");
+    cancelUpgradeButton = CCSprite::createWithSpriteFrameName("cancel.png");
     cancelUpgradeButton->setScale(0.18f);
     //  cancelUpgradeButton->setScale(cancelUpgradeButton->boundingBox().size.width / cancelUpgradeButton->boundingBox().size.width, cancelUpgradeButton->boundingBox().size.height / cancelUpgradeButton->boundingBox().size.height);
     cancelUpgradeButton->setAnchorPoint(ccp(0, 1));
@@ -933,7 +934,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         // Create population icons
         for (int i = 0; i < mBuildingVacancy; i++)
         {
-            CCSprite* vacancySlot = CCSprite::create("assign_menu_unfilled.png");
+            CCSprite* vacancySlot = CCSprite::createWithSpriteFrameName("assign_menu_unfilled.png");
             vacancySlot->setScale(70.0f / vacancySlot->boundingBox().size.width);
             vacancySlot->setAnchorPoint(ccp(0, 1));
             this->addChild(vacancySlot);
@@ -1030,7 +1031,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             {
                 GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(i);
                 
-                CCSprite* currentMemberBackground = CCSprite::create("assign_menu_filled.png");
+                CCSprite* currentMemberBackground = CCSprite::createWithSpriteFrameName("assign_menu_filled.png");
                 currentMemberBackground->setScale(70.0f / currentMemberBackground->boundingBox().size.width);
                 currentMemberBackground->setAnchorPoint(ccp(0, 1));
                 this->addChild(currentMemberBackground);
@@ -1089,7 +1090,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
             {
                 GameSprite* gameSprite = (GameSprite*) building->memberSpriteList->objectAtIndex(i);
                 
-                CCSprite* currentMemberBackground = CCSprite::create("assign_menu_filled.png");
+                CCSprite* currentMemberBackground = CCSprite::createWithSpriteFrameName("assign_menu_filled.png");
                 currentMemberBackground->setScale(70.0f / currentMemberBackground->boundingBox().size.width);
                 currentMemberBackground->setAnchorPoint(ccp(0, 1));
                 this->addChild(currentMemberBackground);

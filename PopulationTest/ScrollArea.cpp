@@ -66,31 +66,33 @@ void ScrollArea::enableScrollHorizontal(float thickness, const char* trackFileNa
     // Create track
     if(trackFileName == NULL || thumbFileName == NULL) return;
     
-    CCTexture2D* texture = CCTextureCache::sharedTextureCache()->addImage(trackFileName);
-    ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-    texture->setTexParameters(&params);
-    hScrollBarTrack = CCSprite::createWithTexture(texture);
+//    CCTexture2D* texture = CCTextureCache::sharedTextureCache()->addImage(trackFileName);
+  //  ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
+ //   texture->setTexParameters(&params);
+    
+    hScrollBarTrack = CCSprite::createWithSpriteFrameName(trackFileName);
+    //CCSpriteFrame * l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache() -> spriteFrameByName(trackFileName);
+    
     hScrollBarTrack->setAnchorPoint(ccp(0, 1));
     hScrollBarTrack->setContentSize(CCSizeMake(scrollView->getViewSize().width, thickness));
-    hScrollBarTrack->setTextureRect(CCRectMake(0, 0,
-                                               hScrollBarTrack->getContentSize().width * (texture->getPixelsHigh() / thickness),
-                                               texture->getPixelsHigh()));
-    hScrollBarTrack->setScale(thickness / texture->getPixelsHigh());
+    //hScrollBarTrack->setScaleX(thickness / l_SpriteFrame->getTexture()->getPixelsWide());
+   // hScrollBarTrack->setScaleY(thickness / l_SpriteFrame->getTexture()->getPixelsHigh());
     
     // Create thumb
-    texture = CCTextureCache::sharedTextureCache()->addImage(thumbFileName);
-    texture->setTexParameters(&params);
-    hScrollBarThumb = CCSprite::createWithTexture(texture);
+   // texture = CCTextureCache::sharedTextureCache()->addImage(thumbFileName);
+   // texture->setTexParameters(&params);
+    hScrollBarThumb = CCSprite::createWithSpriteFrameName(thumbFileName);
+   // l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache() -> spriteFrameByName(thumbFileName);
     hScrollBarThumb->setAnchorPoint(ccp(0, 1));
     hScrollBarThumb->setContentSize(hScrollBarTrack->getContentSize());
-    hScrollBarThumbTexSize = texture->getContentSizeInPixels();
-    hScrollBarThumb->setScale(hScrollBarTrack->getScale());
+    //hScrollBarThumbTexSize = l_SpriteFrame->getTexture()->getContentSizeInPixels();
+   // hScrollBarThumb->setScale(hScrollBarTrack->getScale());
     
     float newWidth = hScrollBarTrack->getContentSize().width * (scrollView->getViewSize().width / layer->getContentSize().width);
     hScrollDistanceMax = hScrollBarThumb->getScale() * (hScrollBarTrack->getContentSize().width - newWidth);
     
-    this->addChild(hScrollBarTrack);
-    this->addChild(hScrollBarThumb);
+ //   this->addChild(hScrollBarTrack);
+  //  this->addChild(hScrollBarThumb);
     
     // Schedule update if not already scheduled
     if (!isUpdateScheduled)
