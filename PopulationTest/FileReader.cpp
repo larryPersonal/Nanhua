@@ -46,13 +46,19 @@ FileReader::FileReader( string pFileName, char pMode ) {
     
     // Delete buffer created by fileContents. This part is required.
     if ( fileContents ) {
-        delete[ ] fileContents;
+        delete fileContents; //lookout, it's actually a pointer NOT an array... delete [] doesn't work on non-specific arrays. LARRY
         fileContents = NULL;
     }
-    
+
+    contents = "";
     // For testing purposes
     CCLog("[ NOTICE ] Finished opening file: " );
     //CCLog( pFileName.c_str() );
     CCLog(" \n");
     cout << "[ NOTICE ] Finished opening file: " << pFileName.c_str( ) << endl;
+}
+
+FileReader::~FileReader()
+{
+    mFileContents.clear(); //alamak, I think it doesn't clear itself //LARRY
 }

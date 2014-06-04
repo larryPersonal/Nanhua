@@ -172,12 +172,14 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
             
             for (int j = startIndex; j < endIndex ; ++j)
             {
+                
+                
                 Building* b = Building::create();
                 b->targetLayerName = layer->getLayerName();
                 b->baseGID = j;
                 
                 b->buildingTexture = CCTextureCache::sharedTextureCache()->addImage( layer->getTileSet()->m_sSourceImage.c_str());
-                b->buildingTexture->retain();
+              //  b->buildingTexture->retain();
                 b->buildingRect = layer->getTileSet()->rectForGID(b->baseGID);
                 
                 b->width = b->buildingRect.size.width / 128;
@@ -222,7 +224,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                     }
                     else
                     {
-                        b->buildingName= "No Name";//";  //CCStringMake("PlaceHolder");
+                        b->buildingName= "";//";  //CCStringMake("PlaceHolder");
                     }
                     
                     currProperty = properties->valueForKey("description");
@@ -623,7 +625,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                 }
                 else
                 {
-                    b->buildingName= "No Name";
+                    b->buildingName= "";
                     b->buildingDesc=  "You forgot to set a property somewhere";
                     b->buildingCost = 9999.0f;
                     b->buildingBuyPrice = 9999.0f;
@@ -654,7 +656,9 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                 b->ID = buildingID;
                 b->currGID = b->baseGID;
                 b->lastGID = b->baseGID;
-                allBuildings->addObject(b);
+                
+                if (b->buildingName.length() > 0)
+                    allBuildings->addObject(b);
                 ++buildingID;
             }
             

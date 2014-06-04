@@ -19,6 +19,8 @@ public:
     vector< string > mFileContents;
     
 public:
+    ~FileReader();
+    
     FileReader( string pFile, char pMoe = 'r' );
 };
 

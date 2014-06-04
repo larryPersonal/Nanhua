@@ -9,9 +9,9 @@
 #include "AnimatedSprite.h"
 #include "Senario.h"
 
-AnimatedSprite* AnimatedSprite::create(std::string spritePicture, bool hasFadeIn, bool hasFadeOut)
+AnimatedSprite* AnimatedSprite::create(std::string spritePicture, bool hasFadeIn, bool hasFadeOut, bool fromCache)
 {
-    AnimatedSprite* pRet = new AnimatedSprite(spritePicture, hasFadeIn, hasFadeOut);
+    AnimatedSprite* pRet = new AnimatedSprite(spritePicture, hasFadeIn, hasFadeOut, fromCache);
     if(pRet)
     {
         pRet->autorelease();
@@ -24,7 +24,7 @@ AnimatedSprite* AnimatedSprite::create(std::string spritePicture, bool hasFadeIn
     }
 }
 
-AnimatedSprite::AnimatedSprite(std::string spritePicture, bool hasFadeIn, bool hasFadeOut)
+AnimatedSprite::AnimatedSprite(std::string spritePicture, bool hasFadeIn, bool hasFadeOut, bool fromCache)
 {
     cumulativeTime = 0;
     hasFadeInAnimation = hasFadeIn;
@@ -39,7 +39,7 @@ AnimatedSprite::AnimatedSprite(std::string spritePicture, bool hasFadeIn, bool h
     
     currentAlpha = 255;
     
-    setup(spritePicture);
+    setup(spritePicture, fromCache);
 }
 
 AnimatedSprite::~AnimatedSprite()
@@ -47,9 +47,13 @@ AnimatedSprite::~AnimatedSprite()
     
 }
 
-void AnimatedSprite::setup(std::string spritePicture)
+void AnimatedSprite::setup(std::string spritePicture, bool fromCache)
 {
-    sprite = CCSprite::create(spritePicture.c_str());
+    if (fromCache)
+        sprite = CCSprite::createWithSpriteFrameName(spritePicture.c_str());
+    
+    else
+        sprite = CCSprite::create(spritePicture.c_str());
     if(hasFadeInAnimation)
     {
         currentAlpha = 0;

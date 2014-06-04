@@ -73,11 +73,11 @@ void AlertBox::createMenuItems()
     menuItemPositions = CCPointArray::create(0);
     menuItemPositions->retain();
     
-    background = CCSprite::create("dialogbox.png");
-    background->setScale(500.0f / background->getContentSize().height);
+   // background = CCSprite::create("dialogbox.png");
+    //background->setScale(500.0f / background->getContentSize().height);
     
-    backgroundOverlay = CCSprite::create("blackscreen.png");
-    backgroundOverlay->setScale(background->getScale());
+   // backgroundOverlay = CCSprite::create("blackscreen.png");
+    //backgroundOverlay->setScale(background->getScale());
     
     
     displayText = CCLabelTTF::create("", "Shojumaru-Regular", 26, CCSizeMake(background->boundingBox().size.width - 100.0f, 300.0f),

@@ -2,7 +2,7 @@
 <project>
     <slide>
         <scene>school_student.png</scene>
-        <playBGM>Cheerful_Music_at_Library.wav</playBGM>
+        <playBGM>Cheerful_Music_at_Library.mp3</playBGM>
         <clickToNext></clickToNext>
     </slide>
     <slide>
@@ -147,7 +147,7 @@
     </slide>
     <slide>
         <clickToNext></clickToNext>
-        <playBGM>Cheerful_Music_at_Library.wav</playBGM>
+        <playBGM>Cheerful_Music_at_Library.mp3</playBGM>
         <dialogue>
             <name>老师</name>
             <text>今^天^的^课^就^上^到^这^里^。^请^各^位^同^学^在^课^后^到^图^书^馆^或^上^网^查^询^有^关^“^三^国^时^代^”^的^资^料^，^下^节^课^再^继^续^讨^论^。</text>

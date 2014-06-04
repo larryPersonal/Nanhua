@@ -128,14 +128,14 @@ void SystemMenu::clickOptionButton()
 
 void SystemMenu::clickExitButton()
 {
-    /*
+    
     GameScene::getThis()->mapHandler->UnBuildEndGame();
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
-    */
+    
     GameScene::getThis()->enableLoadingScreen();
 }
 

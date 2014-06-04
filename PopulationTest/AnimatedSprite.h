@@ -27,10 +27,10 @@ public:
     bool hasFadeInAnimation;
     bool hasFadeOutAnimation;
 public:
-    static AnimatedSprite* create(std::string, bool, bool);
-    AnimatedSprite(std::string, bool, bool);
+    static AnimatedSprite* create(std::string, bool, bool, bool = false);
+    AnimatedSprite(std::string, bool, bool, bool);
     ~AnimatedSprite();
-    void setup(std::string);
+    void setup(std::string, bool);
     void update(float);
     CCSprite* getSprite();
     void triggerFadeOut();

@@ -256,7 +256,7 @@ void BuildingCard::init()
     largeScale = ccp(cardBG->getScaleX(), cardBG->getScaleY());
     smallScale = largeScale * 0.98f;
     
-    mask = CCSprite::create("black.png");
+    mask = CCSprite::createWithSpriteFrameName("black.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
     mask->setOpacity((GLubyte) 120);
     

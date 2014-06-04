@@ -137,7 +137,7 @@ bool SenarioChooseScene::init()
     
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
-        backgroundImage->setScale(0.5);
+ //       backgroundImage->setScale(1)
         senarioButtonTutorial->setScale(0.4);
         senarioButtonS1->setScale(0.4);
         senarioButtonS2->setScale(0.4);
@@ -146,6 +146,7 @@ bool SenarioChooseScene::init()
         senarioButtonS5->setScale(0.4);
         senarioButtonS6->setScale(0.4);
     } else {
+   //     background
         senarioButtonTutorial->setScale(0.8);
         senarioButtonS1->setScale(0.8);
         senarioButtonS2->setScale(0.8);

@@ -77,6 +77,8 @@ GameScene::GameScene()
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
+    this->initSharedTextureCache();
+    
     /* loading screen module */
     loadingScreen = CCSprite::create("loading screen.png");
     loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
@@ -1139,7 +1141,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     mapHandler->PathLine(firstPathPosPreview, lastPathPosPreview);
                     GameHUD::getThis()->buyBuilding(buildPathDistance * 10);
                     
-                    SoundtrackManager::PlaySFX("construction.wav");
+                    SoundtrackManager::PlaySFX("construction.mp3");
                     
                     GameHUD::getThis()->closeAllMenuAndResetTapMode();
                     
@@ -2048,4 +2050,20 @@ void GameScene::clearCache()
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCDirector::sharedDirector()->purgeCachedData();
+}
+
+/*Initialized all packed textures here.
+ since they're in the shared texture cache, there's no issue calling them from child objects or layers while In Game. This includes the Tutorials. The cache will work as long as the scene is GameScene, and as long as PurgeSharedTextureCache isn't called.*/
+
+void GameScene::initSharedTextureCache()
+{
+    CCSpriteBatchNode* backgroundBgNode = CCSpriteBatchNode::create("packedportraits.png");
+    this->addChild(backgroundBgNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("packedportraits.plist");
+    
+    CCSpriteBatchNode* HUDNode = CCSpriteBatchNode::create("GameHUD.png");
+    this->addChild(HUDNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("GameHUD.plist");
+    
+    
 }

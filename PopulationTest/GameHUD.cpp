@@ -1162,26 +1162,26 @@ void GameHUD::createStatsMenu()
     statsMenu->setPosition(ccp(0, screenSize.height));
     this->addChild(statsMenu, 2);
     
-    reputationBackground = CCSprite::create("yellow_icon.png");
+    reputationBackground = CCSprite::createWithSpriteFrameName("yellow_icon.png");
     reputationBackground->setAnchorPoint(ccp(0, 1));
     reputationBackground->setScale(0.6f);
     reputationBackground->setPosition(ccp(60, screenSize.height - 65));
     this->addChild(reputationBackground, 1);
     
-    reputationIcon = CCSprite::create("ren_icon.png");
+    reputationIcon = CCSprite::createWithSpriteFrameName("ren_icon.png");
     reputationIcon->setAnchorPoint(ccp(0, 1));
     reputationIcon->setScale(0.5f);
     reputationIcon->setPosition(ccp(76, screenSize.height - 62));
     this->addChild(reputationIcon, 3);
     
     // create the money indicator
-    moneyIcon = CCSprite::create("money_label.png");
+    moneyIcon = CCSprite::createWithSpriteFrameName("money_label.png");
     moneyIcon->setScale(0.5f);
     moneyIcon->setAnchorPoint(ccp(0, 1));
     moneyIcon->setPosition(ccp(120, screenSize.height - 8));
     this->addChild(moneyIcon, 2);
     
-    moneyBackground = CCSprite::create("amount_ui.png");
+    moneyBackground = CCSprite::createWithSpriteFrameName("amount_ui.png");
     moneyBackground->setScale(0.4f);
     moneyBackground->setAnchorPoint(ccp(0, 1));
     moneyBackground->setPosition(ccp(185, screenSize.height - 9));
@@ -1196,13 +1196,13 @@ void GameHUD::createStatsMenu()
     moneyLabel->CCNode::setPosition(282, screenSize.height - 22);
     
     // create the food indicator
-    foodIcon = CCSprite::create("food_label.png");
+    foodIcon = CCSprite::createWithSpriteFrameName("food_label.png");
     foodIcon->setScale(moneyIcon->boundingBox().size.height / foodIcon->boundingBox().size.height * 1.1f);
     foodIcon->setAnchorPoint(ccp(0, 1));
     foodIcon->setPosition(ccp(370, screenSize.height - 8));
     this->addChild(foodIcon, 2);
     
-    foodBackground = CCSprite::create("amount_ui.png");
+    foodBackground = CCSprite::createWithSpriteFrameName("amount_ui.png");
     foodBackground->setScale(moneyBackground->boundingBox().size.width / foodBackground->boundingBox().size.width);
     foodBackground->setAnchorPoint(ccp(0, 1));
     foodBackground->setPosition(ccp(400, screenSize.height - 9));
@@ -1226,13 +1226,13 @@ void GameHUD::createStatsMenu()
     foodLabel->CCNode::setPosition(492, screenSize.height - 22);
     
     // create the population indicator
-    populationIcon = CCSprite::create("population_icon.png");
+    populationIcon = CCSprite::createWithSpriteFrameName("population_icon.png");
     populationIcon->setScale(moneyIcon->boundingBox().size.height / populationIcon->boundingBox().size.height * 1.4f);
     populationIcon->setAnchorPoint(ccp(0, 1));
     populationIcon->setPosition(ccp(580, screenSize.height - 6));
     this->addChild(populationIcon, 2);
     
-    populationBackground = CCSprite::create("amount_ui.png");
+    populationBackground = CCSprite::createWithSpriteFrameName("amount_ui.png");
     populationBackground->setScale(moneyBackground->boundingBox().size.width / populationBackground->boundingBox().size.width);
     populationBackground->setAnchorPoint(ccp(0, 1));
     populationBackground->setPosition(ccp(615, screenSize.height - 9));
@@ -1291,7 +1291,7 @@ void GameHUD::createStatsMenu()
         average_happiness_label->CCNode::setPosition(620, 0);
     }
     
-    infoBackground = CCSprite::create("infor display ui.png");
+    infoBackground = CCSprite::createWithSpriteFrameName("infor display ui.png");
     infoBackground->setScale(screenSize.width / infoBackground->boundingBox().size.width * 0.25f);
     infoBackground->setAnchorPoint(ccp(0.5, 1));
     infoBackground->setPosition(ccp(220, screenSize.height));
@@ -1377,7 +1377,7 @@ void GameHUD::createTimeMenu()
     
     // create the time group background
     string timeBG = "springtimeclock.png";
-    timeMenu = CCSprite::create(timeBG.c_str());
+    timeMenu = CCSprite::createWithSpriteFrameName(timeBG.c_str());
     CCSize spriteSize = timeMenu->getContentSize();
     timeMenu->setAnchorPoint(ccp(1, 1));
     timeMenu->setScale(screenSize.width / spriteSize.width * 0.125f);
@@ -1385,7 +1385,7 @@ void GameHUD::createTimeMenu()
     
     this->addChild(timeMenu, 2);
     
-    timeBackground = CCSprite::create("timeclock1.png");
+    timeBackground = CCSprite::createWithSpriteFrameName("timeclock1.png");
     spriteSize = timeBackground->getContentSize();
     timeBackground->setAnchorPoint(ccp(1, 1));
     timeBackground->setScale(screenSize.width / spriteSize.width * 0.18f);
@@ -1394,28 +1394,28 @@ void GameHUD::createTimeMenu()
     this->addChild(timeBackground, 1);
     
     // create the four weeks labels
-    firstWeekLabel = CCSprite::create("timeclock_week1.png");
+    firstWeekLabel = CCSprite::createWithSpriteFrameName("timeclock_week1.png");
     firstWeekLabel->setAnchorPoint(ccp(1, 1));
     firstWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
     firstWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
 
     this->addChild(firstWeekLabel, 3);
     
-    secondWeekLabel = CCSprite::create("timeclock_week2.png");
+    secondWeekLabel = CCSprite::createWithSpriteFrameName("timeclock_week2.png");
     secondWeekLabel->setAnchorPoint(ccp(1, 1));
     secondWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
     secondWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
 
     this->addChild(secondWeekLabel, 3);
     
-    thirdWeekLabel = CCSprite::create("timeclock_week3.png");
+    thirdWeekLabel = CCSprite::createWithSpriteFrameName("timeclock_week3.png");
     thirdWeekLabel->setAnchorPoint(ccp(1, 1));
     thirdWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
     thirdWeekLabel->setPosition(ccp(screenSize.width + 63.78f - leftPos, screenSize.height - 10.8f));
 
     this->addChild(thirdWeekLabel, 3);
     
-    lastWeekLabel = CCSprite::create("timeclock_week4.png");
+    lastWeekLabel = CCSprite::createWithSpriteFrameName("timeclock_week4.png");
     lastWeekLabel->setAnchorPoint(ccp(1, 1));
     lastWeekLabel->setScale(screenSize.width / timeMenu->getContentSize().width * 0.13f);
     lastWeekLabel->setPosition(ccp(screenSize.width + 15.0f - leftPos, screenSize.height - 7.1f));
@@ -1580,7 +1580,7 @@ void GameHUD::createObjectiveMenu()
     
     // create the objective group background
     string objectiveBackground = "objectiveScreen.png";
-    objectiveMenu = CCSprite::create(objectiveBackground.c_str());
+    objectiveMenu = CCSprite::createWithSpriteFrameName(objectiveBackground.c_str());
     CCSize spriteSize = objectiveMenu->getContentSize();
     objectiveMenu->setVisible(false);
     objectiveMenu->setAnchorPoint(ccp(0.0, 1.0));
@@ -1811,7 +1811,7 @@ void GameHUD::createBuildMenu()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // create the build button
-    buildButton = CCSprite::create("main-game-buttons_build.png");
+    buildButton = CCSprite::createWithSpriteFrameName("main-game-buttons_build.png");
     buildButton->setScale(0.3f);
 
     buildButton->setAnchorPoint(ccp(1, 0));
@@ -1819,7 +1819,7 @@ void GameHUD::createBuildMenu()
     
     this->addChild(buildButton, 2);
     
-    mask = CCSprite::create("black.png");
+    mask = CCSprite::createWithSpriteFrameName("black.png");
     mask->setScale(screenSize.width / mask->boundingBox().size.width);
     mask->setAnchorPoint(ccp(0.5, 0.5));
     mask->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -1904,14 +1904,14 @@ void GameHUD::createSystemMenu()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    systemButton = CCSprite::create("optionmenubutton.png");
+    systemButton = CCSprite::createWithSpriteFrameName("optionmenubutton.png");
     
-    pauseButton = CCSprite::create("pauseIcon.png");
-    resumeButton = CCSprite::create("nextButton.png");
-    stickHappinessButton = CCSprite::create("happyFace.png");
-    resumeHappinessButton = CCSprite::create("normalFace.png");
-    warButton = CCSprite::create("banditicon.png");
-    peaceButton = CCSprite::create("peaceicon.png");
+    pauseButton = CCSprite::createWithSpriteFrameName("pauseIcon.png");
+    resumeButton = CCSprite::createWithSpriteFrameName("nextButton.png");
+    stickHappinessButton = CCSprite::createWithSpriteFrameName("happyFace.png");
+    resumeHappinessButton = CCSprite::createWithSpriteFrameName("normalFace.png");
+    warButton = CCSprite::createWithSpriteFrameName("banditicon.png");
+    peaceButton = CCSprite::createWithSpriteFrameName("peaceicon.png");
     
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
@@ -1945,7 +1945,7 @@ void GameHUD::createSystemMenu()
     resumeHappinessButton->setVisible(false);
     peaceButton->setVisible(false);
     
-    scoreButton = CCSprite::create("score.png");
+    scoreButton = CCSprite::createWithSpriteFrameName("score.png");
     scoreButton->setScale(screenSize.width / scoreButton->boundingBox().size.width * 0.05f);
     scoreButton->setAnchorPoint(ccp(0, 0));
     scoreButton->setPosition(ccp(screenSize.width * 0.15f, 0));
@@ -2229,7 +2229,7 @@ void GameHUD::createAlertSystem()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    redMask = CCSprite::create("red.png");
+    redMask = CCSprite::createWithSpriteFrameName("red.png");
     redMask->cocos2d::CCNode::setScale(screenSize.width / redMask->boundingBox().size.width, screenSize.height / redMask->boundingBox().size.height);
     redMask->setAnchorPoint(ccp(0.5f, 0.5f));
     redMask->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -2250,7 +2250,7 @@ void GameHUD::createAlertSystem()
 void GameHUD::UpdateBuildButton()
 {
     if (buildButton == NULL) return;
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+   // CCTextureCache::sharedTextureCache()->purgeSharedTextureCache(); //don't do this here!!!
     
     CCTexture2D* tex;
     if (getTapMode() == 0)

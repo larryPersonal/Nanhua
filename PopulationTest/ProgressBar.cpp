@@ -31,7 +31,7 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
         // Create bgBody sprite, which is repeated and scaled
         texture = CCTextureCache::sharedTextureCache()->addImage(bgBodyFileName);
         
-        bgBody = CCSprite::createWithTexture(texture);
+        bgBody = CCSprite::createWithSpriteFrameName(bgBodyFileName);
         bgBody->setAnchorPoint(CCPointZero);
         bgBody->setContentSize(bgBodyRect.size);
         bgBody->setTextureRect(CCRectMake(0, 0,
@@ -50,7 +50,7 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     // Create bgLeft, which is stretched and scaled
     if (strncmp(bgLeftFileName, "NONE", 4) != 0)
     {
-        bgLeft = CCSprite::create(bgLeftFileName);
+        bgLeft = CCSprite::createWithSpriteFrameName(bgLeftFileName);
         bgLeft->setAnchorPoint(CCPointZero);
         bgLeft->setScale(bgBodyRect.size.height / bgLeft->boundingBox().size.height);
     }
@@ -62,7 +62,7 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     // Create bgRight, which is stretched and scaled
     if (strncmp(bgRightFileName, "NONE", 4) != 0)
     {
-        bgRight = CCSprite::create(bgRightFileName);
+        bgRight = CCSprite::createWithSpriteFrameName(bgRightFileName);
         bgRight->setAnchorPoint(CCPointZero);
         bgRight->setScale(bgBodyRect.size.height / bgRight->boundingBox().size.height);
     }
@@ -72,10 +72,10 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
     }
     
     // Create barFill, which is repeated and scaled
-    texture = CCTextureCache::sharedTextureCache()->addImage(barFileName);
+ //   texture = CCTextureCache::sharedTextureCache()->addImage(barFileName);
     
     // texture->setTexParameters(&params);
-    barFill = CCSprite::createWithTexture(texture);
+    barFill = CCSprite::createWithSpriteFrameName(barFileName);
     barFill->setAnchorPoint(CCPointZero);
     
     barFill->setContentSize(barFillOffsetRect.size);
