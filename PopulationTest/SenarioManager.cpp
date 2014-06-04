@@ -33,14 +33,6 @@ CCObject* SenarioManager::getSlide(int index){
 
 void SenarioManager::releaseSlides()
 {
-    
-    //This is what I meant by "don't mix Create and New, slidesList->removeAllObjects doesn't actually do that for you...
-    for (int i = 0; i < slidesList->count(); ++i)
-    {
-        delete slidesList->objectAtIndex(i);
-    
-    }
-    
     slidesList->removeAllObjects();
     slidesList->release();
 }
@@ -89,7 +81,7 @@ void SenarioManager::parseXMLFile(string xml)
         {
             if(str.find("<slide>") != std::string::npos)
             {
-                slide = new Slide();
+                slide = Slide::create();
                 inSlide = true;
             }
             else if(str.find("</project>") != std::string::npos)

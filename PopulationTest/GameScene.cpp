@@ -140,21 +140,15 @@ CCScene* GameScene::scene()
     scene->addChild(layer, 0);
     
     Senario* senlayer = Senario::create();
-    std::string filename = "senario_h.xml";
-    
-    /*
-    senlayer->playSenario(filename.c_str());
-    */
+    //std::string filename = "senario_h.xml";
     
     ObjectiveHandler* objectiveHandler = ObjectiveHandler::create();
     objectiveHandler->loadObjective();
-    if(GameManager::getThis()->getLevel() > 0)
-    {
-        //objectiveHandler->playObjective();
-    }
     
     TutorialManager* tm = TutorialManager::create();
     CCLog("Level is %d", GameManager::getThis()->getLevel());
+    
+    std::string filename = "senario_h.xml";
     
     if(GameManager::getThis()->getLevel() == 0)
     {
@@ -178,8 +172,6 @@ CCScene* GameScene::scene()
     scene->addChild(senlayer, 1);
     scene->addChild(tm, 1);
     scene->addChild(objectiveHandler, 1);
-    
-    
      
     return scene;
 }
@@ -872,13 +864,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             {
                 if(ScoreMenu::getThis()->background->boundingBox().containsPoint(touchLoc))
                 {
-                    /*
-                    if(ScoreMenu::getThis()->scoreMenuButton->boundingBox().containsPoint(touchLoc))
-                    {
-                        ScoreMenu::getThis()->clickScoreMenuButton();
-                    }
-                    */
-                    
                     skip = true;
                 }
             }
@@ -892,14 +877,14 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            /* click the build button in the bottom right corner to open the build scroll if it is not disable in the tutorial mode */
+            //click the build button in the bottom right corner to open the build scroll if it is not disable in the tutorial mode
             if(GameHUD::getThis()->buildButton != NULL && !(TutorialManager::getThis()->lockBuildButton))
             {
-                /* the click point must locate in the actual build button */
+                //the click point must locate in the actual build button
                 if(GameHUD::getThis()->buildButton->boundingBox().containsPoint(touchLoc))
                 {
                     GameHUD::getThis()->clickBuildButton();
-                    /* do not trigger map interaction. (return before that stage) */
+                    //do not trigger map interaction. (return before that stage)
                     skip = true;
                 }
             }
@@ -2046,10 +2031,12 @@ void GameScene::goToMainMenu()
 
 void GameScene::clearCache()
 {
+    CCLog("******** start to clear the cache ......");
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCDirector::sharedDirector()->purgeCachedData();
+    CCLog("******** clear cache finished ......");
 }
 
 /*Initialized all packed textures here.

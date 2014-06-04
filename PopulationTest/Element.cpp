@@ -30,6 +30,20 @@ Element::~Element(){
     
 }
 
+Element* Element::create(){
+    Element *pRet = new Element();
+    if (pRet)
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
 void Element::updateSpriteType()
 {
     type = sprite;

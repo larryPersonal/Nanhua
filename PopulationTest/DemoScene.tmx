@@ -1340,15 +1340,6 @@
    eJztwSEBAAAAAiAn+H+tJ4xAAwAAAAAAAAAAAAAAAAAAAH8DLAwAEQ==
   </data>
  </layer>
- <layer name="Building_2" width="67" height="60" visible="0">
-  <properties>
-   <property name="number_of_tiles" value="1"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20JT6AAAAAAAAAAAAAAAAAAAADgbz7QAAE=
-  </data>
- </layer>
  <layer name="Building_3" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="3"/>
@@ -1385,7 +1376,7 @@
    eJzt1DEKgEAMBMD7roKg/r+w0W4b5SARZppUIVssGQMAAACAWc7qALS0VgegJb0g0QuSvToALfkXJHpBohckevEPxz2Xl3P7uPfcAwAAAAAAgNkuThkKBA==
   </data>
  </layer>
- <layer name="Building_School" width="67" height="60">
+ <layer name="Building_School" width="67" height="60" visible="0">
   <properties>
    <property name="number_of_tiles" value="34"/>
    <property name="start_tile_offset" value="0"/>

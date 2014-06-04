@@ -56,6 +56,8 @@ public:
     Element();
     ~Element();
     
+    static Element* create();
+    
     void updateSpriteType();
     void updateDialogueType();
     void updateOptionType();

@@ -135,9 +135,11 @@ void MiniDragon::readTutorialFile()
 
 bool MiniDragon::constructTutorialSlide()
 {
+    /* remove all the animated string for the previous slide */
     for(int i = 0; i < animatedStringList->count(); i++)
     {
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
+        /* the animated string in some slides are kept in the GameHUD layer, not the tutorial layer */
         if(TutorialManager::getThis()->hide)
         {
             as->getLabel()->autorelease();
@@ -145,15 +147,19 @@ bool MiniDragon::constructTutorialSlide()
         }
         else
         {
+            as->getLabel()->autorelease();
             TutorialManager::getThis()->removeChild(as->getLabel());
         }
     }
+    
+    /* re-initialize the animated string list array */
     animatedStringList->removeAllObjects();
     CC_SAFE_RELEASE(animatedStringList);
     
     animatedStringList = CCArray::create();
     animatedStringList->retain();
     
+    /* if there is no more slides, finish executing the slides handling code */
     if(curSlide >= slidesList->count())
     {
         return false;
@@ -161,6 +167,7 @@ bool MiniDragon::constructTutorialSlide()
     
     TutorialSlide* ts = (TutorialSlide*) slidesList->objectAtIndex(curSlide);
     
+    /* check for whether the slides require to connect the path to the house or farm in tutorial mode */
     if(ts->checkGranary || ts->checkFarm)
     {
         CCArray* allGranaryGhost = GameScene::getThis()->buildingHandler->granaryGhostOnMap;
@@ -249,11 +256,13 @@ bool MiniDragon::constructTutorialSlide()
     TutorialManager* tm = TutorialManager::getThis();
     delay = ts->delay;
     
+    /* control camera position */
     if(cameraMove)
     {
         moveCamera(target);
     }
     
+    /* control dragon sprite position */
     if(dragonMove)
     {
         move(moveVector);
@@ -930,9 +939,8 @@ void MiniDragon::clickNext()
     else
     {
         clearMiniDragon();
-        stringstream ss;
-        ss << "Congratulations! You have complete the tutorial, please re-launch the game to play the scenario 1.";
-        GameHUD::getThis()->addNewNotification(ss.str());
+        GameHUD::getThis()->clickScoreButton();
+        finalObjective = false;
         CCUserDefault::sharedUserDefault()->setBoolForKey("level_1_open", true);
     }
 }

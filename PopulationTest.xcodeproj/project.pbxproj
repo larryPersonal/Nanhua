@@ -183,7 +183,6 @@
 		36AC558818D69A0100C165F5 /* press_options.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557E18D69A0100C165F5 /* press_options.png */; };
 		36AC558A18D69A0100C165F5 /* options.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558018D69A0100C165F5 /* options.png */; };
 		36AC558C18D6A16600C165F5 /* building3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558B18D6A16600C165F5 /* building3x3.png */; };
-		36AC559018D6A31100C165F5 /* gound.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558F18D6A31100C165F5 /* gound.png */; };
 		36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */ = {isa = PBXBuildFile; fileRef = 36ACD7F518ED784D007C5306 /* main_game_buttons_cancel_build.png */; };
 		36B18A5918A0A6A700A8B515 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE118A0A69B00A8B515 /* CCAction.cpp */; };
 		36B18A5A18A0A6A700A8B515 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE318A0A69B00A8B515 /* CCActionCamera.cpp */; };
@@ -908,7 +907,6 @@
 		36AC557E18D69A0100C165F5 /* press_options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = press_options.png; sourceTree = "<group>"; };
 		36AC558018D69A0100C165F5 /* options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = options.png; sourceTree = "<group>"; };
 		36AC558B18D6A16600C165F5 /* building3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building3x3.png; sourceTree = "<group>"; };
-		36AC558F18D6A31100C165F5 /* gound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gound.png; sourceTree = "<group>"; };
 		36ACD7F518ED784D007C5306 /* main_game_buttons_cancel_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_game_buttons_cancel_build.png; sourceTree = "<group>"; };
 		36B17AE118A0A69B00A8B515 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		36B17AE218A0A69B00A8B515 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
@@ -1679,7 +1677,6 @@
 				8450A1671935826A0051F90C /* GameManagement */,
 				84DBDDA11929C5A800EEDFB9 /* VideoPlayer */,
 				FFB89C1B18EB181B0001E588 /* Tutorial */,
-				8476EB9118F63E650004DE79 /* TutorialFiles */,
 				8418C38C18D82E9F00C8C9B9 /* Objectives */,
 				848D2FEA1859AF5600EB9257 /* Senario */,
 				848883DD172F79D200D7E197 /* System */,
@@ -1835,7 +1832,6 @@
 				36AC557618D6996600C165F5 /* MainMenu */,
 				3632864218CEC503002C58D3 /* houses.png */,
 				8412CA4118AC8D3200AF4645 /* newUI */,
-				36AC558F18D6A31100C165F5 /* gound.png */,
 				36AC558B18D6A16600C165F5 /* building3x3.png */,
 				848D2FE61859764C00EB9257 /* gy */,
 				B4B0147F17389F350071E59F /* Buttons */,
@@ -3631,6 +3627,7 @@
 		FFB89C1B18EB181B0001E588 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
+				8476EB9118F63E650004DE79 /* TutorialFiles */,
 				FFB89C1D18EB18320001E588 /* Source */,
 				FFB89C1C18EB18290001E588 /* Header */,
 			);
@@ -3692,7 +3689,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					365FB99A16E5E30B00A57CF0 = {
-						DevelopmentTeam = SY936FX3R9;
+						DevelopmentTeam = QAT7Q4CF37;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -3986,7 +3983,6 @@
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,
 				843B18D818F2910600C00490 /* housedetailred.png in Resources */,
 				841D0366190FC4E300E34ACB /* tutorial.xml in Resources */,
-				36AC559018D6A31100C165F5 /* gound.png in Resources */,
 				36AC558318D69A0100C165F5 /* splash1.png in Resources */,
 				8410545D18E94ECB003D88C6 /* restartbtn.png in Resources */,
 				8412CA6518AC8D4A00AF4645 /* build-menu_goldreq.png in Resources */,
