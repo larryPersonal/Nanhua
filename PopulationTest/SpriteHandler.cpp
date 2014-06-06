@@ -365,7 +365,7 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     
     GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
-    if(TutorialManager::getThis()->active && tutorial)
+    if(tutorial)
     {
         TutorialManager::getThis()->spritesArray->addObject(newSprite);
     }

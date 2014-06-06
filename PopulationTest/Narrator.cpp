@@ -89,6 +89,7 @@ void Narrator::display()
             textBackground->setVisible(false);
             TutorialManager::getThis()->scheduleFadeIn(0.0f, 2);
             TutorialManager::getThis()->active = false;
+            CCLog("I am in narrator!");
             setupForScenario();
             clickToNext = false;
             delete this;
@@ -227,7 +228,7 @@ void Narrator::activateSprite(float dt)
 
 void Narrator::setupForScenario()
 {
-    
+    CCLog("I am going to setup for senario");
     TutorialManager::getThis()->unlockAll();
     GameHUD::getThis()->pause = true;
     std::string filename = "senario_h.xml";

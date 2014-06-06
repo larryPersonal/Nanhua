@@ -558,11 +558,38 @@ void BuildingInfoMenu::createMenuItems()
     houseLimitLabel->setColor(colorYellow);
     this->addChild(houseLimitLabel);
     
+    ss.str(std::string());
+    ss << "MARKET:";
+    marketLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
+    marketLimitTitle->setAnchorPoint(ccp(0, 1));
+    marketLimitTitle->setPosition(ccp(20 + hw, 70 + hh));
+    marketLimitTitle->setColor(colorYellow);
+    this->addChild(marketLimitTitle);
+    
+    CCArray* allMarket = GameScene::getThis()->buildingHandler->marketOnMap;
+    mGameMarketNumber = allMarket->count();
+    
+    ss.str(std::string());
+    ss << allMarket->count() << "/";
+    if(GameManager::getThis()->housingLimitation->market_limits.at(level) > 99999)
+    {
+        ss << "~";
+    }
+    else
+    {
+        ss << GameManager::getThis()->housingLimitation->market_limits.at(level);
+    }
+    marketLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
+    marketLimitLabel->setAnchorPoint(ccp(0, 1));
+    marketLimitLabel->setPosition(ccp(200 + hw, 70 + hh));
+    marketLimitLabel->setColor(colorYellow);
+    this->addChild(marketLimitLabel);
+    
     ss.str(string());
     ss << "GRANARY:";
     granaryLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     granaryLimitTitle->setAnchorPoint(ccp(0, 1));
-    granaryLimitTitle->setPosition(ccp(20 + hw, 70 + hh));
+    granaryLimitTitle->setPosition(ccp(20 + hw, 40 + hh));
     granaryLimitTitle->setColor(colorYellow);
     this->addChild(granaryLimitTitle);
     
@@ -570,7 +597,7 @@ void BuildingInfoMenu::createMenuItems()
     mGameGranaryNumber = allGranary->count();
     
     ss.str(string());
-    ss << allHouse->count() << "/";
+    ss << allGranary->count() << "/";
     if(GameManager::getThis()->housingLimitation->granary_limits.at(level) > 99999)
     {
         ss << "~";
@@ -581,7 +608,7 @@ void BuildingInfoMenu::createMenuItems()
     }
     granaryLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     granaryLimitLabel->setAnchorPoint(ccp(0, 1));
-    granaryLimitLabel->setPosition(ccp(200 + hw, 70 + hh));
+    granaryLimitLabel->setPosition(ccp(200 + hw, 40 + hh));
     granaryLimitLabel->setColor(colorYellow);
     this->addChild(granaryLimitLabel);
     
@@ -589,7 +616,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << "FARM:";
     farmLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     farmLimitTitle->setAnchorPoint(ccp(0, 1));
-    farmLimitTitle->setPosition(ccp(20 + hw, 40 + hh));
+    farmLimitTitle->setPosition(ccp(20 + hw, 10 + hh));
     farmLimitTitle->setColor(colorYellow);
     this->addChild(farmLimitTitle);
     
@@ -597,7 +624,7 @@ void BuildingInfoMenu::createMenuItems()
     mGameFarmNumber = allFarm->count();
     
     ss.str(string());
-    ss << allHouse->count() << "/";
+    ss << allFarm->count() << "/";
     if(GameManager::getThis()->housingLimitation->farm_limits.at(level) > 99999)
     {
         ss << "~";
@@ -608,7 +635,7 @@ void BuildingInfoMenu::createMenuItems()
     }
     farmLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     farmLimitLabel->setAnchorPoint(ccp(0, 1));
-    farmLimitLabel->setPosition(ccp(200 + hw, 40 + hh));
+    farmLimitLabel->setPosition(ccp(200 + hw, 10 + hh));
     farmLimitLabel->setColor(colorYellow);
     this->addChild(farmLimitLabel);
     
@@ -616,7 +643,7 @@ void BuildingInfoMenu::createMenuItems()
     ss << "GUARD TOWER:";
     guardTowerLimitTitle = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     guardTowerLimitTitle->setAnchorPoint(ccp(0, 1));
-    guardTowerLimitTitle->setPosition(ccp(20 + hw, 10 + hh));
+    guardTowerLimitTitle->setPosition(ccp(20 + hw, -20 + hh));
     guardTowerLimitTitle->setColor(colorYellow);
     this->addChild(guardTowerLimitTitle);
     
@@ -624,7 +651,7 @@ void BuildingInfoMenu::createMenuItems()
     mGameTowerNumber = allTower->count();
     
     ss.str(string());
-    ss << allHouse->count() << "/";
+    ss << allTower->count() << "/";
     if(GameManager::getThis()->housingLimitation->guard_tower_limits.at(level) > 99999)
     {
         ss << "~";
@@ -635,7 +662,7 @@ void BuildingInfoMenu::createMenuItems()
     }
     guardTowerLimitLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     guardTowerLimitLabel->setAnchorPoint(ccp(0, 1));
-    guardTowerLimitLabel->setPosition(ccp(200 + hw, 10 + hh));
+    guardTowerLimitLabel->setPosition(ccp(200 + hw, -20 + hh));
     guardTowerLimitLabel->setColor(colorYellow);
     this->addChild(guardTowerLimitLabel);
     
@@ -1191,19 +1218,63 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         upgradeBarLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
+        ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/";
+        if(GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel) > 99999)
+        {
+            ss << "~";
+        }
+        else
+        {
+            ss << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
+        }
         houseLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->granaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel);
+        ss << GameScene::getThis()->buildingHandler->marketOnMap->count() << "/";
+        if(GameManager::getThis()->housingLimitation->market_limits.at(mGameLevel) > 99999)
+        {
+            ss << "~";
+        }
+        else
+        {
+            ss << GameManager::getThis()->housingLimitation->market_limits.at(mGameLevel);
+        }
+        marketLimitLabel->setString(ss.str().c_str());
+        
+        ss.str(string());
+        ss << GameScene::getThis()->buildingHandler->granaryOnMap->count() << "/";
+        if(GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel) > 99999)
+        {
+            ss << "~";
+        }
+        else
+        {
+            ss << GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel);
+        }
         granaryLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->amenityOnMap->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel);
+        ss << GameScene::getThis()->buildingHandler->amenityOnMap->count() << "/";
+        if(GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel) > 99999)
+        {
+            ss << "~";
+        }
+        else
+        {
+            ss << GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel);
+        }
         farmLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
+        ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/";
+        if(GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel) > 99999)
+        {
+            ss << "~";
+        }
+        else
+        {
+            ss << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
+        }
         guardTowerLimitLabel->setString(ss.str().c_str());
         
         upgradeButton->setVisible(true);

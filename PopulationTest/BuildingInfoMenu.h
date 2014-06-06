@@ -104,6 +104,7 @@ public:
     int mGameHouseNumber;
     int mGameFarmNumber;
     int mGameGranaryNumber;
+    int mGameMarketNumber;
     int mGameTowerNumber;
     bool mGameCurrentlyUpgrading;
     
@@ -129,6 +130,9 @@ public:
     
     CCLabelTTF* granaryLimitTitle;
     CCLabelTTF* granaryLimitLabel;
+    
+    CCLabelTTF* marketLimitTitle;
+    CCLabelTTF* marketLimitLabel;
     
     CCLabelTTF* farmLimitTitle;
     CCLabelTTF* farmLimitLabel;

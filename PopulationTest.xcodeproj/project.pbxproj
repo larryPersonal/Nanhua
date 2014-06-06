@@ -175,13 +175,6 @@
 		36AC557318D6981900C165F5 /* yuanbao_amount.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC555618D6981900C165F5 /* yuanbao_amount.png */; };
 		36AC557418D6981900C165F5 /* yuanbao_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC555718D6981900C165F5 /* yuanbao_icon.png */; };
 		36AC557518D6981900C165F5 /* yuanbao.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC555818D6981900C165F5 /* yuanbao.png */; };
-		36AC558218D69A0100C165F5 /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557818D69A0100C165F5 /* start.png */; };
-		36AC558318D69A0100C165F5 /* splash1.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557918D69A0100C165F5 /* splash1.png */; };
-		36AC558518D69A0100C165F5 /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557B18D69A0100C165F5 /* quit.png */; };
-		36AC558618D69A0100C165F5 /* press_start.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557C18D69A0100C165F5 /* press_start.png */; };
-		36AC558718D69A0100C165F5 /* press_quit.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557D18D69A0100C165F5 /* press_quit.png */; };
-		36AC558818D69A0100C165F5 /* press_options.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC557E18D69A0100C165F5 /* press_options.png */; };
-		36AC558A18D69A0100C165F5 /* options.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558018D69A0100C165F5 /* options.png */; };
 		36AC558C18D6A16600C165F5 /* building3x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 36AC558B18D6A16600C165F5 /* building3x3.png */; };
 		36ACD7F618ED784D007C5306 /* main_game_buttons_cancel_build.png in Resources */ = {isa = PBXBuildFile; fileRef = 36ACD7F518ED784D007C5306 /* main_game_buttons_cancel_build.png */; };
 		36B18A5918A0A6A700A8B515 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B17AE118A0A69B00A8B515 /* CCAction.cpp */; };
@@ -501,7 +494,6 @@
 		845A9EDF18F7CAC50074EF77 /* tutorial2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 845A9EDE18F7CAC50074EF77 /* tutorial2.xml */; };
 		8467C80118EAB3DC0038AC2E /* TutorialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8467C80018EAB3DC0038AC2E /* TutorialManager.cpp */; };
 		84714C6B18DC4C2E00F149BC /* AnimatedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */; };
-		847309C918DC09AC001869C6 /* assigntaskicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309C718DC09AC001869C6 /* assigntaskicon.png */; };
 		847309CE18DC0A23001869C6 /* peaceicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847309CD18DC0A22001869C6 /* peaceicon.png */; };
 		8476EB9418F6422A0004DE79 /* TutorialSlide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8476EB9318F6422A0004DE79 /* TutorialSlide.cpp */; };
 		8476EB9718F643C40004DE79 /* TutorialReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8476EB9618F643C40004DE79 /* TutorialReader.cpp */; };
@@ -901,13 +893,6 @@
 		36AC555618D6981900C165F5 /* yuanbao_amount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao_amount.png; sourceTree = "<group>"; };
 		36AC555718D6981900C165F5 /* yuanbao_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao_icon.png; sourceTree = "<group>"; };
 		36AC555818D6981900C165F5 /* yuanbao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuanbao.png; sourceTree = "<group>"; };
-		36AC557818D69A0100C165F5 /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
-		36AC557918D69A0100C165F5 /* splash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash1.png; sourceTree = "<group>"; };
-		36AC557B18D69A0100C165F5 /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quit.png; sourceTree = "<group>"; };
-		36AC557C18D69A0100C165F5 /* press_start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = press_start.png; sourceTree = "<group>"; };
-		36AC557D18D69A0100C165F5 /* press_quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = press_quit.png; sourceTree = "<group>"; };
-		36AC557E18D69A0100C165F5 /* press_options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = press_options.png; sourceTree = "<group>"; };
-		36AC558018D69A0100C165F5 /* options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = options.png; sourceTree = "<group>"; };
 		36AC558B18D6A16600C165F5 /* building3x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = building3x3.png; sourceTree = "<group>"; };
 		36ACD7F518ED784D007C5306 /* main_game_buttons_cancel_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_game_buttons_cancel_build.png; sourceTree = "<group>"; };
 		36B17AE118A0A69B00A8B515 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -1464,7 +1449,6 @@
 		8467C80018EAB3DC0038AC2E /* TutorialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialManager.cpp; sourceTree = "<group>"; };
 		84714C6918DC4C1900F149BC /* AnimatedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedString.h; sourceTree = "<group>"; };
 		84714C6A18DC4C2E00F149BC /* AnimatedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedString.cpp; sourceTree = "<group>"; };
-		847309C718DC09AC001869C6 /* assigntaskicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = assigntaskicon.png; sourceTree = "<group>"; };
 		847309CD18DC0A22001869C6 /* peaceicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = peaceicon.png; sourceTree = "<group>"; };
 		8476EB9218F63EB70004DE79 /* TutorialSlide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialSlide.h; sourceTree = "<group>"; };
 		8476EB9318F6422A0004DE79 /* TutorialSlide.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialSlide.cpp; sourceTree = "<group>"; };
@@ -1828,12 +1812,10 @@
 				84C97AFF18DFF2B100640CE8 /* skip_button.png */,
 				84C97AFD18DFD87D00640CE8 /* banditicon.png */,
 				847309CD18DC0A22001869C6 /* peaceicon.png */,
-				847309C718DC09AC001869C6 /* assigntaskicon.png */,
 				843689F818DBF1A200FA08FF /* Full_Scene.tmx */,
 				36B411EA18D9AD69005967EC /* plant-1x1.png */,
 				36B411E818D9ACFF005967EC /* greatwall2x2.png */,
 				36B411E218D9AAEB005967EC /* DemoScene.tmx */,
-				36AC557618D6996600C165F5 /* MainMenu */,
 				3632864218CEC503002C58D3 /* houses.png */,
 				8412CA4118AC8D3200AF4645 /* newUI */,
 				36AC558B18D6A16600C165F5 /* building3x3.png */,
@@ -2180,20 +2162,6 @@
 			);
 			name = json;
 			path = libs/json;
-			sourceTree = "<group>";
-		};
-		36AC557618D6996600C165F5 /* MainMenu */ = {
-			isa = PBXGroup;
-			children = (
-				36AC557818D69A0100C165F5 /* start.png */,
-				36AC557918D69A0100C165F5 /* splash1.png */,
-				36AC557B18D69A0100C165F5 /* quit.png */,
-				36AC557C18D69A0100C165F5 /* press_start.png */,
-				36AC557D18D69A0100C165F5 /* press_quit.png */,
-				36AC557E18D69A0100C165F5 /* press_options.png */,
-				36AC558018D69A0100C165F5 /* options.png */,
-			);
-			name = MainMenu;
 			sourceTree = "<group>";
 		};
 		36B17ADF18A0A69A00A8B515 /* cocos2dx */ = {
@@ -3788,7 +3756,6 @@
 				84EB32811867FB7A003B5CEB /* senario1_option1.xml in Resources */,
 				367613EC1712AEF400CD354B /* json_valueiterator.inl in Resources */,
 				84EF1F5A191778C3002D64D9 /* starvingandstuck.png in Resources */,
-				36AC558818D69A0100C165F5 /* press_options.png in Resources */,
 				84F2912918FE51240045F834 /* loading.png in Resources */,
 				36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */,
 				842B84C91906599800D43E2E /* objectiveScreen.png in Resources */,
@@ -3805,7 +3772,6 @@
 				843BE2B218F7F1BA00682E5B /* speechdialog.png in Resources */,
 				84F2913118FE9A5B0045F834 /* red.png in Resources */,
 				8444D6BD190779E500D5AFAC /* banditAttackLeftDown.png in Resources */,
-				36AC558618D69A0100C165F5 /* press_start.png in Resources */,
 				36423C281917258200975B4C /* hit sfx.wav in Resources */,
 				84360A2F18B21FED002EC8C2 /* assign_menu_unfilled.png in Resources */,
 				3658DD7718D6F1430056B895 /* FemaleVillager.png in Resources */,
@@ -3830,7 +3796,6 @@
 				8497F6F418F40B8400838503 /* acceptpressbtn.png in Resources */,
 				844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */,
 				361A56371754BF3200854FE1 /* builderbehavior.lua in Resources */,
-				36AC558A18D69A0100C165F5 /* options.png in Resources */,
 				843E972B18DA94F100DBB48D /* MaleVillager_port.png in Resources */,
 				367E24B9193DD20C000CA2A7 /* GameHUD.png in Resources */,
 				8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */,
@@ -3886,10 +3851,8 @@
 				840813C6193B1E510085EAFC /* in-game_bandit.mp3 in Resources */,
 				842A0F55190A494A008B16AF /* sortbyenergy_downpress.png in Resources */,
 				84F9B76B18D94ADD00579060 /* Girl.plist in Resources */,
-				847309C918DC09AC001869C6 /* assigntaskicon.png in Resources */,
 				8450A1791935F70D0051F90C /* scenario2.xml in Resources */,
 				3658DD7D18D6F1430056B895 /* char2MMC.png in Resources */,
-				36AC558518D69A0100C165F5 /* quit.png in Resources */,
 				367E24B8193DD20C000CA2A7 /* GameHUD.plist in Resources */,
 				8410546518E94ECB003D88C6 /* resumebtn.png in Resources */,
 				36BC4214190F40D400F89DC5 /* market.png in Resources */,
@@ -3912,7 +3875,6 @@
 				84DA68D1191A3424002B459D /* thiefStealingFood.png in Resources */,
 				842A0F59190A494A008B16AF /* sortbyenergy_uppress.png in Resources */,
 				84EF1F5B191778C3002D64D9 /* nopath.png in Resources */,
-				36AC558218D69A0100C165F5 /* start.png in Resources */,
 				8410546218E94ECB003D88C6 /* pausemenusample.png in Resources */,
 				840813B7193AECBE0085EAFC /* accept.png in Resources */,
 				84C97B0018DFF2B100640CE8 /* skip_button.png in Resources */,
@@ -3928,7 +3890,6 @@
 				84DA68D4191A3444002B459D /* goingToWork.png in Resources */,
 				84F2912018FE307D0045F834 /* timeclock_week3.png in Resources */,
 				3658DD8618D6F78A0056B895 /* FemaleBandit.png in Resources */,
-				36AC558718D69A0100C165F5 /* press_quit.png in Resources */,
 				8476EB9918F644B90004DE79 /* tutorial0.xml in Resources */,
 				36AC556018D6981900C165F5 /* Energy.png in Resources */,
 				844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */,
@@ -3991,7 +3952,6 @@
 				36AC555918D6981900C165F5 /* allocatebtn.png in Resources */,
 				843B18D818F2910600C00490 /* housedetailred.png in Resources */,
 				841D0366190FC4E300E34ACB /* tutorial.xml in Resources */,
-				36AC558318D69A0100C165F5 /* splash1.png in Resources */,
 				8410545D18E94ECB003D88C6 /* restartbtn.png in Resources */,
 				8412CA6518AC8D4A00AF4645 /* build-menu_goldreq.png in Resources */,
 				3647C7F317C1D9D3008FA626 /* Icon.png in Resources */,

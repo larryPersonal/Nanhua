@@ -662,10 +662,10 @@ void GameHUD::update(float deltaTime)
             }
             
             if (l_SpriteFrame != NULL)
-                
-            
-            timeMenu -> setTexture( l_SpriteFrame -> getTexture() );
-            timeMenu -> setTextureRect( l_SpriteFrame -> getRect( ) );
+            {
+                timeMenu -> setTexture( l_SpriteFrame -> getTexture() );
+                timeMenu -> setTextureRect( l_SpriteFrame -> getRect( ) );
+            }
             
             
             std::stringstream ss;
@@ -2238,9 +2238,11 @@ void GameHUD::clickScoreButton()
         ScoreMenu* sm = ScoreMenu::create(this);
         sm->retain();
         sm->scheduleShowScoreMenu();
+        GameHUD::getThis()->pause = true;
     }
     else
     {
+        GameHUD::getThis()->pause = false;
         ScoreMenu::getThis()->scheduleHideScoreMenu();
     }
 }
@@ -2610,10 +2612,6 @@ void GameHUD::scheduleAddMoney(int mon)
     if(mon >= 0)
     {
         ss << "+";
-    }
-    else
-    {
-        ss << "-";
     }
     
     ss << mon << "G";

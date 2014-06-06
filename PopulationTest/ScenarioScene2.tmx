@@ -65,10 +65,10 @@
    <properties>
     <property name="anim_frames" value="4"/>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="500"/>
+    <property name="build_uint_required" value="750"/>
     <property name="builder_limit" value="1"/>
     <property name="building_type" value="amenity"/>
-    <property name="cost" value="300"/>
+    <property name="cost" value="400"/>
     <property name="description" value="Farmland"/>
     <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="1"/>
@@ -88,7 +88,7 @@
     <property name="unlocked_at_start" value="yes"/>
     <property name="upgrade_unit" value="0"/>
     <property name="work_unit" value="0"/>
-    <property name="work_unit_required" value="1000"/>
+    <property name="work_unit_required" value="1250"/>
    </properties>
   </tile>
   <tile id="8">
@@ -138,10 +138,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="500"/>
+    <property name="build_uint_required" value="750"/>
     <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -215,10 +215,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="2000"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="750"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -292,10 +292,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="750"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -369,10 +369,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="20"/>
-    <property name="build_uint_required" value="500"/>
-    <property name="builder_limit" value="3"/>
+    <property name="build_uint_required" value="750"/>
+    <property name="builder_limit" value="1"/>
     <property name="building_type" value="housing"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="400"/>
     <property name="description" value="A house of brick"/>
     <property name="food_consumption_rate" value="0"/>
     <property name="jobs_available" value="0"/>
@@ -833,10 +833,10 @@
    <properties>
     <property name="anim_frames" value="14"/>
     <property name="build_time" value="30"/>
-    <property name="build_uint_required" value="1000"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="2"/>
     <property name="building_type" value="military"/>
-    <property name="cost" value="300"/>
+    <property name="cost" value="800"/>
     <property name="description" value="Protect Your Town"/>
     <property name="food_consumption_rate" value=""/>
     <property name="jobs_available" value="1"/>
@@ -930,9 +930,9 @@
   <image source="river_anim_w_fish.png" width="4096" height="4096"/>
   <tile id="0">
    <properties>
-    <property name="anim_frames" value="7"/>
-    <property name="anim_random" value="true"/>
-    <property name="anim_random_chance" value="0.95"/>
+    <property name="anim_frames" value="8"/>
+    <property name="anim_random" value="false"/>
+    <property name="anim_random_chance" value="0"/>
     <property name="building_type" value="decoration"/>
     <property name="name" value="river1"/>
    </properties>
@@ -1217,10 +1217,10 @@
     <property name="anim_random" value="true"/>
     <property name="anim_random_chance" value="0.9"/>
     <property name="build_time" value="10"/>
-    <property name="build_uint_required" value="1000"/>
+    <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="2"/>
     <property name="building_type" value="granary"/>
-    <property name="cost" value="100"/>
+    <property name="cost" value="800"/>
     <property name="description" value="Granary for storing food!"/>
     <property name="food_consumption_rate" value="1"/>
     <property name="jobs_available" value="0"/>
@@ -1252,10 +1252,10 @@
     <property name="build_uint_required" value="2000"/>
     <property name="builder_limit" value="2"/>
     <property name="building_type" value="market"/>
-    <property name="cost" value="200"/>
+    <property name="cost" value="800"/>
     <property name="description" value="Shops"/>
     <property name="food_consumption_rate" value="0"/>
-    <property name="jobs_available" value="0"/>
+    <property name="jobs_available" value="2"/>
     <property name="level_exp_req" value="100, 120, 140, 160, 0"/>
     <property name="level_gain_cost" value="2:50, 4:50"/>
     <property name="level_gain_population_limit" value="3:1, 5:1"/>
@@ -1282,7 +1282,7 @@
   <tile id="0">
    <properties>
     <property name="building_type" value="decoration"/>
-    <property name="name" value="shrubbery"/>
+    <property name="name" value="shruppy"/>
    </properties>
   </tile>
  </tileset>
@@ -1319,16 +1319,16 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1FsKwjAQBdDZhNYH1v3vUgXlYmlLvoy058CQQPIR7oSpAgAAAABoMzzrvlCX93rr9rrfGhvO1u5siSxCFnGs+RnxqvNkXaqtmPZ8nNnv5V/IImQRh/qeCafKHPjsr91e18deet9CFiGLkEXIImQRsgAAAAAAAODfPACG6gd5
+   eJzt00sKgDAMBcBeQqwKev9b6kJIECyICz/MQGgCWZRXWgoAAAAAAMB9/VbLXmPq8zw2do71ZfNJn+fWzp/IIsgidCX+et3P4TDXtDM9c83H/Pntr5JFkEWQRZBFkEWQBQAAAAAAAG+zAvMQBk8=
   </data>
  </layer>
- <layer name="Building_House" width="67" height="60" opacity="0.97">
+ <layer name="Building_House" width="67" height="60">
   <properties>
    <property name="number_of_tiles" value="40"/>
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt07EJAEAIBEGbsf8WPzQzEl5kpoJj4SIAAAAAAJiWvwcsogX0fKRoUbQAAAAAAAAAAOCKB7JZALo=
+   eJzt0rEJACAAA8EsY21t7f47KegIgoJ38H2KJAAAAAAAAJxWZvX2iEe0HUnP+gYAAAAAAAAAAPxiAO2iAS8=
   </data>
  </layer>
  <layer name="Building_1" width="67" height="60">
@@ -1337,16 +1337,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztw7EJAAAIAzBHR/+/tos/CJJApgAAAAAAAIBrvQEAAAAAAAAA4JMAXYoAIQ==
-  </data>
- </layer>
- <layer name="Building_2" width="67" height="60" visible="0">
-  <properties>
-   <property name="number_of_tiles" value="1"/>
-   <property name="start_tile_offset" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20JT6AAAAAAAAAAAAAAAAAAAADgbz7QAAE=
+   eJzt0LENADAIwLCOjP3/WkY+AITsC6L8BwAAAAAAQKeYDljEi+IFAAAAAAAAAAAXJY+ZACk=
   </data>
  </layer>
  <layer name="Building_3" width="67" height="60">
@@ -1373,7 +1364,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1bENACAIBED239QtbO1UQiHmrqUj8B8BAAA9jYdmAMA93QoANXQqANTQqQBQQ6cCP9plm+w7Z1dkuBvoye8CALCaAGsMvw==
+   eJzt2jERADAIBEH8O42LWKAgE2B22zdwxUcAAPR3mu8AAFm6AwB4SUsAANX0BQBQTV8AwC6//5vaAgAAZrgCDA2o
   </data>
  </layer>
  <layer name="Building_Wall" width="67" height="60">
@@ -1385,7 +1376,7 @@
    eJzt1DEKgEAMBMD7roKg/r+w0W4b5SARZppUIVssGQMAAACAWc7qALS0VgegJb0g0QuSvToALfkXJHpBohckevEPxz2Xl3P7uPfcAwAAAAAAgNkuThkKBA==
   </data>
  </layer>
- <layer name="Building_School" width="67" height="60">
+ <layer name="Building_School" width="67" height="60" visible="0">
   <properties>
    <property name="number_of_tiles" value="34"/>
    <property name="start_tile_offset" value="0"/>
@@ -1400,7 +1391,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzkERAAAEADD9iwmhjAD+3LktwSJgqusAAAAAAAA8ltcBAAAAAAAAAACAJQ0dRwGj
+   eJztzkERAAAEADD9iwmhjADezsOWYBEw1XUAAAAAAAAeyOsAAAAAAAAAAADAsgYXDwGj
   </data>
  </layer>
  <layer name="Building_Market" width="67" height="60">

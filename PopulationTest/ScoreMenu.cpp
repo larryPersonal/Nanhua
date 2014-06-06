@@ -261,17 +261,27 @@ void ScoreMenu::removeScoreMenu()
 
 void ScoreMenu::clickScoreMenuButton()
 {
-    if(GameManager::getThis()->getLevel() == 1)
+    if(GameManager::getThis()->getLevel() == 0)
     {
-        /*
-        GameManager::getThis()->setLevel(2);
-        
-        std::string filename = "scenario2.xml";
-        Senario::getThis()->scenarioState = Scenario2;
-        Senario::getThis()->playSenario(filename.c_str());
-        */
         int reputation = GameHUD::getThis()->targetReputation;
-        CCUserDefault::sharedUserDefault()->setFloatForKey("level_1_score", (float) reputation);
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey("level_0_score");
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey("level_0_score", (float) reputation);
+        }
+        CCUserDefault::sharedUserDefault()->setBoolForKey("level_1_open", true);
+        
+        scoreMenuButton->setVisible(false);
+        noticeLabel->setVisible(true);
+    }
+    else if(GameManager::getThis()->getLevel() == 1)
+    {
+        int reputation = GameHUD::getThis()->targetReputation;
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey("level_1_score");
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey("level_1_score", (float) reputation);
+        }
         CCUserDefault::sharedUserDefault()->setBoolForKey("level_2_open", true);
         
         scoreMenuButton->setVisible(false);
@@ -279,13 +289,6 @@ void ScoreMenu::clickScoreMenuButton()
     }
     else if(GameManager::getThis()->getLevel() == 2)
     {
-        /*
-         GameManager::getThis()->setLevel(2);
-         
-         std::string filename = "scenario2.xml";
-         Senario::getThis()->scenarioState = Scenario2;
-         Senario::getThis()->playSenario(filename.c_str());
-         */
         int reputation = GameHUD::getThis()->targetReputation;
         CCArray* sprites = GameScene::getThis()->spriteHandler->spritesOnMap;
         float total = 0;

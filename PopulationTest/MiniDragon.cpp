@@ -941,7 +941,6 @@ void MiniDragon::clickNext()
         clearMiniDragon();
         GameHUD::getThis()->clickScoreButton();
         finalObjective = false;
-        CCUserDefault::sharedUserDefault()->setBoolForKey("level_1_open", true);
     }
 }
 

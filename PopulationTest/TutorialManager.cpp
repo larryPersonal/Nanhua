@@ -437,10 +437,12 @@ void TutorialManager::setupMiniDragon()
 
 void TutorialManager::clearSprites()
 {
+    CCLog("I am going to clear all the sprites for showing.");
     for(int i = 0; i < spritesArray->count(); i++)
     {
         GameSprite* gs = (GameSprite*) spritesArray->objectAtIndex(i);
         GameScene::getThis()->spriteHandler->removeSpriteFromMap(gs);
+        CCLog("removing the sprites from map!");
     }
     spritesArray->removeAllObjects();
     CC_SAFE_RELEASE(spritesArray);

@@ -28,6 +28,7 @@ class MainMenuScene : public cocos2d::CCLayer
     CCSprite* loadingLabel;
     
     CCSprite* highScoreScreen;
+    CCLabelTTF* tutorialScoreLabel;
     CCLabelTTF* level1ScoreLabel;
     CCLabelTTF* level2ScoreLabel;
     CCLabelTTF* totalScoreLabel;
