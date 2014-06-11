@@ -11,6 +11,7 @@
 #include "GameManager.h"
 #include "MainMenuScene.h"
 #include "SoundtrackManager.h"
+#include "GlobalHelper.h"
 
 using namespace cocos2d;
 
@@ -20,6 +21,7 @@ SenarioChooseScene* SenarioChooseScene::SP;
 SenarioChooseScene::SenarioChooseScene()
 {
     SenarioChooseScene::SP = this;
+    preloadTextures();
 }
 
 SenarioChooseScene::~SenarioChooseScene()
@@ -61,7 +63,7 @@ bool SenarioChooseScene::init()
     CCRect exitrect = CCRectMake(0,0, screenSize.width * 0.15f, screenSize.width * 0.15f);
     
     
-    backgroundImage = CCSprite::create("screenlevelselect_v2.png");
+    backgroundImage = CCSprite::createWithSpriteFrameName("screenlevelselect_v2.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
     
     senarioButtonTutorial = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseTutorial));
@@ -89,7 +91,8 @@ bool SenarioChooseScene::init()
     senarioButtonS5->setContentSize(boxrect.size);
     senarioButtonS5->setVisible(false);
     
-    senarioButtonS6 = CCMenuItemImage::create("back_icon.png", "back_icon.png", this, menu_selector(SenarioChooseScene::chooseSenario6));
+    CCSprite* backButton = CCSprite::createWithSpriteFrameName("back_icon.png");
+    senarioButtonS6 = CCMenuItemSprite::create(backButton, backButton, this, menu_selector(SenarioChooseScene::chooseSenario6));
     senarioButtonS6->setContentSize(exitrect.size);
     
     CCLabelTTF* tutorialLabel = CCLabelTTF::create("Tutorial", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter,kCCVerticalTextAlignmentCenter);
@@ -166,9 +169,9 @@ bool SenarioChooseScene::init()
     senarioButtonS5->setPosition(ccp(screenSize.width * 0.672, screenSize.height * 0.262));
     senarioButtonS6->setPosition(ccp(screenSize.width * 0.95, screenSize.height * 0.05));
     
-    CCMenu* menu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, NULL);
-    menu->setPosition( CCPointZero );
-    this->addChild(menu, 1);
+    senarioChooseSceneMenu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, NULL);
+    senarioChooseSceneMenu->setPosition( CCPointZero );
+    this->addChild(senarioChooseSceneMenu, 1);
     this->addChild(backgroundImage, 0);
     
     /* loading screen module */
@@ -203,9 +206,8 @@ void SenarioChooseScene::loadingTutorial()
     GameManager::getThis()->setLevel(0);
     
     // load the actual game scene
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    GlobalHelper::clearCache();
+    GlobalHelper::clearPreloadedTexture();
     
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
@@ -227,9 +229,8 @@ void SenarioChooseScene::loadingSenario1()
     GameManager::getThis()->setLevel(1);
     
     // load the actual game scene
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    GlobalHelper::clearCache();
+    GlobalHelper::clearPreloadedTexture();
     
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
@@ -248,11 +249,8 @@ void SenarioChooseScene::chooseSenario2()
 void SenarioChooseScene::loadingSenario2()
 {
     GameManager::getThis()->setLevel(2);
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    
+    GlobalHelper::clearCache();
+    GlobalHelper::clearPreloadedTexture();
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
@@ -308,25 +306,15 @@ void SenarioChooseScene::chooseSenario6()
 
 void SenarioChooseScene::loadingSenario6()
 {
-    // CCDirector::sharedDirector()->popScene();
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCDirector::sharedDirector()->purgeCachedData();
+    GlobalHelper::clearCache();
+    GlobalHelper::clearPreloadedTexture();
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 
 void SenarioChooseScene::enableLoadingScreen()
 {
     this->removeChild(backgroundImage);
-    this->removeChild(senarioButtonTutorial);
-    this->removeChild(senarioButtonS1);
-    this->removeChild(senarioButtonS2);
-    this->removeChild(senarioButtonS3);
-    this->removeChild(senarioButtonS4);
-    this->removeChild(senarioButtonS5);
-    this->removeChild(senarioButtonS6);
+    this->removeChild(senarioChooseSceneMenu);
     
     loadingScreen->setVisible(true);
     loadingLabel->setVisible(true);
@@ -339,4 +327,11 @@ void SenarioChooseScene::onOrientationChangedToPortrait(){
 }
 
 void SenarioChooseScene::onOrientationChangedToLandscape(){
+}
+
+void SenarioChooseScene::preloadTextures()
+{
+    CCSpriteBatchNode* mainMenuSceneNode = CCSpriteBatchNode::create("LevelSelectSceneSpriteSheet.png");
+    this->addChild(mainMenuSceneNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("LevelSelectSceneSpriteSheet.plist");
 }

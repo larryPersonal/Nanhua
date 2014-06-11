@@ -62,10 +62,9 @@ public:
     static std::wstring stringToWstring( std::string str );
     static std::string WstringTostring( std::wstring wStr );
     
-    /*
-    static wchar_t * UTF8ToUnicode( const char* str );
-    static char * UnicodeToUTF8( const wchar_t* str );
-    */
+    /* clear cache function */
+    static void clearCache();
+    static void clearPreloadedTexture();
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

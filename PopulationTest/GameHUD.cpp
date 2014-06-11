@@ -8,9 +8,7 @@
 
 #include "GameHUD.h"
 #include "GameScene.h"
-#include "InGameMenu.h"
 #include "BuildMenu.h"
-#include "PopulationMenu.h"
 #include "TutorialHandler.h"
 #include "GlobalHelper.h"
 #include "MainMenuScene.h"
@@ -2286,8 +2284,6 @@ void GameHUD::UpdateBuildButton()
     else
     {
         l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("main-game-buttons_cancel_build.png");
-        
-        //     tex = CCTextureCache::sharedTextureCache()->addImage("main_game_buttons_cancel_build.png");
         
     }
     

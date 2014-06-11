@@ -11,7 +11,6 @@
 #include "Selector.h"
 #include "GameManager.h"
 #include "GameHUD.h"
-#include "PopulationMenu.h"
 #include "GameDefaults.h"
 #include "NameGenerator.h"
 #include "BuildingHandler.h"
@@ -29,7 +28,6 @@ GameSprite::GameSprite()
 {
     spriteW = 128;
     spriteH = 128;
-    spriteSpeed = 50;
     currAction = IDLE;
     nextAction = IDLE;
     

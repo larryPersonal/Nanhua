@@ -2,7 +2,7 @@
 
 <tutorial>
     <slide>
-        <speech>Like other villages, there is a problem we would face when developing the village - Bandits. We have to maintain our military force to protect our village and wealth.</speech>
+        <speech>Our village has grown to a respectable size, and this has attracted the attention of various bands of bandits looking to steal both our food and gold.</speech>
         <cameraMove>4544,2176</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
@@ -27,7 +27,7 @@
         </unlock>
     </slide>
     <slide>
-        <speech>During the bandits attack, bandits may come through the village gate.</speech>
+        <speech>During a bandit attack, bandits will enter our village through the gates and make their way to either the town hall or granary. Upon reaching their target, they will steal either gold or food and attempt to leave.</speech>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
         <cameraMove>4128, 1800</cameraMove>

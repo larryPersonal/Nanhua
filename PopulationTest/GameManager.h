@@ -182,6 +182,12 @@ public:
     int level;
     std::string gameMap;
     
+    /* player profile */
+    std::string username;
+    std::string password;
+    bool gender;
+    bool isLoggedIn;
+    
 public:
     void UnlockAll();
     

@@ -82,8 +82,6 @@ public:
     CCArray* battleIconArray;
     
     /*note: clones will always have NULL requirements, only the primary copy inside allSprites has these initialized.*/
-    int spriteSpeed;
-   
     std::string currentDir;
     
     float cumulativeTime;

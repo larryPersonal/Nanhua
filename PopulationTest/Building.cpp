@@ -10,7 +10,6 @@
 #include "GameScene.h"
 #include "Sprite.h"
 #include "GameHUD.h"
-#include "InfoMenu.h"
 #include "BuildingInfoMenu.h"
 #include "GlobalHelper.h"
 #include <iterator>
@@ -90,7 +89,33 @@ Building::Building()
     
     labelArray = CCArray::create();
     labelArray->retain();
+    
+    /* fish animation */
+    fishAnimationFrameWidth = 64;
+    fishAnimationFrameHeight = 64;
+    
+    fishAnimationArea = CCRect(-100, -100, 200, 200);
+    fishAnimationCheckTime = 0;
+    fishAnimationCheckTimeMax = 2;
+    fishAnimationCheckTimeMin = 1;
+    fishAnimationCumulativeTime = 0;
+    
+    fishAnimationRate = 50;
+    
+    isInAnimation = false;
+    
+    delay_animFrame = 0.1;
+    delay_curr = 0.1;
+    
+    x_frameNo = 0;
+    x_maxFrameNo = 8;
+    
+    xOffset = 0;
+    yOffset = 0;
+    
+    fishAnim = NULL;
 }
+
 Building::~Building()
 {
     expToLevel->removeAllObjects();
@@ -204,6 +229,26 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->anim_random_chance = this->anim_random_chance;
         pCopy->currentExp = this->currentExp;
         pCopy->expToLevel->initWithArray(this->expToLevel);
+        
+        pCopy->fishAnim = this->fishAnim;
+        pCopy->fishAnimationArea = this->fishAnimationArea;
+        pCopy->fishAnimationCheckTime = this->fishAnimationCheckTime;
+        pCopy->fishAnimationCheckTimeMax = this->fishAnimationCheckTimeMax;
+        pCopy->fishAnimationCheckTimeMin = this->fishAnimationCheckTimeMin;
+        pCopy->fishAnimationCumulativeTime = this->fishAnimationCumulativeTime;
+        pCopy->fishAnimationRate = this->fishAnimationRate;
+        pCopy->isInAnimation = this->isInAnimation;
+        pCopy->fishAnimationFrameWidth = this->fishAnimationFrameWidth;
+        pCopy->fishAnimationFrameHeight = this->fishAnimationFrameHeight;
+        pCopy->delay_animFrame = this->delay_animFrame;
+        pCopy->delay_curr = this->delay_curr;
+        pCopy->x_frameNo = this->x_frameNo;
+        pCopy->x_maxFrameNo = this->x_maxFrameNo;
+        pCopy->xOffset = this->xOffset;
+        pCopy->yOffset = this->yOffset;
+        pCopy->fishAnimationTexture = this->fishAnimationTexture;
+        pCopy->fishAnimationRect = this->fishAnimationRect;
+        pCopy->fishAnim = this->fishAnim;
         
         pNewZone = new CCZone(pCopy);
     }
@@ -1106,6 +1151,84 @@ void Building::updateBuilding(float dt)
         else
         {
             label->setOpacity((GLubyte) alpha);
+        }
+    }
+    
+    /* randomly trigger the fish animation */
+    if (buildingType == RIVER)
+    {
+        if (!isInAnimation)
+        {
+            if(fishAnimationCheckTime <= 0)
+            {
+                fishAnimationCheckTime = fishAnimationCheckTimeMin + rand() % ((int) (fishAnimationCheckTimeMax - fishAnimationCheckTimeMin) + 1);
+                fishAnimationCumulativeTime = 0;
+            }
+            else
+            {
+                fishAnimationCumulativeTime += dt;
+                
+                if(fishAnimationCumulativeTime >= fishAnimationCheckTime)
+                {
+                    int randNumber = rand() % 100 + 1;
+                    if(randNumber <= fishAnimationRate)
+                    {
+                        isInAnimation = true;
+                        x_frameNo = -1;
+                    }
+                    fishAnimationCheckTime = 0;
+                    fishAnimationCumulativeTime = 0;
+                }
+            }
+        }
+        else
+        {
+            if(delay_curr > 0)
+            {
+                delay_curr -= dt;
+            }
+            else
+            {
+                delay_curr = delay_animFrame;
+                
+                x_frameNo++;
+                
+                if(x_frameNo >= x_maxFrameNo)
+                {
+                    x_frameNo = 0;
+                    isInAnimation = false;
+                    GameScene::getThis()->mapHandler->getMap()->removeChild(fishAnim);
+                    GameScene::getThis()->spriteHandler->fishAnimOnMap->removeObject(fishAnim);
+                    fishAnim = NULL;
+                }
+                else
+                {
+                    xOffset = x_frameNo % 2;
+                    yOffset = x_frameNo / 2;
+                    
+                    if(x_frameNo == 0)
+                    {
+                        fishAnimationTexture = CCTextureCache::sharedTextureCache()->addImage("fish.png");
+                        
+                        fishAnimationRect = CCRectMake(xOffset * fishAnimationFrameWidth, yOffset * fishAnimationFrameHeight, fishAnimationFrameWidth, fishAnimationFrameHeight);
+                        fishAnim = CCSprite::createWithTexture(fishAnimationTexture, fishAnimationRect);
+                        fishAnim->setAnchorPoint(ccp(0.5, 0.5));
+                        fishAnim->setScale( 1.0f );
+                        GameScene::getThis()->mapHandler->getMap()->addChild(fishAnim, buildingRep->getZOrder() + 1);
+                        GameScene::getThis()->spriteHandler->fishAnimOnMap->addObject(fishAnim);
+                        
+                        int xPos = ((int) fishAnimationArea.getMinX()) + rand() % ((int) (fishAnimationArea.getMaxX() - fishAnimationArea.getMinX()));
+                        int yPos = ((int) fishAnimationArea.getMinY()) + rand() % ((int) (fishAnimationArea.getMaxY() - fishAnimationArea.getMinY()));
+                        
+                        fishAnim->setPosition(ccp((float) xPos + buildingRep->getPositionX(), (float) yPos + buildingRep->getPositionY()));
+                    }
+                    else
+                    {
+                        fishAnimationRect.setRect(xOffset * fishAnimationFrameWidth, yOffset * fishAnimationFrameHeight, fishAnimationFrameWidth, fishAnimationFrameHeight);
+                        fishAnim->setTextureRect(fishAnimationRect);
+                    }
+                }
+            }
         }
     }
 }

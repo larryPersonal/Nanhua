@@ -146,11 +146,11 @@ public:
     
     void checkTeachBuildRoad();
     
-    void clearCache();
-    
     void initSharedTextureCache();
     
-    
+    void saveData();
+    void saveSpritesData();
+    void saveBuildingData();
     
     CREATE_FUNC(GameScene);
 };

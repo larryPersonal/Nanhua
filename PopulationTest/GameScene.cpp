@@ -11,7 +11,6 @@
 #include "Senario.h"
 #include "PopupMenu.h"
 #include "Sprite.h"
-#include "AlertBox.h"
 #include "SoundtrackManager.h"
 #include "GameDefaults.h"
 #include "SpriteInfoMenu.h"
@@ -25,6 +24,7 @@
 #include "BuildingCard.h"
 #include "MainMenuScene.h"
 #include "ScoreMenu.h"
+#include "GlobalHelper.h"
 
 #include <cmath>
 
@@ -62,6 +62,7 @@ GameScene::GameScene()
             settingsLevel->setLevel0();
             systemConfig->skipSenario = systemConfig->skipSenario_level2;
             systemConfig->skipTutorial = systemConfig->skipTutorial_level2;
+            break;
         default:
             break;
     }
@@ -118,11 +119,7 @@ GameScene::~GameScene()
     delete jobCollection;
     delete constructionHandler;
     
-    //delete screenCenter;
-    
     GameScene::SP=NULL;
-    
-    //map = NULL;
 }
 
 CCScene* GameScene::scene()
@@ -1563,7 +1560,7 @@ void GameScene::update(float time)
         clearCacheTime += time;
         if(clearCacheTime >= clearCacheTimeLimit)
         {
-            clearCache();
+            GlobalHelper::clearCache();
             clearCacheTime = 0;
         }
         
@@ -2017,26 +2014,14 @@ void GameScene::enableLoadingScreen()
     
     GameScene::getThis()->mapHandler->UnBuildEndGame();
     GameScene::getThis()->unschedule(schedule_selector(GameScene::update));
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
     
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    GlobalHelper::clearCache();
     this->scheduleOnce(schedule_selector(GameScene::goToMainMenu), 0.1f);
 }
 
 void GameScene::goToMainMenu()
 {
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
-}
-
-void GameScene::clearCache()
-{
-    CCLog("******** start to clear the cache ......");
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCDirector::sharedDirector()->purgeCachedData();
-    CCLog("******** clear cache finished ......");
 }
 
 /*Initialized all packed textures here.
@@ -2055,6 +2040,555 @@ void GameScene::initSharedTextureCache()
     CCSpriteBatchNode* ScrollNode = CCSpriteBatchNode::create("BuildScrollUI.png");
     this->addChild(ScrollNode);
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("BuildScrollUI.plist");
+}
 
+void GameScene::saveData()
+{
     
+}
+
+void GameScene::saveSpritesData()
+{
+    std::string username = GameManager::getThis()->username;
+    
+    CCArray* spritesOnMap = spriteHandler->spritesOnMap;
+    
+    stringstream ss;
+    ss << username << "_numberOfGameSprites";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), spritesOnMap->count());
+    for (int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+        
+        // sprite displayed name
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_spriteDisplayedName";
+        CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteDisplayedName);
+        
+        // sprite name
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_spriteName";
+        CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteName);
+        
+        // sprite positions
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_position_x";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->spriteRep->getPositionX());
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_position_y";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->spriteRep->getPositionY());
+        
+        // sprite foodCarried
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_foodCarried";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->foodCarried);
+        
+        // sprite current direction
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentDirection";
+        CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->currentDir);
+        
+        // sprite cumulative time
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_cumulativeTime";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeTime);
+        
+        // sprite cumulative time for happiness
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_cumulativeTime_happiness";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeTime_happiness);
+        
+        // sprite cumulative time for attack
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_cumulativeTime_attack";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeTime_attack);
+        
+        // sprite is token drop cooldown
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isTokenDropCooldown";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->is_token_drop_cooldown);
+        
+        // sprite token drop cooldown time
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_tokenDropCooldownTime";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->token_drop_cooldown_time);
+        
+        // sprite go to town hall
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_gotoTownHall";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->goToTownHall);
+        
+        // sprite has assigned
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_hasAssigned";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->hasAssigned);
+        
+        // sprite cumulative check time
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_cumulativeCheckTime";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeCheckTime);
+        
+        // sprite targetHungry
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetHungry";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetHungry);
+        
+        // sprite targetEnergy
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetEnergy";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetEnergy);
+        
+        // sprite targetHappiness
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetHappiness";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetHappiness);
+        
+        // sprite villager class
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_villagerClass";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->villagerClass);
+        
+        // sprite enermy
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_enermy";
+        string key = ss.str();
+        
+        ss.str(std::string());
+        if (gs->enermy == NULL)
+        {
+            ss << "NULL";
+        }
+        else
+        {
+            ss << gs->enermy->spriteDisplayedName;
+        }
+        CCUserDefault::sharedUserDefault()->setStringForKey(key.c_str(), ss.str());
+        
+        // sprite pre-enermy
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_preEnermy";
+        key = ss.str();
+        
+        ss.str(std::string());
+        if (gs->preEnermy == NULL)
+        {
+            ss << "NULL";
+        }
+        else
+        {
+            ss << gs->preEnermy->spriteDisplayedName;
+        }
+        CCUserDefault::sharedUserDefault()->setStringForKey(key.c_str(), ss.str());
+        
+        // sprite nextTile
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_nextTile_x";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->nextTile.x);
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_nextTile_y";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->nextTile.y);
+        
+        // sprite currentTile
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentTile_x";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->currentTile.x);
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentTile_y";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->currentTile.y);
+        
+        // sprite target location
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetLocation_x";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetLocation.x);
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetLocation_y";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetLocation.y);
+        
+        // sprite stop action
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_stopAction";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->stopAction);
+        
+        // sprite is moving
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isMoving";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isMoving);
+        
+        // sprite try escape
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_tryEscape";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->tryEscape);
+        
+        // sprite mGameCurrentEndurance
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_mGameCurrentEndurance";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->mGameCurrentEndurance);
+        
+        // sprite mGameMaxEndurance
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_mGameMaxEndurance";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->mGameMaxEndurance);
+        
+        // sprite mGameWarMode
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_mGameWarMode";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->mGameWarMode);
+        
+        // sprite current money rob
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentMoneyRob";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->current_money_rob);
+        
+        // sprite current food rob
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentFoodRob";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->current_food_rob);
+        
+        // sprite should stop next square
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_shouldStopNextSquare";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->shouldStopNextSquare);
+        
+        // sprite wander flag
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_wanderFlag";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->wanderFlag);
+        
+        // sprite should set visible next frame
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_shouldSetVisibleNextFrame";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->shouldSetVisibleNextFrame);
+        
+        // sprite job location
+        CCArray* allBuildings = buildingHandler->allBuildingsOnMap;
+        int index = 0;
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_jobLocation";
+        
+        if(gs->getJobLocation() == NULL)
+        {
+            index = -1;
+        }
+        else
+        {
+            for (int j = 0; j < allBuildings->count(); j++)
+            {
+                Building* bui = (Building*) allBuildings->objectAtIndex(j);
+                if (bui == gs->getJobLocation())
+                {
+                    index = j;
+                    break;
+                }
+            }
+        }
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
+        
+        // sprite job
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_job";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->job);
+        
+        // sprite is doing job
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isDoingJob";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isDoingJob);
+        
+        // sprite combat state
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_combatState";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->combatState);
+        
+        // sprite is leaving next update
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isLeavingNextUpdate";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isLeavingNextUpdate);
+        
+        // sprite is in building
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isInBuilding";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isInBuilding);
+        
+        // sprite gender
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_gender";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->gender);
+        
+        // sprite spriteclass
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_spriteClass";
+        CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteClass);
+        
+        // sprite movement speed
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_movementSpeed";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->movementSpeed);
+        
+        // sprite last frame action
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_lastFrameAction";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->lastFrameAction);
+        
+        // sprite current action
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentAction";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->currAction);
+        
+        // sprite next action
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_nextAction";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->nextAction);
+        
+        // sprite future action 1
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_futureAction1";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->futureAction1);
+        
+        // sprite future action 2
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_futureAction2";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->futureAction2);
+        
+        // sprite batch layer index
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_batchLayerIndex";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->batchLayerIndex);
+        
+        // sprite barHp value
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_barHPValue";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->barHP->getValue());
+        
+        // sprite is in combat
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isInCombat";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isInCombat);
+        
+        // sprite is in attack action
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_isInAttackAction";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isInAttackAction);
+        
+        // sprite just move one tile
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_justMoveOneTile";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->justMoveOneTile);
+        
+        // sprite frame Width
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_frameWidth";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->frameWidth);
+        
+        // sprite frame Height
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_frameHeight";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->frameHeight);
+        
+        // sprite possession happiness rating
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_happinessRating";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->happinessRating);
+        
+        // sprite possession current hungry
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentHungry";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->currentHungry);
+        
+        // sprite possession target hungry
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetHungry";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->targetHungry);
+        
+        // sprite possession energy rating
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_energyRating";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->energyRating);
+        
+        // sprite possession default work rate
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultWorkRate";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_work_rate);
+        
+        // sprite possession default happiness limit
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultHappinessLimit";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_hapiness_limit);
+        
+        // sprite possession default work unit per day
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultWorkUnitPerDay";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_work_unit_per_day);
+        
+        // sprite possession default movement speed
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultMovementSpeed";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_movement_speed);
+        
+        // sprite possession default animated speed
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultAnimatedSpeed";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_animate_speed);
+        
+        // sprite possession default hungry limit
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultHungryLimit";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_hungry_limit);
+        
+        // sprite possession default food carriage limit
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultFoodCarriageLimit";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_food_carriage_limit);
+        
+        // sprite possession default energy limit
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_defaultEnergyLimit";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_energy_limit);
+        
+        // sprite possession attack cooldown
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_attackCooldown";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->attack_cooldown);
+        
+        // sprite possession attack power max
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_attackPowerMax";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->attack_power_max);
+        
+        // sprite possession attack power min
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_attackPowerMin";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->attack_power_min);
+        
+        // sprite possession current endurance
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_currentEndurance";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->current_endurance);
+        
+        // sprite possession max endurance
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_maxEndurance";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->max_endurance);
+        
+        // sprite possession home location
+        index = 0;
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_homeLocation";
+        
+        if(gs->getHome() == NULL)
+        {
+            index = -1;
+        }
+        else
+        {
+            for (int j = 0; j < allBuildings->count(); j++)
+            {
+                Building* bui = (Building*) allBuildings->objectAtIndex(j);
+                if (bui == gs->getHome())
+                {
+                    index = j;
+                    break;
+                }
+            }
+        }
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
+        
+        // sprite possession job location
+        index = 0;
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_possessionJobLocation";
+        
+        if(gs->getJobLocation() == NULL)
+        {
+            index = -1;
+        }
+        else
+        {
+            for (int j = 0; j < allBuildings->count(); j++)
+            {
+                Building* bui = (Building*) allBuildings->objectAtIndex(j);
+                if (bui == gs->getJobLocation())
+                {
+                    index = j;
+                    break;
+                }
+            }
+        }
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
+        
+        // sprite possession target location
+        index = 0;
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetLocation";
+        
+        if(gs->getTargetLocation() == NULL)
+        {
+            index = -1;
+        }
+        else
+        {
+            for (int j = 0; j < allBuildings->count(); j++)
+            {
+                Building* bui = (Building*) allBuildings->objectAtIndex(j);
+                if (bui == gs->getTargetLocation())
+                {
+                    index = j;
+                    break;
+                }
+            }
+        }
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
+        
+        // sprite possession target home location
+        index = 0;
+        
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_targetHomeLocation";
+        
+        if(gs->getPossessions()->targetHomeLocation == NULL)
+        {
+            index = -1;
+        }
+        else
+        {
+            for (int j = 0; j < allBuildings->count(); j++)
+            {
+                Building* bui = (Building*) allBuildings->objectAtIndex(j);
+                if (bui == gs->getPossessions()->targetHomeLocation)
+                {
+                    index = j;
+                    break;
+                }
+            }
+        }
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
+    }
+}
+
+void GameScene::saveBuildingData()
+{
+    std::string username = GameManager::getThis()->username;
+    
+    CCArray* allBuildingsOnMap = buildingHandler->allBuildingsOnMap;
+    
+    stringstream ss;
+    ss << username << "_numberOfBuildings";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), allBuildingsOnMap->count());
+    for (int i = 0; i < allBuildingsOnMap->count(); i++)
+    {
+        Building* bui = (Building*) allBuildingsOnMap->objectAtIndex(i);
+        
+        
+    }
 }

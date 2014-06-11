@@ -27,6 +27,7 @@ BuildingHandler::BuildingHandler()
     specialOnMap = NULL;
     decorationOnMap = NULL;
     marketOnMap = NULL;
+    riverOnMap = NULL;
     
     allBuildingsGhostOnMap = NULL;
     housingGhostOnMap = NULL;
@@ -39,6 +40,7 @@ BuildingHandler::BuildingHandler()
     specialGhostOnMap = NULL;
     decorationGhostOnMap = NULL;
     marketGhostOnMap = NULL;
+    riverGhostOnMap = NULL;
 }
 
 BuildingHandler::~BuildingHandler()
@@ -53,6 +55,7 @@ BuildingHandler::~BuildingHandler()
     specialOnMap->removeAllObjects();
     decorationOnMap->removeAllObjects();
     marketOnMap->removeAllObjects();
+    riverOnMap->removeAllObjects();
     
     housingOnMap->release();
     amenityOnMap->release();
@@ -64,6 +67,7 @@ BuildingHandler::~BuildingHandler()
     specialOnMap->release();
     CC_SAFE_RELEASE(decorationOnMap);
     CC_SAFE_RELEASE(marketOnMap);
+    CC_SAFE_RELEASE(riverOnMap);
     
     housingGhostOnMap->removeAllObjects();
     granaryGhostOnMap->removeAllObjects();
@@ -75,6 +79,7 @@ BuildingHandler::~BuildingHandler()
     specialGhostOnMap->removeAllObjects();
     decorationGhostOnMap->removeAllObjects();
     marketGhostOnMap->removeAllObjects();
+    riverGhostOnMap->removeAllObjects();
     
     CC_SAFE_RELEASE(housingGhostOnMap);
     CC_SAFE_RELEASE(granaryGhostOnMap);
@@ -86,6 +91,7 @@ BuildingHandler::~BuildingHandler()
     CC_SAFE_RELEASE(specialGhostOnMap);
     CC_SAFE_RELEASE(decorationGhostOnMap);
     CC_SAFE_RELEASE(marketGhostOnMap);
+    CC_SAFE_RELEASE(riverGhostOnMap);
     
     if (allBuildingsOnMap)
     {
@@ -504,6 +510,10 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
                         {
                             b->buildingType = MARKET;
                         }
+                        else if (type == "river")
+                        {
+                            b->buildingType = RIVER;
+                        }
                         else if (type == "")
                         {
                             b->buildingType = BUILDINGCATEGORYMAX;
@@ -683,6 +693,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     specialOnMap= CCArray::create();
     decorationOnMap = CCArray::create();
     marketOnMap = CCArray::create();
+    riverOnMap = CCArray::create();
     
     housingOnMap->retain();
     granaryOnMap->retain();
@@ -694,6 +705,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     specialOnMap->retain();
     decorationOnMap->retain();
     marketOnMap->retain();
+    riverOnMap->retain();
     
     housingGhostOnMap = CCArray::create();
     granaryGhostOnMap = CCArray::create();
@@ -705,6 +717,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     specialGhostOnMap = CCArray::create();
     decorationGhostOnMap = CCArray::create();
     marketGhostOnMap = CCArray::create();
+    riverGhostOnMap = CCArray::create();
     
     housingGhostOnMap->retain();
     granaryGhostOnMap->retain();
@@ -716,6 +729,7 @@ void BuildingHandler::init(cocos2d::CCTMXTiledMap *mapPtr, JobCollection* jc)
     specialGhostOnMap->retain();
     decorationGhostOnMap->retain();
     marketGhostOnMap->retain();
+    riverGhostOnMap->retain();
 }
 
 void BuildingHandler::addBuildingToMap(Building *b)
@@ -765,6 +779,8 @@ void BuildingHandler::addBuildingToMap(Building *b)
         case MARKET:
             marketOnMap->addObject(b);
             break;
+        case RIVER:
+            riverOnMap->addObject(b);
         default:
             decorationOnMap->addObject(b);
             break;
@@ -814,6 +830,8 @@ void BuildingHandler::removeBuildingFromMap(Building *b)
         case MARKET:
             marketOnMap->removeObject(b);
             break;
+        case RIVER:
+            riverOnMap->removeObject(b);
         default:
             decorationOnMap->removeObject(b);
             break;

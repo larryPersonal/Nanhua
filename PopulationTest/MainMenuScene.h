@@ -10,9 +10,14 @@
 #define __PopulationTest__MainMenuScene__
 
 #include "cocos2d.h"
+#include "CCEditBox.h"
 
 using namespace cocos2d;
+using namespace cocos2d::extension;
 
+enum Mode {
+    login, signup, chooseCharacter, mainPage
+};
 
 class MainMenuScene : public cocos2d::CCLayer
 {
@@ -21,19 +26,114 @@ class MainMenuScene : public cocos2d::CCLayer
     CCSprite* backgroundImage;
     CCMenuItemImage* buttonStart;
     CCMenuItemImage* buttonOptions;
-    CCMenuItemImage* buttonCredits;
+    CCMenuItemImage* buttonExit;
     
     // loading screen module
     CCSprite* loadingScreen;
     CCSprite* loadingLabel;
+    
+    CCLabelTTF* usernameLabel;
+    
+    CCSprite* blackScreen;
     
     CCSprite* highScoreScreen;
     CCLabelTTF* tutorialScoreLabel;
     CCLabelTTF* level1ScoreLabel;
     CCLabelTTF* level2ScoreLabel;
     CCLabelTTF* totalScoreLabel;
-    CCMenuItemImage* cancelButton;
+    CCMenuItem* cancelButton;
     
+    CCMenu* mainMenuSceneMenu;
+    CCMenu* cancelButtonMenu;
+    CCMenu* loginCancelButtonMenu;
+    
+    CCMenu* loginMenu;
+    CCMenu* signupMenu;
+    CCMenu* warningCancelMenu;
+    
+    bool isScoreScreenJumpIn;
+    bool isScoreScreenJumpOut;
+    
+    bool isWarningScreenJumpIn;
+    bool isWarningScreenJumpOut;
+    
+    /* login module */
+    bool isClose;
+    bool startGame;
+    
+    CCLabelTTF* loginModuleTitle;
+    
+    CCEditBox* usernameBox;
+    CCEditBox* passwordBox;
+    
+    CCLabelTTF* usernameBoxLabel;
+    CCLabelTTF* passwordBoxLabel;
+    
+    CCMenuItem* loginButton;
+    CCMenuItem* createButton;
+    
+    /* warning window */
+    CCSprite* warningBackground;
+    CCLabelTTF* warningHead;
+    CCLabelTTF* warningDescription;
+    CCMenuItem* warningCancelButton;
+    
+    CCSprite* loginBackground;
+    CCMenuItem* loginCancelButton;
+    
+    CCMenuItem* playAnolymouslyButton;
+    CCMenuItem* createAccountButton;
+    
+    CCMenuItem* backButton;
+    
+    CCLabelTTF* loginScreenTitleLabel;
+    CCLabelTTF* loginScreenInstructionLabel;
+    CCLabelTTF* loginScreenWarningLabel;
+    
+    Mode mode;
+    
+    /* boy, girl animation */
+    
+    CCSprite* boyHead;
+    CCSprite* girlHead;
+    
+    CCTexture2D* boyTexture;
+    CCTexture2D* girlTexture;
+    
+    CCRect boyRect;
+    CCRect girlRect;
+    
+    int frameWidth;
+    int frameHeight;
+    
+    int boyFrameNo;
+    int girlFrameNo;
+    
+    int boyMaxFrameNo;
+    int girlMaxFrameNo;
+    
+    int boyXOffset;
+    int boyYOffset;
+    int girlXOffset;
+    int girlYOffset;
+    
+    float boy_delay_animFrame;
+    float boy_delay_current;
+    float girl_delay_animFrame;
+    float girl_delay_current;
+    
+    bool isInBoyAnimation;
+    bool isInGirlAnimation;
+    
+    float boyCumulativeTime;
+    float girlCumulativeTime;
+    
+    float boyCheckTime;
+    float girlCheckTime;
+    
+    int baseTime;
+    int rangeTime;
+    int animationRatio;
     
 public:
     
@@ -51,22 +151,60 @@ public:
     
     void onButtonStartPressed(CCObject* pSender);
     void onButtonOptionsPressed(CCObject* pSender);
-    void onButtonCreditsPressed(CCObject* pSender);
-    void onOrientationChanged();
-    void onOrientationChangedToPortrait();
-    void onOrientationChangedToLandscape();
+    void onButtonExitPressed(CCObject* pSender);
     
-    void onLoadGame(CCObject* pSender);
     void onNewGame(CCObject* pSender);
-    
-    void onAcceptTutorial(CCObject* pSender);
-    void onRejectTutorial(CCObject* pSender);
     
     void enableLoadingScreen();
     void loadSenarioChooseScene();
     
     void closeScoreScreen();
-    void openScoreScreen();
+    
+    void closeWarningScreen();
+    void openWarningScreen();
+    
+    void onOrientationChanged();
+    
+    void scheduleScoreScreenJumpIn();
+    void scheduleScoreScreenJumpOut();
+    
+    void scoreScreenJumpIn(float deltaTime);
+    void scoreScreenJumpOut(float deltaTime);
+    
+    void scheduleWarningScreenJumpIn();
+    void scheduleWarningScreenJumpOut();
+    
+    void warningScreenJumpIn(float deltaTime);
+    void warningScreenJumpOut(float deltaTime);
+    
+    void scheduleLoginScreenJumpIn();
+    void scheduleLoginScreenJumpOut();
+    
+    void loginScreenJumpIn(float deltaTime);
+    void loginScreenJumpOut(float deltaTime);
+    
+    void closeLoginScreen();
+    
+    void clickLoginButton();
+    
+    void clickCreateAccountButton();
+    
+    void clickBackButton();
+    
+    void clickCreateButton();
+    
+    void clickPlayAnolymouslyButton();
+    
+    void configMode();
+    
+    void update(float deltaTime);
+    
+    void enableModule();
+    void disableModule();
+    
+    virtual void ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
+    virtual void ccTouchesMoved(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
+    virtual void ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(MainMenuScene);

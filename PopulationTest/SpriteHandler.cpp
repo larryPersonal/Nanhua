@@ -44,7 +44,8 @@ SpriteHandler::SpriteHandler()
     allSpriteClass = CCArray::create();
     allSpriteClass->retain();
     
-    
+    fishAnimOnMap = CCArray::create();
+    fishAnimOnMap->retain();
 }
 
 SpriteHandler::~SpriteHandler()
@@ -69,6 +70,9 @@ SpriteHandler::~SpriteHandler()
     
     allSprites->removeAllObjects();
     CC_SAFE_RELEASE(allSprites);
+    
+    fishAnimOnMap->removeAllObjects();
+    CC_SAFE_RELEASE(fishAnimOnMap);
     
     /*
     if (allClassRequirements != NULL)

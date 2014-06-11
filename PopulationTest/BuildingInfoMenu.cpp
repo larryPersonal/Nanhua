@@ -119,7 +119,6 @@ void BuildingInfoMenu::createMenuItems()
     spriteBackground->setPosition(ccp(screenSize.width / 2.0f - spriteBackground->boundingBox().size.width / 2.0f, screenSize.height / 2.0f + spriteBackground->boundingBox().size.height / 2.0f));
     this->addChild(spriteBackground);
     
-//    spriteBackgroundInner = CCSprite::create("blackscreen.png");
     spriteBackgroundInner=CCSprite::createWithSpriteFrameName("black.png");
     spriteBackgroundInner->setScale(spriteBackground->getScale());
     
@@ -347,7 +346,7 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(buttonClose);
     
     //selectWorkerButton = CCMenuItemImage::create("allocatebtn.png", "allocatebtn-press.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton = CCSprite::createWithSpriteFrameName("allocatebtn.png");
+    selectWorkerButton = CCSprite::create("allocatebtn.png");
     selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
@@ -391,7 +390,7 @@ void BuildingInfoMenu::createMenuItems()
     
     // sprite population label
     ss.str(string());
-    ss << "Villages Assigned!";
+    ss << "Villagers Assigned!";
     spritePopulationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     spritePopulationLabel->setColor(colorYellow);
     spritePopulationLabel->setAnchorPoint(ccp(0, 1));
@@ -722,6 +721,9 @@ void BuildingInfoMenu::createMenuItems()
         
         houseLimitTitle->setVisible(false);
         houseLimitLabel->setVisible(false);
+        
+        marketLimitTitle->setVisible(false);
+        marketLimitLabel->setVisible(false);
         
         granaryLimitTitle->setVisible(false);
         granaryLimitLabel->setVisible(false);

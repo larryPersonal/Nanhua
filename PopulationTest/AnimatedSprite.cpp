@@ -50,10 +50,14 @@ AnimatedSprite::~AnimatedSprite()
 void AnimatedSprite::setup(std::string spritePicture, bool fromCache)
 {
     if (fromCache)
+    {
         sprite = CCSprite::createWithSpriteFrameName(spritePicture.c_str());
-    
+    }
     else
+    {
         sprite = CCSprite::create(spritePicture.c_str());
+    }
+    
     if(hasFadeInAnimation)
     {
         currentAlpha = 0;
@@ -84,7 +88,9 @@ void AnimatedSprite::update(float dt)
                 sprite->setOpacity((GLubyte) currentAlpha);
                 fadeOut = false;
                 Senario::getThis()->goNextSlide();
-            } else {
+            }
+            else
+            {
                 sprite->setOpacity((GLubyte) currentAlpha);
             }
         }

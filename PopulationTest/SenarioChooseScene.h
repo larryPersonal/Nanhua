@@ -28,6 +28,8 @@ public:
     CCMenuItem* senarioButtonS5;
     CCMenuItem* senarioButtonS6;
     
+    CCMenu* senarioChooseSceneMenu;
+    
     CCSprite* loadingScreen;
     CCSprite* loadingLabel;
     
@@ -64,6 +66,8 @@ public:
     void loadingSenario4();
     void loadingSenario5();
     void loadingSenario6();
+    
+    void preloadTextures();
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(SenarioChooseScene);

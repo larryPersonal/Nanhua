@@ -37,6 +37,8 @@ public:
 
     CCArray* spritesOnMap;
     
+    CCArray* fishAnimOnMap;
+    
     GameSprite* getSpriteByVillagerClass(VillagerClass villagerClass);
     
     void addSpriteToMap(CCPoint &tilePos, VillagerClass, bool tutorial = false);

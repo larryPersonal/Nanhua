@@ -56,7 +56,7 @@ bool SplashScene::init()
     
     bool isHori = GlobalHelper::isHorizontal();
     
-    splashImage = CCSprite::create("newsplashpage2.png");
+    splashImage = CCSprite::create("newsplashpage.png");
     CCSize spriteSize = splashImage->getContentSize();
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
@@ -96,10 +96,8 @@ void SplashScene::update(float dt){
         case 1:
             alpha += 5;
             if (alpha >= 255) {
-                CCTextureCache::sharedTextureCache()->removeAllTextures();
-                CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-                CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
                 this->unschedule(schedule_selector(SplashScene::update));
+                GlobalHelper::clearCache();
                 CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
             }
             break;

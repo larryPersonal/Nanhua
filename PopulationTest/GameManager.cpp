@@ -50,6 +50,11 @@ GameManager::GameManager()
     housingLimitation = new HousingLimit();
     parseHousingLimitation();
     
+    username = "";
+    password = "";
+    gender = true;
+    isLoggedIn = false;
+    
     init();
 }
 

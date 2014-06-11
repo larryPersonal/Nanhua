@@ -288,7 +288,7 @@
         </lock>
     </slide>
     <slide>
-        <speech>Wait for the farm to finish construction.</speech>
+        <speech>Wait for the construction of the farm to be finished.</speech>
         <fade_in>0</fade_in>
         <lock>
             <buildButton></buildButton>

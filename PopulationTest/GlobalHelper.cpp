@@ -383,26 +383,17 @@ std::string GlobalHelper::WstringTostring( std::wstring wStr )
     return str;
 }
 
-/*
-wchar_t * GlobalHelper::UTF8ToUnicode( const char* str )
+/* clear cache section */
+void GlobalHelper::clearCache()
 {
-    int textlen ;
-    wchar_t * result;
-    textlen = MultiByteToWideChar( CP_UTF8, 0, str,-1, NULL,0 );
-    result = (wchar_t *)malloc((textlen+1)*sizeof(wchar_t));
-    memset(result,0,(textlen+1)*sizeof(wchar_t));
-    MultiByteToWideChar(CP_UTF8, 0,str,-1,(LPWSTR)result,textlen );
-    return result;
+    CCTextureCache::sharedTextureCache()->removeAllTextures();
+    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
+    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    CCDirector::sharedDirector()->purgeCachedData();
 }
 
-char * GlobalHelper::UnicodeToUTF8( const wchar_t* str )
+void GlobalHelper::clearPreloadedTexture()
 {
-    char* result;
-    int textlen;
-    textlen = WideCharToMultiByte( CP_UTF8, 0, str, -1, NULL, 0, NULL, NULL );
-    result =(char *)malloc((textlen+1)*sizeof(char));
-    memset(result, 0, sizeof(char) * ( textlen + 1 ) );
-    WideCharToMultiByte( CP_UTF8, 0, str, -1, result, textlen, NULL, NULL );
-    return result;
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrames();
+    CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
 }
-*/

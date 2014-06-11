@@ -31,7 +31,7 @@ void ProgressBar::createProgressBar(CCRect bgBodyRect, CCRect barOffsetRect,
         // Create bgBody sprite, which is repeated and scaled
         texture = CCTextureCache::sharedTextureCache()->addImage(bgBodyFileName);
         
-        bgBody = CCSprite::createWithSpriteFrameName(bgBodyFileName);
+        bgBody = CCSprite::create(bgBodyFileName);
         bgBody->setAnchorPoint(CCPointZero);
         bgBody->setContentSize(bgBodyRect.size);
         bgBody->setTextureRect(CCRectMake(0, 0,

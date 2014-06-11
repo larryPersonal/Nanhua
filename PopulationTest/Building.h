@@ -31,7 +31,8 @@ enum BuildingCategory {
     SPECIAL,
     DECORATION,
     MARKET,
-    BUILDINGCATEGORYMAX = 10
+    RIVER,
+    BUILDINGCATEGORYMAX = 11
 };
 
 enum FarmState {
@@ -203,6 +204,36 @@ public:
     void removeProgressiveBar();
     
     void addNotificationLabel(std::string notificationStr, ccColor3B);
+    
+public:
+    // fish animation;
+    CCRect fishAnimationArea;
+    
+    float fishAnimationCheckTime;
+    float fishAnimationCheckTimeMin;
+    float fishAnimationCheckTimeMax;
+    float fishAnimationCumulativeTime;
+    
+    float fishAnimationRate;
+    
+    bool isInAnimation;
+    
+    float fishAnimationFrameWidth;
+    float fishAnimationFrameHeight;
+    
+    float delay_animFrame;
+    float delay_curr;
+    
+    int x_frameNo;
+    int x_maxFrameNo;
+    
+    int xOffset;
+    int yOffset;
+    
+    CCTexture2D* fishAnimationTexture;
+    CCRect fishAnimationRect;
+    
+    CCSprite* fishAnim;
 };
 
 #endif

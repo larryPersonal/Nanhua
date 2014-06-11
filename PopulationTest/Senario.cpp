@@ -214,7 +214,6 @@ bool Senario::constructSenarioStage(bool skip)
              * Future: may include animation of the sprite shown on the screen (probably a gif?)
              */
             
-            //CCSprite* cha = CCSprite::create(ele->src.c_str(), CCRectMake(0, 0, screenSize.width * ele->width / 100.0f, screenSize.height * ele->height / 100.0f));
             AnimatedSprite* as = AnimatedSprite::create(ele->src.c_str(), ele->fadeIn, ele->fadeOut, true);
             stringstream ss;
             CCSprite* cha = as->getSprite();
