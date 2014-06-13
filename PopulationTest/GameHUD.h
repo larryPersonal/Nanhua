@@ -412,6 +412,9 @@ public:
     
     void setupForGuardTowerBar();
     void clearGuardTowerBar();
+    
+    int getNumberOfDays();
+    void setNumberOfDays(int days);
 };
 
 #endif

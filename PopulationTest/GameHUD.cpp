@@ -82,6 +82,7 @@ GameHUD::GameHUD()
     label_fade_out = false;
     
     targetMoney = GameScene::getThis()->settingsLevel->default_start_money;
+    isAddingMoney = false;
     
     targetReputation = 0;
     isAddingReputation = false;
@@ -2597,6 +2598,10 @@ void GameHUD::scheduleAddMoney(int mon)
     if(!isAddingMoney)
     {
         targetMoney = money + mon;
+        if(mon != 0)
+        {
+            isAddingMoney = true;
+        }
     }
     else
     {
@@ -2639,6 +2644,10 @@ void GameHUD::addMoney(float dt)
     else if(money > targetMoney)
     {
         money--;
+    }
+    else
+    {
+        isAddingMoney = false;
     }
     
     for(int i = 0; i < addMoneyLabelArray->count(); i++)
@@ -2790,7 +2799,7 @@ void GameHUD::addReputation(float dt)
     if(stop)
     {
         isAddingReputation = false;
-        this->unschedule(schedule_selector(GameHUD::addMoney));
+        this->unschedule(schedule_selector(GameHUD::addReputation));
     }
 
 }
@@ -3024,4 +3033,22 @@ void GameHUD::addStorage(float dt)
 void GameHUD::addNewNotification(std::string notificationStr)
 {
     notificationToBeScheduled.push_back(notificationStr);
+}
+
+int GameHUD::getNumberOfDays()
+{
+    return date->year * 336 + date->month * 28 + date->week * 7 + date->day * 1 + 1;
+}
+
+void GameHUD::setNumberOfDays(int days)
+{
+    int years = (days - 1) / 336;
+    int month = ((days - 1) % 336) / 28;
+    int week = (((days - 1) % 336) % 28) / 7;
+    int day = (((days - 1) % 336) % 28) % 7;
+    
+    date->year = years;
+    date->month = month;
+    date->week = week;
+    date->day = day;
 }

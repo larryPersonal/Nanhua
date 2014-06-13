@@ -44,6 +44,8 @@ public:
     void addSpriteToMap(CCPoint &tilePos, VillagerClass, bool tutorial = false);
     void loadSpriteToMap(CCPoint &tilePos, GameSprite* sp, std::string details);
     
+    GameSprite* getSpriteToMap(CCPoint &tilePos, VillagerClass villagerClass);
+    
     void removeSpriteFromMap(GameSprite *sprite);
     
     void update(float);

@@ -114,6 +114,8 @@ Building::Building()
     yOffset = 0;
     
     fishAnim = NULL;
+    
+    buildingRep = NULL;
 }
 
 Building::~Building()
@@ -969,6 +971,7 @@ void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
     }
     
     GameScene::getThis()->mapHandler->getMap()->removeChild(buildingRep);
+    
     //Because ::Create was used the old one should garbage collect on its own. TO MONITOR.
     buildingRep = newRep;
     
@@ -1155,6 +1158,7 @@ void Building::updateBuilding(float dt)
     }
     
     /* randomly trigger the fish animation */
+    /*
     if (buildingType == RIVER)
     {
         if (!isInAnimation)
@@ -1231,6 +1235,7 @@ void Building::updateBuilding(float dt)
             }
         }
     }
+    */
 }
 
 void Building::addNotificationLabel(std::string notificationStr, ccColor3B color)

@@ -316,7 +316,6 @@
 		36B190F818A0A6AD00A8B515 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B189D518A0A6A700A8B515 /* SimpleAudioEngine_objc.m */; };
 		36B411E318D9AAEB005967EC /* DemoScene.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E218D9AAEB005967EC /* DemoScene.tmx */; };
 		36B411E918D9ACFF005967EC /* greatwall2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411E818D9ACFF005967EC /* greatwall2x2.png */; };
-		36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B411EA18D9AD69005967EC /* plant-1x1.png */; };
 		36BC4214190F40D400F89DC5 /* market.png in Resources */ = {isa = PBXBuildFile; fileRef = 36BC4213190F40D400F89DC5 /* market.png */; };
 		36C16E4A18D0049000C307DB /* FemaleFarmer_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4018D0049000C307DB /* FemaleFarmer_port.png */; };
 		36C16E4B18D0049000C307DB /* MaleFarmer_port.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C16E4118D0049000C307DB /* MaleFarmer_port.png */; };
@@ -557,6 +556,8 @@
 		84F9B76718D9415200579060 /* Ishikari Lore.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84F9B76618D9415200579060 /* Ishikari Lore.mp3 */; };
 		84F9B76918D949D900579060 /* MaleVillager.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F9B76818D949D900579060 /* MaleVillager.plist */; };
 		84F9B76B18D94ADD00579060 /* Girl.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F9B76A18D94ADD00579060 /* Girl.plist */; };
+		84FC2E8019499D83009E4E28 /* plant-1x1.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FC2E7F19499D83009E4E28 /* plant-1x1.png */; };
+		84FC2E821949A389009E4E28 /* DemoSceneEmpty.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 84FC2E811949A389009E4E28 /* DemoSceneEmpty.tmx */; };
 		B40859C01720D6A3008F68DC /* BuildingInfoMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B40859BF1720D6A3008F68DC /* BuildingInfoMenu.cpp */; };
 		B41409C9172A1886000D475A /* TabbedView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B41409C8172A1886000D475A /* TabbedView.cpp */; };
 		B422477B174082FE007E57F6 /* ConstructionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4224779174082FD007E57F6 /* ConstructionHandler.cpp */; };
@@ -1199,7 +1200,6 @@
 		36B189D518A0A6A700A8B515 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		36B411E218D9AAEB005967EC /* DemoScene.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DemoScene.tmx; sourceTree = "<group>"; };
 		36B411E818D9ACFF005967EC /* greatwall2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greatwall2x2.png; sourceTree = "<group>"; };
-		36B411EA18D9AD69005967EC /* plant-1x1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plant-1x1.png"; sourceTree = "<group>"; };
 		36BC4213190F40D400F89DC5 /* market.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = market.png; sourceTree = "<group>"; };
 		36C16E4018D0049000C307DB /* FemaleFarmer_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FemaleFarmer_port.png; sourceTree = "<group>"; };
 		36C16E4118D0049000C307DB /* MaleFarmer_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MaleFarmer_port.png; sourceTree = "<group>"; };
@@ -1500,6 +1500,8 @@
 		84F9B76618D9415200579060 /* Ishikari Lore.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Ishikari Lore.mp3"; sourceTree = "<group>"; };
 		84F9B76818D949D900579060 /* MaleVillager.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MaleVillager.plist; sourceTree = "<group>"; };
 		84F9B76A18D94ADD00579060 /* Girl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Girl.plist; sourceTree = "<group>"; };
+		84FC2E7F19499D83009E4E28 /* plant-1x1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plant-1x1.png"; sourceTree = "<group>"; };
+		84FC2E811949A389009E4E28 /* DemoSceneEmpty.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DemoSceneEmpty.tmx; sourceTree = "<group>"; };
 		B40859BE1720D689008F68DC /* BuildingInfoMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingInfoMenu.h; sourceTree = "<group>"; };
 		B40859BF1720D6A3008F68DC /* BuildingInfoMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BuildingInfoMenu.cpp; sourceTree = "<group>"; };
 		B41409C7172A182B000D475A /* TabbedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabbedView.h; sourceTree = "<group>"; };
@@ -3271,9 +3273,9 @@
 		848D8B111941819E0006E14C /* Buildings&Environment */ = {
 			isa = PBXGroup;
 			children = (
+				84FC2E7F19499D83009E4E28 /* plant-1x1.png */,
 				3632864218CEC503002C58D3 /* houses.png */,
 				36B411E818D9ACFF005967EC /* greatwall2x2.png */,
-				36B411EA18D9AD69005967EC /* plant-1x1.png */,
 				36D0CB4319079BFC001AEBC0 /* granary.png */,
 				36984AA7190E02D70081CB17 /* building2x2.png */,
 				36BC4213190F40D400F89DC5 /* market.png */,
@@ -3289,6 +3291,7 @@
 		848D8B1819418D070006E14C /* tmx */ = {
 			isa = PBXGroup;
 			children = (
+				84FC2E811949A389009E4E28 /* DemoSceneEmpty.tmx */,
 				36B411E218D9AAEB005967EC /* DemoScene.tmx */,
 				8450A1761935F65B0051F90C /* ScenarioScene2.tmx */,
 			);
@@ -3639,6 +3642,7 @@
 				8435414A19457ED300AFE64B /* button.png in Resources */,
 				3608CB001704343E00AB65A3 /* FemaleFarmer.plist in Resources */,
 				8444D6BE190779E500D5AFAC /* banditAttackRightUp.png in Resources */,
+				84FC2E821949A389009E4E28 /* DemoSceneEmpty.tmx in Resources */,
 				36B411E918D9ACFF005967EC /* greatwall2x2.png in Resources */,
 				840813B5193AECBE0085EAFC /* reject_press.png in Resources */,
 				840813B4193AECBE0085EAFC /* reject.png in Resources */,
@@ -3720,7 +3724,6 @@
 				848D8B13194181B40006E14C /* river_anim.png in Resources */,
 				841ADE401947030500D50463 /* inputBar.png in Resources */,
 				840813C8193B1E510085EAFC /* in-game_1.wav in Resources */,
-				36B411EB18D9AD69005967EC /* plant-1x1.png in Resources */,
 				843BE2B018F7EB2600682E5B /* tutorialBackup.xml in Resources */,
 				36AC553B18D696D600C165F5 /* Shojumaru-Regular.ttf in Resources */,
 				84DBDDC4192A25ED00EEDFB9 /* flippingbook.png in Resources */,
@@ -3778,6 +3781,7 @@
 				8450A1771935F65B0051F90C /* ScenarioScene2.tmx in Resources */,
 				842B84D219066AC600D43E2E /* summertimeclock.png in Resources */,
 				36B18A8118A0A6A700A8B515 /* CMakeLists.txt in Resources */,
+				84FC2E8019499D83009E4E28 /* plant-1x1.png in Resources */,
 				367E24B5193DB4A6000CA2A7 /* packedportraits.png in Resources */,
 				84CFAEDF18E034E900A81C94 /* timeclock0.png in Resources */,
 				84DA68D1191A3424002B459D /* thiefStealingFood.png in Resources */,

@@ -151,6 +151,12 @@ public:
     void saveData();
     void saveSpritesData();
     void saveBuildingData();
+    void saveSystemData();
+    
+    void loadData();
+    void loadSystemData();
+    void loadBuildingData();
+    void loadSpritesData();
     
     CREATE_FUNC(GameScene);
 };

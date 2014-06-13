@@ -112,6 +112,7 @@ public:
     void UnPathPreviewLineExtend();
     
     /*building*/
+    Building* BuildOnMap(CCPoint &target, Building* building);
     bool Build(CCPoint &target, Building* building, bool skipConstruction=false, std::string withDetails = "", bool inGame=false);
     bool BuildPreview(CCPoint &target, Building* building);
     void ForceUnbuild(CCPoint &target);

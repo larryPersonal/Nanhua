@@ -380,6 +380,32 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     }
 }
 
+GameSprite* SpriteHandler::getSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass villagerClass)
+{
+    GameSprite* targetSprite = getSpriteByVillagerClass(villagerClass);
+    SpriteClass* spriteClass = GlobalHelper::getSpriteClassByVillagerClass(villagerClass);
+    
+    if (!targetSprite){
+        return NULL;
+    }
+    
+    GameSprite* newSprite = (GameSprite*)targetSprite->copy();
+    newSprite->retain();
+    
+    newSprite->defaults_doc = spriteClass->defaultContent;
+    newSprite->config_doc = spriteClass->configContent;
+    newSprite->spriteClass = spriteClass->targetClass;
+    newSprite->villagerClass = villagerClass;
+    
+    newSprite->makeSprite(&tilePos);
+    
+    spritesOnMap->addObject(newSprite);
+    
+    GameHUD::getThis()->onSpriteAddedToMap(newSprite);
+    
+    return newSprite;
+}
+
 void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, std::string details)
 {
     GameSprite* newSprite = (GameSprite*)sp->copy();

@@ -14,26 +14,7 @@
 void GameManagement::saveGameToFile()
 {
     CCLog("try saving......");
-    /* save all gameConfigs */
-    int level = GameManager::getThis()->getLevel();
-    std::string map = GameManager::getThis()->gameMap;
-    int currentTime = GameHUD::getThis()->getCurrentTime();
-    int goldTarget = GameHUD::getThis()->targetMoney;
-    int reputationTarget = GameHUD::getThis()->targetReputation;
-    
-    /* save all buildings */
-    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
-    CCArray* allGhostBuildings = GameScene::getThis()->buildingHandler->allBuildingsGhostOnMap;
-    
-    /* save all sprites */
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-    
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("level", level);
-    CCUserDefault::sharedUserDefault()->setStringForKey("map", map);
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("time", currentTime);
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("gold", goldTarget);
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("reputation", reputationTarget);
-    
+    GameScene::getThis()->saveData();
     CCLog("saving success!");
 }
 

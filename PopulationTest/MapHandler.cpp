@@ -236,8 +236,9 @@ CCPoint MapHandler::tilePosFromLocation(CCPoint &location)
 	float mapHeight = mapPtr->getMapSize().height;
 	float tileWidth = mapPtr->getTileSize().width;
 	float tileHeight = mapPtr->getTileSize().height;
-	
+    
 	CCPoint tilePosDiv = CCPointMake(pos.x / tileWidth, pos.y / tileHeight);
+    
 	float mapHeightDiff = mapHeight - tilePosDiv.y;
 	
 	// Cast to int makes sure that result is in whole numbers, tile coordinates will be used as array indices
@@ -385,11 +386,11 @@ bool MapHandler::isTileBuildable(cocos2d::CCPoint &tilePos, bool obey_playarea)
     
     if (obey_playarea)
     {
-    if (targetTile->hasBuilding() || targetTile->isPath)
-    {
-        CCLog("Target tile isOccupied or isPath");
-        return false;
-    }
+        if (targetTile->hasBuilding() || targetTile->isPath)
+        {
+            CCLog("Target tile isOccupied or isPath");
+            return false;
+        }
     }
     
     return true;
@@ -445,14 +446,16 @@ bool MapHandler::isTileBlocked(cocos2d::CCPoint &tilePos)
 bool MapHandler::isBuildableOnTile(CCPoint &target, Building* building)
 {
     // Check if tiles are occupied
-    bool shouldObeyPlayArea = (building->buildingType != DECORATION);
+    bool shouldObeyPlayArea = building->buildingType != DECORATION && true;
     
     for (int i = 0; i < building->height; i++)
         for (int j = 0; j < building->width; j++)
         {
             CCPoint tilePos = ccp(target.x + j, target.y + i);
             if (!isTileBuildable(tilePos, shouldObeyPlayArea))
+            {
                 return false;
+            }
         }
     return true;
 }
@@ -670,6 +673,67 @@ CCPoint MapHandler::getRandomTile()
     MapTile* mapTile = (MapTile*)mapTiles->objectAtIndex(targetIdx);
     
     return CCPointMake(mapTile->xpos, mapTile->ypos);
+}
+
+Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
+{
+    if (!building)
+    {
+        return NULL;
+    }
+    
+    /*Note: do NOT use the pointer directly! The pointer points to the main instance of the building. */
+    
+    Building* cloneBuilding = (Building*) building->copy();
+    
+    if (cloneBuilding->buildingType == BUILDINGCATEGORYMAX)
+    {
+        return NULL;
+    }
+    
+    // Don't build if tiles are occupied. EDIT: Ignore this rule if Building is a decoration, which allows it to build on OOB tiles and over each other.
+    if (!isBuildableOnTile(target, cloneBuilding))
+    {
+        CCLog("****** you are the apple of my eye!");
+        return NULL;
+    }
+    
+    cloneBuilding->buildingRep = CCSprite::create();
+    cloneBuilding->buildingRep->initWithTexture(cloneBuilding->buildingTexture, cloneBuilding->buildingRect);
+    CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
+    cloneBuilding->buildingRep->setPosition(tilePos);
+    if (cloneBuilding->buildingType == MILITARY)
+    {
+        getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width) - cloneBuilding->width - 2); //force buildings to be drawn always on top
+    }
+    else
+    {
+        getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width)); //force buildings to be drawn always on top
+    }
+    
+    MapTile* master = getTileAt(target.x, target.y);
+    for (int i = 0; i < cloneBuilding->height; i++)
+    {
+        for (int j = 0; j < cloneBuilding->width; j++)
+        {
+            if (i == 0 && j == 0)
+            {
+                master->Build(cloneBuilding);
+            }
+            else
+            {
+                getTileAt(target.x + j, target.y + i)->setMaster(master);
+            }
+        }
+    }
+    
+    cloneBuilding->ID = GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
+    
+    cloneBuilding->build_uint_current = cloneBuilding->build_uint_required;
+    
+    GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
+    
+    return cloneBuilding;
 }
 
 bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)

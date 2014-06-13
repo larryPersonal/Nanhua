@@ -883,8 +883,15 @@ Building* BuildingHandler::getNearestStorage(GameSprite* sp)
 //I definitely need to optimize this, but CCArray no have searching. Meh.
 Building* BuildingHandler::getBuilding(int withID)
 {
-    if (!allBuildings) return NULL;
-    if (allBuildings->count() == 0) return NULL;
+    if (!allBuildings)
+    {
+        return NULL;
+    }
+    
+    if (allBuildings->count() == 0)
+    {
+        return NULL;
+    }
     
     /*binary search fixed, changed*/
     Building* currBuilding = BinarySearch(allBuildings, withID);
