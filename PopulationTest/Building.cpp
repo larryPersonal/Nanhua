@@ -1158,7 +1158,6 @@ void Building::updateBuilding(float dt)
     }
     
     /* randomly trigger the fish animation */
-    /*
     if (buildingType == RIVER)
     {
         if (!isInAnimation)
@@ -1235,7 +1234,6 @@ void Building::updateBuilding(float dt)
             }
         }
     }
-    */
 }
 
 void Building::addNotificationLabel(std::string notificationStr, ccColor3B color)

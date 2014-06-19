@@ -393,7 +393,8 @@ bool MainMenuScene::init()
     }
     else
     {
-        mode = login;
+        // mode = login;
+        mode = mainPage;
     }
     
     configMode();

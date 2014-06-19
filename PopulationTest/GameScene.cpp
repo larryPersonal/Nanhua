@@ -1465,6 +1465,7 @@ void GameScene::FirstRunPopulate()
     {
         mapHandler->Populate(buildingHandler->allBuildingLayers);
     }
+    return;
     spriteHandler->initialize();
 
     GameManager::getThis()->initGameData();
@@ -1875,7 +1876,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         if (selectedTile->master)
             selectedTile = selectedTile->master;
         
-        if (selectedTile->building && selectedTile->building->buildingType != DECORATION)
+        if (selectedTile->building && selectedTile->building->buildingType != DECORATION && selectedTile->building->buildingType != RIVER)
         {
             if(selectedTile->building->isUnderConstruction())
             {
@@ -1944,7 +1945,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 
                 if (selectedTile->building &&
                     selectedTile->building->buildingRep->boundingBox().containsPoint(touchWorldLoc) &&
-                    selectedTile->building->buildingType != DECORATION)
+                    selectedTile->building->buildingType != DECORATION &&
+                    selectedTile->building->buildingType != RIVER)
                 {
                     if(selectedTile->building->isUnderConstruction())
                     {

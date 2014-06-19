@@ -254,7 +254,7 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(ccp(0.5f,0.5f));
         sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
-           positionAt(pos).y + sprite->getContentSize().width/2 ) );
+        positionAt(pos).y + sprite->getContentSize().width/2 ) );
 
         unsigned int flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
 

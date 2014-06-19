@@ -133,6 +133,8 @@ public:
     void update(float dt);
     
     CCPoint getNearestNoneBuildingTile(CCPoint sourcePos);
+    
+    void moveToPosition(CCPoint target, CCPoint current);
 };
 
 
