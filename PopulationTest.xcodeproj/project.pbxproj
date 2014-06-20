@@ -462,6 +462,8 @@
 		844AC8E818C81954005166FD /* BanditsAttackHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */; };
 		844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */ = {isa = PBXBuildFile; fileRef = 844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */; };
 		844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */ = {isa = PBXBuildFile; fileRef = 844D728D18AC750D008E0AD3 /* senario_h.xml */; };
+		844EAF82195403650084F780 /* back_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 844EAF80195403650084F780 /* back_press.png */; };
+		844EAF83195403650084F780 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 844EAF81195403650084F780 /* back.png */; };
 		84509B7D18879C2900EF8BD8 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 84509B7C18879C2900EF8BD8 /* cancel.png */; };
 		8450A16C193582C00051F90C /* GameManagement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8450A16B193582C00051F90C /* GameManagement.cpp */; };
 		8450A16E19359A480051F90C /* sangumaolu.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8450A16D19359A480051F90C /* sangumaolu.mp4 */; };
@@ -481,6 +483,7 @@
 		8476EB9718F643C40004DE79 /* TutorialReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8476EB9618F643C40004DE79 /* TutorialReader.cpp */; };
 		8476EB9918F644B90004DE79 /* tutorial0.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8476EB9818F644B90004DE79 /* tutorial0.xml */; };
 		8483260818E441E500EDCB59 /* AnimatedSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8483260718E441E500EDCB59 /* AnimatedSprite.cpp */; };
+		848881DD19541D0100B03B31 /* ingame_dragon_glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 848881DC19541D0100B03B31 /* ingame_dragon_glow.png */; };
 		8489ADAA175C96C1004CCB84 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8489ADA9175C96C1004CCB84 /* GameData.plist */; };
 		848D2FE51859730A00EB9257 /* SenarioChooseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848D2FE41859730A00EB9257 /* SenarioChooseScene.cpp */; };
 		848D2FEF1859B6DB00EB9257 /* Senario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848D2FEE1859B6DB00EB9257 /* Senario.cpp */; };
@@ -1378,6 +1381,8 @@
 		844ACE781918903800505F01 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditicon.png; sourceTree = "<group>"; };
 		844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workers_menu_buttonCollider.png; sourceTree = "<group>"; };
 		844D728D18AC750D008E0AD3 /* senario_h.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = senario_h.xml; sourceTree = "<group>"; };
+		844EAF80195403650084F780 /* back_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_press.png; sourceTree = "<group>"; };
+		844EAF81195403650084F780 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		84509B7C18879C2900EF8BD8 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		8450A16A193582B10051F90C /* GameManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManagement.h; sourceTree = "<group>"; };
 		8450A16B193582C00051F90C /* GameManagement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManagement.cpp; sourceTree = "<group>"; };
@@ -1404,6 +1409,7 @@
 		8476EB9818F644B90004DE79 /* tutorial0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial0.xml; sourceTree = "<group>"; };
 		8483260618E4412F00EDCB59 /* AnimatedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedSprite.h; sourceTree = "<group>"; };
 		8483260718E441E500EDCB59 /* AnimatedSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedSprite.cpp; sourceTree = "<group>"; };
+		848881DC19541D0100B03B31 /* ingame_dragon_glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ingame_dragon_glow.png; sourceTree = "<group>"; };
 		8489ADA9175C96C1004CCB84 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		848D2FE31859707000EB9257 /* SenarioChooseScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenarioChooseScene.h; sourceTree = "<group>"; };
 		848D2FE41859730A00EB9257 /* SenarioChooseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SenarioChooseScene.cpp; sourceTree = "<group>"; };
@@ -3025,6 +3031,7 @@
 		8444D6B7190779DB00D5AFAC /* animation */ = {
 			isa = PBXGroup;
 			children = (
+				848881DC19541D0100B03B31 /* ingame_dragon_glow.png */,
 				84C66650190DF6C700B981D3 /* raining.png */,
 				842A0F43190A2EB2008B16AF /* soldierAnimationDL.png */,
 				842A0F44190A2EB2008B16AF /* soldierAnimationDR.png */,
@@ -3237,6 +3244,8 @@
 		848D8B00194176610006E14C /* MainMenuScene */ = {
 			isa = PBXGroup;
 			children = (
+				844EAF80195403650084F780 /* back_press.png */,
+				844EAF81195403650084F780 /* back.png */,
 				841ADE4719470A9B00D50463 /* inputBar1.png */,
 				841ADE4919470EF700D50463 /* create_press.png */,
 				841ADE4A19470EF700D50463 /* create.png */,
@@ -3640,6 +3649,7 @@
 				841ADE421947030500D50463 /* trophyscreen.png in Resources */,
 				8459756D19109D560093709B /* objective_scenario_1.xml in Resources */,
 				8435414A19457ED300AFE64B /* button.png in Resources */,
+				848881DD19541D0100B03B31 /* ingame_dragon_glow.png in Resources */,
 				3608CB001704343E00AB65A3 /* FemaleFarmer.plist in Resources */,
 				8444D6BE190779E500D5AFAC /* banditAttackRightUp.png in Resources */,
 				84FC2E821949A389009E4E28 /* DemoSceneEmpty.tmx in Resources */,
@@ -3671,6 +3681,7 @@
 				845A9EDF18F7CAC50074EF77 /* tutorial2.xml in Resources */,
 				84EB32811867FB7A003B5CEB /* senario1_option1.xml in Resources */,
 				367613EC1712AEF400CD354B /* json_valueiterator.inl in Resources */,
+				844EAF83195403650084F780 /* back.png in Resources */,
 				84EF1F5A191778C3002D64D9 /* starvingandstuck.png in Resources */,
 				84F2912918FE51240045F834 /* loading.png in Resources */,
 				36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */,
@@ -3756,6 +3767,7 @@
 				8421158018D2C4DD00A441D0 /* rice_icon.png in Resources */,
 				8436BCF1193C8B1700FC2243 /* warscene.mp3 in Resources */,
 				84F2912118FE307D0045F834 /* timeclock_week2.png in Resources */,
+				844EAF82195403650084F780 /* back_press.png in Resources */,
 				847309CE18DC0A23001869C6 /* peaceicon.png in Resources */,
 				3658DD7518D6F1430056B895 /* Girl.png in Resources */,
 				840813C6193B1E510085EAFC /* in-game_bandit.mp3 in Resources */,

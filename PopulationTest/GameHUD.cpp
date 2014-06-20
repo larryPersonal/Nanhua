@@ -121,11 +121,17 @@ GameHUD::GameHUD()
     characterFrameWidth = 245;
     characterFrameHeight = 225;
     
+    glowingFrameWidth = 220;
+    glowingFrameHeight = 220;
+    
     xOffset = 0;
     yOffset = 0;
     
     characterXOffset = 0;
     characterYOffset = 0;
+    
+    glowingXOffset = 0;
+    glowingYOffset = 0;
     
     x_frameNo = 0;
     x_maxFrameNo = 0;
@@ -133,17 +139,26 @@ GameHUD::GameHUD()
     character_frameNo = 0;
     character_maxFrameNo = 0;
     
+    glowing_frameNo = 0;
+    glowing_maxFrameNo = 0;
+    
     delay_curr = 0;
     delay_animFrame = 0;
     
     character_delay_curr = 0;
     character_delay_animFrame = 0;
     
+    glowing_delay_curr = 0;
+    glowing_delay_animFrame = 0;
+    
     emotionTexture = CCTextureCache::sharedTextureCache()->addImage("Happinessicon.png");
     objectiveButtonTexture = CCTextureCache::sharedTextureCache()->addImage("ingamedragonanim.png");
     objectiveButtonWhiteTexture = CCTextureCache::sharedTextureCache()->addImage("ingamedragonanimwhite.png");
     boyTexture = CCTextureCache::sharedTextureCache()->addImage("igamechar_boy.png");
     girlTexture = CCTextureCache::sharedTextureCache()->addImage("ingame_chargirl.png");
+    objectiveGlowingTexture = CCTextureCache::sharedTextureCache()->addImage("ingame_dragon_glow.png");
+    
+    playObjectiveGlowingEffect = false;
     
     showObjectiveNotification = false;
     
@@ -336,6 +351,31 @@ void GameHUD::update(float deltaTime)
             delay_curr = delay_animFrame;
         }
 
+    }
+    
+    /* play the objective glowing animation */
+    if (playObjectiveGlowingEffect)
+    {
+        if (glowing_delay_curr > 0)
+        {
+            glowing_delay_curr -= deltaTime;
+        }
+        else
+        {
+            glowing_frameNo++;
+            if (glowing_frameNo >= glowing_maxFrameNo)
+            {
+                glowing_frameNo = 0;
+            }
+            
+            glowingXOffset = glowing_frameNo % 8;
+            glowingYOffset = glowing_frameNo / 8;
+            
+            objectiveGlowingRect.setRect(glowingXOffset * glowingFrameWidth, glowingYOffset * glowingFrameHeight, glowingFrameWidth, glowingFrameHeight);
+            objectiveGlowingEffect->setTextureRect(objectiveGlowingRect);
+            
+            glowing_delay_curr = glowing_delay_animFrame;
+        }
     }
     
     /* play the character avatar smile animation */
@@ -1614,6 +1654,13 @@ void GameHUD::createObjectiveMenu()
     objectiveButtonRect = CCRectMake(0, 0,  dragonFrameWidth, dragonFrameHeight);
     objectiveButtonBlueRect = CCRectMake(0, 0, dragonFrameWidth, dragonFrameHeight);
     
+    // create objective glowing effect
+    glowing_frameNo = 0;
+    glowing_maxFrameNo = 16;
+    glowing_delay_animFrame = 0.1f;
+    glowing_delay_curr = 0.1f;
+    objectiveGlowingRect = CCRectMake(0, 0, glowingFrameWidth, glowingFrameHeight);
+    
     //set the thing to the first frame.
     objectiveButton = CCSprite::createWithTexture(objectiveButtonWhiteTexture, objectiveButtonRect);
     
@@ -1629,6 +1676,15 @@ void GameHUD::createObjectiveMenu()
     objectiveButtonBlue->setPosition(ccp(15, screenSize.height -113));
     objectiveButtonBlue->setOpacity((GLubyte) 0);
     this->addChild(objectiveButtonBlue, 8);
+    
+    objectiveGlowingEffect = CCSprite::createWithTexture(objectiveGlowingTexture, objectiveGlowingRect);
+    
+    objectiveGlowingEffect->setAnchorPoint(ccp(0, 1));
+    objectiveGlowingEffect->cocos2d::CCNode::setScale(objectiveButton->boundingBox().size.width / objectiveGlowingEffect->boundingBox().size.width * 0.99f, objectiveButton->boundingBox().size.height / objectiveGlowingEffect->boundingBox().size.height * 0.95f);
+    objectiveGlowingEffect->setPosition(ccp(15, screenSize.height - 113));
+    this->addChild(objectiveGlowingEffect, 9);
+    
+    objectiveGlowingEffect->setVisible(false);
     
     // create the objective title and objective strings!
     stringstream ss;
@@ -1677,11 +1733,18 @@ void GameHUD::scheduleShowNewObjectiveNotification()
     showObjectiveNotification = false;
     objectiveNotificationLabel->setOpacity((GLubyte) 0);
     objectiveNotificationLabel->setPosition(ccp(-100, screenSize.height - 145));
+    
+    playObjectiveGlowingEffect = true;
+    objectiveGlowingEffect->setVisible(true);
+    
     this->schedule(schedule_selector(GameHUD::showNewObjectiveNotification), 1.0f/120.0f);
 }
 
 void GameHUD::scheduleHideNewObjectiveNotification()
 {
+    playObjectiveGlowingEffect = false;
+    objectiveGlowingEffect->setVisible(false);
+    
     if(showObjectiveNotification)
     {
         showObjectiveNotification = false;

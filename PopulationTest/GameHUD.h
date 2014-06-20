@@ -179,6 +179,7 @@ public:
     CCSprite* objectiveMenu;
     CCSprite* objectiveButton;
     CCSprite* objectiveButtonBlue;
+    CCSprite* objectiveGlowingEffect;
     CCLabelTTF* objectiveTime;
     bool hasTimer;
     float targetTime;
@@ -216,6 +217,9 @@ public:
     int characterFrameHeight;
     int characterFrameWidth;
     
+    int glowingFrameHeight;
+    int glowingFrameWidth;
+    
     CCTexture2D* emotionTexture;
     CCRect emotionRect;
     
@@ -229,11 +233,17 @@ public:
     int characterXOffset;
     int characterYOffset;
     
+    int glowingXOffset;
+    int glowingYOffset;
+    
     int x_frameNo;
     int x_maxFrameNo;
     
     int character_frameNo;
     int character_maxFrameNo;
+    
+    int glowing_frameNo;
+    int glowing_maxFrameNo;
     
     float delay_animFrame;
     float delay_curr;
@@ -241,10 +251,15 @@ public:
     float character_delay_animFrame;
     float character_delay_curr;
     
+    float glowing_delay_animFrame;
+    float glowing_delay_curr;
+    
     CCTexture2D* objectiveButtonWhiteTexture;
     CCTexture2D* objectiveButtonTexture;
+    CCTexture2D* objectiveGlowingTexture;
     CCRect objectiveButtonRect;
     CCRect objectiveButtonBlueRect;
+    CCRect objectiveGlowingRect;
     
     bool startWar;
     CCSprite* peaceButton;
@@ -385,6 +400,7 @@ public:
     
     bool playDragonAnimation;
     float playDragonCountDown;
+    bool playObjectiveGlowingEffect;
     
     CCLabelTTF* guardTowerScoreLabel;
     float guardTowerScore;

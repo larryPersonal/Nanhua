@@ -624,6 +624,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
                // scaleCenter = mapHandler->pointOnMapFromTouchLocation(scaleCenter);
                 
                 mapHandler->scaleTo(currScale);
+
                 
             }
             //Map dragging
@@ -1465,7 +1466,7 @@ void GameScene::FirstRunPopulate()
     {
         mapHandler->Populate(buildingHandler->allBuildingLayers);
     }
-    return;
+    
     spriteHandler->initialize();
 
     GameManager::getThis()->initGameData();

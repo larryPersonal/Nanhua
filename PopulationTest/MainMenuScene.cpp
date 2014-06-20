@@ -274,17 +274,13 @@ bool MainMenuScene::init()
     createAccountButton->setPosition(ccp(100.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
     
     // back button
-    backButton = CCMenuItemImage::create("create.png", "create_press.png", this, menu_selector(MainMenuScene::clickBackButton));
+    backButton = CCMenuItemImage::create("back.png", "back_press.png", this, menu_selector(MainMenuScene::clickBackButton));
     backButton->setScale(0.3f);
     backButton->setAnchorPoint(ccp(0, 1));
     backButton->setPosition(ccp(250.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
     
     signupMenu = CCMenu::create(createAccountButton, backButton, NULL);
     this->addChild(signupMenu, 9);
-    
-    
-    
-    
     
     // login background -> the window
     loginBackground = CCSprite::create("trophyscreen.png");

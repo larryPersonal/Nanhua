@@ -196,145 +196,115 @@ CCTMXTiledMap* MapHandler::getMap()
 void MapHandler::scaleTo(float scaleFactor)
 {
     scalePanLayer->setScale(scaleFactor);
+    moveMapBy(0, 0);
     rescaleScrollLimits();
-    
+}
+
+bool MapHandler::checkPoint(CCPoint newPos, CCPoint oriPos)
+{
+    if(newPos.x <= 2 || newPos.x >= mapPtr->getMapSize().width - 3 || newPos.y <= 2 || newPos.y >= mapPtr->getMapSize().height - 3){
+        CCPoint targetPos = CCPointZero;
+        if(newPos.x <= 2 && newPos.y <= 2)
+        {
+            targetPos = ccp(3, 3);
+        }
+        else if(newPos.x <= 2 && newPos.y >= mapPtr->getMapSize().height - 3)
+        {
+            targetPos = ccp(3, mapPtr->getMapSize().height - 4);
+        }
+        else if(newPos.y >= mapPtr->getMapSize().height - 3 && newPos.x >= mapPtr->getMapSize().width - 3)
+        {
+            targetPos = ccp(mapPtr->getMapSize().width - 4, mapPtr->getMapSize().height - 4);
+        }
+        else if(newPos.y <= 2 && newPos.x >= mapPtr->getMapSize().width - 3)
+        {
+            targetPos = ccp(mapPtr->getMapSize().width - 4, 3);
+        }
+        else if(newPos.x <= 2)
+        {
+            targetPos = ccp(3, newPos.y);
+        }
+        else if(newPos.x >= mapPtr->getMapSize().width - 3)
+        {
+            targetPos = ccp(mapPtr->getMapSize().width - 4, newPos.y);
+        }
+        else if(newPos.y <= 2)
+        {
+            targetPos = ccp(newPos.x, 3);
+        }
+        else
+        {
+            targetPos = ccp(newPos.x, mapPtr->getMapSize().height - 4);
+        }
+        
+        if(GameScene::getThis()->isInDeccelerating)
+        {
+            GameScene::getThis()->isInDeccelerating = false;
+            GameScene::getThis()->unschedule(schedule_selector(GameScene::decceleratingDragging));
+        }
+        
+        //mapPtr->setPosition(oriPos);
+        moveToPosition(targetPos, newPos);
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool MapHandler::checkExtremePosition(float moveX, float moveY)
+{
+    CCPoint mapPos = mapPtr->getPosition();
+    return true;
 }
 
 void MapHandler::moveMapBy(float moveX, float moveY)
 {
-    CCLog("********************************************");
-    CCLog("previous position: (%f, %f)", mapPtr->getPosition().x, mapPtr->getPosition().y);
+    //mapPtr moves. ScalePanLayer scales.
+    CCPoint mapPos = mapPtr->getPosition();
     
-    //mapPtr moves. ScalePanLayer scales. 
     CCPoint pos =CCPointMake(
-                mapPtr->getPosition().x + moveX,
-                mapPtr->getPosition().y + moveY
+                             mapPtr->getPosition().x + moveX,
+                             mapPtr->getPosition().y + moveY
                              );
-    
-    CCLog("current position: (%f, %f)", pos.x, pos.y);
     
     if (GameScene::getThis() != NULL){
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         
         CCPoint nTouch = ccp(0, 0);
         CCPoint nPos = tilePosFromTouchLocation(nTouch);
-        CCLog("Bottom-left point is : (%f, %f)", nPos.x, nPos.y);
         
-        if(nPos.x <= 1 || nPos.x >= mapPtr->getMapSize().width - 1 || nPos.y <= 1 || nPos.y >= mapPtr->getMapSize().height - 1){
-            CCPoint targetPos = CCPointZero;
-            if(nPos.x <= 1)
-            {
-                targetPos = ccp(2, nPos.y);
-            }
-            else if(nPos.x >= mapPtr->getMapSize().width)
-            {
-                targetPos = ccp(mapPtr->getMapSize().width - 2, nPos.y);
-            }
-            else if(nPos.y <= 1)
-            {
-                targetPos = ccp(nPos.x, 2);
-            }
-            else
-            {
-                targetPos = ccp(nPos.x, mapPtr->getMapSize().height - 2);
-            }
-            
-            mapPtr->setPosition(pos);
-            moveToPosition(targetPos, nPos);
-            
+        if(checkPoint(nPos, mapPos))
+        {
             return;
         }
         
         nTouch = ccp(0, screenSize.height);
         nPos = tilePosFromTouchLocation(nTouch);
-        CCLog("Top-left point is : (%f, %f)", nPos.x, nPos.y);
         
-        if(nPos.x <= 1 || nPos.x >= mapPtr->getMapSize().width - 1 || nPos.y <= 1 || nPos.y >= mapPtr->getMapSize().height - 1){
-            CCPoint targetPos = CCPointZero;
-            if(nPos.x <= 1)
-            {
-                CCLog("test1");
-                targetPos = ccp(2, nPos.y);
-            }
-            else if(nPos.x >= mapPtr->getMapSize().width)
-            {
-                CCLog("test2");
-                targetPos = ccp(mapPtr->getMapSize().width - 2, nPos.y);
-            }
-            else if(nPos.y <= 1)
-            {
-                CCLog("test3");
-                targetPos = ccp(nPos.x, 2);
-            }
-            else
-            {
-                CCLog("test4");
-                targetPos = ccp(nPos.x, mapPtr->getMapSize().height - 2);
-            }
-            
-            mapPtr->setPosition(pos);
-            moveToPosition(targetPos, nPos);
+        if(checkPoint(nPos, mapPos))
+        {
             return;
         }
         
         nTouch = ccp(screenSize.width, screenSize.height);
         nPos = tilePosFromTouchLocation(nTouch);
-        CCLog("Top-right point is : (%f, %f)", nPos.x, nPos.y);
         
-        if(nPos.x <= 1 || nPos.x >= mapPtr->getMapSize().width - 1 || nPos.y <= 1 || nPos.y >= mapPtr->getMapSize().height - 1){
-            CCPoint targetPos = CCPointZero;
-            if(nPos.x <= 1)
-            {
-                targetPos = ccp(2, nPos.y);
-            }
-            else if(nPos.x >= mapPtr->getMapSize().width)
-            {
-                targetPos = ccp(mapPtr->getMapSize().width - 2, nPos.y);
-            }
-            else if(nPos.y <= 1)
-            {
-                targetPos = ccp(nPos.x, 2);
-            }
-            else
-            {
-                targetPos = ccp(nPos.x, mapPtr->getMapSize().height - 2);
-            }
-            
-            mapPtr->setPosition(pos);
-            moveToPosition(targetPos, nPos);
+        if(checkPoint(nPos, mapPos))
+        {
             return;
         }
         
         nTouch = ccp(screenSize.width, 0);
         nPos = tilePosFromTouchLocation(nTouch);
-        CCLog("Bottom-right point is : (%f, %f)", nPos.x, nPos.y);
         
-        if(nPos.x <= 1 || nPos.x >= mapPtr->getMapSize().width - 1 || nPos.y <= 1 || nPos.y >= mapPtr->getMapSize().height - 1){
-            CCPoint targetPos = CCPointZero;
-            if(nPos.x <= 1)
-            {
-                targetPos = ccp(2, nPos.y);
-            }
-            else if(nPos.x > mapPtr->getMapSize().width - 2)
-            {
-                targetPos = ccp(mapPtr->getMapSize().width, nPos.y);
-            }
-            else if(nPos.y <= 1)
-            {
-                targetPos = ccp(nPos.x, 2);
-            }
-            else
-            {
-                targetPos = ccp(nPos.x, mapPtr->getMapSize().height - 2);
-            }
-            
-            mapPtr->setPosition(pos);
-            moveToPosition(targetPos, nPos);
+        if(checkPoint(nPos, mapPos))
+        {
             return;
         }
     }
-    
-    CCLog("*********************************************");
     
     // mapPtr->setPosition(forceBoundsConstraints(pos));
     mapPtr->setPosition(pos);
@@ -352,7 +322,8 @@ void MapHandler::moveToPosition(CCPoint target, CCPoint current)
     float xDiff = targetPos.x - currentPos.x;
     float yDiff = targetPos.y - currentPos.y;
     
-    moveMapBy(-xDiff, -yDiff);
+    mapPtr->setPosition(mapPtr->getPositionX() - xDiff, mapPtr->getPositionY() - yDiff);
+    //moveMapBy(-xDiff, -yDiff);
 }
 
 void MapHandler::centerMap()
@@ -460,17 +431,10 @@ void MapHandler::rescaleScrollLimits()
     if (mapPtr == NULL){
         return;
     }
-    // CCLog("****************************************************");
-    // CCLog("Tile size is (%f, %f)", mapPtr->getTileSize().width, mapPtr->getTileSize().height);
     
     // center map first! Or it will take the wrong position values.
-    int centerW = 32; //mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
-    int centerH = 32; //mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
-    
-    // CCLog("Map centre is (%d, %d)", centerW, centerW);
-    
-    // CCLog("Map size is (%f, %f)", mapPtr->getMapSize().width, mapPtr->getMapSize().height);
-    // CCLog("****************************************************");
+    int centerW = mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
+    int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
     
     CCPoint mapPos = mapPtr->getPosition();
     

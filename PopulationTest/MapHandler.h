@@ -135,6 +135,8 @@ public:
     CCPoint getNearestNoneBuildingTile(CCPoint sourcePos);
     
     void moveToPosition(CCPoint target, CCPoint current);
+    bool checkPoint(CCPoint newPosition, CCPoint originalPosition);
+    bool checkExtremePosition(float moveX, float moveY);
 };
 
 
