@@ -3116,7 +3116,7 @@ void GameSprite::checkDropRate()
 
 bool GameSprite::escape()
 {
-    CCPoint target = CCPointMake(29,33);
+    CCPoint target = CCPointMake(39,60);
     if(!GoLocation(target))
     {
         isLeavingNextUpdate = true;

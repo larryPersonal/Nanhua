@@ -48,7 +48,7 @@ void BanditsAttackHandler::update(float dt)
 }
 
 void BanditsAttackHandler::addBandit(){
-    CCPoint target = CCPointMake(29,33);
+    CCPoint target = CCPointMake(39,60);
     
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_BANDIT);
 

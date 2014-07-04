@@ -16,7 +16,7 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 enum Mode {
-    login, signup, chooseCharacter, mainPage
+    login, signup, chooseCharacter, mainPage, teacher
 };
 
 class MainMenuScene : public cocos2d::CCLayer
@@ -208,6 +208,10 @@ public:
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(MainMenuScene);
+    
+public:
+    bool checkIsTeacherLogin(std::string username, std::string password);
+    void showTeacherScreen();
 };
 
 #endif /* defined(__PopulationTest__MainMenuScene__) */

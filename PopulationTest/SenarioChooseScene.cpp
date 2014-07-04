@@ -62,6 +62,8 @@ bool SenarioChooseScene::init()
     CCRect boxrect = CCRectMake(0,0, screenSize.width * 0.8f,  screenSize.width * 0.2f);
     CCRect exitrect = CCRectMake(0,0, screenSize.width * 0.15f, screenSize.width * 0.15f);
     
+    CCRect loadButtonRect = CCRectMake(0, 0, screenSize.width * 0.25f, screenSize.width * 0.15f);
+    
     
     backgroundImage = CCSprite::createWithSpriteFrameName("screenlevelselect_v2.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
@@ -94,6 +96,10 @@ bool SenarioChooseScene::init()
     CCSprite* backButton = CCSprite::createWithSpriteFrameName("back_icon.png");
     senarioButtonS6 = CCMenuItemSprite::create(backButton, backButton, this, menu_selector(SenarioChooseScene::chooseSenario6));
     senarioButtonS6->setContentSize(exitrect.size);
+    
+    loadGameButton = CCMenuItemImage::create("loadGameBtn.jpg", "loadGameBtn.jpg", this, menu_selector(SenarioChooseScene::chooseLoadGame));
+    loadGameButton->setContentSize(loadButtonRect.size);
+    loadGameButton->setAnchorPoint(ccp(0, 0.5f));
     
     CCLabelTTF* tutorialLabel = CCLabelTTF::create("Tutorial", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter,kCCVerticalTextAlignmentCenter);
     // tutorialLabel->setAnchorPoint(ccp(0.5f, 0.5));
@@ -148,6 +154,8 @@ bool SenarioChooseScene::init()
         senarioButtonS4->setScale(0.4);
         senarioButtonS5->setScale(0.4);
         senarioButtonS6->setScale(0.4);
+        
+        loadGameButton->setScale(0.4);
     } else {
    //     background
         senarioButtonTutorial->setScale(0.8);
@@ -157,6 +165,8 @@ bool SenarioChooseScene::init()
         senarioButtonS4->setScale(0.8);
         senarioButtonS5->setScale(0.8);
         senarioButtonS6->setScale(0.8);
+        
+        loadGameButton->setScale(0.8);
     }
     //onOrientateChange();
     
@@ -169,7 +179,9 @@ bool SenarioChooseScene::init()
     senarioButtonS5->setPosition(ccp(screenSize.width * 0.672, screenSize.height * 0.262));
     senarioButtonS6->setPosition(ccp(screenSize.width * 0.95, screenSize.height * 0.05));
     
-    senarioChooseSceneMenu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, NULL);
+    loadGameButton->setPosition(ccp(screenSize.width * 0.035f, screenSize.height * 0.05f));
+    
+    senarioChooseSceneMenu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, loadGameButton, NULL);
     senarioChooseSceneMenu->setPosition( CCPointZero );
     this->addChild(senarioChooseSceneMenu, 1);
     this->addChild(backgroundImage, 0);
@@ -195,6 +207,10 @@ bool SenarioChooseScene::init()
 
 void SenarioChooseScene::chooseTutorial()
 {
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
@@ -218,6 +234,11 @@ void SenarioChooseScene::chooseSenario1()
     {
         return;
     }
+    
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario1), 0.1f);
@@ -241,6 +262,11 @@ void SenarioChooseScene::chooseSenario2()
     {
         return;
     }
+    
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario2), 0.1f);
@@ -260,6 +286,11 @@ void SenarioChooseScene::chooseSenario3()
     {
         return;
     }
+    
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
@@ -274,6 +305,11 @@ void SenarioChooseScene::chooseSenario4()
     {
         return;
     }
+    
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
@@ -288,6 +324,11 @@ void SenarioChooseScene::chooseSenario5()
     {
         return;
     }
+    
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
 }
 
@@ -334,4 +375,28 @@ void SenarioChooseScene::preloadTextures()
     CCSpriteBatchNode* mainMenuSceneNode = CCSpriteBatchNode::create("LevelSelectSceneSpriteSheet.png");
     this->addChild(mainMenuSceneNode);
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("LevelSelectSceneSpriteSheet.plist");
+}
+
+void SenarioChooseScene::chooseLoadGame()
+{
+    SoundtrackManager::PlaySFX("Button_press.wav");
+    
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+    
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
+}
+
+void SenarioChooseScene::loadingLoadGame()
+{
+    // update the level number in the Game Manager, if loading game fails, it will auto direct the game to tutorial
+    GameManager::getThis()->setLevel(0);
+    
+    // load the actual game scene
+    GlobalHelper::clearCache();
+    GlobalHelper::clearPreloadedTexture();
+    
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }

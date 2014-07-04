@@ -109,7 +109,7 @@ void MapHandler::setupTiles()
     if (!mapPtr) return;
     
     CCTMXLayer* groundzero = mapPtr->layerNamed("Ground_0");
-  
+    
     mapTiles = CCArray::create();
     
       for (int i = 0; i < mapPtr->getMapSize().height; ++i)
@@ -200,6 +200,7 @@ void MapHandler::scaleTo(float scaleFactor)
     rescaleScrollLimits();
 }
 
+/*
 bool MapHandler::checkPoint(CCPoint newPos, CCPoint oriPos)
 {
     if(newPos.x <= 2 || newPos.x >= mapPtr->getMapSize().width - 3 || newPos.y <= 2 || newPos.y >= mapPtr->getMapSize().height - 3){
@@ -253,6 +254,118 @@ bool MapHandler::checkPoint(CCPoint newPos, CCPoint oriPos)
         return false;
     }
 }
+*/
+
+/* type indicate which screen point is used for checking
+ * the equation for checking the corner points are based on the map implementation! (so if map has been changed, change the checking equation accordingly
+ * 0 -> left bottom corner of the screen, checking equation: y = -0.5x + 2208, check above the checking line
+ * 1 -> left top corner of the screen, checking eqaution: y = 0.5x + 1696, check below the checking line
+ * 2 -> right top corner of the screen, checking equation: y = -0.5x + 5984, check below the checking line
+ * 3 -> right bottom corner of the screen, checking equation: y = 0.5x - 2528, check above the checking line
+ */
+bool MapHandler::checkPoint(CCPoint newCornerPos, int type, float moveX, float moveY)
+{
+    switch (type)
+    {
+        // left bottom corner, check above line
+        case 0:
+        {
+            float expectedY = -0.5 * newCornerPos.x + 2208.0f;
+            if (newCornerPos.y >= expectedY)
+            {
+                return true;
+            }
+            /*
+            else
+            {
+                // the new corner position is not in boundary, calculate the correct position of the corner point
+                float newMoveY = newCornerPos.y + moveY - expectedY;
+                CCPoint newPos = CCPointMake(
+                                             mapPtr->getPosition().x + moveX,
+                                             mapPtr->getPosition().y + newMoveY
+                                             );
+                mapPtr->setPosition(newPos);
+            }
+             */
+            
+        }
+            break;
+        // left top corner, check below line
+        case 1:
+        {
+            float expectedY = 0.5 * newCornerPos.x + 1632.0f;
+            if (newCornerPos.y <= expectedY) // (moveX >= 0 && moveY <= 0) || (moveX >= 0 && moveY >= 0 && moveX / moveY >= 0.5f) || (moveX <= 0 && moveY <= 0 && moveX / moveY <= 0.5))
+            {
+                return true;
+            }
+            /*
+            else
+            {
+                float newMoveY = newCornerPos.y + moveY - expectedY;
+                CCPoint newPos = CCPointMake(
+                                             mapPtr->getPosition().x + moveX,
+                                             mapPtr->getPosition().y + newMoveY
+                                             );
+                mapPtr->setPosition(newPos);
+            }
+             */
+        }
+            break;
+        // right top corner, check below line
+        case 2:
+        {
+            float expectedY = -0.5 * newCornerPos.x + 5984.0f;
+            if (newCornerPos.y <= expectedY)
+            {
+                return true;
+            }
+            /*
+            else
+            {
+                float newMoveY = newCornerPos.y + moveY - expectedY;
+                CCPoint newPos = CCPointMake(
+                                             mapPtr->getPosition().x + moveX,
+                                             mapPtr->getPosition().y + newMoveY
+                                             );
+                mapPtr->setPosition(newPos);
+            }
+             */
+        }
+            break;
+        // right bottom corner, check above line
+        case 3:
+        {
+            float expectedY = 0.5 * newCornerPos.x - 2528.0f;
+            if (newCornerPos.y >= expectedY) //|| (moveX <= 0 && moveY >= 0) || (moveX >= 0 && moveY >= 0 && moveX / moveY <= 0.5f) || (moveX <= 0 && moveY <= 0 && moveX / moveY >= 0.5f))
+            {
+                return true;
+            }
+            /*
+            else
+            {
+                float newMoveY = newCornerPos.y + moveY - expectedY;
+                CCPoint newPos = CCPointMake(
+                                             mapPtr->getPosition().x + moveX,
+                                             mapPtr->getPosition().y + newMoveY
+                                             );
+                mapPtr->setPosition(newPos);
+            }
+            */
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
+    if(GameScene::getThis()->isInDeccelerating)
+    {
+        GameScene::getThis()->isInDeccelerating = false;
+        GameScene::getThis()->unschedule(schedule_selector(GameScene::decceleratingDragging));
+    }
+    
+    return false;
+}
 
 bool MapHandler::checkExtremePosition(float moveX, float moveY)
 {
@@ -265,49 +378,76 @@ void MapHandler::moveMapBy(float moveX, float moveY)
     //mapPtr moves. ScalePanLayer scales.
     CCPoint mapPos = mapPtr->getPosition();
     
-    CCPoint pos =CCPointMake(
+    // the new map position, it will be used only the screen points pass the valilidity check!
+    CCPoint newPos =CCPointMake(
                              mapPtr->getPosition().x + moveX,
                              mapPtr->getPosition().y + moveY
                              );
     
+    /*
     if (GameScene::getThis() != NULL){
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         
+        // left bottom corner of the screen
         CCPoint nTouch = ccp(0, 0);
-        CCPoint nPos = tilePosFromTouchLocation(nTouch);
+        CCPoint cornerPos = tilePosFromTouchLocation(nTouch);
+        CCPoint cornerPosition = locationFromTilePos(&cornerPos);
+        CCPoint newCornerPos = CCPointMake(
+                                        cornerPosition.x - moveX,
+                                        cornerPosition.y - moveY
+        );
         
-        if(checkPoint(nPos, mapPos))
+        if(!checkPoint(newCornerPos, 0, -moveX, -moveY))
         {
             return;
         }
         
+        // left top corner of the screen
         nTouch = ccp(0, screenSize.height);
-        nPos = tilePosFromTouchLocation(nTouch);
+        cornerPos = tilePosFromTouchLocation(nTouch);
+        cornerPosition = locationFromTilePos(&cornerPos);
+        newCornerPos = CCPointMake(
+                                cornerPosition.x - moveX,
+                                cornerPosition.y - moveY
+        );
         
-        if(checkPoint(nPos, mapPos))
+        if(!checkPoint(newCornerPos, 1, -moveX, -moveY))
         {
             return;
         }
         
+        // right top corner of the screen
         nTouch = ccp(screenSize.width, screenSize.height);
-        nPos = tilePosFromTouchLocation(nTouch);
+        cornerPos = tilePosFromTouchLocation(nTouch);
+        cornerPosition = locationFromTilePos(&cornerPos);
+        newCornerPos = CCPointMake(
+                                cornerPosition.x - moveX,
+                                cornerPosition.y - moveY
+        );
         
-        if(checkPoint(nPos, mapPos))
+        if(!checkPoint(newCornerPos, 2, -moveX, -moveY))
         {
             return;
         }
         
+        // right bottom corner of the screen
         nTouch = ccp(screenSize.width, 0);
-        nPos = tilePosFromTouchLocation(nTouch);
+        cornerPos = tilePosFromTouchLocation(nTouch);
+        cornerPosition = locationFromTilePos(&cornerPos);
+        newCornerPos = CCPointMake(
+                                cornerPosition.x - moveX,
+                                cornerPosition.y - moveY
+        );
         
-        if(checkPoint(nPos, mapPos))
+        if(!checkPoint(newCornerPos, 3, -moveX, -moveY))
         {
             return;
         }
     }
+    */
     
-    // mapPtr->setPosition(forceBoundsConstraints(pos));
-    mapPtr->setPosition(pos);
+    //mapPtr->setPosition(forceBoundsConstraints(newPos));
+    mapPtr->setPosition(forceBounds(newPos));
     
     // CCLog("%f, %f",mapPtr->getPosition().x, mapPtr->getPosition().y );
     // scalePanLayer->setPosition(forceBoundsConstraints(pos));
@@ -457,6 +597,21 @@ CCPoint MapHandler::forceBoundsConstraints(CCPoint &tilePos)
 	tilePos.y = MAX(mapScroll_min.y, tilePos.y);
 	    
 	return tilePos;
+}
+
+CCPoint MapHandler::forceBounds(CCPoint &tilePos)
+{
+    CCPoint maxBounds = ccp(-3000, -1700);
+    CCPoint minBounds = ccp(-7000, -3600);
+    
+    tilePos.x = MIN(maxBounds.x, tilePos.x);
+	tilePos.x = MAX(minBounds.x, tilePos.x);
+	tilePos.y = MIN(maxBounds.y, tilePos.y);
+	tilePos.y = MAX(minBounds.y, tilePos.y);
+    
+    // CCLog("map position is (%f, %f)", tilePos.x, tilePos.y);
+    
+    return tilePos;
 }
 
 CCPoint MapHandler::pointOnMapFromTouchLocation(cocos2d::CCPoint &location)

@@ -664,7 +664,7 @@ void Senario::clearScenario()
 void Senario::activateRefugee(float dt)
 {
     cumulativeTime += dt;
-    CCPoint target = CCPointMake(29,33);
+    CCPoint target = CCPointMake(39,60);
     if(cumulativeTime >= lastTime + 1)
     {
         GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);

@@ -30,7 +30,7 @@ struct SystemConfig
     
     SystemConfig()
     {
-        skipSenario_tutorial = false;
+        skipSenario_tutorial = true;
         skipTutorial_tutorial = false;
         
         skipSenario_level1 = false;

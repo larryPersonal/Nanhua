@@ -121,8 +121,8 @@ GameHUD::GameHUD()
     characterFrameWidth = 245;
     characterFrameHeight = 225;
     
-    glowingFrameWidth = 220;
-    glowingFrameHeight = 220;
+    glowingFrameWidth = 219;
+    glowingFrameHeight = 229;
     
     xOffset = 0;
     yOffset = 0;
@@ -1680,7 +1680,7 @@ void GameHUD::createObjectiveMenu()
     objectiveGlowingEffect = CCSprite::createWithTexture(objectiveGlowingTexture, objectiveGlowingRect);
     
     objectiveGlowingEffect->setAnchorPoint(ccp(0, 1));
-    objectiveGlowingEffect->cocos2d::CCNode::setScale(objectiveButton->boundingBox().size.width / objectiveGlowingEffect->boundingBox().size.width * 0.99f, objectiveButton->boundingBox().size.height / objectiveGlowingEffect->boundingBox().size.height * 0.95f);
+    objectiveGlowingEffect->cocos2d::CCNode::setScale(objectiveButton->boundingBox().size.width / objectiveGlowingEffect->boundingBox().size.width * 0.99f, objectiveButton->boundingBox().size.height / objectiveGlowingEffect->boundingBox().size.height * 0.97f);
     objectiveGlowingEffect->setPosition(ccp(15, screenSize.height - 113));
     this->addChild(objectiveGlowingEffect, 9);
     
@@ -1964,7 +1964,7 @@ void GameHUD::clickBuildButton()
 }
 
 void GameHUD::addPopulation(){
-    CCPoint target = CCPointMake(29,33);
+    CCPoint target = CCPointMake(39,60);
     
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);
     

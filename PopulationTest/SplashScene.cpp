@@ -81,6 +81,16 @@ bool SplashScene::init()
     
     new GameManager();
     
+    // set the teacher management account
+    stringstream ss;
+    ss << "UserManagement_Account";
+    
+    CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), "nanhua");
+    
+    ss.str(std::string());
+    ss << "UserManagement_Password";
+    CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), "nanhua");
+    
     return true;
 }
 

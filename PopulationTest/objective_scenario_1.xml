@@ -8,8 +8,8 @@
     <tittle>Governor</title>
     <content>Try to raise your village in 15 minutes!</content>
     <next>2</next>
-    <time>200</time>
-    <scenario>100</scenario>
+    <time>15</time>
+    <scenario>3</scenario>
     <finalObjective></finalObjective>
 </objective>
 

@@ -153,7 +153,7 @@ public:
     void saveBuildingData();
     void saveSystemData();
     
-    void loadData();
+    bool loadData();
     void loadSystemData();
     void loadBuildingData();
     void loadSpritesData();

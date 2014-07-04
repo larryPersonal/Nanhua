@@ -94,13 +94,13 @@ Building::Building()
     fishAnimationFrameWidth = 64;
     fishAnimationFrameHeight = 64;
     
-    fishAnimationArea = CCRect(-100, -100, 200, 200);
+    fishAnimationArea = CCRect(220, -120, 480, 230);
     fishAnimationCheckTime = 0;
-    fishAnimationCheckTimeMax = 2;
-    fishAnimationCheckTimeMin = 1;
+    fishAnimationCheckTimeMax = 2; //2
+    fishAnimationCheckTimeMin = 1; //1
     fishAnimationCumulativeTime = 0;
     
-    fishAnimationRate = 50;
+    fishAnimationRate = 50; // 50
     
     isInAnimation = false;
     

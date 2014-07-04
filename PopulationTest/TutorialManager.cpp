@@ -270,7 +270,7 @@ void TutorialManager::scheduleVillagers(float dt)
     if(cumulativeTime >= 1.0f)
     {
         cumulativeTime = 0;
-        CCPoint location = CCPointMake(29, 33);
+        CCPoint location = CCPointMake(39, 60);
         GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
         villagersToBeAdded--;
     }

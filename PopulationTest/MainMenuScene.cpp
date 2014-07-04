@@ -389,8 +389,8 @@ bool MainMenuScene::init()
     }
     else
     {
-        // mode = login;
-        mode = mainPage;
+        mode = login;
+        // mode = mainPage;
     }
     
     configMode();
@@ -529,6 +529,27 @@ void MainMenuScene::configMode()
         
         warningBackground->setVisible(false);
     }
+    else if(mode == teacher)
+    {
+        loginModuleTitle->setVisible(false);
+        
+        loginMenu->setVisible(false);
+        signupMenu->setVisible(false);
+        
+        usernameBox->setVisible(false);
+        passwordBox->setVisible(false);
+        
+        usernameBoxLabel->setVisible(false);
+        passwordBoxLabel->setVisible(false);
+        
+        buttonStart->setVisible(false);
+        buttonOptions->setVisible(false);
+        
+        boyHead->setVisible(false);
+        girlHead->setVisible(false);
+        
+        warningBackground->setVisible(false);
+    }
 }
 
 void MainMenuScene::clickLoginButton()
@@ -542,40 +563,70 @@ void MainMenuScene::clickLoginButton()
     string username = usernameBox->getText();
     string password = passwordBox->getText();
     
-    string key = username + "_password";
-    string expectedPassword = CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str());
-    
-    SoundtrackManager::PlaySFX("Button_press.wav");
-    
-    if(password.length() <= 0 || expectedPassword.length() <= 0)
+    if(checkIsTeacherLogin(username, password))
     {
-        warningDescription->setString("Either username or password does not match!");
-        openWarningScreen();
+        // go to teacher management page
+        mode = teacher;
+        configMode();
+        showTeacherScreen();
     }
     else
     {
-        if(password.compare(expectedPassword) == 0)
-        {
-            // login successful
-            GameManager::getThis()->username = username;
-            GameManager::getThis()->password = password;
-            
-            string key = username + "_gender";
-            bool isBoy = CCUserDefault::sharedUserDefault()->getBoolForKey(key.c_str());
-            GameManager::getThis()->gender = isBoy;
-            GameManager::getThis()->isLoggedIn = true;
-            
-            CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("newsplashpage1.png");
-            backgroundImage->setTexture(tex);
-            
-            mode = mainPage;
-            configMode();
-        }
-        else
+        string key = username + "_password";
+        string expectedPassword = CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str());
+        
+        SoundtrackManager::PlaySFX("Button_press.wav");
+        
+        if(password.length() <= 0 || expectedPassword.length() <= 0)
         {
             warningDescription->setString("Either username or password does not match!");
             openWarningScreen();
         }
+        else
+        {
+            if(password.compare(expectedPassword) == 0)
+            {
+                // login successful
+                GameManager::getThis()->username = username;
+                GameManager::getThis()->password = password;
+                
+                string key = username + "_gender";
+                bool isBoy = CCUserDefault::sharedUserDefault()->getBoolForKey(key.c_str());
+                GameManager::getThis()->gender = isBoy;
+                GameManager::getThis()->isLoggedIn = true;
+                
+                CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("newsplashpage1.png");
+                backgroundImage->setTexture(tex);
+                
+                mode = mainPage;
+                configMode();
+            }
+            else
+            {
+                warningDescription->setString("Either username or password does not match!");
+                openWarningScreen();
+            }
+        }
+    }
+}
+
+bool MainMenuScene::checkIsTeacherLogin(string username, string password)
+{
+    stringstream ss;
+    ss << "UserManagement_Account";
+    std::string stored_username = CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "UserManagement_Password";
+    std::string stored_password = CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str());
+    
+    if(username.compare(stored_username) == 0 && password.compare(stored_password) == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
@@ -828,9 +879,23 @@ void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     totalScoreLabel->setString(ss.str().c_str());
 }
 
+void MainMenuScene::showTeacherScreen()
+{
+    stringstream ss;
+    ss << "User Management";
+    usernameLabel->setString(ss.str().c_str());
+    
+    tutorialScoreLabel->setString("");
+    level1ScoreLabel->setString("");
+    level2ScoreLabel->setString("");
+    totalScoreLabel->setString("");
+    
+    scheduleScoreScreenJumpIn();
+}
+
 void MainMenuScene::onButtonExitPressed(CCObject* pSender)
 {
-    if (highScoreScreen->isVisible() || loginBackground->isVisible())
+    if (highScoreScreen->isVisible() || loginBackground->isVisible() || mode == teacher)
     {
         return;
     }

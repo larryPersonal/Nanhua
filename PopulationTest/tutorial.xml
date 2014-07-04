@@ -3,7 +3,7 @@
 <tutorial>
     <slide>
         <speech>Hello! My name is Xiao Long - nice to meet you. I will be your guide and assist you in rebuilding your village.</speech>
-        <cameraMove>4544,2176</cameraMove>
+        <cameraMove>5120,3008</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
         <lock>
@@ -35,7 +35,7 @@
     </slide>
     <slide>
         <speech>Look! Two refugees have just arrived at the city gates.</speech>
-        <cameraMove>4128, 1800</cameraMove>
+        <cameraMove>4400,2500</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
         <addVillager>2</addVillager>
@@ -48,7 +48,7 @@
     </slide>
     <slide>
         <speech>They are most likely villagers displaced by the war. You will have to provide them with food and shelter if you want them to remain in your village.</speech>
-        <cameraMove>4352,2272</cameraMove>
+        <cameraMove>4800,3168</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
     </slide>
@@ -114,7 +114,7 @@
             <scroll></scroll>
         </lock>
         <hideObjective></hideObjective>
-        <cameraMove>4352,2272</cameraMove>
+        <cameraMove>4800,3168</cameraMove>
         <highlight>housing</highlight>
         <lockClick></lockClick>
         <clickToNext></clickToNext>
@@ -125,7 +125,7 @@
     </slide>
     <slide>
         <speech>The refugees appear to have settled in nicely, but now they are hungry! Luckily, we also have a granary ready.</speech>
-        <cameraMove>4928,1984</cameraMove>
+        <cameraMove>5504,2816</cameraMove>
         <deHighlight></deHighlight>
         <highlight>granary</highlight>
         <clickToNext></clickToNext>
@@ -338,7 +338,7 @@
     </slide>
     <slide>
         <speech>Look! More refugees have arrived. Let us get to work on expanding the village.</speech>
-        <cameraMove>4128,1800</cameraMove>
+        <cameraMove>4400,2500</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
         <addVillager>1</addVillager>

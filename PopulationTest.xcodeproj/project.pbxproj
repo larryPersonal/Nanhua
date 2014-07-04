@@ -392,6 +392,7 @@
 		841ADE4E19470EF700D50463 /* create.png in Resources */ = {isa = PBXBuildFile; fileRef = 841ADE4A19470EF700D50463 /* create.png */; };
 		841ADE4F19470EF700D50463 /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 841ADE4B19470EF700D50463 /* login.png */; };
 		841ADE5019470EF700D50463 /* login_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 841ADE4C19470EF700D50463 /* login_press.png */; };
+		841B4884195AB09F00ADEBDF /* DemoScene1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 841B4883195AB09F00ADEBDF /* DemoScene1.tmx */; };
 		841D0366190FC4E300E34ACB /* tutorial.xml in Resources */ = {isa = PBXBuildFile; fileRef = 841D0365190FC4E300E34ACB /* tutorial.xml */; };
 		841F1F121936FD79004C4C04 /* tutorialBandits.xml in Resources */ = {isa = PBXBuildFile; fileRef = 841F1F111936FD79004C4C04 /* tutorialBandits.xml */; };
 		8421158018D2C4DD00A441D0 /* rice_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8421156318D2C4DD00A441D0 /* rice_icon.png */; };
@@ -459,6 +460,7 @@
 		8444D6BF190779E500D5AFAC /* banditAttackLeftUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8444D6BB190779E500D5AFAC /* banditAttackLeftUp.png */; };
 		8444D6C21907A67F00D5AFAC /* BattleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8444D6C11907A67F00D5AFAC /* BattleManager.cpp */; };
 		8444D6C51907A76000D5AFAC /* BattlePair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8444D6C41907A76000D5AFAC /* BattlePair.cpp */; };
+		8447A33A196666E600D49014 /* loadGameBtn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8447A339196666E600D49014 /* loadGameBtn.jpg */; };
 		844AC8E818C81954005166FD /* BanditsAttackHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */; };
 		844BE68618B32C6C0066CC21 /* workers_menu_buttonCollider.png in Resources */ = {isa = PBXBuildFile; fileRef = 844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */; };
 		844D728E18AC750D008E0AD3 /* senario_h.xml in Resources */ = {isa = PBXBuildFile; fileRef = 844D728D18AC750D008E0AD3 /* senario_h.xml */; };
@@ -1297,6 +1299,7 @@
 		841ADE4A19470EF700D50463 /* create.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create.png; sourceTree = "<group>"; };
 		841ADE4B19470EF700D50463 /* login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login.png; sourceTree = "<group>"; };
 		841ADE4C19470EF700D50463 /* login_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_press.png; sourceTree = "<group>"; };
+		841B4883195AB09F00ADEBDF /* DemoScene1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DemoScene1.tmx; sourceTree = "<group>"; };
 		841D0365190FC4E300E34ACB /* tutorial.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorial.xml; sourceTree = "<group>"; };
 		841F1F111936FD79004C4C04 /* tutorialBandits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tutorialBandits.xml; sourceTree = "<group>"; };
 		8421154E18D2B9A100A441D0 /* HousingLimit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HousingLimit.h; sourceTree = "<group>"; };
@@ -1377,6 +1380,7 @@
 		8444D6C11907A67F00D5AFAC /* BattleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleManager.cpp; sourceTree = "<group>"; };
 		8444D6C31907A6D600D5AFAC /* BattlePair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattlePair.h; sourceTree = "<group>"; };
 		8444D6C41907A76000D5AFAC /* BattlePair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattlePair.cpp; sourceTree = "<group>"; };
+		8447A339196666E600D49014 /* loadGameBtn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loadGameBtn.jpg; sourceTree = "<group>"; };
 		844AC8E718C81954005166FD /* BanditsAttackHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BanditsAttackHandler.cpp; sourceTree = "<group>"; };
 		844ACE781918903800505F01 /* banditicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banditicon.png; sourceTree = "<group>"; };
 		844BE68518B32C6C0066CC21 /* workers_menu_buttonCollider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workers_menu_buttonCollider.png; sourceTree = "<group>"; };
@@ -3183,6 +3187,7 @@
 		848D2FE61859764C00EB9257 /* gy */ = {
 			isa = PBXGroup;
 			children = (
+				8447A339196666E600D49014 /* loadGameBtn.jpg */,
 				8435414919457ED300AFE64B /* button.png */,
 				8421158A18D2F02D00A441D0 /* upgrade.png */,
 				84EDD26A18C6EF0C003BAF5E /* normalFace.png */,
@@ -3300,6 +3305,7 @@
 		848D8B1819418D070006E14C /* tmx */ = {
 			isa = PBXGroup;
 			children = (
+				841B4883195AB09F00ADEBDF /* DemoScene1.tmx */,
 				84FC2E811949A389009E4E28 /* DemoSceneEmpty.tmx */,
 				36B411E218D9AAEB005967EC /* DemoScene.tmx */,
 				8450A1761935F65B0051F90C /* ScenarioScene2.tmx */,
@@ -3705,6 +3711,7 @@
 				84EF1F59191778C3002D64D9 /* nofood.png in Resources */,
 				361FDE0E171BF14000665EDE /* refugeebehavior.lua in Resources */,
 				84DBDD971929A9FF00EEDFB9 /* introduction.xml in Resources */,
+				841B4884195AB09F00ADEBDF /* DemoScene1.tmx in Resources */,
 				36C16E4C18D0049000C307DB /* MaleOldMan_port.png in Resources */,
 				361FDE10171BF14000665EDE /* farmerbehavior.lua in Resources */,
 				361FDE12171BF14000665EDE /* soldierbehavior.lua in Resources */,
@@ -3867,6 +3874,7 @@
 				8412CA6518AC8D4A00AF4645 /* build-menu_goldreq.png in Resources */,
 				3647C7F317C1D9D3008FA626 /* Icon.png in Resources */,
 				36AC557418D6981900C165F5 /* yuanbao_icon.png in Resources */,
+				8447A33A196666E600D49014 /* loadGameBtn.jpg in Resources */,
 				84F2912818FE51240045F834 /* loading screen.png in Resources */,
 				3647C7F517C1D9D7008FA626 /* Icon-114.png in Resources */,
 				845A9EDD18F78CB50074EF77 /* tutorial1.xml in Resources */,
