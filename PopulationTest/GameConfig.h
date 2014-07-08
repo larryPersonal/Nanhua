@@ -40,7 +40,7 @@ struct SystemConfig
         skipTutorial_level2 = false;
         
         hideSkipButton = true;
-        debugMode = false;
+        debugMode = true;
     }
 };
 

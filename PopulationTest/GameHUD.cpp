@@ -56,6 +56,8 @@ GameHUD::GameHUD()
     originalHappiness = 0;
     stickHappiness = false;
     
+    showRandomEventManager = false;
+    
     isThisTapCounted = false;
     
     startWar = false;
@@ -1995,6 +1997,8 @@ void GameHUD::createSystemMenu()
     warButton = CCSprite::createWithSpriteFrameName("banditicon.png");
     peaceButton = CCSprite::createWithSpriteFrameName("peaceicon.png");
     
+    showRandomEventManagerButton = CCSprite::create("test_button.png");
+    
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
     systemButton->setPosition(ccp(screenSize.width * 0.075f, screenSize.height - 205.0f));
@@ -2022,6 +2026,10 @@ void GameHUD::createSystemMenu()
     peaceButton->setScale(screenSize.width / peaceButton->boundingBox().size.width * 0.05f);
     peaceButton->setAnchorPoint(ccp(0, 0));
     peaceButton->setPosition(ccp(0, -500));
+    
+    showRandomEventManagerButton->setScale(screenSize.width / showRandomEventManagerButton->boundingBox().size.width * 0.05f);
+    showRandomEventManagerButton->setAnchorPoint(ccp(0, 0));
+    showRandomEventManagerButton->setPosition(ccp(500.0f, 0));
     
     resumeButton->setVisible(false);
     resumeHappinessButton->setVisible(false);
@@ -2082,6 +2090,7 @@ void GameHUD::createSystemMenu()
         warButton->cocos2d::CCNode::setScale(0, 0);
         peaceButton->cocos2d::CCNode::setScale(0, 0);
         scoreButton->cocos2d::CCNode::setScale(0, 0);
+        showRandomEventManagerButton->cocos2d::CCNode::setScale(0, 0);
     }
     
     this->addChild(stickHappinessButton, 5);
@@ -2091,6 +2100,7 @@ void GameHUD::createSystemMenu()
     this->addChild(warButton, 5);
     this->addChild(peaceButton, 5);
     this->addChild(scoreButton, 5);
+    this->addChild(showRandomEventManagerButton, 5);
 }
 
 void GameHUD::banditsAttack(int banditsNo)

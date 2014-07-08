@@ -13,6 +13,7 @@
 #include "GameManager.h"
 #include "SoundtrackManager.h"
 #include "GlobalHelper.h"
+#include "AccountRow.h"
 
 using namespace CocosDenshion;
 
@@ -51,12 +52,21 @@ MainMenuScene::MainMenuScene()
     
     startGame = false;
     
+    teacherManagementIsOpen = false;
+    teacherManagementIsClose = false;
+    
+    accountRowArray = CCArray::create();
+    accountRowArray->retain();
+    
     mode = login;
 }
 
 MainMenuScene::~MainMenuScene()
 {
     MainMenuScene::SP = NULL;
+    
+    accountRowArray->removeAllObjects();
+    CC_SAFE_RELEASE(accountRowArray);
 }
 
 MainMenuScene* MainMenuScene::getThis()
@@ -244,7 +254,7 @@ bool MainMenuScene::init()
     warningBackground->setAnchorPoint(ccp(0.5f, 0.5f));
     warningBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     warningBackground->setScale(1.0f);
-    this->addChild(warningBackground, 10);
+    this->addChild(warningBackground, 15);
     
     // warning cancelButton
     warningCancelButton = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(MainMenuScene::closeWarningScreen));
@@ -252,7 +262,15 @@ bool MainMenuScene::init()
     warningCancelButton->setPosition(ccp(screenSize.width / 2.0f - 180.0f, 0 + 18.0f));
     warningCancelButton->setScale(1.2f);
     
-    warningCancelMenu = CCMenu::create(warningCancelButton, NULL);
+    // warning confirmButton
+    warningConfirmButton = CCMenuItemImage::create("confirm.png", "confirm_press.png", this, menu_selector(MainMenuScene::closeResetPasswordConfirmScreen));
+    warningConfirmButton->setAnchorPoint(ccp(0, 1));
+    warningConfirmButton->setPosition(ccp(screenSize.width / 2.0f - 320.0f, -240.0f));
+    warningConfirmButton->setScale(0.5f);
+    
+    warningConfirmButton->setVisible(false);
+    
+    warningCancelMenu = CCMenu::create(warningCancelButton, warningConfirmButton, NULL);
     warningBackground->addChild(warningCancelMenu);
     
     // warning head
@@ -399,6 +417,9 @@ bool MainMenuScene::init()
     
     GlobalHelper::clearCache();
     
+    // teacher management screen
+    setupTeacherManagementScreen();
+    
     return true;
 }
 
@@ -458,6 +479,8 @@ void MainMenuScene::configMode()
         warningBackground->setVisible(false);
         
         loginModuleTitle->setString("LOGIN:");
+        
+        blackScreen->setVisible(false);
     }
     else if(mode == signup)
     {
@@ -481,6 +504,8 @@ void MainMenuScene::configMode()
         warningBackground->setVisible(false);
         
         loginModuleTitle->setString("SIGNUP:");
+        
+        blackScreen->setVisible(false);
     }
     else if(mode == chooseCharacter)
     {
@@ -507,6 +532,8 @@ void MainMenuScene::configMode()
         loginScreenInstructionLabel->setString(str.c_str());
         
         loginScreenWarningLabel->setString("Choose your character:");
+        
+        blackScreen->setVisible(true);
     }
     else if(mode == mainPage)
     {
@@ -528,6 +555,8 @@ void MainMenuScene::configMode()
         girlHead->setVisible(false);
         
         warningBackground->setVisible(false);
+        
+        blackScreen->setVisible(true);
     }
     else if(mode == teacher)
     {
@@ -549,6 +578,8 @@ void MainMenuScene::configMode()
         girlHead->setVisible(false);
         
         warningBackground->setVisible(false);
+        
+        blackScreen->setVisible(true);
     }
 }
 
@@ -572,6 +603,29 @@ void MainMenuScene::clickLoginButton()
     }
     else
     {
+        int userNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey("userNumber");
+        bool valid = false;
+        stringstream ss;
+        
+        for (int i = 0; i < userNumber; i++)
+        {
+            ss.str(std::string());
+            ss << "user_" << i;
+            string tempName = CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str());
+            if (username.compare(tempName) == 0)
+            {
+                valid = true;
+                break;
+            }
+        }
+        
+        if (!valid)
+        {
+            warningDescription->setString("Either username or password does not valid!");
+            openWarningScreen();
+            return;
+        }
+        
         string key = username + "_password";
         string expectedPassword = CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str());
         
@@ -579,7 +633,7 @@ void MainMenuScene::clickLoginButton()
         
         if(password.length() <= 0 || expectedPassword.length() <= 0)
         {
-            warningDescription->setString("Either username or password does not match!");
+            warningDescription->setString("Either username or password does not valid!");
             openWarningScreen();
         }
         else
@@ -881,16 +935,8 @@ void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
 
 void MainMenuScene::showTeacherScreen()
 {
-    stringstream ss;
-    ss << "User Management";
-    usernameLabel->setString(ss.str().c_str());
-    
-    tutorialScoreLabel->setString("");
-    level1ScoreLabel->setString("");
-    level2ScoreLabel->setString("");
-    totalScoreLabel->setString("");
-    
-    scheduleScoreScreenJumpIn();
+    SoundtrackManager::PlaySFX("Button_press.wav");
+    scheduleTeacherManagementScreenOpen();
 }
 
 void MainMenuScene::onButtonExitPressed(CCObject* pSender)
@@ -934,6 +980,48 @@ void MainMenuScene::openWarningScreen()
     scheduleWarningScreenJumpIn();
 }
 
+void MainMenuScene::openResetPasswordConfirmScreen(std::string username)
+{
+    if (isWarningScreenJumpIn || isWarningScreenJumpOut)
+    {
+        return;
+    }
+    
+    warningConfirmButton->setVisible(true);
+    warningHead->setString("Reset Password");
+    
+    stringstream ss;
+    ss << username << "_password";
+    string password = CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "Current password is : " << password << ". Do you want to reset it to : test?";
+    
+    warningDescription->setString(ss.str().c_str());
+    
+    scheduleWarningScreenJumpIn();
+}
+
+void MainMenuScene::closeResetPasswordConfirmScreen()
+{
+    if (isWarningScreenJumpIn || isWarningScreenJumpOut)
+    {
+        return;
+    }
+    
+    warningConfirmButton->setVisible(false);
+    warningHead->setString("WARNING");
+    
+    string username = CCUserDefault::sharedUserDefault()->getStringForKey("currentWarningUsername");
+    
+    stringstream ss;
+    ss << username << "_password";
+    
+    CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), "test");
+    
+    scheduleWarningScreenJumpOut();
+}
+
 void MainMenuScene::closeScoreScreen()
 {
     if (isScoreScreenJumpIn || isScoreScreenJumpOut)
@@ -952,7 +1040,16 @@ void MainMenuScene::closeWarningScreen()
         return;
     }
     
-    enableModule();
+    if(mode == teacher)
+    {
+        warningHead->setString("WARNING");
+        warningDescription->setString("");
+        warningConfirmButton->setVisible(false);
+    }
+    else
+    {
+        enableModule();
+    }
     
     SoundtrackManager::PlaySFX("Button_press.wav");
     scheduleWarningScreenJumpOut();
@@ -1021,6 +1118,12 @@ void MainMenuScene::scoreScreenJumpOut(float dt)
         isScoreScreenJumpOut = false;
         this->unschedule(schedule_selector(MainMenuScene::scoreScreenJumpOut));
         highScoreScreen->setVisible(false);
+        
+        if(mode == teacher)
+        {
+            mode = login;
+            configMode();
+        }
     }
     
     highScoreScreen->setScale(scale);
@@ -1108,11 +1211,27 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
         {
             GameManager::getThis()->gender = true;
             CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+            
+            AccountRow* accRow = AccountRow::create(scrollArea, userNumber);
+            accRow->getUserAccount()->setAccountName(tempUser);
+            accRow->refresh();
+            accountRowArray->addObject((CCObject*)accRow);
+            
+            scrollArea->setScrollContentSize(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, 110.0f * userNumber));
+            scrollArea->updateScrollBars();
         }
         else
         {
             GameManager::getThis()->gender = false;
             CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+            
+            AccountRow* accRow = AccountRow::create(scrollArea, userNumber);
+            accRow->getUserAccount()->setAccountName(tempUser);
+            accRow->refresh();
+            accountRowArray->addObject((CCObject*)accRow);
+            
+            scrollArea->setScrollContentSize(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, 110.0f * userNumber));
+            scrollArea->updateScrollBars();
         }
     }
     
@@ -1261,4 +1380,206 @@ void MainMenuScene::disableModule()
 
 void MainMenuScene::onOrientationChanged()
 {
+}
+
+void MainMenuScene::setupTeacherManagementScreen()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    teacherManagementBackground = CCSprite::create("adminscreen.png");
+    teacherManagementBackground->setAnchorPoint(ccp(0.5f, 0.5f));
+    teacherManagementBackground->setScale(0.5f);
+    teacherManagementBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    
+    teacherManagementScreenLogoutButton = CCMenuItemImage::create("logout.png", "logout_press.png", this, menu_selector(MainMenuScene::clearTeacherManagementScreen));
+    teacherManagementScreenLogoutButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    teacherManagementScreenLogoutButton->setPosition(ccp(screenSize.width + 150.0f, -200.0f));
+    teacherManagementScreenLogoutButton->setScale(0.7f);
+    
+    teacherManagementScreenMenu = CCMenu::create(teacherManagementScreenLogoutButton, NULL);
+    
+    teacherManagementBackground->addChild(teacherManagementScreenMenu, 2);
+    
+    teacherManagementScreenTitile = CCLabelTTF::create("Profile", "Shojumaru-Regular", 58);
+    teacherManagementScreenTitile->setAnchorPoint(ccp(0.5f, 0.5f));
+    teacherManagementScreenTitile->setPosition(ccp(screenSize.width, screenSize.height * 1.85f));
+    
+    teacherManagementBackground->addChild(teacherManagementScreenTitile);
+    
+    // scroll section for other villagers
+    scrollArea = new ScrollArea();
+    scrollArea->createScrollArea(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, teacherManagementBackground->boundingBox().size.height * 1.6f), CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, teacherManagementBackground->boundingBox().size.height * 1.6f));
+    scrollArea->enableScrollVertical(0, "bar.png", "bar.png");
+    scrollArea->setAnchorPoint(ccp(0.5f, 0.5f));
+    
+    scrollArea->setPosition(ccp(0, screenSize.height * 0.15f));
+    
+    // CCUserDefault::sharedUserDefault()->setIntegerForKey("userNumber", 0);
+    
+    int userNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey("userNumber");
+    
+    for (int i = 0; i < userNumber; i++)
+    {
+        AccountRow* accRow = AccountRow::create(scrollArea, i);
+        
+        stringstream ss;
+        ss.str(std::string());
+        ss << "user_" << i;
+        std::string username = CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str());
+        accRow->getUserAccount()->setAccountName(username);
+        
+        ss.str(std::string());
+        ss << username << "_level_1_open";
+        bool flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        accRow->getUserAccount()->setScenario1Status(flag);
+        
+        ss.str(std::string());
+        ss << username << "_level_2_open";
+        flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        accRow->getUserAccount()->setScenario2Status(flag);
+        
+        ss.str(std::string());
+        ss << username << "_level_3_open";
+        flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        accRow->getUserAccount()->setScenario3Status(flag);
+        
+        ss.str(std::string());
+        ss << username << "_level_4_open";
+        flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        accRow->getUserAccount()->setScenario3Status(flag);
+        
+        ss.str(std::string());
+        ss << username << "_level_5_open";
+        flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        accRow->getUserAccount()->setScenario3Status(flag);
+        
+        accRow->refresh();
+        
+        accountRowArray->addObject((CCObject*) accRow);
+    }
+    
+    scrollArea->setScrollContentSize(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, 110.0f * userNumber));
+    scrollArea->updateScrollBars();
+
+    teacherManagementBackground->addChild(scrollArea, 1);
+    
+    this->addChild(teacherManagementBackground, 10);
+    
+    teacherManagementBackground->setScale(0.0f);
+    teacherManagementBackground->setOpacity((GLubyte) 0.0f);
+    teacherManagementBackground->setVisible(false);
+}
+
+void MainMenuScene::scheduleTeacherManagementScreenOpen()
+{
+    if(teacherManagementIsOpen || teacherManagementIsClose)
+    {
+        return;
+    }
+    
+    teacherManagementIsOpen = true;
+    
+    teacherManagementBackground->setVisible(true);
+    teacherManagementBackground->setScale(0.0f);
+    teacherManagementBackground->setOpacity((GLubyte) 0.0f);
+    
+    this->schedule(schedule_selector(MainMenuScene::teacherManagementScreenOpen), 1.0f/120.0f);
+}
+
+void MainMenuScene::scheduleTeacherManagementScreenClose()
+{
+    if(teacherManagementIsOpen || teacherManagementIsClose)
+    {
+        return;
+    }
+    
+    mode = login;
+    
+    teacherManagementIsClose = true;
+    passwordBox->setText("");
+    usernameBox->setText("");
+    
+    this->schedule(schedule_selector(MainMenuScene::teacherManagementScreenClose), 1.0f/120.0f);
+}
+
+void MainMenuScene::teacherManagementScreenOpen(float dt)
+{
+    float scale = teacherManagementBackground->getScale();
+    
+    scale += 0.025f;
+    
+    if (scale >= 0.5f)
+    {
+        scale = 0.5f;
+        teacherManagementIsOpen = false;
+        teacherManagementIsClose = false;
+        this->unschedule(schedule_selector(MainMenuScene::teacherManagementScreenOpen));
+    }
+    
+    teacherManagementBackground->setScale(scale);
+    
+    float opacity = 255.0f * (scale / 0.5f);
+    
+    teacherManagementBackground->setOpacity((GLubyte) opacity);
+    blackScreen->setOpacity((GLubyte) opacity);
+}
+
+void MainMenuScene::teacherManagementScreenClose(float dt)
+{
+    float scale = teacherManagementBackground->getScale();
+    
+    scale -= 0.025f;
+    
+    if (scale <= 0.0f)
+    {
+        scale = 0.0f;
+        teacherManagementIsOpen = false;
+        teacherManagementIsClose = false;
+        teacherManagementBackground->setVisible(false);
+        configMode();
+        this->unschedule(schedule_selector(MainMenuScene::teacherManagementScreenClose));
+    }
+    
+    teacherManagementBackground->setScale(scale);
+    
+    float opacity = 255.0f * (scale / 0.5f);
+    
+    teacherManagementBackground->setOpacity((GLubyte) opacity);
+    blackScreen->setOpacity((GLubyte) opacity);
+}
+
+void MainMenuScene::clearTeacherManagementScreen()
+{
+    SoundtrackManager::PlaySFX("Button_press.wav");
+    scheduleTeacherManagementScreenClose();
+}
+
+void MainMenuScene::deleteAccountRow(int index)
+{
+    for (int i = index; i < accountRowArray->count(); i++)
+    {
+        if (i < accountRowArray->count() - 1)
+        {
+            AccountRow* preA = (AccountRow*) accountRowArray->objectAtIndex(i);
+            AccountRow* postA = (AccountRow*) accountRowArray->objectAtIndex(i + 1);
+            
+            preA->getUserAccount()->setAccountName(postA->getUserAccount()->getAccountName());
+            preA->getUserAccount()->setScenario1Status(postA->getUserAccount()->getScenario1Status());
+            preA->getUserAccount()->setScenario2Status(postA->getUserAccount()->getScenario2Status());
+            preA->getUserAccount()->setScenario3Status(postA->getUserAccount()->getScenario3Status());
+            preA->getUserAccount()->setScenario4Status(postA->getUserAccount()->getScenario4Status());
+            preA->getUserAccount()->setScenario5Status(postA->getUserAccount()->getScenario5Status());
+            preA->refresh();
+        }
+        else
+        {
+            AccountRow* accRow = (AccountRow*) accountRowArray->objectAtIndex(i);
+            accRow->clear();
+            accountRowArray->removeObject((CCObject*)accRow);
+        }
+    }
+    
+    int userNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey("userNumber");
+    scrollArea->setScrollContentSize(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, 110.0f * userNumber));
+    scrollArea->updateScrollBars();
 }

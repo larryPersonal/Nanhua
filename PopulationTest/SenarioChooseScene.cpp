@@ -21,6 +21,10 @@ SenarioChooseScene* SenarioChooseScene::SP;
 SenarioChooseScene::SenarioChooseScene()
 {
     SenarioChooseScene::SP = this;
+    
+    isSaveFileChooseScreenOpening = false;
+    isSaveFileChooseScreenClosing = false;
+    
     preloadTextures();
 }
 
@@ -62,8 +66,9 @@ bool SenarioChooseScene::init()
     CCRect boxrect = CCRectMake(0,0, screenSize.width * 0.8f,  screenSize.width * 0.2f);
     CCRect exitrect = CCRectMake(0,0, screenSize.width * 0.15f, screenSize.width * 0.15f);
     
-    CCRect loadButtonRect = CCRectMake(0, 0, screenSize.width * 0.25f, screenSize.width * 0.15f);
+    CCRect loadButtonRect = CCRectMake(0, 0, screenSize.width * 0.15f, screenSize.width * 0.15f);
     
+    std::string usrname = GameManager::getThis()->username;
     
     backgroundImage = CCSprite::createWithSpriteFrameName("screenlevelselect_v2.png");
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
@@ -71,14 +76,21 @@ bool SenarioChooseScene::init()
     senarioButtonTutorial = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseTutorial));
     senarioButtonTutorial->setContentSize(boxrect.size);
 
+    stringstream ss;
+    ss.str(std::string());
+    ss << usrname << "_level_1_open";
+    
     senarioButtonS1 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario1));
     senarioButtonS1->setContentSize(boxrect.size);
-    bool value = CCUserDefault::sharedUserDefault()->getBoolForKey("level_1_open");
+    bool value = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
     senarioButtonS1->setVisible(value);
+    
+    ss.str(std::string());
+    ss << usrname << "_level_2_open";
     
     senarioButtonS2 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario2));
     senarioButtonS2->setContentSize(boxrect.size);
-    value = CCUserDefault::sharedUserDefault()->getBoolForKey("level_2_open");
+    value = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
     senarioButtonS2->setVisible(value);
     
     senarioButtonS3 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario3));
@@ -97,7 +109,7 @@ bool SenarioChooseScene::init()
     senarioButtonS6 = CCMenuItemSprite::create(backButton, backButton, this, menu_selector(SenarioChooseScene::chooseSenario6));
     senarioButtonS6->setContentSize(exitrect.size);
     
-    loadGameButton = CCMenuItemImage::create("loadGameBtn.jpg", "loadGameBtn.jpg", this, menu_selector(SenarioChooseScene::chooseLoadGame));
+    loadGameButton = CCMenuItemImage::create("load_icon.png", "load_icon.png", this, menu_selector(SenarioChooseScene::chooseLoadGame));
     loadGameButton->setContentSize(loadButtonRect.size);
     loadGameButton->setAnchorPoint(ccp(0, 0.5f));
     
@@ -179,7 +191,7 @@ bool SenarioChooseScene::init()
     senarioButtonS5->setPosition(ccp(screenSize.width * 0.672, screenSize.height * 0.262));
     senarioButtonS6->setPosition(ccp(screenSize.width * 0.95, screenSize.height * 0.05));
     
-    loadGameButton->setPosition(ccp(screenSize.width * 0.035f, screenSize.height * 0.05f));
+    loadGameButton->setPosition(ccp(screenSize.width * 0.015f, screenSize.height * 0.05f));
     
     senarioChooseSceneMenu = CCMenu::create(senarioButtonTutorial, senarioButtonS1, senarioButtonS2, senarioButtonS3, senarioButtonS4, senarioButtonS5, senarioButtonS6, loadGameButton, NULL);
     senarioChooseSceneMenu->setPosition( CCPointZero );
@@ -201,12 +213,18 @@ bool SenarioChooseScene::init()
     this->addChild(loadingLabel, 11);
     loadingLabel->setVisible(false);
     
+    setupSaveFileChooseScreen();
     
     return true;
 }
 
 void SenarioChooseScene::chooseTutorial()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     stringstream ss;
     ss << "isLoadingGame";
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
@@ -230,6 +248,11 @@ void SenarioChooseScene::loadingTutorial()
 
 void SenarioChooseScene::chooseSenario1()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     if(!senarioButtonS1->isVisible())
     {
         return;
@@ -258,6 +281,11 @@ void SenarioChooseScene::loadingSenario1()
 
 void SenarioChooseScene::chooseSenario2()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     if(!senarioButtonS2->isVisible())
     {
         return;
@@ -282,6 +310,11 @@ void SenarioChooseScene::loadingSenario2()
 
 void SenarioChooseScene::chooseSenario3()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     if(!senarioButtonS3->isVisible())
     {
         return;
@@ -301,6 +334,11 @@ void SenarioChooseScene::loadingSenario3()
 
 void SenarioChooseScene::chooseSenario4()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     if(!senarioButtonS4->isVisible())
     {
         return;
@@ -320,6 +358,11 @@ void SenarioChooseScene::loadingSenario4()
 
 void SenarioChooseScene::chooseSenario5()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     if(!senarioButtonS5->isVisible())
     {
         return;
@@ -340,6 +383,11 @@ void SenarioChooseScene::loadingSenario5()
 //THIS IS ACTUALLY THE GO BACK BUTTON.
 void SenarioChooseScene::chooseSenario6()
 {
+    if(saveFileChooseBackground->isVisible())
+    {
+        return;
+    }
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario6), 0.1f);
@@ -377,16 +425,62 @@ void SenarioChooseScene::preloadTextures()
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("LevelSelectSceneSpriteSheet.plist");
 }
 
+void SenarioChooseScene::loadAutoSaveGame()
+{
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+    
+    ss.str(std::string());
+    ss << "loadingGameType";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 0);
+    
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
+}
+
+void SenarioChooseScene::loadFixedSaveGame()
+{
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+    
+    ss.str(std::string());
+    ss << "loadingGameType";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 1);
+    
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
+
+}
+
+void SenarioChooseScene::loadCustomSaveGame()
+{
+    stringstream ss;
+    ss << "isLoadingGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+    
+    ss.str(std::string());
+    ss << "loadingGameType";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 2);
+    
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
+}
+
 void SenarioChooseScene::chooseLoadGame()
 {
-    SoundtrackManager::PlaySFX("Button_press.wav");
     
+    
+    scheduleSaveFileChooseScreenOpening();
+    /*
     stringstream ss;
     ss << "isLoadingGame";
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
     
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
+    */
 }
 
 void SenarioChooseScene::loadingLoadGame()
@@ -399,4 +493,265 @@ void SenarioChooseScene::loadingLoadGame()
     GlobalHelper::clearPreloadedTexture();
     
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
+}
+
+void SenarioChooseScene::setupSaveFileChooseScreen()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    saveFileChooseBackground = CCSprite::create("popup_dialogbox.png");
+    saveFileChooseBackground->setAnchorPoint(ccp(0.5f, 0.5f));
+    saveFileChooseBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    
+    loadScreenTitle = CCLabelTTF::create("Load Saved Game", "Shojumaru-Regular", 36);
+    loadScreenTitle->setAnchorPoint(ccp(0.5f, 0.5f));
+    loadScreenTitle->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    saveFileChooseBackground->addChild(loadScreenTitle);
+    
+    closeButton = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(SenarioChooseScene::scheduleSaveFileChooseScreenClosing));
+    closeButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    closeButton->setPosition(ccp(screenSize.width / 2.0f - 160.0f, -5.0f));
+    
+    autoLoadButton = CCMenuItemImage::create("load.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadAutoSaveGame));
+    autoLoadButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    autoLoadButton->setScale(0.6f);
+    autoLoadButton->setPosition(ccp(-350.0f, -80.0f));
+    
+    autoLoadDisableButton = CCMenuItemImage::create("load_disable.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadDisableWarning));
+    autoLoadDisableButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    autoLoadDisableButton->setScale(0.6f);
+    autoLoadDisableButton->setPosition(ccp(-350.0f, -80.0f));
+    
+    fixedLoadButton = CCMenuItemImage::create("load.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadFixedSaveGame));
+    fixedLoadButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    fixedLoadButton->setScale(0.6f);
+    fixedLoadButton->setPosition(ccp(-350.0f, -160.0f));
+    
+    fixedLoadDisableButton = CCMenuItemImage::create("load_disable.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadDisableWarning));
+    fixedLoadDisableButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    fixedLoadDisableButton->setScale(0.6f);
+    fixedLoadDisableButton->setPosition(ccp(-350.0f, -160.0f));
+    
+    customLoadButton = CCMenuItemImage::create("load.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadCustomSaveGame));
+    customLoadButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    customLoadButton->setScale(0.6f);
+    customLoadButton->setPosition(ccp(-350.0f, -240.0f));
+    
+    customLoadDisableButton = CCMenuItemImage::create("load_disable.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadDisableWarning));
+    customLoadDisableButton->setAnchorPoint(ccp(0.5f, 0.5f));
+    customLoadDisableButton->setScale(0.6f);
+    customLoadDisableButton->setPosition(ccp(-350.0f, -240.0f));
+    
+    saveFileMenu = CCMenu::create(closeButton, autoLoadButton, autoLoadDisableButton, fixedLoadButton, fixedLoadDisableButton, customLoadButton, customLoadDisableButton, NULL);
+    saveFileChooseBackground->addChild(saveFileMenu);
+    
+    autoSaveLabel = CCLabelTTF::create("Autosave:", "GillSansMT", 24);
+    autoSaveLabel->setAnchorPoint(ccp(0.0f, 1.0f));
+    autoSaveLabel->setPosition(ccp(screenSize.width / 2.0f - 300.0f, screenSize.height / 2.0f - 65.0f));
+    
+    saveFileChooseBackground->addChild(autoSaveLabel);
+    
+    autoSaveStatusLabel = CCLabelTTF::create("Autosave", "GillSansMT", 24);
+    autoSaveStatusLabel->setAnchorPoint(ccp(0.0f, 1.0f));
+    autoSaveStatusLabel->setPosition(ccp(screenSize.width / 2.0f - 150.0f, screenSize.height / 2.0f - 65.0f));
+    
+    saveFileChooseBackground->addChild(autoSaveStatusLabel);
+    
+    fixedSaveLabel = CCLabelTTF::create("Fixedsave:", "GillSansMT", 24);
+    fixedSaveLabel->setAnchorPoint(ccp(0.0f, 1.0f));
+    fixedSaveLabel->setPosition(ccp(screenSize.width / 2.0f - 300.0f, screenSize.height / 2.0f - 145.0f));
+    
+    saveFileChooseBackground->addChild(fixedSaveLabel);
+    
+    fixedSaveStatusLabel = CCLabelTTF::create("Fixedsave", "GillSansMT", 24);
+    fixedSaveStatusLabel->setAnchorPoint(ccp(0.0f, 1.0f));
+    fixedSaveStatusLabel->setPosition(ccp(screenSize.width / 2.0f - 150.0f, screenSize.height / 2.0f - 145.0f));
+    
+    saveFileChooseBackground->addChild(fixedSaveStatusLabel);
+    
+    customSaveLabel = CCLabelTTF::create("Customsave:", "GillSansMT", 24);
+    customSaveLabel->setAnchorPoint(ccp(0.0f, 1.0f));
+    customSaveLabel->setPosition(ccp(screenSize.width / 2.0f - 300.0f, screenSize.height / 2.0f - 225.0f));
+    
+    saveFileChooseBackground->addChild(customSaveLabel);
+    
+    customSaveStatusLabel = CCLabelTTF::create("Customsave", "GillSansMT", 24);
+    customSaveStatusLabel->setAnchorPoint(ccp(0.0f, 1.0f));
+    customSaveStatusLabel->setPosition(ccp(screenSize.width / 2.0f - 150.0f, screenSize.height / 2.0f - 225.0f));
+    
+    saveFileChooseBackground->addChild(customSaveStatusLabel);
+    
+    this->addChild(saveFileChooseBackground, 11);
+    
+    blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen->setAnchorPoint(ccp(0.5f, 0.5f));
+    blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
+    blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(blackScreen, 10);
+    
+    saveFileChooseBackground->setScale(0.001f);
+    saveFileChooseBackground->setOpacity((GLubyte) 0.0f);
+    
+    saveFileChooseBackground->setVisible(false);
+    
+    blackScreen->setOpacity((GLubyte) 0.0f);
+    
+    checkLoadStatus();
+}
+
+void SenarioChooseScene::scheduleSaveFileChooseScreenOpening()
+{
+    if(isSaveFileChooseScreenOpening || isSaveFileChooseScreenClosing)
+    {
+        return;
+    }
+    
+    checkLoadStatus();
+    
+    SoundtrackManager::PlaySFX("Button_press.wav");
+    saveFileChooseBackground->setVisible(true);
+    
+    isSaveFileChooseScreenOpening = true;
+    this->schedule(schedule_selector(SenarioChooseScene::saveFileChooseScreenOpen), 1.0f/120.0f);
+}
+
+void SenarioChooseScene::scheduleSaveFileChooseScreenClosing()
+{
+    if(isSaveFileChooseScreenOpening || isSaveFileChooseScreenClosing)
+    {
+        return;
+    }
+    
+    SoundtrackManager::PlaySFX("Button_press.wav");
+    
+    isSaveFileChooseScreenClosing = true;
+    this->schedule(schedule_selector(SenarioChooseScene::saveFileChooseScreenClose), 1.0f/120.0f);
+}
+
+void SenarioChooseScene::saveFileChooseScreenOpen(float dt)
+{
+    float scale = saveFileChooseBackground->getScale();
+    scale += 0.05f;
+    
+    if(scale >= 1.0f)
+    {
+        scale = 1.0f;
+        isSaveFileChooseScreenOpening = false;
+        this->unschedule(schedule_selector(SenarioChooseScene::saveFileChooseScreenOpen));
+    }
+    
+    saveFileChooseBackground->setScale(scale);
+    
+    float opacity = 255.0f * (scale / 1.0f);
+    
+    saveFileChooseBackground->setOpacity((GLubyte) opacity);
+    blackScreen->setOpacity((GLubyte) opacity);
+}
+
+void SenarioChooseScene::saveFileChooseScreenClose(float dt)
+{
+    float scale = saveFileChooseBackground->getScale();
+    scale -= 0.05f;
+    
+    if(scale <= 0.0f)
+    {
+        scale = 0.0f;
+        isSaveFileChooseScreenClosing = false;
+        saveFileChooseBackground->setVisible(false);
+        this->unschedule(schedule_selector(SenarioChooseScene::saveFileChooseScreenClose));
+    }
+    
+    saveFileChooseBackground->setScale(scale);
+    
+    float opacity = 255.0f * (scale / 1.0f);
+    
+    saveFileChooseBackground->setOpacity((GLubyte) opacity);
+    blackScreen->setOpacity((GLubyte) opacity);
+}
+
+void SenarioChooseScene::loadDisableWarning()
+{
+    // by now, nothing will happen. Reserve for possible warning screen.
+}
+
+void SenarioChooseScene::checkLoadStatus()
+{
+    string username = GameManager::getThis()->username;
+    
+    stringstream ss;
+    
+    ss.str(std::string());
+    ss << "autosave_" << username << "_hasSavedGame";
+    bool autosaveStatus = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "fixedsave_" << username << "_hasSavedGame";
+    bool fixedsaveStatus = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "customsave_" << username << "_hasSavedGame";
+    bool customsaveStatus = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+    
+    if(autosaveStatus)
+    {
+        autoLoadButton->setVisible(true);
+        autoLoadDisableButton->setVisible(false);
+        
+        ss.str(std::string());
+        ss << "autosave_" << username << "_levelNumber";
+        int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        
+        ss.str(std::string());
+        ss << "Level: " << levelNumber;
+        autoSaveStatusLabel->setString(ss.str().c_str());
+    }
+    else
+    {
+        autoLoadButton->setVisible(false);
+        autoLoadDisableButton->setVisible(true);
+        
+        autoSaveStatusLabel->setString("No record found!");
+    }
+    
+    if(fixedsaveStatus)
+    {
+        fixedLoadButton->setVisible(true);
+        fixedLoadDisableButton->setVisible(false);
+        
+        ss.str(std::string());
+        ss << "fixedsave_" << username << "_levelNumber";
+        int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        
+        ss.str(std::string());
+        ss << "Level: " << levelNumber;
+        fixedSaveStatusLabel->setString(ss.str().c_str());
+    }
+    else
+    {
+        fixedLoadButton->setVisible(false);
+        fixedLoadDisableButton->setVisible(true);
+        
+        fixedSaveStatusLabel->setString("No record found!");
+    }
+    
+    if(customsaveStatus)
+    {
+        customLoadButton->setVisible(true);
+        customLoadDisableButton->setVisible(false);
+        
+        ss.str(std::string());
+        ss << "customsave_" << username << "_levelNumber";
+        int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        
+        ss.str(std::string());
+        ss << "Level: " << levelNumber;
+        customSaveStatusLabel->setString(ss.str().c_str());
+    }
+    else
+    {
+        customLoadButton->setVisible(false);
+        customLoadDisableButton->setVisible(true);
+        
+        customSaveStatusLabel->setString("No record found!");
+    }
 }

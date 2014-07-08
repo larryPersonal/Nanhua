@@ -148,17 +148,31 @@ public:
     
     void initSharedTextureCache();
     
-    void saveData();
-    void saveSpritesData();
-    void saveBuildingData();
-    void saveSystemData();
+    void saveData(int type);
+    void saveSpritesData(int type);
+    void saveBuildingData(int type);
+    void saveSystemData(int type);
+    void saveRoadData(int type);
+    void saveReputationOrbData(int type);
     
-    bool loadData();
-    void loadSystemData();
-    void loadBuildingData();
-    void loadSpritesData();
+    bool loadData(int type);
+    void loadSystemData(int type);
+    void loadBuildingData(int type);
+    void loadSpritesData(int type);
+    void loadRoadData(int type);
+    void loadReputationOrbData(int type);
     
     CREATE_FUNC(GameScene);
+    
+public:
+    // auto save
+    float autoSaveTimeLeft;
+    float autoSaveTimeInterval;
+    
+    bool hasLoadedMap;
+    
+public:
+    void checkAutoSave(float deltaTime);
 };
 
 #endif

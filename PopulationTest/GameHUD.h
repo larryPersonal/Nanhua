@@ -208,6 +208,9 @@ public:
     CCSprite* resumeHappinessButton;
     CCSprite* happinessIcon;
     
+    bool showRandomEventManager;
+    CCSprite* showRandomEventManagerButton;
+    
     int frameHeight;
     int frameWidth;
     

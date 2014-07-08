@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "CCEditBox.h"
+#include "ScrollArea.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -77,6 +78,7 @@ class MainMenuScene : public cocos2d::CCLayer
     CCLabelTTF* warningHead;
     CCLabelTTF* warningDescription;
     CCMenuItem* warningCancelButton;
+    CCMenuItem* warningConfirmButton;
     
     CCSprite* loginBackground;
     CCMenuItem* loginCancelButton;
@@ -210,8 +212,38 @@ public:
     CREATE_FUNC(MainMenuScene);
     
 public:
+    CCSprite* teacherManagementBackground;
+    
+    CCMenuItem* teacherManagementScreenLogoutButton;
+    
+    CCMenu* teacherManagementScreenMenu;
+    
+    CCLabelTTF* teacherManagementScreenTitile;
+    
+    ScrollArea* scrollArea;
+    
+    CCArray* accountRowArray;
+    
+    bool teacherManagementIsOpen;
+    bool teacherManagementIsClose;
+    
+public:
     bool checkIsTeacherLogin(std::string username, std::string password);
     void showTeacherScreen();
+    void setupTeacherManagementScreen();
+    
+    void scheduleTeacherManagementScreenOpen();
+    void scheduleTeacherManagementScreenClose();
+    
+    void teacherManagementScreenOpen(float dt);
+    void teacherManagementScreenClose(float dt);
+    
+    void clearTeacherManagementScreen();
+    
+    void deleteAccountRow(int index);
+    
+    void openResetPasswordConfirmScreen(std::string username);
+    void closeResetPasswordConfirmScreen();
 };
 
 #endif /* defined(__PopulationTest__MainMenuScene__) */

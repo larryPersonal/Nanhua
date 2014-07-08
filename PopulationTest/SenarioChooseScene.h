@@ -76,6 +76,48 @@ public:
     
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(SenarioChooseScene);
+    
+public:
+    // save file choose screen
+    CCSprite* saveFileChooseBackground;
+    CCMenuItem* closeButton;
+    CCMenu* saveFileMenu;
+    CCSprite* blackScreen;
+    
+    CCLabelTTF* loadScreenTitle;
+    
+    bool isSaveFileChooseScreenOpening;
+    bool isSaveFileChooseScreenClosing;
+    
+    CCMenuItem* autoLoadButton;
+    CCMenuItem* fixedLoadButton;
+    CCMenuItem* customLoadButton;
+    
+    CCMenuItem* autoLoadDisableButton;
+    CCMenuItem* fixedLoadDisableButton;
+    CCMenuItem* customLoadDisableButton;
+    
+    CCLabelTTF* autoSaveLabel;
+    CCLabelTTF* fixedSaveLabel;
+    CCLabelTTF* customSaveLabel;
+    
+    CCLabelTTF* autoSaveStatusLabel;
+    CCLabelTTF* fixedSaveStatusLabel;
+    CCLabelTTF* customSaveStatusLabel;
+    
+public:
+    void setupSaveFileChooseScreen();
+    void scheduleSaveFileChooseScreenOpening();
+    void scheduleSaveFileChooseScreenClosing();
+    void saveFileChooseScreenOpen(float dt);
+    void saveFileChooseScreenClose(float dt);
+    
+    void loadAutoSaveGame();
+    void loadFixedSaveGame();
+    void loadCustomSaveGame();
+    
+    void loadDisableWarning();
+    void checkLoadStatus();
 };
 
 

@@ -14,7 +14,7 @@
 void GameManagement::saveGameToFile()
 {
     CCLog("try saving......");
-    GameScene::getThis()->saveData();
+    GameScene::getThis()->saveData(1);
     CCLog("saving success!");
 }
 

@@ -731,7 +731,10 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             }
         }
         
-        GameHUD::getThis()->isThisTapCounted = false;
+        if(GameHUD::getThis() != NULL)
+        {
+            GameHUD::getThis()->isThisTapCounted = false;
+        }
     }
 }
 
@@ -747,7 +750,7 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
         return;
     }
     
-    if (!GameHUD::getThis()->isThisTapCounted)
+    if (GameHUD::getThis() != NULL && !GameHUD::getThis()->isThisTapCounted)
     {
         GameHUD::getThis()->isThisTapCounted = true;
         if (m_pTouches->containsObject(touch))
@@ -758,6 +761,18 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
             }
             
         }
+    }
+    else if(GameHUD::getThis() == NULL)
+    {
+        if (m_pTouches->containsObject(touch))
+        {
+            if ((m_pTouches->count() == 1 && m_bTouchMoved) || true)
+            {
+                this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
+            }
+            
+        }
+
     }
     
     m_pTouches->removeAllObjects();
