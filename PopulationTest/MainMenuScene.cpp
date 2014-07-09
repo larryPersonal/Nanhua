@@ -457,6 +457,7 @@ void MainMenuScene::onNewGame(cocos2d::CCObject *pSender)
 
 void MainMenuScene::configMode()
 {
+    GlobalHelper::clearCache();
     if(mode == login)
     {
         loginModuleTitle->setVisible(true);

@@ -101,7 +101,6 @@ public:
     JobCollection* jobCollection;
     ConstructionHandler* constructionHandler;
     BanditsAttackHandler* banditsAttackHandler;
-    ObjectiveHandler* objectiveHandler;
     
     CCPoint lastTilePosPreview;
     CCPoint firstPathPosPreview;
@@ -173,6 +172,10 @@ public:
     
 public:
     void checkAutoSave(float deltaTime);
+    
+    void reSetupLevel();
+    void configSkipData();
+    void configLevelData();
 };
 
 #endif

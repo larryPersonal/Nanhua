@@ -435,6 +435,12 @@ void SenarioChooseScene::loadAutoSaveGame()
     ss << "loadingGameType";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 0);
     
+    string username = GameManager::getThis()->username;
+    ss.str(std::string());
+    ss << "autosave_" << username << "_levelNumber";
+    int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+    GameManager::getThis()->setLevel(levelNumber);
+    
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
 }
@@ -448,6 +454,12 @@ void SenarioChooseScene::loadFixedSaveGame()
     ss.str(std::string());
     ss << "loadingGameType";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 1);
+    
+    string username = GameManager::getThis()->username;
+    ss.str(std::string());
+    ss << "fixedsave_" << username << "_levelNumber";
+    int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+    GameManager::getThis()->setLevel(levelNumber);
     
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
@@ -463,6 +475,12 @@ void SenarioChooseScene::loadCustomSaveGame()
     ss.str(std::string());
     ss << "loadingGameType";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 2);
+    
+    string username = GameManager::getThis()->username;
+    ss.str(std::string());
+    ss << "customsave_" << username << "_levelNumber";
+    int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+    GameManager::getThis()->setLevel(levelNumber);
     
     enableLoadingScreen();
     this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
@@ -486,7 +504,7 @@ void SenarioChooseScene::chooseLoadGame()
 void SenarioChooseScene::loadingLoadGame()
 {
     // update the level number in the Game Manager, if loading game fails, it will auto direct the game to tutorial
-    GameManager::getThis()->setLevel(0);
+    // GameManager::getThis()->setLevel(0);
     
     // load the actual game scene
     GlobalHelper::clearCache();

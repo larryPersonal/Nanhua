@@ -28,6 +28,8 @@ public:
     
     CCLabelTTF* titleLabel;
     
+    CCSprite* blackScreen;
+    
 public:
     RandomEventManager();
     ~RandomEventManager();

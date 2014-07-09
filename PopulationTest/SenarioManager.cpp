@@ -15,10 +15,14 @@ SenarioManager::SenarioManager(){
     slidesList = CCArray::create();
     slidesList->retain();
     curSlide = 0;
+    fr = NULL;
 }
 
 SenarioManager::~SenarioManager(){
-    delete fr;
+    if(fr != NULL)
+    {
+        delete fr;
+    }
 }
 
 

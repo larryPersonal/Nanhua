@@ -24,6 +24,8 @@ public:
     
     CCLabelTTF* scenarioTitle;
     
+    CCLabelTTF* userLabel;
+    
     CCSprite* renToken;
     CCLabelTTF* renTokenLabel;
     

@@ -44,29 +44,7 @@ GameScene::GameScene()
     settingsLevel = new SettingsLevel();
     systemConfig = new SystemConfig();
     
-    switch (GameManager::getThis()->getLevel())
-    {
-        case 0:
-            CCLog("l0");
-            settingsLevel->setLevel0();
-            systemConfig->skipSenario = systemConfig->skipSenario_tutorial;
-            systemConfig->skipTutorial = systemConfig->skipTutorial_tutorial;
-            break;
-        case 1:
-            CCLog("l1");
-            settingsLevel->setLevel0();
-            systemConfig->skipSenario = systemConfig->skipSenario_level1;
-            systemConfig->skipTutorial = systemConfig->skipTutorial_level1;
-            break;
-        case 2:
-            CCLog("l2");
-            settingsLevel->setLevel0();
-            systemConfig->skipSenario = systemConfig->skipSenario_level2;
-            systemConfig->skipTutorial = systemConfig->skipTutorial_level2;
-            break;
-        default:
-            break;
-    }
+    configSkipData();
     
     hasBeenDragged = false;
     isInDeccelerating = false;
@@ -192,6 +170,96 @@ CCScene* GameScene::scene()
 GameScene* GameScene::getThis()
 {
     return SP;
+}
+
+void GameScene::configSkipData()
+{
+    int level = GameManager::getThis()->getLevel();
+    
+    if(level == 0)
+    {
+        settingsLevel->setLevel0();
+        systemConfig->skipSenario = systemConfig->skipSenario_tutorial;
+        systemConfig->skipTutorial = systemConfig->skipTutorial_tutorial;
+    }
+    else if(level == 1)
+    {
+        settingsLevel->setLevel0();
+        systemConfig->skipSenario = systemConfig->skipSenario_level1;
+        systemConfig->skipTutorial = systemConfig->skipTutorial_level1;
+    }
+    else if(level == 2)
+    {
+        settingsLevel->setLevel0();
+        systemConfig->skipSenario = systemConfig->skipSenario_level2;
+        systemConfig->skipTutorial = systemConfig->skipTutorial_level2;
+    }
+    else if(level == 3)
+    {
+        settingsLevel->setLevel0();
+        systemConfig->skipSenario = systemConfig->skipSenario_level3;
+        systemConfig->skipTutorial = systemConfig->skipTutorial_level3;
+    }
+    else if(level == 4)
+    {
+        settingsLevel->setLevel0();
+        systemConfig->skipSenario = systemConfig->skipSenario_level4;
+        systemConfig->skipTutorial = systemConfig->skipTutorial_level4;
+    }
+    else if(level == 5)
+    {
+        settingsLevel->setLevel0();
+        systemConfig->skipSenario = systemConfig->skipSenario_level5;
+        systemConfig->skipTutorial = systemConfig->skipTutorial_level5;
+    }
+}
+
+void GameScene::configLevelData()
+{
+    int level = GameManager::getThis()->getLevel();
+    
+    std::string filename = "senario_h.xml";
+    
+    if(level == 0)
+    {
+        filename = "introduction.xml";
+        Senario::getThis()->scenarioState = Introduction;
+        Senario::getThis()->playSenario(filename.c_str());
+    }
+    else if(level == 1)
+    {
+        filename = "senario_h.xml";
+        Senario::getThis()->scenarioState = Scenario1;
+        Senario::getThis()->playSenario(filename.c_str());
+    }
+    else if(level == 2)
+    {
+        filename = "scenario2.xml";
+        Senario::getThis()->scenarioState = Scenario2;
+        Senario::getThis()->playSenario(filename.c_str());
+    }
+    else if(level == 3)
+    {
+        
+    }
+    else if(level == 4)
+    {
+        
+    }
+    else if(level == 5)
+    {
+    }
+}
+
+void GameScene::reSetupLevel()
+{
+    configSkipData();
+    
+    configLevelData();
+    
+    ObjectiveHandler::getThis()->loadObjective();
+    
+    ObjectiveHandler::getThis()->playObjective(true);
 }
 
 bool GameScene::init()
@@ -446,6 +514,23 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
                 skip = true;
             }
         }
+        
+        /*
+        if(RandomEventManager::getThis()->background != NULL)
+        {
+            if(RandomEventManager::getThis()->background->boundingBox().containsPoint(touchLoc))
+            {
+                skip = true;
+            }
+            else
+            {
+                if(RandomEventManager::getThis()->blackScreen->isVisible())
+                {
+                    RandomEventManager::getThis()->hideUI();
+                }
+            }
+        }
+        */
         
         if(GameHUD::getThis()->stickHappinessButton != NULL)
         {
@@ -834,6 +919,35 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     skip = true;
                 }
             }
+            
+            /*
+            if(RandomEventManager::getThis()->background != NULL)
+            {
+                if(RandomEventManager::getThis()->background->boundingBox().containsPoint(touchLoc))
+                {
+                    // click in the background area, nothing happens.
+                    skip = true;
+                }
+                else
+                {
+                    if(RandomEventManager::getThis()->blackScreen->isVisible())
+                    {
+                        RandomEventManager::getThis()->hideUI();
+                        skip = true;
+                    }
+                }
+            }
+            
+            if(GameHUD::getThis()->showRandomEventManagerButton != NULL)
+            {
+                if(GameHUD::getThis()->showRandomEventManagerButton->boundingBox().containsPoint(touchLoc))
+                {
+                    CCLog("test1");
+                    GameHUD::getThis()->clickShowRandomEventManagerButton();
+                    skip = true;
+                }
+            }
+            */
             
             if(GameHUD::getThis()->stickHappinessButton != NULL && GameHUD::getThis()->resumeHappinessButton != NULL)
             {
@@ -1494,7 +1608,7 @@ void GameScene::FirstRunPopulate()
     {
         // new game
         CCLOG("GameManager::getLoadedGame is false!");
-        CCPoint target = CCPointMake(28,43);
+        CCPoint target = CCPointMake(32,43);
         
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
         
@@ -1672,7 +1786,10 @@ void GameScene::update(float time)
         }
     }
     
-    checkAutoSave(time);
+    if(!TutorialManager::getThis()->active)
+    {
+        checkAutoSave(time);
+    }
     
     //GameScene::getThis()->animatedRain->update(time);
 }

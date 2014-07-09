@@ -987,6 +987,8 @@ void MiniDragon::setupScenario()
 
 void MiniDragon::clearMiniDragon()
 {
+    TutorialManager::getThis()->active = false;
+    TutorialManager::getThis()->unlockAll();
     TutorialManager::getThis()->removeChild(dragon);
     TutorialManager::getThis()->removeChild(bubble);
     for (int i = 0; i < animatedStringList->count(); i++)

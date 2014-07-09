@@ -25,6 +25,15 @@ struct SystemConfig
     bool skipSenario_level2;
     bool skipTutorial_level2;
     
+    bool skipSenario_level3;
+    bool skipTutorial_level3;
+    
+    bool skipSenario_level4;
+    bool skipTutorial_level4;
+    
+    bool skipSenario_level5;
+    bool skipTutorial_level5;
+    
     bool hideSkipButton;
     bool debugMode;
     
@@ -38,6 +47,15 @@ struct SystemConfig
         
         skipSenario_level2 = false;
         skipTutorial_level2 = false;
+        
+        skipSenario_level3 = false;
+        skipTutorial_level3 = false;
+        
+        skipSenario_level4 = false;
+        skipTutorial_level4 = false;
+        
+        skipSenario_level5 = false;
+        skipTutorial_level5 = false;
         
         hideSkipButton = true;
         debugMode = true;

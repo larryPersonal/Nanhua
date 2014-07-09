@@ -772,7 +772,6 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
             }
             
         }
-
     }
     
     m_pTouches->removeAllObjects();

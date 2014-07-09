@@ -82,11 +82,19 @@ bool ScoreMenu::init(CCLayer* layer)
     background->addChild(scenarioTitle);
     scenarioTitle->setPosition(ccp(screenSize.width, screenSize.height / 2.0f * 3.0f - 150.0f));
     
+    ss.str(std::string());
+    ss << "Player: " << GameManager::getThis()->username.c_str();
+    userLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 44);
+    userLabel->setAnchorPoint(ccp(0.5f, 1.0f));
+    userLabel->setColor(colorBlack);
+    background->addChild(userLabel);
+    userLabel->setPosition(ccp(screenSize.width, screenSize.height / 2.0f * 3.0f - 250.0f));
+    
     renToken = CCSprite::create("ren_icon.png");
     renToken->setAnchorPoint(ccp(0, 0.5));
     renToken->setScale(1.0f);
     background->addChild(renToken);
-    renToken->setPosition(ccp(screenSize.width - 150.0f, screenSize.height / 2.0f * 3.0f - 300.0f));
+    renToken->setPosition(ccp(screenSize.width - 150.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
     
     ss.str(std::string());
     ss << GameHUD::getThis()->targetReputation;
@@ -110,13 +118,13 @@ bool ScoreMenu::init(CCLayer* layer)
     renTokenLabel->setAnchorPoint(ccp(0.5, 0.5));
     renTokenLabel->setColor(colorBlack);
     background->addChild(renTokenLabel);
-    renTokenLabel->setPosition(ccp(screenSize.width + 100.0f, screenSize.height / 2.0f * 3.0f - 300.0f));
+    renTokenLabel->setPosition(ccp(screenSize.width + 100.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
     
     money = CCSprite::create("money_label.png");
     money->setAnchorPoint(ccp(0, 0.5));
     money->setScale(0.5f);
     background->addChild(money);
-    money->setPosition(ccp(screenSize.width / 2.0f + 140.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
+    money->setPosition(ccp(screenSize.width / 2.0f + 140.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
     ss.str(std::string());
     ss << GameHUD::getThis()->targetMoney;
@@ -125,13 +133,13 @@ bool ScoreMenu::init(CCLayer* layer)
     moneyLabel->setAnchorPoint(ccp(0, 0.5));
     moneyLabel->setColor(colorBlack);
     background->addChild(moneyLabel);
-    moneyLabel->setPosition(ccp(screenSize.width / 2.0f + 250.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
+    moneyLabel->setPosition(ccp(screenSize.width / 2.0f + 250.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
     food = CCSprite::create("food_label.png");
     food->setAnchorPoint(ccp(0, 0.5));
     food->setScale(0.5f);
     background->addChild(food);
-    food->setPosition(ccp(screenSize.width * 2.0f / 2.0f - 90.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
+    food->setPosition(ccp(screenSize.width * 2.0f / 2.0f - 90.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
     ss.str(std::string());
     ss << GameHUD::getThis()->targetFood << "/" << GameHUD::getThis()->targetStorage;
@@ -140,13 +148,13 @@ bool ScoreMenu::init(CCLayer* layer)
     foodLabel->setAnchorPoint(ccp(0, 0.5));
     foodLabel->setColor(colorBlack);
     background->addChild(foodLabel);
-    foodLabel->setPosition(ccp(screenSize.width * 2.0f / 2.0f + 0.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
+    foodLabel->setPosition(ccp(screenSize.width * 2.0f / 2.0f + 0.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
     population = CCSprite::create("population_icon.png");
     population->setAnchorPoint(ccp(0, 0.5));
     population->setScale(0.5f);
     background->addChild(population);
-    population->setPosition(ccp(screenSize.width * 3.0f / 2.0f - 350.0f, screenSize.height / 2.0f * 3.0f - 410.0f));
+    population->setPosition(ccp(screenSize.width * 3.0f / 2.0f - 350.0f, screenSize.height / 2.0f * 3.0f - 510.0f));
     
     ss.str(std::string());
     ss << GameHUD::getThis()->populationLabel->getString();
@@ -155,7 +163,7 @@ bool ScoreMenu::init(CCLayer* layer)
     populationLabel->setAnchorPoint(ccp(0, 0.5));
     populationLabel->setColor(colorBlack);
     background->addChild(populationLabel);
-    populationLabel->setPosition(ccp(screenSize.width * 3.0f / 2.0f - 250.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
+    populationLabel->setPosition(ccp(screenSize.width * 3.0f / 2.0f - 250.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
     ss.str(std::string());
     ss << "Congratulations for your good result!";
@@ -168,7 +176,7 @@ bool ScoreMenu::init(CCLayer* layer)
     scoreMenuButton = CCMenuItemImage::create("accept.png", "", this, menu_selector( ScoreMenu::clickScoreMenuButton ));
     scoreMenuButton->setScale(1.5f);
     scoreMenuButton->setAnchorPoint(ccp(0.5f, 0.5f));
-    scoreMenuButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
+    scoreMenuButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 250.0f));
     
     noticeLabel = CCLabelTTF::create("Re-launch the game to play the next level!", "GillSansMT", 32);
     noticeLabel->setColor(colorBlack);
@@ -271,8 +279,14 @@ void ScoreMenu::clickScoreMenuButton()
         }
         CCUserDefault::sharedUserDefault()->setBoolForKey("level_1_open", true);
         
-        scoreMenuButton->setVisible(false);
-        noticeLabel->setVisible(true);
+        GameManager::getThis()->setLevel(1);
+        
+        scheduleHideScoreMenu();
+        
+        GameScene::getThis()->reSetupLevel();
+        
+        //scoreMenuButton->setVisible(false);
+        //noticeLabel->setVisible(true);
     }
     else if(GameManager::getThis()->getLevel() == 1)
     {
@@ -284,8 +298,14 @@ void ScoreMenu::clickScoreMenuButton()
         }
         CCUserDefault::sharedUserDefault()->setBoolForKey("level_2_open", true);
         
-        scoreMenuButton->setVisible(false);
-        noticeLabel->setVisible(true);
+        GameManager::getThis()->setLevel(2);
+        
+        scheduleHideScoreMenu();
+        
+        GameScene::getThis()->reSetupLevel();
+        
+        //scoreMenuButton->setVisible(false);
+        //noticeLabel->setVisible(true);
     }
     else if(GameManager::getThis()->getLevel() == 2)
     {
@@ -311,8 +331,14 @@ void ScoreMenu::clickScoreMenuButton()
         CCUserDefault::sharedUserDefault()->setFloatForKey("level_2_score", (float) reputation);
         CCUserDefault::sharedUserDefault()->setBoolForKey("level_3_open", true);
         
-        scoreMenuButton->setVisible(false);
-        noticeLabel->setVisible(true);
+        GameManager::getThis()->setLevel(3);
+        
+        scheduleHideScoreMenu();
+        
+        GameScene::getThis()->reSetupLevel();
+        
+        //scoreMenuButton->setVisible(false);
+        //noticeLabel->setVisible(true);
     }
 }
 

@@ -379,7 +379,7 @@ void BuildingCard::init()
     
     cardBG->addChild(menu);
     eventTrigger->setAnchorPoint(ccp(0, 0));
-    eventTrigger->cocos2d::CCNode::setScale(0.358f, 0.54f);
+    eventTrigger->cocos2d::CCNode::setScale(23.0f, 26.0f);
     eventTrigger->setPosition(ccp(0, 0));
     menu->setPosition(ccp(0, 0));
     
@@ -421,9 +421,11 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
 {
     cardBG->setScaleX(largeScale.x);
     cardBG->setScaleY(largeScale.y);
+    CCLog("test my apple1");
     
     if (!GameHUD::getThis()->isThisTapCounted)
     {
+        CCLog("test my apple2");
         return;
     }
     

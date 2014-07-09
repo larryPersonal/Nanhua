@@ -17,6 +17,7 @@
 #include "TutorialManager.h"
 #include "NotificationString.h"
 #include "ScoreMenu.h"
+#include "RandomEventManager.h"
 
 GameHUD* GameHUD::SP;
 
@@ -2293,6 +2294,11 @@ void GameHUD::stickGameHappiness()
         resumeHappinessButton->setVisible(true);
         resumeHappinessButton->setPosition(ccp(resumeHappinessButton->getPositionX(), resumeHappinessButton->getPositionY() + 500));
     }
+}
+
+void GameHUD::clickShowRandomEventManagerButton()
+{
+    RandomEventManager::getThis()->showUI();
 }
 
 void GameHUD::clickSystemButton()

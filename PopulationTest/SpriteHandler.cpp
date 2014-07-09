@@ -186,7 +186,7 @@ void SpriteHandler::initialize()
                 break;
             case 9:
                 targetGender = 'f';
-                fileName = "FMW";
+                fileName = "Soldier";
                 targetIdleF = 3;
                 targetWalkF = 4;
                 villagerClass = V_SOLDIER;

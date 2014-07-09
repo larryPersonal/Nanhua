@@ -1,0 +1,14 @@
+<?xml encoding="ISO-8859-1"?>
+<project>
+    <evt>
+        <id>100001</id>
+        <image>abc.png</image>
+        <name>earthquake</name>
+        <description>There is an earthquake!</description>
+        <effects>
+            <ef>gold:-100</ef>
+            <ef>food:-100</ef>
+            <ef>house:-2</ef>
+        </effects>
+    </evt>
+</project>

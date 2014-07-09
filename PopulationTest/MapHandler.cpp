@@ -601,8 +601,8 @@ CCPoint MapHandler::forceBoundsConstraints(CCPoint &tilePos)
 
 CCPoint MapHandler::forceBounds(CCPoint &tilePos)
 {
-    CCPoint maxBounds = ccp(-3000, -1700);
-    CCPoint minBounds = ccp(-7000, -3600);
+    CCPoint maxBounds = ccp(-3600, -2000);
+    CCPoint minBounds = ccp(-6000, -3200);
     
     tilePos.x = MIN(maxBounds.x, tilePos.x);
 	tilePos.x = MAX(minBounds.x, tilePos.x);

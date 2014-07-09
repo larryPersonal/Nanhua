@@ -1046,7 +1046,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0LENACAMA8FMAvtvyQIUVA6IO8m99VUAAAAAAAAAAAAAAAAAAAAAAJyam8EtRveBT+icoXOGzhk6Z+icoXOGzhk6AwAAAAAAAAAAAPCKBTB+Aao=
+   eJzt0AENACAMwLArwb9MXIwArYJlMwAAAAAAAAAAAAAAAAAAAAAAwAvW6YBP+NzwueFzw+eGzw2fGz43fAYAAAAAAAAAAADgFhvGFQEP
   </data>
  </layer>
  <layer name="Building_River" width="90" height="90">
@@ -1055,7 +1055,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1jENADAMwLDyZzR2o5BvnWQjyJkZAICdzusAAAD4iH8GAIDOPwMAQOefAQCg888AAND5ZwAA6PwzAAB0/hkAADr/DAAAnX8GAAAAtrjRWgc7
+   eJzt1kENAEAIBDH8O8IdFjb3gUtaBfOcKgAAAAAAAAAA4EVvBwAAwEf8MwAA5PwzAADk/DMAAOT8MwAA5PwzAAAAAAAAAADXDISHBFc=
   </data>
  </layer>
  <layer name="Building_House" width="90" height="90">
@@ -1100,7 +1100,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt27ENACAIRUH2X8j13MDYKOTnriVUNK+hCgAAAAAAAIDJ1vA5f7gDAEAGXQcAkEHXAQBk0HUAABl0HQBABl0HAHDv9W/wad9fMgAAAAAAAAAA9NlpZgtx
+   eJzt1sENADAIAzH2X6jrsQRSIbK/vImuCgAAAAAAAAAA4Kb3+Q4AwC36DgAgg64DAMig6wAAMug6AIAMug6yTP20bQAAAAAAAAAAgF0atPgH3g==
   </data>
  </layer>
  <layer name="Building_Wall" width="90" height="90">
@@ -1109,7 +1109,7 @@
    <property name="start_tile_offset" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2rEJwDAMRUGv60Agzv5FmmxggeD7rlFnVDxUeQwAAAAAAAAAAADgNG/3AlDo6l4ACumZJHomiZ5JomeS6JkkeiaJnkmiZ5I83QtAIfeZJHomiZ5JomeS6Jkd659zc95F7/j/DAAAAAAAAAAAAJzuA1qsDo8=
+   eJzt1DEKgEAMRcG9roKg3r+wcQsrLYKBz0yTZgkpHjsGAAAAAAAAAAAAAAB/OrsPgEJr9wFQSM8k0TNJ9EwSPZNEzyTRM0n27gOgkP+ZJHomiZ5JomeS6JkOxz2Xl7l9fDfn3AsAAAAAAAAAAADA0wW2Mgrb
   </data>
  </layer>
  <layer name="Building_School" width="90" height="90" visible="0">

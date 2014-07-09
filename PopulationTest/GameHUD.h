@@ -434,6 +434,8 @@ public:
     
     int getNumberOfDays();
     void setNumberOfDays(int days);
+    
+    void clickShowRandomEventManagerButton();
 };
 
 #endif
