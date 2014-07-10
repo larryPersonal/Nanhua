@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>injured.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{128,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{128,128}}</string>
+                <key>sourceSize</key>
+                <string>{128,128}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>injuredEmote.png</string>
+            <key>size</key>
+            <string>{132,132}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:04251ab1d35c3a7a724facd51b5662e4:60340ba03fdbf46d52c98a66bc0ffa6e:0e145b2f746e54380e2574a74e0518e9$</string>
+            <key>textureFileName</key>
+            <string>injuredEmote.png</string>
+        </dict>
+    </dict>
+</plist>

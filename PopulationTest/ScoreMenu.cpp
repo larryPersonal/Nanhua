@@ -10,6 +10,7 @@
 #include "GameHUD.h"
 #include "GameManager.h"
 #include "Senario.h"
+#include "GlobalHelper.h"
 
 ScoreMenu* ScoreMenu::SP;
 
@@ -269,15 +270,24 @@ void ScoreMenu::removeScoreMenu()
 
 void ScoreMenu::clickScoreMenuButton()
 {
+    string username = GameManager::getThis()->username;
+    stringstream ss;
+    
+    GlobalHelper::resumeAllVillagers();
     if(GameManager::getThis()->getLevel() == 0)
     {
         int reputation = GameHUD::getThis()->targetReputation;
-        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey("level_0_score");
+        ss.str(std::string());
+        ss << username << "_level_0_score";
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
         if(prevReputation < reputation)
         {
-            CCUserDefault::sharedUserDefault()->setFloatForKey("level_0_score", (float) reputation);
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
         }
-        CCUserDefault::sharedUserDefault()->setBoolForKey("level_1_open", true);
+        
+        ss.str(std::string());
+        ss << username << "_level_1_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
         GameManager::getThis()->setLevel(1);
         
@@ -291,12 +301,17 @@ void ScoreMenu::clickScoreMenuButton()
     else if(GameManager::getThis()->getLevel() == 1)
     {
         int reputation = GameHUD::getThis()->targetReputation;
-        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey("level_1_score");
+        ss.str(std::string());
+        ss << username << "_level_1_score";
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
         if(prevReputation < reputation)
         {
-            CCUserDefault::sharedUserDefault()->setFloatForKey("level_1_score", (float) reputation);
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
         }
-        CCUserDefault::sharedUserDefault()->setBoolForKey("level_2_open", true);
+        
+        ss.str(std::string());
+        ss << username << "_level_2_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
         GameManager::getThis()->setLevel(2);
         
@@ -310,6 +325,8 @@ void ScoreMenu::clickScoreMenuButton()
     else if(GameManager::getThis()->getLevel() == 2)
     {
         int reputation = GameHUD::getThis()->targetReputation;
+        ss.str(std::string());
+        ss << username << "_level_2_score";
         CCArray* sprites = GameScene::getThis()->spriteHandler->spritesOnMap;
         float total = 0;
         for (int i = 0; i < sprites->count(); i++)
@@ -328,8 +345,15 @@ void ScoreMenu::clickScoreMenuButton()
         
         reputation += total;
         
-        CCUserDefault::sharedUserDefault()->setFloatForKey("level_2_score", (float) reputation);
-        CCUserDefault::sharedUserDefault()->setBoolForKey("level_3_open", true);
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
+        }
+        
+        ss.str(std::string());
+        ss << username << "_level_3_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
         GameManager::getThis()->setLevel(3);
         

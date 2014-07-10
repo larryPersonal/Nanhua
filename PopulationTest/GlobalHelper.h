@@ -65,6 +65,9 @@ public:
     /* clear cache function */
     static void clearCache();
     static void clearPreloadedTexture();
+    
+    /* resume villagers */
+    static void resumeAllVillagers();
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

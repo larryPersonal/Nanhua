@@ -130,7 +130,6 @@ public:
     void resetBuildMode();
     void setBuildPathDistance(int dist);
     
-    void lostGame(CCObject* psender);
     void decceleratingDragging(float dt);
     
     // jerry added

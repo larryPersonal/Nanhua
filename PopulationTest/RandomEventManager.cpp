@@ -57,30 +57,26 @@ void RandomEventManager::createUI()
     blackScreen->setVisible(false);
     this->addChild(blackScreen, 1);
     
-    background = CCSprite::create("Building Info UI placeholder_dialog.png");
+    background = CCSprite::create("scroller_breaknews.png");
     background->setAnchorPoint(ccp(0.5f, 0.5f));
-    background->setScale(1.5f);
+    background->cocos2d::CCNode::setScale(0.5f, 1.0f);
     background->setPosition(ccp(-screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(background, 2);
 }
 
 void RandomEventManager::showUI()
 {
-    /*
     CCLog("test2");
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     blackScreen->setVisible(true);
     background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-    */
 }
 
 void RandomEventManager::hideUI()
 {
-    /*
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     blackScreen->setVisible(false);
     background->setPosition(ccp(-screenSize.width / 2.0f, screenSize.height / 2.0f));
-    */
 }

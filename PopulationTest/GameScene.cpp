@@ -228,9 +228,9 @@ void GameScene::configLevelData()
     }
     else if(level == 1)
     {
-        filename = "senario_h.xml";
+        //filename = "senario_h.xml";
         Senario::getThis()->scenarioState = Scenario1;
-        Senario::getThis()->playSenario(filename.c_str());
+        //Senario::getThis()->playSenario(filename.c_str());
     }
     else if(level == 2)
     {
@@ -404,14 +404,6 @@ void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
-    if(GameHUD::getThis() != NULL)
-    {
-        if(GameHUD::getThis()->moneyIcon->boundingBox().containsPoint(touchLoc))
-        {
-            CCLog("I clicked the money icon.");
-        }
-    }
-    
     if(BuildingInfoMenu::getThis() != NULL)
     {
         if(BuildingInfoMenu::getThis()->selectWorkerButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->selectWorkerButton->isVisible())
@@ -515,7 +507,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
             }
         }
         
-        /*
         if(RandomEventManager::getThis()->background != NULL)
         {
             if(RandomEventManager::getThis()->background->boundingBox().containsPoint(touchLoc))
@@ -530,7 +521,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
                 }
             }
         }
-        */
         
         if(GameHUD::getThis()->stickHappinessButton != NULL)
         {
@@ -764,15 +754,6 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
-    /*
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    
-    // get the current position
-    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
-    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
-    CCLog("%f, %f", xPos, yPos);
-    */
-    
     if(tapped)
     {
         tapped = false;
@@ -920,7 +901,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            /*
             if(RandomEventManager::getThis()->background != NULL)
             {
                 if(RandomEventManager::getThis()->background->boundingBox().containsPoint(touchLoc))
@@ -942,12 +922,10 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             {
                 if(GameHUD::getThis()->showRandomEventManagerButton->boundingBox().containsPoint(touchLoc))
                 {
-                    CCLog("test1");
                     GameHUD::getThis()->clickShowRandomEventManagerButton();
                     skip = true;
                 }
             }
-            */
             
             if(GameHUD::getThis()->stickHappinessButton != NULL && GameHUD::getThis()->resumeHappinessButton != NULL)
             {
@@ -1607,7 +1585,6 @@ void GameScene::FirstRunPopulate()
     else
     {
         // new game
-        CCLOG("GameManager::getLoadedGame is false!");
         CCPoint target = CCPointMake(32,43);
         
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
@@ -1622,7 +1599,6 @@ void GameScene::FirstRunPopulate()
         spriteHandler->addSpriteToMap(target, V_REFUGEE);
     }
     
-    CCLog("There are %d sprites on the map!", spriteHandler->spritesOnMap->count());
     for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
     {
         GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
@@ -1805,26 +1781,6 @@ void GameScene::checkAutoSave(float deltaTime)
     }
 }
 
-/*
-void GameScene::checkPathValid(float time)
-{
-    //CCLog("test my bad");
-    // check for tutorial build road to connect town hall to house and farm.
-    if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachBuildRoad)
-    {
-        if(teachBuildRoadCheckTime >= 1.0f)
-        {
-            teachBuildRoadCheckTime = 0;
-            checkTeachBuildRoad();
-        }
-        else
-        {
-            teachBuildRoadCheckTime += time;
-        }
-    }
-}
-*/
-
 void GameScene::checkTeachBuildRoad()
 {
     Building* house = NULL;
@@ -1901,13 +1857,6 @@ void GameScene::checkTeachBuildRoad()
     }
     
     delete p;
-}
-                         
-void GameScene::lostGame(cocos2d::CCObject *psender)
-{
-    GameManager::getThis()->firstPlay = false;
-    CCDirector::sharedDirector()->popScene();
-    CCLog("here!");
 }
 
 bool GameScene::handleTouchTokens(CCPoint touchLoc)
@@ -2179,11 +2128,80 @@ void GameScene::initSharedTextureCache()
     CCSpriteBatchNode* ScrollNode = CCSpriteBatchNode::create("BuildScrollUI.png");
     this->addChild(ScrollNode);
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("BuildScrollUI.plist");
+    
+    CCSpriteBatchNode* appearAnimationNode = CCSpriteBatchNode::create("appearAnim.png");
+    this->addChild(appearAnimationNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("appearAnim.plist");
+    
+    CCSpriteBatchNode* disappearAnimationNode = CCSpriteBatchNode::create("disappearAnim.png");
+    this->addChild(disappearAnimationNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("disappearAnim.plist");
+    
+    CCSpriteBatchNode* tokenAnimationNode = CCSpriteBatchNode::create("tokenAnimation.png");
+    this->addChild(tokenAnimationNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("tokenAnimation.plist");
+    
+    /* sprites emotions! */
+    CCSpriteBatchNode* injuredEmoteNode = CCSpriteBatchNode::create("injuredEmote.png");
+    this->addChild(injuredEmoteNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("injuredEmote.plist");
+    
+    CCSpriteBatchNode* stealMoneyNode = CCSpriteBatchNode::create("stealMoneyEmote.png");
+    this->addChild(stealMoneyNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("stealMoneyEmote.plist");
+    
+    CCSpriteBatchNode* findBanditNode = CCSpriteBatchNode::create("findBanditEmote.png");
+    this->addChild(findBanditNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("findBanditEmote.plist");
+    
+    CCSpriteBatchNode* homelessNode = CCSpriteBatchNode::create("homelessEmote.png");
+    this->addChild(homelessNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("homelessEmote.plist");
+    
+    CCSpriteBatchNode* noPathNode = CCSpriteBatchNode::create("noPathEmote.png");
+    this->addChild(noPathNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("noPathEmote.plist");
+    
+    CCSpriteBatchNode* stealFoodNode = CCSpriteBatchNode::create("stealFoodEmote.png");
+    this->addChild(stealFoodNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("stealFoodEmote.plist");
+    
+    CCSpriteBatchNode* commonNode = CCSpriteBatchNode::create("commonEmote.png");
+    this->addChild(commonNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("commonEmote.plist");
+    
+    CCSpriteBatchNode* workNode = CCSpriteBatchNode::create("workEmote.png");
+    this->addChild(workNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("workEmote.plist");
+    
+    CCSpriteBatchNode* bubbleNode = CCSpriteBatchNode::create("bubbleEmote.png");
+    this->addChild(bubbleNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("bubbleEmote.plist");
+    
+    CCSpriteBatchNode* happinessNode = CCSpriteBatchNode::create("happinessEmote.png");
+    this->addChild(happinessNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("happinessEmote.plist");
+    
+    CCSpriteBatchNode* starvingNode = CCSpriteBatchNode::create("starvingEmote.png");
+    this->addChild(starvingNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("starvingEmote.plist");
+    
+    CCSpriteBatchNode* buildNode = CCSpriteBatchNode::create("buildEmote.png");
+    this->addChild(buildNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("buildEmote.plist");
+    
+    CCSpriteBatchNode* defendNode = CCSpriteBatchNode::create("defendEmote.png");
+    this->addChild(defendNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("defendEmote.plist");
+    
+    CCSpriteBatchNode* noFoodNode = CCSpriteBatchNode::create("noFoodEmote.png");
+    this->addChild(noFoodNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("noFoodEmote.plist");
 }
 
 void GameScene::saveBuildingData(int type)
 {
-    CCLog("trying to save building data");
+    // CCLog("trying to save building data");
     
     stringstream ss;
     ss.str(std::string());
@@ -2239,7 +2257,7 @@ void GameScene::saveBuildingData(int type)
             }
         }
         
-        CCLog("****** the current tag is %d", tag);
+        // CCLog("****** the current tag is %d", tag);
         
         // building id
         ss.str(std::string());
@@ -2436,7 +2454,7 @@ void GameScene::saveBuildingData(int type)
 
 void GameScene::saveSystemData(int type)
 {
-    CCLog("### trying to save system data......");
+    // CCLog("### trying to save system data......");
     stringstream ss;
     ss.str(std::string());
     
@@ -2458,56 +2476,56 @@ void GameScene::saveSystemData(int type)
     
     std::string username = ss.str();
     
-    CCLog("### Username of the account is : %s", username.c_str());
+    // CCLog("### Username of the account is : %s", username.c_str());
     
     // save the load game status
     ss.str(std::string());
     ss << username << "_hasSavedGame";
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
     
-    CCLog("### has saved game : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+    // CCLog("### has saved game : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
     
     // save the level number
     ss.str(std::string());
     ss << username << "_levelNumber";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameManager::getThis()->getLevel());
     
-    CCLog("### level number : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### level number : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     // save the current gold
     ss.str(std::string());
     ss << username << "_currentGold";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameHUD::getThis()->money);
     
-    CCLog("### current gold : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### current gold : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     // save the target gold
     ss.str(std::string());
     ss << username << "_targetGold";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameHUD::getThis()->targetMoney);
     
-    CCLog("### target gold : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### target gold : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     // save the reputation
     ss.str(std::string());
     ss << username << "_currentReputation";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameHUD::getThis()->reputation);
     
-    CCLog("### current reputation : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### current reputation : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     // save the target reputation
     ss.str(std::string());
     ss << username << "_targetReputation";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameHUD::getThis()->targetReputation);
     
-    CCLog("### target reputation : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### target reputation : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     // save the date
     ss.str(std::string());
     ss << username << "_date";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameHUD::getThis()->getNumberOfDays());
     
-    CCLog("### current date : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### current date : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     // ignore objective first, deal it later!!!
     
@@ -2516,7 +2534,7 @@ void GameScene::saveSystemData(int type)
 
 void GameScene::saveSpritesData(int type)
 {
-    CCLog("trying to save sprite data");
+    // CCLog("trying to save sprite data");
     
     stringstream ss;
     ss.str(std::string());
@@ -2545,12 +2563,12 @@ void GameScene::saveSpritesData(int type)
     ss << username << "_numberOfGameSprites";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), spritesOnMap->count());
     
-    CCLog("### number of sprites : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### number of sprites : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     for (int i = 0; i < spritesOnMap->count(); i++)
     {
-        CCLog ("#####################################################");
-        CCLog ("### sprite : %d", i);
+        // CCLog ("#####################################################");
+        // CCLog ("### sprite : %d", i);
         
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
         
@@ -2559,14 +2577,14 @@ void GameScene::saveSpritesData(int type)
         ss << username << "_sprite_" << i << "_spriteDisplayedName";
         CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteDisplayedName);
         
-        CCLog ("### sprite displayed name : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
+        // CCLog ("### sprite displayed name : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
         
         // sprite name
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_spriteName";
         CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteName);
         
-        CCLog ("### sprite name : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
+        // CCLog ("### sprite name : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
         
         // sprite positions
         CCPoint tilePos = gs->getWorldPosition();
@@ -2576,111 +2594,111 @@ void GameScene::saveSpritesData(int type)
         ss << username << "_sprite_" << i << "_position_x";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), tilePos.x);
         
-        CCLog ("### sprite position x is : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite position x is : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_position_y";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), tilePos.y);
         
-        CCLog ("### sprite position y is : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite position y is : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite foodCarried
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_foodCarried";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->foodCarried);
         
-        CCLog ("### sprite food carried : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite food carried : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite current direction
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentDirection";
         CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->currentDir);
         
-        CCLog ("### sprite current direction : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
+        // CCLog ("### sprite current direction : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
         
         // sprite cumulative time
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_cumulativeTime";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeTime);
         
-        CCLog ("### sprite cumulative time : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite cumulative time : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite cumulative time for happiness
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_cumulativeTime_happiness";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeTime_happiness);
         
-        CCLog ("### sprite cumulative time happiness : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite cumulative time happiness : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite cumulative time for attack
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_cumulativeTime_attack";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeTime_attack);
         
-        CCLog ("### sprite cumulative time attack : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite cumulative time attack : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite is token drop cooldown
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isTokenDropCooldown";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->is_token_drop_cooldown);
         
-        CCLog ("### sprite is token drop down : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is token drop down : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite token drop cooldown time
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_tokenDropCooldownTime";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->token_drop_cooldown_time);
         
-        CCLog ("### sprite token drop cooldown time : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite token drop cooldown time : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite go to town hall
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_gotoTownHall";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->goToTownHall);
         
-        CCLog ("### sprite go to town hall : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite go to town hall : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite has assigned
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_hasAssigned";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->hasAssigned);
         
-        CCLog ("### sprite has assigned : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite has assigned : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite cumulative check time
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_cumulativeCheckTime";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->cumulativeCheckTime);
         
-        CCLog ("### sprite cumulative check time : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite cumulative check time : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite targetHungry
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_targetHungry";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetHungry);
         
-        CCLog ("### sprite target hungry : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite target hungry : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite targetEnergy
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_targetEnergy";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetEnergy);
         
-        CCLog ("### sprite target energy : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite target energy : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite targetHappiness
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_targetHappiness";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetHappiness);
         
-        CCLog ("### sprite target happiness : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite target happiness : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite villager class
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_villagerClass";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->villagerClass);
         
-        CCLog ("### sprite villager class : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite villager class : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite enermy
         ss.str(std::string());
@@ -2698,7 +2716,7 @@ void GameScene::saveSpritesData(int type)
         }
         CCUserDefault::sharedUserDefault()->setStringForKey(key.c_str(), ss.str());
         
-        CCLog ("### sprite enermy : %s", CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str()).c_str());
+        // CCLog ("### sprite enermy : %s", CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str()).c_str());
         
         // sprite pre-enermy
         ss.str(std::string());
@@ -2716,123 +2734,123 @@ void GameScene::saveSpritesData(int type)
         }
         CCUserDefault::sharedUserDefault()->setStringForKey(key.c_str(), ss.str());
         
-        CCLog ("### sprite pre enermy : %s", CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str()).c_str());
+        // CCLog ("### sprite pre enermy : %s", CCUserDefault::sharedUserDefault()->getStringForKey(key.c_str()).c_str());
         
         // sprite nextTile
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_nextTile_x";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->nextTile.x);
         
-        CCLog ("### sprite next tile x : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite next tile x : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_nextTile_y";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->nextTile.y);
         
-        CCLog ("### sprite next tile y : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite next tile y : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite currentTile
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentTile_x";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->currentTile.x);
         
-        CCLog ("### sprite current tile x : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite current tile x : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentTile_y";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->currentTile.y);
         
-        CCLog ("### sprite current tile y : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite current tile y : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite target location
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_targetLocation_x";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetLocation.x);
         
-        CCLog ("### sprite target location x : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite target location x : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_targetLocation_y";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->targetLocation.y);
         
-        CCLog ("### sprite target location y : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite target location y : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite stop action
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_stopAction";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->stopAction);
         
-        CCLog ("### sprite stop action : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite stop action : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite is moving
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isMoving";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isMoving);
         
-        CCLog ("### sprite is moving : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is moving : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite try escape
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_tryEscape";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->tryEscape);
         
-        CCLog ("### sprite try escape : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite try escape : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite mGameCurrentEndurance
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_mGameCurrentEndurance";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->mGameCurrentEndurance);
         
-        CCLog ("### sprite game current endurance : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite game current endurance : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite mGameMaxEndurance
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_mGameMaxEndurance";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->mGameMaxEndurance);
         
-        CCLog ("### sprite game max endurance : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite game max endurance : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite mGameWarMode
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_mGameWarMode";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->mGameWarMode);
         
-        CCLog ("### sprite game war mode : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite game war mode : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite current money rob
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentMoneyRob";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->current_money_rob);
         
-        CCLog ("### sprite current money rob : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite current money rob : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite current food rob
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentFoodRob";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->current_food_rob);
         
-        CCLog ("### sprite current food rob : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite current food rob : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite should stop next square
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_shouldStopNextSquare";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->shouldStopNextSquare);
         
-        CCLog ("### sprite should stop next square : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite should stop next square : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite wander flag
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_wanderFlag";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->wanderFlag);
         
-        CCLog ("### sprite wander flag : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite wander flag : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite should set visible next frame
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_shouldSetVisibleNextFrame";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->shouldSetVisibleNextFrame);
         
-        CCLog ("### sprite should set visible next frame : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite should set visible next frame : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite job location
         CCArray* allBuildings = buildingHandler->allBuildingsOnMap;
@@ -2860,266 +2878,266 @@ void GameScene::saveSpritesData(int type)
         
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
         
-        CCLog ("### sprite job location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite job location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite job
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_job";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->job);
         
-        CCLog ("### sprite job : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite job : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite is doing job
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isDoingJob";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isDoingJob);
         
-        CCLog ("### sprite is doing job : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is doing job : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite combat state
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_combatState";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->combatState);
         
-        CCLog ("### sprite combat state : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite combat state : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite is leaving next update
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isLeavingNextUpdate";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isLeavingNextUpdate);
         
-        CCLog ("### sprite is leaving next update : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is leaving next update : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite is in building
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isInBuilding";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isInBuilding);
         
-        CCLog ("### sprite is in building : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is in building : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite gender
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_gender";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->gender);
         
-        CCLog ("### sprite gender : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite gender : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite spriteclass
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_spriteClass";
         CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteClass);
         
-        CCLog ("### sprite sprite class : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
+        // CCLog ("### sprite sprite class : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
         
         // sprite movement speed
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_movementSpeed";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->movementSpeed);
         
-        CCLog ("### sprite movement speed : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite movement speed : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite last frame action
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_lastFrameAction";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->lastFrameAction);
         
-        CCLog ("### sprite last frame action : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite last frame action : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite current action
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentAction";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->currAction);
         
-        CCLog ("### sprite current action : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite current action : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite next action
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_nextAction";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->nextAction);
         
-        CCLog ("### sprite next action : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### sprite next action : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite future action 1
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_futureAction1";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->futureAction1);
         
-        CCLog ("### future action 1: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### future action 1: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite future action 2
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_futureAction2";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->futureAction2);
         
-        CCLog ("### future action 2: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### future action 2: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite batch layer index
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_batchLayerIndex";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), (int) gs->batchLayerIndex);
         
-        CCLog ("### batch layer index: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### batch layer index: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite barHp value
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_barHPValue";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->barHP->getValue());
         
-        CCLog ("### sprite bar hp value: %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite bar hp value: %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite is in combat
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isInCombat";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isInCombat);
         
-        CCLog ("### sprite is in combat: %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is in combat: %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite is in attack action
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_isInAttackAction";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->isInAttackAction);
         
-        CCLog ("### sprite is in attack action : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite is in attack action : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite just move one tile
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_justMoveOneTile";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->justMoveOneTile);
         
-        CCLog ("### sprite just move one tile : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
+        // CCLog ("### sprite just move one tile : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite frame Width
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_frameWidth";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->frameWidth);
         
-        CCLog ("### sprite frame width : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog ("### sprite frame width : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite frame Height
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_frameHeight";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->frameHeight);
         
-        CCLog("### sprite frame height : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite frame height : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession happiness rating
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_happinessRating";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->happinessRating);
         
-        CCLog("### sprite happiness rating : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite happiness rating : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession current hungry
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentHungry";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->currentHungry);
         
-        CCLog("### sprite current hungry : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite current hungry : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession target hungry
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_targetHungry";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->targetHungry);
         
-        CCLog("### sprite target hungry : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite target hungry : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession energy rating
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_energyRating";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->energyRating);
         
-        CCLog("### sprite energy rating : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite energy rating : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default work rate
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultWorkRate";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_work_rate);
         
-        CCLog("### sprite default work rate : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default work rate : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default happiness limit
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultHappinessLimit";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_hapiness_limit);
         
-        CCLog("### sprite default happiness limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default happiness limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default work unit per day
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultWorkUnitPerDay";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_work_unit_per_day);
         
-        CCLog("### sprite default work unit per day : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default work unit per day : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default movement speed
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultMovementSpeed";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_movement_speed);
         
-        CCLog("### sprite default movement speed : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default movement speed : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default animated speed
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultAnimatedSpeed";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_animate_speed);
         
-        CCLog("### sprite default animated speed : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default animated speed : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default hungry limit
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultHungryLimit";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_hungry_limit);
         
-        CCLog("### sprite default hungry limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default hungry limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default food carriage limit
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultFoodCarriageLimit";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_food_carriage_limit);
         
-        CCLog("### sprite default food carriage limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default food carriage limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession default energy limit
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_defaultEnergyLimit";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->default_energy_limit);
         
-        CCLog("### sprite default energy limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite default energy limit : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession attack cooldown
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_attackCooldown";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->attack_cooldown);
         
-        CCLog("### sprite attack cooldown : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite attack cooldown : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession attack power max
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_attackPowerMax";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->attack_power_max);
         
-        CCLog("### sprite attack power max : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite attack power max : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession attack power min
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_attackPowerMin";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->attack_power_min);
         
-        CCLog("### sprite attack power min : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite attack power min : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession current endurance
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_currentEndurance";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->current_endurance);
         
-        CCLog("### sprite current endurance : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite current endurance : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession max endurance
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_maxEndurance";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), gs->getPossessions()->max_endurance);
         
-        CCLog("### sprite max endurance : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
+        // CCLog("### sprite max endurance : %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str()));
         
         // sprite possession home location
         index = 0;
@@ -3146,7 +3164,7 @@ void GameScene::saveSpritesData(int type)
         
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
         
-        CCLog("### sprite home location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog("### sprite home location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite possession job location
         index = 0;
@@ -3173,7 +3191,7 @@ void GameScene::saveSpritesData(int type)
         
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
         
-        CCLog("### sprite possession job location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog("### sprite possession job location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite possession target location
         index = 0;
@@ -3200,7 +3218,7 @@ void GameScene::saveSpritesData(int type)
         
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
         
-        CCLog("### sprite target location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog("### sprite target location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         // sprite possession target home location
         index = 0;
@@ -3227,15 +3245,15 @@ void GameScene::saveSpritesData(int type)
         
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
         
-        CCLog("### sprite target home location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog("### sprite target home location : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
-        CCLog ("#####################################################");
+        // CCLog ("#####################################################");
     }
 }
 
 void GameScene::saveRoadData(int type)
 {
-    CCLog("trying to save road data");
+    // CCLog("trying to save road data");
     
     stringstream ss;
     ss.str(std::string());
@@ -3266,12 +3284,12 @@ void GameScene::saveRoadData(int type)
     ss << username << "_numberOfPathTiles";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), allPath->count());
     
-    CCLog("### number of paths : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### number of paths : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     for (int i = 0; i < allPath->count(); i++)
     {
-        CCLog ("#####################################################");
-        CCLog ("### path : %d", i);
+        // CCLog ("#####################################################");
+        // CCLog ("### path : %d", i);
         
         MapTile* mt = (MapTile*) allPath->objectAtIndex(i);
         
@@ -3280,21 +3298,21 @@ void GameScene::saveRoadData(int type)
         ss << username << "_path_" << i << "_posX";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), mt->xpos);
         
-        CCLog ("### path position x : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### path position x : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
         ss.str(std::string());
         ss << username << "_path_" << i << "_posY";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), mt->ypos);
         
-        CCLog ("### path position y : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+        // CCLog ("### path position y : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
         
-        CCLog ("#####################################################");
+        // CCLog ("#####################################################");
     }
 }
 
 void GameScene::saveReputationOrbData(int type)
 {
-    CCLog("trying to save reputation orb data");
+    // CCLog("trying to save reputation orb data");
     
     stringstream ss;
     ss.str(std::string());
@@ -3325,12 +3343,12 @@ void GameScene::saveReputationOrbData(int type)
     ss << username << "_numberOfReputationOrbs";
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), allReputationOrbs->count());
     
-    CCLog("### number of reputation orbs : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    // CCLog("### number of reputation orbs : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
     for (int i = 0; i < allReputationOrbs->count(); i++)
     {
-        CCLog ("#####################################################");
-        CCLog ("### reputation orb : %d", i);
+        // CCLog ("#####################################################");
+        // CCLog ("### reputation orb : %d", i);
         
         ReputationOrb* ro = (ReputationOrb*) allReputationOrbs->objectAtIndex(i);
         
@@ -3355,7 +3373,7 @@ void GameScene::saveData(int type)
 
 void GameScene::loadSpritesData(int type)
 {
-    CCLog("trying to load sprites data......");
+    // CCLog("trying to load sprites data......");
     
     stringstream ss;
     ss.str(std::string());
@@ -3401,7 +3419,7 @@ void GameScene::loadSpritesData(int type)
         
         CCPoint tilePos = ccp(posX, posY);
         
-        CCLog("****** sprite tilePos is: (%f, %f)", tilePos.x, tilePos.y);
+        // CCLog("****** sprite tilePos is: (%f, %f)", tilePos.x, tilePos.y);
         
         GameSprite* gameSprite = spriteHandler->getSpriteToMap(tilePos, vc);
         
@@ -3952,7 +3970,7 @@ void GameScene::loadSpritesData(int type)
 
 void GameScene::loadSystemData(int type)
 {
-    CCLog("trying to load system data......");
+    // CCLog("trying to load system data......");
     
     stringstream ss;
     ss.str(std::string());
@@ -4013,7 +4031,7 @@ void GameScene::loadSystemData(int type)
 
 void GameScene::loadBuildingData(int type)
 {
-    CCLog("trying to load building data......");
+    // CCLog("trying to load building data......");
     
     stringstream ss;
     ss.str(std::string());
@@ -4247,7 +4265,7 @@ void GameScene::loadBuildingData(int type)
 
 void GameScene::loadRoadData(int type)
 {
-    CCLog("trying to load road data......");
+    // CCLog("trying to load road data......");
     
     stringstream ss;
     ss.str(std::string());
@@ -4282,13 +4300,13 @@ void GameScene::loadRoadData(int type)
         ss << username << "_path_" << i << "_posX";
         int posX = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         
-        CCLog ("### path position x : %d", posX);
+        // CCLog ("### path position x : %d", posX);
         
         ss.str(std::string());
         ss << username << "_path_" << i << "_posY";
         int posY = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         
-        CCLog ("### path position y : %d", posY);
+        // CCLog ("### path position y : %d", posY);
         
         MapTile* mapTile = mapHandler->getTileAt(posX, posY);
         
@@ -4361,14 +4379,14 @@ bool GameScene::loadData(int type)
         }
     }
     
-    CCLog("trying to load the game data......");
+    // CCLog("trying to load the game data......");
     // warning: for loading the game data, always load the system data first (before loading the building and sprites data!);
     loadSystemData(type);
     loadBuildingData(type);
     loadSpritesData(type);
     loadRoadData(type);
     // loadReputationOrbData(type);
-    CCLog("loading data finished......");
+    // CCLog("loading data finished......");
     
     return true;
 }

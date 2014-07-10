@@ -72,6 +72,7 @@ class GameHUD : public CCLayer
     int mGameReputation;
     int mGameReputationMax;
     
+    int mGameCurrentPopulationCitizen;
     int mGameCurrentPopulation;
     int mGameCurrentPopulationRoom;
     
@@ -407,6 +408,11 @@ public:
     
     CCLabelTTF* guardTowerScoreLabel;
     float guardTowerScore;
+    
+    CCLabelTTF* tokensOnMapLabel;
+    CCLabelTTF* moneyCountLabel;
+    CCLabelTTF* foodCountLabel;
+    CCLabelTTF* reputationCountLabel;
     
 public:
     void scheduleAddMoney(int);

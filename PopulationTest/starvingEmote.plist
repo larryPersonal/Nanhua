@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>starvingandstuck.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{198,196}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{198,196}}</string>
+                <key>sourceSize</key>
+                <string>{198,196}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>starvingEmote.png</string>
+            <key>size</key>
+            <string>{200,202}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:5f8c93b83ce225a1bfd8ebd9a6f4bd55:d0ca35f01f0fecc46ff9ce533120e92b:6abbdd503b23dddffeb5f29e2894f7d1$</string>
+            <key>textureFileName</key>
+            <string>starvingEmote.png</string>
+        </dict>
+    </dict>
+</plist>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>building_safety helmet2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{128,256}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{128,256}}</string>
+                <key>sourceSize</key>
+                <string>{128,256}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>buildEmote.png</string>
+            <key>size</key>
+            <string>{132,260}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:3ab84be3f18ee5c72b79b29add515221:e03686f706fa3f1907d357977a619d5e:d2a64a10babaf76a6e911a58fdd922e1$</string>
+            <key>textureFileName</key>
+            <string>buildEmote.png</string>
+        </dict>
+    </dict>
+</plist>

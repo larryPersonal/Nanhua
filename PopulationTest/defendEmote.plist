@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>defending.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{256,256}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,256}}</string>
+                <key>sourceSize</key>
+                <string>{256,256}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>defendEmote.png</string>
+            <key>size</key>
+            <string>{260,260}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:69d59a405bd273fd758ad082122c2930:86dbc26d0a3f577c17dfc5993982f05f:7fd1cc0d9cd564811e3a27046b6bab33$</string>
+            <key>textureFileName</key>
+            <string>defendEmote.png</string>
+        </dict>
+    </dict>
+</plist>

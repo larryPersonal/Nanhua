@@ -57,20 +57,25 @@ ObjectiveHandler* ObjectiveHandler::create()
 
 void ObjectiveHandler::loadObjective()
 {
-    
     objectives->removeAllObjects();
     objectives->release();
     
     if(GameManager::getThis()->getLevel() == 0)
     {
+        nextID = 0;
+        progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
     }
     else if(GameManager::getThis()->getLevel() == 1)
     {
+        nextID = 0;
+        progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_1.xml");
     }
     else
     {
+        nextID = 0;
+        progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_1.xml");
     }
 }

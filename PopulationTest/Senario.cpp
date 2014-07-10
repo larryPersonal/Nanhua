@@ -635,6 +635,7 @@ void Senario::buttonSelect()
     }
 }
 
+/*
 void Senario::clearCache()
 {
     CCTextureCache::sharedTextureCache()->removeAllTextures();
@@ -642,6 +643,7 @@ void Senario::clearCache()
     CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
     CCDirector::sharedDirector()->purgeCachedData();
 }
+*/
 
 void Senario::clearScenario()
 {
@@ -651,11 +653,18 @@ void Senario::clearScenario()
     
     curSlide = 0;
     
-    clearCache(); //The GameHUD uses the sprite cache now. This will cause stuff in the gameHUD to disappear during the tutorial.
-    //Do this on gameEnd instead.
+    // clearCache(); //The GameHUD uses the sprite cache now. This will cause stuff in the gameHUD to disappear during the tutorial.
+    
+    GlobalHelper::clearCache();
+    //GlobalHelper::clearPreloadedTexture();
+    
     clearElements();
     
     slidesList->removeAllObjects();
+    CC_SAFE_RELEASE(slidesList);
+    
+    slidesList = CCArray::create();
+    slidesList->retain();
     
     skipSlide = false;
     cumulativeTime = 0;

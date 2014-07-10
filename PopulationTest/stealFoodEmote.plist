@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>thiefStealingFood.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{256,256}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,256}}</string>
+                <key>sourceSize</key>
+                <string>{256,256}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>stealFoodEmote.png</string>
+            <key>size</key>
+            <string>{260,260}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:3d5e1cff1f601ace3b8159911ae531da:33261af304e7231096e60d9b3638f4fe:105007b3b06574153315b03c89f7059a$</string>
+            <key>textureFileName</key>
+            <string>stealFoodEmote.png</string>
+        </dict>
+    </dict>
+</plist>

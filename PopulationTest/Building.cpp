@@ -1270,7 +1270,7 @@ void Building::addProgressiveBar()
     }
     else if(taskType == FarmActivity)
     {
-        CCSprite* taskIcon = CCSprite::create("rice_icon.png");
+        CCSprite* taskIcon = CCSprite::createWithSpriteFrameName("rice_icon.png");
         taskIcon->setAnchorPoint(ccp(0, 1));
         taskIcon->setScale(progressBar->boundingBox().size.height / taskIcon->boundingBox().size.height * 1.5f);
         progressBar->addChild(taskIcon);

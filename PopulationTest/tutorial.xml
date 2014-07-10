@@ -321,7 +321,7 @@
         </lock>
     </slide>
     <slide>
-        <speech>When villagers complete a task, they will gain happiness. Happy villagers will be more likely to drop reputation tokens that will increase your 仁.</speech>
+        <speech>When villagers complete a task, they will gain happiness. Happy villagers will be more likely to drop reputation tokens that will increase your 仁^.</speech>
         <unlock>
             <teachFarming></teachFarming>
             <scroll></scroll>
@@ -329,7 +329,7 @@
         <clickToNext></clickToNext>
     </slide>
     <slide>
-        <speech>The higher your 仁, the more renowned your village will become. Certain unlocks become available after a certain amount of 仁 is earned.</speech>
+        <speech>The higher your 仁^, the more renowned your village will become. Certain unlocks become available after a certain amount of ^仁^ is earned.</speech>
         <clickToNext></clickToNext>
     </slide>
     <slide>

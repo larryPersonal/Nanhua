@@ -35,6 +35,8 @@ public:
     CCSprite* loadingScreen;
     CCSprite* loadingLabel;
     
+    bool isGoingToLoadGame;
+    
 public:
     SenarioChooseScene();
     ~SenarioChooseScene();
@@ -96,6 +98,10 @@ public:
     CCMenuItem* autoLoadDisableButton;
     CCMenuItem* fixedLoadDisableButton;
     CCMenuItem* customLoadDisableButton;
+    
+    CCMenuItem* autoLoadHandleButton;
+    CCMenuItem* fixedLoadHandleButton;
+    CCMenuItem* customLoadHandleButton;
     
     CCLabelTTF* autoSaveLabel;
     CCLabelTTF* fixedSaveLabel;

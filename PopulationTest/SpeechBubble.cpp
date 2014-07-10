@@ -21,7 +21,9 @@ SpeechBubble::SpeechBubble()
     frameHeight = 64;
     frameWidth = 64;
     
-    bubbleTexture = CCTextureCache::sharedTextureCache()->addImage("emotionicon_anima.png");
+    CCSprite* rawSprite = CCSprite::createWithSpriteFrameName("emotionicon_anima.png");
+    bubbleTexture = rawSprite->getTexture();
+    // bubbleTexture = CCTextureCache::sharedTextureCache()->addImage("emotionicon_anima.png");
     
     x_frameno = 0;
     x_maxframeno = 1;
@@ -35,7 +37,7 @@ SpeechBubble::SpeechBubble()
 
 void SpeechBubble::createSpeechBubble()
 {
-    background = CCSprite::create("bubble.png");
+    background = CCSprite::createWithSpriteFrameName("bubble.png");
     
     orig_sizeX = background->getContentSize().width;
     background->setAnchorPoint(ccp(0.5, 0));
@@ -69,7 +71,9 @@ void SpeechBubble::addContent(CCNode* node, CCPoint offset)
 
 void SpeechBubble::addContent(std::string texture, CCPoint offset, int maxFrameNo, int numberOfFrame, int startID, float frameW, float frameH)
 {
-    bubbleTexture = CCTextureCache::sharedTextureCache()->addImage(texture.c_str());
+    CCSprite* rawSprite = CCSprite::createWithSpriteFrameName(texture.c_str());
+    bubbleTexture = rawSprite->getTexture();
+    // bubbleTexture = CCTextureCache::sharedTextureCache()->addImage(texture.c_str());
     
     x_maxframeno = maxFrameNo;
     numberOfElementInOneRow = numberOfFrame;

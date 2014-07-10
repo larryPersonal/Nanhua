@@ -10,6 +10,7 @@
 #include <sstream>
 #include <vector>
 #include "GameScene.h"
+#include "GameHUD.h"
 
 string GlobalHelper::stringToUpper(string str)
 {
@@ -396,4 +397,17 @@ void GlobalHelper::clearPreloadedTexture()
 {
     CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrames();
     CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
+}
+
+void GlobalHelper::resumeAllVillagers()
+{
+    GameHUD::getThis()->pause = false;
+    GameScene::getThis()->tapped = true;
+    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    
+    for (int i = 0; i < spritesOnMap->count(); i++)
+    {
+        GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
+        sp->followPath();
+    }
 }

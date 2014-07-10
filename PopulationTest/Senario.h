@@ -88,8 +88,6 @@ public:
     
     void activateRefugee(float);
     
-    void clearCache();
-    
     void clearScenario();
 };
 

@@ -622,7 +622,7 @@ void MainMenuScene::clickLoginButton()
         
         if (!valid)
         {
-            warningDescription->setString("Either username or password does not valid!");
+            warningDescription->setString("Either username or password is invalid!");
             openWarningScreen();
             return;
         }
@@ -634,7 +634,7 @@ void MainMenuScene::clickLoginButton()
         
         if(password.length() <= 0 || expectedPassword.length() <= 0)
         {
-            warningDescription->setString("Either username or password does not valid!");
+            warningDescription->setString("Either username or password is invalid!");
             openWarningScreen();
         }
         else
@@ -658,7 +658,7 @@ void MainMenuScene::clickLoginButton()
             }
             else
             {
-                warningDescription->setString("Either username or password does not match!");
+                warningDescription->setString("Either username or password is invalid!");
                 openWarningScreen();
             }
         }
@@ -1207,6 +1207,9 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
         
         startGame = true;
         scheduleLoginScreenJumpOut();
+        
+        mode = login;
+        configMode();
         
         if(boyHead->boundingBox().containsPoint(touchLoc))
         {

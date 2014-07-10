@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>findingbandit.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{256,256}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,256}}</string>
+                <key>sourceSize</key>
+                <string>{256,256}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>findBanditEmote.png</string>
+            <key>size</key>
+            <string>{260,260}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:00b6e897bde3efd75298b21d0d36a84c:8a85cfd4087d9da7dd11f8fbefdc9bb3:59886682a0972d7749f2118489cdd3d6$</string>
+            <key>textureFileName</key>
+            <string>findBanditEmote.png</string>
+        </dict>
+    </dict>
+</plist>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>disappear.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{256,256}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,256}}</string>
+                <key>sourceSize</key>
+                <string>{256,256}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>disappearAnim.png</string>
+            <key>size</key>
+            <string>{260,260}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:dcc663dcefb9e5762fed32d1f78dab0f:7b6dcd1a139ba00ed6cd0a9ccd28f1e9:531f5e8d89ae940b45a7ef4fec819c8c$</string>
+            <key>textureFileName</key>
+            <string>disappearAnim.png</string>
+        </dict>
+    </dict>
+</plist>

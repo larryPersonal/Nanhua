@@ -567,23 +567,89 @@ bool MiniDragon::constructTutorialSlide()
         
         CC_SAFE_RELEASE(tempLabel);
         
+        bool hasChinese = false;
         for (int j = 0; j < tokenStr.length(); j++)
         {
-            string tempStr = tokenStr.substr(j, 1);
-            //AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 18, 80.0f);
-            AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "Shojumaru-Regular", 16, 80.0f);
+            if(tokenStr.at(j) == '^')
+            {
+                hasChinese = true;
+                break;
+            }
+        }
+        
+        if(hasChinese)
+        {
+            int startIndex = 0;
+            for (int j = 0; j < tokenStr.length(); j++)
+            {
+                if(tokenStr.at(j) == '^')
+                {
+                    string str = tokenStr.substr(startIndex, j - startIndex);
+                    
+                    /*
+                    CCLabelTTF* tempLabel = CCLabelTTF::create(str.c_str(), "Shojumaru-Regular", 16);
+                    tempLabel->retain();
+                    
+                    if (startX + offX + tempLabel->boundingBox().size.width > limitX)
+                    {
+                        offY = offY + 35.0f;
+                        offX = 0;
+                    }
+                    
+                    CC_SAFE_RELEASE(tempLabel);
+                    */
+                    
+                    AnimatedString* as = AnimatedString::create(str, flashTimeGap * flashGapCount, "Shojumaru-Regular", 16, 80.0f);
+                    as->getLabel()->setColor(color);
+                    as->getLabel()->setAnchorPoint(ccp(0, 1));
+                    
+                    as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
+                    offX += as->label->boundingBox().size.width;
+                    
+                    TutorialManager::getThis()->addChild(as->getLabel(), 20);
+                    animatedStringList->addObject(as);
+                    
+                    flashGapCount += 1;
+                    
+                    startIndex = j + 1;
+                }
+            }
+            
+            string str = tokenStr.substr(startIndex, tokenStr.length() - startIndex);
+            AnimatedString* as = AnimatedString::create(str, flashTimeGap * flashGapCount, "Shojumaru-Regular", 16, 80.0f);
             as->getLabel()->setColor(color);
             as->getLabel()->setAnchorPoint(ccp(0, 1));
             
-            as->getLabel()->setPosition(ccp(startX + offX, startY - offY + offsetY));
+            as->getLabel()->setPosition(ccp(startX + offX, startY - offY));
             offX += as->label->boundingBox().size.width;
             
             TutorialManager::getThis()->addChild(as->getLabel(), 20);
             animatedStringList->addObject(as);
+            
+            flashGapCount += 1;
+            
+            offX += 10;
         }
-        
-        flashGapCount += tokenStr.size();
-        offX += 10;
+        else
+        {
+            for (int j = 0; j < tokenStr.length(); j++)
+            {
+                string tempStr = tokenStr.substr(j, 1);
+                //AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "TooneyLoons", 18, 80.0f);
+                AnimatedString* as = AnimatedString::create(tempStr, flashTimeGap * (j + flashGapCount), "Shojumaru-Regular", 16, 80.0f);
+                as->getLabel()->setColor(color);
+                as->getLabel()->setAnchorPoint(ccp(0, 1));
+                
+                as->getLabel()->setPosition(ccp(startX + offX, startY - offY + offsetY));
+                offX += as->label->boundingBox().size.width;
+                
+                TutorialManager::getThis()->addChild(as->getLabel(), 20);
+                animatedStringList->addObject(as);
+            }
+            
+            flashGapCount += tokenStr.size();
+            offX += 10;
+        }
     }
     
     TutorialManager::getThis()->schedule( schedule_selector( MiniDragon::update ), 1.0f / 120.0f );

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>homeless_anim.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{256,256}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,256}}</string>
+                <key>sourceSize</key>
+                <string>{256,256}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>homelessEmote.png</string>
+            <key>size</key>
+            <string>{260,260}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:8319d9623d4be9de512202299d40afd7:ef598e6acc4104c43b63ac5eed83faf9:f338076386627c48029909af4354db22$</string>
+            <key>textureFileName</key>
+            <string>homelessEmote.png</string>
+        </dict>
+    </dict>
+</plist>

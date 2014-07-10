@@ -61,7 +61,10 @@ ReputationOrb::ReputationOrb(std::string spriteStr, float tTime)
     
     // orbSprite = CCSprite::create(spriteStr.c_str());
     //orbTexture = CCTextureCache::sharedTextureCache()->addImage("tokenanim.png");
-    orbTexture = CCTextureCache::sharedTextureCache()->addImage("appear.png");
+    CCSprite* rawSprite = CCSprite::createWithSpriteFrameName("appear.png");
+    orbTexture = rawSprite->getTexture();
+    
+    // orbTexture = CCTextureCache::sharedTextureCache()->addImage("appear.png");
     
     //assume left to right. ALWAYS make the leftmost frame the first frame.
     //hopefully the artist will not try to make
@@ -109,7 +112,10 @@ void ReputationOrb::appearAnimation(float deltaTime)
             frameWidth = 64;
             frameHeight = 64;
             
-            orbTexture = CCTextureCache::sharedTextureCache()->addImage("tokenanim.png");
+            CCSprite* rawSprite = CCSprite::createWithSpriteFrameName("tokenanim.png");
+            orbTexture = rawSprite->getTexture();
+            
+            // orbTexture = CCTextureCache::sharedTextureCache()->addImage("tokenanim.png");
             x_maxframeno = 4;
             orbRect.setRect(0, y_offset * frameHeight, frameWidth, frameHeight);
             
@@ -183,7 +189,10 @@ void ReputationOrb::update(float dt)
                 frameWidth = 64;
                 frameHeight = 128;
                 
-                orbTexture = CCTextureCache::sharedTextureCache()->addImage("disappear.png");
+                CCSprite* rawSprite = CCSprite::createWithSpriteFrameName("disappear.png");
+                orbTexture = rawSprite->getTexture();
+                
+                // orbTexture = CCTextureCache::sharedTextureCache()->addImage("disappear.png");
                 x_maxframeno = 8;
                 orbRect.setRect(0, ((int)(x_frameno / 4)) * frameHeight, frameWidth, frameHeight);
                 
@@ -244,7 +253,10 @@ void ReputationOrb::collectComplete()
     frameWidth = 64;
     frameHeight = 128;
     
-    orbTexture = CCTextureCache::sharedTextureCache()->addImage("disappear.png");
+    CCSprite* rawSprite = CCSprite::createWithSpriteFrameName("disappear.png");
+    orbTexture = rawSprite->getTexture();
+    
+    // orbTexture = CCTextureCache::sharedTextureCache()->addImage("disappear.png");
     x_maxframeno = 8;
     orbRect.setRect(0, ((int)(x_frameno / 4)) * frameHeight, frameWidth, frameHeight);
     

@@ -257,6 +257,7 @@ void GameHUD::setAllStats()
     mGameCurrentFood = 0;
     mGameCurrentStorage = 0;
     
+    mGameCurrentPopulationCitizen = 0;
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
 }
@@ -264,7 +265,7 @@ void GameHUD::setAllStats()
 void GameHUD::update(float deltaTime)
 {
     // update the timer if the timer is enabled
-    if(hasTimer)
+    if(hasTimer && !pause)
     {
         currentTime += deltaTime;
         
@@ -312,6 +313,26 @@ void GameHUD::update(float deltaTime)
             ObjectiveHandler::getThis()->playObjective();
         }
     }
+    
+    // tokens debuging
+    CCArray* allTokens = GameScene::getThis()->spriteHandler->tokensOnMap;
+    stringstream ss;
+    ss.str(std::string());
+    
+    ss << "Tokens: " << allTokens->count();
+    tokensOnMapLabel->setString(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "money label: " << addMoneyLabelArray->count();
+    moneyCountLabel->setString(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "food label: " << addFoodLabelArray->count();
+    foodCountLabel->setString(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << "reputation label: " << addReputationLabelArray->count();
+    reputationCountLabel->setString(ss.str().c_str());
     
     /* play the dragon animation */
     if(!playDragonAnimation)
@@ -763,6 +784,7 @@ void GameHUD::update(float deltaTime)
     
     // room and population change;
     int temp = 0;
+    int tempCitizen = 0;
     spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
     for (int i = 0; i < spritesOnMap->count(); i++)
     {
@@ -771,13 +793,18 @@ void GameHUD::update(float deltaTime)
         {
             temp++;
         }
+        
+        if(gs->getHome() != NULL)
+        {
+            tempCitizen++;
+        }
     }
     
-    if(mGameCurrentPopulation != temp)
+    if(mGameCurrentPopulation != temp || mGameCurrentPopulationCitizen != tempCitizen)
     {
         mGameCurrentPopulation = temp;
         std::stringstream ss;
-        ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+        ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
         if(mGameCurrentPopulation > mGameCurrentPopulationRoom)
         {
@@ -801,7 +828,7 @@ void GameHUD::update(float deltaTime)
     {
         mGameCurrentPopulationRoom = temp;
         std::stringstream ss;
-        ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+        ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
         if(mGameCurrentPopulation > mGameCurrentPopulationRoom)
         {
@@ -1300,6 +1327,7 @@ void GameHUD::createStatsMenu()
     populationBackground->setPosition(ccp(615, screenSize.height - 9));
     this->addChild(populationBackground, 1);
     
+    mGameCurrentPopulationCitizen = 0;
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
     
@@ -1311,6 +1339,11 @@ void GameHUD::createStatsMenu()
         {
             mGameCurrentPopulation++;
         }
+        
+        if(gs->getHome() != NULL)
+        {
+            mGameCurrentPopulationCitizen++;
+        }
     }
     
     CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
@@ -1321,7 +1354,7 @@ void GameHUD::createStatsMenu()
     }
     
     ss.str(std::string());
-    ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+    ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
@@ -1888,8 +1921,6 @@ void GameHUD::clickObjectiveButton()
     }
 }
 
-
-
 void GameHUD::createBuildMenu()
 {
     // set common variables
@@ -1936,23 +1967,33 @@ void GameHUD::clickBuildButton()
             TutorialManager::getThis()->miniDragon->move(ccp(0, 220));
         }
         
+        bool flag = false;
         
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        if(currTapMode != Normal)
+        {
+            flag = true;
+        }
+        
         if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
         {
             GameHUD::getThis()->scheduleAddMoney(GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost);
         }
         
-        buildButton->setVisible(false);
+        
         currTapMode = Normal;
         GameScene::getThis()->buildingHandler->selectedBuilding = NULL;
         GameScene::getThis()->mapHandler->UnBuildPreview();
         GameScene::getThis()->mapHandler->UnPathPreview();
-        buildScroll = BuildScroll::create();
-        buildScroll->useAsTopmostPopupMenu();
-        buildButton->setPosition(ccp(screenSize.width + buildButton->boundingBox().size.width, 0));
         
-        buildScroll->cocos2d::CCNode::setZOrder(30);
+        if(!(flag && !TutorialManager::getThis()->active))
+        {
+            buildButton->setVisible(false);
+            buildScroll = BuildScroll::create();
+            buildScroll->useAsTopmostPopupMenu();
+            buildButton->setPosition(ccp(screenSize.width + buildButton->boundingBox().size.width, 0));
+            buildScroll->cocos2d::CCNode::setZOrder(30);
+        }
         
         if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildFarm || (TutorialManager::getThis()->teachBuildRoad && !TutorialManager::getThis()->miniDragon->notFirst && !TutorialManager::getThis()->miniDragon->connectGranary && !TutorialManager::getThis()->miniDragon->connectFarm) || TutorialManager::getThis()->teachBuildGranary))
         {
@@ -2040,6 +2081,37 @@ void GameHUD::createSystemMenu()
     scoreButton->setScale(screenSize.width / scoreButton->boundingBox().size.width * 0.05f);
     scoreButton->setAnchorPoint(ccp(0, 0));
     scoreButton->setPosition(ccp(screenSize.width * 0.15f, 0));
+    
+    // tokens debuging
+    CCArray* allTokens = GameScene::getThis()->spriteHandler->tokensOnMap;
+    stringstream ss;
+    ss << "Tokens: " << allTokens->count();
+    tokensOnMapLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
+    tokensOnMapLabel->setAnchorPoint(ccp(0.0f, 0.5f));
+    tokensOnMapLabel->setPosition(ccp(0, screenSize.height / 2.0f + 80.0f));
+    this->addChild(tokensOnMapLabel);
+    
+    ss.str(std::string());
+    ss << "Money Label: " << addMoneyLabelArray->count();
+    moneyCountLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
+    moneyCountLabel->setAnchorPoint(ccp(0.0f, 0.5f));
+    moneyCountLabel->setPosition(ccp(0, screenSize.height / 2.0f + 30.0f));
+    this->addChild(moneyCountLabel);
+    
+    ss.str(std::string());
+    ss << "Food Label: " << addFoodLabelArray->count();
+    foodCountLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
+    foodCountLabel->setAnchorPoint(ccp(0.0f, 0.5f));
+    foodCountLabel->setPosition(ccp(0, screenSize.height / 2.0f -20.0f));
+    this->addChild(foodCountLabel);
+    
+    ss.str(std::string());
+    ss << "Reputation Label: " << addReputationLabelArray->count();
+    reputationCountLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
+    reputationCountLabel->setAnchorPoint(ccp(0.0f, 0.5f));
+    reputationCountLabel->setPosition(ccp(0, screenSize.height / 2.0f - 70.0f));
+    this->addChild(reputationCountLabel);
+    
     
     float happinessRate = average_happiness;
     

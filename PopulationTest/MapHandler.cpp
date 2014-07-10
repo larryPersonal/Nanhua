@@ -468,7 +468,7 @@ void MapHandler::moveToPosition(CCPoint target, CCPoint current)
 
 void MapHandler::centerMap()
 {
-    CCPoint pos = CCPointMake(-4044, -1700);
+    CCPoint pos = CCPointMake(-4600, -2600);
     mapPtr->setPosition(pos.x, pos.y);
 }
 

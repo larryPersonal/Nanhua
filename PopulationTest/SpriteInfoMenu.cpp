@@ -85,7 +85,7 @@ void SpriteInfoMenu::createMenuItems()
     textName->setColor(colorYellow);
     
     // Cash
-    spCash = CCSprite::create("yuanbao.png");
+    spCash = CCSprite::createWithSpriteFrameName("yuanbao.png");
     spCash->setScale(0.75);
     
   //  std::string tempStr = "CASH";

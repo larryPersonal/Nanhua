@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>Happinessicon.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>happinessEmote.png</string>
+            <key>size</key>
+            <string>{260,132}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:38dee40d6e773a066057bdb267a44068:3c8b3265f904088b6877fe6901cda20a:b04aa9b1e6e4734ac94274b9befb10e5$</string>
+            <key>textureFileName</key>
+            <string>happinessEmote.png</string>
+        </dict>
+    </dict>
+</plist>

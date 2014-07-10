@@ -10,6 +10,7 @@
 #include "GameHUD.h"
 #include "MainMenuScene.h"
 #include "GameManagement.h"
+#include "GlobalHelper.h"
 
 SystemMenu* SystemMenu::SP;
 SystemMenu* SystemMenu::create(CCLayer* layer)
@@ -106,16 +107,7 @@ bool SystemMenu::init(CCLayer* layer)
 
 void SystemMenu::clickResumeButton()
 {
-    GameHUD::getThis()->pause = false;
-    GameScene::getThis()->tapped = true;
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    
-    for (int i = 0; i < spritesOnMap->count(); i++)
-    {
-        GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-        sp->followPath();
-    }
-    
+    GlobalHelper::resumeAllVillagers();
     scheduleHideSystemMenu();
     //releaseAll();
 }
