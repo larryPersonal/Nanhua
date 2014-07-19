@@ -218,13 +218,15 @@ void TutorialManager::setupForScenario()
     GameManager::getThis()->setLevel(1);
     
     lockAll();
-    target = ccp(4128.0f, 1800.0f);
+    target = ccp(4400.0f, 2500.0f);
     this->schedule(schedule_selector(TutorialManager::moveCamera), 1.0f / 120.0f);
     
     spritesArray = CCArray::create();
     spritesArray->retain();
     
-    CCPoint target = CCPointMake(30,39);
+    CCLog("my very best warming!");
+    
+    CCPoint target = CCPointMake(39,64);
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x += 1;

@@ -757,17 +757,21 @@ void MapHandler::Populate(CCArray* layers)
                 if (gid == 0) continue;
                 if (!GameScene::getThis()) continue;
                 
+                // CCLog("************** the gid is %d", gid);
                 Building* targetBuilding = GameScene::getThis()->buildingHandler->getBuildingWithGID(gid);
-                if (!targetBuilding) continue;
+                if (!targetBuilding)
+                {
+                    continue;
+                }
+                
                 if (targetBuilding->buildingType != BUILDINGCATEGORYMAX)
                 {
-                    
                     if (targetBuilding->buildingType == HOUSING)
                     {
-                        targetBuilding = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(targetBuilding->buildingName);
-                    }                    
+                        targetBuilding = GameScene::getThis()->buildingHandler->getRandomBuilding(targetBuilding);
+                    }
                     
-                    Build(tgtPoint, targetBuilding, true);
+                    Build(tgtPoint, targetBuilding, true, true);
                 }
                 
             }
@@ -814,57 +818,50 @@ void MapHandler::Populate(CCArray* layers)
         }
     }
     pLayer->setVisible(false);
-    /*
-    pLayer = mapPtr->layerNamed("Ground_River");
+}
+
+void MapHandler::PopulateForLoadingGame(CCArray* layers)
+{
     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
     {
         for (int j = 0; j < mapPtr->getMapSize().height; ++j)
         {
-            CCPoint tilePos = ccp(i, j);
-            CCSprite* environment = pLayer->tileAt(tilePos);
-            if (environment != NULL)
+            int gid = 0;
+            CCPoint tgtPoint = CCPointMake(i,j);
+            
+            for (int k = layers->count() -1; k>= 0; --k)
             {
-                // Remove environment tile from TMXLayer, and add to map instead
-                environment->retain();
-                environment->removeFromParent();
+                CCTMXLayer* layer = (CCTMXLayer*)(layers->objectAtIndex(k));
                 
-                //FUKKIN OFFSET FOR LARGE TILES
-                //I ASSUME 2048x2048. anything else CHANGE.
-                CCPoint worldPos = MapHandler::locationFromTilePos(&tilePos);
-                worldPos.x -= 960;
-                worldPos.y += 960;
-                environment->setPosition(worldPos);
                 
-                getMap()->addChild(environment, calcZIndex(tilePos));
-                getTileAt(i, j)->setEnvironment(environment);
+                if (strncmp(layer->getLayerName(), "Building", strlen("Building")) == 0)
+                {
+                    
+                    gid = layer->tileGIDAt(tgtPoint);
+                    if (gid != 0)
+                        break;
+                }
+                
+                
             }
+            
+            if (gid == 0) continue;
+            if (!GameScene::getThis()) continue;
+            
+            // CCLog("************** the gid is %d", gid);
+            Building* targetBuilding = GameScene::getThis()->buildingHandler->getBuildingWithGID(gid);
+            if (!targetBuilding)
+            {
+                continue;
+            }
+            
+            if (targetBuilding->buildingType != BUILDINGCATEGORYMAX && targetBuilding->buildingType != HOUSING && targetBuilding->buildingType != AMENITY && targetBuilding->buildingType != GRANARY && targetBuilding->buildingType != MARKET && targetBuilding->buildingType != MILITARY && targetBuilding->buildingType != SPECIAL && targetBuilding->buildingType != EDUCATION && targetBuilding->buildingType != SOCIAL)
+            {
+                Build(tgtPoint, targetBuilding, true, true);
+            }
+            
         }
     }
-    
-    */
-  //  pLayer->setVisible(false);
-    /*
-    pLayer = mapPtr->layerNamed("Ground_Border");
-    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
-    {
-        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
-        {
-            CCPoint tilePos = ccp(i, j);
-            CCSprite* environment = pLayer->tileAt(tilePos);
-            if (environment != NULL)
-            {
-                // Remove environment tile from TMXLayer, and add to map instead
-                environment->retain();
-                environment->removeFromParent();
-                getMap()->addChild(environment, calcZIndex(tilePos));
-                getTileAt(i, j)->setEnvironment(environment);
-            }
-        }
-    }
-    pLayer->setVisible(false);
-    */
-    
-    
 }
 
 
@@ -963,7 +960,6 @@ Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
     // Don't build if tiles are occupied. EDIT: Ignore this rule if Building is a decoration, which allows it to build on OOB tiles and over each other.
     if (!isBuildableOnTile(target, cloneBuilding))
     {
-        CCLog("****** you are the apple of my eye!");
         return NULL;
     }
     
@@ -1005,7 +1001,7 @@ Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
     return cloneBuilding;
 }
 
-bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipConstruction, std::string withDetails, bool inGame)
+bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewBuilding, bool skipConstruction, std::string withDetails, bool inGame)
 {
     if (!building)
     {
@@ -1054,6 +1050,17 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool skipCo
                 getTileAt(target.x + j, target.y + i)->setMaster(master);
             }
         }
+    }
+    
+    if(isNewBuilding)
+    {
+        string username = GameManager::getThis()->username;
+        stringstream sss;
+        sss << username << "_building_unique_id";
+        int buildingUniqueID = CCUserDefault::sharedUserDefault()->getIntegerForKey(sss.str().c_str(), 0);
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(sss.str().c_str(), buildingUniqueID + 1);
+    
+        cloneBuilding->uniqueID = buildingUniqueID;
     }
     
     if (skipConstruction)

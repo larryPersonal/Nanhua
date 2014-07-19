@@ -11,6 +11,7 @@
 #include "MainMenuScene.h"
 #include "GameManagement.h"
 #include "GlobalHelper.h"
+#include "RandomEventManager.h"
 
 SystemMenu* SystemMenu::SP;
 SystemMenu* SystemMenu::create(CCLayer* layer)
@@ -53,7 +54,7 @@ SystemMenu::~SystemMenu()
 bool SystemMenu::init(CCLayer* layer)
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen = CCSprite::createWithSpriteFrameName("blackscreen.png");
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -120,7 +121,32 @@ void SystemMenu::clickOptionButton()
 
 void SystemMenu::clickExitButton()
 {
+    GameScene::getThis()->setTouchEnabled(false);
     
+    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    for(int i = 0; i < allBuildings->count(); i++)
+    {
+        Building* bui = (Building*) allBuildings->objectAtIndex(i);
+        bui->stopUpdate();
+    }
+    
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for(int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+        gs->stopAction = true;
+        gs->StopMoving();
+    }
+    
+    GameScene::getThis()->unschedule(schedule_selector(GameScene::update));
+    GameScene::getThis()->unschedule(schedule_selector(GameScene::scrollToCenter));
+    GameScene::getThis()->unschedule(schedule_selector(GameScene::decceleratingDragging));
+    
+    GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::stopGame), 0.1f);
+    
+    SystemMenu::getThis()->removeSystemMenu();
+    
+    /*
     GameScene::getThis()->mapHandler->UnBuildEndGame();
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     
@@ -129,6 +155,7 @@ void SystemMenu::clickExitButton()
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
     
     GameScene::getThis()->enableLoadingScreen();
+    */
 }
 
 void SystemMenu::clickRestartButton()
@@ -139,8 +166,8 @@ void SystemMenu::clickRestartButton()
 
 void SystemMenu::releaseAll()
 {
-    GameHUD::getThis()->removeChild(blackScreen);
-    GameHUD::getThis()->removeChild(systemMenu_background);
+    RandomEventManager::getThis()->removeChild(blackScreen);
+    RandomEventManager::getThis()->removeChild(systemMenu_background);
     CC_SAFE_RELEASE(this);
 }
 

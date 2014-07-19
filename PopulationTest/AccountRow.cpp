@@ -9,6 +9,7 @@
 #include "AccountRow.h"
 #include "MainMenuScene.h"
 #include "SoundtrackManager.h"
+#include "GlobalHelper.h"
 
 AccountRow* AccountRow::create(ScrollArea* sa, int ind)
 {
@@ -226,6 +227,8 @@ void AccountRow::clickDeleteAccountButton()
         userNumber--;
         CCUserDefault::sharedUserDefault()->setIntegerForKey("userNumber", userNumber);
     }
+    
+    GlobalHelper::cleanSaveData(userAccount->getAccountName());
     
     MainMenuScene::getThis()->deleteAccountRow(index);
     

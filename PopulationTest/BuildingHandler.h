@@ -11,7 +11,6 @@
 
 #include "Building.h"
 #include "cocos2d.h"
-#include "JobCollection.h"
 /*this class must be initialized before the map!*/
 
 class BuildingHandler
@@ -73,13 +72,13 @@ public:
     
     Building* getNearestStorage(GameSprite* sp);
     
-    void init(CCTMXTiledMap* mapPtr, JobCollection* jc);
+    void init(CCTMXTiledMap* mapPtr);
     
     void removeBuildingFromMap(Building* b);
     void addBuildingToMap(Building* b);
     
     
-    Building* getRandomBuildingWithName(std::string name);
+    Building* getRandomBuilding(Building* building);
     
     
     int getHighestBuildingID();

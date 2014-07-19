@@ -28,6 +28,7 @@ RandomEvent::RandomEvent()
     event_name = "";
     event_image = "";
     event_description = "";
+    percentage = 0;
 }
 
 RandomEvent::~RandomEvent()

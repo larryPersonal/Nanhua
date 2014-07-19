@@ -12,7 +12,6 @@
 #include "Building.h"
 #include "Sprite.h"
 #include "Behavior.h"
-#include "Job.h"
 
 /* contains the sprite's possessions at the moment*/
 /* this is contained as a private member inside Sprite and used as a private pointer inside Behavior.*/

@@ -308,29 +308,20 @@ public:
     static GameHUD* create();
     static GameHUD* getThis();
     
-    CCLabelTTF* miscLabel;
-    
     bool init();
     void createInitialGUI();
     void onOrientationChanged();
+    
     void update(float deltaTime);
+    void updateReputation(float deltaTime);
+    void updateMoney(float);
+    void updateFood(float);
+    void updateStorage(float);
     
     int getTapMode();
     void setTapMode(int mode);
     
     void closeAllMenuAndResetTapMode();
-    
-    void buyBuilding(int cost);
-    
-    void onSpriteAddedToMap(GameSprite* sprite);
-    void onSpriteRemovedFromMap(GameSprite* sprite);
-    
-    void updatePopTotalLabel();
-    void updateAvgHapLabel();
-    void updateMoneyLabel();
-    void updateBuildCostLabel(int cost, int dist=-1);
-    
-    void showHint(std::string hintText);
     
     Date* getDate();
     
@@ -348,7 +339,6 @@ public:
     
     void clickObjectiveButton();
     void clickBuildButton();
-    void clickSystemButton();
     void clickScoreButton();
     
     void clickMoneyLabel();
@@ -388,7 +378,6 @@ public:
     
     CCArray* addReputationLabelArray;
     int targetReputation;
-    bool isAddingReputation;
     
     CCArray* addFoodLabelArray;
     CCArray* addStorageLabelArray;
@@ -416,15 +405,10 @@ public:
     
 public:
     void scheduleAddMoney(int);
-    void addMoney(float);
-    
     void scheduleAddReputation(int);
-    void addReputation(float);
-    
     void scheduleAddFood(int);
     void scheduleAddStorage(int);
-    void addFood(float);
-    void addStorage(float);
+    
     
     void scheduleShowNewObjectiveNotification();
     void scheduleHideNewObjectiveNotification();
@@ -442,6 +426,8 @@ public:
     void setNumberOfDays(int days);
     
     void clickShowRandomEventManagerButton();
+    
+    void clearAllLabels();
 };
 
 #endif

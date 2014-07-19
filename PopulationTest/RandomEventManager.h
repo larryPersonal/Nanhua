@@ -10,6 +10,7 @@
 #define PopulationTest_RandomEventManager_h
 
 #include "cocos2d.h"
+#include "RandomEvent.h"
 
 using namespace cocos2d;
 
@@ -20,15 +21,21 @@ public:
     
     CCSprite* background;
     
-    CCRect* imageRect;
-    CCRect* effectRect;
-    
     CCMenuItem* okButton;
-    CCMenuItem* cancelButton;
+    CCMenu* menu;
     
     CCLabelTTF* titleLabel;
     
     CCSprite* blackScreen;
+    
+    CCArray* randomEvents;
+    
+    RandomEvent* theRandomEvent;
+    CCSprite* image;
+    
+    CCLabelTTF* descriptionLabel;
+    
+    bool active;
     
 public:
     RandomEventManager();
@@ -43,6 +50,15 @@ public:
     
     void showUI();
     void hideUI();
+    
+    void constructRandomEventContent();
+    void removeRandomEventContent();
+    
+    void clickSystemButton();
+    
+    void readRandomEventsFile();
+    
+    void applyRandomEventEffects();
 };
 
 #endif

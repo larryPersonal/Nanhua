@@ -100,6 +100,7 @@ public:
     void rescaleScrollLimits();
     void updatePlayArea(CCPoint min, CCPoint max);
     void Populate(CCArray* layers);
+    void PopulateForLoadingGame(CCArray* layers);
     
     /*path*/
     void Path(CCPoint &target);
@@ -113,7 +114,7 @@ public:
     
     /*building*/
     Building* BuildOnMap(CCPoint &target, Building* building);
-    bool Build(CCPoint &target, Building* building, bool skipConstruction=false, std::string withDetails = "", bool inGame=false);
+    bool Build(CCPoint &target, Building* building, bool isNewBuilding, bool skipConstruction=false, std::string withDetails = "", bool inGame=false);
     bool BuildPreview(CCPoint &target, Building* building);
     void ForceUnbuild(CCPoint &target);
     void UnBuild(CCPoint &target);

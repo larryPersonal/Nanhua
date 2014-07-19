@@ -89,6 +89,8 @@ public:
     void activateRefugee(float);
     
     void clearScenario();
+    
+    void stopGame();
 };
 
 #endif

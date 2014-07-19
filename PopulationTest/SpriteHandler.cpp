@@ -312,11 +312,13 @@ GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
     //return NULL;
     if (!allSprites)
     {
+        CCLog("test1");
         return NULL;
     }
     
     if (allSprites->count() == 0)
     {
+        CCLog("test2");
         return NULL;
     }
     
@@ -339,6 +341,7 @@ GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
     
     if(idList.size() <= 0)
     {
+        CCLog("test3");
         return NULL;
     }
     
@@ -352,8 +355,11 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     SpriteClass* spriteClass = GlobalHelper::getSpriteClassByVillagerClass(villagerClass);
      
     if (!targetSprite){
+        CCLog("halo 1");
         return;
     }
+    
+    // CCLog("halo 2");
     
     GameSprite* newSprite = (GameSprite*)targetSprite->copy();
     newSprite->retain();
@@ -365,9 +371,18 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     
     newSprite->makeSprite(&tilePos);
     
+    // set the unique id for that sprite
+    string username = GameManager::getThis()->username;
+    stringstream ss;
+    ss << username << "_sprite_unique_id";
+    
+    int uniqueID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    newSprite->uniqueID = uniqueID;
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), uniqueID + 1);
+    
     spritesOnMap->addObject(newSprite);
     
-    GameHUD::getThis()->onSpriteAddedToMap(newSprite);
+    // GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
     if(tutorial)
     {
@@ -401,7 +416,7 @@ GameSprite* SpriteHandler::getSpriteToMap(cocos2d::CCPoint &tilePos, VillagerCla
     
     spritesOnMap->addObject(newSprite);
     
-    GameHUD::getThis()->onSpriteAddedToMap(newSprite);
+    // GameHUD::getThis()->onSpriteAddedToMap(newSprite);
     
     return newSprite;
 }
@@ -473,7 +488,7 @@ void SpriteHandler::loadSpriteToMap(cocos2d::CCPoint &tilePos, GameSprite *sp, s
     
     spritesOnMap->addObject(newSprite);
     
-    GameHUD::getThis()->onSpriteAddedToMap(newSprite);
+    // GameHUD::getThis()->onSpriteAddedToMap(newSprite);
 }
 
 void SpriteHandler::removeSpriteFromMap(GameSprite* sprite)
@@ -481,7 +496,7 @@ void SpriteHandler::removeSpriteFromMap(GameSprite* sprite)
     spritesOnMap->removeObject(sprite);
     
     //Order of execution! 
-    GameHUD::getThis()->onSpriteRemovedFromMap(sprite);
+    // GameHUD::getThis()->onSpriteRemovedFromMap(sprite);
     sprite->unmakeSprite();
     sprite->release();
 }

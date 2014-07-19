@@ -37,7 +37,6 @@ GameSprite::GameSprite()
     config_doc = "";
     shouldStopNextSquare = false;
     speechBubble = NULL;
-    isFollowingMoveInstruction = false;
     currTile = NULL;
     shouldSetVisibleNextFrame = false;
     
@@ -124,7 +123,7 @@ GameSprite::GameSprite()
     targetEnergy = 0;
     targetHappiness = 0;
     
-    
+    uniqueID = -1;
 }
 
 void GameSprite::initAI(bool isUpgrade)
@@ -300,6 +299,7 @@ GameSprite* GameSprite::copyWithZone(CCZone *pZone)
         pCopy->gender = this->gender;
         pCopy->race = this->race;
         pCopy->villagerClass = this->villagerClass;
+        pCopy->uniqueID = this->uniqueID;
         pNewZone = new CCZone(pCopy);
     }
     
@@ -450,7 +450,6 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
     
     if (from.equals(to))
     {
-        isFollowingMoveInstruction = false;
         return false;
     }
     
@@ -467,58 +466,24 @@ bool GameSprite::CreatePath(CCPoint from, CCPoint to)
         }
     }
     
-    path = p->makePath(&from, &to);
+    bool isCombatingSprite = false;
+    if(villagerClass == V_SOLDIER || villagerClass == V_BANDIT)
+    {
+        isCombatingSprite = true;
+    }
+    
+    path = p->makePath(&from, &to, isCombatingSprite);
 
     if (path->count() == 0)
     {
         //CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
         saySpeech(STUCK, 2.0f);
-        path = p->makePath(&from, &p->closest);
+        path = p->makePath(&from, &p->closest, isCombatingSprite);
     }
     path->retain();
     
     delete p;
     return true;
- }
-
-bool GameSprite::CreatePathEscape(CCPoint from, CCPoint to)
-{
-    if (currAction != IDLE)
-    {
-        setAction(IDLE);
-    }
-    
-    if (from.equals(to))
-    {
-        isFollowingMoveInstruction = false;
-        return false;
-    }
-    
-    PathFinder *p = new PathFinder();
-    
-    if (path != NULL)
-    {
-        if (path->count() > 0)
-        {
-            path->removeAllObjects();
-            path->release();
-            path = NULL;
-        }
-    }
-    
-    path = p->makePath(&from, &to);
-    
-    if (path->count() == 0)
-    {
-        //CCLog("Warning! no path from %f, %f to %f, %f - next closest node used", from.x, from.y, to.x, to.y);
-        saySpeech(STUCK, 2.0f);
-        path = p->makePath(&from, &p->closest);
-    }
-    path->retain();
-    
-    delete p;
-    return true;
-
 }
 
 int GameSprite::getPathDistance(CCPoint from, CCPoint to)
@@ -535,7 +500,13 @@ int GameSprite::getPathDistance(CCPoint from, CCPoint to)
         CCArray* tempPath = CCArray::create();
         tempPath->retain();
         
-        tempPath = p->makePath(&from, &to);
+        bool isCombatingSprite = false;
+        if(villagerClass == V_SOLDIER || villagerClass == V_BANDIT)
+        {
+            isCombatingSprite = true;
+        }
+        
+        tempPath = p->makePath(&from, &to, isCombatingSprite);
         
         int result = tempPath->count();
         
@@ -876,7 +847,6 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     else
     {
         shouldStopNextSquare = false;
-        isFollowingMoveInstruction = false;
         setAction(IDLE);
         idleDelay = 5.0f;
         changeAnimation(currentDir);
@@ -960,7 +930,6 @@ bool GameSprite::Wander()
         return false;
     }
     
-    //Note: the random nature of Wander means there is no need to set isFollowingMoveInstruction to true. Wander should be interruptable at any time.
     wanderFlag = !wanderFlag;
     if (wanderFlag)
     {
@@ -1045,29 +1014,6 @@ SpriteAction GameSprite::getAction()
     return currAction;
 }
 
-
-bool GameSprite::PathToResources()
-{
-    Building* b = GameScene::getThis()->buildingHandler->getNearestStorage(this);
-    if (b == NULL) return false;
-    
-    CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    
-    CCPoint endPos =b->getWorldPosition();
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }
-    
-    
-    return hasPath;
-}
-
 void GameSprite::updateSprite(float dt)
 {
     updateZIndex();
@@ -1126,43 +1072,32 @@ void GameSprite::updateSprite(float dt)
             attack();
         }
     }
-    
-    /*
-     
-    if(!GameScene::getThis()->banditsAttackHandler->warMode)
-    {
-        if(villagerClass == V_SOLDIER && currAction == IDLE)
-        {
-            GoBuilding(getJobLocation());
-        }
-    }
-    */
         
     /****************************************************
      * This part is only for the combating in the game! *
      ****************************************************/
-    if(GameScene::getThis()->banditsAttackHandler->warMode || true)
+    // move and fade out the damage label
+    for (int i = 0; i < hpLabels->count(); i++)
     {
-        // move and fade out the damage label
-        for (int i = 0; i < hpLabels->count(); i++)
+        CCLabelTTF* label = (CCLabelTTF*) hpLabels->objectAtIndex(i);
+        label->setPosition(ccp(label->getPosition().x, label->getPosition().y + 1));
+        
+        int labelOpacity = (int)label->getOpacity();
+        int newOpacity = labelOpacity - 10;
+        int limitOpacity = 0;
+        
+        if(newOpacity < limitOpacity)
         {
-            CCLabelTTF* label = (CCLabelTTF*) hpLabels->objectAtIndex(i);
-            label->setPosition(ccp(label->getPosition().x, label->getPosition().y + 1));
-            
-            int labelOpacity = (int)label->getOpacity();
-            int newOpacity = labelOpacity - 10;
-            int limitOpacity = 0;
-            
-            if(newOpacity < limitOpacity)
-            {
-                newOpacity = limitOpacity;
-                spriteRep->removeChild(label, true);
-                hpLabels->removeObject(label);
-            }
-            
-            label->setOpacity(newOpacity);
+            newOpacity = limitOpacity;
+            spriteRep->removeChild(label, true);
+            hpLabels->removeObject(label);
         }
         
+        label->setOpacity(newOpacity);
+    }
+    
+    if(GameScene::getThis()->banditsAttackHandler->warMode)
+    {
         if(combatState == C_COMBAT)
         {
             // currently only apply this to bandit but not the soldiers
@@ -1458,8 +1393,6 @@ void GameSprite::updateSprite(float dt)
                         int damage = possessions->attack_power_min + random_number;
                         enermy->damaged(damage);
                         
-                        
-                        
                         playAttackAction();
                     }
                     
@@ -1591,9 +1524,7 @@ void GameSprite::updateSprite(float dt)
         
         if (isLeavingNextUpdate)
         {
-            GameHUD::getThis()->showHint(spriteDisplayedName +" has left the town.");
             GameScene::getThis()->spriteHandler->removeSpriteFromMap(this);
-            
             return;
         }
         
@@ -1866,7 +1797,7 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
             show = false;
             break;
         case STEAL_MONEY:
-            speechBubble->addContent("thieftStealingMoney.png", CCPointZero, 14, 4, 0);
+            speechBubble->addContent("thiefStealingMoney.png", CCPointZero, 14, 4, 0);
             show = false;
             break;
         case STEAL_FOOD:
@@ -1884,147 +1815,6 @@ void GameSprite::saySpeech(SpeechMood s, float timeInSeconds)
     }
     
     speechBubble->show(timeInSeconds * 2);
-}
-
-
-
-/*pathing*/
-/*paths back home, if possible. Ignores range for obvious reasons.*/
-bool GameSprite::PathToHome()
-{
-    
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("still moving. Can't obey.");
-        return false;
-    }
-    if (possessions->homeLocation == NULL)
-    {
-       //we don't do this anymoe
-        //CCLog("No house?");
-    //    saySpeech("Homeless..", 3.0f);
-     //   increasePossession(STATS_HAPPINESS, happiness_mod_homeless); //note actually subtracts
-        
-        return false; // no home
-    }
-    CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    
-    CCPoint endPos = possessions->homeLocation->getWorldPosition();
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }
-    return hasPath;
-}
-
-/*paths to an existing workplace, if it does. Ignores range, because it is assumed that in this case the person cannot change where he works.*/
-bool GameSprite::PathToWork()
-{
-
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("still moving. Can't obey.");
-        return false;
-    }
-    /*
-    if (possessions->hasJob == false){
-     
-        //we don't do this here anymore, as the hasjob check prevents this from running.
-     //   saySpeech("Jobless..", 3.0f);
-     //   increasePossession(STATS_HAPPINESS, happiness_mod_jobless); //note actually subtracts
-        return false;
-    }*/
-    
-    CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    bool hasPath = false; //temporary TODO
-   // CCPoint endPos = possessions->jobLocation->getWorldPosition();
-   // endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    /*
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }*/
-    return hasPath;
-}
-
-bool GameSprite::PathToBuildingOverride(int building_id)
-{
-    //move instruction should be interruptable
-    BuildingHandler* bh = GameScene::getThis()->buildingHandler;
-    Building* b = bh->getBuildingOnMapWithID(building_id);
-    
-    if (b == NULL)
-    {
-        CCLog("Building ain't in map anymore");
-        return false;
-    }
-
-
-    
-    CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    CCPoint endPos = b->getWorldPosition();
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }
-    
-    return hasPath;
-}
-
-
-bool GameSprite::PathToBuilding(int building_id)
-{
-    
-    if (isFollowingMoveInstruction)
-    {
-        CCLog("Still moving. Can't obey.");
-        return false;
-    }
-    
-    BuildingHandler* bh = GameScene::getThis()->buildingHandler;
-    Building* b = bh->getBuildingOnMapWithID(building_id);
-    
-    if (b == NULL)
-    {
-        CCLog("Building ain't in map anymore");
-        return false;
-    }
-    
-    
-    if (race == 'a' && b->buildingType == MILITARY)
-    {
-        CCLog("Aliens cannot visit Military buildings");
-        return false;
-    }
-    
-    CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    
-    CCPoint endPos = b->getWorldPosition();
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }
-    return hasPath;
-
-    
 }
 
 /* paths to a target building. */
@@ -2134,100 +1924,6 @@ bool GameSprite::GoHome(Building* b)
     this->nextAction = GET_HOME;
     
     return GoBuilding(b);
-}
-
-bool GameSprite::PathToBuild()
-{
-    if (GameScene::getThis()->constructionHandler->getConstructingBuildingCount() == 0) return false; //no buildings under construction, stop.
-    
-    Building* target = NULL;
-    CCPoint startPos = getWorldPosition();
-    CCPoint endPos;
-    
-    float shortestDist = 9999.0f;
-    
-    if (GameScene::getThis()->constructionHandler->getConstructingBuildingCount() == 1)
-    {
-        target = (Building*)GameScene::getThis()->constructionHandler->getConstructingBuildings()->objectAtIndex(0);
-        endPos = target->getWorldPosition();
-    }
-    else
-    {
-        for (int i = 0; i <GameScene::getThis()->constructionHandler->getConstructingBuildingCount(); ++i)
-        {
-            target =(Building*)GameScene::getThis()->constructionHandler->getConstructingBuildings()->objectAtIndex(i);
-            CCPoint tEndPos = target->getWorldPosition();
-            
-            float dist = ccpDistanceSQ(startPos, tEndPos);
-            if (dist < shortestDist)
-            {
-                shortestDist = dist;
-                endPos = tEndPos;
-            }
-            
-            
-        }
-    }
-    
-    
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }
-    
-    return hasPath;
-    
-}
-
-
-bool GameSprite::PathToExit()
-{
-    
-    
-    
-    return false;
-}
-
-
-/*checks if destination is within range of home. If any.*/
-bool GameSprite::isDestinationInRange(int destinationID)
-{
-    /* note: destination doesn't necessarily exist as the sprite's home or workplace. This is why the Building ID is supplied. */
-    /*this makes sure the character can only path a certain distance from his own home. Applies only if the character has a home, otherwise the
-     character has infinite range.*/
-    Building* destination = (Building*)GameScene::getThis()->buildingHandler->allBuildingsOnMap->objectAtIndex(destinationID);
-    
-    if (possessions->homeLocation != NULL) return true;
-    
-    /*create a Path first before using by calling CreatePath */
-    if (!path) return false;
-    if (path->count() == 0) return false;
-     
-    //CCArray *pathFromHome = CCArray::create();
-    //no need to retain. It loses its scope after this function.
-        
-    CCPoint homePos = possessions->homeLocation->getWorldPosition();
-    homePos = GameScene::getThis()->mapHandler->tilePosFromLocation(homePos);
-    
-    CCPoint to = destination->getWorldPosition();
-    to = GameScene::getThis()->mapHandler->tilePosFromLocation(to);
-    
-    PathFinder *p = new PathFinder();
-    CCArray* pathFromHome = p->makePath(&homePos, &to);
-    p->setDestination(to);
-    p->setSource(homePos);
-    if (pathFromHome->count() > possessions->default_movement_range)
-    {
-        delete p;
-        return false;
-    }
-    delete p;
-    return true;
 }
 
 /*changes the gamesprite's appearance.*/
@@ -2360,39 +2056,6 @@ void GameSprite::ReplaceSpriteRep()
      
    // updateZIndex();
   
-}
-
-/*will override all current move instructions.*/
-void GameSprite::PathToHighTemple()
-{
-    
-    
-    BuildingHandler* bh = GameScene::getThis()->buildingHandler;
-    
-    if (bh->specialOnMap->count() == 0) return;
-    
-    Building* b = (Building*)bh->specialOnMap->objectAtIndex(0);
-    
-    if (b == NULL)
-    {
-        CCLog("Building ain't in map anymore");
-        return;
-    }
-    
-    CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    
-    CCPoint endPos = b->getWorldPosition();
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
-    
-    bool hasPath = CreatePath(startPos, endPos);
-    if (hasPath)
-    {
-        isFollowingMoveInstruction = true;
-        followPath();
-    }
-    return;
-
 }
 
 /*

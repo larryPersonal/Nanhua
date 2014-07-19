@@ -67,6 +67,8 @@ public:
     
     int ID;
     
+    int uniqueID;
+    
     bool inProgress;
     
     CCSprite* buildingRep;
@@ -234,6 +236,11 @@ public:
     CCRect fishAnimationRect;
     
     CCSprite* fishAnim;
+    
+    bool startAnimation;
+    
+public:
+    void stopUpdate();
 };
 
 #endif

@@ -411,3 +411,34 @@ void GlobalHelper::resumeAllVillagers()
         sp->followPath();
     }
 }
+
+void GlobalHelper::cleanSaveData(string username)
+{
+    stringstream ss;
+    
+    ss.str(std::string());
+    ss << "autosave_" << username << "_hasSavedGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
+    ss.str(std::string());
+    ss << "fixedsave_" << username << "_hasSavedGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
+    ss.str(std::string());
+    ss << "customsave_" << username << "_hasSavedGame";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    
+    for (int i = 0; i < 6; i++)
+    {
+        ss.str(std::string());
+        ss << username << "_level_" << i << "_score";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 0);
+    }
+    
+    for (int i = 1; i < 6; i++)
+    {
+        ss.str(std::string());
+        ss << username << "_level_" << i << "_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
+    }
+}

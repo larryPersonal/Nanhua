@@ -416,7 +416,7 @@
             <left>17</left>
 			<top>15</top>
             <outcome>
-                <refugee>5</refugee>
+                <refugee>8</refugee>
             </outcome>
         </option>
         <option>
@@ -428,7 +428,7 @@
             <left>32</left>
 			<top>15</top>
             <outcome>
-                <bandit>5</bandit>
+                <bandit>8</bandit>
             </outcome>
         </option>
     </slide>

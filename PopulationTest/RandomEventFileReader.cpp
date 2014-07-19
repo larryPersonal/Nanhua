@@ -110,6 +110,13 @@ void RandomEventFileReader::parseXMLFile(string xml)
                 content = str.substr(startPos + 13, endPos - startPos - 13);
                 randomEvent->event_description = content.c_str();
             }
+            else if(str.find("<percentage>") != std::string::npos && str.find("</percentage>") != std::string::npos)
+            {
+                startPos = str.find("<percentage>");
+                endPos = str.find("</percentage>");
+                content = str.substr(startPos + 12, endPos - startPos - 12);
+                randomEvent->percentage = ::atoi(content.c_str());
+            }
             else if(str.find("<effects>") != std::string::npos)
             {
                 isInEffects = true;

@@ -78,6 +78,8 @@ public:
     void tryToBuild(int);
     
     void setOpacity(GLubyte);
+    
+    void updateMask();
 };
 
 #endif

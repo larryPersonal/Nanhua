@@ -45,7 +45,7 @@ struct SystemConfig
         skipSenario_level1 = false;
         skipTutorial_level1 = true;
         
-        skipSenario_level2 = false;
+        skipSenario_level2 = true;
         skipTutorial_level2 = false;
         
         skipSenario_level3 = false;
@@ -216,7 +216,7 @@ struct SettingsLevel
     
     void setLevel0()
     {
-        default_start_money = 2500;
+        default_start_money = 25000000;
         default_max_reputation = 400;
         projected_population_growth = 20;
         

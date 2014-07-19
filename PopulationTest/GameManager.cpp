@@ -179,12 +179,7 @@ void GameManager::initGameData()
     researchableBuildings->removeAllObjects();
 
     //Loaded game must be set from the main menu, if player chooses to continue game instead of starting a new game.
-   // if (!loadedGame)
-        NewGameUnlocks();
-   // else
-//        loadGameData();
-
-    GameHUD::getThis()->updateMoneyLabel();
+    NewGameUnlocks();
 
     // Init arrays of locked and unlocked buildings
     for (list<int>::iterator it = unlockedBuildingIDs.begin(); it != unlockedBuildingIDs.end(); it++)
@@ -337,7 +332,7 @@ void GameManager::loadGameData()
                     {
                         CCPoint target = ccp(atoi(tokens[1].c_str()), atoi(tokens[2].c_str()));
                         
-                        GameScene::getThis()->mapHandler->Build(target, b, true, tokens[3]);
+                        GameScene::getThis()->mapHandler->Build(target, b, false, true, tokens[3]);
                         
                     }
                     

@@ -88,7 +88,6 @@ GameHUD::GameHUD()
     isAddingMoney = false;
     
     targetReputation = 0;
-    isAddingReputation = false;
     
     targetFood = 0;
     isAddingFood = false;
@@ -260,6 +259,12 @@ void GameHUD::setAllStats()
     mGameCurrentPopulationCitizen = 0;
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
+    
+    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
+    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
+    
+    mGameReputation = reputation;
+    mGameReputationMax = reputationMax;
 }
 
 void GameHUD::update(float deltaTime)
@@ -638,15 +643,6 @@ void GameHUD::update(float deltaTime)
             increasePopulation = true;
         }
         
-        // if money has change, update in the UI
-        if (mGameMoney != money)
-        {
-            mGameMoney = money;
-            stringstream ss;
-            ss << mGameMoney;
-            moneyLabel->setString(ss.str().c_str());
-        }
-        
         // update time group
         // if week has been changed
         if(mGameWeek != date->week)
@@ -749,18 +745,6 @@ void GameHUD::update(float deltaTime)
         //checkReputaionPopulation();
     }
     
-    // reputation change
-    if(mGameReputation != reputation || mGameReputationMax != reputationMax)
-    {
-        mGameReputation = reputation;
-        mGameReputationMax = reputationMax;
-        
-        std::stringstream ss;
-        ss << mGameReputation;
-        
-        achivementsLabel->setString(ss.str().c_str());
-    }
-    
     CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
     if(GameScene::getThis()->systemConfig->debugMode)
     {
@@ -803,6 +787,7 @@ void GameHUD::update(float deltaTime)
     if(mGameCurrentPopulation != temp || mGameCurrentPopulationCitizen != tempCitizen)
     {
         mGameCurrentPopulation = temp;
+        mGameCurrentPopulationCitizen = tempCitizen;
         std::stringstream ss;
         ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
@@ -921,19 +906,6 @@ void GameHUD::update(float deltaTime)
             scheduleAddStorage(temp_storage - mGameCurrentStorage);
         }
     }
-    
-    /*
-    if (mGameCurrentFood != temp || mGameCurrentStorage != temp_storage)
-    {
-        mGameCurrentFood = temp;
-        mGameCurrentStorage = temp_storage;
-        
-        stringstream ss;
-        ss << mGameCurrentFood << "/" << mGameCurrentStorage;
-        foodLabel->setDimensions(CCSizeMake(ss.str().length() * 20.0f, 5.0f));
-        foodLabel->setString(ss.str().c_str());
-    }
-    */
     
     updateSoldierHelper(deltaTime);
     
@@ -1063,17 +1035,13 @@ void GameHUD::update(float deltaTime)
         }
     }
     
-    addMoney(deltaTime);
+    updateMoney(deltaTime);
+    updateReputation(deltaTime);
+    updateFood(deltaTime);
+    updateStorage(deltaTime);
 }
 
 void GameHUD::createInitialGUI(){
-    
-    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
-    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
-    
-    mGameReputation = reputation;
-    mGameReputationMax = reputationMax;
-    
     createStatsMenu();
     createObjectiveMenu();
     createTimeMenu();
@@ -1109,96 +1077,6 @@ void GameHUD::closeAllMenuAndResetTapMode()
     
     //hideBuildLabel();
     setTapMode(0);
-}
-
-void GameHUD::buyBuilding(int cost){
-    updateMoneyLabel();
-}
-
-void GameHUD::onSpriteAddedToMap(GameSprite* sprite)
-{
-    /*
-    GameManager::getThis()->totalHappiness += sprite->getPossessions()->happinessRating;
-    updatePopTotalLabel();
-    updateAvgHapLabel();
-    
-    if (currMenuMode == PopulationMenu)
-    {
-        if (class PopulationMenu* menu = dynamic_cast<class PopulationMenu*>(PopupMenu::getBottommostPopupMenu()))  
-            menu->addPopulationToList(sprite);
-    }
-    */
-}
-
-void GameHUD::onSpriteRemovedFromMap(GameSprite* sprite)
-{
-    /*
-    GameManager::getThis()->totalHappiness -= sprite->getPossessions()->happinessRating;
-    updatePopTotalLabel();
-    updateAvgHapLabel();
-    
-    if (currMenuMode == PopulationMenu)
-    {
-        if (class PopulationMenu* menu = dynamic_cast<class PopulationMenu*>(PopupMenu::getBottommostPopupMenu()))
-            menu->removePopulationFromList(sprite);
-    }
-    */
-}
-
-void GameHUD::updatePopTotalLabel()
-{
-    /*
-    std::stringstream ss;
-    ss << "Total Pop: " << GameScene::getThis()->spriteHandler->spritesOnMap->count();
-    popTotalLabel->setString(ss.str().c_str());
-    */
-}
-
-void GameHUD::updateAvgHapLabel()
-{
-    /*
-    std::stringstream ss;
-    ss << "Avg Hap: " << GameManager::getThis()->getAverageHappiness();
-    avgHapLabel->setString(ss.str().c_str());
-    */
-}
-
-void GameHUD::updateMoneyLabel()
-{
-    /*
-    std::stringstream ss;
-    ss << GameManager::getThis()->currentMoney << " G";
-    */
-}
-
-void GameHUD::updateBuildCostLabel(int cost, int dist)
-{
-    /*
-    std::stringstream ss;
-    ss << "Cost: " << cost * (dist >= 0 ? dist : 1) << "G";
-    if (dist >= 0)
-        ss << " (" << dist << "x" << cost << "G)";
-    
-    buildCostLabel->setString(ss.str().c_str());
-    */
-}
-
-
-void GameHUD::showHint(std::string hintText)
-{
-    /*
-    hintLabel->setFontSize(default_hint_font_size);
-    hintLabel->setString(hintText.c_str());
-    if ((hintLabel->getContentSize().width + 10) > hintInfoBar->size.width)
-    {
-
-        hintLabel->setFontSize(default_hint_font_size * (hintInfoBar->size.width/(hintLabel->getContentSize().width + 10)));
-    }
-    
-    hintInfoBar->setVisible(true);
-    
-    curr_hint_show_time = hint_show_time;
-    */
 }
 
 Date* GameHUD::getDate()
@@ -1672,6 +1550,7 @@ void GameHUD::createObjectiveMenu()
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorWhite = ccc3(255, 255, 255);
     ccColor3B colorBlack = ccc3(0, 0, 0);
+    ccColor3B colorYellow = ccc3(255, 255, 140);
     
     // create the objective group background
     string objectiveBackground = "objectiveScreen.png";
@@ -1749,7 +1628,7 @@ void GameHUD::createObjectiveMenu()
     objectiveNotificationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16);
     objectiveNotificationLabel->setAnchorPoint(ccp(0, 1));
     objectiveNotificationLabel->setPosition(ccp(100, screenSize.height - 145));
-    objectiveNotificationLabel->setColor(colorBlack);
+    objectiveNotificationLabel->setColor(colorYellow);
     objectiveNotificationLabel->setOpacity((GLubyte) 0);
     this->addChild(objectiveNotificationLabel, 4);
     
@@ -1758,7 +1637,7 @@ void GameHUD::createObjectiveMenu()
     objectiveTime = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 16);
     objectiveTime->setAnchorPoint(ccp(0, 1));
     objectiveTime->setPosition(ccp(100, screenSize.height - 125));
-    objectiveTime->setColor(colorBlack);
+    objectiveTime->setColor(colorYellow);
     objectiveTime->setVisible(false);
     this->addChild(objectiveTime, 4);
 }
@@ -2373,14 +2252,6 @@ void GameHUD::clickShowRandomEventManagerButton()
     RandomEventManager::getThis()->showUI();
 }
 
-void GameHUD::clickSystemButton()
-{
-    SystemMenu* sm = SystemMenu::create(this);
-    sm->retain();
-    pause = true;
-    sm->scheduleShowSystemMenu();
-}
-
 void GameHUD::clickScoreButton()
 {
     if(ScoreMenu::getThis() == NULL)
@@ -2749,6 +2620,13 @@ void GameHUD::scheduleAddMoney(int mon)
     if(!isAddingMoney)
     {
         targetMoney = money + mon;
+        
+        if(targetMoney < 0)
+        {
+            mon = -money;
+            targetMoney = 0;
+        }
+        
         if(mon != 0)
         {
             isAddingMoney = true;
@@ -2756,9 +2634,15 @@ void GameHUD::scheduleAddMoney(int mon)
     }
     else
     {
+        
+        if(mon < 0 && targetMoney + mon < 0)
+        {
+            mon = -targetMoney;
+            targetMoney = 0;
+        }
         targetMoney += mon;
     }
-    
+
     stringstream ss;
     
     if(mon >= 0)
@@ -2786,7 +2670,7 @@ void GameHUD::scheduleAddMoney(int mon)
     addMoneyLabelArray->addObject(addMoneyLabel);
 }
 
-void GameHUD::addMoney(float dt)
+void GameHUD::updateMoney(float dt)
 {
     if(money < targetMoney)
     {
@@ -2828,31 +2712,16 @@ void GameHUD::addMoney(float dt)
             temp->setOpacity((GLubyte) opacity);
         }
     }
+    
+    // if money has change, update in the UI
+    if (mGameMoney != money)
+    {
+        mGameMoney = money;
+        stringstream ss;
+        ss << mGameMoney;
+        moneyLabel->setString(ss.str().c_str());
+    }
 }
-
-/*
- PS: reputation max is associated to the population growth, need to settle how to raise the growth of population and the reputation max with kris again.
- 
- void GameHUD::addReputation(int incre)
- {
- reputation += incre;
- if(reputation >= reputationMax)
- {
- reputation = reputationMax;
- }
- 
- int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
- float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
- 
- int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
- 
- if(growthPopulation < projectedPopulation)
- {
- growthPopulation++;
- addPopulation();
- }
- }
- */
 
 void GameHUD::checkReputaionPopulation()
 {
@@ -2894,12 +2763,6 @@ void GameHUD::scheduleAddReputation(int re)
     this->addChild(addReputationLabel, 10);
     addReputationLabelArray->addObject(addReputationLabel);
     
-    if(!isAddingReputation)
-    {
-        isAddingReputation = true;
-        this->schedule(schedule_selector(GameHUD::addReputation));
-    }
-    
     if(TutorialManager::getThis()->active)
     {
         if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->dropToken)
@@ -2910,14 +2773,11 @@ void GameHUD::scheduleAddReputation(int re)
     }
 }
 
-void GameHUD::addReputation(float dt)
+void GameHUD::updateReputation(float dt)
 {
-    bool stop = true;
-    
     if(reputation < targetReputation)
     {
         reputation++;
-        stop = false;
     }
     
     for(int i = 0; i < addReputationLabelArray->count(); i++)
@@ -2937,6 +2797,7 @@ void GameHUD::addReputation(float dt)
         opacity -= 1.5f;
         if(opacity <= 0)
         {
+            this->removeChild(temp);
             addReputationLabelArray->removeObject(temp);
             i--;
         }
@@ -2944,15 +2805,19 @@ void GameHUD::addReputation(float dt)
         {
             temp->setOpacity((GLubyte) opacity);
         }
-        stop = false;
     }
     
-    if(stop)
+    // reputation change
+    if(mGameReputation != reputation || mGameReputationMax != reputationMax)
     {
-        isAddingReputation = false;
-        this->unschedule(schedule_selector(GameHUD::addReputation));
+        mGameReputation = reputation;
+        mGameReputationMax = reputationMax;
+        
+        std::stringstream ss;
+        ss << mGameReputation;
+        
+        achivementsLabel->setString(ss.str().c_str());
     }
-
 }
 
 void GameHUD::scheduleAddFood(int fo)
@@ -2963,6 +2828,10 @@ void GameHUD::scheduleAddFood(int fo)
     if(!isAddingFood)
     {
         targetFood = mGameCurrentFood + fo;
+        if(fo != 0)
+        {
+            isAddingFood = true;
+        }
     }
     else
     {
@@ -2999,12 +2868,6 @@ void GameHUD::scheduleAddFood(int fo)
     addFoodLabel->setScale(0.01f);
     this->addChild(addFoodLabel, 10);
     addFoodLabelArray->addObject(addFoodLabel);
-    
-    if(!isAddingFood)
-    {
-        isAddingFood = true;
-        this->schedule(schedule_selector(GameHUD::addFood), 1.0f / 120.0f);
-    }
 }
 
 void GameHUD::scheduleAddStorage(int st)
@@ -3015,6 +2878,10 @@ void GameHUD::scheduleAddStorage(int st)
     if(!isAddingStorage)
     {
         targetStorage = mGameCurrentStorage + st;
+        if(st != 0)
+        {
+            isAddingStorage = true;
+        }
     }
     else
     {
@@ -3051,27 +2918,21 @@ void GameHUD::scheduleAddStorage(int st)
     addStorageLabel->setScale(0.01f);
     this->addChild(addStorageLabel, 10);
     addStorageLabelArray->addObject(addStorageLabel);
-    
-    if(!isAddingStorage)
-    {
-        isAddingStorage = true;
-        this->schedule(schedule_selector(GameHUD::addStorage), 1.0f / 120.0f);
-    }
 }
 
-void GameHUD::addFood(float dt)
+void GameHUD::updateFood(float dt)
 {
-    bool stop = true;
-    
     if(mGameCurrentFood < targetFood)
     {
         mGameCurrentFood++;
-        stop = false;
     }
     else if(mGameCurrentFood > targetFood)
     {
         mGameCurrentFood--;
-        stop = false;
+    }
+    else
+    {
+        isAddingFood = false;
     }
     
     for(int i = 0; i < addFoodLabelArray->count(); i++)
@@ -3099,6 +2960,7 @@ void GameHUD::addFood(float dt)
         opacity -= 1.5f;
         if(opacity <= 0)
         {
+            this->removeChild(temp);
             addFoodLabelArray->removeObject(temp);
             i--;
         }
@@ -3106,33 +2968,26 @@ void GameHUD::addFood(float dt)
         {
             temp->setOpacity((GLubyte) opacity);
         }
-        stop = false;
     }
     
     stringstream ss;
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
     foodLabel->setString(ss.str().c_str());
-    
-    if(stop)
-    {
-        isAddingFood = false;
-        this->unschedule(schedule_selector(GameHUD::addFood));
-    }
 }
 
-void GameHUD::addStorage(float dt)
+void GameHUD::updateStorage(float dt)
 {
-    bool stop = true;
-    
     if(mGameCurrentStorage < targetStorage)
     {
         mGameCurrentStorage++;
-        stop = false;
     }
     else if(mGameCurrentStorage > targetStorage)
     {
         mGameCurrentStorage--;
-        stop = false;
+    }
+    else
+    {
+        isAddingStorage = false;
     }
     
     for(int i = 0; i < addStorageLabelArray->count(); i++)
@@ -3160,6 +3015,7 @@ void GameHUD::addStorage(float dt)
         opacity -= 1.5f;
         if(opacity <= 0)
         {
+            this->removeChild(temp);
             addStorageLabelArray->removeObject(temp);
             i--;
         }
@@ -3167,18 +3023,11 @@ void GameHUD::addStorage(float dt)
         {
             temp->setOpacity((GLubyte) opacity);
         }
-        stop = false;
     }
     
     stringstream ss;
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
     foodLabel->setString(ss.str().c_str());
-    
-    if(stop)
-    {
-        isAddingStorage = false;
-        this->unschedule(schedule_selector(GameHUD::addStorage));
-    }
 }
 
 void GameHUD::addNewNotification(std::string notificationStr)
@@ -3202,4 +3051,28 @@ void GameHUD::setNumberOfDays(int days)
     date->month = month;
     date->week = week;
     date->day = day;
+}
+
+void GameHUD::clearAllLabels()
+{
+    for (int i = 0; i < addMoneyLabelArray->count(); i++)
+    {
+        CCLabelTTF* monLabel = (CCLabelTTF*) addMoneyLabelArray->objectAtIndex(i);
+        GameHUD::getThis()->removeChild(monLabel);
+    }
+    addMoneyLabelArray->removeAllObjects();
+    
+    for (int i = 0; i < addFoodLabelArray->count(); i++)
+    {
+        CCLabelTTF* fooLabel = (CCLabelTTF*) addFoodLabelArray->objectAtIndex(i);
+        GameHUD::getThis()->removeChild(fooLabel);
+    }
+    addFoodLabelArray->removeAllObjects();
+    
+    for (int i = 0; i < addReputationLabelArray->count(); i++)
+    {
+        CCLabelTTF* repLabel = (CCLabelTTF*) addReputationLabelArray->objectAtIndex(i);
+        GameHUD::getThis()->removeChild(repLabel);
+    }
+    addReputationLabelArray->removeAllObjects();
 }

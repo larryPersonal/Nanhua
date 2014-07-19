@@ -110,6 +110,20 @@ void BuildScroll::createMenuItems()
     numberOfBuildingCards++;
     buildingCards->addObject(bc);
     
+    if(GameManager::getThis()->getLevel() != 0)
+    {
+        for (int i = 0; i < allBuildings->count(); i++)
+        {
+            Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+            if(tempBuilding->buildingType == SOCIAL)
+            {
+                bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+                numberOfBuildingCards++;
+                buildingCards->addObject(bc);
+            }
+        }
+    }
+    
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
@@ -220,6 +234,11 @@ void BuildScroll::reposition()
 
 void BuildScroll::refreshAllMenuItemValues()
 {
+    for (int i = 0; i < buildingCards->count(); i++)
+    {
+        BuildingCard* bc = (BuildingCard*) buildingCards->objectAtIndex(i);
+        bc->updateMask();
+    }
 }
 
 void BuildScroll::willChangeOrientation()
@@ -253,7 +272,6 @@ void BuildScroll::onOrientationChanged()
 
 void BuildScroll::update(float deltaTime)
 {
-    CCLog("lalalalalal");
     refreshAllMenuItemValues();
 }
 

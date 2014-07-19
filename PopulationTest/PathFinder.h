@@ -39,16 +39,16 @@ public:
     void setDestination(CCPoint dest);
     void setSource(CCPoint src);
     
-    CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile);
+    CCArray* getReachableTiles(PathfindingNode* fromTile, CCPoint* toTile, bool isCombatingSprite);
     
-    CCArray* makePath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
+    CCArray* makePath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile, bool isCombatingSprite);
     CCArray* makeRainPath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     
     bool hasPath(cocos2d::CCPoint *fromTile, cocos2d::CCPoint *toTile);
     
     PathfindingNode* isOnList(CCPoint tilePos, CCArray* list);
     
-    bool isReachable(CCPoint* tilePos);
+    bool isReachable(CCPoint* tilePos, bool isCombatingSprite);
     
     CCPoint getNearestNoneBuildingPos(CCPoint* sourcePos);
 };

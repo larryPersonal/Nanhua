@@ -116,6 +116,10 @@ Building::Building()
     fishAnim = NULL;
     
     buildingRep = NULL;
+    
+    startAnimation = false;
+    
+    uniqueID = -1;
 }
 
 Building::~Building()
@@ -251,6 +255,8 @@ Building* Building::copyWithZone(CCZone *pZone)
         pCopy->fishAnimationTexture = this->fishAnimationTexture;
         pCopy->fishAnimationRect = this->fishAnimationRect;
         pCopy->fishAnim = this->fishAnim;
+        
+        pCopy->uniqueID = this->uniqueID;
         
         pNewZone = new CCZone(pCopy);
     }
@@ -952,7 +958,11 @@ void Building::leaveGranuary(GameSprite* sp)
 //If the animation sequence is changed the pointer supplies the new default and max frames BUUUUUT nothing else changes.(/TODO)
 void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
 {
-    if (b==NULL) return;
+    if (b==NULL)
+    {
+        return;
+    }
+        
     CCSprite* newRep = CCSprite::create();
     newRep->initWithTexture(b->buildingTexture, b->buildingRect);
     CCPoint tilePos = buildingRep->getPosition();
@@ -998,8 +1008,17 @@ void Building::BeginAnim()
         
     }
     
+    if (buildingType == AMENITY)
+    {
+        startAnimation = true;
+    }
+    
 }
 
+void Building::stopUpdate()
+{
+    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(Building::AnimUpdate), this);
+}
 
 void Building::EndAnim()
 {
@@ -1050,7 +1069,7 @@ void Building::AnimUpdate()
 
 void Building::updateBuilding(float dt)
 {
-    if(buildingType == AMENITY)
+    if(startAnimation && buildingType == AMENITY)
     {
         //  int number_of_phase = maxGID - baseGID + 1;
         if(work_unit_current == 0)
@@ -1069,6 +1088,26 @@ void Building::updateBuilding(float dt)
         if(lastGID != currGID)
         {
             lastGID = currGID;
+            /*
+            CCLog("*********************************************************");
+            if(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID) == NULL)
+            {
+                CCLog("** test123, currentGID: %d", currGID);
+            }
+            else
+            {
+                CCLog("** test456, currentGID: %d", currGID);
+            }
+            */
+            
+            CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
+            for (int i = 0; i < allBuildings->count(); i++)
+            {
+                Building* bui = (Building*) allBuildings->objectAtIndex(i);
+                // CCLog("one type of building, baseGID: %d", bui->baseGID);
+            }
+            // CCLog("*********************************************************");
+            
             ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID));
         }
     }

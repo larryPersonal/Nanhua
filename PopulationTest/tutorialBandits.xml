@@ -3,7 +3,7 @@
 <tutorial>
     <slide>
         <speech>Our village has grown to a respectable size, and this has attracted the attention of various bands of bandits looking to steal both our food and gold.</speech>
-        <cameraMove>4544,2176</cameraMove>
+        <cameraMove>4400,2500</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
         <addVillager>5</addVillager>
@@ -30,25 +30,19 @@
         <speech>During a bandit attack, bandits will enter our village through the gates and make their way to either the town hall or granary. Upon reaching their target, they will steal either gold or food and attempt to leave.</speech>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
-        <cameraMove>4128, 1800</cameraMove>
+        <cameraMove>5900,2600</cameraMove>
     </slide>
     <slide>
-        <speech>They will follow the path to attack us.</speech>
+        <speech>We can build Guard Towers to protect our village against such attack. Each Guard tower will allow you to train one villager as a guard who will intercept and drive off invading bandits.</speech>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
-        <cameraMove>5400,1800</cameraMove>
-    </slide>
-    <slide>
-        <speech>Now we are going to build guard towers in order to protect our village.</speech>
-        <clickToNext></clickToNext>
-        <lockClick></lockClick>
-        <cameraMove>4544,2176</cameraMove>
+        <cameraMove>5120,3008</cameraMove>
         <lock>
             <teachBuildGuardTower></teachBuildGuardTower>
         </lock>
     </slide>
     <slide>
-        <speech>Click build button to build a guard tower.</speech>
+        <speech>Tap on the build icon and build a guard tower.</speech>
         <unlock>
             <buildButton></buildButton>
             <scroll></scroll>
@@ -65,44 +59,23 @@
         </unlock>
     </slide>
     <slide>
-        <speech>Great! Now we have a guard tower already!</speech>
-        <clickToNext></clickToNext>
+        <speech>Now tap on the guard tower to assign a villager man the guard tower. Manned guard tower will cost you extra food and gold monthly.</speech>
         <lock>
             <buildButton></buildButton>
-            <buttonOk></buttonOk>
-            <buttonCancel></buttonCancel>
-            <buttonClose></buttonClose>
-            <manpowerSelect></manpowerSelect>
-            <popup></popup>
             <lockDropTokens></lockDropTokens>
             <buildingButton></buildingButton>
             <objectiveButton></objectiveButton>
             <villager></villager>
+            <teachSoldier></teachSoldier>
         </lock>
         <unlock>
             <teachBuildGuardTower></teachBuildGuardTower>
         </unlock>
     </slide>
     <slide>
-        <speech>The guard towers can keep villagers to soldiers so that soldiers will be the power to protect our village.</speech>
+        <speech>Great! Now your village is protected against bandits! Just in time too – looks like some bandits are attacking.</speech>
         <clickToNext></clickToNext>
-    </slide>
-    <slide>
-        <speech>Click the guard tower and assign a villager to become a guard.</speech>
-        <unlock>
-            <popup><popup>
-            <manpowerSelect></manpowerSelect>
-            <buttonOk></buttonOk>
-            <buttonCancel></buttonCancel>
-            <buttonClose></buttonClose>
-        </unlock>
-        <lock>
-            <teachSoldier></teachSoldier>
-        </lock>
-    </slide>
-    <slide>
-        <speech>Great, now the soldier will protect us!</speech>
-        <clickToNext></clickToNext>
+        <addBandit>2</addBandit>
         <lock>
             <popup></popup>
             <manpowerSelect></manpowerSelect>
@@ -115,34 +88,17 @@
         </unlock>
     </slide>
     <slide>
-        <speech>Every guard tower that is manned will cost gold and food each month. Hence ensure you have enough gold and food to support all your guard tower.</speech>
-        <clickToNext></clickToNext>
-    </slide>
-    <slide>
-        <speech>Sometimes, the bandits will attack the village. Hence we need enough guard towers to defend our village and prevent them from stealing our gold and food.</speech>
-        <clickToNext></clickToNext>
-    </slide>
-    <slide>
-        <speech>Look, a bandit is attacking the village, your soldier will go to fight with the bandit until the bandit has escaped.</speech>
-        <clickToNext></clickToNext>
-        <addBandit>1</addBandit>
-    </slide>
-    <slide>
-        <speech>Beside your soldier, you can also tap on the bandit to help the soldiers.</speech>
+        <speech>You can also tap on the bandits to help your guards out.</speech>
         <lock>
             <teachFighting></teachFighting>
         </lock>
     </slide>
     <slide>
-        <speech>Once your soldiers fended off the bandits, the battle will end.</speech>
+        <speech>We will use the guard towers as training grounds to muster troops for Liu Bei. The more manned guard towers we have, the more troops we can send to help! So build and man as many guard towers as you can.</speech>
         <clickToNext></clickToNext>
         <unlock>
             <teachFighting></teachFighting>
         </unlock>
-    </slide>
-    <slide>
-        <speech>your next objective is to build and manned 10 guard towers!</speech>
-        <clickToNext></clickToNext>
     </slide>
     <slide>
         <hideBubble></hideBubble>

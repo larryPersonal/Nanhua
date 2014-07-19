@@ -224,7 +224,6 @@ public:
     void setFrameCount(int idleFrames, int walkFrames);
     
     bool CreatePath(CCPoint start, CCPoint end);
-    bool CreatePathEscape(CCPoint start, CCPoint end);
     
     void initAI(bool isUpgrade = false);
     
@@ -254,23 +253,7 @@ public:
     bool Wander();
     void StopMoving();
     
-    /*standard pathing*/
-    bool PathToHome();
-    bool PathToWork();
-    
-    void PathToHighTemple();
-    bool PathToBuilding(int building_id);
-    bool PathToBuildingOverride(int building_id);
-    
-    bool PathToResources();
-    bool PathToExit();
-    bool PathToBuild();
-    
     bool GoBuild(Building *b);
-    
-    
-    //destinations shold always be buildings.
-    bool isDestinationInRange(int buildingID);
     
     void changeSpriteTo(GameSprite*, SpriteClass*);
     void changeClassTo(SpriteClass*);
@@ -388,6 +371,8 @@ public:
     
     float delay_animFrame;
     float delay_curr;
+    
+    int uniqueID;
     
 public:
     void playAttackAction();

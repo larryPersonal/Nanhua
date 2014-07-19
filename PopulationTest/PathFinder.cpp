@@ -69,17 +69,22 @@ PathfindingNode* PathFinder::isOnList(CCPoint tilePos, CCArray* list)
 	return NULL;
 }
 
-bool PathFinder::isReachable(cocos2d::CCPoint *tilePos)
+bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool isCombatingSprite)
 {
     MapHandler* handler = GameScene::getThis()->mapHandler;
     if (handler->isTilePosWithinBounds(*tilePos))
     {
+        if(isCombatingSprite)
+        {
+            return true;
+        }
+        
         if (destination.x == tilePos->x &&
             destination.y == tilePos->y)
         {
             //the destination must always be reachable, in case someone wants to enter a building.
             MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(tilePos->x, tilePos->y);
-            if((targetTile->hasBuilding() && (targetTile->building != NULL && targetTile->building->buildingType != DECORATION)) || targetTile->isPath)
+            if((targetTile->hasBuilding() && targetTile->building != NULL && targetTile->building->buildingType != DECORATION) || targetTile->isPath)
             {
                 return true;
             }
@@ -131,7 +136,7 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos)
     
 }
 
-bool PathFinder::hasPath( CCPoint* fromTile, CCPoint* toTile )
+bool PathFinder::hasPath(CCPoint* fromTile, CCPoint* toTile)
 {
     // should use greedy algorithms for the path finding!
     
@@ -184,7 +189,7 @@ bool PathFinder::hasPath( CCPoint* fromTile, CCPoint* toTile )
         openList->removeObject(lowestCostNode);
         closedList->addObject(lowestCostNode);
         
-        CCArray *reachableTiles = getReachableTiles(lowestCostNode, toTile);
+        CCArray *reachableTiles = getReachableTiles(lowestCostNode, toTile, false);
         for (int i = 0; i < reachableTiles->count(); ++i)
         {
             PathfindingNode* reachableTile = (PathfindingNode*)reachableTiles->objectAtIndex(i);
@@ -282,7 +287,7 @@ CCPoint PathFinder::getNearestNoneBuildingPos( CCPoint* sourcePos )
     return CCPointZero;
 }
 
-CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
+CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile, bool isCombatingSprite)
 {
     openList->removeAllObjects();
     CC_SAFE_RELEASE(openList);
@@ -333,22 +338,18 @@ CCArray* PathFinder::makePath( CCPoint* fromTile, CCPoint* toTile)
         openList->removeObject(lowestCostNode);
         closedList->addObject(lowestCostNode);
         
-        CCArray *reachableTiles = getReachableTiles(lowestCostNode, toTile);
+        CCArray *reachableTiles = getReachableTiles(lowestCostNode, toTile, isCombatingSprite);
         for (int i = 0; i < reachableTiles->count(); ++i)
         {
             PathfindingNode* reachableTile = (PathfindingNode*)reachableTiles->objectAtIndex(i);
-            // make the search greedy!
-            if(reachableTile->tilepos.x == toTile->x && reachableTile->tilepos.y == toTile->y)
-            {
-                targetNode = reachableTile;
-                break;
-            }
             openList->addObject(reachableTile);
         }
         
         if ((toTile->x == lowestCostNode->tilepos.x) && (toTile->y == lowestCostNode->tilepos.y))
         {
             targetNode = lowestCostNode;
+            // greedy
+            break;
         }
         
         reachableTiles->removeAllObjects();
@@ -441,47 +442,8 @@ CCArray* PathFinder::makeRainPath(CCPoint* fromTile, CCPoint* toTile)
     return retrievedPath;
 }
 
-/*
-CCArray* PathFinder::makePathEscape(CCPoint* fromTile, CCPoint* toTile)
-{
-   
-    openList = CCArray::create();
-    closedList = CCArray::create();
-    
-    PathfindingNode* n = new PathfindingNode();
-    n->autorelease();
-    n->tilepos = CCPointMake(fromTile->x, fromTile->y);
-    n->parent = NULL;
-    n->G = 0;
-    n->H = 0;
-    n->F = 0;
-    openList->addObject(n);
-    
-    initializeWithLowestCostNode(*toTile, true);
-    
-    CCArray* retrievedPath = CCArray::create();
-    //retrievedPath->autorelease();
-    n = isOnList(*toTile, closedList);
-    if (n)
-    {
-        retrievedPath->addObject(n);
-        
-        PathfindingNode* parent = n->parent;
-        while (parent)
-        {
-            n = parent;
-            parent = n->parent;
-            retrievedPath->addObject(n);
-            
-        }
-    }
-    
-    return retrievedPath;
-}
-*/
-
 CCArray* PathFinder::getReachableTiles(PathfindingNode *fromTile,
-                                        CCPoint *toTile)
+                                        CCPoint *toTile, bool isCombatingSprite)
 {
     CCArray* reachableTiles = CCArray::create();
     if (fromTile == NULL || toTile == NULL)
@@ -499,44 +461,43 @@ CCArray* PathFinder::getReachableTiles(PathfindingNode *fromTile,
     for (int i = 3; i >= 0; i--)
     {
         CCPoint adjacentTile = pointsToCheck[i];
-        if (isReachable(&adjacentTile))
+        if (isReachable(&adjacentTile, isCombatingSprite))
         {
-            if (!isOnList(adjacentTile, closedList))
+            MapTile* adjTile = GameScene::getThis()->mapHandler->getTileAt(adjacentTile.x, adjacentTile.y);
+            int G = 0;
+            if(adjTile->hasBuilding())
             {
-                // Either A* search or Dijkstra's algorithm will work for this game, as the distance between two adjacent tiles will not have difference.
-                MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(adjacentTile.x, adjacentTile.y);
+                G = fromTile->G + 10;
+            }
+            else
+            {
+                G = fromTile->G + 1;
+            }
+            
+            int H = manhattanDist(&adjacentTile, toTile);
+            int F = G + H;
+            PathfindingNode* theNodeOnCLosedList = isOnList(adjacentTile, closedList);
+            
+            if(theNodeOnCLosedList == NULL)
+            {
+                PathfindingNode* theNodeOnOpenList = isOnList(adjacentTile, openList);
                 
-                int G = 0;
-                if(targetTile->hasBuilding())
+                if (theNodeOnOpenList != NULL)
                 {
-                    G = fromTile->G + 10;
-                }
-                else
-                {
-                    G = fromTile->G + 1;
-                }
-                
-                int H = manhattanDist(&adjacentTile, toTile);
-                int F = G + H;
-                
-                PathfindingNode* existingNode = isOnList( adjacentTile, openList );
-                
-                if (existingNode)
-                {
-                    if (F < existingNode->F)
+                    if (F < theNodeOnOpenList->F)
                     {
-                        existingNode->F = F;
-                        existingNode->G = G;
-                        existingNode->H = H;
-                        existingNode->parent = fromTile;
+                        theNodeOnOpenList->F = F;
+                        theNodeOnOpenList->G = G;
+                        theNodeOnOpenList->H = H;
+                        theNodeOnOpenList->parent = fromTile;
                         //reachableTiles->addObject(existingNode);
                     }
                     
-                    if (H < lowest_h)
+                    if (F < lowest_h)
                     {
-                        closestNode = existingNode;
+                        closestNode = theNodeOnOpenList;
                         closest = fromTile->tilepos;
-                        lowest_h = H;
+                        lowest_h = F;
                     }
                 }
                 else
@@ -550,11 +511,11 @@ CCArray* PathFinder::getReachableTiles(PathfindingNode *fromTile,
                     node->F = F;
                     reachableTiles->addObject(node);
                     
-                    if (H < lowest_h)
+                    if (F < lowest_h)
                     {
                         closestNode = node;
                         closest = fromTile->tilepos;
-                        lowest_h = H;
+                        lowest_h = F;
                     }
                 }
             }
@@ -563,51 +524,3 @@ CCArray* PathFinder::getReachableTiles(PathfindingNode *fromTile,
     
     return reachableTiles;
 }
-
-/*
-void PathFinder::initializeWithLowestCostNode(CCPoint target, bool tryEscape)
-{
-    PathfindingNode *lowestCostNode = NULL;
-    PathfindingNode *currNode = NULL;
-    for (int i = 0; i < openList->count(); i++)
-    {
-        currNode = (PathfindingNode*) openList->objectAtIndex(i);
-        if (lowestCostNode == NULL)
-        {
-            lowestCostNode = currNode;
-        }
-        else
-        {
-            if (currNode->F < lowestCostNode->F)
-            {
-                lowestCostNode = currNode;
-            }
-            
-        }
-    }
-	
-    openList->removeObject(lowestCostNode);
-    closedList->addObject(lowestCostNode);
-    
-    CCArray *reachableTiles = getReachableTiles(lowestCostNode, &target, tryEscape);
-	for (int i = 0; i < reachableTiles->count(); ++i)
-    {
-        PathfindingNode* reachableTile = (PathfindingNode*)reachableTiles->objectAtIndex(i);
-        openList->addObject(reachableTile);
-    }
-    
-    if ((target.x == lowestCostNode->tilepos.x) && (target.y == lowestCostNode->tilepos.y))
-    {
-		//CCLog("Path found!!");
-	}
-    else
-    {
-		if (openList->count() != 0)
-        {
-            initializeWithLowestCostNode(target, tryEscape);
-        }
-	}
-    reachableTiles->removeAllObjects();
-    reachableTiles->release();
-}
-*/

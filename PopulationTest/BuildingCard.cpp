@@ -150,7 +150,7 @@ void BuildingCard::init()
     
     ss.str(std::string());
     int level = GameManager::getThis()->town_hall_level;
-    if(type == 0)
+    if(type == 0 && building->buildingType != SOCIAL)
     {
         if(building->buildingType == HOUSING)
         {
@@ -192,6 +192,7 @@ void BuildingCard::init()
     }
     else
     {
+        available_number = 999999;
         ss << "unlimited";
     }
     
@@ -297,6 +298,12 @@ void BuildingCard::init()
         }
     }
     
+    // check whether we have enough money to buy this building
+    if (type != 1 && type != 2 && type !=3 && GameHUD::getThis()->targetMoney < building->buildingCost)
+    {
+        mask->setOpacity((GLubyte) 120);
+    }
+    
     eventTrigger = CCMenuItemImage::create();
     eventTrigger->initWithNormalImage("black.png", "black.png", NULL, this, menu_selector(BuildingCard::pressBuildingCard), menu_selector(BuildingCard::onMenuItemSelected));
     if(type == 0)
@@ -323,7 +330,11 @@ void BuildingCard::init()
     cardBG->addChild(buildingImage);
     if(type == 0)
     {
-        if(building->buildingType == HOUSING)
+        if(building->buildingType == SOCIAL)
+        {
+            buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 70));
+        }
+        else if(building->buildingType == HOUSING)
         {
             buildingImage->setPosition(ccp(cardBG->boundingBox().size.width + 40, cardBG->boundingBox().size.height + 70));
         }
@@ -593,7 +604,11 @@ void BuildingCard::tryToBuild(int tag)
     BuildingCategory type = buildingToBuy->buildingType;
     int level = GameManager::getThis()->town_hall_level;
     
-    if(type == HOUSING)
+    if(type == SOCIAL)
+    {
+        // at current situation, there is no limitation on the number of social decoration buildings.
+    }
+    else if(type == HOUSING)
     {
         if(GameScene::getThis()->buildingHandler->housingOnMap->count() + GameScene::getThis()->buildingHandler->housingGhostOnMap->count() >= GameManager::getThis()->housingLimitation->housing_limits.at(level))
         {
@@ -746,10 +761,16 @@ void BuildingCard::tryToBuild(int tag)
         GameHUD::getThis()->scheduleAddMoney(-buildingToBuy->buildingCost);
         GameHUD::getThis()->setTapMode(1);
         GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
+        
+        GameHUD::getThis()->isThisTapCounted = false;
+        
+        GameHUD::getThis()->buildScroll->scheduleScrollOut();
     }
-    GameHUD::getThis()->isThisTapCounted = false;
+    else
+    {
+        
+    }
     
-    GameHUD::getThis()->buildScroll->scheduleScrollOut();
     /*
     BuildScroll::getThis()->closeMenu();
     GameHUD::getThis()->buildButton->setVisible(true);
@@ -769,4 +790,19 @@ void BuildingCard::setOpacity(GLubyte opacity)
     populationLabel->setOpacity(opacity);
     buildingTimeImage->setOpacity(opacity);
     buildingTimeLabel->setOpacity(opacity);
+}
+
+void BuildingCard::updateMask()
+{
+    if(type != 1 && type != 2 && type != 3)
+    {
+        if(GameHUD::getThis()->targetMoney < building->buildingCost)
+        {
+            mask->setOpacity((GLubyte) 120);
+        }
+        else
+        {
+            mask->setOpacity((GLubyte) 0);
+        }
+    }
 }

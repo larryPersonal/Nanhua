@@ -16,7 +16,6 @@
 #include "SpriteHandler.h"
 #include "ConstructionHandler.h"
 #include "SimpleAudioEngine.h"
-#include "JobCollection.h"
 #include "GameConfig.h"
 #include "BanditsAttackHandler.h"
 #include "ObjectiveHandler.h"
@@ -98,7 +97,6 @@ public:
     MapHandler* mapHandler;
     SpriteHandler* spriteHandler;
     BuildingHandler* buildingHandler;
-    JobCollection* jobCollection;
     ConstructionHandler* constructionHandler;
     BanditsAttackHandler* banditsAttackHandler;
     
@@ -157,6 +155,7 @@ public:
     void loadSystemData(int type);
     void loadBuildingData(int type);
     void loadSpritesData(int type);
+    void loadSpritesLinks(int type);
     void loadRoadData(int type);
     void loadReputationOrbData(int type);
     
@@ -167,7 +166,11 @@ public:
     float autoSaveTimeLeft;
     float autoSaveTimeInterval;
     
-    bool hasLoadedMap;
+    float randomEventCumulativeTime;
+    float randomEventTresholdTime;
+    
+    float randomEventTresholdTimeMax;
+    float randomEventTresholdTimeMin;
     
 public:
     void checkAutoSave(float deltaTime);
@@ -175,6 +178,8 @@ public:
     void reSetupLevel();
     void configSkipData();
     void configLevelData();
+    
+    void stopGame();
 };
 
 #endif

@@ -2,13 +2,69 @@
 <project>
     <evt>
         <id>100001</id>
-        <image>abc.png</image>
-        <name>earthquake</name>
-        <description>There is an earthquake!</description>
+        <image>earthquakeEvent.png</image>
+        <name>Earthquake</name>
+        <description>An earthquake has hit the village!</description>
+        <percentage>20</percentage>
+        <effects>
+            <ef>gold:-200</ef>
+            <ef>food:-50</ef>
+        </effects>
+    </evt>
+    <evt>
+        <id>100002</id>
+        <image>typoonEvent.png</image>
+        <name>Typoon</name>
+        <description>A powerful tornado has swept past the village!</description>
+        <percentage>20</percentage>
+        <effects>
+            <ef>gold:-50</ef>
+            <ef>food:-200</ef>
+        </effects>
+    </evt>
+    <evt>
+        <id>100003</id>
+        <image>rainingEvent.png</image>
+        <name>Heavy Storm</name>
+        <description>The village has just endured a torrential storm!</description>
+        <percentage>20</percentage>
         <effects>
             <ef>gold:-100</ef>
             <ef>food:-100</ef>
-            <ef>house:-2</ef>
+        </effects>
+    </evt>
+    
+    <evt>
+        <id>100004</id>
+        <image>peaceful.png</image>
+        <name>Celebrate Peace</name>
+        <description>Times of peace has led merchants to flock to the village!</description>
+        <percentage>20</percentage>
+        <effects>
+            <ef>gold:200</ef>
+            <ef>food:50</ef>
+        </effects>
+    </evt>
+    <evt>
+        <id>100005</id>
+        <image>goodharvest.png</image>
+        <name>Good Harvest</name>
+        <description>Increased harvest due to a good season!</description>
+        <percentage>20</percentage>
+        <effects>
+            <ef>gold:50</ef>
+            <ef>food:200</ef>
+        </effects>
+    </evt>
+    <evt>
+        <id>100006</id>
+        <image>goodweather.png</image>
+        <name>Good Weather</name>
+        <description>Good weather has resulted in increased productivity and harvest!</description>
+        <percentage>20</percentage>
+        <effects>
+            <ef>gold:100</ef>
+            <ef>food:100</ef>
         </effects>
     </evt>
 </project>

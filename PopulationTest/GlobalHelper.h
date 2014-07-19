@@ -68,6 +68,9 @@ public:
     
     /* resume villagers */
     static void resumeAllVillagers();
+    
+    /* reset all data belongs to a invalid user */
+    static void cleanSaveData(string username);
 };
 
 #endif /* defined(__PopulationTest__GlobalHelper__) */

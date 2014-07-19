@@ -52,7 +52,7 @@ bool ScoreMenu::init(CCLayer* layer)
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
-    blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen = CCSprite::createWithSpriteFrameName("blackscreen.png");
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -274,6 +274,7 @@ void ScoreMenu::clickScoreMenuButton()
     stringstream ss;
     
     GlobalHelper::resumeAllVillagers();
+    GameHUD::getThis()->clearAllLabels();
     if(GameManager::getThis()->getLevel() == 0)
     {
         int reputation = GameHUD::getThis()->targetReputation;

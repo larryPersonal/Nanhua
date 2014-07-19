@@ -912,17 +912,25 @@ void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     
     scheduleScoreScreenJumpIn();
     
-    float value0 = CCUserDefault::sharedUserDefault()->getFloatForKey("level_0_score");
+    string username = GameManager::getThis()->username;
+    
     stringstream ss;
+    ss << username << "_level_0_score";
+    float value0 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+    ss.str(std::string());
     ss << "Tutorial high score is: " << value0;
     tutorialScoreLabel->setString(ss.str().c_str());
     
-    float value1 = CCUserDefault::sharedUserDefault()->getFloatForKey("level_1_score");
+    ss.str(std::string());
+    ss << username << "_level_1_score";
+    float value1 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
     ss.str(std::string());
     ss << "Level 1 high score is: " << value1;
     level1ScoreLabel->setString(ss.str().c_str());
     
-    float value = CCUserDefault::sharedUserDefault()->getFloatForKey("level_2_score");
+    ss.str(std::string());
+    ss << username << "_level_2_score";
+    float value = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
     ss.str(std::string());
     ss << "Level 2 high score is: " << value;
     level2ScoreLabel->setString(ss.str().c_str());

@@ -628,6 +628,7 @@ void Senario::buttonSelect()
     else
     {
         GameHUD::getThis()->pause = false;
+        GlobalHelper::resumeAllVillagers();
         if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
         {
             this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
@@ -668,6 +669,12 @@ void Senario::clearScenario()
     
     skipSlide = false;
     cumulativeTime = 0;
+}
+
+void Senario::stopGame()
+{
+    clearScenario();
+    delete this;
 }
 
 void Senario::activateRefugee(float dt)

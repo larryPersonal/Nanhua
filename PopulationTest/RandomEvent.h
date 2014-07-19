@@ -21,6 +21,7 @@ public:
     std::string event_image;
     std::string event_description;
     std::vector<std::string> event_effects;
+    int percentage;
     
 public:
     RandomEvent();
