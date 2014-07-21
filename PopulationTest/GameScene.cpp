@@ -641,8 +641,8 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
     }
     
     CCSetIterator it;
-    CCTouch* touchOne;
-    CCTouch* touchTwo;
+    CCTouch* touchOne = NULL;
+    CCTouch* touchTwo = NULL;
     
     /*
     // handle the build button
@@ -1111,7 +1111,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     }
                     else
                     {
-                        GameHUD::getThis()->clickMoneyLabel();
+                        // GameHUD::getThis()->clickMoneyLabel();
                     }
                     skip = true;
                 }
@@ -1127,7 +1127,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     }
                     else
                     {
-                        GameHUD::getThis()->clickFoodLabel();
+                        // GameHUD::getThis()->clickFoodLabel();
                     }
                     skip = true;
                 }
@@ -1143,7 +1143,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     }
                     else
                     {
-                        GameHUD::getThis()->clickPopulationLabel();
+                        // GameHUD::getThis()->clickPopulationLabel();
                     }
                     skip = true;
                 }
@@ -2240,8 +2240,6 @@ void GameScene::saveBuildingData(int type)
     
     std::string username = ss.str();
     
-    CCArray* spritesOnMap = spriteHandler->spritesOnMap;
-    
     CCArray* allBuildingsOnMap = buildingHandler->allBuildingsOnMap;
     
     // total number of buildings
@@ -2386,12 +2384,6 @@ void GameScene::saveBuildingData(int type)
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->memberSpriteList->count());
         
         CCArray* allSpritesOnMap = spriteHandler->spritesOnMap;
-        
-        // display unique id of all sprites
-        for (int j = 0; j < spritesOnMap->count(); j++)
-        {
-            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(j);
-        }
         
         for (int j = 0; j < bui->memberSpriteList->count(); j++)
         {
@@ -3182,12 +3174,6 @@ void GameScene::saveSpritesData(int type)
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_homeLocation";
         
-        // display all the buildings' unique id;
-        for (int j = 0; j < allBuildings->count(); j++)
-        {
-            Building* bui = (Building*) allBuildings->objectAtIndex(j);
-        }
-        
         if(gs->getHome() == NULL)
         {
             index = -1;
@@ -3343,8 +3329,6 @@ void GameScene::saveRoadData(int type)
     ss << GameManager::getThis()->username;
     
     std::string username = ss.str();
-    
-    CCArray* spritesOnMap = spriteHandler->spritesOnMap;
     
     CCArray* allPath = mapHandler->pathTiles;
     
@@ -4149,12 +4133,6 @@ void GameScene::loadSpritesLinks(int type)
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_homeLocation";
         
-        // display all buildings's unique id;
-        for (int k = 0; k < allBuildings->count(); k++)
-        {
-            Building* buil = (Building*) allBuildings->objectAtIndex(k);
-        }
-        
         uniqueID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         if(uniqueID < 0)
         {
@@ -4293,6 +4271,7 @@ void GameScene::loadSystemData(int type)
     ss.str(std::string());
     ss << username << "_levelNumber";
     int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+    GameManager::getThis()->setLevel(levelNumber);
     
     // load the current money the user have
     ss.str(std::string());
@@ -4513,12 +4492,6 @@ void GameScene::loadBuildingData(int type)
         ss.str(std::string());
         ss << username << "_building_" << i << "_memberNumber";
         int memberNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
-        
-        // display all sprites with their unique id
-        for (int j = 0; j < spriteHandler->spritesOnMap->count(); j++)
-        {
-            GameSprite* gs = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(j);
-        }
         
         bui->memberSpriteList->removeAllObjects();
         CC_SAFE_RELEASE(bui->memberSpriteList);

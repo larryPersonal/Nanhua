@@ -210,7 +210,7 @@ void TutorialManager::setupForTutorial()
     //this->schedule(schedule_selector( TutorialManager::moveCamera ), 1.0f / 120.0f);
     setupMiniDragon();
     
-    FloatingArraw* fa = new FloatingArraw();
+    new FloatingArraw();
 }
 
 void TutorialManager::setupForScenario()
@@ -307,7 +307,7 @@ void TutorialManager::moveCamera(float dt)
     GameScene::getThis()->mapHandler->moveMapBy(-xSpeed, -ySpeed);
     
     xPos = - GameScene::getThis()->mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
-    yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    // yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
     
     if(xSpeed > 0)
     {

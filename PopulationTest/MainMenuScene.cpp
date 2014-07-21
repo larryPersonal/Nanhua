@@ -1177,13 +1177,13 @@ void MainMenuScene::warningScreenJumpOut(float dt)
 
 void MainMenuScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
 {
-    CCTouch* touch = (CCTouch*)*touches->begin();
-    CCPoint touchLoc = touch->getLocation();
+    // CCTouch* touch = (CCTouch*)*touches->begin();
+    // CCPoint touchLoc = touch->getLocation();
 }
 
 void MainMenuScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
-    CCTouch* touch = (CCTouch*)*touches->begin();
-    CCPoint touchLoc = touch->getLocation();
+    // CCTouch* touch = (CCTouch*)*touches->begin();
+    // CCPoint touchLoc = touch->getLocation();
 }
 
 void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){

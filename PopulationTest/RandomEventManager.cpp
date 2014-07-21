@@ -103,7 +103,15 @@ void RandomEventManager::constructRandomEventContent()
         total += re->percentage;
     }
     
-    int rollNumber = rand() % total;
+    int rollNumber = 0;
+    if(total == 0)
+    {
+        rollNumber = 0;
+    }
+    else
+    {
+        rollNumber = rand() % total;
+    }
     theRandomEvent = NULL;
     for (int i = 0; i < randomEvents->count(); i++)
     {

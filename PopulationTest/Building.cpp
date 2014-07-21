@@ -1103,7 +1103,7 @@ void Building::updateBuilding(float dt)
             CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
             for (int i = 0; i < allBuildings->count(); i++)
             {
-                Building* bui = (Building*) allBuildings->objectAtIndex(i);
+                // Building* bui = (Building*) allBuildings->objectAtIndex(i);
                 // CCLog("one type of building, baseGID: %d", bui->baseGID);
             }
             // CCLog("*********************************************************");

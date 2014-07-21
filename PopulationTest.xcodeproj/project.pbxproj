@@ -344,6 +344,7 @@
 		8402BBDE1913435900005700 /* Building Info UI placeholder_dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 8402BBDD1913435900005700 /* Building Info UI placeholder_dialog.png */; };
 		8402BBE0191351C500005700 /* popup_dialogbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8402BBDF191351C500005700 /* popup_dialogbox.png */; };
 		8402BBE419138F4D00005700 /* Energybarblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 8402BBE319138F4D00005700 /* Energybarblue.png */; };
+		8405613C197D2CBA00EE9CD1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8405613B197D2CB900EE9CD1 /* Default-568h@2x.png */; };
 		840813A8193ACE600085EAFC /* scenario2Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 840813A7193ACE600085EAFC /* scenario2Background.png */; };
 		840813AF193AE0A00085EAFC /* AnimatedDialogue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 840813AE193AE0A00085EAFC /* AnimatedDialogue.cpp */; };
 		840813B4193AECBE0085EAFC /* reject.png in Resources */ = {isa = PBXBuildFile; fileRef = 840813B0193AECBE0085EAFC /* reject.png */; };
@@ -1326,6 +1327,7 @@
 		8402BBDD1913435900005700 /* Building Info UI placeholder_dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Building Info UI placeholder_dialog.png"; sourceTree = "<group>"; };
 		8402BBDF191351C500005700 /* popup_dialogbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popup_dialogbox.png; sourceTree = "<group>"; };
 		8402BBE319138F4D00005700 /* Energybarblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Energybarblue.png; sourceTree = "<group>"; };
+		8405613B197D2CB900EE9CD1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		840813A7193ACE600085EAFC /* scenario2Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scenario2Background.png; sourceTree = "<group>"; };
 		840813AD193AE04F0085EAFC /* AnimatedDialogue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedDialogue.h; sourceTree = "<group>"; };
 		840813AE193AE0A00085EAFC /* AnimatedDialogue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedDialogue.cpp; sourceTree = "<group>"; };
@@ -1855,6 +1857,7 @@
 		365FB99016E5E30B00A57CF0 = {
 			isa = PBXGroup;
 			children = (
+				8405613B197D2CB900EE9CD1 /* Default-568h@2x.png */,
 				84007D0419739C170048F23E /* NANHUA_TESTFLIGHT.mobileprovision */,
 				3647C7F817C1D9E3008FA626 /* Icon-144.png */,
 				3647C7F617C1D9DF008FA626 /* Icon-72.png */,
@@ -4119,6 +4122,7 @@
 				36D87D1018C5BF3900FE8B31 /* MaleOldMan.png in Resources */,
 				84EF1F4F191770F1002D64D9 /* roads.png in Resources */,
 				8414BF4E18BC8040007626B2 /* pauseIcon.png in Resources */,
+				8405613C197D2CBA00EE9CD1 /* Default-568h@2x.png in Resources */,
 				8412AEA5196EAFBC0091C76C /* FemaleBandit_port.png in Resources */,
 				843B18DA18F2A4FA00C00490 /* infor display ui.png in Resources */,
 				842B84C519064FCF00D43E2E /* ingamedragonanim.png in Resources */,

@@ -573,8 +573,8 @@ void MapHandler::rescaleScrollLimits()
     }
     
     // center map first! Or it will take the wrong position values.
-    int centerW = mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
-    int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
+    // int centerW = mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
+    // int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
     
     CCPoint mapPos = mapPtr->getPosition();
     

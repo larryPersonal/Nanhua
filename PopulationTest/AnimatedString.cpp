@@ -49,18 +49,15 @@ void AnimatedString::setup(std::string labelStr, std::string font, float fontSiz
 
 void AnimatedString::update(float dt)
 {
-    bool stop = false;
     CCArray* animatedDialogueList = Senario::getThis()->animatedDialogueList;
     for (int i = 0; i < animatedDialogueList->count(); i++)
     {
         AnimatedDialogue* ad = (AnimatedDialogue*) animatedDialogueList->objectAtIndex(i);
         if (ad->fadeIn)
         {
-            stop = true;
             return;
         }
     }
-    
     
     if(!flashIn)
     {

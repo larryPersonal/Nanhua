@@ -101,7 +101,7 @@ void BuildScroll::createMenuItems()
     BuildingCard* bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 1);
     numberOfBuildingCards++;
     buildingCards->addObject(bc);
-
+    
     bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 2);
     numberOfBuildingCards++;
     buildingCards->addObject(bc);
@@ -143,14 +143,14 @@ void BuildScroll::createMenuItems()
         Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
         if(tempBuilding->buildingType == AMENITY)
         {
-           // if (!nameExists(tempBuilding->buildingName))
-           // {
-                
-                
-                bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
-                numberOfBuildingCards++;
-                buildingCards->addObject(bc);
-          //  }
+            // if (!nameExists(tempBuilding->buildingName))
+            // {
+            
+        
+            bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+            numberOfBuildingCards++;
+            buildingCards->addObject(bc);
+            // }
         }
     }
     
@@ -348,10 +348,20 @@ bool BuildScroll::nameExists(const std::string& checkName)
     if (buildingCards->count() == 0) return false;
     for (int i = 0; i < buildingCards->count(); ++i)
     {
-        if (buildingCards->objectAtIndex(i) == NULL) continue;
-        if (((BuildingCard*)buildingCards->objectAtIndex(i))->building == NULL) continue;
-        if (checkName.compare(((BuildingCard*)buildingCards->objectAtIndex(i))->building->buildingName));
-        return true;
+        if (buildingCards->objectAtIndex(i) == NULL)
+        {
+            continue;
+        }
+        
+        if (((BuildingCard*)buildingCards->objectAtIndex(i))->building == NULL)
+        {
+            continue;
+        }
+        
+        if (checkName.compare(((BuildingCard*)buildingCards->objectAtIndex(i))->building->buildingName) == 0)
+        {
+            return true;
+        }
     }
     return false;
 }

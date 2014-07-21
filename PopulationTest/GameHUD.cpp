@@ -1549,7 +1549,6 @@ void GameHUD::createObjectiveMenu()
     // set common variables
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorWhite = ccc3(255, 255, 255);
-    ccColor3B colorBlack = ccc3(0, 0, 0);
     ccColor3B colorYellow = ccc3(255, 255, 140);
     
     // create the objective group background

@@ -61,7 +61,7 @@ SpriteRow* SpriteRow::create(GameSprite* gs, ScrollArea* sa, Building* building,
 
 bool SpriteRow::init()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     int row = (int) (index / 4);
     int column = (int) (index % 4);
