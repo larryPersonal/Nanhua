@@ -235,7 +235,6 @@ void SpriteHandler::initialize()
         gs->setAIConfig(configContent);
         gs->setDefaultsConfig(defaultContent);
         gs->villagerClass = villagerClass;
-        gs->appearanceType = sat;
         
         allSprites->addObject(gs);
         configContent = "";

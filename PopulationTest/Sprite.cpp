@@ -752,10 +752,14 @@ void GameSprite::moveSpritePosition(CCPoint target, cocos2d::CCObject *pSender)
     else if (diff.x > 0 && diff.y < 0)
     {
         changeAnimation("DR");
+        
+        updateZIndex();
     }
     else if (diff.x < 0 && diff.x < 0)
     {
         changeAnimation("DL");
+        
+        updateZIndex();
     }
 
     callback = CCCallFuncN::create(pSender, callfuncN_selector(GameSprite::moveComplete));
@@ -777,6 +781,9 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     currPos = GameScene::getThis()->mapHandler->tilePosFromLocation(currPos);
     
     currTile = GameScene::getThis()->mapHandler->getTileAt(currPos.x, currPos.y);
+    
+    // after calculate the newest currPos, update the z order of the sprite
+    updateZIndex();
     
     // each time after moveComplete has been triggered, the soldier will check the bandit's position again, so that they can adjust their path to the capture the bandit.
     if (villagerClass == V_SOLDIER)
@@ -1016,7 +1023,7 @@ SpriteAction GameSprite::getAction()
 
 void GameSprite::updateSprite(float dt)
 {
-    updateZIndex();
+    // updateZIndex();
     
     /* if one villager has been assigned to one target building and he cannot reach there, keep trying to there before he finally reach the target */
     if(hasAssigned)
@@ -2116,6 +2123,7 @@ void GameSprite::setIsFollowingMovementInstruction(bool flag)
 void GameSprite::changeToCitizen()
 {
     changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
+    setJob(NONE);
 }
 
 void GameSprite::setTargetLocation(Building* b)

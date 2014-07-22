@@ -759,17 +759,20 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             }
         }
     }
-    else if (buildingType == MILITARY && sp->currAction == GUARD)
+    else if (buildingType == MILITARY)
     {
-        if(sp->villagerClass == V_CITIZEN)
+        if(sp->currAction == GUARD)
         {
-            sp->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(sp, V_SOLDIER), GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
-            
-            if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachSoldier)
+            if(sp->villagerClass == V_CITIZEN)
             {
-                if(TutorialManager::getThis()->miniDragon != NULL)
+                sp->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(sp, V_SOLDIER), GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
+                
+                if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachSoldier)
                 {
-                    TutorialManager::getThis()->miniDragon->clickNext();
+                    if(TutorialManager::getThis()->miniDragon != NULL)
+                    {
+                        TutorialManager::getThis()->miniDragon->clickNext();
+                    }
                 }
             }
         }

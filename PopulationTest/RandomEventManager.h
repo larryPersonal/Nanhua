@@ -30,10 +30,10 @@ public:
     
     CCArray* randomEvents;
     
+    CCArray* descriptionLabels;
+    
     RandomEvent* theRandomEvent;
     CCSprite* image;
-    
-    CCLabelTTF* descriptionLabel;
     
     bool active;
     
@@ -53,6 +53,8 @@ public:
     
     void constructRandomEventContent();
     void removeRandomEventContent();
+    
+    void setupDescription(std::string desc);
     
     void clickSystemButton();
     

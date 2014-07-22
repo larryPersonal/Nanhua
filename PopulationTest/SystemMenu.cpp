@@ -138,6 +138,7 @@ void SystemMenu::clickExitButton()
         gs->StopMoving();
     }
     
+    GameScene::getThis()->isEndingGame = true;
     GameScene::getThis()->unschedule(schedule_selector(GameScene::update));
     GameScene::getThis()->unschedule(schedule_selector(GameScene::scrollToCenter));
     GameScene::getThis()->unschedule(schedule_selector(GameScene::decceleratingDragging));

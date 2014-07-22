@@ -172,6 +172,8 @@ public:
     float randomEventTresholdTimeMax;
     float randomEventTresholdTimeMin;
     
+    bool isEndingGame;
+    
 public:
     void checkAutoSave(float deltaTime);
     

@@ -140,18 +140,14 @@ void RandomEventManager::constructRandomEventContent()
     image = CCSprite::createWithSpriteFrameName(theRandomEvent->event_image.c_str());
     image->setAnchorPoint(ccp(0.5f, 0.5f));
     image->setScale(0.6f);
-    image->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 80.0f));
+    image->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 40.0f));
     background->addChild(image);
     
-    descriptionLabel = CCLabelTTF::create(theRandomEvent->event_description.c_str(), "Shojumaru-Regular", 18);
-    descriptionLabel->setAnchorPoint(ccp(0.5f, 0.5f));
-    descriptionLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 40.0f));
-    descriptionLabel->setColor(colorBlack);
-    background->addChild(descriptionLabel);
+    setupDescription(theRandomEvent->event_description);
     
     vector<string> effects = theRandomEvent->event_effects;
     int index = 0;
-    float startY = screenSize.height / 2.0f - 80.0f;
+    float startY = screenSize.height / 2.0f - 140.0f;
     bool isOdd = false;
     
     for (int i = 0; i < effects.size(); i++)
@@ -218,11 +214,60 @@ void RandomEventManager::constructRandomEventContent()
     background->addChild(menu);
 }
 
+void RandomEventManager::setupDescription(std::string desc)
+{
+    vector<string> tokens = GlobalHelper::split(desc, ' ');
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    ccColor3B colorBlack = ccc3(0, 0, 0);
+    
+    descriptionLabels = CCArray::create();
+    descriptionLabels->retain();
+    
+    float offY = 0;
+    stringstream ss;
+    ss << "";
+    string tempStr = ss.str();
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        tempStr = ss.str();
+        if (i > 0)
+        {
+            ss << " ";
+        }
+        ss << tokens.at(i);
+        CCLabelTTF* descLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
+        descLabel->retain();
+        if(descLabel->boundingBox().size.width > 400)
+        {
+            CCLabelTTF* theLabel = CCLabelTTF::create(tempStr.c_str(), "Shojumaru-Regular", 18);
+            theLabel->setAnchorPoint(ccp(0.5f, 0.5f));
+            theLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 70.0f - offY));
+            theLabel->setColor(colorBlack);
+            background->addChild(theLabel);
+            descriptionLabels->addObject(theLabel);
+            ss.str(std::string());
+            ss << tokens.at(i);
+            offY += 20.0f;
+        }
+        
+        CC_SAFE_DELETE(descLabel);
+    }
+    
+    CCLabelTTF* theLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
+    theLabel->setAnchorPoint(ccp(0.5f, 0.5f));
+    theLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 70.0f - offY));
+    theLabel->setColor(colorBlack);
+    background->addChild(theLabel);
+    descriptionLabels->addObject(theLabel);
+}
+
 void RandomEventManager::removeRandomEventContent()
 {
     if(background != NULL)
     {
         background->removeAllChildrenWithCleanup(true);
+        descriptionLabels->removeAllObjects();
+        CC_SAFE_RELEASE(descriptionLabels);
     }
 }
 

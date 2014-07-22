@@ -72,6 +72,8 @@ GameScene::GameScene()
     
     randomEventTresholdTime = 0;
     randomEventCumulativeTime = 0;
+    
+    isEndingGame = false;
 }
 
 GameScene::~GameScene()
@@ -372,6 +374,11 @@ void GameScene::enableTouch()
 
 void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
 {
+    if(isEndingGame)
+    {
+        return;
+    }
+    
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
@@ -389,6 +396,11 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
     if(tapped)
     {
         tapped = false;
+    }
+    
+    if(isEndingGame)
+    {
+        return;
     }
     
     isSwipe = true;
@@ -728,6 +740,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     if(tapped)
     {
         tapped = false;
+        return;
+    }
+    
+    if(isEndingGame)
+    {
         return;
     }
     
@@ -1268,11 +1285,13 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                         bui = selectedTile->master->building;
                     }
                     
+                    // the special building town hall is not allowed to be destroyed!
                     if(bui->buildingType == SPECIAL)
                     {
                         return;
                     }
                     
+                    // unlink all the villagers that has a relationship with the destroyed building.
                     CCArray* allSprites = spriteHandler->spritesOnMap;
                     for (int i = 0; i < allSprites->count(); i++)
                     {
@@ -1283,7 +1302,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             gs->currAction = IDLE;
                         }
                         
-                        if(gs->getJobLocation() == bui)
+                        if(gs->getJobLocation() == bui || gs->getPossessions()->jobLocation == bui)
                         {
                             gs->setJobLocation(NULL);
                             gs->changeToCitizen();
@@ -1296,6 +1315,13 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             SpriteClass* sc = new SpriteClass();
                             gs->changeClassTo(sc);
                             gs->currAction = IDLE;
+                            
+                            if(gs->getPossessions()->jobLocation != NULL)
+                            {
+                                gs->getPossessions()->jobLocation->memberSpriteList->removeObject(gs);
+                                gs->setJobLocation(NULL);
+                                gs->setJob(NONE);
+                            }
                         }
                     }
                     
@@ -1411,6 +1437,12 @@ void GameScene::centerCamera(Building* b, bool instant)
 
 void GameScene::scrollToCenter(float dt)
 {
+    if(isEndingGame)
+    {
+        this->unschedule(schedule_selector(GameScene::scrollToCenter));
+        return;
+    }
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // get the current position
@@ -1514,6 +1546,12 @@ void GameScene::scrollToCenter(float dt)
 // going to finish deccelerating dragging.
 void GameScene::decceleratingDragging(float dt)
 {
+    if(isEndingGame)
+    {
+        this->unschedule(schedule_selector(GameScene::decceleratingDragging));
+        return;
+    }
+    
     if(hasBeenDragged)
     {
         this->unschedule(schedule_selector(GameScene::decceleratingDragging));
@@ -1614,6 +1652,12 @@ void GameScene::stopGame()
 
 void GameScene::update(float time)
 {
+    if(isEndingGame)
+    {
+        this->unschedule(schedule_selector(GameScene::update));
+        return;
+    }
+    
     if(!GameHUD::getThis()->pause)
     {
         for (int i = 0; i < spriteHandler->spritesOnMap->count(); i++)
@@ -2510,6 +2554,11 @@ void GameScene::saveSystemData(int type)
     CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameManager::getThis()->getLevel());
     
     // CCLog("### level number : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
+    
+    // save the town hall level
+    ss.str(std::string());
+    ss << username << "_townhallLevel";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameManager::getThis()->town_hall_level);
     
     // save the current gold
     ss.str(std::string());
@@ -3973,6 +4022,13 @@ void GameScene::loadSpritesData(int type)
         ss << username << "_sprite_" << i << "_idleDelay";
         value = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
         gameSprite->idleDelay = value;
+        
+        if(gameSprite->villagerClass == V_SOLDIER || gameSprite->villagerClass == V_BANDIT)
+        {
+            gameSprite->spriteRep->setVisible(true);
+            gameSprite->spriteRep->setZOrder( 99999 );
+            gameSprite->speechBubble->setZOrder( 99999 );
+        }
     }
     
     // all the game sprites have been loaded, then load the links between these gamesprites!
@@ -4272,6 +4328,12 @@ void GameScene::loadSystemData(int type)
     ss << username << "_levelNumber";
     int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
     GameManager::getThis()->setLevel(levelNumber);
+    
+    // load the town hall level
+    ss.str(std::string());
+    ss << username << "_townhallLevel";
+    int townhallLevel = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+    GameManager::getThis()->town_hall_level = townhallLevel;
     
     // load the current money the user have
     ss.str(std::string());

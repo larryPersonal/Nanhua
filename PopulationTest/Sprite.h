@@ -109,7 +109,6 @@ public:
     float targetHappiness;
     
 public:
-    SpriteAppearanceType appearanceType;
     VillagerClass villagerClass;
     
     GameSprite* enermy;

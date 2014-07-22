@@ -871,6 +871,7 @@ float MapHandler::calcZIndex(CCPoint &point, int offset, bool isSprite, GameSpri
     float currZ = (point.x + point.y) * 2 + offset;
     if(isSprite)
     {
+        /*
         if(gs->getCurrentDir().compare("DR") == 0)
         {
             //currZ += 1;
@@ -887,13 +888,11 @@ float MapHandler::calcZIndex(CCPoint &point, int offset, bool isSprite, GameSpri
         {
             currZ -= 1;
         }
+        */
     }
     else
     {
-        if(offset <= 0)
-        {
-            currZ -= 2;
-        }
+        currZ += 1;
     }
     
     return (lowestZ + currZ) + mapPtr->layerNamed("Ground_1")->getZOrder();
@@ -967,14 +966,7 @@ Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
     cloneBuilding->buildingRep->initWithTexture(cloneBuilding->buildingTexture, cloneBuilding->buildingRect);
     CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
     cloneBuilding->buildingRep->setPosition(tilePos);
-    if (cloneBuilding->buildingType == MILITARY)
-    {
-        getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width) - cloneBuilding->width - 2); //force buildings to be drawn always on top
-    }
-    else
-    {
-        getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width)); //force buildings to be drawn always on top
-    }
+    getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, (cloneBuilding->width - 1) * 2.0f)); //force buildings to be drawn always on
     
     MapTile* master = getTileAt(target.x, target.y);
     for (int i = 0; i < cloneBuilding->height; i++)
@@ -1027,14 +1019,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
     cloneBuilding->buildingRep->initWithTexture(cloneBuilding->buildingTexture, cloneBuilding->buildingRect);
     CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
     cloneBuilding->buildingRep->setPosition(tilePos);
-    if (cloneBuilding->buildingType == MILITARY)
-    {
-        getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width) - cloneBuilding->width - 2); //force buildings to be drawn always on top
-    }
-    else
-    {
-        getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, cloneBuilding->width)); //force buildings to be drawn always on top
-    }
+    getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, (cloneBuilding->width - 1) * 2.0f)); //force buildings to be drawn always on top
     
     MapTile* master = getTileAt(target.x, target.y);
     for (int i = 0; i < cloneBuilding->height; i++)
@@ -1157,15 +1142,7 @@ bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
     currBuildingPreview->buildingRep->setOpacity(75);
     
     //I assume buildings are SQUARE.
-    //getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target, currBuildingPreview->width)); //force buildings to be drawn always on top
-    if (currBuildingPreview->buildingType == MILITARY)
-    {
-        getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target, currBuildingPreview->width) - currBuildingPreview->width - 2); //force buildings to be drawn always on top
-    }
-    else
-    {
-        getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target, currBuildingPreview->width)); //force buildings to be drawn always on top
-    }
+    getMap()->addChild(currBuildingPreview->buildingRep, calcZIndex(target, (currBuildingPreview->width - 1) * 2.0f)); //force buildings to be drawn always on top
     
     // Show red-tinted preview and red-tinted tile and return false if tiles are occupied.
     if (!isBuildableOnTile(target, currBuildingPreview))

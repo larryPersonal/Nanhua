@@ -756,7 +756,7 @@ void BuildingCard::tryToBuild(int tag)
         }
     }
     
-    if(GameHUD::getThis()->money > buildingToBuy->buildingCost)
+    if(GameHUD::getThis()->money >= buildingToBuy->buildingCost)
     {
         GameHUD::getThis()->scheduleAddMoney(-buildingToBuy->buildingCost);
         GameHUD::getThis()->setTapMode(1);

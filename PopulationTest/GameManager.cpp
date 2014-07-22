@@ -119,7 +119,6 @@ void GameManager::initMapUnlocks()
             a.required_bcount = root["items"].operator[](i)["unlock_bcount"].asInt();
             a.required_popn = root["items"].operator[](i)["unlock_popn"].asInt();
             areaUnlocks.push_back(a);
-            //rootseq->m_Children.push_back(buildTreeWithJsonValue(json["items"].operator[](i)));
         }
     }
     
@@ -151,7 +150,6 @@ void GameManager::initMenuUnlocks()
             a.required_popn = root["items"].operator[](i)["unlock_popn"].asInt();
             
             gameMenuUnlocks.push_back(a);
-            //rootseq->m_Children.push_back(buildTreeWithJsonValue(json["items"].operator[](i)));
         }
     }
     
