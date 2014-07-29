@@ -292,6 +292,7 @@ GameSprite* GameSprite::copyWithZone(CCZone *pZone)
         pCopy->idleFrameCount = this->idleFrameCount;
         pCopy->walkingFrameCount = this->walkingFrameCount;
         pCopy->spriteName = this->spriteName;
+        pCopy->baseSpriteName = this->baseSpriteName;
         pCopy->spriteClass = this->spriteClass;
         pCopy->currAction = IDLE;
         pCopy->config_doc = this->config_doc;
@@ -1024,7 +1025,6 @@ SpriteAction GameSprite::getAction()
 void GameSprite::updateSprite(float dt)
 {
     // updateZIndex();
-    
     /* if one villager has been assigned to one target building and he cannot reach there, keep trying to there before he finally reach the target */
     if(hasAssigned)
     {
@@ -1977,6 +1977,67 @@ void GameSprite::changeClassTo(SpriteClass* sc)
     {
         loadClassPossessions();
     }
+}
+
+void GameSprite::changeSpriteRepWhenLoadingGame()
+{
+    CCPoint pos = spriteRep->getPosition();
+    speechBubble->retain();
+    spriteRep->removeChild(speechBubble, false);
+    
+    for (int i = 0; i < battleIconArray->count(); i++)
+    {
+        BattleIcon* bi = (BattleIcon*) battleIconArray->objectAtIndex(i);
+        spriteRep->removeChild(bi->battleSprite, true);
+    }
+    battleIconArray->removeAllObjects();
+    
+    spriteRep->removeChild(barHP, true);
+    delete barHP;
+    
+    GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    
+    std::string initName = spriteName;
+    initName+= "_IDL001.png";
+    
+    spriteRep = CCSprite::createWithSpriteFrameName(initName.c_str());
+    spriteRep->setAnchorPoint(ccp(0.5, 0.75));
+    spriteRep->setScale(0.5f);
+    
+    spriteRep->setPosition(pos);
+    
+    spriteRep->addChild(speechBubble);
+    
+    BattleIcon* battleIcon = BattleIcon::create(this);
+    battleIconArray->addObject(battleIcon);
+    
+    barHP = new ProgressBar();
+    barHP->createProgressBar(CCRectMake(0, 0, 76, 16),
+                             CCRectMake(3, 3, 70, 10),
+                             "Energy_brown bar.png",
+                             "NONE",
+                             "NONE",
+                             "Energybarblue.png", true);
+    barHP->setAnchorPoint(ccp(0.5, 0.5));
+    
+    barHP->setValue((float) getPossessions()->current_endurance / (float) getPossessions()->max_endurance);
+    barHP->setPosition(ccp(spriteRep->boundingBox().size.width * 1.0f, spriteRep->boundingBox().size.height * 2.0f));
+    spriteRep->addChild(barHP);
+    
+    mGameCurrentEndurance = getPossessions()->current_endurance;
+    mGameMaxEndurance = getPossessions()->max_endurance;
+    
+    if (villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
+    {
+        barHP->setVisible(false);
+    }
+    else
+    {
+        barHP->setVisible(true);
+    }
+    
+    GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
+                                                         GameScene::getThis()->mapHandler->calcZIndex(pos));
 }
 
 void GameSprite::ReplaceSpriteRep()

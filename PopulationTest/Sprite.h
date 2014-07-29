@@ -154,6 +154,7 @@ public:
     bool shouldSetVisibleNextFrame;
     
     void ReplaceSpriteRep();
+    void changeSpriteRepWhenLoadingGame();
     
     CCCallFuncN* callback;
     
@@ -178,6 +179,7 @@ public:
     char race; //human or alien
     
     std::string spriteName;
+    std::string baseSpriteName;
     std::string spriteClass;
     std::string spriteDisplayedName;
     

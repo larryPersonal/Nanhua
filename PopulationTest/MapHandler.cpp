@@ -23,13 +23,7 @@ MapHandler::MapHandler()
 
 MapHandler::~MapHandler()
 {
-   // delete mapPtr;
-  /*
-    for (int i = 0; i < mapTiles->count(); ++i)
-    {
-        
-    }
-    */
+    // delete mapPtr;
     UnBuildPreview();
     
     for (int i = 0; i < mapTiles->count(); ++i)
@@ -37,12 +31,7 @@ MapHandler::~MapHandler()
         ((MapTile*)mapTiles->objectAtIndex(i))->UnBuild();
         
     }
-   /*
-    for (int i = 0; i < mapTiles->count(); ++i)
-    {
-        mapTiles->objectAtIndex(i)->release();
-        
-    }*/
+    
     mapTiles->removeAllObjects();
     mapTiles->release();
     
@@ -200,62 +189,6 @@ void MapHandler::scaleTo(float scaleFactor)
     rescaleScrollLimits();
 }
 
-/*
-bool MapHandler::checkPoint(CCPoint newPos, CCPoint oriPos)
-{
-    if(newPos.x <= 2 || newPos.x >= mapPtr->getMapSize().width - 3 || newPos.y <= 2 || newPos.y >= mapPtr->getMapSize().height - 3){
-        CCPoint targetPos = CCPointZero;
-        if(newPos.x <= 2 && newPos.y <= 2)
-        {
-            targetPos = ccp(3, 3);
-        }
-        else if(newPos.x <= 2 && newPos.y >= mapPtr->getMapSize().height - 3)
-        {
-            targetPos = ccp(3, mapPtr->getMapSize().height - 4);
-        }
-        else if(newPos.y >= mapPtr->getMapSize().height - 3 && newPos.x >= mapPtr->getMapSize().width - 3)
-        {
-            targetPos = ccp(mapPtr->getMapSize().width - 4, mapPtr->getMapSize().height - 4);
-        }
-        else if(newPos.y <= 2 && newPos.x >= mapPtr->getMapSize().width - 3)
-        {
-            targetPos = ccp(mapPtr->getMapSize().width - 4, 3);
-        }
-        else if(newPos.x <= 2)
-        {
-            targetPos = ccp(3, newPos.y);
-        }
-        else if(newPos.x >= mapPtr->getMapSize().width - 3)
-        {
-            targetPos = ccp(mapPtr->getMapSize().width - 4, newPos.y);
-        }
-        else if(newPos.y <= 2)
-        {
-            targetPos = ccp(newPos.x, 3);
-        }
-        else
-        {
-            targetPos = ccp(newPos.x, mapPtr->getMapSize().height - 4);
-        }
-        
-        if(GameScene::getThis()->isInDeccelerating)
-        {
-            GameScene::getThis()->isInDeccelerating = false;
-            GameScene::getThis()->unschedule(schedule_selector(GameScene::decceleratingDragging));
-        }
-        
-        //mapPtr->setPosition(oriPos);
-        moveToPosition(targetPos, newPos);
-        
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-*/
-
 /* type indicate which screen point is used for checking
  * the equation for checking the corner points are based on the map implementation! (so if map has been changed, change the checking equation accordingly
  * 0 -> left bottom corner of the screen, checking equation: y = -0.5x + 2208, check above the checking line
@@ -275,19 +208,6 @@ bool MapHandler::checkPoint(CCPoint newCornerPos, int type, float moveX, float m
             {
                 return true;
             }
-            /*
-            else
-            {
-                // the new corner position is not in boundary, calculate the correct position of the corner point
-                float newMoveY = newCornerPos.y + moveY - expectedY;
-                CCPoint newPos = CCPointMake(
-                                             mapPtr->getPosition().x + moveX,
-                                             mapPtr->getPosition().y + newMoveY
-                                             );
-                mapPtr->setPosition(newPos);
-            }
-             */
-            
         }
             break;
         // left top corner, check below line
@@ -298,17 +218,6 @@ bool MapHandler::checkPoint(CCPoint newCornerPos, int type, float moveX, float m
             {
                 return true;
             }
-            /*
-            else
-            {
-                float newMoveY = newCornerPos.y + moveY - expectedY;
-                CCPoint newPos = CCPointMake(
-                                             mapPtr->getPosition().x + moveX,
-                                             mapPtr->getPosition().y + newMoveY
-                                             );
-                mapPtr->setPosition(newPos);
-            }
-             */
         }
             break;
         // right top corner, check below line
@@ -319,17 +228,6 @@ bool MapHandler::checkPoint(CCPoint newCornerPos, int type, float moveX, float m
             {
                 return true;
             }
-            /*
-            else
-            {
-                float newMoveY = newCornerPos.y + moveY - expectedY;
-                CCPoint newPos = CCPointMake(
-                                             mapPtr->getPosition().x + moveX,
-                                             mapPtr->getPosition().y + newMoveY
-                                             );
-                mapPtr->setPosition(newPos);
-            }
-             */
         }
             break;
         // right bottom corner, check above line
@@ -340,17 +238,6 @@ bool MapHandler::checkPoint(CCPoint newCornerPos, int type, float moveX, float m
             {
                 return true;
             }
-            /*
-            else
-            {
-                float newMoveY = newCornerPos.y + moveY - expectedY;
-                CCPoint newPos = CCPointMake(
-                                             mapPtr->getPosition().x + moveX,
-                                             mapPtr->getPosition().y + newMoveY
-                                             );
-                mapPtr->setPosition(newPos);
-            }
-            */
         }
             break;
         default:
@@ -383,68 +270,6 @@ void MapHandler::moveMapBy(float moveX, float moveY)
                              mapPtr->getPosition().x + moveX,
                              mapPtr->getPosition().y + moveY
                              );
-    
-    /*
-    if (GameScene::getThis() != NULL){
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-        
-        // left bottom corner of the screen
-        CCPoint nTouch = ccp(0, 0);
-        CCPoint cornerPos = tilePosFromTouchLocation(nTouch);
-        CCPoint cornerPosition = locationFromTilePos(&cornerPos);
-        CCPoint newCornerPos = CCPointMake(
-                                        cornerPosition.x - moveX,
-                                        cornerPosition.y - moveY
-        );
-        
-        if(!checkPoint(newCornerPos, 0, -moveX, -moveY))
-        {
-            return;
-        }
-        
-        // left top corner of the screen
-        nTouch = ccp(0, screenSize.height);
-        cornerPos = tilePosFromTouchLocation(nTouch);
-        cornerPosition = locationFromTilePos(&cornerPos);
-        newCornerPos = CCPointMake(
-                                cornerPosition.x - moveX,
-                                cornerPosition.y - moveY
-        );
-        
-        if(!checkPoint(newCornerPos, 1, -moveX, -moveY))
-        {
-            return;
-        }
-        
-        // right top corner of the screen
-        nTouch = ccp(screenSize.width, screenSize.height);
-        cornerPos = tilePosFromTouchLocation(nTouch);
-        cornerPosition = locationFromTilePos(&cornerPos);
-        newCornerPos = CCPointMake(
-                                cornerPosition.x - moveX,
-                                cornerPosition.y - moveY
-        );
-        
-        if(!checkPoint(newCornerPos, 2, -moveX, -moveY))
-        {
-            return;
-        }
-        
-        // right bottom corner of the screen
-        nTouch = ccp(screenSize.width, 0);
-        cornerPos = tilePosFromTouchLocation(nTouch);
-        cornerPosition = locationFromTilePos(&cornerPos);
-        newCornerPos = CCPointMake(
-                                cornerPosition.x - moveX,
-                                cornerPosition.y - moveY
-        );
-        
-        if(!checkPoint(newCornerPos, 3, -moveX, -moveY))
-        {
-            return;
-        }
-    }
-    */
     
     //mapPtr->setPosition(forceBoundsConstraints(newPos));
     mapPtr->setPosition(forceBounds(newPos));
@@ -1206,8 +1031,8 @@ void MapHandler::UnBuild(cocos2d::CCPoint &target)
         for (int j = 0; j < targetB->width; j++)
             getTileAt(target.x + j, target.y + i)->UnBuild();
     
-    targetB->buildingTexture->release();
-    
+    // this may result to increase of the memory used (when destroy the building, the texture of the building is not release?), I am not sure, keep to check it!
+    // CC_SAFE_RELEASE(targetB);
 }
 
 void MapHandler::UnBuildPreview()
@@ -1580,4 +1405,67 @@ CCPoint MapHandler::getNearestNoneBuildingTile(CCPoint sourcePos)
     CCPoint targetPos = pf->getNearestNoneBuildingPos(&sourcePos);
     delete pf;
     return targetPos;
+}
+
+CCPoint MapHandler::getNearestPathTile(Building* building)
+{
+    CCPoint buildingPos = building->getWorldPosition();
+    // CCLog("the building World position is: (%f, %f)", buildingPos.x, buildingPos.y);
+    CCPoint buildingTilePos = tilePosFromLocation(buildingPos);
+    // CCLog("the building tile position is (%f, %f)", buildingTilePos.x, buildingTilePos.y);
+    int width = building->width;
+    // CCLog("the building width is: %d", width);
+    
+    CCPoint pathTilePos = ccp(-1, -1);
+    for (int i = buildingTilePos.x - 1; i < buildingTilePos.x + width + 1; i++)
+    {
+        MapTile* mapTile = getTileAt(i, buildingTilePos.y - 1);
+        if(mapTile->isPath)
+        {
+            pathTilePos = ccp(mapTile->xpos, mapTile->ypos);
+            return pathTilePos;
+        }
+    }
+    
+    for (int j = buildingTilePos.y; j < buildingTilePos.y + building->height + 1; j++)
+    {
+        MapTile* mapTile = getTileAt(buildingTilePos.x - 1, j);
+        if(mapTile->isPath)
+        {
+            pathTilePos = ccp(mapTile->xpos, mapTile->ypos);
+            return pathTilePos;
+        }
+        
+        mapTile = getTileAt(buildingTilePos.x + width, j);
+        if(mapTile->isPath)
+        {
+            pathTilePos = ccp(mapTile->xpos, mapTile->ypos);
+            return pathTilePos;
+        }
+    }
+    
+    for (int i = buildingTilePos.x; i < buildingTilePos.x + width; i++)
+    {
+        MapTile* mapTile = getTileAt(i, buildingTilePos.y + building->height);
+        if(mapTile->isPath)
+        {
+            pathTilePos = ccp(mapTile->xpos, mapTile->ypos);
+            return pathTilePos;
+        }
+    }
+    return pathTilePos;
+}
+
+bool MapHandler::isSpriteInBuilding(GameSprite* gameSprite, Building* building)
+{
+    CCPoint spritePos = gameSprite->getWorldPosition();
+    CCPoint spriteTilePos = tilePosFromLocation(spritePos);
+    
+    CCPoint buildingPos = building->getWorldPosition();
+    CCPoint buildingTilePos = tilePosFromLocation(buildingPos);
+    
+    int width = building->width;
+    int height = building->height;
+    
+    return spriteTilePos.x >= buildingTilePos.x && spriteTilePos.x < (buildingTilePos.x + width) && spriteTilePos.y >= buildingTilePos.y && spriteTilePos.y < (buildingTilePos.y + height);
 }

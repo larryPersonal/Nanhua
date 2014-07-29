@@ -514,6 +514,8 @@ void SelectPopulation::scheduleGuardTower()
         
         gameSprite->setJob(SOLDIER);
         
+        gameSprite->setJobLocation(building);
+        
         building->isCurrentWorking = true;
         
         prepareJob(gameSprite);

@@ -765,6 +765,8 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         {
             if(sp->villagerClass == V_CITIZEN)
             {
+                CCLog("********** sprite name is: %s", sp->spriteName.c_str());
+                
                 sp->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(sp, V_SOLDIER), GlobalHelper::getSpriteClassByVillagerClass(V_SOLDIER));
                 
                 if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachSoldier)
@@ -1068,6 +1070,11 @@ void Building::AnimUpdate()
         ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
     }
     
+}
+
+void Building::updateFrame()
+{
+    ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID));
 }
 
 void Building::updateBuilding(float dt)

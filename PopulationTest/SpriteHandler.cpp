@@ -229,6 +229,7 @@ void SpriteHandler::initialize()
         gs->gender = targetGender;
         gs->race = targetRace;
         gs->spriteName = fileName;
+        gs->baseSpriteName = fileName;
         gs->setFrameCount(targetIdleF, targetWalkF);
         gs->batchLayerIndex = i;
         gs->spriteClass = targetClass;

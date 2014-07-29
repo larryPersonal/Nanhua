@@ -192,6 +192,7 @@ public:
     void EndAnim();
     
     void AnimUpdate();
+    void updateFrame();
     
     float cumulatedTimeUpgrading;
     void updateBuilding(float);

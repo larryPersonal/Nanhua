@@ -85,8 +85,8 @@ public:
     CCPoint tilePosFromTouchLocation(CCPoint &location); //Apparently, while I don't need to scale the sprite's tile location, I need to scale the TOUCH location.
     
     CCPoint locationFromTilePos(CCPoint *tilePos);
-    //call this only when dealing with a game sprite that isn't normally part of the tmx layer.
-  //  CCPoint forceTileOffset(CCPoint &spritePos);
+    // call this only when dealing with a game sprite that isn't normally part of the tmx layer.
+    // CCPoint forceTileOffset(CCPoint &spritePos);
     
     CCPoint forceBoundsConstraints(CCPoint &tilePos);
     
@@ -134,6 +134,9 @@ public:
     void update(float dt);
     
     CCPoint getNearestNoneBuildingTile(CCPoint sourcePos);
+    CCPoint getNearestPathTile(Building* building);
+    
+    bool isSpriteInBuilding(GameSprite* gameSprite, Building* building);
     
     void moveToPosition(CCPoint target, CCPoint current);
     bool checkPoint(CCPoint newCornerPos, int type, float moveX, float moveY);

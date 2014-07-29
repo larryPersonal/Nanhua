@@ -1291,6 +1291,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                         return;
                     }
                     
+                    // get the neareast valid path tile
+                    CCPoint nearestPathTile = mapHandler->getNearestPathTile(bui);
+                    
                     // unlink all the villagers that has a relationship with the destroyed building.
                     CCArray* allSprites = spriteHandler->spritesOnMap;
                     for (int i = 0; i < allSprites->count(); i++)
@@ -1304,8 +1307,19 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                         
                         if(gs->getJobLocation() == bui || gs->getPossessions()->jobLocation == bui)
                         {
+                            // CCLog("TEST MY BEST APPLE");
                             gs->setJobLocation(NULL);
-                            gs->changeToCitizen();
+                            if(gs->villagerClass != V_SOLDIER)
+                            {
+                                // gs->changeToCitizen();
+                            }
+                            else
+                            {
+                                // CCLog("gameSprite name is: %s", gs->spriteName.c_str());
+                                gs->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(gs, V_REFUGEE), GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
+                                gs->spriteName = gs->baseSpriteName;
+                                gs->changeSpriteRepWhenLoadingGame();
+                            }
                             gs->currAction = IDLE;
                         }
                         
@@ -1322,6 +1336,13 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                                 gs->setJobLocation(NULL);
                                 gs->setJob(NONE);
                             }
+                        }
+                        
+                        if(mapHandler->isSpriteInBuilding(gs, bui) && (nearestPathTile.x >= 0 && nearestPathTile.y >= 0))
+                        {
+                            CCPoint nearestPathPos = mapHandler->locationFromTilePos(&nearestPathTile);
+                            gs->spriteRep->setVisible(true);
+                            gs->spriteRep->setPosition(nearestPathPos);
                         }
                     }
                     
@@ -2327,6 +2348,8 @@ void GameScene::saveBuildingData(int type)
         ss << username << "_building_" << buildingIndex << "_id";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), tag);
         
+        CCLog("****** the id of the building is %d", tag);
+        
         // building in progress
         ss.str(std::string());
         ss << username << "_building_" << buildingIndex << "_inProgress";
@@ -2401,6 +2424,51 @@ void GameScene::saveBuildingData(int type)
         ss.str(std::string());
         ss << username << "_building_" << buildingIndex << "_foodConsumptionRate";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->food_consumption_rate);
+        
+        // building baseGID
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_baseGID";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->baseGID);
+        
+        // building maxGID
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_maxGID";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->maxGID);
+        
+        // building currGID
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_currGID";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->currGID);
+        
+        // building lastGID
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_lastGID";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->lastGID);
+        
+        // building anim frame count
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_animFrameCount";
+        CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->animframe_count);
+        
+        // building anim random
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_animRandom";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), bui->anim_random);
+        
+        // building anim random chance
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_animRandomChance";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), bui->anim_random_chance);
+        
+        // building anim curr chance
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_animCurrChance";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), bui->anim_curr_chance);
+        
+        // building anim triggered
+        ss.str(std::string());
+        ss << username << "_building_" << buildingIndex << "_animTriggered";
+        CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), bui->anim_triggered);
         
         // building width
         ss.str(std::string());
@@ -2658,6 +2726,11 @@ void GameScene::saveSpritesData(int type)
         CCUserDefault::sharedUserDefault()->setStringForKey(ss.str().c_str(), gs->spriteName);
         
         // CCLog ("### sprite name : %s", CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str()).c_str());
+        
+        // spriteRep visibility
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_spriteRepVisible";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), gs->spriteRep->isVisible());
         
         // sprite positions
         CCPoint tilePos = gs->getWorldPosition();
@@ -3468,7 +3541,7 @@ void GameScene::saveReputationOrbData(int type)
         ss << username << "_orb_" << i << "_position_y";
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), tilePos.y);
         
-        CCLog("tile pos is: (%f, %f)", tilePos.x, tilePos.y);
+        // CCLog("tile pos is: (%f, %f)", tilePos.x, tilePos.y);
     }
 
 }
@@ -3611,6 +3684,14 @@ void GameScene::loadSpritesData(int type)
         ss << username << "_sprite_" << i << "_spriteName";
         std::string sname = CCUserDefault::sharedUserDefault()->getStringForKey(ss.str().c_str());
         gameSprite->spriteName = sname;
+        // CCLog("********** sprite name is: %s", gameSprite->spriteName.c_str());
+        gameSprite->changeSpriteRepWhenLoadingGame();
+        
+        // sprite rep visibility
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_spriteRepVisible";
+        bool tempVisible = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        gameSprite->spriteRep->setVisible(tempVisible);
         
         // sprite foodCarried
         ss.str(std::string());
@@ -4404,6 +4485,8 @@ void GameScene::loadBuildingData(int type)
         ss << username << "_building_" << i << "_id";
         int id = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         
+        CCLog("****** the id of the building is %d", id);
+        
         // get the source image copy of the building want to load
         Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(id);
         
@@ -4526,6 +4609,60 @@ void GameScene::loadBuildingData(int type)
         int foodConsumptionRate = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         bui->food_consumption_rate = foodConsumptionRate;
         
+        // building baseGID
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_baseGID";
+        int baseGID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        bui->baseGID = baseGID;
+        
+        // building maxGID
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_maxGID";
+        int maxGID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        bui->maxGID = maxGID;
+        
+        // building currGID
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_currGID";
+        int currGID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        bui->currGID = currGID;
+        
+        // building lastGID
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_lastGID";
+        int lastGID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        bui->lastGID = lastGID;
+        
+        // building anim frame count
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_animFrameCount";
+        int animframe_count = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+        bui->animframe_count = animframe_count;
+        
+        // building anim random
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_animRandom";
+        bool anim_random = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+        bui->anim_random = anim_random;
+        
+        // building anim random chance
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_animRandomChance";
+        float anim_random_chance = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        bui->anim_random_chance = anim_random_chance;
+        
+        // building anim curr chance
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_animCurrChance";
+        float anim_curr_chance = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        bui->anim_curr_chance = anim_curr_chance;
+        
+        // building anim triggered
+        ss.str(std::string());
+        ss << username << "_building_" << i << "_animTriggered";
+        float anim_triggered = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        bui->anim_triggered = anim_triggered;
+        
         // building width
         ss.str(std::string());
         ss << username << "_building_" << i << "_width";
@@ -4632,6 +4769,8 @@ void GameScene::loadBuildingData(int type)
         ss << username << "_building_" << i << "_cumulativeTimeResting";
         float cumulatedTimeResting = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
         bui->cumulatedTimeResting = cumulatedTimeResting;
+        
+        bui->updateFrame();
     }
 }
 
