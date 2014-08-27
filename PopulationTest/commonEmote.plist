@@ -7,7 +7,7 @@
             <key>emotionicon_anima.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,512}}</string>
+                <string>{{0,0},{256,512}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>commonEmote.png</string>
             <key>size</key>
-            <string>{260,516}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:914a240c66c2591997235c2065e75975:5428a89207f5f2e422ac8dece86944e2:03ee0cc3a2d886c69d2758ecd2a488c7$</string>
+            <string>$TexturePacker:SmartUpdate:4ac87aced0192f2f13dd025ed35d5eea:5428a89207f5f2e422ac8dece86944e2:03ee0cc3a2d886c69d2758ecd2a488c7$</string>
             <key>textureFileName</key>
             <string>commonEmote.png</string>
         </dict>

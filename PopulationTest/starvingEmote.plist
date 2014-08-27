@@ -7,11 +7,11 @@
             <key>starvingandstuck.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{198,196}}</string>
+                <string>{{0,0},{198,196}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{198,196}}</string>
                 <key>sourceSize</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>starvingEmote.png</string>
             <key>size</key>
-            <string>{200,202}</string>
+            <string>{198,196}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5f8c93b83ce225a1bfd8ebd9a6f4bd55:d0ca35f01f0fecc46ff9ce533120e92b:6abbdd503b23dddffeb5f29e2894f7d1$</string>
+            <string>$TexturePacker:SmartUpdate:e1957b2f5c3d65a96f862b01965ea26b:d0ca35f01f0fecc46ff9ce533120e92b:6abbdd503b23dddffeb5f29e2894f7d1$</string>
             <key>textureFileName</key>
             <string>starvingEmote.png</string>
         </dict>

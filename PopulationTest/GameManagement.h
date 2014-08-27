@@ -18,6 +18,21 @@ class GameManagement
 {
 public:
     static void saveGameToFile();
+    static void saveData(int type);
+    static void saveSpritesData(int type);
+    static void saveBuildingData(int type);
+    static void saveSystemData(int type);
+    static void saveRoadData(int type);
+    static void saveReputationOrbData(int type);
+    
+    static bool loadData(int type);
+    static void loadSystemData(int type);
+    static void loadBuildingData(int type);
+    static void loadSpritesData(int type);
+    static void loadSpritesLinks(int type);
+    static void loadRoadData(int type);
+    static void loadReputationOrbData(int type);
+    
     static void loadGameFile();
 };
 

@@ -142,23 +142,6 @@ public:
     
     void checkTeachBuildRoad();
     
-    void initSharedTextureCache();
-    
-    void saveData(int type);
-    void saveSpritesData(int type);
-    void saveBuildingData(int type);
-    void saveSystemData(int type);
-    void saveRoadData(int type);
-    void saveReputationOrbData(int type);
-    
-    bool loadData(int type);
-    void loadSystemData(int type);
-    void loadBuildingData(int type);
-    void loadSpritesData(int type);
-    void loadSpritesLinks(int type);
-    void loadRoadData(int type);
-    void loadReputationOrbData(int type);
-    
     CREATE_FUNC(GameScene);
     
 public:

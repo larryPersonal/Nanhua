@@ -26,10 +26,7 @@ struct Date
     
     Date()
     {
-        year = 0;
-        month = 0;
-        week = 0;
-        day = 0;
+        reset();
     }
     
     void addDay()
@@ -52,6 +49,14 @@ struct Date
             month = 0;
             year++;
         }
+    }
+    
+    void reset()
+    {
+        year = 0;
+        month = 0;
+        week = 0;
+        day = 0;
     }
 };
 
@@ -212,6 +217,14 @@ public:
     bool showRandomEventManager;
     CCSprite* showRandomEventManagerButton;
     
+    // hospital system for level 3
+    int mGameNumberOfHospitals;
+    CCSprite* hospitalIcon;
+    CCSprite* buildHospitalButton;
+    CCLabelTTF* multiplyLabel;
+    CCLabelTTF* hospitalNumberLabel;
+    CCLabelTTF* buildHospitalInstructionLabel;
+    
     int frameHeight;
     int frameWidth;
     
@@ -302,11 +315,13 @@ public:
     bool finalObjective;
     
 public:
-    
     GameHUD();
     ~GameHUD();
+    
     static GameHUD* create();
     static GameHUD* getThis();
+    
+    void resetGameHUD();
     
     bool init();
     void createInitialGUI();
@@ -345,7 +360,6 @@ public:
     void clickFoodLabel();
     void clickPopulationLabel();
     
-    void pauseGame();
     void stickGameHappiness();
     void banditsAttack(int banditsNumber = 1);
     void alertBanditsAttackFade(float);

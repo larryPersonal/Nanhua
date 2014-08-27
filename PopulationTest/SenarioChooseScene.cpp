@@ -26,8 +26,6 @@ SenarioChooseScene::SenarioChooseScene()
     isSaveFileChooseScreenClosing = false;
     
     isGoingToLoadGame = false;
-    
-    preloadTextures();
 }
 
 SenarioChooseScene::~SenarioChooseScene()
@@ -63,6 +61,7 @@ bool SenarioChooseScene::init()
     {
         return false;
     }
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     CCRect boxrect = CCRectMake(0,0, screenSize.width * 0.8f,  screenSize.width * 0.2f);
@@ -95,72 +94,72 @@ bool SenarioChooseScene::init()
     value = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
     senarioButtonS2->setVisible(value);
     
+    ss.str(std::string());
+    ss << usrname << "_level_3_open";
+    
     senarioButtonS3 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario3));
     senarioButtonS3->setContentSize(boxrect.size);
-    senarioButtonS3->setVisible(false);
+    value = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+    senarioButtonS3->setVisible(value);
+    
+    ss.str(std::string());
+    ss << usrname << "_level_4_open";
     
     senarioButtonS4 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario4));
     senarioButtonS4->setContentSize(boxrect.size);
-    senarioButtonS4->setVisible(false);
+    value = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+    senarioButtonS4->setVisible(value);
+    
+    ss.str(std::string());
+    ss << usrname << "_level_5_open";
     
     senarioButtonS5 = CCMenuItemImage::create("", "", this, menu_selector(SenarioChooseScene::chooseSenario5));
     senarioButtonS5->setContentSize(boxrect.size);
-    senarioButtonS5->setVisible(false);
+    value = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
+    senarioButtonS5->setVisible(value);
     
     CCSprite* backButton = CCSprite::createWithSpriteFrameName("back_icon.png");
     senarioButtonS6 = CCMenuItemSprite::create(backButton, backButton, this, menu_selector(SenarioChooseScene::chooseSenario6));
     senarioButtonS6->setContentSize(exitrect.size);
     
-    loadGameButton = CCMenuItemImage::create("load_icon.png", "load_icon.png", this, menu_selector(SenarioChooseScene::chooseLoadGame));
+    CCSprite* button = CCSprite::createWithSpriteFrameName("load_icon.png");
+    CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("load_icon.png");
+    loadGameButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::chooseLoadGame));
     loadGameButton->setContentSize(loadButtonRect.size);
     loadGameButton->setAnchorPoint(ccp(0, 0.5f));
     
-    CCLabelTTF* tutorialLabel = CCLabelTTF::create("Tutorial", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter,kCCVerticalTextAlignmentCenter);
-    // tutorialLabel->setAnchorPoint(ccp(0.5f, 0.5));
+    tutorialLabel = CCLabelTTF::create("Tutorial", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter,kCCVerticalTextAlignmentCenter);
     tutorialLabel->setPosition( ccp(senarioButtonTutorial->boundingBox().size.width * 0.5f, senarioButtonTutorial->boundingBox().size.height * 0.5f));
     senarioButtonTutorial->addChild(tutorialLabel);
     tutorialLabel->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel1 = CCLabelTTF::create("Scenario 1", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // senarioLabel1->setAnchorPoint(ccp(0.5f, 0.5));
+    senarioLabel1 = CCLabelTTF::create("Scenario 1", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     senarioLabel1->setPosition( ccp(senarioButtonS1->boundingBox().size.width * 0.5f, senarioButtonS1->boundingBox().size.height * 0.5f));
     senarioButtonS1->addChild(senarioLabel1);
     senarioLabel1->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel2 = CCLabelTTF::create("Scenario 2", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // senarioLabel2->setAnchorPoint(ccp(0.5f, 0.5));
+    senarioLabel2 = CCLabelTTF::create("Scenario 2", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     senarioLabel2->setPosition( ccp(senarioButtonS2->boundingBox().size.width * 0.5f, senarioButtonS2->boundingBox().size.height * 0.5f));
     senarioButtonS2->addChild(senarioLabel2);
     senarioLabel2->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel3 = CCLabelTTF::create("Scenario 3", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // senarioLabel3->setAnchorPoint(ccp(0.5f, 0.5));
+    senarioLabel3 = CCLabelTTF::create("Scenario 3", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     senarioLabel3->setPosition( ccp(senarioButtonS3->boundingBox().size.width * 0.5f, senarioButtonS3->boundingBox().size.height * 0.5f));
     senarioButtonS3->addChild(senarioLabel3);
     senarioLabel3->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel4 = CCLabelTTF::create("Scenario 4", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // senarioLabel4->setAnchorPoint(ccp(0.5f, 0.5));
+    senarioLabel4 = CCLabelTTF::create("Scenario 4", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     senarioLabel4->setPosition( ccp(senarioButtonS4->boundingBox().size.width * 0.5f, senarioButtonS4->boundingBox().size.height * 0.5f));
     senarioButtonS4->addChild(senarioLabel4);
     senarioLabel4->setColor(ccc3(255,189,68));
     
-    CCLabelTTF* senarioLabel5 = CCLabelTTF::create("Scenario 5", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // senarioLabel5->setAnchorPoint(ccp(0.5f, 0.5));
+    senarioLabel5 = CCLabelTTF::create("Scenario 5", "Shojumaru-Regular" ,96, boxrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     senarioLabel5->setPosition( ccp(senarioButtonS5->boundingBox().size.width * 0.5f, senarioButtonS5->boundingBox().size.height * 0.5f));
     senarioButtonS5->addChild(senarioLabel5);
     senarioLabel5->setColor(ccc3(255,189,68));
-    
-    // CCLabelTTF* senarioLabel6 = CCLabelTTF::create("B", "Shojumaru-Regular" ,28, exitrect.size, kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    // senarioLabel6->setAnchorPoint(ccp(0.5f, 0.5));
-    // senarioLabel6->setPosition( ccp(senarioButtonS6->boundingBox().size.width * 0.5f, senarioButtonS6->boundingBox().size.height * 0.5f));
-    // senarioButtonS6->addChild(senarioLabel6);
-    // senarioLabel6->setColor(ccc3(255,189,68));
 
-    
     //2 is retina, 1 is normal
     if (CC_CONTENT_SCALE_FACTOR() == 1) {
- //       backgroundImage->setScale(1)
         senarioButtonTutorial->setScale(0.4);
         senarioButtonS1->setScale(0.4);
         senarioButtonS2->setScale(0.4);
@@ -171,7 +170,6 @@ bool SenarioChooseScene::init()
         
         loadGameButton->setScale(0.4);
     } else {
-   //     background
         senarioButtonTutorial->setScale(0.8);
         senarioButtonS1->setScale(0.8);
         senarioButtonS2->setScale(0.8);
@@ -182,7 +180,6 @@ bool SenarioChooseScene::init()
         
         loadGameButton->setScale(0.8);
     }
-    //onOrientateChange();
     
     backgroundImage->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.5));
     senarioButtonTutorial->setPosition(ccp(screenSize.width * 0.348, screenSize.height * 0.685));
@@ -201,14 +198,14 @@ bool SenarioChooseScene::init()
     this->addChild(backgroundImage, 0);
     
     /* loading screen module */
-    loadingScreen = CCSprite::create("loading screen.png");
+    loadingScreen = CCSprite::createWithSpriteFrameName("loading screen.png");
     loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
     loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
     loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(loadingScreen, 10);
     loadingScreen->setVisible(false);
     
-    loadingLabel = CCSprite::create("loading.png");
+    loadingLabel = CCSprite::createWithSpriteFrameName("loading.png");
     loadingLabel->setAnchorPoint(ccp(0.5, 0.5));
     loadingLabel->setScale(0.5f);
     loadingLabel->setPosition(ccp(screenSize.width / 2.0f + 20.0f, screenSize.height / 2.0f - 120.0f));
@@ -238,12 +235,15 @@ void SenarioChooseScene::chooseTutorial()
 
 void SenarioChooseScene::loadingTutorial()
 {
+    this->removeChild(loadingScreen, true);
+    this->removeChild(loadingLabel, true);
+    
     // update the level number in the Game Manager
     GameManager::getThis()->setLevel(0);
     
     // load the actual game scene
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
+    clearTextureWhenLoadingMap();
     
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
@@ -276,7 +276,7 @@ void SenarioChooseScene::loadingSenario1()
     
     // load the actual game scene
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
+    clearTextureWhenLoadingMap();
     
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
@@ -306,7 +306,7 @@ void SenarioChooseScene::loadingSenario2()
 {
     GameManager::getThis()->setLevel(2);
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
+    clearTextureWhenLoadingMap();
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
@@ -327,11 +327,16 @@ void SenarioChooseScene::chooseSenario3()
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
     
     SoundtrackManager::PlaySFX("Button_press.wav");
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario3), 0.1f);
 }
 
 void SenarioChooseScene::loadingSenario3()
 {
-    
+    GameManager::getThis()->setLevel(3);
+    GlobalHelper::clearCache();
+    clearTextureWhenLoadingMap();
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario4()
@@ -351,11 +356,16 @@ void SenarioChooseScene::chooseSenario4()
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
     
     SoundtrackManager::PlaySFX("Button_press.wav");
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario4), 0.1f);
 }
 
 void SenarioChooseScene::loadingSenario4()
 {
-    
+    GameManager::getThis()->setLevel(4);
+    GlobalHelper::clearCache();
+    clearTextureWhenLoadingMap();
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 void SenarioChooseScene::chooseSenario5()
@@ -375,11 +385,16 @@ void SenarioChooseScene::chooseSenario5()
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
     
     SoundtrackManager::PlaySFX("Button_press.wav");
+    enableLoadingScreen();
+    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingSenario5), 0.1f);
 }
 
 void SenarioChooseScene::loadingSenario5()
 {
-    
+    GameManager::getThis()->setLevel(5);
+    GlobalHelper::clearCache();
+    clearTextureWhenLoadingMap();
+    CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
 
 //THIS IS ACTUALLY THE GO BACK BUTTON.
@@ -397,15 +412,15 @@ void SenarioChooseScene::chooseSenario6()
 
 void SenarioChooseScene::loadingSenario6()
 {
+    this->removeChild(loadingScreen, true);
+    this->removeChild(loadingLabel, true);
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
     CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
 }
 
 void SenarioChooseScene::enableLoadingScreen()
 {
-    this->removeChild(backgroundImage);
-    this->removeChild(senarioChooseSceneMenu);
+    clear();
     
     loadingScreen->setVisible(true);
     loadingLabel->setVisible(true);
@@ -418,13 +433,6 @@ void SenarioChooseScene::onOrientationChangedToPortrait(){
 }
 
 void SenarioChooseScene::onOrientationChangedToLandscape(){
-}
-
-void SenarioChooseScene::preloadTextures()
-{
-    CCSpriteBatchNode* mainMenuSceneNode = CCSpriteBatchNode::create("LevelSelectSceneSpriteSheet.png");
-    this->addChild(mainMenuSceneNode);
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("LevelSelectSceneSpriteSheet.plist");
 }
 
 void SenarioChooseScene::loadAutoSaveGame()
@@ -470,7 +478,6 @@ void SenarioChooseScene::loadFixedSaveGame()
     isGoingToLoadGame = true;
     
     enableLoadingScreen();
-    // this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
     
     scheduleSaveFileChooseScreenClosing();
 }
@@ -494,34 +501,20 @@ void SenarioChooseScene::loadCustomSaveGame()
     isGoingToLoadGame = true;
     
     enableLoadingScreen();
-    // this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
     
     scheduleSaveFileChooseScreenClosing();
 }
 
 void SenarioChooseScene::chooseLoadGame()
 {
-    
-    
     scheduleSaveFileChooseScreenOpening();
-    /*
-    stringstream ss;
-    ss << "isLoadingGame";
-    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
-    
-    enableLoadingScreen();
-    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingLoadGame), 0.1f);
-    */
 }
 
 void SenarioChooseScene::loadingLoadGame()
 {
-    // update the level number in the Game Manager, if loading game fails, it will auto direct the game to tutorial
-    // GameManager::getThis()->setLevel(0);
-    
     // load the actual game scene
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
+    clearTextureWhenLoadingMap();
     
     CCDirector::sharedDirector()->replaceScene(GameScene::scene());
 }
@@ -530,7 +523,7 @@ void SenarioChooseScene::setupSaveFileChooseScreen()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    saveFileChooseBackground = CCSprite::create("popup_dialogbox.png");
+    saveFileChooseBackground = CCSprite::createWithSpriteFrameName("popup_dialogbox.png");
     saveFileChooseBackground->setAnchorPoint(ccp(0.5f, 0.5f));
     saveFileChooseBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     
@@ -539,51 +532,71 @@ void SenarioChooseScene::setupSaveFileChooseScreen()
     loadScreenTitle->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     saveFileChooseBackground->addChild(loadScreenTitle);
     
-    closeButton = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(SenarioChooseScene::scheduleSaveFileChooseScreenClosing));
+    CCSprite* button = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
+    CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
+    closeButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::scheduleSaveFileChooseScreenClosing));
     closeButton->setAnchorPoint(ccp(0.5f, 0.5f));
     closeButton->setPosition(ccp(screenSize.width / 2.0f - 160.0f, -5.0f));
     
-    autoLoadButton = CCMenuItemImage::create("load.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadAutoSaveGame));
+    button = CCSprite::createWithSpriteFrameName("load.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_press.png");
+    autoLoadButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadAutoSaveGame));
     autoLoadButton->setAnchorPoint(ccp(0.5f, 0.5f));
     autoLoadButton->setScale(0.6f);
     autoLoadButton->setPosition(ccp(-350.0f, -80.0f));
     
-    autoLoadDisableButton = CCMenuItemImage::create("load_disable.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadDisableWarning));
+    button = CCSprite::createWithSpriteFrameName("load_disable.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_press.png");
+    autoLoadDisableButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadDisableWarning));
     autoLoadDisableButton->setAnchorPoint(ccp(0.5f, 0.5f));
     autoLoadDisableButton->setScale(0.6f);
     autoLoadDisableButton->setPosition(ccp(-350.0f, -80.0f));
     
-    autoLoadHandleButton = CCMenuItemImage::create("load_button.png", "load_button_press.png", this, menu_selector(SenarioChooseScene::loadAutoSaveGame));
+    button = CCSprite::createWithSpriteFrameName("load_button.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_button_press.png");
+    autoLoadHandleButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadAutoSaveGame));
     autoLoadHandleButton->setAnchorPoint(ccp(0.0f, 0.5f));
     autoLoadHandleButton->setScale(0.6f);
     autoLoadHandleButton->setPosition(ccp(200.0f, -80.0f));
     
-    fixedLoadButton = CCMenuItemImage::create("load.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadFixedSaveGame));
+    button = CCSprite::createWithSpriteFrameName("load.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_press.png");
+    fixedLoadButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadFixedSaveGame));
     fixedLoadButton->setAnchorPoint(ccp(0.5f, 0.5f));
     fixedLoadButton->setScale(0.6f);
     fixedLoadButton->setPosition(ccp(-350.0f, -160.0f));
     
-    fixedLoadDisableButton = CCMenuItemImage::create("load_disable.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadDisableWarning));
+    button = CCSprite::createWithSpriteFrameName("load_disable.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_press.png");
+    fixedLoadDisableButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadDisableWarning));
     fixedLoadDisableButton->setAnchorPoint(ccp(0.5f, 0.5f));
     fixedLoadDisableButton->setScale(0.6f);
     fixedLoadDisableButton->setPosition(ccp(-350.0f, -160.0f));
     
-    fixedLoadHandleButton = CCMenuItemImage::create("load_button.png", "load_button_press.png", this, menu_selector(SenarioChooseScene::loadFixedSaveGame));
+    button = CCSprite::createWithSpriteFrameName("load_button.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_button_press.png");
+    fixedLoadHandleButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadFixedSaveGame));
     fixedLoadHandleButton->setAnchorPoint(ccp(0.0f, 0.5f));
     fixedLoadHandleButton->setScale(0.6f);
     fixedLoadHandleButton->setPosition(ccp(200.0f, -160.0f));
     
-    customLoadButton = CCMenuItemImage::create("load.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadCustomSaveGame));
+    button = CCSprite::createWithSpriteFrameName("load.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_press.png");
+    customLoadButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadCustomSaveGame));
     customLoadButton->setAnchorPoint(ccp(0.5f, 0.5f));
     customLoadButton->setScale(0.6f);
     customLoadButton->setPosition(ccp(-350.0f, -240.0f));
     
-    customLoadDisableButton = CCMenuItemImage::create("load_disable.png", "load_press.png", this, menu_selector(SenarioChooseScene::loadDisableWarning));
+    button = CCSprite::createWithSpriteFrameName("load_disable.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_press.png");
+    customLoadDisableButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadDisableWarning));
     customLoadDisableButton->setAnchorPoint(ccp(0.5f, 0.5f));
     customLoadDisableButton->setScale(0.6f);
     customLoadDisableButton->setPosition(ccp(-350.0f, -240.0f));
     
-    customLoadHandleButton = CCMenuItemImage::create("load_button.png", "load_button_press.png", this, menu_selector(SenarioChooseScene::loadCustomSaveGame));
+    button = CCSprite::createWithSpriteFrameName("load_button.png");
+    buttonPressed = CCSprite::createWithSpriteFrameName("load_button_press.png");
+    customLoadHandleButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(SenarioChooseScene::loadCustomSaveGame));
     customLoadHandleButton->setAnchorPoint(ccp(0.0f, 0.5f));
     customLoadHandleButton->setScale(0.6f);
     customLoadHandleButton->setPosition(ccp(200.0f, -240.0f));
@@ -629,7 +642,7 @@ void SenarioChooseScene::setupSaveFileChooseScreen()
     
     this->addChild(saveFileChooseBackground, 11);
     
-    blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen = CCSprite::createWithSpriteFrameName("blackscreen.png");
     blackScreen->setAnchorPoint(ccp(0.5f, 0.5f));
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -725,6 +738,59 @@ void SenarioChooseScene::loadDisableWarning()
     // by now, nothing will happen. Reserve for possible warning screen.
 }
 
+void SenarioChooseScene::clear()
+{
+    // clear load module
+    saveFileMenu->removeChild(closeButton, true);
+    
+    saveFileMenu->removeChild(autoLoadButton, true);
+    saveFileMenu->removeChild(autoLoadDisableButton, true);
+    saveFileMenu->removeChild(autoLoadHandleButton, true);
+    
+    saveFileMenu->removeChild(fixedLoadButton, true);
+    saveFileMenu->removeChild(fixedLoadDisableButton, true);
+    saveFileMenu->removeChild(fixedLoadHandleButton, true);
+    
+    saveFileMenu->removeChild(customLoadButton, true);
+    saveFileMenu->removeChild(customLoadDisableButton, true);
+    saveFileMenu->removeChild(customLoadHandleButton, true);
+    
+    saveFileChooseBackground->removeChild(loadScreenTitle, true);
+    saveFileChooseBackground->removeChild(saveFileMenu, true);
+    
+    saveFileChooseBackground->removeChild(autoSaveLabel, true);
+    saveFileChooseBackground->removeChild(autoSaveStatusLabel, true);
+    
+    saveFileChooseBackground->removeChild(fixedSaveLabel, true);
+    saveFileChooseBackground->removeChild(fixedSaveStatusLabel, true);
+    
+    saveFileChooseBackground->removeChild(customSaveLabel, true);
+    saveFileChooseBackground->removeChild(customSaveStatusLabel, true);
+    
+    this->removeChild(saveFileChooseBackground, true);
+    this->removeChild(blackScreen, true);
+    
+    // clear level select scene
+    senarioButtonTutorial->removeChild(tutorialLabel, true);
+    senarioButtonS1->removeChild(senarioLabel1, true);
+    senarioButtonS2->removeChild(senarioLabel2, true);
+    senarioButtonS3->removeChild(senarioLabel3, true);
+    senarioButtonS4->removeChild(senarioLabel4, true);
+    senarioButtonS5->removeChild(senarioLabel5, true);
+    
+    senarioChooseSceneMenu->removeChild(senarioButtonTutorial, true);
+    senarioChooseSceneMenu->removeChild(senarioButtonS1, true);
+    senarioChooseSceneMenu->removeChild(senarioButtonS2, true);
+    senarioChooseSceneMenu->removeChild(senarioButtonS3, true);
+    senarioChooseSceneMenu->removeChild(senarioButtonS4, true);
+    senarioChooseSceneMenu->removeChild(senarioButtonS5, true);
+    senarioChooseSceneMenu->removeChild(senarioButtonS6, true);
+    senarioChooseSceneMenu->removeChild(loadGameButton, true);
+    
+    this->removeChild(senarioChooseSceneMenu, true);
+    this->removeChild(backgroundImage, true);
+}
+
 void SenarioChooseScene::checkLoadStatus()
 {
     string username = GameManager::getThis()->username;
@@ -811,4 +877,12 @@ void SenarioChooseScene::checkLoadStatus()
         
         customSaveStatusLabel->setString("No record found!");
     }
+}
+
+void SenarioChooseScene::clearTextureWhenLoadingMap()
+{
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("teacherManagement.plist");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("MainGamePageTexture.plist");
+    // CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("Extra.plist");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("LevelSelectSceneSpriteSheet.plist");
 }

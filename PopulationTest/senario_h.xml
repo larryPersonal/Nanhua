@@ -421,7 +421,7 @@
         </option>
         <option>
             <src>reject.png</src>
-            <srcp>reject_press.png</src>
+            <srcp>reject_press.png</srcp>
             <file>senario1_option2.xml</file>
             <font>GillSansMT</font>
             <fontSize>24</fontSize>

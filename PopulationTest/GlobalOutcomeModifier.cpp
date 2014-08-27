@@ -8,8 +8,11 @@
 
 #include "GlobalOutcomeModifier.h"
 
+GlobalOutcomeModifier* GlobalOutcomeModifier::SP;
+
 GlobalOutcomeModifier::GlobalOutcomeModifier()
 {
+    GlobalOutcomeModifier::SP = this;
     banditsModifier = 0;
     refugeesModifier = 0;
     goldModifier = 0;
@@ -19,5 +22,10 @@ GlobalOutcomeModifier::GlobalOutcomeModifier()
 
 GlobalOutcomeModifier::~GlobalOutcomeModifier()
 {
-    
+    GlobalOutcomeModifier::SP = NULL;
+}
+
+GlobalOutcomeModifier* GlobalOutcomeModifier::getThis()
+{
+    return SP;
 }

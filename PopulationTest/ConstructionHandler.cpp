@@ -12,14 +12,25 @@
 #include "ProgressBar.h"
 #include "TutorialManager.h"
 
+ConstructionHandler* ConstructionHandler::SP;
+
+ConstructionHandler* ConstructionHandler::getThis()
+{
+    return SP;
+}
+
 ConstructionHandler::ConstructionHandler()
 {
+    ConstructionHandler::SP = this;
+    
     constructingBuildings = CCArray::create();
     constructingBuildings->retain();
 }
 
 ConstructionHandler::~ConstructionHandler()
 {
+    ConstructionHandler::SP = NULL;
+    
     constructingBuildings->removeAllObjects();
     constructingBuildings->release();
 }

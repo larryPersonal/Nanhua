@@ -1,14 +1,38 @@
 <?xml version="1.0"?>
 
-<total_objectives>1</total_objectives>
+<total_objectives>2</total_objectives>
 
 <objective>
     <id>1</id>
     <type>DISPLAY</type>
+    <title>Architect 2</title>
+    <content>Build a guard tower!</content>
+    <next>2</next>
+</objective>
+
+<objective>
+    <id>2</id>
+    <type>DISPLAY</type>
+    <title>General</title>
+    <content>Train one villager as a guard!</content>
+    <next>3</next>
+</objective>
+
+<objective>
+    <id>3</id>
+    <type>DISPLAY</type>
+    <title>Protector</title>
+    <content>Defeat the bandits and protect the village!</content>
+    <next>4</next>
+</objective>
+
+<objective>
+    <id>4</id>
+    <type>DISPLAY</type>
     <tittle>Governor</title>
     <content>Try to mater your toops in 30 minutes!</content>
-    <next>2</next>
-    <time>30</time>
+    <next>5</next>
+    <time>1</time>
     <finalObjective></finalObjective>
 </objective>
 

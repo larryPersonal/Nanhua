@@ -11,6 +11,8 @@
 #include "GameManager.h"
 #include "Senario.h"
 #include "GlobalHelper.h"
+#include "SanGuoXiaoXueTang.h"
+#include "UIButtonControl.h"
 
 ScoreMenu* ScoreMenu::SP;
 
@@ -49,6 +51,8 @@ ScoreMenu::~ScoreMenu()
 
 bool ScoreMenu::init(CCLayer* layer)
 {
+    preloadTextures();
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
@@ -59,7 +63,7 @@ bool ScoreMenu::init(CCLayer* layer)
     blackScreen->setOpacity((GLubyte) 0);
     layer->addChild(blackScreen, 9);
     
-    background = CCSprite::create("achievementscreen.png");
+    background = CCSprite::createWithSpriteFrameName("achievementscreen.png");
     background->setAnchorPoint(ccp(0.5, 0.5));
     background->setScale(0);
     background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -91,7 +95,7 @@ bool ScoreMenu::init(CCLayer* layer)
     background->addChild(userLabel);
     userLabel->setPosition(ccp(screenSize.width, screenSize.height / 2.0f * 3.0f - 250.0f));
     
-    renToken = CCSprite::create("ren_icon.png");
+    renToken = CCSprite::createWithSpriteFrameName("ren_icon.png");
     renToken->setAnchorPoint(ccp(0, 0.5));
     renToken->setScale(1.0f);
     background->addChild(renToken);
@@ -121,7 +125,7 @@ bool ScoreMenu::init(CCLayer* layer)
     background->addChild(renTokenLabel);
     renTokenLabel->setPosition(ccp(screenSize.width + 100.0f, screenSize.height / 2.0f * 3.0f - 400.0f));
     
-    money = CCSprite::create("money_label.png");
+    money = CCSprite::createWithSpriteFrameName("money_label.png");
     money->setAnchorPoint(ccp(0, 0.5));
     money->setScale(0.5f);
     background->addChild(money);
@@ -136,7 +140,7 @@ bool ScoreMenu::init(CCLayer* layer)
     background->addChild(moneyLabel);
     moneyLabel->setPosition(ccp(screenSize.width / 2.0f + 250.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
-    food = CCSprite::create("food_label.png");
+    food = CCSprite::createWithSpriteFrameName("food_label.png");
     food->setAnchorPoint(ccp(0, 0.5));
     food->setScale(0.5f);
     background->addChild(food);
@@ -151,7 +155,7 @@ bool ScoreMenu::init(CCLayer* layer)
     background->addChild(foodLabel);
     foodLabel->setPosition(ccp(screenSize.width * 2.0f / 2.0f + 0.0f, screenSize.height / 2.0f * 3.0f - 500.0f));
     
-    population = CCSprite::create("population_icon.png");
+    population = CCSprite::createWithSpriteFrameName("population_icon.png");
     population->setAnchorPoint(ccp(0, 0.5));
     population->setScale(0.5f);
     background->addChild(population);
@@ -174,7 +178,9 @@ bool ScoreMenu::init(CCLayer* layer)
     background->addChild(congratsLabel);
     congratsLabel->setPosition(ccp(screenSize.width, screenSize.height / 2.0f - 10.0f));
     
-    scoreMenuButton = CCMenuItemImage::create("accept.png", "", this, menu_selector( ScoreMenu::clickScoreMenuButton ));
+    CCSprite* button = CCSprite::createWithSpriteFrameName("accept.png");
+    CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("accept_press.png");
+    scoreMenuButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector( ScoreMenu::clickScoreMenuButton ));
     scoreMenuButton->setScale(1.5f);
     scoreMenuButton->setAnchorPoint(ccp(0.5f, 0.5f));
     scoreMenuButton->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 250.0f));
@@ -203,8 +209,14 @@ bool ScoreMenu::init(CCLayer* layer)
 
 void ScoreMenu::releaseAll()
 {
-    GameHUD::getThis()->removeChild(blackScreen);
-    GameHUD::getThis()->removeChild(background);
+    GameHUD::getThis()->unschedule(schedule_selector(ScoreMenu::showScoreMenu));
+    GameHUD::getThis()->unschedule(schedule_selector(ScoreMenu::hideScoreMenu));
+    
+    GameHUD::getThis()->removeChild(blackScreen, true);
+    GameHUD::getThis()->removeChild(background, true);
+    
+    clearTextures();
+    
     CC_SAFE_RELEASE(this);
 }
 
@@ -213,6 +225,7 @@ void ScoreMenu::scheduleShowScoreMenu()
     if(!show && !hide)
     {
         show = true;
+        UIButtonControl::pauseGame();
         GameHUD::getThis()->schedule(schedule_selector(ScoreMenu::showScoreMenu), 1.0f/120.0f);
     }
 }
@@ -253,6 +266,7 @@ void ScoreMenu::hideScoreMenu(float dt)
         ScoreMenu::getThis()->hide = false;
         GameHUD::getThis()->unschedule(schedule_selector(ScoreMenu::hideScoreMenu));
         ScoreMenu::getThis()->removeScoreMenu();
+        UIButtonControl::resumeGame();
     }
     else
     {
@@ -295,9 +309,6 @@ void ScoreMenu::clickScoreMenuButton()
         scheduleHideScoreMenu();
         
         GameScene::getThis()->reSetupLevel();
-        
-        //scoreMenuButton->setVisible(false);
-        //noticeLabel->setVisible(true);
     }
     else if(GameManager::getThis()->getLevel() == 1)
     {
@@ -319,9 +330,6 @@ void ScoreMenu::clickScoreMenuButton()
         scheduleHideScoreMenu();
         
         GameScene::getThis()->reSetupLevel();
-        
-        //scoreMenuButton->setVisible(false);
-        //noticeLabel->setVisible(true);
     }
     else if(GameManager::getThis()->getLevel() == 2)
     {
@@ -361,9 +369,87 @@ void ScoreMenu::clickScoreMenuButton()
         scheduleHideScoreMenu();
         
         GameScene::getThis()->reSetupLevel();
-        
-        //scoreMenuButton->setVisible(false);
-        //noticeLabel->setVisible(true);
     }
+    else if(GameManager::getThis()->getLevel() == 3)
+    {
+        int reputation = GameHUD::getThis()->targetReputation;
+        ss.str(std::string());
+        ss << username << "_level_3_score";
+        
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
+        }
+        
+        ss.str(std::string());
+        ss << username << "_level_4_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+        
+        GameManager::getThis()->setLevel(4);
+        
+        scheduleHideScoreMenu();
+        
+        GameScene::getThis()->reSetupLevel();
+    }
+    else if(GameManager::getThis()->getLevel() == 4)
+    {
+        int reputation = GameHUD::getThis()->targetReputation;
+        ss.str(std::string());
+        ss << username << "_level_4_score";
+        
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
+        }
+        
+        ss.str(std::string());
+        ss << username << "_level_5_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+        
+        GameManager::getThis()->setLevel(5);
+        
+        scheduleHideScoreMenu();
+        
+        GameScene::getThis()->reSetupLevel();
+    }
+    else if(GameManager::getThis()->getLevel() == 5)
+    {
+        int reputation = GameHUD::getThis()->targetReputation;
+        ss.str(std::string());
+        ss << username << "_level_5_score";
+        
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
+        }
+        
+        ss.str(std::string());
+        ss << username << "_level_6_open";
+        CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
+        
+        GameManager::getThis()->setLevel(6);
+        
+        scheduleHideScoreMenu();
+        
+        GameScene::getThis()->reSetupLevel();
+
+    }
+}
+
+void ScoreMenu::preloadTextures()
+{
+    scoreMenuNode = CCSpriteBatchNode::create("ScoreMenu.png");
+    GameHUD::getThis()->addChild(scoreMenuNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("ScoreMenu.plist");
+}
+
+void ScoreMenu::clearTextures()
+{
+    GameHUD::getThis()->removeChild(scoreMenuNode, true);
+    scoreMenuNode = NULL;
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("ScoreMenu.plist");
 }
 

@@ -7,7 +7,7 @@
             <key>goingToWork.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{128,128}}</string>
+                <string>{{0,0},{128,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>workEmote.png</string>
             <key>size</key>
-            <string>{132,132}</string>
+            <string>{128,128}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:75a3a53fa7e809f5d0b558b8c168793c:5eb704c74e13b9efc024cb8df5e9ce49:e741bdf45ece7204e1e5f8e25e523175$</string>
+            <string>$TexturePacker:SmartUpdate:88c4ffe5761d00345f92ef16c8ab5734:5eb704c74e13b9efc024cb8df5e9ce49:e741bdf45ece7204e1e5f8e25e523175$</string>
             <key>textureFileName</key>
             <string>workEmote.png</string>
         </dict>

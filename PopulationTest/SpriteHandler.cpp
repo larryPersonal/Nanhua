@@ -26,8 +26,12 @@
 
 #include <json/json.h>
 
+SpriteHandler* SpriteHandler::SP;
+
 SpriteHandler::SpriteHandler()
 {
+    SpriteHandler::SP = this;
+    
     tokensOnMap = CCArray::create();
     tokensOnMap->retain();
     
@@ -50,6 +54,8 @@ SpriteHandler::SpriteHandler()
 
 SpriteHandler::~SpriteHandler()
 {
+    SpriteHandler::SP = NULL;
+    
     allSpriteClass->removeAllObjects();
     CC_SAFE_RELEASE(allSpriteClass);
     
@@ -82,6 +88,11 @@ SpriteHandler::~SpriteHandler()
         CC_SAFE_RELEASE(allClassRequirements);
     }*/
     CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
+}
+
+SpriteHandler* SpriteHandler::getThis()
+{
+    return SP;
 }
 
 void SpriteHandler::initialize()
@@ -312,13 +323,11 @@ GameSprite* SpriteHandler::getSpriteByVillagerClass(VillagerClass villagerClass)
     //return NULL;
     if (!allSprites)
     {
-        CCLog("test1");
         return NULL;
     }
     
     if (allSprites->count() == 0)
     {
-        CCLog("test2");
         return NULL;
     }
     

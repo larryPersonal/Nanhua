@@ -346,7 +346,7 @@ void BuildingInfoMenu::createMenuItems()
     this->addChild(buttonClose);
     
     //selectWorkerButton = CCMenuItemImage::create("allocatebtn.png", "allocatebtn-press.png", this, menu_selector(BuildingInfoMenu::selectPop));
-    selectWorkerButton = CCSprite::create("allocatebtn.png");
+    selectWorkerButton = CCSprite::createWithSpriteFrameName("allocatebtn.png");
     selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     

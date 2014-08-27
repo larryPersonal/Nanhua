@@ -52,9 +52,9 @@ void SoundtrackManager::PlaySFX(std::string sfxName)
     SimpleAudioEngine::sharedEngine()->playEffect(sfxName.c_str(), false);
     
 }
-/*
-void SoundtrackManager::StopSFX()
+
+void SoundtrackManager::release()
 {
-    
-    
-}*/
+    SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->stopAllEffects();
+}

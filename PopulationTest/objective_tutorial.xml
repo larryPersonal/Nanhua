@@ -21,7 +21,7 @@
 <objective>
     <id>3</id>
     <type>DISPLAY</type>
-    <title>Architect</title>
+    <title>Architect 1</title>
     <content>Build a farm.</content>
     <next>4</next>
 </objective>

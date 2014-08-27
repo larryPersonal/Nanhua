@@ -38,8 +38,10 @@ public:
     
     CCLabelTTF* congratsLabel;
     
-    CCMenuItemImage* scoreMenuButton;
+    CCMenuItem* scoreMenuButton;
     CCMenu* menu;
+    
+    CCSpriteBatchNode* scoreMenuNode;
     
     bool show;
     bool hide;
@@ -67,6 +69,9 @@ public:
     void releaseAll();
     
     void clickScoreMenuButton();
+    
+    void preloadTextures();
+    void clearTextures();
 };
 
 #endif

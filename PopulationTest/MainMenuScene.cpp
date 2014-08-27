@@ -102,11 +102,11 @@ bool MainMenuScene::init()
     
     if (GameManager::getThis()->isLoggedIn)
     {
-        backgroundImage = CCSprite::create("newsplashpage1.png");
+        backgroundImage = CCSprite::createWithSpriteFrameName("newsplashpage1.png");
     }
     else
     {
-        backgroundImage = CCSprite::create("loginPage.png");
+        backgroundImage = CCSprite::createWithSpriteFrameName("loginPage.png");
     }
     
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
@@ -132,21 +132,21 @@ bool MainMenuScene::init()
     // buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
     
     /* loading screen module */
-    loadingScreen = CCSprite::create("loading screen.png");
+    loadingScreen = CCSprite::createWithSpriteFrameName("loading screen.png");
     loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
     loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
     loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(loadingScreen, 10);
     loadingScreen->setVisible(false);
     
-    loadingLabel = CCSprite::create("loading.png");
+    loadingLabel = CCSprite::createWithSpriteFrameName("loading.png");
     loadingLabel->setAnchorPoint(ccp(0.5f, 0.5f));
     loadingLabel->setPosition(ccp(screenSize.width / 2.0f + 20.0f, screenSize.height / 2.0f - 120.0f));
     loadingLabel->setScale(0.5f);
     this->addChild(loadingLabel, 11);
     loadingLabel->setVisible(false);
     
-    highScoreScreen = CCSprite::create("trophyscreen.png");
+    highScoreScreen = CCSprite::createWithSpriteFrameName("trophyscreen.png");
     highScoreScreen->setAnchorPoint(ccp(0.5f, 0.5f));
     highScoreScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     //highScoreScreen->setScaleX(0.9f);
@@ -154,7 +154,7 @@ bool MainMenuScene::init()
     highScoreScreen->setScale(0.9f);
     this->addChild(highScoreScreen, 9);
     
-    blackScreen = CCSprite::create("blackscreen.png");
+    blackScreen = CCSprite::createWithSpriteFrameName("blackscreen.png");
     blackScreen->setAnchorPoint(ccp(0.5f, 0.5f));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
@@ -162,7 +162,7 @@ bool MainMenuScene::init()
     
     blackScreen->setOpacity((GLubyte) 0);
     
-    CCSprite* cancelSprite = CCSprite::create("Closebtn_Sq.png");
+    CCSprite* cancelSprite = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
     cancelButton = CCMenuItemSprite::create(cancelSprite, cancelSprite, this, menu_selector(MainMenuScene::closeScoreScreen));
     cancelButton->setAnchorPoint(ccp(0, 1));
     cancelButton->setPosition(ccp(screenSize.width / 2.0f - 180.0f, screenSize.height / 2.0f + 8.0f));
@@ -205,7 +205,7 @@ bool MainMenuScene::init()
     loginModuleTitle->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 110.0f));
     this->addChild(loginModuleTitle, 9);
     
-    usernameBox = CCEditBox::create(ccp(300, 40), CCScale9Sprite::create("inputBar.png"));
+    usernameBox = CCEditBox::create(ccp(300, 40), CCScale9Sprite::createWithSpriteFrameName("inputBar.png"));
     usernameBox->setAnchorPoint(ccp(0, 1));
     usernameBox->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 200.0f));
     usernameBox->setFontColor(ccBLACK);
@@ -214,7 +214,7 @@ bool MainMenuScene::init()
     usernameBox->setReturnType(kKeyboardReturnTypeDone);
     this->addChild(usernameBox, 9);
     
-    passwordBox = CCEditBox::create(ccp(300, 40), CCScale9Sprite::create("inputBar1.png"));
+    passwordBox = CCEditBox::create(ccp(300, 40), CCScale9Sprite::createWithSpriteFrameName("inputBar1.png"));
     passwordBox->setAnchorPoint(ccp(0, 1));
     passwordBox->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 280.0f));
     passwordBox->setFontColor(ccBLACK);
@@ -234,14 +234,18 @@ bool MainMenuScene::init()
     passwordBoxLabel->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 250.0f));
     this->addChild(passwordBoxLabel, 9);
     
+    CCSprite* buttonSprite = CCSprite::createWithSpriteFrameName("login.png");
+    CCSprite* buttonPressedSprite = CCSprite::createWithSpriteFrameName("login_press.png");
     // the login button for the login window
-    loginButton = CCMenuItemImage::create("login.png", "login_press.png", this, menu_selector(MainMenuScene::clickLoginButton));
+    loginButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickLoginButton));
     loginButton->setScale(0.3f);
     loginButton->setAnchorPoint(ccp(0, 1));
     loginButton->setPosition(ccp(100.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
     
+    buttonSprite = CCSprite::createWithSpriteFrameName("create.png");
+    buttonPressedSprite = CCSprite::createWithSpriteFrameName("create_press.png");
     // create button
-    createButton = CCMenuItemImage::create("create.png", "create_press.png", this, menu_selector(MainMenuScene::clickCreateButton));
+    createButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickCreateButton));
     createButton->setScale(0.3f);
     createButton->setAnchorPoint(ccp(0, 1));
     createButton->setPosition(ccp(250.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
@@ -250,20 +254,24 @@ bool MainMenuScene::init()
     this->addChild(loginMenu, 9);
     
     // warning background
-    warningBackground = CCSprite::create("popup_dialogbox.png");
+    warningBackground = CCSprite::createWithSpriteFrameName("popup_dialogbox.png");
     warningBackground->setAnchorPoint(ccp(0.5f, 0.5f));
     warningBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     warningBackground->setScale(1.0f);
     this->addChild(warningBackground, 15);
     
+    buttonSprite = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
+    buttonPressedSprite = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
     // warning cancelButton
-    warningCancelButton = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(MainMenuScene::closeWarningScreen));
+    warningCancelButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::closeWarningScreen));
     warningCancelButton->setAnchorPoint(ccp(0, 1));
     warningCancelButton->setPosition(ccp(screenSize.width / 2.0f - 180.0f, 0 + 18.0f));
     warningCancelButton->setScale(1.2f);
     
+    buttonSprite = CCSprite::createWithSpriteFrameName("confirm.png");
+    buttonPressedSprite = CCSprite::createWithSpriteFrameName("confirm_press.png");
     // warning confirmButton
-    warningConfirmButton = CCMenuItemImage::create("confirm.png", "confirm_press.png", this, menu_selector(MainMenuScene::closeResetPasswordConfirmScreen));
+    warningConfirmButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::closeResetPasswordConfirmScreen));
     warningConfirmButton->setAnchorPoint(ccp(0, 1));
     warningConfirmButton->setPosition(ccp(screenSize.width / 2.0f - 320.0f, -240.0f));
     warningConfirmButton->setScale(0.5f);
@@ -285,14 +293,18 @@ bool MainMenuScene::init()
     warningDescription->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 180.0f));
     warningBackground->addChild(warningDescription);
     
+    buttonSprite = CCSprite::createWithSpriteFrameName("create.png");
+    buttonPressedSprite = CCSprite::createWithSpriteFrameName("create_press.png");
     // create account button
-    createAccountButton = CCMenuItemImage::create("create.png", "create_press.png", this, menu_selector(MainMenuScene::clickCreateAccountButton));
+    createAccountButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickCreateAccountButton));
     createAccountButton->setScale(0.3f);
     createAccountButton->setAnchorPoint(ccp(0, 1));
     createAccountButton->setPosition(ccp(100.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
     
+    buttonSprite = CCSprite::createWithSpriteFrameName("back.png");
+    buttonPressedSprite = CCSprite::createWithSpriteFrameName("back_press.png");
     // back button
-    backButton = CCMenuItemImage::create("back.png", "back_press.png", this, menu_selector(MainMenuScene::clickBackButton));
+    backButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickBackButton));
     backButton->setScale(0.3f);
     backButton->setAnchorPoint(ccp(0, 1));
     backButton->setPosition(ccp(250.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
@@ -301,23 +313,24 @@ bool MainMenuScene::init()
     this->addChild(signupMenu, 9);
     
     // login background -> the window
-    loginBackground = CCSprite::create("trophyscreen.png");
+    loginBackground = CCSprite::createWithSpriteFrameName("trophyscreen.png");
     loginBackground->setAnchorPoint(ccp(0.5f, 0.5f));
     loginBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     loginBackground->setScale(0.9f);
     this->addChild(loginBackground, 10);
     
     // the cancel button for the login window
-    CCSprite* loginCancelButtonSprite = CCSprite::create("Closebtn_Sq.png");
+    CCSprite* loginCancelButtonSprite = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
     loginCancelButton = CCMenuItemSprite::create(loginCancelButtonSprite, loginCancelButtonSprite, this, menu_selector(MainMenuScene::closeLoginScreen));
     loginCancelButton->setAnchorPoint(ccp(0, 1));
     loginCancelButton->setPosition(ccp(screenSize.width / 2.0f - 180.0f, screenSize.height /2.0f + 8.0f));
     loginCancelButton->setScale(1.2f);
     
-    
-    
+    /*
+    buttonSprite = CCSprite::createWithSpriteFrameName("button.png");
+    buttonPressedSprite = CCSprite::createWithSpriteFrameName("button.png");
     // the play anolymous button for the login window
-    playAnolymouslyButton = CCMenuItemImage::create("button.png", "button.png", this, menu_selector(MainMenuScene::clickPlayAnolymouslyButton));
+    playAnolymouslyButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickPlayAnolymouslyButton));
     playAnolymouslyButton->setAnchorPoint(ccp(0.5, 0.5));
     playAnolymouslyButton->setPosition(ccp(0, 0 - 160.0f));
     
@@ -325,11 +338,11 @@ bool MainMenuScene::init()
     playAnolymouslyButtonLabel->setAnchorPoint(ccp(0.5, 0.5));
     playAnolymouslyButtonLabel->setPosition(ccp(playAnolymouslyButton->boundingBox().size.width / 2.0f, playAnolymouslyButton->boundingBox().size.height / 2.0f + 3.0f));
     playAnolymouslyButton->addChild(playAnolymouslyButtonLabel);
-    
-    
+    */
     
     // add all buttons into the button menu
-    loginCancelButtonMenu = CCMenu::create(loginCancelButton, playAnolymouslyButton, NULL);
+    // loginCancelButtonMenu = CCMenu::create(loginCancelButton, playAnolymouslyButton, NULL);
+    loginCancelButtonMenu = CCMenu::create(loginCancelButton, NULL);
     loginBackground->addChild(loginCancelButtonMenu);
     
     loginBackground->setVisible(false);
@@ -512,7 +525,7 @@ void MainMenuScene::configMode()
     {
         loginModuleTitle->setVisible(true);
         
-        playAnolymouslyButton->setVisible(false);
+        // playAnolymouslyButton->setVisible(false);
         
         loginMenu->setVisible(false);
         signupMenu->setVisible(true);
@@ -650,8 +663,13 @@ void MainMenuScene::clickLoginButton()
                 GameManager::getThis()->gender = isBoy;
                 GameManager::getThis()->isLoggedIn = true;
                 
-                CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("newsplashpage1.png");
-                backgroundImage->setTexture(tex);
+                CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+                
+                this->removeChild(backgroundImage);
+                backgroundImage = CCSprite::createWithSpriteFrameName("newsplashpage1.png");
+                backgroundImage->setScale(screenSize.width / backgroundImage->boundingBox().size.width);
+                backgroundImage->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+                this->addChild(backgroundImage, 0);
                 
                 mode = mainPage;
                 configMode();
@@ -882,7 +900,7 @@ void MainMenuScene::loadSenarioChooseScene()
     this->removeChild(loadingLabel);
     
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
+    // GlobalHelper::clearPreloadedTexture();
     
     CCDirector::sharedDirector()->replaceScene(SenarioChooseScene::scene());
 }
@@ -973,8 +991,12 @@ void MainMenuScene::onButtonExitPressed(CCObject* pSender)
     mode = login;
     configMode();
     
-    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("loginPage.png");
-    backgroundImage->setTexture(tex);
+    this->removeChild(backgroundImage);
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    backgroundImage = CCSprite::createWithSpriteFrameName("loginPage.png");
+    backgroundImage->setScale(screenSize.width / backgroundImage->boundingBox().size.width);
+    backgroundImage->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    this->addChild(backgroundImage, 0);
 }
 
 void MainMenuScene::openWarningScreen()
@@ -1398,12 +1420,14 @@ void MainMenuScene::setupTeacherManagementScreen()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    teacherManagementBackground = CCSprite::create("adminscreen.png");
+    teacherManagementBackground = CCSprite::createWithSpriteFrameName("adminscreen.png");
     teacherManagementBackground->setAnchorPoint(ccp(0.5f, 0.5f));
     teacherManagementBackground->setScale(0.5f);
     teacherManagementBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     
-    teacherManagementScreenLogoutButton = CCMenuItemImage::create("logout.png", "logout_press.png", this, menu_selector(MainMenuScene::clearTeacherManagementScreen));
+    CCSprite* button = CCSprite::createWithSpriteFrameName("logout.png");
+    CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("logout_press.png");
+    teacherManagementScreenLogoutButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(MainMenuScene::clearTeacherManagementScreen));
     teacherManagementScreenLogoutButton->setAnchorPoint(ccp(0.5f, 0.5f));
     teacherManagementScreenLogoutButton->setPosition(ccp(screenSize.width + 150.0f, -200.0f));
     teacherManagementScreenLogoutButton->setScale(0.7f);

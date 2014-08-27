@@ -34,6 +34,8 @@ enum TileType
 
 class MapHandler
 {
+    static MapHandler* SP;
+    
 public:
     CCTMXTiledMap* mapPtr;
   
@@ -53,6 +55,9 @@ public:
 public:
     MapHandler();
     ~MapHandler();
+    
+    static MapHandler* getThis();
+    
     void UnBuildEndGame();
     //2D array, where X and Y is position. To get the correct index, supply an index of X * y.
     //This is to keep things simple.

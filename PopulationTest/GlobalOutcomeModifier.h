@@ -15,6 +15,7 @@ using namespace cocos2d;
 
 class GlobalOutcomeModifier
 {
+    static GlobalOutcomeModifier* SP;
 public:
     int banditsModifier;
     int refugeesModifier;
@@ -25,6 +26,8 @@ public:
 public:
     GlobalOutcomeModifier();
     ~GlobalOutcomeModifier();
+    
+    static GlobalOutcomeModifier* getThis();
 };
 
 #endif

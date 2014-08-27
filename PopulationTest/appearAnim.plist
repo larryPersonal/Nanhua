@@ -7,7 +7,7 @@
             <key>appear.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>appearAnim.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:2ec83c01e2d1c0b0870359b158887ece:03ad798f0b586d43471914d2e3f52360:c20b784da0da95d3598ffe4e0debdac3$</string>
+            <string>$TexturePacker:SmartUpdate:da8166a2a13cf83c16e4c882331ce4cd:03ad798f0b586d43471914d2e3f52360:c20b784da0da95d3598ffe4e0debdac3$</string>
             <key>textureFileName</key>
             <string>appearAnim.png</string>
         </dict>

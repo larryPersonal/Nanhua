@@ -7,7 +7,7 @@
             <key>findingbandit.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>findBanditEmote.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:00b6e897bde3efd75298b21d0d36a84c:8a85cfd4087d9da7dd11f8fbefdc9bb3:59886682a0972d7749f2118489cdd3d6$</string>
+            <string>$TexturePacker:SmartUpdate:42589dc93deef99a587826e3e5ddb152:8a85cfd4087d9da7dd11f8fbefdc9bb3:59886682a0972d7749f2118489cdd3d6$</string>
             <key>textureFileName</key>
             <string>findBanditEmote.png</string>
         </dict>

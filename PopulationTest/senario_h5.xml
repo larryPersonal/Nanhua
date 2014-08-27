@@ -1,0 +1,313 @@
+<?xml encoding="ISO-8859-1"?>
+<project>
+	<slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_in>yes</fade_in>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>The village is ready to develop into a small town. My efforts these few months had not been in vain and I am so proud of myself.</text>
+            <limitX>960</limitX>
+			<width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+            <fade_in>yes</fade_in>
+		</dialogue>
+	</slide>
+	<slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>I am now one step closer to realize the fulfilling of a “^全^德^之^人^” and return back home.</text>
+            <limitX>960</limitX>
+			<width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>0</left>
+			<top>90</top>
+			<src>dragon_c.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Long</name>
+            <text>We are in trouble! Have you observed the stars lately to foresee the future?</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>right</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>No, I was busy with other matters and did not have time to do so. Xiao Long, you look flustered. What had happened?</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+       <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>0</left>
+			<top>90</top>
+			<src>dragon_c.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Long</name>
+            <text>A messenger from the west side of our village came by and informed us that there was a drought.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>right</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_in>yes</fade_in>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>Oh no, that's terrible.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+       <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>0</left>
+			<top>90</top>
+			<src>dragon_c.png</src>
+            <fade_in>yes</fade_in>
+		</sprite>
+		<dialogue>
+            <name>Xiao Long</name>
+            <text>The villagers were unable to harvest the crops earlier as they were not prepared for the drought.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>right</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+       <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>0</left>
+			<top>90</top>
+			<src>dragon_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>Xiao Long</name>
+            <text>Most of the crops could not survive the harsh weather conditions and this resulted in a shortage of food supplies.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>right</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+       <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>0</left>
+			<top>90</top>
+			<src>dragon_c.png</src>
+		</sprite>
+		<dialogue>
+            <name>Xiao Long</name>
+            <text>I would suggest opening the inventory and giving out rations to the villagers.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>right</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+       <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>0</left>
+			<top>90</top>
+			<src>dragon_c.png</src>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Long</name>
+            <text>However, that means our army will receive lesser food supplies. We may lose the war if the soldiers are not well fed.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>right</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_in>yes</fade_in>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>We cannot just ignore their plight.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>Inform the messenger that we are opening the inventory to give out food supplies.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>Arrange for the food supplies to be transported to the village immediately.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+		</dialogue>
+	</slide>
+    <slide>
+        <clickToNext></clickToNext>
+		<sprite>
+			<width>60</width>
+			<left>-10</left>
+			<top>90</top>
+			<src>Studentboy_left.png</src>
+            <fade_out>yes</fade_out>
+		</sprite>
+		<dialogue>
+            <name>Xiao Hua</name>
+            <text>You will need to inform the rest of the villagers that they have to be on reduced rations until the next harvest.</text>
+			<limitX>960</limitX>
+            <width>85</width>
+			<left>15</left>
+			<top>28</top>
+			<src>scroller.png</src>
+            <dir>left</dir>
+            <font>GillSansMT</font>
+            <fontSize>24</fontSize>
+            <fade_out>yes</fade_out>
+		</dialogue>
+	</slide>
+</project>

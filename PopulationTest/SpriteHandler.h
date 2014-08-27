@@ -15,6 +15,8 @@
 
 class SpriteHandler
 {
+    static SpriteHandler* SP;
+    
 private:
     void AddToCache(CCSpriteBatchNode* spritesheet, std::string animName);
     
@@ -22,6 +24,8 @@ private:
     float cumulatedTime_energy;
 public:
     CCArray* allSpriteClass;
+    
+    static SpriteHandler* getThis();
     
     SpriteHandler();
     ~SpriteHandler();

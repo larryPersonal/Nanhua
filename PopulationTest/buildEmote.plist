@@ -7,7 +7,7 @@
             <key>building_safety helmet2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{128,256}}</string>
+                <string>{{0,0},{128,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>buildEmote.png</string>
             <key>size</key>
-            <string>{132,260}</string>
+            <string>{128,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3ab84be3f18ee5c72b79b29add515221:e03686f706fa3f1907d357977a619d5e:d2a64a10babaf76a6e911a58fdd922e1$</string>
+            <string>$TexturePacker:SmartUpdate:b90ef971815560d985dbdafc75c64048:e03686f706fa3f1907d357977a619d5e:d2a64a10babaf76a6e911a58fdd922e1$</string>
             <key>textureFileName</key>
             <string>buildEmote.png</string>
         </dict>

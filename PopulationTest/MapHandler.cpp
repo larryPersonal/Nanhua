@@ -15,14 +15,20 @@
 #include "PathFinder.h"
 #include "SoundtrackManager.h"
 
+MapHandler* MapHandler::SP;
+
 MapHandler::MapHandler()
 {
+    MapHandler::SP = this;
+    
     combatTiles = CCArray::create();
     combatTiles->retain();
 }
 
 MapHandler::~MapHandler()
 {
+    MapHandler::SP = NULL;
+    
     // delete mapPtr;
     UnBuildPreview();
     
@@ -40,6 +46,11 @@ MapHandler::~MapHandler()
     
     combatTiles->removeAllObjects();
     combatTiles->release();
+}
+
+MapHandler* MapHandler::getThis()
+{
+    return SP;
 }
 
 void MapHandler::UnBuildEndGame()

@@ -14,8 +14,12 @@
 #include <string>
 #include <iostream>
 
+BuildingHandler* BuildingHandler::SP;
+
 BuildingHandler::BuildingHandler()
 {
+    BuildingHandler::SP = this;
+    
     allBuildingsOnMap = NULL;
     housingOnMap = NULL;
     granaryOnMap = NULL;
@@ -45,6 +49,8 @@ BuildingHandler::BuildingHandler()
 
 BuildingHandler::~BuildingHandler()
 {
+    BuildingHandler::SP = NULL;
+    
     housingOnMap->removeAllObjects();
     granaryOnMap->removeAllObjects();
     amenityOnMap->removeAllObjects();
@@ -121,6 +127,10 @@ BuildingHandler::~BuildingHandler()
 
 }
 
+BuildingHandler* BuildingHandler::getThis()
+{
+    return SP;
+}
 
 Building* BuildingHandler::BinarySearch(cocos2d::CCArray *targetArray, int targetID)
 {

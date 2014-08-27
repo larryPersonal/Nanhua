@@ -21,7 +21,7 @@ Narrator::Narrator()
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    textBackground = CCSprite::create("popup_dialogbox.png");
+    textBackground = CCSprite::createWithSpriteFrameName("popup_dialogbox.png");
     textBackground->setScale(screenSize.width / textBackground->boundingBox().size.width * 0.75f);
     textBackground->setAnchorPoint(ccp(0.5, 0.5));
     textBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -40,16 +40,18 @@ Narrator::Narrator()
 
 Narrator::~Narrator()
 {
+    TutorialManager::getThis()->unschedule(schedule_selector(Narrator::update));
+    
     for (int i = 0; i < animatedStringList->count(); i++)
     {
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
-        TutorialManager::getThis()->removeChild(as->getLabel());
+        TutorialManager::getThis()->removeChild(as->getLabel(), true);
     }
     
     animatedStringList->removeAllObjects();
     CC_SAFE_RELEASE(animatedStringList);
     
-    TutorialManager::getThis()->removeChild(textBackground);
+    TutorialManager::getThis()->removeChild(textBackground, true);
     
     ns = NS_START;
     
@@ -66,7 +68,7 @@ void Narrator::display()
     for(int i = 0; i < animatedStringList->count(); i++)
     {
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
-        TutorialManager::getThis()->removeChild(as->getLabel());
+        TutorialManager::getThis()->removeChild(as->getLabel(), true);
     }
     animatedStringList->removeAllObjects();
     ns = (Narrator_State)((int)ns + 1);
@@ -88,11 +90,11 @@ void Narrator::display()
             TutorialManager::getThis()->inDisplay = false;
             textBackground->setVisible(false);
             TutorialManager::getThis()->scheduleFadeIn(0.0f, 2);
+            GameHUD::getThis()->mask->setOpacity((GLubyte) 0);
             TutorialManager::getThis()->active = false;
             CCLog("I am in narrator!");
             setupForScenario();
             clickToNext = false;
-            delete this;
             break;
         default:
             str = "end";
@@ -232,6 +234,7 @@ void Narrator::setupForScenario()
     TutorialManager::getThis()->unlockAll();
     GameHUD::getThis()->pause = true;
     std::string filename = "senario_h.xml";
-    Senario::getThis()->playSenario(filename.c_str());
     TutorialManager::getThis()->clearSprites();
+    GlobalHelper::clearCache();
+    Senario::getThis()->playSenario(filename.c_str());
 }

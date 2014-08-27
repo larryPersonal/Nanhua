@@ -28,6 +28,13 @@ public:
     CCMenuItem* senarioButtonS5;
     CCMenuItem* senarioButtonS6;
     
+    CCLabelTTF* tutorialLabel;
+    CCLabelTTF* senarioLabel1;
+    CCLabelTTF* senarioLabel2;
+    CCLabelTTF* senarioLabel3;
+    CCLabelTTF* senarioLabel4;
+    CCLabelTTF* senarioLabel5;
+    
     CCMenuItem* loadGameButton;
     
     CCMenu* senarioChooseSceneMenu;
@@ -70,8 +77,6 @@ public:
     void loadingSenario4();
     void loadingSenario5();
     void loadingSenario6();
-    
-    void preloadTextures();
     
     void chooseLoadGame();
     void loadingLoadGame();
@@ -124,6 +129,10 @@ public:
     
     void loadDisableWarning();
     void checkLoadStatus();
+    
+    void clearTextureWhenLoadingMap();
+    
+    void clear();
 };
 
 

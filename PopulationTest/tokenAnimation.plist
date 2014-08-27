@@ -7,7 +7,7 @@
             <key>tokenanim.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>tokenAnimation.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:df1088bc2301284bb766cef1ce354250:88ba50405f6f14869026d261dd2f7ed9:36d4165c9a696fba529ebf52061a3f75$</string>
+            <string>$TexturePacker:SmartUpdate:6e5c2bef6b0cb0c0790df2486e60d21f:88ba50405f6f14869026d261dd2f7ed9:36d4165c9a696fba529ebf52061a3f75$</string>
             <key>textureFileName</key>
             <string>tokenAnimation.png</string>
         </dict>

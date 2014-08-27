@@ -22,10 +22,9 @@
 
 GameManager* GameManager::SP;
 
-
 GameManager::GameManager()
 {
-    SP = this;
+    GameManager::SP = this;
     loadedGame = false;
     unlockedBuildings = CCArray::create();
     unlockedBuildings->retain();
@@ -43,6 +42,7 @@ GameManager::GameManager()
     loadedGameArea->retain();
     
     level = 0;
+    number_of_hospital = 0;
     town_hall_level = 0;
     
     gameMap = "";
@@ -55,12 +55,14 @@ GameManager::GameManager()
     gender = true;
     isLoggedIn = false;
     
+    hasGameHUD = false;
+    
     init();
 }
 
 GameManager::~GameManager()
 {
-    SP = NULL;
+    GameManager::SP = NULL;
     //PLEASE empty all arrays before use. RELEASING arrays does not necessarily empty them first!
     unlockedBuildings->removeAllObjects();
     lockedBuildings->removeAllObjects();

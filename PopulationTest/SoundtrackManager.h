@@ -24,6 +24,8 @@ public:
     
     static void StopBGM();
     static void PlaySFX(std::string sfxName);
+    
+    static void release();
 };
 
 

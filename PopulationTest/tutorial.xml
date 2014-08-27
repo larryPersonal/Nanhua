@@ -351,6 +351,7 @@
     <slide>
         <hideBubble></hideBubble>
         <unlockAll><unlockAll>
+        <clickToNext></clickToNext>
     </slide>
     <slide>
         <clear></clear>

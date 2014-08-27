@@ -18,6 +18,9 @@
 #include "NotificationString.h"
 #include "ScoreMenu.h"
 #include "RandomEventManager.h"
+#include "UIButtonControl.h"
+#include "SanGuoXiaoXueTang.h"
+#include "NanhuaGameStaticAPI.h"
 
 GameHUD* GameHUD::SP;
 
@@ -52,7 +55,7 @@ GameHUD::GameHUD()
     
     growthPopulation = 0;
     mGameTapMode = Normal;
-    money = GameScene::getThis()->settingsLevel->default_start_money;
+    money = 0;
     
     originalHappiness = 0;
     stickHappiness = false;
@@ -84,7 +87,7 @@ GameHUD::GameHUD()
     label_fade_in = false;
     label_fade_out = false;
     
-    targetMoney = GameScene::getThis()->settingsLevel->default_start_money;
+    targetMoney = 0;
     isAddingMoney = false;
     
     targetReputation = 0;
@@ -218,11 +221,329 @@ GameHUD::~GameHUD()
     GameHUD::SP = NULL;
 }
 
+void GameHUD::resetGameHUD()
+{
+    GameHUD::SP = this;
+    date->reset();
+    
+    cumulatedTime = 0;
+    buildScroll = NULL;
+    
+    pause = false;
+    getMoney = true;
+    increasePopulation = false;
+    
+    mGameDay = 0;
+    mGameMonth = 0;
+    mGameWeek = 0;
+    mGameYear = 0;
+    
+    mGameReputation = 0;
+    mGameReputationMax = 0;
+    reputation = 0;
+    reputationMax = 0;
+    
+    mAverageHappiness = 0;
+    average_happiness = 0;
+    
+    is_token_drop_cooldown = false;
+    token_drop_cooldown_time = 0;
+    
+    growthPopulation = 0;
+    mGameTapMode = Normal;
+    money = GameScene::getThis()->settingsLevel->default_start_money;
+    
+    originalHappiness = 0;
+    stickHappiness = false;
+    
+    showRandomEventManager = false;
+    
+    isThisTapCounted = false;
+    
+    startWar = false;
+    
+    leftPos = 0;
+    maxPos = 100.0f;
+    
+    scroll_in = false;
+    scroll_out = false;
+    
+    scrolled_in = false;
+    
+    setTutorial = false;
+    
+    fade_out = false;
+    fade_in = false;
+    
+    labelStatus = Default;
+    isToggle = false;
+    newPos = CCPointZero;
+    targetOpacity = 0;
+    fadeSpeed = 0;
+    label_fade_in = false;
+    label_fade_out = false;
+    
+    targetMoney = GameScene::getThis()->settingsLevel->default_start_money;
+    isAddingMoney = false;
+    
+    targetReputation = 0;
+    
+    targetFood = 0;
+    isAddingFood = false;
+    foodLabelDirectionUp = false;
+    targetStorage = 0;
+    isAddingStorage = false;
+    storageLabelDirectionUp = false;
+    
+    isAlerting = false;
+    isAlertingText = false;
+    alertFadeIn = false;
+    alertTextFadeIn = false;
+    alertCumulativeTime = 0;
+    
+    frameWidth = 64;
+    frameHeight = 64;
+    
+    dragonFrameWidth = 189;
+    dragonFrameHeight = 199;
+    
+    characterFrameWidth = 245;
+    characterFrameHeight = 225;
+    
+    glowingFrameWidth = 219;
+    glowingFrameHeight = 229;
+    
+    xOffset = 0;
+    yOffset = 0;
+    
+    characterXOffset = 0;
+    characterYOffset = 0;
+    
+    glowingXOffset = 0;
+    glowingYOffset = 0;
+    
+    x_frameNo = 0;
+    x_maxFrameNo = 0;
+    
+    character_frameNo = 0;
+    character_maxFrameNo = 0;
+    
+    glowing_frameNo = 0;
+    glowing_maxFrameNo = 0;
+    
+    delay_curr = 0;
+    delay_animFrame = 0;
+    
+    character_delay_curr = 0;
+    character_delay_animFrame = 0;
+    
+    glowing_delay_curr = 0;
+    glowing_delay_animFrame = 0;
+    
+    playObjectiveGlowingEffect = false;
+    
+    showObjectiveNotification = false;
+    
+    numberOfEventsToDisplay = 8;
+    
+    slideIn = false;
+    slideUp = false;
+    slideOut = false;
+    
+    genderMale = true;
+    
+    hasTimer = false;
+    targetTime = 0;
+    currentTime = 0;
+    
+    playCharacterSmileAnimation = false;
+    playCharacterSmileCountDown = 0.0f;
+    
+    playDragonAnimation = false;
+    playDragonCountDown = 0.0f;
+    
+    finalObjective = false;
+    
+    mGameCurrentFood = 0;
+    mGameCurrentStorage = 0;
+    
+    mGameCurrentPopulationCitizen = 0;
+    mGameCurrentPopulation = 0;
+    mGameCurrentPopulationRoom = 0;
+    
+    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
+    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
+    
+    mGameReputation = reputation;
+    mGameReputationMax = reputationMax;
+    
+    ccColor3B colorBlack = ccc3(255, 255, 255);
+    stringstream ss;
+    
+    // reset food label
+    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    for (int i = 0; i < allGranary->count(); i++)
+    {
+        Building* b = (Building*) allGranary->objectAtIndex(i);
+        mGameCurrentFood += b->currentStorage;
+        mGameCurrentStorage += b->storageLimit;
+    }
+    
+    ss.str(std::string());
+    ss << mGameCurrentFood << "/" << mGameCurrentStorage;
+    foodLabel->setString(ss.str().c_str());
+    
+    // reset population label
+    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    for(int i = 0; i < allSprites->count(); i++)
+    {
+        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
+        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
+        {
+            mGameCurrentPopulation++;
+        }
+     
+        if(gs->getHome() != NULL)
+        {
+            mGameCurrentPopulationCitizen++;
+        }
+    }
+    
+    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    for(int i = 0; i < allHousing->count(); i++)
+    {
+        Building* b = (Building*) allHousing->objectAtIndex(i);
+        mGameCurrentPopulationRoom += b->populationLimit;
+    }
+    
+    ss.str(std::string());
+    ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+    populationLabel->setString(ss.str().c_str());
+    
+    // reset achievement label
+    ss.str(std::string());
+    ss << GameScene::getThis()->configSettings->default_ini_reputation;
+    achivementsLabel->setString(ss.str().c_str());
+    
+    // reset average happiness label
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        ss.str(std::string());
+        ss << mAverageHappiness;
+        
+        average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
+        average_happiness_label->setColor(colorBlack);
+        average_happiness_label->setAnchorPoint(ccp(0, 0));
+        this->addChild(average_happiness_label, 2);
+        average_happiness_label->CCNode::setPosition(620, 0);
+    }
+    
+    // reset debug mode feature
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        // tap mode label
+        ss.str(std::string());
+        switch (currTapMode)
+        {
+            case 0:
+                ss << "Normal";
+                break;
+            case 1:
+                ss << "Build";
+                break;
+            case 2:
+                ss << "Deconstruct";
+                break;
+            case 3:
+                ss << "BuildPathPreview";
+                break;
+            case 4:
+                ss << "UnBuildPath";
+                break;
+            case 5:
+                ss << "BuildPathLine";
+                break;
+            default:
+                break;
+        }
+        tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+        tapModeLabel->setColor(colorBlack);
+        tapModeLabel->setAnchorPoint(ccp(0, 0));
+        this->addChild(tapModeLabel, 2);
+        tapModeLabel->CCNode::setPosition(720, 0);
+    }
+    
+    // reset debugging buttons
+    if(!GameScene::getThis()->systemConfig->debugMode)
+    {
+        stickHappinessButton->cocos2d::CCNode::setScale(0, 0);
+        resumeHappinessButton->cocos2d::CCNode::setScale(0, 0);
+        pauseButton->cocos2d::CCNode::setScale(0, 0);
+        resumeButton->cocos2d::CCNode::setScale(0, 0);
+        warButton->cocos2d::CCNode::setScale(0, 0);
+        peaceButton->cocos2d::CCNode::setScale(0, 0);
+        scoreButton->cocos2d::CCNode::setScale(0, 0);
+        showRandomEventManagerButton->cocos2d::CCNode::setScale(0, 0);
+    }
+    
+    // reset soldier helper
+    if(GameScene::getThis()->systemConfig->debugMode)
+    {
+        CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+        GameSprite* firstSoldier = NULL;
+        for(int i = 0; i < allSprites->count(); i++)
+        {
+            GameSprite* temp = (GameSprite*) allSprites->objectAtIndex(i);
+            if(temp->villagerClass == V_SOLDIER)
+            {
+                firstSoldier = temp;
+                break;
+            }
+        }
+        
+        stringstream ss;
+        
+        if(firstSoldier == NULL)
+        {
+            ss << "NULL";
+        }
+        else
+        {
+            ss << firstSoldier->spriteName;
+        }
+        
+        soldierName->setString(ss.str().c_str());
+        
+        ss.str(string());
+        if(firstSoldier == NULL || firstSoldier->enermy == NULL)
+        {
+            ss << "NULL";
+        }
+        else
+        {
+            ss << firstSoldier->enermy->spriteName;
+        }
+        
+        enermyName->setString(ss.str().c_str());
+        
+        ss.str(string());
+        if(firstSoldier == NULL)
+        {
+            ss << "NULL";
+        }
+        else
+        {
+            ss << "StopAction: " << (firstSoldier->stopAction ? "true" : "false");
+        }
+        
+        stopActionLabel->setString(ss.str().c_str());
+    }
+}
+
 GameHUD* GameHUD::getThis()
 {
     return SP;
 }
-
 
 GameHUD* GameHUD::create()
 {
@@ -243,8 +564,6 @@ bool GameHUD::init()
 {
     currTapMode = Normal;
     
-    //this->CCLayer::setTouchEnabled(true);
-    
     setAllStats();
     createInitialGUI();
     
@@ -260,8 +579,8 @@ void GameHUD::setAllStats()
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
     
-    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
-    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
+    reputation = 0;
+    reputationMax = 0;
     
     mGameReputation = reputation;
     mGameReputationMax = reputationMax;
@@ -307,13 +626,18 @@ void GameHUD::update(float deltaTime)
                 GameHUD::getThis()->addNewNotification(sss.str());
             
                 // withdraw the objective. TODO: play the next objective
-                
             }
             else
             {
                 finalObjective = false;
-                pause = true;
-                clickScoreButton();
+                if(GameManager::getThis()->getLevel() == 2)
+                {
+                    SanGuoXiaoXueTang::getThis()->showUI();
+                }
+                else
+                {
+                    clickScoreButton();
+                }
             }
             ObjectiveHandler::getThis()->playObjective();
         }
@@ -680,44 +1004,25 @@ void GameHUD::update(float deltaTime)
         }
         
         // if month has been changed
-        
-        
         if(mGameMonth != date->month)
         {
             CCSpriteFrame * l_SpriteFrame;
             
-          
             if(date->month < 3)
             {
                 l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("springtimeclock.png");
-                
-                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_spring-bg.png"));
-            //    timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("springtimeclock.png"));
-                
             }
             else if(date->month < 6)
             {
                 l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("summertimeclock.png");
-                
-                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_summer-bg.png"));
-              //  timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("summertimeclock.png"));
-                
             }
             else if(date->month < 9)
             {
                 l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("autumtimeclock.png");
-                
-                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_autumn-bg.png"));
-               // timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("autumtimeclock.png"));
-                
             }
             else
             {
                 l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("timeclock0.png");
-                
-                //timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("time_winter-bg.png"));
-               // timeMenu->setTexture(CCTextureCache::sharedTextureCache()->addImage("timeclock0.png"));
-                
             }
             
             if (l_SpriteFrame != NULL)
@@ -725,7 +1030,6 @@ void GameHUD::update(float deltaTime)
                 timeMenu -> setTexture( l_SpriteFrame -> getTexture() );
                 timeMenu -> setTextureRect( l_SpriteFrame -> getRect( ) );
             }
-            
             
             std::stringstream ss;
             ss << "Month: " << (date->month + 1);
@@ -741,21 +1045,12 @@ void GameHUD::update(float deltaTime)
             timeLabel_1->setString(ss.str().c_str());
             mGameYear = date->year;
         }
-        
-        //checkReputaionPopulation();
     }
     
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    // get average happiness of the villagers
     if(GameScene::getThis()->systemConfig->debugMode)
     {
-        float totalHappiness = 0;
-        
-        for(int i = 0; i < spritesOnMap->count(); i++)
-        {
-            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-            totalHappiness += gs->getPossessions()->happinessRating;
-        }
-        average_happiness = totalHappiness / (float) spritesOnMap->count();
+        average_happiness = NanhuaGameStaticAPI::getAverageHappiness();
         
         if(mAverageHappiness != average_happiness)
         {
@@ -767,22 +1062,8 @@ void GameHUD::update(float deltaTime)
     }
     
     // room and population change;
-    int temp = 0;
-    int tempCitizen = 0;
-    spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    for (int i = 0; i < spritesOnMap->count(); i++)
-    {
-        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
-        {
-            temp++;
-        }
-        
-        if(gs->getHome() != NULL)
-        {
-            tempCitizen++;
-        }
-    }
+    int temp = NanhuaGameStaticAPI::getNumberOfVillagers();
+    int tempCitizen = NanhuaGameStaticAPI::getNumberOfCitizens();
     
     if(mGameCurrentPopulation != temp || mGameCurrentPopulationCitizen != tempCitizen)
     {
@@ -1039,6 +1320,51 @@ void GameHUD::update(float deltaTime)
     updateReputation(deltaTime);
     updateFood(deltaTime);
     updateStorage(deltaTime);
+    
+    // for level 3, update the build hospital button
+    if(GameManager::getThis()->getLevel() == 3 && targetMoney >= 1000 && targetFood >= 0)
+    {
+        buildHospitalButton->setVisible(true);
+        buildHospitalInstructionLabel->setVisible(true);
+    }
+    else
+    {
+        buildHospitalButton->setVisible(false);
+        buildHospitalInstructionLabel->setVisible(false);
+    }
+    
+    if(GameManager::getThis()->getLevel() == 3)
+    {
+        if(mGameNumberOfHospitals >= 2)
+        {
+            hospitalIcon->setVisible(false);
+            multiplyLabel->setVisible(false);
+            hospitalNumberLabel->setVisible(false);
+            
+            buildHospitalButton->setVisible(false);
+            buildHospitalInstructionLabel->setVisible(false);
+        }
+        else
+        {
+            hospitalIcon->setVisible(true);
+            multiplyLabel->setVisible(true);
+            hospitalNumberLabel->setVisible(true);
+        }
+    }
+    else
+    {
+        hospitalIcon->setVisible(false);
+        multiplyLabel->setVisible(false);
+        hospitalNumberLabel->setVisible(false);
+    }
+    
+    if(mGameNumberOfHospitals != GameManager::getThis()->number_of_hospital)
+    {
+        mGameNumberOfHospitals = GameManager::getThis()->number_of_hospital;
+        stringstream ss;
+        ss << mGameNumberOfHospitals;
+        hospitalNumberLabel->setString(ss.str().c_str());
+    }
 }
 
 void GameHUD::createInitialGUI(){
@@ -1093,10 +1419,6 @@ void GameHUD::createStatsMenu()
     ccColor3B colorWhite = ccc3(255, 255, 255);
     
     // create the background of the stats menu
-    /*
-    statsMenu = CCSprite::create("chargirl_represent.png");
-    */
-    
     character_frameNo = 0;
     
     if(genderMale)
@@ -1177,13 +1499,7 @@ void GameHUD::createStatsMenu()
     
     mGameCurrentFood = 0;
     mGameCurrentStorage = 0;
-    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
-    for (int i = 0; i < allGranary->count(); i++)
-    {
-        Building* b = (Building*) allGranary->objectAtIndex(i);
-        mGameCurrentFood += b->currentStorage;
-        mGameCurrentStorage += b->storageLimit;
-    }
+
     ss.str(std::string());
     ss << mGameCurrentFood << "/" << mGameCurrentStorage;
     foodLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
@@ -1209,28 +1525,6 @@ void GameHUD::createStatsMenu()
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
     
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-    for(int i = 0; i < allSprites->count(); i++)
-    {
-        GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-        if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
-        {
-            mGameCurrentPopulation++;
-        }
-        
-        if(gs->getHome() != NULL)
-        {
-            mGameCurrentPopulationCitizen++;
-        }
-    }
-    
-    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
-    for(int i = 0; i < allHousing->count(); i++)
-    {
-        Building* b = (Building*) allHousing->objectAtIndex(i);
-        mGameCurrentPopulationRoom += b->populationLimit;
-    }
-    
     ss.str(std::string());
     ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
@@ -1241,7 +1535,7 @@ void GameHUD::createStatsMenu()
     
     // create the achievements label for the values
     ss.str(std::string());
-    ss << GameScene::getThis()->configSettings->default_ini_reputation;
+    ss << "0";
     achivementsLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 18);
     achivementsLabel->setColor(colorBlack);
     achivementsLabel->setAnchorPoint(ccp(0.5, 1));
@@ -1252,18 +1546,6 @@ void GameHUD::createStatsMenu()
     average_happiness = 0;
     mAverageHappiness = average_happiness;
     
-    if(GameScene::getThis()->systemConfig->debugMode)
-    {
-        ss.str(std::string());
-        ss << mAverageHappiness;
-        
-        average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
-        average_happiness_label->setColor(colorBlack);
-        average_happiness_label->setAnchorPoint(ccp(0, 0));
-        this->addChild(average_happiness_label, 2);
-        average_happiness_label->CCNode::setPosition(620, 0);
-    }
-    
     infoBackground = CCSprite::createWithSpriteFrameName("infor display ui.png");
     infoBackground->setScale(screenSize.width / infoBackground->boundingBox().size.width * 0.25f);
     infoBackground->setAnchorPoint(ccp(0.5, 1));
@@ -1272,40 +1554,6 @@ void GameHUD::createStatsMenu()
     
     float opacity = 0;
     infoBackground->setOpacity(opacity);
-    
-    if(GameScene::getThis()->systemConfig->debugMode)
-    {
-        // tap mode label
-        ss.str(std::string());
-        switch (currTapMode)
-        {
-            case 0:
-                ss << "Normal";
-                break;
-            case 1:
-                ss << "Build";
-                break;
-            case 2:
-                ss << "Deconstruct";
-                break;
-            case 3:
-                ss << "BuildPathPreview";
-                break;
-            case 4:
-                ss << "UnBuildPath";
-                break;
-            case 5:
-                ss << "BuildPathLine";
-                break;
-            default:
-                break;
-        }
-        tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-        tapModeLabel->setColor(colorBlack);
-        tapModeLabel->setAnchorPoint(ccp(0, 0));
-        this->addChild(tapModeLabel, 2);
-        tapModeLabel->CCNode::setPosition(720, 0);
-    }
 }
 
 void GameHUD::setupForGuardTowerBar()
@@ -1814,7 +2062,7 @@ void GameHUD::createBuildMenu()
     this->addChild(buildButton, 2);
     
     mask = CCSprite::createWithSpriteFrameName("black.png");
-    mask->setScale(screenSize.width / mask->boundingBox().size.width);
+    mask->setScale(screenSize.width / mask->boundingBox().size.width * 1.5f);
     mask->setAnchorPoint(ccp(0.5, 0.5));
     mask->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     mask->setOpacity((GLubyte) 0);
@@ -1889,19 +2137,6 @@ void GameHUD::addPopulation(){
     CCPoint target = CCPointMake(39,60);
     
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);
-    
-    /*
-    int isMale = rand() % 2;
-    
-    if(isMale)
-    {
-        GameScene::getThis()->spriteHandler->addSpriteToMap(target, M_REFUGEE);
-    }
-    else
-    {
-        GameScene::getThis()->spriteHandler->addSpriteToMap(target, F_REFUGEE);
-    }
-    */
 }
 
 void GameHUD::createSystemMenu()
@@ -1910,6 +2145,14 @@ void GameHUD::createSystemMenu()
     
     systemButton = CCSprite::createWithSpriteFrameName("optionmenubutton.png");
     
+    // hospital group
+    mGameNumberOfHospitals = 0;
+    buildHospitalButton = CCSprite::createWithSpriteFrameName("buildingHospital.png");
+    hospitalIcon = CCSprite::createWithSpriteFrameName("hospital icon.png");
+    multiplyLabel = CCLabelTTF::create("X", "GillSansMT", 24);
+    hospitalNumberLabel = CCLabelTTF::create("0", "GillSansMT", 24);
+    buildHospitalInstructionLabel = CCLabelTTF::create("Build a hospital", "GillSansMT", 24);
+    
     pauseButton = CCSprite::createWithSpriteFrameName("pauseIcon.png");
     resumeButton = CCSprite::createWithSpriteFrameName("nextButton.png");
     stickHappinessButton = CCSprite::createWithSpriteFrameName("happyFace.png");
@@ -1917,11 +2160,33 @@ void GameHUD::createSystemMenu()
     warButton = CCSprite::createWithSpriteFrameName("banditicon.png");
     peaceButton = CCSprite::createWithSpriteFrameName("peaceicon.png");
     
-    showRandomEventManagerButton = CCSprite::create("test_button.png");
+    showRandomEventManagerButton = CCSprite::createWithSpriteFrameName("test_button.png");
     
     systemButton->setScale(screenSize.width / systemButton->boundingBox().size.width * 0.05f);
     systemButton->setAnchorPoint(ccp(1, 1));
     systemButton->setPosition(ccp(screenSize.width * 0.075f, screenSize.height - 205.0f));
+    
+    buildHospitalButton->setScale(screenSize.width / buildHospitalButton->boundingBox().size.width * 0.05f);
+    buildHospitalButton->setAnchorPoint(ccp(1, 1));
+    buildHospitalButton->setPosition(ccp(screenSize.width * 0.075f, screenSize.height - 205.0f - systemButton->boundingBox().size.height));
+    buildHospitalButton->setVisible(false);
+    
+    hospitalIcon->setScale(screenSize.width / hospitalIcon->boundingBox().size.width * 0.04f);
+    hospitalIcon->setAnchorPoint(ccp(0, 1));
+    hospitalIcon->setPosition(ccp(260, screenSize.height - 65));
+    hospitalIcon->setVisible(true);
+    
+    buildHospitalInstructionLabel->setAnchorPoint(ccp(0, 1));
+    buildHospitalInstructionLabel->setPosition(ccp(screenSize.width * 0.075f - buildHospitalButton->boundingBox().size.width, screenSize.height - 205.0f - systemButton->boundingBox().size.height - buildHospitalButton->boundingBox().size.height));
+    buildHospitalInstructionLabel->setVisible(false);
+    
+    multiplyLabel->setAnchorPoint(ccp(0, 0.5f));
+    multiplyLabel->setPosition(ccp(320, screenSize.height - 65 - hospitalIcon->boundingBox().size.height / 2.0f));
+    multiplyLabel->setVisible(false);
+    
+    hospitalNumberLabel->setAnchorPoint(ccp(0, 0.5f));
+    hospitalNumberLabel->setPosition(ccp(360, screenSize.height - 65 - hospitalIcon->boundingBox().size.height / 2.0f));
+    hospitalNumberLabel->setVisible(false);
     
     pauseButton->setScale(screenSize.width / pauseButton->boundingBox().size.width * 0.05f);
     pauseButton->setAnchorPoint(ccp(0, 0));
@@ -1961,35 +2226,33 @@ void GameHUD::createSystemMenu()
     scoreButton->setPosition(ccp(screenSize.width * 0.15f, 0));
     
     // tokens debuging
-    CCArray* allTokens = GameScene::getThis()->spriteHandler->tokensOnMap;
     stringstream ss;
-    ss << "Tokens: " << allTokens->count();
+    ss << "Tokens: " << 0;
     tokensOnMapLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
     tokensOnMapLabel->setAnchorPoint(ccp(0.0f, 0.5f));
     tokensOnMapLabel->setPosition(ccp(0, screenSize.height / 2.0f + 80.0f));
     this->addChild(tokensOnMapLabel);
     
     ss.str(std::string());
-    ss << "Money Label: " << addMoneyLabelArray->count();
+    ss << "Money Label: " << 0;
     moneyCountLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
     moneyCountLabel->setAnchorPoint(ccp(0.0f, 0.5f));
     moneyCountLabel->setPosition(ccp(0, screenSize.height / 2.0f + 30.0f));
     this->addChild(moneyCountLabel);
     
     ss.str(std::string());
-    ss << "Food Label: " << addFoodLabelArray->count();
+    ss << "Food Label: " << 0;
     foodCountLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
     foodCountLabel->setAnchorPoint(ccp(0.0f, 0.5f));
     foodCountLabel->setPosition(ccp(0, screenSize.height / 2.0f -20.0f));
     this->addChild(foodCountLabel);
     
     ss.str(std::string());
-    ss << "Reputation Label: " << addReputationLabelArray->count();
+    ss << "Reputation Label: " << 0;
     reputationCountLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
     reputationCountLabel->setAnchorPoint(ccp(0.0f, 0.5f));
     reputationCountLabel->setPosition(ccp(0, screenSize.height / 2.0f - 70.0f));
     this->addChild(reputationCountLabel);
-    
     
     float happinessRate = average_happiness;
     
@@ -2030,19 +2293,12 @@ void GameHUD::createSystemMenu()
     happinessIcon->setPosition(ccp(screenSize.width, screenSize.height - 100));
     
     this->addChild(systemButton, 5);
+    this->addChild(buildHospitalButton, 5);
+    this->addChild(hospitalIcon, 5);
+    this->addChild(buildHospitalInstructionLabel, 5);
+    this->addChild(multiplyLabel, 5);
+    this->addChild(hospitalNumberLabel, 5);
     this->addChild(happinessIcon, 5);
-    
-    if(!GameScene::getThis()->systemConfig->debugMode)
-    {
-        stickHappinessButton->cocos2d::CCNode::setScale(0, 0);
-        resumeHappinessButton->cocos2d::CCNode::setScale(0, 0);
-        pauseButton->cocos2d::CCNode::setScale(0, 0);
-        resumeButton->cocos2d::CCNode::setScale(0, 0);
-        warButton->cocos2d::CCNode::setScale(0, 0);
-        peaceButton->cocos2d::CCNode::setScale(0, 0);
-        scoreButton->cocos2d::CCNode::setScale(0, 0);
-        showRandomEventManagerButton->cocos2d::CCNode::setScale(0, 0);
-    }
     
     this->addChild(stickHappinessButton, 5);
     this->addChild(resumeHappinessButton, 5);
@@ -2097,12 +2353,9 @@ void GameHUD::banditsAttack(int banditsNo)
             redMask->setVisible(true);
             alertText->setScale(0);
             alertText->setVisible(true);
-            //isAlerting = true;
             isAlertingText = true;
-            //alertFadeIn = true;
             alertTextFadeIn = true;
             alertCumulativeTime = 0;
-            //this->schedule(schedule_selector(GameHUD::alertBanditsAttackFade), 1.0f / 120.0f);
             this->schedule(schedule_selector(GameHUD::alertBanditsAttackText), 1.0f / 120.0f);
             
             peaceButton->setVisible(true);
@@ -2199,33 +2452,6 @@ void GameHUD::alertBanditsAttackText(float dt)
     }
 }
 
-void GameHUD::pauseGame()
-{
-    if(pause)
-    {
-        pause = false;
-        pauseButton->setVisible(true);
-        pauseButton->setPosition(ccp(pauseButton->getPositionX(), pauseButton->getPositionY() + 500));
-        resumeButton->setVisible(false);
-        resumeButton->setPosition(ccp(resumeButton->getPositionX(), resumeButton->getPositionY() - 500));
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-        
-        for (int i = 0; i < spritesOnMap->count(); i++)
-        {
-            GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-            sp->followPath();
-        }
-    }
-    else
-    {
-        pause = true;
-        pauseButton->setVisible(false);
-        pauseButton->setPosition(ccp(pauseButton->getPositionX(), pauseButton->getPositionY() - 500));
-        resumeButton->setVisible(true);
-        resumeButton->setPosition(ccp(resumeButton->getPositionX(), resumeButton->getPositionY() + 500));
-    }
-}
-
 void GameHUD::stickGameHappiness()
 {
     if(stickHappiness)
@@ -2258,11 +2484,11 @@ void GameHUD::clickScoreButton()
         ScoreMenu* sm = ScoreMenu::create(this);
         sm->retain();
         sm->scheduleShowScoreMenu();
-        GameHUD::getThis()->pause = true;
+        UIButtonControl::pauseGame();
     }
     else
     {
-        GameHUD::getThis()->pause = false;
+        UIButtonControl::resumeGame();
         ScoreMenu::getThis()->scheduleHideScoreMenu();
     }
 }
@@ -2292,21 +2518,17 @@ void GameHUD::createAlertSystem()
 void GameHUD::UpdateBuildButton()
 {
     if (buildButton == NULL) return;
-   // CCTextureCache::sharedTextureCache()->purgeSharedTextureCache(); //don't do this here!!!
     
-   // CCTexture2D* tex;
+    // CCTexture2D* tex;
     CCSpriteFrame * l_SpriteFrame;
     
     if (getTapMode() == 0)
     {
         l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("main-game-buttons_build.png");
-        
-        //   tex = CCTextureCache::sharedTextureCache()->addImage("main-game-buttons_build.png");
     }
     else
     {
         l_SpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("main-game-buttons_cancel_build.png");
-        
     }
     
     buildButton -> setTexture( l_SpriteFrame -> getTexture() );
@@ -2316,33 +2538,8 @@ void GameHUD::UpdateBuildButton()
 
 void GameHUD::createSoldierHelper()
 {
-    if(!GameScene::getThis()->systemConfig->debugMode)
-    {
-        return;
-    }
-    
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-    GameSprite* firstSoldier = NULL;
-    for(int i = 0; i < allSprites->count(); i++)
-    {
-        GameSprite* temp = (GameSprite*) allSprites->objectAtIndex(i);
-        if(temp->villagerClass == V_SOLDIER)
-        {
-            firstSoldier = temp;
-            break;
-        }
-    }
-    
     stringstream ss;
-    
-    if(firstSoldier == NULL)
-    {
-        ss << "NULL";
-    }
-    else
-    {
-        ss << firstSoldier->spriteName;
-    }
+    ss << "NULL";
     
     soldierName = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     soldierName->setAnchorPoint(ccp(0, 0));
@@ -2350,14 +2547,7 @@ void GameHUD::createSoldierHelper()
     this->addChild(soldierName);
     
     ss.str(string());
-    if(firstSoldier == NULL || firstSoldier->enermy == NULL)
-    {
-        ss << "NULL";
-    }
-    else
-    {
-        ss << firstSoldier->enermy->spriteName;
-    }
+    ss << "NULL";
     
     enermyName = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     enermyName->setAnchorPoint(ccp(0, 0));
@@ -2365,14 +2555,7 @@ void GameHUD::createSoldierHelper()
     this->addChild(enermyName);
     
     ss.str(string());
-    if(firstSoldier == NULL)
-    {
-        ss << "NULL";
-    }
-    else
-    {
-        ss << "StopAction: " << (firstSoldier->stopAction ? "true" : "false");
-    }
+    ss << "NULL";
     
     stopActionLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     stopActionLabel->setAnchorPoint(ccp(0, 0));
@@ -2724,19 +2907,6 @@ void GameHUD::updateMoney(float dt)
 
 void GameHUD::checkReputaionPopulation()
 {
-    /*
-    int projectedPopulationGrowth = GameScene::getThis()->settingsLevel->projected_population_growth;
-    float baseValue = powf((float) projectedPopulationGrowth / (float) 3, (float) 1 / (float) reputationMax);
-    
-    int projectedPopulation = (int) (3 * pow(baseValue, reputationMax) - 3 * pow(baseValue, (reputationMax - reputation)));
-    
-    if(growthPopulation < projectedPopulation)
-    {
-        growthPopulation++;
-        addPopulation();
-    }
-    */
-    
     if(mGameCurrentPopulation < mGameCurrentPopulationRoom)
     {
         addPopulation();

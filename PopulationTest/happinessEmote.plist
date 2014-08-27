@@ -7,7 +7,7 @@
             <key>Happinessicon.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,128}}</string>
+                <string>{{0,0},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>happinessEmote.png</string>
             <key>size</key>
-            <string>{260,132}</string>
+            <string>{256,128}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:38dee40d6e773a066057bdb267a44068:3c8b3265f904088b6877fe6901cda20a:b04aa9b1e6e4734ac94274b9befb10e5$</string>
+            <string>$TexturePacker:SmartUpdate:496ccfacfe757d4cdbec84ccc9aa95bf:3c8b3265f904088b6877fe6901cda20a:b04aa9b1e6e4734ac94274b9befb10e5$</string>
             <key>textureFileName</key>
             <string>happinessEmote.png</string>
         </dict>

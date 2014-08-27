@@ -1,0 +1,43 @@
+<?xml encoding="ISO-8859-1"?>
+<project>
+    <question>
+        <text>1、《三国演义》中的“三国”指的是：</text>
+        <answer>a. 魏、蜀、吴</answer>
+        <answer>b. 吴、秦、越</answer>
+        <answer>c. 魏、蜀、匈奴</answer>
+        <answer>d. 蜀、吴、韩</answer>
+        <index>1</index>
+    </question>
+    <question>
+        <text>2、“桃园三结义”中，三位一起结拜为兄弟的是：</text>
+        <answer>a. 赵云、关羽、张飞</answer>
+        <answer>b. 曹操、孙权、刘备</answer>
+        <answer>c. 刘备、诸葛亮、赵云</answer>
+        <answer>d. 刘备、关羽、张飞</answer>
+        <index>4</index>
+    </question>
+    <question>
+        <text>3、刘备诚意邀请诸葛亮出山相助，历史上称为：</text>
+        <answer>a. 礼贤下士</answer>
+        <answer>b. 闻鸡起舞</answer>
+        <answer>c. 三顾茅庐</answer>
+        <answer>d. 鞠躬尽瘁</answer>
+        <index>3</index>
+        </question>
+    <question>
+        <text>4、以下哪项典故与三国无关：</text>
+        <answer>a. 过五关，斩六将</answer>
+        <answer>b. 刮骨疗伤</answer>
+        <answer>c. 草船借箭</answer>
+        <answer>d. 含沙射影</answer>
+        <index>4</index>
+    </question>
+    <question>
+        <text>5、在《三国演义》中以红脸、长须、义气著称的是:</text>
+        <answer>a. 赵云</answer>
+        <answer>b. 关羽</answer>
+        <answer>c. 张飞</answer>
+        <answer>d. 诸葛亮</answer>
+        <index>2</index>
+    </question>
+</project>

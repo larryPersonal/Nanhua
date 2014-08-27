@@ -7,7 +7,7 @@
             <key>unabletogo.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>noPathEmote.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:86162bf5ebbea518849ccf9bc2b19789:779518ebaf2bc8dfbff45b3178e3917a:16edb67688f43259e676d23da4d7e739$</string>
+            <string>$TexturePacker:SmartUpdate:0e6447a4ab2cb02661e9dbe759b6dd99:779518ebaf2bc8dfbff45b3178e3917a:16edb67688f43259e676d23da4d7e739$</string>
             <key>textureFileName</key>
             <string>noPathEmote.png</string>
         </dict>

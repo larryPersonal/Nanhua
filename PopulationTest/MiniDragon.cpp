@@ -25,9 +25,6 @@ MiniDragon::MiniDragon()
     
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    //dragon = CCSprite::create("dragon_c.png");
-    
-    
     dragon = CCSprite::createWithSpriteFrameName("dragon_c.png");
     
     
@@ -101,6 +98,7 @@ void MiniDragon::playMiniDraggon()
     {
         if(Senario::getThis()->scenarioState == Tutorial)
         {
+            CCLog("########## tes my real apple of range");
             setupScenario();
         }
     }
@@ -142,13 +140,11 @@ bool MiniDragon::constructTutorialSlide()
         /* the animated string in some slides are kept in the GameHUD layer, not the tutorial layer */
         if(TutorialManager::getThis()->hide)
         {
-            as->getLabel()->autorelease();
-            GameHUD::getThis()->removeChild(as->getLabel());
+            GameHUD::getThis()->removeChild(as->getLabel(), true);
         }
         else
         {
-            as->getLabel()->autorelease();
-            TutorialManager::getThis()->removeChild(as->getLabel());
+            TutorialManager::getThis()->removeChild(as->getLabel(), true);
         }
     }
     
@@ -296,6 +292,8 @@ bool MiniDragon::constructTutorialSlide()
     
     if(TutorialManager::getThis()->show)
     {
+        bubble->retain();
+        dragon->retain();
         GameHUD::getThis()->removeChild(dragon);
         GameHUD::getThis()->removeChild(bubble);
         TutorialManager::getThis()->addChild(dragon, 2);
@@ -730,6 +728,8 @@ void MiniDragon::hideDragonGroup()
     TutorialManager::getThis()->removeChild(bubble);
     GameHUD::getThis()->addChild(dragon, 32);
     GameHUD::getThis()->addChild(bubble, 31);
+    dragon->autorelease();
+    bubble->autorelease();
     
     for(int i = 0; i < animatedStringList->count(); i++)
     {
@@ -737,6 +737,7 @@ void MiniDragon::hideDragonGroup()
         temp->retain();
         TutorialManager::getThis()->removeChild(temp);
         GameHUD::getThis()->addChild(temp, 33);
+        temp->autorelease();
     }
     
     if(TutorialManager::getThis()->miniDragon->setButtonOkForDelay)
@@ -986,7 +987,7 @@ void MiniDragon::deHighlightBuilding(string b)
     
     if (highlightSprite != NULL)
     {
-        TutorialManager::getThis()->removeChild(highlightSprite);
+        TutorialManager::getThis()->removeChild(highlightSprite, true);
         highlightSprite = NULL;
     }
 }
@@ -1005,7 +1006,11 @@ void MiniDragon::clickNext()
     else
     {
         clearMiniDragon();
-        GameHUD::getThis()->clickScoreButton();
+        
+        if(Senario::getThis()->scenarioState == Tutorial)
+        {
+            GameHUD::getThis()->clickScoreButton();
+        }
         finalObjective = false;
     }
 }
@@ -1055,12 +1060,22 @@ void MiniDragon::clearMiniDragon()
 {
     TutorialManager::getThis()->active = false;
     TutorialManager::getThis()->unlockAll();
-    TutorialManager::getThis()->removeChild(dragon);
-    TutorialManager::getThis()->removeChild(bubble);
+    TutorialManager::getThis()->removeChild(dragon, true);
+    TutorialManager::getThis()->removeChild(bubble, true);
+    
+    TutorialManager::getThis()->unschedule(schedule_selector(MiniDragon::update));
+    TutorialManager::getThis()->unschedule(schedule_selector(TutorialManager::moveCamera));
+    
+    if (highlightSprite != NULL)
+    {
+        TutorialManager::getThis()->removeChild(highlightSprite, true);
+        highlightSprite = NULL;
+    }
+    
     for (int i = 0; i < animatedStringList->count(); i++)
     {
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
-        TutorialManager::getThis()->removeChild(as->getLabel());
+        TutorialManager::getThis()->removeChild(as->getLabel(), true);
     }
     animatedStringList->removeAllObjects();
     slidesList->removeAllObjects();

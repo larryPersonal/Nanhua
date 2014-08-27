@@ -4,27 +4,14 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>blackscreen.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{4,4},{2052,1540}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{2052,1540}}</string>
-                <key>sourceSize</key>
-                <string>{2052,1540}</string>
-            </dict>
             <key>earthquakeEvent.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2752,1012},{464,308}}</string>
+                <string>{{4,543},{464,308}}</string>
                 <key>offset</key>
                 <string>{-1,-10}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{25,114},{464,308}}</string>
                 <key>sourceSize</key>
@@ -33,11 +20,11 @@
             <key>goodharvest.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2432,1012},{464,314}}</string>
+                <string>{{1473,542},{464,314}}</string>
                 <key>offset</key>
                 <string>{-1,-7}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{25,108},{464,314}}</string>
                 <key>sourceSize</key>
@@ -46,11 +33,11 @@
             <key>goodweather.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2774,542},{464,308}}</string>
+                <string>{{474,543},{464,308}}</string>
                 <key>offset</key>
                 <string>{-1,-10}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{25,114},{464,308}}</string>
                 <key>sourceSize</key>
@@ -59,11 +46,11 @@
             <key>peaceful.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2460,542},{464,308}}</string>
+                <string>{{944,543},{464,308}}</string>
                 <key>offset</key>
                 <string>{-1,-10}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{25,114},{464,308}}</string>
                 <key>sourceSize</key>
@@ -72,20 +59,33 @@
             <key>rainingEvent.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2062,542},{464,392}}</string>
+                <string>{{2241,4},{464,392}}</string>
                 <key>offset</key>
                 <string>{-1,32}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{25,30},{464,392}}</string>
                 <key>sourceSize</key>
                 <string>{516,516}</string>
             </dict>
+            <key>scroller_breaknews.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{1463,533}}</string>
+                <key>offset</key>
+                <string>{0,1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{1463,533}}</string>
+                <key>sourceSize</key>
+                <string>{1463,535}</string>
+            </dict>
             <key>scrollerbreaknews.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2062,4},{762,532}}</string>
+                <string>{{1473,4},{762,532}}</string>
                 <key>offset</key>
                 <string>{13,5}</string>
                 <key>rotated</key>
@@ -98,11 +98,11 @@
             <key>typoonEvent.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2062,1012},{464,364}}</string>
+                <string>{{2241,402},{464,364}}</string>
                 <key>offset</key>
                 <string>{-1,18}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{25,58},{464,364}}</string>
                 <key>sourceSize</key>
@@ -116,9 +116,9 @@
             <key>realTextureFileName</key>
             <string>RandomEventsArt.png</string>
             <key>size</key>
-            <string>{3086,1548}</string>
+            <string>{2709,860}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:78fedbd25dbccdd1aabbaba30f2b0997:5054fc5bc1ce97d6c3f3de8aff3db887:9f671c34a5f45e5b364239799c799900$</string>
+            <string>$TexturePacker:SmartUpdate:9300e99585e62775e98b1456366a32cc:6916ea6dce58f895872327dd9fd274b7:9f671c34a5f45e5b364239799c799900$</string>
             <key>textureFileName</key>
             <string>RandomEventsArt.png</string>
         </dict>

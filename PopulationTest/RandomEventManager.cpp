@@ -21,6 +21,9 @@ RandomEventManager::RandomEventManager()
     
     active = false;
     
+    randomEventsNode = NULL;
+    background = NULL;
+    
     randomEvents = CCArray::create();
     randomEvents->retain();
 }
@@ -28,6 +31,7 @@ RandomEventManager::RandomEventManager()
 RandomEventManager::~RandomEventManager()
 {
     RandomEventManager::SP = NULL;
+    theRandomEvent = NULL;
     randomEvents->removeAllObjects();
     CC_SAFE_RELEASE(randomEvents);
 }
@@ -54,15 +58,15 @@ RandomEventManager* RandomEventManager::create()
 
 bool RandomEventManager::init()
 {
+    // createUI();
     readRandomEventsFile();
-    createUI();
     return true;
 }
 
 void RandomEventManager::readRandomEventsFile()
 {
     randomEvents->removeAllObjects();
-    randomEvents->release();
+    CC_SAFE_RELEASE(randomEvents);
     
     RandomEventFileReader* refr = new RandomEventFileReader();
     refr->parseXMLFile("randomEvents.xml");
@@ -85,7 +89,7 @@ void RandomEventManager::createUI()
     background = CCSprite::createWithSpriteFrameName("scrollerbreaknews.png");
     background->setAnchorPoint(ccp(0.5f, 0.5f));
     background->cocos2d::CCNode::setScale(1.0f, 1.0f);
-    background->setPosition(ccp(-screenSize.width / 2.0f, screenSize.height / 2.0f));
+    background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(background, 2);
 }
 
@@ -128,6 +132,7 @@ void RandomEventManager::constructRandomEventContent()
     }
     if(theRandomEvent == NULL)
     {
+        CCLog("this is my test apple 1");
         theRandomEvent = (RandomEvent*) randomEvents->objectAtIndex(randomEvents->count() - 1);
     }
     
@@ -265,6 +270,7 @@ void RandomEventManager::removeRandomEventContent()
 {
     if(background != NULL)
     {
+        menu->removeChild(okButton, true);
         background->removeAllChildrenWithCleanup(true);
         descriptionLabels->removeAllObjects();
         CC_SAFE_RELEASE(descriptionLabels);
@@ -273,28 +279,27 @@ void RandomEventManager::removeRandomEventContent()
 
 void RandomEventManager::showUI()
 {
-    CCLog("test2");
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    preloadTextures();
+    createUI();
     
     active = true;
     
     constructRandomEventContent();
     blackScreen->setVisible(true);
-    background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
 }
 
 void RandomEventManager::hideUI()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    
     active = false;
     
     applyRandomEventEffects();
     removeRandomEventContent();
-    blackScreen->setVisible(false);
-    GlobalHelper::clearCache();
+    this->removeChild(blackScreen, true);
+    this->removeChild(background, true);
     
-    background->setPosition(ccp(-screenSize.width / 2.0f, screenSize.height / 2.0f));
+    background = NULL;
+    GlobalHelper::clearCache();
+    removeTextures();
 }
 
 void RandomEventManager::applyRandomEventEffects()
@@ -390,6 +395,24 @@ void RandomEventManager::applyRandomEventEffects()
                 }
             }
         }
+    }
+}
+
+void RandomEventManager::preloadTextures()
+{
+    /* random events manager */
+    randomEventsNode = CCSpriteBatchNode::create("RandomEventsArt.png");
+    this->addChild(randomEventsNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("RandomEventsArt.plist");
+}
+
+void RandomEventManager::removeTextures()
+{
+    if(randomEventsNode != NULL)
+    {
+        this->removeChild(randomEventsNode, true);
+        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("RandomEventsArt.plist");
+        randomEventsNode = NULL;
     }
 }
 

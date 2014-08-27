@@ -15,6 +15,8 @@
 
 class BanditsAttackHandler
 {
+    static BanditsAttackHandler* SP;
+    
 public:
     int requiredPopulation;
     int requiredGranary;
@@ -24,9 +26,12 @@ public:
     float tresholdTime;
     
     bool warMode;
+    
 public:
     BanditsAttackHandler();
     ~BanditsAttackHandler();
+    
+    static BanditsAttackHandler* getThis();
     
     void initialize();
     

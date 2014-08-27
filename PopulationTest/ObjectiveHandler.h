@@ -24,6 +24,9 @@ public:
     
     Objective* obj;
     
+    int startPopulation;
+    int targetPopulation;
+    
     static ObjectiveHandler* SP;
 public:
     ObjectiveHandler();

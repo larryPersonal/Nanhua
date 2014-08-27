@@ -9,13 +9,22 @@
 #include "BanditsAttackHandler.h"
 #include "GameHUD.h"
 
+BanditsAttackHandler* BanditsAttackHandler::SP;
+
 BanditsAttackHandler::BanditsAttackHandler()
 {
+    BanditsAttackHandler::SP = this;
     initialize();
 }
 
 BanditsAttackHandler::~BanditsAttackHandler()
 {
+    BanditsAttackHandler::SP = NULL;
+}
+
+BanditsAttackHandler* BanditsAttackHandler::getThis()
+{
+    return SP;
 }
 
 void BanditsAttackHandler::initialize()

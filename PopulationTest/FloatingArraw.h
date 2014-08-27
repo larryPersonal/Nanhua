@@ -44,6 +44,8 @@ public:
     
     void showArrow(CCPoint, float, float, int arrowLayer = 0);
     void hideArrow();
+    
+    void clear();
 };
 
 #endif

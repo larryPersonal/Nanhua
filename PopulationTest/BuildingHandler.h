@@ -15,11 +15,15 @@
 
 class BuildingHandler
 {
+    static BuildingHandler* SP;
 private:
     Building* BinarySearch(CCArray* targetArray, int targetID);
 public:
     BuildingHandler();
     ~BuildingHandler();
+    
+    static BuildingHandler* getThis();
+    
     Building* selectedBuilding; //if in build mode, pointer to target building.
     
     Building* mainBuilding;

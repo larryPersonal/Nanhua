@@ -180,6 +180,8 @@ public:
     void initMenuUnlocks();
     
     int level;
+    int number_of_hospital;
+    
     std::string gameMap;
     
     /* player profile */
@@ -187,6 +189,8 @@ public:
     std::string password;
     bool gender;
     bool isLoggedIn;
+    
+    bool hasGameHUD;
     
 public:
     void UnlockAll();

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<total_objectives>1</total_objectives>
+
+<objective>
+    <id>1</id>
+    <type>DISPLAY</type>
+    <tittle>No Objective</title>
+    <content>There is no objective currently!</content>
+    <next>2</next>
+    <finalObjective></finalObjective>
+</objective>
+
+PS: remember to leave at least two lines at the bottom.

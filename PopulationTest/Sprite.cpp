@@ -584,10 +584,10 @@ void GameSprite::followPath(bool moveOneTile)
             CCPoint nextPos = GameScene::getThis()->mapHandler->locationFromTilePos(&(node->tilepos));
             this->nextTile = nextPos;
             
-            if(!isInCombat)
+            if(!isInCombat || true)
             {
                 // if the soldier's next target tile is already taken by the bandits, stop moving and prepare to attack the bandit
-                if(villagerClass == V_SOLDIER){
+                if(villagerClass == V_SOLDIER && !tryEscape){
                     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
                     CCPoint myTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(currPos));
                     
@@ -615,7 +615,7 @@ void GameSprite::followPath(bool moveOneTile)
                 }
                 
                 // if the bandit's next target tile is already taken by the soldiers, stop moving and prepare to attack the soldier
-                if(villagerClass == V_BANDIT){
+                if(villagerClass == V_BANDIT && !tryEscape){
                     CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
                     CCPoint myTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(currPos));
                     
@@ -1103,11 +1103,12 @@ void GameSprite::updateSprite(float dt)
         label->setOpacity(newOpacity);
     }
     
+    // in combat mode, the soldiers and bandits will follow own strategic plan
     if(GameScene::getThis()->banditsAttackHandler->warMode)
     {
         if(combatState == C_COMBAT)
         {
-            // currently only apply this to bandit but not the soldiers
+            // bandit is the fighting controller.
             if(villagerClass == V_BANDIT)
             {
                 if(enermy != NULL && enermy->enermy == this && enermy->combatState == C_COMBAT)
@@ -1130,11 +1131,13 @@ void GameSprite::updateSprite(float dt)
                         enermy->enermy = NULL;
                         enermy->combatState = C_IDLE;
                         enermy->currAction = IDLE;
+                        enermy->stopAction = false;
                         enermy->followPath();
                         
                         this->enermy = NULL;
                         this->combatState = C_IDLE;
                         this->currAction = IDLE;
+                        this->stopAction = false;
                         this->followPath();
                         return;
                     }
@@ -1144,6 +1147,7 @@ void GameSprite::updateSprite(float dt)
                     this->enermy = NULL;
                     this->combatState = C_IDLE;
                     this->currAction = IDLE;
+                    this->stopAction = false;
                     this->followPath();
                     return;
                 }
@@ -1275,6 +1279,15 @@ void GameSprite::updateSprite(float dt)
                         currAction = IDLE;
                         combatState = C_IDLE;
                         stopAction = false;
+                        if(enermy != NULL)
+                        {
+                            enermy->currAction = IDLE;
+                            enermy->combatState = C_IDLE;
+                            enermy->stopAction = false;
+                            enermy->followPath();
+                            enermy = NULL;
+                        }
+                        this->followPath();
                         return;
                     }
                 }
@@ -1347,12 +1360,16 @@ void GameSprite::updateSprite(float dt)
                     {
                         // not enermy in all directions, resume the finding enermy process
                         stopAction = false;
+                        currAction = IDLE;
                         combatState = C_IDLE;
-                        if(enermy != NULL && enermy->enermy != this)
+                        if(enermy != NULL)
                         {
-                            enermy = NULL;
-                            currAction = IDLE;
+                            enermy->stopAction = false;
+                            enermy->currAction = IDLE;
+                            enermy->combatState = C_IDLE;
+                            enermy->followPath();
                         }
+                        this->followPath();
                         return;
                     }
                 }
@@ -1500,6 +1517,17 @@ void GameSprite::updateSprite(float dt)
                 {
                     GoBuilding(getJobLocation());
                 }
+            }
+        }
+    }
+    else
+    {
+        if(villagerClass == V_SOLDIER)
+        {
+            if(stopAction)
+            {
+                stopAction = false;
+                GoBuilding(possessions->jobLocation);
             }
         }
     }
@@ -2882,6 +2910,7 @@ void GameSprite::damaged(int damage)
         possessions->current_endurance = 0;
         tryEscape = true;
         combatState = C_ESCAPE;
+        stopAction = false;
         if(enermy != NULL)
         {
             if(enermy->enermy != NULL)

@@ -90,12 +90,8 @@ TutorialManager::TutorialManager()
 
 TutorialManager::~TutorialManager()
 {
-     if(miniDragon != NULL)
-    {
-        delete miniDragon;
-    }
     TutorialManager::SP = NULL;
-    
+    clearSprites();
 }
 
 void TutorialManager::unlockAll()
@@ -163,54 +159,61 @@ void TutorialManager::setupForTutorial()
     active = true;
     lockDropTokens = true;
     
-    GameHUD* hudlayer = GameHUD::create();
-    GameScene::getThis()->setTouchEnabled(true);
-    GameScene::getThis()->addChild(hudlayer, 1);
-    SoundtrackManager::PlayBGM("in-game_1.wav");
+    bool setup = false;
+    if(!GameManager::getThis()->hasGameHUD)
+    {
+        GameHUD* hudlayer = GameHUD::getThis();
+        hudlayer->resetGameHUD();
+        GameScene::getThis()->setTouchEnabled(true);
+        GameScene::getThis()->addChild(hudlayer, 1);
+        SoundtrackManager::PlayBGM("in-game_1.wav");
+        GameManager::getThis()->hasGameHUD = true;
+        setup = true;
+    }
     
+    /*
     if(GameManager::getThis()->getLevel() == 2)
     {
         GameHUD::getThis()->setupForGuardTowerBar();
     }
+    */
     
     if(GameScene::getThis()->systemConfig->skipTutorial)
     {
-        GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
+        if(setup)
+        {
+            GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
+        }
         unlockAll();
         
-        if(!GameScene::getThis()->systemConfig->skipSenario && Senario::getThis()->scenarioState != Scenario1)
-        {
-            GameHUD::getThis()->pause = true;
-            this->scheduleOnce(schedule_selector(TutorialManager::setupForScenario), 1.0f);
-        }
-        else
-        {
-            active = false;
-        }
+        active = false;
         
         ObjectiveHandler::getThis()->playObjective();
         
         return;
     }
     
-    // animated rain is not used for this time, maybe in later time?
-    //GameScene::getThis()->animatedRain = AnimatedRain::create();
+    if(setup)
+    {
+        // animated rain is not used for this time, maybe in later time?
+        //GameScene::getThis()->animatedRain = AnimatedRain::create();
+        
+        GameScene::getThis()->mapHandler->Populate(GameScene::getThis()->buildingHandler->allBuildingLayers);
+        
+        GameScene::getThis()->spriteHandler->initialize();
+        
+        GameManager::getThis()->initGameData();
+        
+        GameManager::getThis()->UpdateUnlocks();
+        GameScene::getThis()->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
+        GameScene::getThis()->mapHandler->rescaleScrollLimits();
+        GameHUD::getThis()->update(0.1f);
+        
+        new FloatingArraw();
+    }
     
-    GameScene::getThis()->mapHandler->Populate(GameScene::getThis()->buildingHandler->allBuildingLayers);
-    
-    GameScene::getThis()->spriteHandler->initialize();
-    
-    GameManager::getThis()->initGameData();
-    
-    GameManager::getThis()->UpdateUnlocks();
-    GameScene::getThis()->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
-    GameScene::getThis()->mapHandler->rescaleScrollLimits();
-    GameHUD::getThis()->update(0.1f);
     GameHUD::getThis()->pause = true;
-    //this->schedule(schedule_selector( TutorialManager::moveCamera ), 1.0f / 120.0f);
     setupMiniDragon();
-    
-    new FloatingArraw();
 }
 
 void TutorialManager::setupForScenario()
@@ -224,7 +227,7 @@ void TutorialManager::setupForScenario()
     spritesArray = CCArray::create();
     spritesArray->retain();
     
-    CCLog("my very best warming!");
+    // CCLog("my very best warming!");
     
     CCPoint target = CCPointMake(39,64);
     GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
@@ -448,6 +451,23 @@ void TutorialManager::clearSprites()
     }
     spritesArray->removeAllObjects();
     CC_SAFE_RELEASE(spritesArray);
+    
+    TutorialManager::getThis()->unschedule(schedule_selector(TutorialManager::fadeIn));
+    TutorialManager::getThis()->unschedule(schedule_selector(TutorialManager::fadeOut));
+    
+    if(miniDragon != NULL)
+    {
+        delete miniDragon;
+        miniDragon = NULL;
+    }
+    
+    if(narrator != NULL)
+    {
+        delete narrator;
+        narrator = NULL;
+    }
+    
+    FloatingArraw::getThis()->clear();
 }
 
 void TutorialManager::scheduleForScenario(float time)

@@ -58,6 +58,8 @@ FloatingArraw::FloatingArraw()
 FloatingArraw::~FloatingArraw()
 {
     FloatingArraw::SP = NULL;
+    TutorialManager::getThis()->unschedule(schedule_selector(FloatingArraw::update));
+    TutorialManager::getThis()->removeChild(arrow, true);
     CC_SAFE_RELEASE(arrow);
 }
 
@@ -145,4 +147,9 @@ void FloatingArraw::showArrow(CCPoint pos, float ang, float scale, int arrowLaye
 void FloatingArraw::hideArrow()
 {
     arrow->setVisible(false);
+}
+
+void FloatingArraw::clear()
+{
+    delete  this;
 }

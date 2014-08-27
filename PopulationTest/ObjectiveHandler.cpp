@@ -11,6 +11,7 @@
 #include "GameHUD.h"
 #include "GlobalHelper.h"
 #include "TutorialManager.h"
+#include "NotificationPopup.h"
 
 ObjectiveHandler* ObjectiveHandler::SP;
 
@@ -25,6 +26,9 @@ ObjectiveHandler::ObjectiveHandler()
     
     nextID = 0;
     progressNumber = 0;
+    
+    startPopulation = 0;
+    targetPopulation = 0;
 }
 
 ObjectiveHandler::~ObjectiveHandler()
@@ -58,7 +62,7 @@ ObjectiveHandler* ObjectiveHandler::create()
 void ObjectiveHandler::loadObjective()
 {
     objectives->removeAllObjects();
-    objectives->release();
+    CC_SAFE_RELEASE(objectives);
     
     if(GameManager::getThis()->getLevel() == 0)
     {
@@ -71,6 +75,36 @@ void ObjectiveHandler::loadObjective()
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_1.xml");
+    }
+    else if(GameManager::getThis()->getLevel() == 2)
+    {
+        nextID = 0;
+        progressNumber = 0;
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_2.xml");
+    }
+    else if(GameManager::getThis()->getLevel() == 3)
+    {
+        nextID = 0;
+        progressNumber = 0;
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_3.xml");
+    }
+    else if(GameManager::getThis()->getLevel() == 4)
+    {
+        nextID = 0;
+        progressNumber = 0;
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_4.xml");
+    }
+    else if(GameManager::getThis()->getLevel() == 5)
+    {
+        nextID = 0;
+        progressNumber = 0;
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_5.xml");
+    }
+    else if(GameManager::getThis()->getLevel() == 6)
+    {
+        nextID = 0;
+        progressNumber = 0;
+        objectives = ObjectiveManager::parseXMLFile("objective_scenario_6.xml");
     }
     else
     {
@@ -114,6 +148,14 @@ void ObjectiveHandler::playObjective(bool showNotification)
     
     if(obj == NULL)
     {
+        if(GameManager::getThis()->getLevel() == 4)
+        {
+            NotificationPopup::getThis()->showScenario4Congratulations();
+        }
+        else if(GameManager::getThis()->getLevel() == 5)
+        {
+            NotificationPopup::getThis()->showScenario5Congratulations();
+        }
         return;
     }
     
@@ -144,13 +186,42 @@ void ObjectiveHandler::playObjective(bool showNotification)
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
             GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-            if(gs->villagerClass != V_CLASS_END && gs->getHome() != NULL)
+            if(gs->villagerClass != V_CLASS_END && gs->villagerClass != V_BANDIT && gs->getHome() != NULL)
             {
                 num++;
             }
         }
         ss2 << "(" << num << "/" << obj->value << ")";
         progressNumber = num;
+    }
+    else if(obj->oType == RaisePopulationGoal)
+    {
+        ss << "Raise Population";
+        ss1 << "Raise your population by " << obj->value << "!";
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        int num = 0;
+        for (int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+            if(gs->villagerClass != V_CLASS_END && gs->villagerClass != V_BANDIT)
+            {
+                num++;
+            }
+        }
+        startPopulation = num;
+        targetPopulation = startPopulation + obj->value;
+        int currentPopulation = obj->value - (targetPopulation - startPopulation);
+        if(currentPopulation < 0)
+        {
+            currentPopulation = 0;
+        }
+        else if(currentPopulation > obj->value)
+        {
+            currentPopulation = obj->value;
+        }
+        
+        ss2 << "(" << obj->value - (targetPopulation - startPopulation) << "/" << obj->value << ")";
+        progressNumber = obj->value - (targetPopulation - startPopulation);
     }
     else if(obj->oType == ReputationGoal)
     {
@@ -323,7 +394,7 @@ void ObjectiveHandler::update(float dt)
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
             GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-            if(gs->villagerClass != V_CLASS_END && gs->getHome() != NULL)
+            if(gs->villagerClass != V_CLASS_END && gs->villagerClass != V_BANDIT && gs->getHome() != NULL)
             {
                 num++;
             }
@@ -338,6 +409,46 @@ void ObjectiveHandler::update(float dt)
         else
         {
             progressNumber = num;
+        }
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
+        }
+    }
+    else if(obj->oType == RaisePopulationGoal)
+    {
+        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        int num = 0;
+        for (int i = 0; i < spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
+            if(gs->villagerClass != V_CLASS_END && gs->villagerClass != V_BANDIT && gs->getHome() != NULL)
+            {
+                num++;
+            }
+        }
+        
+        int currentPopulation = obj->value - (targetPopulation - num);
+        
+        if(currentPopulation < 0)
+        {
+            currentPopulation = 0;
+        }
+        else if(currentPopulation > obj->value)
+        {
+            currentPopulation = obj->value;
+        }
+        
+        if(progressNumber != currentPopulation)
+        {
+            progressNumber = currentPopulation;
+            ss << "(" << progressNumber << "/" << obj->value << ")";
+            hasUpdate = true;
+        }
+        else
+        {
+            progressNumber = currentPopulation;
         }
         
         if(progressNumber >= obj->value)

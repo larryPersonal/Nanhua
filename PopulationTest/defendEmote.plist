@@ -7,7 +7,7 @@
             <key>defending.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>defendEmote.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:69d59a405bd273fd758ad082122c2930:86dbc26d0a3f577c17dfc5993982f05f:7fd1cc0d9cd564811e3a27046b6bab33$</string>
+            <string>$TexturePacker:SmartUpdate:d00e4f0d76133382c5a148536e1b4471:86dbc26d0a3f577c17dfc5993982f05f:7fd1cc0d9cd564811e3a27046b6bab33$</string>
             <key>textureFileName</key>
             <string>defendEmote.png</string>
         </dict>

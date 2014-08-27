@@ -14,7 +14,7 @@
 using namespace cocos2d;
 
 enum ObjectiveType {
-    DefaultGoal, PopulationGoal, ReputationGoal, BuildBuilding, GoldGoal, FoodGoal, DisplayGoal
+    DefaultGoal, PopulationGoal, ReputationGoal, BuildBuilding, GoldGoal, FoodGoal, DisplayGoal, RaisePopulationGoal
 };
 
 class Objective : public CCObject

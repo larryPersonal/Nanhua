@@ -52,20 +52,11 @@ Senario::Senario()
 Senario::~Senario()
 {
     Senario::SP = NULL;
-    spriteList.clear();
-    menuList.clear();
-    labelList.clear();
+    
+    clearElements();
+    
     slidesList->removeAllObjects();
     CC_SAFE_RELEASE(slidesList);
-    
-    animatedStringList->removeAllObjects();
-    CC_SAFE_RELEASE(animatedStringList);
-    
-    animatedSpriteList->removeAllObjects();
-    CC_SAFE_RELEASE(animatedSpriteList);
-    
-    animatedDialogueList->removeAllObjects();
-    CC_SAFE_RELEASE(animatedDialogueList);
 }
 
 Senario* Senario::getThis()
@@ -360,12 +351,8 @@ void Senario::displayTexts(std::string str, float startX, float startY, string f
             }
         }
         
-        //if(tokenStr.at(0) == '(' && tokenStr.at(tokenStr.length() - 1) == ')')
         if (hasChinese)
         {
-            /*
-            string str = tokenStr.substr(1, tokenStr.length() - 2);
-            */
             int startIndex = 0;
             for (int j = 0; j < tokenStr.length(); j++)
             {
@@ -497,22 +484,6 @@ void Senario::nextButtonPressed(bool skip)
             }
         }
         
-        /*
-        for (int i = 0; i < animatedDialogueList->count(); i++){
-            AnimatedDialogue* ad = (AnimatedDialogue*) animatedDialogueList->objectAtIndex(i);
-            
-            if(ad->fadeOut || ad->fadeIn)
-            {
-                hasFade = true;
-            }
-            else if(ad->hasFadeOutAnimation)
-            {
-                ad->triggerFadeOut();
-                hasFade = true;
-            }
-        }
-        */
-        
         skipSlide = skip;
         
         if(!hasFade){
@@ -556,17 +527,17 @@ void Senario::clearElements()
 {
     for(int i = 0; i < spriteList.size(); i++)
     {
-        this->removeChild(spriteList.at(i));
+        this->removeChild(spriteList.at(i), true);
     }
     
     for(int i = 0; i < menuList.size(); i++)
     {
-        this->removeChild(menuList.at(i));
+        this->removeChild(menuList.at(i), true);
     }
     
     for(int i = 0; i < labelList.size(); i++)
     {
-        this->removeChild(labelList.at(i));
+        this->removeChild(labelList.at(i), true);
     }
     
     spriteList.clear();
@@ -576,7 +547,7 @@ void Senario::clearElements()
     for(int i = 0; i < animatedStringList->count(); i++)
     {
         AnimatedString* as = (AnimatedString*) animatedStringList->objectAtIndex(i);
-        this->removeChild(as->getLabel());
+        this->removeChild(as->getLabel(), true);
     }
     
     animatedStringList->removeAllObjects();
@@ -588,7 +559,7 @@ void Senario::clearElements()
     for(int i = 0; i < animatedSpriteList->count(); i++)
     {
         AnimatedSprite* as = (AnimatedSprite*) animatedSpriteList->objectAtIndex(i);
-        this->removeChild(as->getSprite());
+        this->removeChild(as->getSprite(), true);
     }
     
     animatedSpriteList->removeAllObjects();
@@ -596,6 +567,18 @@ void Senario::clearElements()
     
     animatedSpriteList = CCArray::create();
     animatedSpriteList->retain();
+    
+    for(int i = 0; i < animatedDialogueList->count(); i++)
+    {
+        AnimatedDialogue* ad = (AnimatedDialogue*) animatedDialogueList->objectAtIndex(i);
+        this->removeChild(ad->getSprite(), true);
+    }
+    
+    animatedDialogueList->removeAllObjects();
+    CC_SAFE_RELEASE(animatedDialogueList);
+    
+    animatedDialogueList = CCArray::create();
+    animatedDialogueList->retain();
     
     if(skipButton != NULL)
     {
@@ -615,14 +598,32 @@ void Senario::buttonSelect()
     
     if(scenarioState == Introduction)
     {
-        
-        TutorialManager::getThis()->setupForTutorial();
         this->scenarioState = Tutorial;
-        //GameScene::getThis()->removeChild(this);
+        TutorialManager::getThis()->setupForTutorial();
     }
     else if(scenarioState == Scenario2)
     {
         scenarioState = Tutorial2;
+        TutorialManager::getThis()->setupForTutorial();
+    }
+    else if(scenarioState == Scenario3)
+    {
+        scenarioState = Scenario4;
+        TutorialManager::getThis()->setupForTutorial();
+    }
+    else if(scenarioState == Scenario4)
+    {
+        scenarioState = Scenario5;
+        TutorialManager::getThis()->setupForTutorial();
+    }
+    else if(scenarioState == Scenario5)
+    {
+        scenarioState = Scenario6;
+        TutorialManager::getThis()->setupForTutorial();
+    }
+    else if(scenarioState == Scenario6)
+    {
+        scenarioState = Scenario6;
         TutorialManager::getThis()->setupForTutorial();
     }
     else
@@ -636,16 +637,6 @@ void Senario::buttonSelect()
     }
 }
 
-/*
-void Senario::clearCache()
-{
-    CCTextureCache::sharedTextureCache()->removeAllTextures();
-    CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCDirector::sharedDirector()->purgeCachedData();
-}
-*/
-
 void Senario::clearScenario()
 {
     active = false;
@@ -654,10 +645,7 @@ void Senario::clearScenario()
     
     curSlide = 0;
     
-    // clearCache(); //The GameHUD uses the sprite cache now. This will cause stuff in the gameHUD to disappear during the tutorial.
-    
     GlobalHelper::clearCache();
-    //GlobalHelper::clearPreloadedTexture();
     
     clearElements();
     
@@ -694,12 +682,6 @@ void Senario::activateRefugee(float dt)
 }
 
 void Senario::onOrientationChanged(){
-    /*
-    readSenarioFile();
-    constructSenarioStage(false);
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    startGameMenu->setPosition(screenSize.width * 0.5, screenSize.height * 0.5);
-    */
 }
 
 void Senario::update(float time)

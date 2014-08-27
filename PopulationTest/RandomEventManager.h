@@ -20,20 +20,20 @@ public:
     static RandomEventManager* SP;
     
     CCSprite* background;
+    CCSprite* blackScreen;
+    CCSprite* image;
     
     CCMenuItem* okButton;
     CCMenu* menu;
     
     CCLabelTTF* titleLabel;
     
-    CCSprite* blackScreen;
-    
     CCArray* randomEvents;
-    
     CCArray* descriptionLabels;
     
     RandomEvent* theRandomEvent;
-    CCSprite* image;
+    
+    CCSpriteBatchNode* randomEventsNode;
     
     bool active;
     
@@ -61,6 +61,9 @@ public:
     void readRandomEventsFile();
     
     void applyRandomEventEffects();
+    
+    void preloadTextures();
+    void removeTextures();
 };
 
 #endif

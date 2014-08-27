@@ -97,6 +97,10 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 {
                     objective->oType = DisplayGoal;
                 }
+                else if(content.compare("RAISE_POPULATION") == 0)
+                {
+                    objective->oType = RaisePopulationGoal;
+                }
                 else
                 {
                     objective->oType = DefaultGoal;

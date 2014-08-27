@@ -15,16 +15,18 @@ using namespace cocos2d;
 
 class ConstructionHandler
 {
+    static ConstructionHandler* SP;
     
 private:
     
     CCArray* constructingBuildings;
     
 public:
-    
-    
     ConstructionHandler();
     ~ConstructionHandler();
+    
+    static ConstructionHandler* getThis();
+    
     virtual void update(float deltaTime);
     
     void addConstructingBuilding(Building* building);

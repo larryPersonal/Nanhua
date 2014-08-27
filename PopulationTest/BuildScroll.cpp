@@ -247,27 +247,6 @@ void BuildScroll::willChangeOrientation()
 
 void BuildScroll::onOrientationChanged()
 {
-    /*
-    // set common variables
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    bool isHori = GlobalHelper::isHorizontal();
-    CCSize spriteSize = buildMenu->getContentSize();
-    
-    if(isHori)
-    {
-        buildMenu->setScale(screenSize.width / spriteSize.width * 0.98f);
-    }
-    else
-    {
-        buildMenu->cocos2d::CCNode::setScale(screenSize.width / spriteSize.width * 0.98f, screenSize.height / spriteSize.width * 0.98f);
-    }
-    buildMenu->setPosition(ccp(screenSize.width, 0));
-    
-    scrollArea->setScrollContentSize(CCSizeMake(200.0f * numberOfBuildingCards, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setViewSize(CCSizeMake(buildMenu->boundingBox().size.width * 0.875f, buildMenu->boundingBox().size.height * 0.7f));
-    scrollArea->setPosition(0, buildMenu->boundingBox().size.height);
-    scrollArea->updateScrollBars();
-    */
 }
 
 void BuildScroll::update(float deltaTime)

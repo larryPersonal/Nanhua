@@ -7,7 +7,7 @@
             <key>homeless_anim.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>homelessEmote.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:8319d9623d4be9de512202299d40afd7:ef598e6acc4104c43b63ac5eed83faf9:f338076386627c48029909af4354db22$</string>
+            <string>$TexturePacker:SmartUpdate:22fe6b3aaa64ac9c7c1284676120ab6a:ef598e6acc4104c43b63ac5eed83faf9:f338076386627c48029909af4354db22$</string>
             <key>textureFileName</key>
             <string>homelessEmote.png</string>
         </dict>

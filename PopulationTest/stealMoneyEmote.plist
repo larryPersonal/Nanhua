@@ -7,7 +7,7 @@
             <key>thiefStealingMoney.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>stealMoneyEmote.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:2df86a03582ca35b606af727455cba30:f24c69fde2875e5043a908f8f1be48ca:aff54b3375489258f87b68054d2c9213$</string>
+            <string>$TexturePacker:SmartUpdate:ee704dff85d568338a351ccf7ce7dcdd:f24c69fde2875e5043a908f8f1be48ca:aff54b3375489258f87b68054d2c9213$</string>
             <key>textureFileName</key>
             <string>stealMoneyEmote.png</string>
         </dict>

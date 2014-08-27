@@ -7,7 +7,7 @@
             <key>thiefStealingFood.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{256,256}}</string>
+                <string>{{0,0},{256,256}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>stealFoodEmote.png</string>
             <key>size</key>
-            <string>{260,260}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3d5e1cff1f601ace3b8159911ae531da:33261af304e7231096e60d9b3638f4fe:105007b3b06574153315b03c89f7059a$</string>
+            <string>$TexturePacker:SmartUpdate:23d7d0040546b9db568c51a43e96aff0:33261af304e7231096e60d9b3638f4fe:105007b3b06574153315b03c89f7059a$</string>
             <key>textureFileName</key>
             <string>stealFoodEmote.png</string>
         </dict>

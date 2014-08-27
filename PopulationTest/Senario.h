@@ -17,7 +17,7 @@ using namespace cocos2d;
 
 enum ScenarioState
 {
-    Introduction, Tutorial, Scenario1, Scenario2, Tutorial2
+    Introduction, Tutorial, Scenario1, Scenario2, Tutorial2, Scenario3, Scenario4, Scenario5, Scenario6
 };
 
 class Senario : public CCLayer
