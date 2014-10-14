@@ -7,13 +7,13 @@
             <key>disappear.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,0},{256,256}}</string>
+                <string>{{2,2},{244,208}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-11}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{256,256}}</string>
+                <string>{{6,35},{244,208}}</string>
                 <key>sourceSize</key>
                 <string>{256,256}</string>
             </dict>
@@ -25,9 +25,9 @@
             <key>realTextureFileName</key>
             <string>disappearAnim.png</string>
             <key>size</key>
-            <string>{256,256}</string>
+            <string>{248,212}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:92dd3f27c5e7824ee658f4a6b885740e:7b6dcd1a139ba00ed6cd0a9ccd28f1e9:531f5e8d89ae940b45a7ef4fec819c8c$</string>
+            <string>$TexturePacker:SmartUpdate:01948722c99ba73aad578707eaea5292:37746c02686f5f48f260fadc47821b00:531f5e8d89ae940b45a7ef4fec819c8c$</string>
             <key>textureFileName</key>
             <string>disappearAnim.png</string>
         </dict>

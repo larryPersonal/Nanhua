@@ -122,6 +122,9 @@ public:
     bool isTutorialChooseScreenOpening;
     bool isTutorialChooseScreenClosing;
     
+    bool goToPlayTutorial;
+    bool goToSkipTutorial;
+    
 public:
     void setupTutorialChooseScreen();
     void setupSaveFileChooseScreen();

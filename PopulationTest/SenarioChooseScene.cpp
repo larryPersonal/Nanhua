@@ -29,6 +29,9 @@ SenarioChooseScene::SenarioChooseScene()
     isTutorialChooseScreenClosing = false;
     isTutorialChooseScreenOpening = false;
     
+    goToPlayTutorial = false;
+    goToSkipTutorial = false;
+    
     isGoingToLoadGame = false;
 }
 
@@ -218,15 +221,6 @@ void SenarioChooseScene::chooseTutorial()
     }
     
     scheduleTutorialChooseScreenOpening();
-    
-    /*
-    stringstream ss;
-    ss << "isLoadingGame";
-    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
-    
-    SoundtrackManager::PlaySFX("Button_press.wav");
-    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
-    */
 }
 
 void SenarioChooseScene::playTutorial()
@@ -245,8 +239,13 @@ void SenarioChooseScene::playTutorial()
     ss << "isLoadingGame";
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
     
+    goToPlayTutorial = true;
+    goToSkipTutorial = false;
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
-    this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
+    scheduleTutorialChooseScreenClosing();
+    
+    // this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
 }
 
 void SenarioChooseScene::loadingTutorial()
@@ -281,8 +280,13 @@ void SenarioChooseScene::playScenario1()
     ss << "isLoadingGame";
     CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
     
+    goToSkipTutorial = true;
+    goToPlayTutorial = false;
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
-    this->scheduleOnce(schedule_selector(SenarioChooseScene::chooseLoadScenario1), 0.1f);
+    scheduleTutorialChooseScreenClosing();
+    
+    // this->scheduleOnce(schedule_selector(SenarioChooseScene::chooseLoadScenario1), 0.1f);
 }
 
 void SenarioChooseScene::chooseLoadScenario1()
@@ -1025,6 +1029,17 @@ void SenarioChooseScene::tutorialChooseScreenClose(float dt)
         tutorialChooseBackground->setVisible(false);
         this->unschedule(schedule_selector(SenarioChooseScene::tutorialChooseScreenClose));
         // play 1 or play tutorial
+        if(goToPlayTutorial)
+        {
+            this->scheduleOnce(schedule_selector(SenarioChooseScene::loadingTutorial), 0.1f);
+        }
+        else if(goToSkipTutorial)
+        {
+            this->scheduleOnce(schedule_selector(SenarioChooseScene::chooseLoadScenario1), 0.1f);
+        }
+        
+        goToPlayTutorial = false;
+        goToSkipTutorial = false;
     }
     else
     {
