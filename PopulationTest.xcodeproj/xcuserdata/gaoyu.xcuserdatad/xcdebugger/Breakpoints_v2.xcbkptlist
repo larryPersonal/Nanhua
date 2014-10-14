@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "427130209.502391"
+            timestampString = "431806536.749572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4252"
-            endingLineNumber = "4252"
-            landmarkName = "GameScene::loadBuildingData(int type)"
+            startingLineNumber = "4277"
+            endingLineNumber = "4277"
+            landmarkName = "GameScene::isActive()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

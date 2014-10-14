@@ -116,6 +116,8 @@ public:
     
     void scheduleForScenario(float time);
     
+    void annouceForScenario1();
+    
     //void saySpeech(std::string());
 };
 

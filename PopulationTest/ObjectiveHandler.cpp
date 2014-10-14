@@ -12,6 +12,7 @@
 #include "GlobalHelper.h"
 #include "TutorialManager.h"
 #include "NotificationPopup.h"
+#include "UserProfile.h"
 
 ObjectiveHandler* ObjectiveHandler::SP;
 
@@ -24,6 +25,7 @@ ObjectiveHandler::ObjectiveHandler()
     
     obj = NULL;
     
+    currID = 0;
     nextID = 0;
     progressNumber = 0;
     
@@ -64,43 +66,43 @@ void ObjectiveHandler::loadObjective()
     objectives->removeAllObjects();
     CC_SAFE_RELEASE(objectives);
     
-    if(GameManager::getThis()->getLevel() == 0)
+    if(UserProfile::getThis()->gameLevel == 0)
     {
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_tutorial.xml");
     }
-    else if(GameManager::getThis()->getLevel() == 1)
+    else if(UserProfile::getThis()->gameLevel == 1)
     {
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_1.xml");
     }
-    else if(GameManager::getThis()->getLevel() == 2)
+    else if(UserProfile::getThis()->gameLevel == 2)
     {
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_2.xml");
     }
-    else if(GameManager::getThis()->getLevel() == 3)
+    else if(UserProfile::getThis()->gameLevel == 3)
     {
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_3.xml");
     }
-    else if(GameManager::getThis()->getLevel() == 4)
+    else if(UserProfile::getThis()->gameLevel == 4)
     {
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_4.xml");
     }
-    else if(GameManager::getThis()->getLevel() == 5)
+    else if(UserProfile::getThis()->gameLevel == 5)
     {
         nextID = 0;
         progressNumber = 0;
         objectives = ObjectiveManager::parseXMLFile("objective_scenario_5.xml");
     }
-    else if(GameManager::getThis()->getLevel() == 6)
+    else if(UserProfile::getThis()->gameLevel == 6)
     {
         nextID = 0;
         progressNumber = 0;
@@ -148,13 +150,26 @@ void ObjectiveHandler::playObjective(bool showNotification)
     
     if(obj == NULL)
     {
-        if(GameManager::getThis()->getLevel() == 4)
+        nextID = currID;
+        if(UserProfile::getThis()->gameLevel == 1)
+        {
+            NotificationPopup::getThis()->showScenario1Congratulations();
+        }
+        else if(UserProfile::getThis()->gameLevel == 2)
+        {
+            NotificationPopup::getThis()->showScenario2Congratulations();
+        }
+        if(UserProfile::getThis()->gameLevel == 4)
         {
             NotificationPopup::getThis()->showScenario4Congratulations();
         }
-        else if(GameManager::getThis()->getLevel() == 5)
+        else if(UserProfile::getThis()->gameLevel == 5)
         {
             NotificationPopup::getThis()->showScenario5Congratulations();
+        }
+        else if(UserProfile::getThis()->gameLevel == 6)
+        {
+            NotificationPopup::getThis()->showScenario6Congratulations();
         }
         return;
     }
@@ -181,7 +196,7 @@ void ObjectiveHandler::playObjective(bool showNotification)
     {
         ss << "Sustain Population";
         ss1 << "Raise your population to " << obj->value << "!";
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         int num = 0;
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -198,7 +213,7 @@ void ObjectiveHandler::playObjective(bool showNotification)
     {
         ss << "Raise Population";
         ss1 << "Raise your population by " << obj->value << "!";
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         int num = 0;
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -222,6 +237,25 @@ void ObjectiveHandler::playObjective(bool showNotification)
         
         ss2 << "(" << obj->value - (targetPopulation - startPopulation) << "/" << obj->value << ")";
         progressNumber = obj->value - (targetPopulation - startPopulation);
+    }
+    else if(obj->oType == ArmyGoal)
+    {
+        ss << "Build Army";
+        ss1 << "Build 5 guard towers and man them.";
+        
+        int numberOfMannedTowers = 0;
+        CCArray* guardTowers = BuildingHandler::getThis()->militaryOnMap;
+        for(int i = 0; i < guardTowers->count(); i++)
+        {
+            Building* bui = (Building*)guardTowers->objectAtIndex(i);
+            if(bui->memberSpriteList->count() > 0)
+            {
+                numberOfMannedTowers += 1;
+            }
+        }
+        
+        ss2 << "(" << numberOfMannedTowers << "/" << obj->value << ")";
+        progressNumber = numberOfMannedTowers;
     }
     else if(obj->oType == ReputationGoal)
     {
@@ -301,6 +335,7 @@ void ObjectiveHandler::playObjective(bool showNotification)
     GameHUD::getThis()->objectiveDescriptions->addObject(tempLabel);
     GameHUD::getThis()->objectiveMenu->addChild(tempLabel);
     
+    currID = obj->oid;
     nextID = obj->nid;
     
     if(obj->timeLimit > 0)
@@ -330,12 +365,24 @@ void ObjectiveHandler::playObjective(bool showNotification)
     
     if(obj->scheduleScenario)
     {
-        TutorialManager::getThis()->scheduleForScenario(obj->scenarioTime);
+        GameHUD::getThis()->hasScenario = true;
+        GameHUD::getThis()->scenarioTime = obj->scenarioTime;
     }
-    
-    if(obj->finalObjective)
+}
+
+void ObjectiveHandler::playObjectiveWithObjectiveID(int objectiveID, bool showNotification)
+{
+    if(objectiveID == 0)
     {
-        GameHUD::getThis()->finalObjective = true;
+        playObjective();
+    }
+    else
+    {
+        playObjective();
+        while ((objectiveID != obj->oid) && (obj->oid != obj->nid))
+        {
+            playObjective();
+        }
     }
 }
 
@@ -389,7 +436,7 @@ void ObjectiveHandler::update(float dt)
     }
     else if(obj->oType == PopulationGoal)
     {
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         int num = 0;
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -418,7 +465,7 @@ void ObjectiveHandler::update(float dt)
     }
     else if(obj->oType == RaisePopulationGoal)
     {
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         int num = 0;
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -449,6 +496,31 @@ void ObjectiveHandler::update(float dt)
         else
         {
             progressNumber = currentPopulation;
+        }
+        
+        if(progressNumber >= obj->value)
+        {
+            completeObjective = true;
+        }
+    }
+    else if(obj->oType == ArmyGoal)
+    {
+        CCArray* guardTowers = BuildingHandler::getThis()->militaryOnMap;
+        int numberOfMannedTowers = 0;
+        for (int i = 0; i < guardTowers->count(); i++)
+        {
+            Building* bui = (Building*) guardTowers->objectAtIndex(i);
+            if(bui->memberSpriteList->count() > 0)
+            {
+                numberOfMannedTowers += 1;
+            }
+        }
+        
+        if(progressNumber != numberOfMannedTowers)
+        {
+            progressNumber = numberOfMannedTowers;
+            ss << "(" << progressNumber << "/" << obj->value << ")";
+            hasUpdate = true;
         }
         
         if(progressNumber >= obj->value)

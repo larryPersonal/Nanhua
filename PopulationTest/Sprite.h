@@ -31,16 +31,16 @@ enum SpriteAppearanceType {
 };
 
 
-enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, GET_HOME, GUARD, ROB, ACTION_END = 14};
+enum SpriteAction { IDLE = 0, WALKING, CARRYING, FIGHTING, ESCAPING, EATING, STORING, FARMING, BUILD, RESTING, GET_HOME, GUARD, ROB, MARKETING, ACTION_END = 15};
 
-enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER = 4 };
+enum SpriteJob { NONE = 0, BUILDER, FARMER, DELIVERER, SOLDIER, MARKETER = 5 };
 
 enum SpriteCombatState {
     C_IDLE = 0, C_COMBAT, C_ESCAPE = 2
 };
 
 enum VillagerClass {
-    V_REFUGEE = 0, V_CITIZEN, V_FARMER, V_BUILDER, V_SOLDIER, V_BANDIT, V_CLASS_END = 6
+    V_REFUGEE = 0, V_CITIZEN, V_FARMER, V_BUILDER, V_SOLDIER, V_BANDIT, V_MARKET, V_CLASS_END = 7
 };
 
 class SpriteClass : public CCObject
@@ -317,6 +317,7 @@ public:
     bool hasEmptyHouse();
     bool findNearestHome();
     Building* findNearestHouse();
+    Building* findNearestEmptyHouse();
     
     int getPathDistance(CCPoint, CCPoint);
     int getDistance(CCPoint, CCPoint);

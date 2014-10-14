@@ -583,6 +583,27 @@ void CCMenuItemSprite::selected()
     }
 }
 
+void CCMenuItemSprite::clear()
+{
+    if (m_pNormalImage)
+    {
+        this->removeChild(m_pNormalImage, true);
+        m_pNormalImage = NULL;
+    }
+    
+    if (m_pSelectedImage)
+    {
+        this->removeChild(m_pSelectedImage, true);
+        m_pSelectedImage = NULL;
+    }
+    
+    if (m_pDisabledImage)
+    {
+        this->removeChild(m_pDisabledImage, true);
+        m_pDisabledImage = NULL;
+    }
+}
+
 void CCMenuItemSprite::unselected()
 {
     CCMenuItem::unselected();
@@ -703,19 +724,40 @@ bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *s
     CCNode *selectedSprite = NULL;
     CCNode *disabledSprite = NULL;
 
-    if (normalImage)
+    if(normalImage)
     {
-        normalSprite = CCSprite::create(normalImage);
+        if (strcmp(normalImage, "") != 0)
+        {
+            normalSprite = CCSprite::createWithSpriteFrameName(normalImage);
+        }
+        else
+        {
+            normalSprite = CCSprite::create(normalImage);
+        }
     }
 
-    if (selectedImage)
+    if(selectedImage)
     {
-        selectedSprite = CCSprite::create(selectedImage);
+        if (strcmp(selectedImage, "") != 0)
+        {
+            selectedSprite = CCSprite::createWithSpriteFrameName(selectedImage);
+        }
+        else
+        {
+            selectedSprite = CCSprite::create(selectedImage);
+        }
     }
     
     if(disabledImage)
     {
-        disabledSprite = CCSprite::create(disabledImage);
+        if(strcmp(disabledImage, "") != 0)
+        {
+            disabledSprite = CCSprite::createWithSpriteFrameName(disabledImage);
+        }
+        else
+        {
+            disabledSprite = CCSprite::create(disabledImage);
+        }
     }
     
     return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, down_selector, release_selector);

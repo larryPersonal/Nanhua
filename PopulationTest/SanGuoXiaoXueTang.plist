@@ -4,6 +4,32 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>emptybtn.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2062,434},{146,64}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{146,64}}</string>
+                <key>sourceSize</key>
+                <string>{146,64}</string>
+            </dict>
+            <key>emptybtn_press.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2214,434},{146,64}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{146,64}}</string>
+                <key>sourceSize</key>
+                <string>{146,64}</string>
+            </dict>
             <key>quizscreen.png</key>
             <dict>
                 <key>frame</key>
@@ -17,18 +43,44 @@
                 <key>sourceSize</key>
                 <string>{2052,1540}</string>
             </dict>
-            <key>scrollerbreaknews.png</key>
+            <key>tick.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2062,4},{762,532}}</string>
+                <string>{{2366,434},{109,113}}</string>
                 <key>offset</key>
-                <string>{13,5}</string>
+                <string>{-1,2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{146,115},{762,532}}</string>
+                <string>{{3,0},{109,113}}</string>
                 <key>sourceSize</key>
-                <string>{1028,772}</string>
+                <string>{117,117}</string>
+            </dict>
+            <key>truefalsebubblespeech.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2062,4},{424,424}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{424,424}}</string>
+                <key>sourceSize</key>
+                <string>{424,424}</string>
+            </dict>
+            <key>wrong.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2062,504},{103,101}}</string>
+                <key>offset</key>
+                <string>{0,1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{7,7},{103,101}}</string>
+                <key>sourceSize</key>
+                <string>{117,117}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -38,9 +90,9 @@
             <key>realTextureFileName</key>
             <string>SanGuoXiaoXueTang.png</string>
             <key>size</key>
-            <string>{2598,1548}</string>
+            <string>{2490,1548}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:9e23c26ac09b214fed9852a072bf0dd6:e2fe333dc7d99c56269e94bcbe89fa60:de1931a9c8dd08358d7ccceef5e50c11$</string>
+            <string>$TexturePacker:SmartUpdate:8797aacf013143373e2258b6d7cd8f3f:cd5301418fbefeb66b58984f53cc369d:de1931a9c8dd08358d7ccceef5e50c11$</string>
             <key>textureFileName</key>
             <string>SanGuoXiaoXueTang.png</string>
         </dict>

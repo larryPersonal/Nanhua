@@ -14,6 +14,7 @@
 #include "GlobalHelper.h"
 #include <iterator>
 #include "TutorialManager.h"
+#include "UserProfile.h"
 
 Building::Building()
 {
@@ -273,7 +274,7 @@ CCPoint Building::getWorldPosition()
     }
     else
     {
-        return ccpAdd(buildingRep->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
+        return ccpAdd(buildingRep->getPosition(), MapHandler::getThis()->getMap()->getPosition());
     }
     
 }
@@ -335,7 +336,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
         // if the building is under construction, construct the building
         if (isUnderConstruction())
         {
-            int workval = sp->getPossessions()->PerformTask(dt, GameScene::getThis()->configSettings->secondToDayRatio, GameScene::getThis()->configSettings->default_work_rate);
+            int workval = sp->getPossessions()->PerformTask(dt, UserProfile::getThis()->configSettings->secondToDayRatio, UserProfile::getThis()->configSettings->default_work_rate);
             
             // workval > 0 means the construction is successful, so update the construction scale and the energy scale
             if(workval > 0)
@@ -679,18 +680,31 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
     }
     else if(sp->currAction == ROB && sp->getTargetLocation() == this)
     {
-        // if the building to be rob is a town hall, rob the money;
-        if(build_uint_required >= 10000)
+        if(sp->combatState == C_IDLE)
         {
-            if(sp->current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob && GameHUD::getThis()->money > 0)
+            // if the building to be rob is a town hall, rob the money;
+            if(buildingType == SPECIAL)
             {
-                GameHUD::getThis()->money--;
-                sp->current_money_rob++;
-                
-                if(GameHUD::getThis()->money < 0)
+                if(sp->current_money_rob < UserProfile::getThis()->settingsLevel->max_money_rob && GameHUD::getThis()->money > 0)
                 {
-                    GameHUD::getThis()->money = 0;
-                    sp->current_money_rob--;
+                    if(GameHUD::getThis()->targetMoney > 0)
+                    {
+                        GameHUD::getThis()->scheduleAddMoney(-1);
+                        sp->current_money_rob++;
+                    }
+                    
+                    if(GameHUD::getThis()->targetMoney < 0)
+                    {
+                        GameHUD::getThis()->money = 0;
+                        GameHUD::getThis()->targetMoney = 0;
+                        sp->current_money_rob--;
+                        sp->currAction = IDLE;
+                        sp->nextAction = IDLE;
+                        sp->setTargetLocation(NULL);
+                    }
+                }
+                else
+                {
                     sp->currAction = IDLE;
                     sp->nextAction = IDLE;
                     sp->setTargetLocation(NULL);
@@ -698,24 +712,18 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             }
             else
             {
-                sp->currAction = IDLE;
-                sp->nextAction = IDLE;
-                sp->setTargetLocation(NULL);
-            }
-        }
-        else
-        {
-            // if the building to rob is a granary, rob the food.
-            if(currentStorage > 0)
-            {
-                this->currentStorage--;
-                sp->current_food_rob++;
-            }
-            else
-            {
-                sp->currAction = IDLE;
-                sp->nextAction = IDLE;
-                sp->setTargetLocation(NULL);
+                // if the building to rob is a granary, rob the food.
+                if(currentStorage > 0)
+                {
+                    this->currentStorage--;
+                    sp->current_food_rob++;
+                }
+                else
+                {
+                    sp->currAction = IDLE;
+                    sp->nextAction = IDLE;
+                    sp->setTargetLocation(NULL);
+                }
             }
         }
     }
@@ -739,7 +747,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
                 {
                     cumulatedTimeResting += dt * 3;
                     
-                    if(cumulatedTimeResting >= (1.0f / GameScene::getThis()->configSettings->default_energy_recovery))
+                    if(cumulatedTimeResting >= (1.0f / UserProfile::getThis()->configSettings->default_energy_recovery))
                     {
                         sp->getPossessions()->energyRating += sp->getPossessions()->Rest();
                         if(sp->getPossessions()->energyRating >= sp->getPossessions()->default_energy_limit)
@@ -787,7 +795,7 @@ void Building::StickAroundHandler(GameSprite *sp, float dt)
             {
                 if (sp->getPossessions()->jobLocation == this && sp->getAction() == FARMING)
                 {
-                    int workval = sp->getPossessions()->PerformTask(dt, GameScene::getThis()->configSettings->secondToDayRatio, GameScene::getThis()->configSettings->default_work_rate);
+                    int workval = sp->getPossessions()->PerformTask(dt, UserProfile::getThis()->configSettings->secondToDayRatio, UserProfile::getThis()->configSettings->default_work_rate);
                     if (workval > 0)
                     {
                         
@@ -873,7 +881,7 @@ void Building::gainExp(int expToGain)
             // Update GameHUD
         
             //increase stats here **
-            Building* buildingData = GameScene::getThis()->buildingHandler->getBuildingWithGID(baseGID);
+            Building* buildingData = BuildingHandler::getThis()->getBuildingWithGID(baseGID);
         
             CCInteger* gain = (CCInteger*)buildingData->levelGainVacancy->objectForKey(currentLevel);
             if (gain != NULL)
@@ -923,8 +931,8 @@ void Building::leaveGranuary(GameSprite* sp)
         CCPoint startPos = sp->getWorldPosition();
         CCPoint endPos = sp->jobLocation->getWorldPosition();
         
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
         
         if(startPos.equals(endPos))
         {
@@ -985,7 +993,7 @@ void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
         maxGID = b->maxGID;
     }
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(buildingRep);
+    MapHandler::getThis()->getMap()->removeChild(buildingRep);
     
     //Because ::Create was used the old one should garbage collect on its own. TO MONITOR.
     buildingRep = newRep;
@@ -998,7 +1006,7 @@ void Building::ChangeAppearance(Building *b, bool should_completely_change_anim)
         }
     }
     
-    GameScene::getThis()->mapHandler->getMap()->addChild(buildingRep, z);
+    MapHandler::getThis()->getMap()->addChild(buildingRep, z);
     
 }
 
@@ -1067,14 +1075,14 @@ void Building::AnimUpdate()
             curr_anim_check_time = anim_check_time;
             anim_triggered = false;
         }
-        ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
+        ChangeAppearance(BuildingHandler::getThis()->getBuildingWithGID(currGID)); //do NOT call true here, otherwise the number of frames will update. We don't want that. - Larry
     }
     
 }
 
 void Building::updateFrame()
 {
-    ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID));
+    ChangeAppearance(BuildingHandler::getThis()->getBuildingWithGID(currGID));
 }
 
 void Building::updateBuilding(float dt)
@@ -1110,7 +1118,7 @@ void Building::updateBuilding(float dt)
             }
             */
             
-            CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
+            CCArray* allBuildings = BuildingHandler::getThis()->allBuildings;
             for (int i = 0; i < allBuildings->count(); i++)
             {
                 // Building* bui = (Building*) allBuildings->objectAtIndex(i);
@@ -1118,7 +1126,7 @@ void Building::updateBuilding(float dt)
             }
             // CCLog("*********************************************************");
             
-            ChangeAppearance(GameScene::getThis()->buildingHandler->getBuildingWithGID(currGID));
+            ChangeAppearance(BuildingHandler::getThis()->getBuildingWithGID(currGID));
         }
     }
     
@@ -1249,8 +1257,8 @@ void Building::updateBuilding(float dt)
                 {
                     x_frameNo = 0;
                     isInAnimation = false;
-                    GameScene::getThis()->mapHandler->getMap()->removeChild(fishAnim);
-                    GameScene::getThis()->spriteHandler->fishAnimOnMap->removeObject(fishAnim);
+                    MapHandler::getThis()->getMap()->removeChild(fishAnim);
+                    SpriteHandler::getThis()->fishAnimOnMap->removeObject(fishAnim);
                     fishAnim = NULL;
                 }
                 else
@@ -1266,8 +1274,8 @@ void Building::updateBuilding(float dt)
                         fishAnim = CCSprite::createWithTexture(fishAnimationTexture, fishAnimationRect);
                         fishAnim->setAnchorPoint(ccp(0.5, 0.5));
                         fishAnim->setScale( 1.0f );
-                        GameScene::getThis()->mapHandler->getMap()->addChild(fishAnim, buildingRep->getZOrder() + 1);
-                        GameScene::getThis()->spriteHandler->fishAnimOnMap->addObject(fishAnim);
+                        MapHandler::getThis()->getMap()->addChild(fishAnim, buildingRep->getZOrder() + 1);
+                        SpriteHandler::getThis()->fishAnimOnMap->addObject(fishAnim);
                         
                         int xPos = ((int) fishAnimationArea.getMinX()) + rand() % ((int) (fishAnimationArea.getMaxX() - fishAnimationArea.getMinX()));
                         int yPos = ((int) fishAnimationArea.getMinY()) + rand() % ((int) (fishAnimationArea.getMaxY() - fishAnimationArea.getMinY()));

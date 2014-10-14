@@ -54,97 +54,73 @@ void AccountRow::constructAccountRow()
     
     scrollArea->addItem(accountNameLabel, ccp(350.0f, yOffset + 28.0f + yGap * index));
     
-    CCSprite* button = CCSprite::createWithSpriteFrameName("reset.png");
-    CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("reset_press.png");
-    resetPasswordButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickResetPasswordButton));
+    resetPasswordButton = CCMenuItemImage::create("reset.png", "reset_press.png", this, menu_selector(AccountRow::clickResetPasswordButton));
     resetPasswordButton->setScale(1.5f);
     resetPasswordButton->setAnchorPoint(ccp(0.5f, 0.5f));
     
     resetPasswordButton->setPosition(ccp(0.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("delete.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("delete_press.png");
-    deleteAccountButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickDeleteAccountButton));
+    deleteAccountButton = CCMenuItemImage::create("delete.png", "delete_press.png", this, menu_selector(AccountRow::clickDeleteAccountButton));
     deleteAccountButton->setScale(1.5f);
     deleteAccountButton->setAnchorPoint(ccp(0.5f, 0.5f));
     
     deleteAccountButton->setPosition(ccp(150.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario1_disable.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario1_press.png");
-    activateScenario1Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickActivateScenario1Button));
+    activateScenario1Button = CCMenuItemImage::create("scenario1_disable.png", "scenario1_press.png", this, menu_selector(AccountRow::clickActivateScenario1Button));
     activateScenario1Button->setScale(0.64f);
     activateScenario1Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     activateScenario1Button->setPosition(ccp(300.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario1.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario1_press.png");
-    deActivateScenario1Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickDeactivateScenario1Button));
+    deActivateScenario1Button = CCMenuItemImage::create("scenario1.png", "scenario1_press.png", this, menu_selector(AccountRow::clickDeactivateScenario1Button));
     deActivateScenario1Button->setScale(0.64f);
     deActivateScenario1Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     deActivateScenario1Button->setPosition(ccp(300.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario2_disable.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario2_press.png");
-    activateScenario2Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickActivateScenario2Button));
+    activateScenario2Button = CCMenuItemImage::create("scenario2_disable.png", "scenario2_press.png", this, menu_selector(AccountRow::clickActivateScenario2Button));
     activateScenario2Button->setScale(0.64f);
     activateScenario2Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     activateScenario2Button->setPosition(ccp(450.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario2.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario2_press.png");
-    deActivateScenario2Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickDeactivateScenario2Button));
+    deActivateScenario2Button = CCMenuItemImage::create("scenario2.png", "scenario2_press.png", this, menu_selector(AccountRow::clickDeactivateScenario2Button));
     deActivateScenario2Button->setScale(0.64f);
     deActivateScenario2Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     deActivateScenario2Button->setPosition(ccp(450.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario3_disable.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario3_press.png");
-    activateScenario3Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickActivateScenario3Button));
+    activateScenario3Button = CCMenuItemImage::create("scenario3_disable.png", "scenario3_press.png", this, menu_selector(AccountRow::clickActivateScenario3Button));
     activateScenario3Button->setScale(0.64f);
     activateScenario3Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     activateScenario3Button->setPosition(ccp(600.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario3.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario3_press.png");
-    deActivateScenario3Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickDeactivateScenario3Button));
+    deActivateScenario3Button = CCMenuItemImage::create("scenario3.png", "scenario3_press.png", this, menu_selector(AccountRow::clickDeactivateScenario3Button));
     deActivateScenario3Button->setScale(0.64f);
     deActivateScenario3Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     deActivateScenario3Button->setPosition(ccp(600.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario4_disable.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario4_press.png");
-    activateScenario4Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickActivateScenario4Button));
+    activateScenario4Button = CCMenuItemImage::create("scenario4_disable.png", "scenario4_press.png", this, menu_selector(AccountRow::clickActivateScenario4Button));
     activateScenario4Button->setScale(0.64f);
     activateScenario4Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     activateScenario4Button->setPosition(ccp(750.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario4.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario4_press.png");
-    deActivateScenario4Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickDeactivateScenario4Button));
+    deActivateScenario4Button = CCMenuItemImage::create("scenario4.png", "scenario4_press.png", this, menu_selector(AccountRow::clickDeactivateScenario4Button));
     deActivateScenario4Button->setScale(0.64f);
     deActivateScenario4Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     deActivateScenario4Button->setPosition(ccp(750.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario5_disable.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario5_press.png");
-    activateScenario5Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickActivateScenario5Button));
+    activateScenario5Button = CCMenuItemImage::create("scenario5_disable.png", "scenario5_press.png", this, menu_selector(AccountRow::clickActivateScenario5Button));
     activateScenario5Button->setScale(0.64f);
     activateScenario5Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
     activateScenario5Button->setPosition(ccp(900.0f, 0.0f));
     
-    button = CCSprite::createWithSpriteFrameName("scenario5.png");
-    buttonPressed = CCSprite::createWithSpriteFrameName("scenario5_press.png");
-    deActivateScenario5Button = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(AccountRow::clickDeactivateScenario5Button));
+    deActivateScenario5Button = CCMenuItemImage::create("scenario5.png", "scenario5_press.png", this, menu_selector(AccountRow::clickDeactivateScenario5Button));
     deActivateScenario5Button->setScale(0.64f);
     deActivateScenario5Button->setAnchorPoint(ccp(0.5f, 0.5f));
     
@@ -219,8 +195,38 @@ void AccountRow::refresh()
 
 void AccountRow::clear()
 {
-    scrollArea->removeI(accountNameLabel);
-    scrollArea->removeI(accountRowMenu);
+    ((CCMenuItemSprite*) resetPasswordButton)->clear();
+    ((CCMenuItemSprite*) deleteAccountButton)->clear();
+    ((CCMenuItemSprite*) activateScenario1Button)->clear();
+    ((CCMenuItemSprite*) deActivateScenario1Button)->clear();
+    ((CCMenuItemSprite*) activateScenario2Button)->clear();
+    ((CCMenuItemSprite*) deActivateScenario2Button)->clear();
+    ((CCMenuItemSprite*) activateScenario3Button)->clear();
+    ((CCMenuItemSprite*) deActivateScenario3Button)->clear();
+    ((CCMenuItemSprite*) activateScenario4Button)->clear();
+    ((CCMenuItemSprite*) deActivateScenario4Button)->clear();
+    ((CCMenuItemSprite*) activateScenario5Button)->clear();
+    ((CCMenuItemSprite*) deActivateScenario5Button)->clear();
+    
+    resetPasswordButton->removeFromParentAndCleanup(true);
+    deleteAccountButton->removeFromParentAndCleanup(true);
+    activateScenario1Button->removeFromParentAndCleanup(true);
+    deActivateScenario1Button->removeFromParentAndCleanup(true);
+    activateScenario2Button->removeFromParentAndCleanup(true);
+    deActivateScenario2Button->removeFromParentAndCleanup(true);
+    activateScenario3Button->removeFromParentAndCleanup(true);
+    deActivateScenario3Button->removeFromParentAndCleanup(true);
+    activateScenario4Button->removeFromParentAndCleanup(true);
+    deActivateScenario4Button->removeFromParentAndCleanup(true);
+    activateScenario5Button->removeFromParentAndCleanup(true);
+    deActivateScenario5Button->removeFromParentAndCleanup(true);
+    
+    scrollArea->removeChild(accountNameLabel, true);
+    scrollArea->removeChild(accountRowMenu, true);
+    
+    delete userAccount;
+    scrollArea = NULL;
+    
 }
 
 void AccountRow::clickResetPasswordButton()

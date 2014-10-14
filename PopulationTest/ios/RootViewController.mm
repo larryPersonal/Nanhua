@@ -8,7 +8,6 @@
 
 #import "cocos2d.h"
 #import "RootViewController.h"
-#import "MainMenuScene.h"
 #import "GameHUD.h"
 #import "AppDelegate.h"
 #import "Senario.h"
@@ -135,13 +134,7 @@ using namespace cocos2d;
 }
 
 -(void)prepareGUIOrientationChange{
-    MainMenuScene* menuScript = MainMenuScene::getThis();
     GameHUD* gameHUDScript = GameHUD::getThis();
-    
-    if (menuScript)
-    {
-//        menuScript->onOrientationChanged();
-    }
     
     if (gameHUDScript)
     {
@@ -152,7 +145,6 @@ using namespace cocos2d;
     //Not used yet
   //  UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
     
-    MainMenuScene* menuScript = MainMenuScene::getThis();
     SplashScene* splashScript = SplashScene::getThis();
     GameScene* gameScene = GameScene::getThis();
     GameHUD* gameHUDScript = GameHUD::getThis();
@@ -162,11 +154,6 @@ using namespace cocos2d;
     if(splashScript)
     {
         splashScript->onOrientationChanged();
-    }
-    
-    if (menuScript)
-    {
-        menuScript->onOrientationChanged();
     }
     
     if (gameScene)
@@ -201,7 +188,8 @@ using namespace cocos2d;
 
 // For ios6, use supportedInterfaceOrientations & shouldAutorotate instead
 - (NSUInteger) supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll;
+    // return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 

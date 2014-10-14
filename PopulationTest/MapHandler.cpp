@@ -14,15 +14,16 @@
 #include "TutorialManager.h"
 #include "PathFinder.h"
 #include "SoundtrackManager.h"
+#include "FileReader.h"
+#include "UserProfile.h"
 
 MapHandler* MapHandler::SP;
 
 MapHandler::MapHandler()
 {
     MapHandler::SP = this;
-    
-    combatTiles = CCArray::create();
-    combatTiles->retain();
+    mapPtr = NULL;
+    scalePanLayer = NULL;
 }
 
 MapHandler::~MapHandler()
@@ -43,9 +44,6 @@ MapHandler::~MapHandler()
     
     pathTiles->removeAllObjects();
     pathTiles->release();
-    
-    combatTiles->removeAllObjects();
-    combatTiles->release();
 }
 
 MapHandler* MapHandler::getThis()
@@ -55,24 +53,21 @@ MapHandler* MapHandler::getThis()
 
 void MapHandler::UnBuildEndGame()
 {
-    
-     for (int i = 0; i < mapPtr->getMapSize().width; ++i)
-     {
-            for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+    {
+        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        {
+            if (getTileAt(i, j) != NULL)
             {
-                    if (getTileAt(i, j) != NULL)
-                    {
-                        if (getTileAt(i, j)->hasBuilding())
-                        {
-                            
-                            CCPoint p = ccp(i,j);
-                            ForceUnbuild(p);
-                        }
-                    }
+                if (getTileAt(i, j)->hasBuilding())
+                {
+                    CCPoint p = ccp(i,j);
+                    ForceUnbuild(p);
+                }
             }
-     }
+        }
+    }
 }
-
 
 void MapHandler::updatePlayArea(cocos2d::CCPoint min, cocos2d::CCPoint max)
 {
@@ -136,23 +131,20 @@ void MapHandler::setupTiles()
     updatePlayArea(playarea_min, playarea_max);
 }
 
-
-
 float MapHandler::getInverseScale()
 {
-    return 1.0f / scalePanLayer->getScale();
+    return 1.0f / MapHandler::getThis()->scalePanLayer->getScale();
     
 }
 
-
 MapTile* MapHandler::getTileAt(int X, int Y)
 {
-    int targetIndex = mapPtr->getMapSize().width * X + Y;
-    if (targetIndex >= mapTiles->count())
+    int targetIndex = MapHandler::getThis()->mapPtr->getMapSize().width * X + Y;
+    if (targetIndex >= MapHandler::getThis()->mapTiles->count())
             return NULL;
     
     
-    return  (MapTile*)mapTiles->objectAtIndex( targetIndex );
+    return  (MapTile*)MapHandler::getThis()->mapTiles->objectAtIndex( targetIndex );
 }
 
 void MapHandler::initTiles(const char* mapName)
@@ -162,35 +154,35 @@ void MapHandler::initTiles(const char* mapName)
         return;
     }
     
-    mapPtr = CCTMXTiledMap::create(mapName);
+    MapHandler::getThis()->mapPtr = CCTMXTiledMap::create(mapName);
     
-    CCTMXLayer* metaLayer = mapPtr->layerNamed("Metadata");
+    CCTMXLayer* metaLayer = MapHandler::getThis()->mapPtr->layerNamed("Metadata");
     
     if (metaLayer){
         metaLayer->setVisible(false);
     }
     
-    playarea_min = GameManager::getThis()->getMinArea();
-    playarea_max = GameManager::getThis()->getMaxArea();
+    MapHandler::getThis()->playarea_min = GameManager::getThis()->getMinArea();
+    MapHandler::getThis()->playarea_max = GameManager::getThis()->getMaxArea();
     
-    setupTiles();
+    MapHandler::getThis()->setupTiles();
     
-    scalePanLayer = CCLayer::create();
+    MapHandler::getThis()->scalePanLayer = CCLayer::create();
     
-    currBuildingPreview = NULL;
-    previewTileHighlight = NULL;
-    pathPreview = NULL;
-    pathPreviewTileHighlight = NULL;
+    MapHandler::getThis()->currBuildingPreview = NULL;
+    MapHandler::getThis()->previewTileHighlight = NULL;
+    MapHandler::getThis()->pathPreview = NULL;
+    MapHandler::getThis()->pathPreviewTileHighlight = NULL;
 }
 
 CCLayer* MapHandler::getScaleLayer()
 {
-    return scalePanLayer;
+    return MapHandler::getThis()->scalePanLayer;
 }
 
 CCTMXTiledMap* MapHandler::getMap()
 {
-    return mapPtr;
+    return MapHandler::getThis()->mapPtr;
 }
 
 void MapHandler::scaleTo(float scaleFactor)
@@ -274,16 +266,16 @@ bool MapHandler::checkExtremePosition(float moveX, float moveY)
 void MapHandler::moveMapBy(float moveX, float moveY)
 {
     //mapPtr moves. ScalePanLayer scales.
-    CCPoint mapPos = mapPtr->getPosition();
+    CCPoint mapPos = MapHandler::getThis()->mapPtr->getPosition();
     
     // the new map position, it will be used only the screen points pass the valilidity check!
     CCPoint newPos =CCPointMake(
-                             mapPtr->getPosition().x + moveX,
-                             mapPtr->getPosition().y + moveY
+                             MapHandler::getThis()->mapPtr->getPosition().x + moveX,
+                             MapHandler::getThis()->mapPtr->getPosition().y + moveY
                              );
     
     //mapPtr->setPosition(forceBoundsConstraints(newPos));
-    mapPtr->setPosition(forceBounds(newPos));
+    MapHandler::getThis()->mapPtr->setPosition(forceBounds(newPos));
     
     // CCLog("%f, %f",mapPtr->getPosition().x, mapPtr->getPosition().y );
     // scalePanLayer->setPosition(forceBoundsConstraints(pos));
@@ -305,7 +297,7 @@ void MapHandler::moveToPosition(CCPoint target, CCPoint current)
 void MapHandler::centerMap()
 {
     CCPoint pos = CCPointMake(-4600, -2600);
-    mapPtr->setPosition(pos.x, pos.y);
+    MapHandler::getThis()->mapPtr->setPosition(pos.x, pos.y);
 }
 
 void MapHandler::ResetPositionAndScale()
@@ -320,12 +312,12 @@ void MapHandler::ResetPositionAndScale()
 
 CCPoint MapHandler::tilePosFromLocation(CCPoint &location)
 {
-    CCPoint pos = ccpSub(location, mapPtr->getPosition());
+    CCPoint pos = ccpSub(location, MapHandler::getThis()->mapPtr->getPosition());
     
-    float halfMapWidth = mapPtr->getMapSize().width * 0.5f ;
-	float mapHeight = mapPtr->getMapSize().height;
-	float tileWidth = mapPtr->getTileSize().width;
-	float tileHeight = mapPtr->getTileSize().height;
+    float halfMapWidth = MapHandler::getThis()->mapPtr->getMapSize().width * 0.5f ;
+	float mapHeight = MapHandler::getThis()->mapPtr->getMapSize().height;
+	float tileWidth = MapHandler::getThis()->mapPtr->getTileSize().width;
+	float tileHeight = MapHandler::getThis()->mapPtr->getTileSize().height;
     
 	CCPoint tilePosDiv = CCPointMake(pos.x / tileWidth, pos.y / tileHeight);
     
@@ -342,10 +334,10 @@ CCPoint MapHandler::tilePosFromTouchLocation(cocos2d::CCPoint &location)
 {
     CCPoint pos = pointOnMapFromTouchLocation(location);
     
-    float halfMapWidth = mapPtr->getMapSize().width * 0.5f;
-	float mapHeight = mapPtr->getMapSize().height;
-	float tileWidth = mapPtr->getTileSize().width;
-    float tileHeight = mapPtr->getTileSize().height;
+    float halfMapWidth = MapHandler::getThis()->mapPtr->getMapSize().width * 0.5f;
+	float mapHeight = MapHandler::getThis()->mapPtr->getMapSize().height;
+	float tileWidth = MapHandler::getThis()->mapPtr->getTileSize().width;
+    float tileHeight = MapHandler::getThis()->mapPtr->getTileSize().height;
 	
 	CCPoint tilePosDiv = CCPointMake(pos.x / tileWidth, pos.y / tileHeight);
     float mapHeightDiff = mapHeight - tilePosDiv.y;
@@ -359,21 +351,21 @@ CCPoint MapHandler::tilePosFromTouchLocation(cocos2d::CCPoint &location)
 
 CCPoint MapHandler::locationFromTilePos (CCPoint *location)
 {
-    CCTMXLayer *grass = mapPtr->layerNamed("Ground_0");
+    CCTMXLayer *grass = MapHandler::getThis()->mapPtr->layerNamed("Ground_0");
 	CCSprite *tile = grass->tileAt(*location);//  [grass tileAt:tilePos];
     
-    float x = tile->getPosition().x + mapPtr->getTileSize().width * 0.5f;
-    float y = tile->getPosition().y + mapPtr->getTileSize().height ;// * 0.5f);
+    float x = tile->getPosition().x + MapHandler::getThis()->mapPtr->getTileSize().width * 0.5f;
+    float y = tile->getPosition().y + MapHandler::getThis()->mapPtr->getTileSize().height ;// * 0.5f);
     //	float y = tile->getPosition().y - mapPtr->getTileSize().height * mapPtr->getScale() + (mapPtr->getTileSize().height *mapPtr->getScale() * 0.5f);
 	return CCPointMake(x,y);
 }
 
 bool MapHandler::isTilePosWithinBounds(CCPoint &tilePos)
 {
-    if ((tilePos.x < playarea_min.x) ||
-       (tilePos.x > playarea_max.x) ||
-       (tilePos.y < playarea_min.y) ||
-       (tilePos.y > playarea_max.y))
+    if ((tilePos.x < MapHandler::getThis()->playarea_min.x) ||
+       (tilePos.x > MapHandler::getThis()->playarea_max.x) ||
+       (tilePos.y < MapHandler::getThis()->playarea_min.y) ||
+       (tilePos.y > MapHandler::getThis()->playarea_max.y))
     {
        return false;
     }
@@ -396,15 +388,14 @@ bool MapHandler::isTilePosWithinMap(CCPoint & tilePos)
 
 void MapHandler::originateMapToTile()
 {
-    mapPtr->setPosition(CCPointMake(-mapPtr->boundingBox().size.width * 0.4f,
-                                    -mapPtr->boundingBox().size.height * 0.75f));
-    
+    MapHandler::getThis()->mapPtr->setPosition(CCPointMake(-MapHandler::getThis()->mapPtr->boundingBox().size.width * 0.4f,
+                                                           -MapHandler::getThis()->mapPtr->boundingBox().size.height * 0.75f));
 }
 
 void MapHandler::rescaleScrollLimits()
 {
     // first, make sure map is existed, game will crash?
-    if (mapPtr == NULL){
+    if (MapHandler::getThis()->mapPtr == NULL){
         return;
     }
     
@@ -412,16 +403,16 @@ void MapHandler::rescaleScrollLimits()
     // int centerW = mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
     // int centerH = mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
     
-    CCPoint mapPos = mapPtr->getPosition();
+    CCPoint mapPos = MapHandler::getThis()->mapPtr->getPosition();
     
     //Note: 30 and 5 are offsets in tile amounts. A scroll position based on tiles will mean the maximum places a tile at the edge of a screen.
     //offsetting tries to solve the issue by putting a limit at X tiles before the edge. 
-    int playAreaW = ((playarea_max.x - playarea_min.x) - 30) * mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
-    int playAreaH = ((playarea_max.y - playarea_min.y) - 5) * mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
+    int playAreaW = ((MapHandler::getThis()->playarea_max.x - MapHandler::getThis()->playarea_min.x) - 30) * MapHandler::getThis()->mapPtr->getTileSize().width * 0.5f * getScaleLayer()->getScale();
+    int playAreaH = ((MapHandler::getThis()->playarea_max.y - MapHandler::getThis()->playarea_min.y) - 5) * MapHandler::getThis()->mapPtr->getTileSize().height * 0.5f * getScaleLayer()->getScale();
     
     //HARDCODE ALERT -5736, -1592, based on the stuff in centerMap
-    mapScroll_max = ccp(mapPos.x + playAreaW, mapPos.y + playAreaH);
-    mapScroll_min = ccp(mapPos.x - playAreaW, mapPos.y - playAreaH);
+    MapHandler::getThis()->mapScroll_max = ccp(mapPos.x + playAreaW, mapPos.y + playAreaH);
+    MapHandler::getThis()->mapScroll_min = ccp(mapPos.x - playAreaW, mapPos.y - playAreaH);
 }
 
 CCPoint MapHandler::forceBoundsConstraints(CCPoint &tilePos)
@@ -453,11 +444,11 @@ CCPoint MapHandler::forceBounds(CCPoint &tilePos)
 CCPoint MapHandler::pointOnMapFromTouchLocation(cocos2d::CCPoint &location)
 {
     CCPoint centerOffset = ccpSub(location, GameScene::getThis()->screenCenter->getPosition());
-    centerOffset = ccpSub(centerOffset, scalePanLayer->getPosition());
+    centerOffset = ccpSub(centerOffset, MapHandler::getThis()->scalePanLayer->getPosition());
     centerOffset.x *= getInverseScale();
     centerOffset.y *= getInverseScale();
-    CCPoint pos = ccpSub(centerOffset, mapPtr->getPosition());
-    pos = ccpSub(pos, ccpMult(scalePanLayer->getAnchorPointInPoints(), getInverseScale() - 1.0f));
+    CCPoint pos = ccpSub(centerOffset, MapHandler::getThis()->mapPtr->getPosition());
+    pos = ccpSub(pos, ccpMult(MapHandler::getThis()->scalePanLayer->getAnchorPointInPoints(), getInverseScale() - 1.0f));
     
     return pos;
 }
@@ -567,9 +558,9 @@ bool MapHandler::isBuildableOnTile(CCPoint &target, Building* building)
 
 void MapHandler::Populate(CCArray* layers)
 {
-        for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+        for (int i = 0; i < MapHandler::getThis()->mapPtr->getMapSize().width; ++i)
         {
-            for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+            for (int j = 0; j < MapHandler::getThis()->mapPtr->getMapSize().height; ++j)
             {
                 int gid = 0;
                 CCPoint tgtPoint = CCPointMake(i,j);
@@ -594,7 +585,7 @@ void MapHandler::Populate(CCArray* layers)
                 if (!GameScene::getThis()) continue;
                 
                 // CCLog("************** the gid is %d", gid);
-                Building* targetBuilding = GameScene::getThis()->buildingHandler->getBuildingWithGID(gid);
+                Building* targetBuilding = BuildingHandler::getThis()->getBuildingWithGID(gid);
                 if (!targetBuilding)
                 {
                     continue;
@@ -604,23 +595,23 @@ void MapHandler::Populate(CCArray* layers)
                 {
                     if (targetBuilding->buildingType == HOUSING)
                     {
-                        targetBuilding = GameScene::getThis()->buildingHandler->getRandomBuilding(targetBuilding);
+                        targetBuilding = BuildingHandler::getThis()->getRandomBuilding(targetBuilding);
                     }
                     
-                    Build(tgtPoint, targetBuilding, true, true);
+                    MapHandler::getThis()->Build(tgtPoint, targetBuilding, true, true);
                 }
                 
             }
         }
     
-    
     //again for paths
     //Path layer is named Ground_Road
-    CCTMXLayer* pLayer = mapPtr->layerNamed("Ground_Road");
+    CCTMXLayer* pLayer = MapHandler::getThis()->mapPtr->layerNamed("Ground_Road");
     
-    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+    /*
+    for (int i = 0; i < MapHandler::getThis()->mapPtr->getMapSize().width; ++i)
     {
-        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        for (int j = 0; j < MapHandler::getThis()->mapPtr->getMapSize().height; ++j)
         {
             MapTile* tile = this->getTileAt(i,j);
             if (tile == NULL) continue;
@@ -629,17 +620,18 @@ void MapHandler::Populate(CCArray* layers)
             {
                 CCLog("%d", tile->tileGID);
                 tile->pathHere();
-                pathTiles->addObject(tile);
+                MapHandler::getThis()->pathTiles->addObject(tile);
             }
         }
     }
+    */
 
     //now for environment //WARNING Ground_1 is now the tile layer
     //putting stuff back in Ground_0 for now
-    pLayer = mapPtr->layerNamed("Ground_1");
-    for (int i = 0; i < mapPtr->getMapSize().width; ++i)
+    pLayer = MapHandler::getThis()->mapPtr->layerNamed("Ground_1");
+    for (int i = 0; i < MapHandler::getThis()->mapPtr->getMapSize().width; ++i)
     {
-        for (int j = 0; j < mapPtr->getMapSize().height; ++j)
+        for (int j = 0; j < MapHandler::getThis()->mapPtr->getMapSize().height; ++j)
         {
             CCPoint tilePos = ccp(i, j);
             CCSprite* environment = pLayer->tileAt(tilePos);
@@ -648,7 +640,7 @@ void MapHandler::Populate(CCArray* layers)
                 // Remove environment tile from TMXLayer, and add to map instead
                 environment->retain();
                 environment->removeFromParent();
-                getMap()->addChild(environment, calcZIndex(tilePos));
+                MapHandler::getThis()->getMap()->addChild(environment, calcZIndex(tilePos));
                 getTileAt(i, j)->setEnvironment(environment);
             }
         }
@@ -685,7 +677,7 @@ void MapHandler::PopulateForLoadingGame(CCArray* layers)
             if (!GameScene::getThis()) continue;
             
             // CCLog("************** the gid is %d", gid);
-            Building* targetBuilding = GameScene::getThis()->buildingHandler->getBuildingWithGID(gid);
+            Building* targetBuilding = BuildingHandler::getThis()->getBuildingWithGID(gid);
             if (!targetBuilding)
             {
                 continue;
@@ -731,7 +723,7 @@ float MapHandler::calcZIndex(CCPoint &point, int offset, bool isSprite, GameSpri
         currZ += 1;
     }
     
-    return (lowestZ + currZ) + mapPtr->layerNamed("Ground_1")->getZOrder();
+    return (lowestZ + currZ) + MapHandler::getThis()->mapPtr->layerNamed("Ground_1")->getZOrder();
 }
 
 CCPoint MapHandler::getRandomTileLocation()
@@ -744,14 +736,14 @@ CCPoint MapHandler::getRandomTileLocation()
 CCPoint MapHandler::getRandomPathTile()
 {
     // if no path tile on the map! (how this will happen?)
-    if (pathTiles->count() == 0)
+    if (MapHandler::getThis()->pathTiles->count() == 0)
     {
         return CCPointMake(-1, -1);
     }
     
     // get a random map tile from all path tiles.
-    int targetIdx = rand() % pathTiles->count();
-    MapTile* tgtTile = (MapTile*)pathTiles->objectAtIndex(targetIdx);
+    int targetIdx = rand() % MapHandler::getThis()->pathTiles->count();
+    MapTile* tgtTile = (MapTile*)MapHandler::getThis()->pathTiles->objectAtIndex(targetIdx);
     
     // if the tile is not a path, cannot go there.
     if (!tgtTile->isPath){
@@ -800,7 +792,7 @@ Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
     
     cloneBuilding->buildingRep = CCSprite::create();
     cloneBuilding->buildingRep->initWithTexture(cloneBuilding->buildingTexture, cloneBuilding->buildingRect);
-    CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
+    CCPoint tilePos = MapHandler::getThis()->locationFromTilePos(&target);
     cloneBuilding->buildingRep->setPosition(tilePos);
     getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, (cloneBuilding->width - 1) * 2.0f)); //force buildings to be drawn always on
     
@@ -820,11 +812,11 @@ Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
         }
     }
     
-    cloneBuilding->ID = GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
+    cloneBuilding->ID = BuildingHandler::getThis()->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
     
     cloneBuilding->build_uint_current = cloneBuilding->build_uint_required;
     
-    GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
+    BuildingHandler::getThis()->addBuildingToMap(cloneBuilding);
     
     return cloneBuilding;
 }
@@ -853,7 +845,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
 
     cloneBuilding->buildingRep = CCSprite::create();
     cloneBuilding->buildingRep->initWithTexture(cloneBuilding->buildingTexture, cloneBuilding->buildingRect);
-    CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
+    CCPoint tilePos = MapHandler::getThis()->locationFromTilePos(&target);
     cloneBuilding->buildingRep->setPosition(tilePos);
     getMap()->addChild(cloneBuilding->buildingRep, calcZIndex(target, (cloneBuilding->width - 1) * 2.0f)); //force buildings to be drawn always on top
     
@@ -875,7 +867,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
     
     if(isNewBuilding)
     {
-        string username = GameManager::getThis()->username;
+        string username = UserProfile::getThis()->username;
         stringstream sss;
         sss << username << "_building_unique_id";
         int buildingUniqueID = CCUserDefault::sharedUserDefault()->getIntegerForKey(sss.str().c_str(), 0);
@@ -886,7 +878,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
     
     if (skipConstruction)
     {
-        cloneBuilding->ID = GameScene::getThis()->buildingHandler->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
+        cloneBuilding->ID = BuildingHandler::getThis()->getHighestBuildingID() + 1; //the clone buildings will reuse the IDs as an instance tracker.
         
         if (withDetails.length() > 0)
         {
@@ -914,7 +906,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
         
         cloneBuilding->build_uint_current = cloneBuilding->build_uint_required;
         
-        GameScene::getThis()->buildingHandler->addBuildingToMap(cloneBuilding);
+        BuildingHandler::getThis()->addBuildingToMap(cloneBuilding);
     }
     else
     {
@@ -923,7 +915,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
         
         SoundtrackManager::PlaySFX("construction.wav");
         
-        GameScene::getThis()->constructionHandler->addConstructingBuilding(cloneBuilding);
+        ConstructionHandler::getThis()->addConstructingBuilding(cloneBuilding);
     }
     
     if(inGame)
@@ -964,7 +956,7 @@ bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
         return false;
     }
     
-    CCPoint tilePos = GameScene::getThis()->mapHandler->locationFromTilePos(&target);
+    CCPoint tilePos = MapHandler::getThis()->locationFromTilePos(&target);
     
     // Add tile highlight
     previewTileHighlight = createTileHighlight(tilePos);
@@ -1000,10 +992,11 @@ void MapHandler::ForceUnbuild(cocos2d::CCPoint &target)
     }
     
     // Try remove from constructionHandler
-    GameScene::getThis()->constructionHandler->removeConstructingBuilding(targetB);
+    ConstructionHandler::getThis()->removeConstructingBuilding(targetB);
+    BuildingHandler::getThis()->removeBuildingFromMap(targetB);
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(targetB->buildingRep, true);
-    GameScene::getThis()->buildingHandler->removeBuildingFromMap(targetB);
+    MapHandler::getThis()->getMap()->removeChild(targetB->buildingRep, true);
+    
     
     for (int i = 0; i < targetB->height; i++)
         for (int j = 0; j < targetB->width; j++)
@@ -1021,9 +1014,9 @@ void MapHandler::UnBuild(cocos2d::CCPoint &target)
     }
     
     int targetID = targetB->ID;
-    for (int i = 0; i < GameScene::getThis()->buildingHandler->specialOnMap->count(); ++i)
+    for (int i = 0; i < BuildingHandler::getThis()->specialOnMap->count(); ++i)
     {
-        Building* b = (Building*)GameScene::getThis()->buildingHandler->specialOnMap->objectAtIndex(i);
+        Building* b = (Building*)BuildingHandler::getThis()->specialOnMap->objectAtIndex(i);
         if (b->ID == targetID)
         {
             CCLog("SPECIALS cannot be destroyed");
@@ -1032,10 +1025,10 @@ void MapHandler::UnBuild(cocos2d::CCPoint &target)
     }
     
     // Try remove from constructionHandler
-    GameScene::getThis()->constructionHandler->removeConstructingBuilding(targetB);
+    ConstructionHandler::getThis()->removeConstructingBuilding(targetB);
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(targetB->buildingRep, true);
-    GameScene::getThis()->buildingHandler->removeBuildingFromMap(targetB);
+    MapHandler::getThis()->getMap()->removeChild(targetB->buildingRep, true);
+    BuildingHandler::getThis()->removeBuildingFromMap(targetB);
     
     
     for (int i = 0; i < targetB->height; i++)
@@ -1048,20 +1041,20 @@ void MapHandler::UnBuild(cocos2d::CCPoint &target)
 
 void MapHandler::UnBuildPreview()
 {
-    if (currBuildingPreview == NULL){
+    if (MapHandler::getThis()->currBuildingPreview == NULL){
         return;
     }
     
-    getMap()->removeChild(previewTileHighlight, true);
-    getMap()->removeChild(currBuildingPreview->buildingRep, true);
+    MapHandler::getThis()->getMap()->removeChild(MapHandler::getThis()->previewTileHighlight, true);
+    MapHandler::getThis()->getMap()->removeChild(MapHandler::getThis()->currBuildingPreview->buildingRep, true);
     
     //currBuildingPreview->buildingRep->release();
    // currBuildingPreview->buildingRep = NULL;
    // delete currBuildingPreview;
 //    previewTileHighlight->release();
-    delete previewTileHighlight;
-    previewTileHighlight = NULL;
-    currBuildingPreview = NULL;
+    delete MapHandler::getThis()->previewTileHighlight;
+    MapHandler::getThis()->previewTileHighlight = NULL;
+    MapHandler::getThis()->currBuildingPreview = NULL;
 }
 
 SpriteSolidPoly* MapHandler::createTileHighlight(CCPoint& pos)
@@ -1233,8 +1226,6 @@ TileType MapHandler::PathTileUpdate(cocos2d::CCPoint &target, int propogate, CCT
     return ttile;
 }
 
-
-
 void MapHandler::PathLine(CCPoint &startTarget, CCPoint &endTarget)
 {
     bool isModifierX = (startTarget.x != endTarget.x ? true : false);
@@ -1364,13 +1355,13 @@ void MapHandler::UnPath(cocos2d::CCPoint &target)
 
 void MapHandler::UnPathPreview()
 {
-    if (pathPreview == NULL)
+    if (MapHandler::getThis()->pathPreview == NULL)
         return;
     
-    getMap()->removeChild(pathPreview, true);
-    getMap()->removeChild(pathPreviewTileHighlight, true);
-    pathPreview = NULL;
-    pathPreviewTileHighlight = NULL;
+    MapHandler::getThis()->getMap()->removeChild(MapHandler::getThis()->pathPreview, true);
+    MapHandler::getThis()->getMap()->removeChild(MapHandler::getThis()->pathPreviewTileHighlight, true);
+    MapHandler::getThis()->pathPreview = NULL;
+    MapHandler::getThis()->pathPreviewTileHighlight = NULL;
 }
 
 void MapHandler::UnPathPreviewLineExtend()
@@ -1378,36 +1369,14 @@ void MapHandler::UnPathPreviewLineExtend()
     if (pathPreview == NULL)
         return;
     
-    pathPreview->setVertexAt(0, 0, 0);
-    pathPreview->setVertexAt(1, -mapPtr->getTileSize().width / 2.0f, -mapPtr->getTileSize().height / 2.0f);
-    pathPreview->setVertexAt(2, 0, -mapPtr->getTileSize().height);
-    pathPreview->setVertexAt(3, mapPtr->getTileSize().width / 2.0f, -mapPtr->getTileSize().height / 2.0f);
+    MapHandler::getThis()->pathPreview->setVertexAt(0, 0, 0);
+    MapHandler::getThis()->pathPreview->setVertexAt(1, -MapHandler::getThis()->mapPtr->getTileSize().width / 2.0f, -MapHandler::getThis()->mapPtr->getTileSize().height / 2.0f);
+    MapHandler::getThis()->pathPreview->setVertexAt(2, 0, -MapHandler::getThis()->mapPtr->getTileSize().height);
+    MapHandler::getThis()->pathPreview->setVertexAt(3, MapHandler::getThis()->mapPtr->getTileSize().width / 2.0f, -MapHandler::getThis()->mapPtr->getTileSize().height / 2.0f);
 }
 
 void MapHandler::update(float dt)
 {
-    /*
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    
-    for(int i = 0; i < combatTiles->count(); i++)
-    {
-        MapTile* tile = (MapTile*) combatTiles->objectAtIndex(i);
-        tile->isInCombat = false;
-    }
-    
-    combatTiles->removeAllObjects();
-    
-    for(int i = 0; i < spritesOnMap->count(); i++)
-    {
-        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        
-        if(gs->combatState == C_COMBAT)
-        {
-            gs->currTile->isInCombat = true;
-            combatTiles->addObject(gs->currTile);
-        }
-    }
-    */
 }
 
 CCPoint MapHandler::getNearestNoneBuildingTile(CCPoint sourcePos)
@@ -1479,4 +1448,229 @@ bool MapHandler::isSpriteInBuilding(GameSprite* gameSprite, Building* building)
     int height = building->height;
     
     return spriteTilePos.x >= buildingTilePos.x && spriteTilePos.x < (buildingTilePos.x + width) && spriteTilePos.y >= buildingTilePos.y && spriteTilePos.y < (buildingTilePos.y + height);
+}
+
+void MapHandler::loadLevelBuildings(int level)
+{
+    string xmlFile = "";
+    switch (level)
+    {
+        case 0:
+            xmlFile = "level0_building.xml";
+            break;
+        case 1:
+            xmlFile = "level1_building.xml";
+            break;
+        case 2:
+            xmlFile = "level2_building.xml";
+            break;
+        case 3:
+            xmlFile = "level3_building.xml";
+            break;
+        case 4:
+            xmlFile = "level4_building.xml";
+            break;
+        case 5:
+            xmlFile = "level5_building.xml";
+            break;
+        case 6:
+            xmlFile = "level6_building.xml";
+            break;
+        default:
+            xmlFile = "level0_building.xml";
+            break;
+    }
+    
+    FileReader* fr = new FileReader(xmlFile);
+    
+    stringstream ss;
+    
+    bool isInProject = false;
+    bool isInBuilding = false;
+    
+    string type = "";
+    int posX = 0;
+    int posY = 0;
+    
+    for(int i = 0; i < fr->mFileContents.size(); i++)
+    {
+        // get the line first
+        string str = fr->mFileContents.at(i);
+        
+        // CCLog("**** %s", str.c_str());
+        
+        // if a line contains "<?xml", then this line is the xml header, ignore it and continue;
+        if(str.find("<?xml") != std::string::npos)
+        {
+            continue;
+        }
+        
+        if(!isInProject)
+        {
+            ss.str(std::string());
+            if(str.find("<project>") != std::string::npos)
+            {
+                isInProject = true;
+            }
+        }
+        else if(!isInBuilding)
+        {
+            ss.str(std::string());
+            if(str.find("<building>") != std::string::npos)
+            {
+                isInBuilding = true;
+            }
+            else if(str.find("</project>") != std::string::npos)
+            {
+                isInProject = false;
+            }
+        }
+        else
+        {
+            unsigned startPos = -1;
+            unsigned endPos = -1;
+            string content = "";
+            int temp = 0;
+            
+            ss.str(std::string());
+            if(str.find("<type>") != std::string::npos && str.find("</type>") != std::string::npos)
+            {
+                startPos = str.find("<type>");
+                endPos = str.find("</type>");
+                content = str.substr(startPos + 6, endPos - startPos - 6);
+                type = content;
+            }
+            else if(str.find("<posX>") != std::string::npos && str.find("</posX>") != std::string::npos)
+            {
+                startPos = str.find("<posX>");
+                endPos = str.find("</posX>");
+                content = str.substr(startPos + 6, endPos - startPos - 6);
+                temp = ::atoi(content.c_str());
+                posX = temp;
+            }
+            else if(str.find("<posY>") != std::string::npos && str.find("</posY>") != std::string::npos)
+            {
+                startPos = str.find("<posY>");
+                endPos = str.find("</posY>");
+                content = str.substr(startPos + 6, endPos - startPos - 6);
+                temp = ::atoi(content.c_str());
+                posY = temp;
+            }
+            else if(str.find("</building>") != std::string::npos)
+            {
+                buildTheBuildingWhenLoadingMap(type, posX, posY);
+                isInBuilding = false;
+                type = "";
+                posX = 0;
+                posY = 0;
+            }
+        }
+    }
+    delete fr;
+}
+
+void MapHandler::buildTheBuildingWhenLoadingMap(string type, int posX, int posY)
+{
+    BuildingCategory bc = HOUSING;
+    if(type.compare("housing") == 0)
+    {
+        bc = HOUSING;
+    }
+    else if(type.compare("granary") == 0)
+    {
+        bc = GRANARY;
+    }
+    else if(type.compare("amenity") == 0)
+    {
+        bc = AMENITY;
+    }
+    else if(type.compare("commerce") == 0)
+    {
+        bc = COMMERCE;
+    }
+    else if(type.compare("military") == 0)
+    {
+        bc = MILITARY;
+    }
+    else if(type.compare("education") == 0)
+    {
+        bc = EDUCATION;
+    }
+    else if(type.compare("social") == 0)
+    {
+        bc = SOCIAL;
+    }
+    else if(type.compare("special") == 0)
+    {
+        bc = SPECIAL;
+    }
+    else if(type.compare("decoration") == 0)
+    {
+        bc = DECORATION;
+    }
+    else if(type.compare("market") == 0)
+    {
+        bc = MARKET;
+    }
+    else if(type.compare("river") == 0)
+    {
+        bc = RIVER;
+    }
+    else if(type.compare("road") == 0)
+    {
+        bc = BUILDINGCATEGORYMAX;
+        
+        CCPoint tilePos = CCPointMake(posX, posY);
+        MapTile* selectedTile = MapHandler::getThis()->getTileAt(tilePos.x, tilePos.y);
+        if(!selectedTile->isPath)
+        {
+            Path(tilePos);
+        }
+    }
+    else if(type.compare("sprite") == 0)
+    {
+        bc = BUILDINGCATEGORYMAX;
+        
+        if (!CCUserDefault::sharedUserDefault()->getBoolForKey("isLoadingGame"))
+        {
+            CCPoint spritePos = CCPointMake(posX, posY);
+            SpriteHandler::getThis()->addSpriteToMap(spritePos, V_REFUGEE);
+        }
+    }
+    else
+    {
+        bc = BUILDINGCATEGORYMAX;
+    }
+    
+    if(bc != BUILDINGCATEGORYMAX)
+    {
+        Building* targetBuilding = BuildingHandler::getThis()->getFirstBuildingOfCategory(bc);
+        if (!targetBuilding)
+        {
+            return;
+        }
+        
+        CCPoint tgtPoint = CCPointMake(posX, posY);
+        
+        if (targetBuilding->buildingType != BUILDINGCATEGORYMAX)
+        {
+            if (targetBuilding->buildingType == HOUSING)
+            {
+                targetBuilding = BuildingHandler::getThis()->getRandomBuilding(targetBuilding);
+            }
+            
+            Build(tgtPoint, targetBuilding, true, true);
+        }
+
+    }
+}
+
+void MapHandler::UnBuildAllPath()
+{
+    while(MapHandler::getThis()->pathTiles->count() > 0)
+    {
+        MapTile* mapTile = (MapTile*)MapHandler::getThis()->pathTiles->objectAtIndex(0);
+        CCPoint tilePos = ccp(mapTile->xpos, mapTile->ypos);
+        MapHandler::getThis()->UnPath(tilePos);
+    }
 }

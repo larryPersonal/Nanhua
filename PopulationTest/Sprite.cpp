@@ -19,7 +19,7 @@
 #include "BattleIcon.h"
 #include "TutorialManager.h"
 #include "SoundtrackManager.h"
-
+#include "UserProfile.h"
 
 #include <cmath>
 #include <sstream>
@@ -179,16 +179,16 @@ bool GameSprite::loadClassSetup()
 
 void GameSprite::loadSpritePossessions()
 {
-    possessions->default_work_rate = GameScene::getThis()->configSettings->default_work_rate;
+    possessions->default_work_rate = UserProfile::getThis()->configSettings->default_work_rate;
     
-    possessions->happinessRating = GameScene::getThis()->configSettings->default_hapiness;
-    possessions->loyaltyRating = GameScene::getThis()->configSettings->default_loyalty;
+    possessions->happinessRating = UserProfile::getThis()->configSettings->default_hapiness;
+    possessions->loyaltyRating = UserProfile::getThis()->configSettings->default_loyalty;
     
-    possessions->currentHungry = GameScene::getThis()->configSettings->default_current_hungry;
-    possessions->energyRating = GameScene::getThis()->configSettings->default_current_energy;
+    possessions->currentHungry = UserProfile::getThis()->configSettings->default_current_hungry;
+    possessions->energyRating = UserProfile::getThis()->configSettings->default_current_energy;
     
-    possessions->default_hapiness_limit = GameScene::getThis()->configSettings->default_hapiness_limit;
-    possessions->default_loyalty_limit = GameScene::getThis()->configSettings->default_loyalty_limit;
+    possessions->default_hapiness_limit = UserProfile::getThis()->configSettings->default_hapiness_limit;
+    possessions->default_loyalty_limit = UserProfile::getThis()->configSettings->default_loyalty_limit;
 }
 
 void GameSprite::loadClassPossessions()
@@ -335,7 +335,7 @@ GameSprite* GameSprite::create()
 
      spriteRep->setScale(0.5f);
     // spriteRep->retain();
-     CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(tilePos);
+     CCPoint target = MapHandler::getThis()->locationFromTilePos(tilePos);
  
      spriteRep->setPosition(target);
      
@@ -375,8 +375,8 @@ GameSprite* GameSprite::create()
      BattleIcon* battleIcon = BattleIcon::create(this);
      battleIconArray->addObject(battleIcon);
 
-     GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
-                                                          GameScene::getThis()->mapHandler->calcZIndex(*tilePos));
+     MapHandler::getThis()->getMap()->addChild(spriteRep,
+                                                          MapHandler::getThis()->calcZIndex(*tilePos));
      //speechBubble->autorelease();
      
      behaviorTree->onInitialize();
@@ -385,9 +385,9 @@ GameSprite* GameSprite::create()
      spriteDisplayedName = NameGenerator::GenerateName(race, gender);
 
      currPos = getWorldPosition();
-     currPos = GameScene::getThis()->mapHandler->tilePosFromLocation(currPos);
+     currPos = MapHandler::getThis()->tilePosFromLocation(currPos);
      
-     currTile = GameScene::getThis()->mapHandler->getTileAt(currPos.x, currPos.y);
+     currTile = MapHandler::getThis()->getTileAt(currPos.x, currPos.y);
  }
 
 void GameSprite::unmakeSpriteEndGame()
@@ -422,9 +422,9 @@ void GameSprite::unmakeSprite()
     behaviorTree = NULL;
     spriteRep->stopAllActions();
     
-    if (GameScene::getThis()->mapHandler->getMap()->getChildren()->containsObject(spriteRep))
+    if (MapHandler::getThis()->getMap()->getChildren()->containsObject(spriteRep))
     {
-        GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+        MapHandler::getThis()->getMap()->removeChild(spriteRep);
     }
     
     delete speechBubble;
@@ -550,7 +550,7 @@ void GameSprite::followPath(bool moveOneTile)
             int targetindex = squares - 2;
             PathfindingNode* node = (PathfindingNode*)path->objectAtIndex(targetindex);
             path->removeLastObject();
-            MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(node->tilepos.x, node->tilepos.y);
+            MapTile* tile = MapHandler::getThis()->getTileAt(node->tilepos.x, node->tilepos.y);
             if (tile->hasBuilding())
             {
                 if (spriteRep != NULL && villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
@@ -563,8 +563,8 @@ void GameSprite::followPath(bool moveOneTile)
                 if (isInBuilding)
                 {
                     CCPoint spritePos = getWorldPosition();
-                    spritePos = GameScene::getThis()->mapHandler->tilePosFromLocation(spritePos);
-                    MapTile* tile = GameScene::getThis()->mapHandler->getTileAt(spritePos.x, spritePos.y );
+                    spritePos = MapHandler::getThis()->tilePosFromLocation(spritePos);
+                    MapTile* tile = MapHandler::getThis()->getTileAt(spritePos.x, spritePos.y );
                     
                     if (tile->hasBuilding())
                     {
@@ -581,20 +581,20 @@ void GameSprite::followPath(bool moveOneTile)
             }
             
             currentTile = nextTile;
-            CCPoint nextPos = GameScene::getThis()->mapHandler->locationFromTilePos(&(node->tilepos));
+            CCPoint nextPos = MapHandler::getThis()->locationFromTilePos(&(node->tilepos));
             this->nextTile = nextPos;
             
             if(!isInCombat || true)
             {
                 // if the soldier's next target tile is already taken by the bandits, stop moving and prepare to attack the bandit
                 if(villagerClass == V_SOLDIER && !tryEscape){
-                    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-                    CCPoint myTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(currPos));
+                    CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
+                    CCPoint myTile = MapHandler::getThis()->locationFromTilePos(&(currPos));
                     
                     for(int i = 0; i < allSprites->count(); i++){
                         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
                         if(gs->villagerClass == V_BANDIT && gs->combatState == C_IDLE && !gs->tryEscape){
-                            CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(gs->currPos));
+                            CCPoint gsTile = MapHandler::getThis()->locationFromTilePos(&(gs->currPos));
                             if(GlobalHelper::compareCCPoint(gs->nextTile, nextTile) || GlobalHelper::compareCCPoint(nextTile, gsTile) || GlobalHelper::compareCCPoint(gs->nextTile, myTile) || GlobalHelper::compareCCPoint(myTile, gsTile))
                             {
                                 if(!gs->isInCombat)
@@ -616,14 +616,14 @@ void GameSprite::followPath(bool moveOneTile)
                 
                 // if the bandit's next target tile is already taken by the soldiers, stop moving and prepare to attack the soldier
                 if(villagerClass == V_BANDIT && !tryEscape){
-                    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-                    CCPoint myTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(currPos));
+                    CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
+                    CCPoint myTile = MapHandler::getThis()->locationFromTilePos(&(currPos));
                     
                     for(int i = 0; i < allSprites->count(); i++){
                         // get the location of that
                         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
                         if(gs->villagerClass == V_SOLDIER && gs->combatState == C_IDLE && !gs->tryEscape){
-                            CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&(gs->currPos));
+                            CCPoint gsTile = MapHandler::getThis()->locationFromTilePos(&(gs->currPos));
                             // if next tile has been pre-assigned by a soldier or the next tile has a soldier
                             if(GlobalHelper::compareCCPoint(gs->nextTile, nextTile) || GlobalHelper::compareCCPoint(nextTile, gsTile) || GlobalHelper::compareCCPoint(myTile, gs->nextTile) || GlobalHelper::compareCCPoint(myTile, gsTile))
                             {
@@ -779,9 +779,9 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     // updateSprite is called at intervals of approx 16ms,
     // we need to calculate the newest currPos right now.
     currPos = getWorldPosition();
-    currPos = GameScene::getThis()->mapHandler->tilePosFromLocation(currPos);
+    currPos = MapHandler::getThis()->tilePosFromLocation(currPos);
     
-    currTile = GameScene::getThis()->mapHandler->getTileAt(currPos.x, currPos.y);
+    currTile = MapHandler::getThis()->getTileAt(currPos.x, currPos.y);
     
     // after calculate the newest currPos, update the z order of the sprite
     updateZIndex();
@@ -789,14 +789,14 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
     // each time after moveComplete has been triggered, the soldier will check the bandit's position again, so that they can adjust their path to the capture the bandit.
     if (villagerClass == V_SOLDIER)
     {
-        CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         
         CCPoint nearestTarget = CCPointZero;
         int nearestDistance = 999999;
         
         // get the current position of the soldier
         CCPoint sPos = getWorldPosition();
-        sPos = GameScene::getThis()->mapHandler->tilePosFromLocation(sPos);
+        sPos = MapHandler::getThis()->tilePosFromLocation(sPos);
         
         for (int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -806,7 +806,7 @@ void GameSprite::moveComplete(cocos2d::CCObject *pSender)
             if (gs->villagerClass == V_BANDIT && gs->possessions->current_endurance > 0 && !gs->tryEscape)
             {
                 CCPoint bPos = gs->getWorldPosition();
-                bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
+                bPos = MapHandler::getThis()->tilePosFromLocation(bPos);
                 
                 int tempDistance = getPathDistance(bPos, sPos);
                 if(tempDistance < nearestDistance)
@@ -895,7 +895,7 @@ bool GameSprite::Wander()
         if(villagerClass != V_BANDIT && villagerClass != V_CLASS_END && goToTownHall)
         {
             goToTownHall = false;
-            Building* th = (Building*) GameScene::getThis()->buildingHandler->specialOnMap->objectAtIndex(0);
+            Building* th = (Building*) BuildingHandler::getThis()->specialOnMap->objectAtIndex(0);
             hasAssigned = true;
             setTargetLocation(th);
             GoBuilding(th);
@@ -950,7 +950,7 @@ bool GameSprite::Wander()
             saySpeech(IDLING, 5.0f);
         }
         
-        CCPoint tgt = GameScene::getThis()->mapHandler->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
+        CCPoint tgt = MapHandler::getThis()->getRandomPathTile();//CCPointMake( rand() % 40, rand() % 40);
         if (tgt.x == -1 && tgt.y == -1)
         {
             setAction(IDLE); //no path, can't
@@ -958,7 +958,7 @@ bool GameSprite::Wander()
         }
         
         CCPoint startPos = getWorldPosition();
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
         if (CreatePath(startPos, tgt))
         {
             setAction(WALKING);
@@ -1104,7 +1104,7 @@ void GameSprite::updateSprite(float dt)
     }
     
     // in combat mode, the soldiers and bandits will follow own strategic plan
-    if(GameScene::getThis()->banditsAttackHandler->warMode)
+    if(BanditsAttackHandler::getThis()->warMode)
     {
         if(combatState == C_COMBAT)
         {
@@ -1114,10 +1114,10 @@ void GameSprite::updateSprite(float dt)
                 if(enermy != NULL && enermy->enermy == this && enermy->combatState == C_COMBAT)
                 {
                     CCPoint myPos = this->getWorldPosition();
-                    myPos = GameScene::getThis()->mapHandler->tilePosFromLocation(myPos);
+                    myPos = MapHandler::getThis()->tilePosFromLocation(myPos);
                     
                     CCPoint enermyPos = this->getWorldPosition();
-                    enermyPos = GameScene::getThis()->mapHandler->tilePosFromLocation(enermyPos);
+                    enermyPos = MapHandler::getThis()->tilePosFromLocation(enermyPos);
                     
                     int tempDistance = getPathDistance(myPos, enermyPos);
                     
@@ -1212,7 +1212,7 @@ void GameSprite::updateSprite(float dt)
             
             if((villagerClass == V_SOLDIER) && !tryEscape)
             {
-                CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+                CCArray* allSpritesOnMap = SpriteHandler::getThis()->spritesOnMap;
                 
                 if(!hasBandit(allSpritesOnMap, infront))
                 {
@@ -1295,7 +1295,7 @@ void GameSprite::updateSprite(float dt)
             
             if ((villagerClass == V_BANDIT) && !tryEscape)
             {
-                CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+                CCArray* allSpritesOnMap = SpriteHandler::getThis()->spritesOnMap;
                 
                 if(!hasSoldier(allSpritesOnMap, infront))
                 {
@@ -1447,10 +1447,10 @@ void GameSprite::updateSprite(float dt)
             {
                 // get the current position of the soldier
                 CCPoint bPos = getWorldPosition();
-                bPos = GameScene::getThis()->mapHandler->tilePosFromLocation(bPos);
+                bPos = MapHandler::getThis()->tilePosFromLocation(bPos);
                 
                 // check whether the bandits meet the soldiers
-                CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+                CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
                 
                 bool stop = false;
                 GameSprite* opponent = NULL;
@@ -1462,7 +1462,7 @@ void GameSprite::updateSprite(float dt)
                     if (gs->villagerClass == V_SOLDIER && gs->combatState == C_IDLE && !gs->tryEscape)
                     {
                         CCPoint sPos = gs->getWorldPosition();
-                        sPos = GameScene::getThis()->mapHandler->tilePosFromLocation(sPos);
+                        sPos = MapHandler::getThis()->tilePosFromLocation(sPos);
                         int tempDistance = getDistance(currPos, sPos);
                         if(tempDistance <= 1 && !tryEscape && gs->combatState == C_IDLE && gs->enermy == NULL)
                         {
@@ -1559,7 +1559,7 @@ void GameSprite::updateSprite(float dt)
         
         if (isLeavingNextUpdate)
         {
-            GameScene::getThis()->spriteHandler->removeSpriteFromMap(this);
+            SpriteHandler::getThis()->removeSpriteFromMap(this);
             return;
         }
         
@@ -1601,8 +1601,8 @@ void GameSprite::updateZIndex()
     
     if(villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
     {
-        spriteRep->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
-        speechBubble->setZOrder( GameScene::getThis()->mapHandler->calcZIndex(currPos, 0, true, this) );
+        spriteRep->setZOrder( MapHandler::getThis()->calcZIndex(currPos, 0, true, this) );
+        speechBubble->setZOrder( MapHandler::getThis()->calcZIndex(currPos, 0, true, this) );
     }
     else
     {
@@ -1630,7 +1630,7 @@ CCPoint GameSprite::getWorldPosition()
     if (!spriteRep) return CCPointMake(-1,-1);
     //good thing the scale's on another layer, so I can safely do this now.
     
-    return ccpAdd(spriteRep->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
+    return ccpAdd(spriteRep->getPosition(), MapHandler::getThis()->getMap()->getPosition());
     
     //GameScene::getThis()->mapHandler->getMap()->convertToWorldSpace(spriteRep->getPosition());
 }
@@ -1860,8 +1860,8 @@ bool GameSprite::GoBuilding(Building* b)
     CCPoint startPos = getWorldPosition();
     CCPoint endPos = b->getWorldPosition();
     
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+    startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+    endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
     
     bool hasPath = CreatePath(startPos, endPos);
     if (hasPath)
@@ -1878,7 +1878,7 @@ bool GameSprite::GoLocation(CCPoint endPos)
 {
     CCPoint startPos = getWorldPosition();
     
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
     
     int tempDistance = getPathDistance(startPos, endPos);
     
@@ -2023,7 +2023,7 @@ void GameSprite::changeSpriteRepWhenLoadingGame()
     spriteRep->removeChild(barHP, true);
     delete barHP;
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    MapHandler::getThis()->getMap()->removeChild(spriteRep);
     
     std::string initName = spriteName;
     initName+= "_IDL001.png";
@@ -2064,8 +2064,8 @@ void GameSprite::changeSpriteRepWhenLoadingGame()
         barHP->setVisible(true);
     }
     
-    GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
-                                                         GameScene::getThis()->mapHandler->calcZIndex(pos));
+    MapHandler::getThis()->getMap()->addChild(spriteRep,
+                                                         MapHandler::getThis()->calcZIndex(pos));
 }
 
 void GameSprite::ReplaceSpriteRep()
@@ -2086,7 +2086,7 @@ void GameSprite::ReplaceSpriteRep()
     spriteRep->removeChild(barHP, true);
     delete barHP;
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    MapHandler::getThis()->getMap()->removeChild(spriteRep);
     
     
     std::string initName = spriteName;
@@ -2145,8 +2145,8 @@ void GameSprite::ReplaceSpriteRep()
         barHP->setVisible(true);
     }
     
-    GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
-                                                        GameScene::getThis()->mapHandler->calcZIndex(pos));
+    MapHandler::getThis()->getMap()->addChild(spriteRep,
+                                                        MapHandler::getThis()->calcZIndex(pos));
     behaviorTree->onInitialize();
     behaviorTree->update();
      
@@ -2247,7 +2247,7 @@ int GameSprite::getFoodCarried()
 
 Building* GameSprite::findNearestGranary(bool isDeliveringFood)
 {
-    CCArray* buildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    CCArray* buildingsOnMap = BuildingHandler::getThis()->allBuildingsOnMap;
     Building* nearestGranary = NULL;
     int distance = 999999;
     
@@ -2273,8 +2273,8 @@ Building* GameSprite::findNearestGranary(bool isDeliveringFood)
         CCPoint startPos = getWorldPosition();
         CCPoint endPos = bui->getWorldPosition();
         
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
         
         int tempDistance = getPathDistance(startPos, endPos);
         
@@ -2316,8 +2316,8 @@ void GameSprite::goToEat()
             CCPoint startPos = getWorldPosition();
             CCPoint endPos = bui->getWorldPosition();
             
-            startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-            endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+            startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+            endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
             
             if(startPos.equals(endPos))
             {
@@ -2378,8 +2378,8 @@ void GameSprite::goToSleep()
         CCPoint startPos = getWorldPosition();
         CCPoint endPos = getHome()->getWorldPosition();
         
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
         
         if(startPos.equals(endPos))
         {
@@ -2410,8 +2410,8 @@ void GameSprite::goToOccupyHome(Building* b)
         CCPoint startPos = getWorldPosition();
         CCPoint endPos = b->getWorldPosition();
         
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
         
         if(startPos.equals(endPos))
         {
@@ -2432,7 +2432,7 @@ void GameSprite::goToOccupyHome(Building* b)
 
 bool GameSprite::hasEmptyHouse()
 {
-    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    CCArray* allHousing = BuildingHandler::getThis()->housingOnMap;
     for(int i = 0; i < allHousing->count(); i++)
     {
         Building* b = (Building*)allHousing->objectAtIndex(i);
@@ -2446,7 +2446,7 @@ bool GameSprite::hasEmptyHouse()
 
 bool GameSprite::findNearestHome()
 {
-    Building* nearestHome = findNearestHouse();
+    Building* nearestHome = findNearestEmptyHouse();
     
     if(nearestHome != NULL)
     {
@@ -2459,7 +2459,7 @@ bool GameSprite::findNearestHome()
 
 Building* GameSprite::findNearestHouse()
 {
-    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    CCArray* allHousing = BuildingHandler::getThis()->housingOnMap;
     Building* nearestHome = NULL;
     int distance = 999999;
     
@@ -2470,8 +2470,36 @@ Building* GameSprite::findNearestHouse()
         CCPoint startPos = getWorldPosition();
         CCPoint endPos = b->getWorldPosition();
         
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-        endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
+        
+        int tempDistance = getDistance(startPos, endPos);
+        
+        if(tempDistance < distance)
+        {
+            distance = tempDistance;
+            nearestHome = b;
+        }
+    }
+    
+    return nearestHome;
+}
+
+Building* GameSprite::findNearestEmptyHouse()
+{
+    CCArray* allHousing = BuildingHandler::getThis()->housingOnMap;
+    Building* nearestHome = NULL;
+    int distance = 999999;
+    
+    for(int i = 0; i < allHousing->count(); i++)
+    {
+        Building* b = (Building*)allHousing->objectAtIndex(i);
+        
+        CCPoint startPos = getWorldPosition();
+        CCPoint endPos = b->getWorldPosition();
+        
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
         
         int tempDistance = getDistance(startPos, endPos);
         
@@ -2488,12 +2516,12 @@ Building* GameSprite::findNearestHouse()
 bool GameSprite::hasValidTarget()
 {
     Building* nearestTarget;
-    if(current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob && current_food_rob < GameScene::getThis()->settingsLevel->max_food_rob)
+    if(current_money_rob < UserProfile::getThis()->settingsLevel->max_money_rob && current_food_rob < UserProfile::getThis()->settingsLevel->max_food_rob)
     {
         // check either food or money
         nearestTarget = checkTarget(1);
     }
-    else if(current_money_rob < GameScene::getThis()->settingsLevel->max_money_rob)
+    else if(current_money_rob < UserProfile::getThis()->settingsLevel->max_money_rob)
     {
         // check money
         nearestTarget = checkTarget(3);
@@ -2527,8 +2555,8 @@ bool GameSprite::hasValidTarget()
 
 Building* GameSprite::checkTarget(int mode)
 {
-    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
-    CCArray* allSpecial = GameScene::getThis()->buildingHandler->specialOnMap;
+    CCArray* allGranary = BuildingHandler::getThis()->granaryOnMap;
+    CCArray* allSpecial = BuildingHandler::getThis()->specialOnMap;
     
     Building* nearestTarget = NULL;
     int distance = 999999;
@@ -2598,8 +2626,8 @@ int GameSprite::getDistance(Building* b)
     CCPoint startPos = getWorldPosition();
     CCPoint endPos = b->getWorldPosition();
     
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+    startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+    endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
     
     return getPathDistance(startPos, endPos);
 }
@@ -2617,9 +2645,9 @@ void GameSprite::updateEndurance(float dt)
         barHP->setValue((float) mGameCurrentEndurance / (float) mGameMaxEndurance);
     }
     
-    if (mGameWarMode != GameScene::getThis()->banditsAttackHandler->warMode)
+    if (mGameWarMode != BanditsAttackHandler::getThis()->warMode)
     {
-        mGameWarMode = GameScene::getThis()->banditsAttackHandler->warMode;
+        mGameWarMode = BanditsAttackHandler::getThis()->warMode;
         if(villagerClass == V_SOLDIER)
         {
             if(mGameWarMode){
@@ -2652,7 +2680,7 @@ void GameSprite::updateHungry(float dt)
     float factor = 1.0f;
     if (villagerClass == V_REFUGEE)
     {
-        factor = 1.0f / GameScene::getThis()->configSettings->default_homeless_happiness_drop_multiplier;
+        factor = 1.0f / UserProfile::getThis()->configSettings->default_homeless_happiness_drop_multiplier;
     }
     /*
      * if the sprite is hungry (currentHungry <= 0), drop happiness!
@@ -2660,7 +2688,7 @@ void GameSprite::updateHungry(float dt)
     if(possessions->happinessRating >= 80.0f)
     {
         // the sprite is in very happy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_veryHappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
+        if (cumulativeTime_happiness >= 1.0f / (UserProfile::getThis()->settingsLevel->hungry_happiness_veryHappy_decay / ((float) UserProfile::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2669,7 +2697,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 60.0f)
     {
         // the sprite is in happy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
+        if (cumulativeTime_happiness >= 1.0f / (UserProfile::getThis()->settingsLevel->hungry_happiness_happy_decay / ((float) UserProfile::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2678,7 +2706,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 40.0f)
     {
         // the sprite is in normal state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
+        if (cumulativeTime_happiness >= 1.0f / (UserProfile::getThis()->settingsLevel->hungry_happiness_normal_decay / ((float) UserProfile::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2687,7 +2715,7 @@ void GameSprite::updateHungry(float dt)
     else if(possessions->happinessRating >= 10.0f)
     {
         // the sprite is in unhappy state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
+        if (cumulativeTime_happiness >= 1.0f / (UserProfile::getThis()->settingsLevel->hungry_happiness_unhappy_decay / ((float) UserProfile::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2696,7 +2724,7 @@ void GameSprite::updateHungry(float dt)
     else
     {
         // the sprite is in angry state
-        if (cumulativeTime_happiness >= 1.0f / (GameScene::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) GameScene::getThis()->configSettings->secondToDayRatio)) * factor)
+        if (cumulativeTime_happiness >= 1.0f / (UserProfile::getThis()->settingsLevel->hungry_happiness_angry_decay / ((float) UserProfile::getThis()->configSettings->secondToDayRatio)) * factor)
         {
             possessions->happinessRating--;
             cumulativeTime_happiness = 0.0f;
@@ -2726,7 +2754,7 @@ void GameSprite::updateHungry(float dt)
         }
         else if(villagerClass != V_BANDIT && villagerClass != V_CLASS_END)
         {
-            if(!GameScene::getThis()->banditsAttackHandler->warMode)
+            if(!BanditsAttackHandler::getThis()->warMode)
             {
                 if(villagerClass != V_CITIZEN)
                 {
@@ -2791,33 +2819,33 @@ void GameSprite::checkDropTresholdTime()
     int timeDiffer = 0;
     if(mAverageHappiness >= 80)
     {
-        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_veryHappy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_veryHappy_min;
+        timeDiffer = UserProfile::getThis()->configSettings->token_drop_treshold_time_veryHappy_max - UserProfile::getThis()->configSettings->token_drop_treshold_time_veryHappy_min;
         int randomTime = rand() % timeDiffer;
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_veryHappy_min + randomTime;
+        token_drop_cooldown_treshold = UserProfile::getThis()->configSettings->token_drop_treshold_time_veryHappy_min + randomTime;
     }
     else if(mAverageHappiness >= 60)
     {
-        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_happy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_happy_min;
+        timeDiffer = UserProfile::getThis()->configSettings->token_drop_treshold_time_happy_max - UserProfile::getThis()->configSettings->token_drop_treshold_time_happy_min;
         int randomTime = rand() % timeDiffer;
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_happy_min + randomTime;
+        token_drop_cooldown_treshold = UserProfile::getThis()->configSettings->token_drop_treshold_time_happy_min + randomTime;
     }
     else if(mAverageHappiness >= 40)
     {
-        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_normal_max - GameScene::getThis()->configSettings->token_drop_treshold_time_normal_min;
+        timeDiffer = UserProfile::getThis()->configSettings->token_drop_treshold_time_normal_max - UserProfile::getThis()->configSettings->token_drop_treshold_time_normal_min;
         int randomTime = rand() % timeDiffer;
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_normal_min + randomTime;
+        token_drop_cooldown_treshold = UserProfile::getThis()->configSettings->token_drop_treshold_time_normal_min + randomTime;
     }
     else if(mAverageHappiness >= 10)
     {
-        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy_max - GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy_min;
+        timeDiffer = UserProfile::getThis()->configSettings->token_drop_treshold_time_unhappy_max - UserProfile::getThis()->configSettings->token_drop_treshold_time_unhappy_min;
         int randomTime = rand() % timeDiffer;
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_unhappy_min + randomTime;
+        token_drop_cooldown_treshold = UserProfile::getThis()->configSettings->token_drop_treshold_time_unhappy_min + randomTime;
     }
     else
     {
-        timeDiffer = GameScene::getThis()->configSettings->token_drop_treshold_time_angry_max - GameScene::getThis()->configSettings->token_drop_treshold_time_angry_min;
+        timeDiffer = UserProfile::getThis()->configSettings->token_drop_treshold_time_angry_max - UserProfile::getThis()->configSettings->token_drop_treshold_time_angry_min;
         int randomTime = rand() % timeDiffer;
-        token_drop_cooldown_treshold = GameScene::getThis()->configSettings->token_drop_treshold_time_angry_min + randomTime;
+        token_drop_cooldown_treshold = UserProfile::getThis()->configSettings->token_drop_treshold_time_angry_min + randomTime;
     }
 }
 
@@ -2829,7 +2857,7 @@ void GameSprite::dropToken(bool tutorial)
     if(random_number <= token_drop_rate || tutorial)
     {
         saySpeech(HAPPY, 1.0f);
-        ReputationOrb* ro = ReputationOrb::create("REN", GameScene::getThis()->configSettings->token_disappear_time);
+        ReputationOrb* ro = ReputationOrb::create("REN", UserProfile::getThis()->configSettings->token_disappear_time);
         CCSprite* newToken = ro->getSprite();
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -2837,13 +2865,13 @@ void GameSprite::dropToken(bool tutorial)
         
         newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
         
-        GameScene::getThis()->spriteHandler->tokensOnMap->addObject(ro);
+        SpriteHandler::getThis()->tokensOnMap->addObject(ro);
         
-        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, 99999);
+        MapHandler::getThis()->getMap()->addChild(newToken, 99999);
         
-        CCPoint targetPos = GameScene::getThis()->mapHandler->getNearestNoneBuildingTile(currPos);
+        CCPoint targetPos = MapHandler::getThis()->getNearestNoneBuildingTile(currPos);
         
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&targetPos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&targetPos);
         
         newToken->setPosition(target);
     }
@@ -2854,23 +2882,23 @@ void GameSprite::checkDropRate()
     float mAverageHappiness = GameHUD::getThis()->average_happiness;
     if(mAverageHappiness >= 80)
     {
-        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_veryHappy;
+        token_drop_rate = UserProfile::getThis()->configSettings->token_drop_rate_veryHappy;
     }
     else if(mAverageHappiness >= 60)
     {
-        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_happy;
+        token_drop_rate = UserProfile::getThis()->configSettings->token_drop_rate_happy;
     }
     else if(mAverageHappiness >= 40)
     {
-        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_normal;
+        token_drop_rate = UserProfile::getThis()->configSettings->token_drop_rate_normal;
     }
     else if(mAverageHappiness >= 10)
     {
-        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_unhappy;
+        token_drop_rate = UserProfile::getThis()->configSettings->token_drop_rate_unhappy;
     }
     else
     {
-        token_drop_rate = GameScene::getThis()->configSettings->token_drop_rate_angry;
+        token_drop_rate = UserProfile::getThis()->configSettings->token_drop_rate_angry;
     }
 }
 
@@ -2941,7 +2969,7 @@ bool GameSprite::hasBandit(CCArray* spritesOnMap, CCPoint checkTile)
     for(int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&checkTile);
+        CCPoint gsTile = MapHandler::getThis()->locationFromTilePos(&checkTile);
         
         if(gs->villagerClass == V_BANDIT && gs->combatState == C_COMBAT && gs->enermy == this)
         {
@@ -2960,7 +2988,7 @@ bool GameSprite::hasSoldier(CCArray* spritesOnMap, CCPoint checkTile)
     for(int i = 0; i < spritesOnMap->count(); i++)
     {
         GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
-        CCPoint gsTile = GameScene::getThis()->mapHandler->locationFromTilePos(&checkTile);
+        CCPoint gsTile = MapHandler::getThis()->locationFromTilePos(&checkTile);
         
         if(gs->villagerClass == V_SOLDIER && gs->combatState == C_COMBAT && gs->enermy == this)
         {
@@ -2981,8 +3009,8 @@ void GameSprite::updatePath(Building* b)
     CCPoint startPos = getWorldPosition();
     CCPoint endPos = b->getWorldPosition();
     
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
-    endPos = GameScene::getThis()->mapHandler->tilePosFromLocation(endPos);
+    startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+    endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
     
     bool hasPath = CreatePath(startPos, endPos);
     if (hasPath)
@@ -2994,7 +3022,7 @@ void GameSprite::updatePath(Building* b)
 void GameSprite::updatePath(CCPoint endPos)
 {
     CCPoint startPos = getWorldPosition();
-    startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+    startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
     bool hasPath = CreatePath(startPos, endPos);
     if (hasPath)
     {
@@ -3086,7 +3114,7 @@ void GameSprite::playAttackAction()
     delay_animFrame = 0.1f;
     delay_curr = 0.1f;
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(spriteRep);
+    MapHandler::getThis()->getMap()->removeChild(spriteRep);
     
     if(villagerClass == V_BANDIT)
     {
@@ -3202,8 +3230,8 @@ void GameSprite::playAttackAction()
         barHP->setVisible(true);
     }
     
-    GameScene::getThis()->mapHandler->getMap()->addChild(spriteRep,
-                                                         GameScene::getThis()->mapHandler->calcZIndex(pos));
+    MapHandler::getThis()->getMap()->addChild(spriteRep,
+                                                         MapHandler::getThis()->calcZIndex(pos));
     behaviorTree->onInitialize();
     behaviorTree->update();
     

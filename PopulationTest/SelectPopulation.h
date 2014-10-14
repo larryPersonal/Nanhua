@@ -117,6 +117,7 @@ public:
     void performTask();
     void scheduleGuardTower();
     void scheduleFarming();
+    void scheduleMarketing();
     
     void clickSortButtonUp();
     void clickSortButtonDown();

@@ -17,7 +17,7 @@ std::string contentJson =
         "\"levelup_food\": \"0\","
         "\"housing\":      \"4\","
         "\"granary\":      \"1\","
-        "\"market\":       \"0\","
+        "\"market\":       \"1\","
         "\"farm\":         \"4\","
         "\"guard_tower\":  \"2\""
     "},"

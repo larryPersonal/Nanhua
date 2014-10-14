@@ -14,7 +14,7 @@
 using namespace cocos2d;
 
 enum ObjectiveType {
-    DefaultGoal, PopulationGoal, ReputationGoal, BuildBuilding, GoldGoal, FoodGoal, DisplayGoal, RaisePopulationGoal
+    DefaultGoal, PopulationGoal, ReputationGoal, BuildBuilding, GoldGoal, FoodGoal, DisplayGoal, RaisePopulationGoal, ArmyGoal
 };
 
 class Objective : public CCObject
@@ -42,8 +42,6 @@ public:
     
     float scenarioTime;
     bool scheduleScenario;
-    
-    bool finalObjective;
     
 public:
     static Objective* create();

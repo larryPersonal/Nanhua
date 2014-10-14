@@ -23,6 +23,7 @@
 #include "TutorialManager.h"
 #include "BuildingCard.h"
 #include "MainMenuScene.h"
+#include "SenarioChooseScene.h"
 #include "ScoreMenu.h"
 #include "GlobalHelper.h"
 #include "RandomEventManager.h"
@@ -30,6 +31,8 @@
 #include "UIButtonControl.h"
 #include "GameManagement.h"
 #include "NotificationPopup.h"
+#include "UserProfile.h"
+#include "NanhuaGameStaticAPI.h"
 
 #include <cmath>
 
@@ -38,33 +41,22 @@ GameScene* GameScene::SP;
 GameScene::GameScene()
 {
     screenCenter = CCNode::create();
-    mapHandler = MapHandler::getThis();
-    
-    globalOutcomeModifier = GlobalOutcomeModifier::getThis();
-    
-    cumulatedTime = 0;
-    
-    configSettings = new ConfigSettings();
-    settingsLevel = new SettingsLevel();
-    systemConfig = new SystemConfig();
-    
-    configSkipData();
-    
+    constructGameScene();
+}
+
+void GameScene::constructGameScene()
+{
     hasBeenDragged = false;
     isInDeccelerating = false;
     scrollDistance = CCPointZero;
     
     tapped = false;
-    isSwipe = false;
-    
-    teachBuildRoadCheckTime = 0;
+    isInGame = false;
     
     targetBuilding = NULL;
     
     clearCacheTime = 0;
     clearCacheTimeLimit = 10;
-    
-    mGameGuardTowerScore = 0;
     
     autoSaveTimeInterval = 60;
     autoSaveTimeLeft = autoSaveTimeInterval;
@@ -80,15 +72,13 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-    CCLog("GameScene Deleted");
-    delete globalOutcomeModifier;
     GameScene::SP = NULL;
 }
 
 CCScene* GameScene::scene()
 {
-    // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
+    // 'scene' is an auto release object
+    CCScene* scene = CCScene::create();
     
     // 'layer' is an autorelease object
     GameScene *layer = GameScene::create();
@@ -98,76 +88,53 @@ CCScene* GameScene::scene()
     
     scene->addChild(layer, 0);
     
+    // add MainMenuScene layer as a child to scene
+    MainMenuScene* mmslayer = MainMenuScene::getThis();
+    
+    // add SenarioChooseScene layer as a child to scene
+    SenarioChooseScene* scslayer = SenarioChooseScene::getThis();
+    
+    // add SanGuoXiaoXueTang layer as a child to scene
+    SanGuoXiaoXueTang* sanlayer = SanGuoXiaoXueTang::getThis();
+    
+    // add scenario layer as a child to scene
     Senario* senlayer = Senario::getThis();
     
-    ObjectiveHandler* objectiveHandler = ObjectiveHandler::getThis();
+    // add tutorial layer as a child to scene
+    TutorialManager* tutlayer = TutorialManager::getThis();
     
-    TutorialManager* tm = TutorialManager::getThis();
-    CCLog("Level is %d", GameManager::getThis()->getLevel());
+    // add game hud layer as a child to scene
+    GameHUD* hudlayer = GameHUD::getThis();
     
-    if(CCUserDefault::sharedUserDefault()->getBoolForKey("isLoadingGame"))
-    {
-        GameScene::getThis()->systemConfig->skipSenario = true;
-        GameScene::getThis()->systemConfig->skipTutorial = true;
-    }
+    // add game objective handler layer as a child to scene
+    ObjectiveHandler* objlayer = ObjectiveHandler::getThis();
     
-    objectiveHandler->loadObjective();
+    // add notification popup layer as a child to scene
+    NotificationPopup* notlayer = NotificationPopup::getThis();
     
-    std::string filename = "senario_h.xml";
+    // add random event manager layer as a child to scene
+    RandomEventManager* ranlayer = RandomEventManager::getThis();
     
-    if(GameManager::getThis()->getLevel() == 0)
-    {
-        filename = "introduction.xml";
-        senlayer->scenarioState = Introduction;
-        senlayer->playSenario(filename.c_str());
-    }
-    else if(GameManager::getThis()->getLevel() == 2)
-    {
-        filename = "scenario2.xml";
-        senlayer->scenarioState = Scenario2;
-        senlayer->playSenario(filename.c_str());
-    }
-    else if(GameManager::getThis()->getLevel() == 3)
-    {
-        filename = "senario_h3.xml";
-        senlayer->scenarioState = Scenario3;
-        senlayer->playSenario(filename.c_str());
-    }
-    else if(GameManager::getThis()->getLevel() == 4)
-    {
-        filename = "senario_h4.xml";
-        senlayer->scenarioState = Scenario4;
-        senlayer->playSenario(filename.c_str());
-    }
-    else if(GameManager::getThis()->getLevel() == 5)
-    {
-        filename = "senario_h6.xml";
-        senlayer->scenarioState = Scenario5;
-        senlayer->playSenario(filename.c_str());
-    }
-    else if(GameManager::getThis()->getLevel() == 6)
-    {
-        filename = "senario_h6.xml";
-        senlayer->scenarioState = Scenario6;
-        senlayer->playSenario(filename.c_str());
-    }
-    else
-    {
-        senlayer->scenarioState = Scenario1;
-        tm->setupForTutorial();
-        //objectiveHandler->playObjective(true);
-    }
+    // add system menu layer as a child to scene
+    SystemMenu* syslayer = SystemMenu::getThis();
     
-    RandomEventManager* rem = RandomEventManager::getThis();
-    SanGuoXiaoXueTang* sgxxt = SanGuoXiaoXueTang::getThis();
-    NotificationPopup* npp = NotificationPopup::getThis();
+    layer->addChild(mmslayer, 10);
+    layer->addChild(scslayer, 9);
+    layer->addChild(sanlayer, 8);
+    layer->addChild(senlayer, 7);
+    layer->addChild(syslayer, 6);
+    layer->addChild(tutlayer, 5);
+    layer->addChild(hudlayer, 4);
+    layer->addChild(objlayer, 3);
+    layer->addChild(notlayer, 2);
+    layer->addChild(ranlayer, 1);
     
-    scene->addChild(senlayer, 1);
-    scene->addChild(tm, 1);
-    scene->addChild(objectiveHandler, 1);
-    scene->addChild(rem, 1);
-    scene->addChild(sgxxt, 1);
-    scene->addChild(npp, 1);
+    MainMenuScene::getThis()->loadTeacherManagementTextures();
+    MainMenuScene::getThis()->loadMainMenuTextures();
+    MainMenuScene::getThis()->init();
+    GameManager::getThis()->enableMainMenuScene();
+    
+    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
     
     return scene;
 }
@@ -179,49 +146,56 @@ GameScene* GameScene::getThis()
 
 void GameScene::configSkipData()
 {
-    int level = GameManager::getThis()->getLevel();
+    // load the data that defines whether the current level will skip the scenario and tutorial, the data is stored in 'GameConfig.h'
+    int level = UserProfile::getThis()->gameLevel;
     
     if(level == 0)
     {
-        settingsLevel->setLevel0();
-        systemConfig->skipSenario = systemConfig->skipSenario_tutorial;
-        systemConfig->skipTutorial = systemConfig->skipTutorial_tutorial;
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_tutorial;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_tutorial;
     }
     else if(level == 1)
     {
-        settingsLevel->setLevel0();
-        systemConfig->skipSenario = systemConfig->skipSenario_level1;
-        systemConfig->skipTutorial = systemConfig->skipTutorial_level1;
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_level1;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_level1;
     }
     else if(level == 2)
     {
-        settingsLevel->setLevel0();
-        systemConfig->skipSenario = systemConfig->skipSenario_level2;
-        systemConfig->skipTutorial = systemConfig->skipTutorial_level2;
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_level2;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_level2;
     }
     else if(level == 3)
     {
-        settingsLevel->setLevel0();
-        systemConfig->skipSenario = systemConfig->skipSenario_level3;
-        systemConfig->skipTutorial = systemConfig->skipTutorial_level3;
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_level3;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_level3;
     }
     else if(level == 4)
     {
-        settingsLevel->setLevel0();
-        systemConfig->skipSenario = systemConfig->skipSenario_level4;
-        systemConfig->skipTutorial = systemConfig->skipTutorial_level4;
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_level4;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_level4;
     }
     else if(level == 5)
     {
-        settingsLevel->setLevel0();
-        systemConfig->skipSenario = systemConfig->skipSenario_level5;
-        systemConfig->skipTutorial = systemConfig->skipTutorial_level5;
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_level5;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_level5;
+    }
+    else if(level == 6)
+    {
+        UserProfile::getThis()->settingsLevel->setLevel0();
+        UserProfile::getThis()->systemConfig->skipSenario = UserProfile::getThis()->systemConfig->skipSenario_level6;
+        UserProfile::getThis()->systemConfig->skipTutorial = UserProfile::getThis()->systemConfig->skipTutorial_level6;
     }
 }
 
 void GameScene::configLevelData()
 {
-    int level = GameManager::getThis()->getLevel();
+    int level = UserProfile::getThis()->gameLevel;
     
     std::string filename = "senario_h.xml";
     
@@ -234,58 +208,56 @@ void GameScene::configLevelData()
     else if(level == 1)
     {
         Senario::getThis()->scenarioState = Scenario1;
+        TutorialManager::getThis()->active = false;
+        TutorialManager::getThis()->unlockAll();
+        ObjectiveHandler::getThis()->playObjective();
     }
     else if(level == 2)
     {
-        filename = "scenario2.xml";
-        Senario::getThis()->scenarioState = Scenario2;
-        Senario::getThis()->playSenario(filename.c_str());
+        SanGuoXiaoXueTang::getThis()->theState = Part_2;
+        SanGuoXiaoXueTang::getThis()->showUI();
     }
     else if(level == 3)
     {
         filename = "senario_h3.xml";
         Senario::getThis()->scenarioState = Scenario3;
         Senario::getThis()->playSenario(filename.c_str());
+        ObjectiveHandler::getThis()->playObjective();
     }
     else if(level == 4)
     {
-        /*
-        filename = "senario_h4.xml";
-        Senario::getThis()->scenarioState = Scenario4;
-        Senario::getThis()->playSenario(filename.c_str());
-        */
+        SanGuoXiaoXueTang::getThis()->theState = Part_3;
+        SanGuoXiaoXueTang::getThis()->showUI();
     }
     else if(level == 5)
     {
-        /*
-        filename = "senario_h5.xml";
-        Senario::getThis()->scenarioState = Scenario5;
-        Senario::getThis()->playSenario(filename.c_str());
-        */
+        SanGuoXiaoXueTang::getThis()->theState = Part_4;
+        SanGuoXiaoXueTang::getThis()->showUI();
     }
     else if(level == 6)
     {
-        
+        filename = "senario_h6.xml";
+        Senario::getThis()->scenarioState = Scenario6;
+        Senario::getThis()->playSenario(filename.c_str());
+        ObjectiveHandler::getThis()->playObjective();
     }
 }
 
-void GameScene::reSetupLevel()
+void GameScene::reSetupLevel(bool newGame)
 {
-    configSkipData();
-    
-    configLevelData();
-    
     ObjectiveHandler::getThis()->loadObjective();
-    
-    
-    ObjectiveHandler::getThis()->playObjective(true);
+    configSkipData();
+    if(!newGame)
+    {
+        // 1 means fixed save
+        GameManagement::saveGameToFile(1);
+    }
+    configLevelData();
 }
 
 bool GameScene::init()
 {
     //The following are compulsory for all scenes!
-    //////////////////////////////
-    // 1. super init first
     if ( !CCLayer::init() )
     {
         return false;
@@ -295,60 +267,47 @@ bool GameScene::init()
     firstPathPosPreview = ccp(INT_MAX, INT_MAX);
     lastPathPosPreview = ccp(INT_MAX, INT_MAX);
 
-    //this->CCLayer::setTouchEnabled(true);
     currScale = 1.0f;
     
     setupScene();
     
-    mapHandler->centerMap();
+    this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
     
     return true;
 }
 
 void GameScene::setupScene()
 {
-    /* load game maps */
-    int level = GameManager::getThis()->getLevel();
-    if(level == 0)
+    MapHandler::getThis()->initTiles("BaseMap.tmx");
+    
+    if (MapHandler::getThis()->getMap())
     {
-        mapHandler->initTiles("DemoScene.tmx");
-        GameManager::getThis()->gameMap = "DemoScene.tmx";
-    }
-    else if(level == 1)
-    {
-        mapHandler->initTiles("DemoScene1.tmx");
-        GameManager::getThis()->gameMap = "DemoScene1.tmx";
-        // mapHandler->initTiles("DemoSceneEmpty.tmx");
-        // GameManager::getThis()->gameMap = "DemoSceneEmpty.tmx";
-    }
-    else
-    {
-        mapHandler->initTiles("DemoScene2.tmx");
-        GameManager::getThis()->gameMap = "DemoScene2.tmx";
-    }
-        
-    if (mapHandler->getMap())
-    {
-        buildingHandler = BuildingHandler::getThis();
-        buildingHandler->init(mapHandler->getMap());
-        
-        screenCenter = CCNode::create();
+        BuildingHandler::getThis()->init(MapHandler::getThis()->getMap());
         
         screenCenter->setAnchorPoint(ccp(0.5, 0.5));
         
-        screenCenter->addChild(mapHandler->getScaleLayer(), -1);
+        screenCenter->addChild(MapHandler::getThis()->getScaleLayer(), -1);
         
-        mapHandler->getScaleLayer()->setPosition(CCPointZero);
+        MapHandler::getThis()->getScaleLayer()->setPosition(CCPointZero);
         
-        mapHandler->getScaleLayer()->addChild(mapHandler->getMap(), 0);
+        MapHandler::getThis()->getScaleLayer()->addChild(MapHandler::getThis()->getMap(), 0);
         this->addChild(screenCenter);
         
-        mapHandler->originateMapToTile();
+        MapHandler::getThis()->originateMapToTile();
+        
+        MapHandler::getThis()->centerMap();
     }
     
-    spriteHandler = SpriteHandler::getThis();
-    constructionHandler = ConstructionHandler::getThis();
-    banditsAttackHandler = BanditsAttackHandler::getThis();
+    SpriteHandler::getThis()->initialize();
+    
+    if (!testMode)
+    {
+        GameManager::getThis()->UpdateUnlocks();
+    }
+    else
+    {
+        GameManager::getThis()->UnlockAll();
+    }
     
     GlobalHelper::clearCache();
     
@@ -385,38 +344,34 @@ void GameScene::move(float time)
         this->unschedule(schedule_selector(GameScene::move));
     }
     
-    mapHandler->rescaleScrollLimits();
-    mapHandler->moveMapBy(0.0f, 0.0f);
+    MapHandler::getThis()->rescaleScrollLimits();
+    MapHandler::getThis()->moveMapBy(0.0f, 0.0f);
 }
 
 void GameScene::initOrientationChange()
 {
-   // CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    //screenCenter->setPosition(screenSize.width * -3.0f, screenSize.height * 1.2f);
-    mapHandler->rescaleScrollLimits();
-    mapHandler->moveMapBy(0.0f, 0.0f);
+    MapHandler::getThis()->rescaleScrollLimits();
+    MapHandler::getThis()->moveMapBy(0.0f, 0.0f);
 }
 
 void GameScene::onOrientationChanged()
 {
-    //CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    //screenCenter->setPosition(screenSize.width * -4.0f, screenSize.height * 1.2f);
-    mapHandler->rescaleScrollLimits();
-    mapHandler->moveMapBy(0.0f, 0.0f);
+    MapHandler::getThis()->rescaleScrollLimits();
+    MapHandler::getThis()->moveMapBy(0.0f, 0.0f);
 }
 
 void GameScene::enableTouch()
 {
-    this->CCLayer::setTouchEnabled(true);
-    TutorialManager::getThis()->unlockAll();
-    //GameHUD* hudlayer = GameHUD::create();
-    //this->addChild(hudlayer, 1);
-    //this->scheduleOnce(schedule_selector( GameScene::FirstRunPopulate) , 0.1f);
-    //SoundtrackManager::PlayBGM("in-game_1.wav");
+    GameScene::getThis()->setTouchEnabled(true);
 }
 
 void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
 {
+    if(!isInGame)
+    {
+        return;
+    }
+    
     if(isEndingGame)
     {
         return;
@@ -429,9 +384,58 @@ void GameScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
     {
         if(BuildingInfoMenu::getThis()->selectWorkerButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->selectWorkerButton->isVisible())
         {
-            CCSprite* tempSprite = CCSprite::createWithSpriteFrameName("allocatebtn-press.png");
-            CCTexture2D* tex = tempSprite->getTexture();
-            BuildingInfoMenu::getThis()->selectWorkerButton->setTexture(tex);
+            CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("allocatebtn-press.png");
+            BuildingInfoMenu::getThis()->selectWorkerButton->setTexture(theFrame->getTexture());
+            BuildingInfoMenu::getThis()->selectWorkerButton->setTextureRect(theFrame->getRect());
+        }
+    }
+    
+    if(RandomEventManager::getThis() != NULL && RandomEventManager::getThis()->background != NULL)
+    {
+        if(RandomEventManager::getThis()->okButton != NULL && RandomEventManager::getThis()->okButton->boundingBox().containsPoint(touchLoc) && RandomEventManager::getThis()->okButton->isVisible())
+        {
+            CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("confirm_press.png");
+            RandomEventManager::getThis()->okButton->setTexture(theFrame->getTexture());
+            RandomEventManager::getThis()->okButton->setTextureRect(theFrame->getRect());
+        }
+    }
+    
+    // check the interactions of san guo xiao xue tang
+    if(SanGuoXiaoXueTang::getThis() != NULL && SanGuoXiaoXueTang::getThis()->background != NULL)
+    {
+        if(SanGuoXiaoXueTang::getThis()->background->boundingBox().containsPoint(touchLoc))
+        {
+            /* section to handle san guo xiao xue tang interactions */
+            if(SanGuoXiaoXueTang::getThis()->buttonAnswer1->isVisible() && SanGuoXiaoXueTang::getThis()->buttonAnswer1->boundingBox().containsPoint(touchLoc))
+            {
+                CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("emptybtn_press.png");
+                SanGuoXiaoXueTang::getThis()->buttonAnswer1->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer1->setTextureRect(theFrame->getRect());
+            }
+            else if(SanGuoXiaoXueTang::getThis()->buttonAnswer2->isVisible() && SanGuoXiaoXueTang::getThis()->buttonAnswer2->boundingBox().containsPoint(touchLoc))
+            {
+                CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("emptybtn_press.png");
+                SanGuoXiaoXueTang::getThis()->buttonAnswer2->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer2->setTextureRect(theFrame->getRect());
+            }
+            else if(SanGuoXiaoXueTang::getThis()->buttonAnswer3->isVisible() && SanGuoXiaoXueTang::getThis()->buttonAnswer3->boundingBox().containsPoint(touchLoc))
+            {
+                CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("emptybtn_press.png");
+                SanGuoXiaoXueTang::getThis()->buttonAnswer3->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer3->setTextureRect(theFrame->getRect());
+            }
+            else if(SanGuoXiaoXueTang::getThis()->buttonAnswer4->isVisible() && SanGuoXiaoXueTang::getThis()->buttonAnswer4->boundingBox().containsPoint(touchLoc))
+            {
+                CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("emptybtn_press.png");
+                SanGuoXiaoXueTang::getThis()->buttonAnswer4->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer4->setTextureRect(theFrame->getRect());
+            }
+            else if(SanGuoXiaoXueTang::getThis()->buttonNext->isVisible() && SanGuoXiaoXueTang::getThis()->buttonNext->boundingBox().containsPoint(touchLoc))
+            {
+                CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("emptybtn_press.png");
+                SanGuoXiaoXueTang::getThis()->buttonNext->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonNext->setTextureRect(theFrame->getRect());
+            }
         }
     }
 }
@@ -442,12 +446,15 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         tapped = false;
     }
     
-    if(isEndingGame)
+    if(!isInGame)
     {
         return;
     }
     
-    isSwipe = true;
+    if(isEndingGame)
+    {
+        return;
+    }
     
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
@@ -486,7 +493,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         return;
     }
     // the second priority for draggin on the screen is to check whether it is for the system menu;
-    else if(SystemMenu::getThis() != NULL && !(TutorialManager::getThis()->lockSystemButton))
+    else if(SystemMenu::getThis() != NULL && SystemMenu::getThis()->isActive && !(TutorialManager::getThis()->lockSystemButton))
     {
         if(SystemMenu::getThis()->systemMenu_background->boundingBox().containsPoint(touchLoc))
         {
@@ -520,7 +527,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         if(GameHUD::getThis()->peaceButton != NULL)
         {
-            if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
+            if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->peaceButton->isVisible())
             {
                 skip = true;
             }
@@ -528,7 +535,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         if(GameHUD::getThis()->warButton != NULL)
         {
-            if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
+            if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->warButton->isVisible())
             {
                 skip = true;
             }
@@ -551,7 +558,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         if(GameHUD::getThis()->stickHappinessButton != NULL)
         {
-            if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
+            if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->stickHappinessButton->isVisible())
             {
                 skip = true;
             }
@@ -559,7 +566,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         if(GameHUD::getThis()->resumeHappinessButton != NULL)
         {
-            if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
+            if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->resumeHappinessButton->isVisible())
             {
                 skip = true;
             }
@@ -567,7 +574,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         if(GameHUD::getThis()->pauseButton != NULL)
         {
-            if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
+            if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->pauseButton->isVisible())
             {
                 skip = true;
             }
@@ -575,7 +582,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         if(GameHUD::getThis()->resumeButton != NULL)
         {
-            if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
+            if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->resumeButton->isVisible())
             {
                 skip = true;
             }
@@ -762,7 +769,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         // CCPoint scaleCenter = ccpMidpoint(touchLocationOne, touchLocationTwo);
         // scaleCenter = mapHandler->pointOnMapFromTouchLocation(scaleCenter);
         
-        mapHandler->scaleTo(currScale);
+        MapHandler::getThis()->scaleTo(currScale);
     }
     // Map dragging
     else
@@ -792,7 +799,7 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
         
         scrollDistance = moveDistance;
         
-        mapHandler->moveMapBy(moveX, moveY);
+        MapHandler::getThis()->moveMapBy(moveX, moveY);
     }
     
     isThisTapCounted = false;
@@ -800,9 +807,15 @@ void GameScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
 
 void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
 {
+    // CCLog("it is a tap!");
     if(tapped)
     {
         tapped = false;
+        return;
+    }
+    
+    if(!isInGame)
+    {
         return;
     }
     
@@ -813,6 +826,26 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
+    
+    if(BuildingInfoMenu::getThis() != NULL)
+    {
+        if(BuildingInfoMenu::getThis()->selectWorkerButton->isVisible())
+        {
+            CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("allocatebtn.png");
+            BuildingInfoMenu::getThis()->selectWorkerButton->setTexture(theFrame->getTexture());
+            BuildingInfoMenu::getThis()->selectWorkerButton->setTextureRect(theFrame->getRect());
+        }
+    }
+    
+    if(RandomEventManager::getThis() != NULL && RandomEventManager::getThis()->background != NULL)
+    {
+        if(RandomEventManager::getThis()->okButton != NULL && RandomEventManager::getThis()->okButton->isVisible())
+        {
+            CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("confirm.png");
+            RandomEventManager::getThis()->okButton->setTexture(theFrame->getTexture());
+            RandomEventManager::getThis()->okButton->setTextureRect(theFrame->getRect());
+        }
+    }
     
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL)
     {
@@ -884,7 +917,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         return;
     }
     // system menu
-    else if(SystemMenu::getThis() != NULL && !(TutorialManager::getThis()->lockSystemButton))
+    else if(SystemMenu::getThis() != NULL && SystemMenu::getThis()->isActive && !(TutorialManager::getThis()->lockSystemButton))
     {
         if(!hasBeenDragged)
         {
@@ -940,14 +973,14 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             
             if(GameHUD::getThis()->peaceButton != NULL && GameHUD::getThis()->warButton != NULL)
             {
-                if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->peaceButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->peaceButton->isVisible())
                 {
-                    GameHUD::getThis()->banditsAttack();
+                    NanhuaGameStaticAPI::banditsEndAttack();
                     skip = true;
                 }
-                else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc))
+                else if(GameHUD::getThis()->warButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->warButton->isVisible())
                 {
-                    GameHUD::getThis()->banditsAttack();
+                    NanhuaGameStaticAPI::banditsAttack(1);
                     skip = true;
                 }
             }
@@ -969,7 +1002,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
-            if(GameHUD::getThis()->showRandomEventManagerButton != NULL)
+            if(GameHUD::getThis()->showRandomEventManagerButton != NULL && GameHUD::getThis()->showRandomEventManagerButton->isVisible())
             {
                 /*
                 if(GameHUD::getThis()->showRandomEventManagerButton->boundingBox().containsPoint(touchLoc))
@@ -979,28 +1012,28 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
                 */
                 
-                /*
                 if(GameHUD::getThis()->showRandomEventManagerButton->boundingBox().containsPoint(touchLoc))
                 {
                     SanGuoXiaoXueTang::getThis()->clickSanGuoXiaoXueTangButton();
                 }
-                */
                 
+                /*
                 if(GameHUD::getThis()->showRandomEventManagerButton->boundingBox().containsPoint(touchLoc))
                 {
                     NotificationPopup::getThis()->showScenario3Congratulations();
                     skip = true;
                 }
+                */
             }
             
             if(GameHUD::getThis()->stickHappinessButton != NULL && GameHUD::getThis()->resumeHappinessButton != NULL)
             {
-                if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->stickHappinessButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->stickHappinessButton->isVisible())
                 {
                     GameHUD::getThis()->stickGameHappiness();
                     skip = true;
                 }
-                else if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc))
+                else if(GameHUD::getThis()->resumeHappinessButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->resumeHappinessButton->isVisible())
                 {
                     GameHUD::getThis()->stickGameHappiness();
                     skip = true;
@@ -1009,12 +1042,12 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             
             if(GameHUD::getThis()->pauseButton != NULL && GameHUD::getThis()->resumeButton != NULL)
             {
-                if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->pauseButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->pauseButton->isVisible())
                 {
                     UIButtonControl::clickPauseButton();
                     skip = true;
                 }
-                else if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc))
+                else if(GameHUD::getThis()->resumeButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->resumeButton->isVisible())
                 {
                     UIButtonControl::clickPauseButton();
                     skip = true;
@@ -1023,7 +1056,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             
             if(GameHUD::getThis()->scoreButton != NULL)
             {
-                if(GameHUD::getThis()->scoreButton->boundingBox().containsPoint(touchLoc))
+                if(GameHUD::getThis()->scoreButton->boundingBox().containsPoint(touchLoc) && GameHUD::getThis()->scoreButton->isVisible())
                 {
                     GameHUD::getThis()->clickScoreButton();
                     skip = true;
@@ -1042,7 +1075,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             {
                 if(GameHUD::getThis()->systemButton->boundingBox().containsPoint(touchLoc))
                 {
-                    RandomEventManager::getThis()->clickSystemButton();
+                    SystemMenu::getThis()->clickSystemButton();
                     skip = true;
                 }
             }
@@ -1092,6 +1125,15 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 }
             }
             
+            // random event manager okButton
+            if(RandomEventManager::getThis() != NULL && RandomEventManager::getThis()->background != NULL)
+            {
+                if(RandomEventManager::getThis()->okButton != NULL && RandomEventManager::getThis()->okButton->boundingBox().containsPoint(touchLoc) && RandomEventManager::getThis()->okButton->isVisible())
+                {
+                    RandomEventManager::getThis()->hideUI();
+                }
+            }
+            
             // check the building info menu
             if(BuildingInfoMenu::getThis() != NULL)
             {
@@ -1107,9 +1149,6 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     }
                     else if(BuildingInfoMenu::getThis()->selectWorkerButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->selectWorkerButton->isVisible())
                     {
-                        CCSprite* sprite = CCSprite::createWithSpriteFrameName("allocatebtn.png");
-                        CCTexture2D* tex = sprite->getTexture();
-                        BuildingInfoMenu::getThis()->selectWorkerButton->setTexture(tex);
                         BuildingInfoMenu::getThis()->selectPop();
                     }
                     else if(BuildingInfoMenu::getThis()->upgradeButton->boundingBox().containsPoint(touchLoc) && BuildingInfoMenu::getThis()->upgradeButton->isVisible())
@@ -1253,6 +1292,22 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             // check the interactions of san guo xiao xue tang
             if(SanGuoXiaoXueTang::getThis() != NULL && SanGuoXiaoXueTang::getThis()->background != NULL)
             {
+                CCSpriteFrame* theFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("emptybtn.png");
+                SanGuoXiaoXueTang::getThis()->buttonAnswer1->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer1->setTextureRect(theFrame->getRect());
+                
+                SanGuoXiaoXueTang::getThis()->buttonAnswer2->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer2->setTextureRect(theFrame->getRect());
+                
+                SanGuoXiaoXueTang::getThis()->buttonAnswer3->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer3->setTextureRect(theFrame->getRect());
+                
+                SanGuoXiaoXueTang::getThis()->buttonAnswer4->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonAnswer4->setTextureRect(theFrame->getRect());
+                
+                SanGuoXiaoXueTang::getThis()->buttonNext->setTexture(theFrame->getTexture());
+                SanGuoXiaoXueTang::getThis()->buttonNext->setTextureRect(theFrame->getRect());
+                
                 if(SanGuoXiaoXueTang::getThis()->background->boundingBox().containsPoint(touchLoc))
                 {
                     skip = true;
@@ -1340,9 +1395,9 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
     // it's a tap on the screen of the touch device
     int tapMode = GameHUD::getThis()->getTapMode();
     
-    CCPoint tilePos = mapHandler->tilePosFromTouchLocation(touchLoc);
+    CCPoint tilePos = MapHandler::getThis()->tilePosFromTouchLocation(touchLoc);
     
-    if (mapHandler->isTilePosWithinBounds(tilePos))
+    if (MapHandler::getThis()->isTilePosWithinBounds(tilePos))
     {
         switch (tapMode)
         {
@@ -1353,8 +1408,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     tilePos.y == lastPathPosPreview.y)
                 {
                     // confirm
-                    mapHandler->UnPathPreview();
-                    mapHandler->PathLine(firstPathPosPreview, lastPathPosPreview);
+                    MapHandler::getThis()->UnPathPreview();
+                    MapHandler::getThis()->PathLine(firstPathPosPreview, lastPathPosPreview);
                     // GameHUD::getThis()->buyBuilding(buildPathDistance * 10);
                     
                     SoundtrackManager::PlaySFX("construction.mp3");
@@ -1369,8 +1424,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 else
                 {
                     // modify
-                    mapHandler->UnPathPreviewLineExtend();
-                    lastPathPosPreview = mapHandler->PathPreviewLineExtend(touchLoc, 10);
+                    MapHandler::getThis()->UnPathPreviewLineExtend();
+                    lastPathPosPreview = MapHandler::getThis()->PathPreviewLineExtend(touchLoc, 10);
                     
                     // Manhattan dist, as it's always one-directional
                     setBuildPathDistance(1 + abs((lastPathPosPreview.x - firstPathPosPreview.x) +
@@ -1384,11 +1439,11 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             //Unbuild path to disallow unpath from mixing with building.
             case 4:
             {
-                MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
+                MapTile* selectedTile = MapHandler::getThis()->getTileAt(tilePos.x, tilePos.y);
                 
                 if (selectedTile->isPath)
                 {
-                    mapHandler->UnPath(tilePos);
+                    MapHandler::getThis()->UnPath(tilePos);
                     //GameHUD::getThis()->closeAllMenuAndResetTapMode();
                     
                 }
@@ -1400,10 +1455,10 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             //Buildpath first tap, show preview path.
             case 3:
             {
-                MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
+                MapTile* selectedTile = MapHandler::getThis()->getTileAt(tilePos.x, tilePos.y);
                 if (!selectedTile->hasBuilding() &&!selectedTile->isOccupied() && !selectedTile->isPath)
                 {
-                    mapHandler->PathPreview(tilePos);
+                    MapHandler::getThis()->PathPreview(tilePos);
                     GameHUD::getThis()->setTapMode(5);
                     firstPathPosPreview = tilePos;
                     lastPathPosPreview = tilePos;
@@ -1414,7 +1469,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             //Unbuild
             case 2:
             {
-                MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
+                MapTile* selectedTile = MapHandler::getThis()->getTileAt(tilePos.x, tilePos.y);
                 if (selectedTile->hasBuilding())
                 {
                     // buildingHandler->buildingsOnMap->removeObject(selectedTile->building);
@@ -1431,10 +1486,10 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     }
                     
                     // get the neareast valid path tile
-                    CCPoint nearestPathTile = mapHandler->getNearestPathTile(bui);
+                    CCPoint nearestPathTile = MapHandler::getThis()->getNearestPathTile(bui);
                     
                     // unlink all the villagers that has a relationship with the destroyed building.
-                    CCArray* allSprites = spriteHandler->spritesOnMap;
+                    CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
                     for (int i = 0; i < allSprites->count(); i++)
                     {
                         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
@@ -1444,13 +1499,15 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                             gs->currAction = IDLE;
                         }
                         
+                        // unlink the building with its member sprits who has this building as job location.
                         if(gs->getJobLocation() == bui || gs->getPossessions()->jobLocation == bui)
                         {
                             // CCLog("TEST MY BEST APPLE");
+                            gs->setIsDoingJob(false);
                             gs->setJobLocation(NULL);
                             if(gs->villagerClass != V_SOLDIER)
                             {
-                                // gs->changeToCitizen();
+                                gs->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
                             }
                             else
                             {
@@ -1460,26 +1517,61 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                                 gs->changeSpriteRepWhenLoadingGame();
                             }
                             gs->currAction = IDLE;
+                            gs->nextAction = IDLE;
+                            gs->setIsDoingJob(false);
+                            gs->setJob(NONE);
+                            gs->path->removeAllObjects();
+                            gs->hasAssigned = false;
                         }
                         
+                        // if the building is a home, all the member will become a refugee and lose their jobs.
                         if(gs->getHome() == bui)
                         {
                             gs->setHome(NULL);
-                            SpriteClass* sc = new SpriteClass();
-                            gs->changeClassTo(sc);
+                            gs->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
                             gs->currAction = IDLE;
-                            
-                            if(gs->getPossessions()->jobLocation != NULL)
+                            gs->nextAction = IDLE;
+                            if(gs->getJobLocation() != NULL)
                             {
-                                gs->getPossessions()->jobLocation->memberSpriteList->removeObject(gs);
+                                Building* tempBui = gs->getJobLocation();
+                                for(int j = 0; j < tempBui->memberSpriteList->count(); j++)
+                                {
+                                    GameSprite* gs = (GameSprite*) tempBui->memberSpriteList->objectAtIndex(j);
+                                    if(gs->getTargetLocation() == tempBui)
+                                    {
+                                        gs->setTargetLocation(NULL);
+                                        gs->currAction = IDLE;
+                                    }
+                                    
+                                    if(tempBui->buildingType == MILITARY)
+                                    {
+                                        gs->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(gs, V_REFUGEE), GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
+                                    }
+                                    else
+                                    {
+                                        gs->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_REFUGEE));
+                                    }
+                                    gs->setJobLocation(NULL);
+                                    gs->currAction = IDLE;
+                                    gs->nextAction = IDLE;
+                                    gs->setIsDoingJob(false);
+                                    gs->setJob(NONE);
+                                    gs->path->removeAllObjects();
+                                    gs->hasAssigned = false;
+                                }
+                                tempBui->memberSpriteList->removeAllObjects();
+                                tempBui->isCurrentWorking = false;
+                                
                                 gs->setJobLocation(NULL);
                                 gs->setJob(NONE);
                             }
+                            gs->path->removeAllObjects();
+                            gs->hasAssigned = false;
                         }
                         
-                        if(mapHandler->isSpriteInBuilding(gs, bui) && (nearestPathTile.x >= 0 && nearestPathTile.y >= 0))
+                        if(MapHandler::getThis()->isSpriteInBuilding(gs, bui) && (nearestPathTile.x >= 0 && nearestPathTile.y >= 0))
                         {
-                            CCPoint nearestPathPos = mapHandler->locationFromTilePos(&nearestPathTile);
+                            CCPoint nearestPathPos = MapHandler::getThis()->locationFromTilePos(&nearestPathTile);
                             gs->spriteRep->setVisible(true);
                             gs->spriteRep->setPosition(nearestPathPos);
                         }
@@ -1487,7 +1579,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     
                     bui->memberSpriteList->removeAllObjects();
                     
-                    mapHandler->UnBuild(tilePos);
+                    MapHandler::getThis()->UnBuild(tilePos);
                     GameHUD::getThis()->closeAllMenuAndResetTapMode();
                 }
              
@@ -1497,7 +1589,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 //Build 
             case 1:
             {
-                Building* newBuilding = (Building*)buildingHandler->selectedBuilding;
+                Building* newBuilding = (Building*)BuildingHandler::getThis()->selectedBuilding;
                 if (newBuilding == NULL)
                 {
                     CCLog("Warning, no building selected");
@@ -1509,8 +1601,8 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 {
                     //build
                     //allow a building to be built on top of a path.
-                    mapHandler->UnPath(tilePos);
-                    if (mapHandler->Build(tilePos, newBuilding, true, false, "", true))
+                    MapHandler::getThis()->UnPath(tilePos);
+                    if (MapHandler::getThis()->Build(tilePos, newBuilding, true, false, "", true))
                     {
                         GameHUD::getThis()->closeAllMenuAndResetTapMode();
                         lastTilePosPreview.x = INT_MAX;
@@ -1521,15 +1613,15 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                 {
                     if(TutorialManager::getThis()->active && (TutorialManager::getThis()->teachBuildHouse || TutorialManager::getThis()->teachBuildGranary))
                     {
-                        if(mapHandler->currBuildingPreview == NULL)
+                        if(MapHandler::getThis()->currBuildingPreview == NULL)
                         {
                             TutorialManager::getThis()->miniDragon->clickNext();
                         }
                     }
                     
-                    mapHandler->UnBuildPreview();
+                    MapHandler::getThis()->UnBuildPreview();
 
-                    if (mapHandler->BuildPreview(tilePos, newBuilding))
+                    if (MapHandler::getThis()->BuildPreview(tilePos, newBuilding))
                     {
                         lastTilePosPreview = tilePos;
                     }
@@ -1546,24 +1638,20 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
             //Check if clicking on building/sprite/tokens
             default:
             {
-                if (!banditsAttackHandler->warMode)
+                if (!BanditsAttackHandler::getThis()->warMode)
                 {
                     if (!handleTouchTokens(touchLoc))
                     {
-                        // if touched tokens, don't check for sprite and building
-                        //if (!handleTouchSprite(touchLoc))
-                        //{
-                            // if touched sprite, dont check for building
-                            if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockPopup))
-                            {
-                                handleTouchBuilding(touchLoc, tilePos);
-                            }
-                        //}
+                        // if touched sprite, dont check for building
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && !TutorialManager::getThis()->lockPopup))
+                        {
+                            handleTouchBuilding(touchLoc, tilePos);
+                        }
                     }
                 }
                 else
                 {
-                    //handleTouchSprite(touchLoc);
+                    handleTouchBandits(touchLoc);
                 }
             }
                 break;
@@ -1576,8 +1664,8 @@ void GameScene::centerCamera(Building* b, bool instant)
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // get the currentPosition
-    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
-    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    float xPos = - MapHandler::getThis()->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - MapHandler::getThis()->getMap()->getPositionY() + screenSize.height / 2.0f;
     
     // get the horizontal and vertical length difference between the screen centre and the target position!
     float xDiff = b->buildingRep->getPositionX() - xPos;
@@ -1585,7 +1673,7 @@ void GameScene::centerCamera(Building* b, bool instant)
     
     if(instant)
     {
-        mapHandler->moveMapBy(-xDiff, -yDiff);
+        MapHandler::getThis()->moveMapBy(-xDiff, -yDiff);
         CCLog("%f, %f", xPos + xDiff, yPos + yDiff);
     }
     else
@@ -1606,8 +1694,8 @@ void GameScene::scrollToCenter(float dt)
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // get the current position
-    float xPos = - mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
-    float yPos = - mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    float xPos = - MapHandler::getThis()->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - MapHandler::getThis()->getMap()->getPositionY() + screenSize.height / 2.0f;
     
     // get the horizontal and vertical length difference between the screen centre and the target position!
     float xDiff = targetBuilding->buildingRep->getPositionX() - xPos;
@@ -1700,7 +1788,7 @@ void GameScene::scrollToCenter(float dt)
         }
     }
     
-    mapHandler->moveMapBy(-xDis, -yDis);
+    MapHandler::getThis()->moveMapBy(-xDis, -yDis);
 }
 
 // going to finish deccelerating dragging.
@@ -1720,7 +1808,7 @@ void GameScene::decceleratingDragging(float dt)
     }
     
     scrollDistance = ccpMult(scrollDistance, SCROLL_DEACCEL_RATE);
-    mapHandler->moveMapBy(scrollDistance.x, scrollDistance.y);
+    MapHandler::getThis()->moveMapBy(scrollDistance.x, scrollDistance.y);
     
     if ((fabsf(scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(scrollDistance.y) <= SCROLL_DEACCEL_DIST))
@@ -1732,119 +1820,228 @@ void GameScene::decceleratingDragging(float dt)
 
 }
 
+void GameScene::loadLevelBuildings()
+{
+    int level = UserProfile::getThis()->gameLevel;
+    
+    MapHandler::getThis()->loadLevelBuildings(level);
+}
+
 /*we can only start adding sprites to the gamescene after init(), so putting buildings dynamically on the map has to be done here. */
 void GameScene::FirstRunPopulate()
 {
-    if(!CCUserDefault::sharedUserDefault()->getBoolForKey("isLoadingGame"))
-    {
-        mapHandler->Populate(buildingHandler->allBuildingLayers);
-    }
-    
-    spriteHandler->initialize();
-
     GameManager::getThis()->initGameData();
     
+    if(!CCUserDefault::sharedUserDefault()->getBoolForKey("isLoadingGame"))
+    {
+        MapHandler::getThis()->Populate(BuildingHandler::getThis()->allBuildingLayers);
+        loadLevelBuildings();
+    }
+
     if(CCUserDefault::sharedUserDefault()->getBoolForKey("isLoadingGame"))
     {
-        mapHandler->PopulateForLoadingGame(buildingHandler->allBuildingLayers);
+        MapHandler::getThis()->PopulateForLoadingGame(BuildingHandler::getThis()->allBuildingLayers);
         // load game type: 0 for auto save, 1 for fixed save, 2 for custom save
         int loadGameType = CCUserDefault::sharedUserDefault()->getIntegerForKey("loadingGameType");
         GameManagement::loadData(loadGameType);
+        
+        for(int i = 0; i < SpriteHandler::getThis()->spritesOnMap->count(); i++)
+        {
+            GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(i);
+            // I must restore all the paths from the villagers!
+            gs->followPath();
+        }
     }
     else
     {
         // new game
-        CCPoint target = CCPointMake(32,43);
-        
-        spriteHandler->addSpriteToMap(target, V_REFUGEE);
-        
-        target.x += 1;
-        spriteHandler->addSpriteToMap(target, V_REFUGEE);
-        
-        target.x += 1;
-        spriteHandler->addSpriteToMap(target, V_REFUGEE);
-        
-        target.x += 1;
-        spriteHandler->addSpriteToMap(target, V_REFUGEE);
-    }
-    
-    for (int i = 0; i < spriteHandler->spritesOnMap->count(); ++i)
-    {
-        GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
-        sp->setAction(IDLE);
+        for (int i = 0; i < SpriteHandler::getThis()->spritesOnMap->count(); ++i)
+        {
+            GameSprite* sp = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(i);
+            sp->setAction(IDLE);
+        }
     }
     
     // set up the animated rain!
     //animatedRain = AnimatedRain::create();
     
-    if (!testMode)
-    {
-        GameManager::getThis()->UpdateUnlocks();
-    }
-    else
-    {
-        GameManager::getThis()->UnlockAll();
-    }
+    enableTouch();
     
-    this->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
+    isInGame = true;
     
-    mapHandler->rescaleScrollLimits();
+    MapHandler::getThis()->rescaleScrollLimits();
+}
+
+void GameScene::startGame()
+{
+    GameManager::getThis()->enableGameScene();
+    reSetupLevel(true);
+    GameHUD::getThis()->resetGameHUD();
+    FirstRunPopulate();
+}
+
+void GameScene::loadGame()
+{
+    GameManager::getThis()->enableGameScene();
+    GameHUD::getThis()->resetGameHUD();
+    ObjectiveHandler::getThis()->loadObjective();
+    configSkipData();
+    FirstRunPopulate();
+    
+    stringstream ss;
+    ss.str(std::string());
+    ss << "loadingGameType";
+    int type = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
+    
+    if(type == 2)
+    {
+        TutorialManager::getThis()->unlockAll();
+    }
 }
 
 void GameScene::stopGame()
 {
-    mapHandler->UnBuildEndGame();
-    GameManager::getThis()->EndGameData();
-    this->removeAllChildren();
+    // close all popupMenu
+    if(BuildingInfoMenu::getThis() != NULL)
+    {
+        BuildingInfoMenu::getThis()->closeMenu(false);
+    }
     
-    delete mapHandler;
-    delete buildingHandler;
-    delete spriteHandler;
-    delete constructionHandler;
+    if(SpriteInfoMenu::getThis() != NULL)
+    {
+        SpriteInfoMenu::getThis()->closeMenu(false);
+    }
+    
+    if(SelectPopulation::getThis() != NULL)
+    {
+        SelectPopulation::getThis()->closeMenu(false);
+    }
+    
+    PopupMenu::clean();
+    
+    // close random event manager
+    if(RandomEventManager::getThis()->active)
+    {
+        RandomEventManager::getThis()->hideUI();
+    }
+    
+    // clear all fish anims
+    CCArray* fishAnimOnMap = SpriteHandler::getThis()->fishAnimOnMap;
+    while(fishAnimOnMap->count() > 0)
+    {
+        CCSprite* sprite = (CCSprite*) fishAnimOnMap->objectAtIndex(0);
+        MapHandler::getThis()->getMap()->removeChild(sprite, true);
+        fishAnimOnMap->removeObject(sprite);
+    }
+    
+    // remove all buildings on map
+    MapHandler::getThis()->UnBuildEndGame();
+    MapHandler::getThis()->UnBuildAllPath();
+    GameManager::getThis()->EndGameData();
+    
+    // remove all entries in constructionHandler
+    ConstructionHandler::getThis()->clear();
+    
+    // remove all game sprites on map
+    CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
+    while (spritesOnMap->count() > 0)
+    {
+        GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(0);
+        SpriteHandler::getThis()->removeSpriteFromMap(gs);
+    }
+    
+    CCArray* tokensOnMap = SpriteHandler::getThis()->tokensOnMap;
+    while(tokensOnMap->count() > 0)
+    {
+        ReputationOrb* ro = (ReputationOrb*) tokensOnMap->objectAtIndex(0);
+        SpriteHandler::getThis()->removeTokenFromMap(ro);
+    }
+    
+    // remove all entries in spriteHandler
+    SpriteHandler::getThis()->clear();
+    
+    // remove all entries in buildingHandler
+    BuildingHandler::getThis()->clear();
+    
+    // reset bandits attack handler
+    BanditsAttackHandler::getThis()->initialize();
+    
+    // if it is in tutorial, need to clear tutorial module
+    if(TutorialManager::getThis()->active)
+    {
+        TutorialManager::getThis()->clearSprites();
+    }
+    
+    // reset up GameScene
+    this->resetupAllData();
+    
+    // clear GameHUD when quit game
+    GameHUD::getThis()->clearWhenQuitGame();
+    
+    // reset town hall level
+    GameManager::getThis()->town_hall_level = 0;
+    
+    MainMenuScene::getThis()->loadTeacherManagementTextures();
+    MainMenuScene::getThis()->loadMainMenuTextures();
+    MainMenuScene::getThis()->init();
+    GameManager::getThis()->enableMainMenuScene();
+    
+    isEndingGame = false;
+    isInGame = false;
     
     GlobalHelper::clearCache();
-    GlobalHelper::clearPreloadedTexture();
-    
-    enableLoadingScreen();
-    
-    this->scheduleOnce(schedule_selector(GameScene::goToMainMenu), 0.1f);
 }
 
 void GameScene::update(float time)
 {
+    if(MainMenuScene::getThis()->isActive())
+    {
+        MainMenuScene::getThis()->update(time);
+        return;
+    }
+    
+    if(SenarioChooseScene::getThis()->isActive())
+    {
+        return;
+    }
+    
+    if(!isInGame)
+    {
+        return;
+    }
+    
     if(isEndingGame)
     {
-        this->unschedule(schedule_selector(GameScene::update));
         return;
     }
     
     if(!GameHUD::getThis()->pause)
     {
-        for (int i = 0; i < spriteHandler->spritesOnMap->count(); i++)
+        for (int i = 0; i < SpriteHandler::getThis()->spritesOnMap->count(); i++)
         {
-            GameSprite* sp = (GameSprite*) spriteHandler->spritesOnMap->objectAtIndex(i);
+            GameSprite* sp = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(i);
             sp->updateSprite(time);
         }
         
-        for (int i = 0; i < buildingHandler->allBuildingsOnMap->count(); i++)
+        for (int i = 0; i < BuildingHandler::getThis()->allBuildingsOnMap->count(); i++)
         {
-            Building* b = (Building*) buildingHandler->allBuildingsOnMap->objectAtIndex(i);
+            Building* b = (Building*) BuildingHandler::getThis()->allBuildingsOnMap->objectAtIndex(i);
             b->updateBuilding(time);
         }
         
-        for (int i = 0; i < buildingHandler->allBuildingsGhostOnMap->count(); i++)
+        for (int i = 0; i < BuildingHandler::getThis()->allBuildingsGhostOnMap->count(); i++)
         {
-            Building* b = (Building*) buildingHandler->allBuildingsGhostOnMap->objectAtIndex(i);
+            Building* b = (Building*) BuildingHandler::getThis()->allBuildingsGhostOnMap->objectAtIndex(i);
             b->updateBuilding(time);
         }
         
-        constructionHandler->update(time);
+        ConstructionHandler::getThis()->update(time);
         GameHUD::getThis()->update(time);
     
-        spriteHandler->update(time);
-        banditsAttackHandler->update(time);
+        SpriteHandler::getThis()->update(time);
+        BanditsAttackHandler::getThis()->update(time);
         
-        mapHandler->update(time);
+        MapHandler::getThis()->update(time);
         if(ObjectiveHandler::getThis() != NULL)
         {
             ObjectiveHandler::getThis()->update(time);
@@ -1855,40 +2052,6 @@ void GameScene::update(float time)
         {
             GlobalHelper::clearCache();
             clearCacheTime = 0;
-        }
-        
-        if(GameManager::getThis()->getLevel() == 2)
-        {
-            float totalScore = 0;
-            CCArray* soldiersOnMap = spriteHandler->spritesOnMap;
-            for (int i = 0; i < soldiersOnMap->count(); i++)
-            {
-                GameSprite* gs = (GameSprite*)soldiersOnMap->objectAtIndex(i);
-                if(gs->villagerClass == V_SOLDIER)
-                {
-                    totalScore += 100.0f;
-                }
-            }
-            
-            if(mGameGuardTowerScore != totalScore)
-            {
-                mGameGuardTowerScore = totalScore;
-                GameHUD::getThis()->guardTowerScore = totalScore;
-                GameHUD::getThis()->guardTowerScoreBar->setValue(((GameHUD::getThis()->guardTowerScore > 1000.0f) ? 1000.0: GameHUD::getThis()->guardTowerScore) / 1000.0);
-                
-                stringstream ss;
-                if(GameHUD::getThis()->guardTowerScore > 1000)
-                {
-                    ss << "1000";
-                }
-                else
-                {
-                    ss << GameHUD::getThis()->guardTowerScore;
-                }
-                ss << "/1000";
-                
-                GameHUD::getThis()->guardTowerScoreLabel->setString(ss.str().c_str());
-            }
         }
         
         if(!TutorialManager::getThis()->active && !RandomEventManager::getThis()->active)
@@ -1913,7 +2076,7 @@ void GameScene::update(float time)
     {
         if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->waitForVillager)
         {
-            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+            CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
             for(int i = 0; i < allSprites->count(); i++)
             {
                 GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
@@ -1928,7 +2091,7 @@ void GameScene::update(float time)
         
         if(TutorialManager::getThis()->miniDragon != NULL && TutorialManager::getThis()->miniDragon->finalObjective && Senario::getThis()->scenarioState == Tutorial)
         {
-            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+            CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
             int temp = 0;
             for(int i = 0; i < allSprites->count(); i++)
             {
@@ -1949,7 +2112,7 @@ void GameScene::update(float time)
     /* check for teach fighting */
     if(TutorialManager::getThis()->active && TutorialManager::getThis()->teachFighting)
     {
-        CCArray* allSpritesOnMap = spriteHandler->spritesOnMap;
+        CCArray* allSpritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         bool teachFightingSuccess = true;
         
         for(int i = 0; i < allSpritesOnMap->count(); i++)
@@ -1965,11 +2128,15 @@ void GameScene::update(float time)
         {
             if(TutorialManager::getThis()->miniDragon != NULL)
             {
-                GameHUD::getThis()->banditsAttack();
+                NanhuaGameStaticAPI::banditsEndAttack();
                 TutorialManager::getThis()->miniDragon->clickNext();
             }
         }
     }
+    
+    return;
+    
+    /* auto save function is currently disabled due to change of main mechanism framework! do it later. */
     
     if(!TutorialManager::getThis()->active)
     {
@@ -1985,7 +2152,7 @@ void GameScene::checkAutoSave(float deltaTime)
     
     if(autoSaveTimeLeft <= 0)
     {
-        GameManagement::saveData(0);
+        GameManagement::saveGameToFile(0);
         autoSaveTimeLeft = autoSaveTimeInterval;
     }
 }
@@ -1995,7 +2162,7 @@ void GameScene::checkTeachBuildRoad()
     Building* house = NULL;
     Building* granary = NULL;
     Building* farm = NULL;
-    Building* townHall = (Building*) buildingHandler->specialOnMap->objectAtIndex(0);
+    Building* townHall = (Building*) BuildingHandler::getThis()->specialOnMap->objectAtIndex(0);
     
     CCPoint housePos = CCPointZero;
     CCPoint granaryPos = CCPointZero;
@@ -2004,34 +2171,34 @@ void GameScene::checkTeachBuildRoad()
     
     if(TutorialManager::getThis()->miniDragon->connectHouse)
     {
-        house = (Building*) buildingHandler->housingOnMap->objectAtIndex(0);
+        house = (Building*) BuildingHandler::getThis()->housingOnMap->objectAtIndex(0);
         housePos = house->getWorldPosition();
-        housePos = GameScene::getThis()->mapHandler->tilePosFromLocation(housePos);
+        housePos = MapHandler::getThis()->tilePosFromLocation(housePos);
     }
     else if(TutorialManager::getThis()->miniDragon->connectGranary)
     {
-        granary = (Building*) buildingHandler->granaryOnMap->objectAtIndex(0);
+        granary = (Building*) BuildingHandler::getThis()->granaryOnMap->objectAtIndex(0);
         granaryPos = granary->getWorldPosition();
-        granaryPos = GameScene::getThis()->mapHandler->tilePosFromLocation(granaryPos);
+        granaryPos = MapHandler::getThis()->tilePosFromLocation(granaryPos);
     }
     else if(TutorialManager::getThis()->miniDragon->connectFarm)
     {
-        farm = (Building*) buildingHandler->amenityGhostOnMap->objectAtIndex(0);
+        farm = (Building*) BuildingHandler::getThis()->amenityGhostOnMap->objectAtIndex(0);
         farmPos = farm->getWorldPosition();
-        farmPos = GameScene::getThis()->mapHandler->tilePosFromLocation(farmPos);
+        farmPos = MapHandler::getThis()->tilePosFromLocation(farmPos);
     }
     
     townHallPos = townHall->getWorldPosition();
-    townHallPos = GameScene::getThis()->mapHandler->tilePosFromLocation(townHallPos);
+    townHallPos = MapHandler::getThis()->tilePosFromLocation(townHallPos);
     
     
     Building* granGhost = NULL;
     CCPoint granGPos = CCPointZero;
     if(TutorialManager::getThis()->miniDragon->notFirst)
     {
-        granGhost = (Building*) buildingHandler->granaryGhostOnMap->objectAtIndex(0);
+        granGhost = (Building*) BuildingHandler::getThis()->granaryGhostOnMap->objectAtIndex(0);
         granGPos = granGhost->getWorldPosition();
-        granGPos = GameScene::getThis()->mapHandler->tilePosFromLocation(granGPos);
+        granGPos = MapHandler::getThis()->tilePosFromLocation(granGPos);
     }
     
     PathFinder *p = new PathFinder();
@@ -2070,7 +2237,7 @@ void GameScene::checkTeachBuildRoad()
 
 bool GameScene::handleTouchTokens(CCPoint touchLoc)
 {
-    CCArray* allTokens = spriteHandler->tokensOnMap;
+    CCArray* allTokens = SpriteHandler::getThis()->tokensOnMap;
     if(allTokens == NULL)
     {
         return false;
@@ -2094,7 +2261,7 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
             continue;
         }
         
-        if (ob->getSprite()->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
+        if (ob->getSprite()->boundingBox().containsPoint(MapHandler::getThis()->pointOnMapFromTouchLocation(touchLoc)))
         {
             if(ob->orbStatus != EXIST)
             {
@@ -2112,7 +2279,7 @@ bool GameScene::handleTouchTokens(CCPoint touchLoc)
 
 bool GameScene::handleTouchSprite(CCPoint touchLoc)
 {
-    CCArray* gameSprites = spriteHandler->spritesOnMap;
+    CCArray* gameSprites = SpriteHandler::getThis()->spritesOnMap;
     if(gameSprites == NULL){
         return false;
     }
@@ -2127,9 +2294,9 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
         if (!gameSprite->spriteRep->isVisible())
             continue;
         
-        if (gameSprite->spriteRep->boundingBox().containsPoint(mapHandler->pointOnMapFromTouchLocation(touchLoc)))
+        if (gameSprite->spriteRep->boundingBox().containsPoint(MapHandler::getThis()->pointOnMapFromTouchLocation(touchLoc)))
         {
-            if (!banditsAttackHandler->warMode)
+            if (!BanditsAttackHandler::getThis()->warMode)
             {
                 PopupMenu::backupCurrentPopupMenu();
                 SpriteInfoMenu* spriteInfoMenu = SpriteInfoMenu::create(gameSprite);
@@ -2155,9 +2322,45 @@ bool GameScene::handleTouchSprite(CCPoint touchLoc)
     return false;
 }
 
+bool GameScene::handleTouchBandits(CCPoint touchLoc)
+{
+    CCArray* gameSprites = SpriteHandler::getThis()->spritesOnMap;
+    if(gameSprites == NULL){
+        return false;
+    }
+    if (gameSprites->count() == 0) return false;
+    
+    for (int i = 0; i < gameSprites->count(); i++)
+    {
+        GameSprite* gameSprite = (GameSprite*) gameSprites->objectAtIndex(i);
+        
+        if(gameSprite == NULL)
+        {
+            continue;
+        }
+        
+        if(!gameSprite->spriteRep->isVisible())
+        {
+            continue;
+        }
+        
+        if(gameSprite->villagerClass == V_BANDIT && gameSprite->tryEscape)
+        {
+            continue;
+        }
+        
+        if(gameSprite->spriteRep->boundingBox().containsPoint(MapHandler::getThis()->pointOnMapFromTouchLocation(touchLoc)) && gameSprite->villagerClass == V_BANDIT)
+        {
+            gameSprite->damaged(50);
+            return true;
+        }
+    }
+    return false;
+}
+
 bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
 {
-    MapTile* selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
+    MapTile* selectedTile = MapHandler::getThis()->getTileAt(tilePos.x, tilePos.y);
     if (selectedTile == NULL) return false;
     // Firstly, check by tile
     if (selectedTile->hasBuilding())
@@ -2170,7 +2373,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         {
             if(selectedTile->building->isUnderConstruction())
             {
-                if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding)) || !TutorialManager::getThis()->active)
+                if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding || TutorialManager::getThis()->teachBuildGuardTower || TutorialManager::getThis()->teachSoldier)) || !TutorialManager::getThis()->active)
                 {
                     PopupMenu::backupCurrentPopupMenu();
                     
@@ -2195,7 +2398,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
             }
             else
             {
-                if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY) || TutorialManager::getThis()->freeBuilding)))
+                if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY) || TutorialManager::getThis()->freeBuilding || TutorialManager::getThis()->teachBuildGuardTower || TutorialManager::getThis()->teachSoldier)))
                 {
                     PopupMenu::backupCurrentPopupMenu();
                     BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
@@ -2213,9 +2416,9 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
         // Checks (n) number of tiles southwards to see if it is occupied.
         // If so, check if the buildingRep is touched.
         const int numberOfTilesToCheck = 6;
-        CCPoint touchWorldLoc = mapHandler->pointOnMapFromTouchLocation(touchLoc);
+        CCPoint touchWorldLoc = MapHandler::getThis()->pointOnMapFromTouchLocation(touchLoc);
         
-        bool isRightwards = touchWorldLoc.x >= mapHandler->locationFromTilePos(&tilePos).x ? true : false;
+        bool isRightwards = touchWorldLoc.x >= MapHandler::getThis()->locationFromTilePos(&tilePos).x ? true : false;
         
         for (int i = 0; i < numberOfTilesToCheck; i++)
         {
@@ -2224,7 +2427,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
             else
                 tilePos.x++;
             
-            selectedTile = mapHandler->getTileAt(tilePos.x, tilePos.y);
+            selectedTile = MapHandler::getThis()->getTileAt(tilePos.x, tilePos.y);
             if (!selectedTile) continue;
             
             if (selectedTile->hasBuilding())
@@ -2240,7 +2443,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                 {
                     if(selectedTile->building->isUnderConstruction())
                     {
-                        if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding)) || !TutorialManager::getThis()->active)
+                        if((TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachBuildHouse && selectedTile->building->buildingType == HOUSING) || TutorialManager::getThis()->freeBuilding || TutorialManager::getThis()->teachBuildGuardTower || TutorialManager::getThis()->teachSoldier)) || !TutorialManager::getThis()->active)
                         {
                             PopupMenu::backupCurrentPopupMenu();
                             
@@ -2265,7 +2468,7 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
                     }
                     else
                     {
-                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY) || TutorialManager::getThis()->freeBuilding)))
+                        if(!TutorialManager::getThis()->active || (TutorialManager::getThis()->active && ((TutorialManager::getThis()->teachFarming && selectedTile->building->buildingType == AMENITY) || TutorialManager::getThis()->freeBuilding || TutorialManager::getThis()->teachBuildGuardTower || TutorialManager::getThis()->teachSoldier)))
                         {
                             PopupMenu::backupCurrentPopupMenu();
                             BuildingInfoMenu* buildingInfoMenu = BuildingInfoMenu::create(selectedTile->building);//new BuildingInfoMenu(selectedTile->building);
@@ -2285,8 +2488,8 @@ bool GameScene::handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos)
 
 void GameScene::resetBuildMode()
 {
-    mapHandler->UnBuildPreview();
-    mapHandler->UnPathPreview();
+    MapHandler::getThis()->UnBuildPreview();
+    MapHandler::getThis()->UnPathPreview();
     
     lastTilePosPreview.x = INT_MAX;
     lastTilePosPreview.y = INT_MAX;
@@ -2324,5 +2527,30 @@ void GameScene::enableLoadingScreen()
 
 void GameScene::goToMainMenu()
 {
-    CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
+    GlobalHelper::clearCache();
+    CCUserDefault::sharedUserDefault()->setBoolForKey("LoadTextureMainMenu", true);
+    // CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
+}
+
+void GameScene::resetupAllData()
+{
+    currScale = 1.0f;
+    MapHandler::getThis()->scaleTo(currScale);
+    
+    hasBeenDragged = false;
+    isInDeccelerating = false;
+    scrollDistance = CCPointZero;
+    
+    tapped = false;
+    
+    targetBuilding = NULL;
+    clearCacheTime = 0;
+    
+    autoSaveTimeLeft = autoSaveTimeInterval;
+    randomEventCumulativeTime = 0;
+}
+
+bool GameScene::isActive()
+{
+    return GameHUD::getThis()->isVisible();
 }

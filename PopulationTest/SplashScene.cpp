@@ -8,6 +8,8 @@
 
 #include "SplashScene.h"
 #include "MainMenuScene.h"
+#include "SenarioChooseScene.h"
+#include "GameScene.h"
 #include "GameManager.h"
 #include "GlobalHelper.h"
 #include "Senario.h"
@@ -23,6 +25,8 @@
 #include "GlobalOutcomeModifier.h"
 #include "GameHUD.h"
 #include "NotificationPopup.h"
+#include "UserProfile.h"
+#include "SystemMenu.h"
 
 SplashScene* SplashScene::SP;
 
@@ -56,6 +60,8 @@ CCScene* SplashScene::scene()
     // add layer as a child to scene
     scene->addChild(layer);
     
+    new UserProfile();
+    
     Senario* senlayer = Senario::create();
     senlayer->retain();
     
@@ -77,17 +83,27 @@ CCScene* SplashScene::scene()
     NotificationPopup* notlayer = NotificationPopup::create();
     notlayer->retain();
     
-    ConstructionHandler* conhandler = new ConstructionHandler();
+    MainMenuScene* mmslayer = MainMenuScene::create();
+    mmslayer->retain();
     
-    BanditsAttackHandler* banhandler = new BanditsAttackHandler();
+    SenarioChooseScene* scslayer = SenarioChooseScene::create();
+    scslayer->retain();
     
-    MapHandler* maphandler = new MapHandler();
+    SystemMenu* syslayer = SystemMenu::create();
+    syslayer->retain();
     
-    SpriteHandler* sprhandler = new SpriteHandler();
+    new ConstructionHandler();
     
-    BuildingHandler* buihandler = new BuildingHandler();
+    new BanditsAttackHandler();
     
-    GlobalOutcomeModifier* glomodifier = new GlobalOutcomeModifier();
+    // create map handler.
+    new MapHandler();
+    
+    new SpriteHandler();
+    
+    new BuildingHandler();
+    
+    new GlobalOutcomeModifier();
     
     // return the scene
     return scene;
@@ -158,7 +174,10 @@ void SplashScene::update(float dt){
                 this->removeChild(splashImage, true);
                 GlobalHelper::clearCache();
                 clearTextureNode();
-                CCDirector::sharedDirector()->replaceScene(MainMenuScene::scene());
+                
+                CCUserDefault::sharedUserDefault()->setBoolForKey("LoadTextureMainMenu", true);
+                
+                CCDirector::sharedDirector()->replaceScene(GameScene::scene());
             }
             break;
             
@@ -175,10 +194,7 @@ void SplashScene::onOrientationChanged()
 
 void SplashScene::clearTextureNode()
 {
-    this->removeChild(teacherManagementNode, true);
-    this->removeChild(mainGamePageNode, true);
     this->removeChild(extraTextureNode, true);
-    this->removeChild(mainMenuSceneNode, true);
     this->removeChild(gameHUDNode, true);
     this->removeChild(buildingInforMenuNode, true);
     this->removeChild(buildScrollNode, true);
@@ -203,10 +219,7 @@ void SplashScene::clearTextureNode()
     this->removeChild(defendNode, true);
     this->removeChild(noFoodNode, true);
     
-    teacherManagementNode = NULL;
-    mainGamePageNode = NULL;
     extraTextureNode = NULL;
-    mainMenuSceneNode = NULL;
     gameHUDNode = NULL;
     buildingInforMenuNode = NULL;
     buildScrollNode = NULL;
@@ -234,25 +247,10 @@ void SplashScene::clearTextureNode()
 
 void SplashScene::preloadTextures()
 {
-    // teacher management node
-    teacherManagementNode = CCSpriteBatchNode::create("teacherManagement.png");
-    this->addChild(teacherManagementNode);
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("teacherManagement.plist");
-    
-    // main game page texture node
-    mainGamePageNode = CCSpriteBatchNode::create("MainGamePageTexture.png");
-    this->addChild(mainGamePageNode);
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("MainGamePageTexture.plist");
-    
     // extra texture node
     extraTextureNode = CCSpriteBatchNode::create("Extra.png");
     this->addChild(extraTextureNode);
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Extra.plist");
-    
-    // level select scene
-    mainMenuSceneNode = CCSpriteBatchNode::create("LevelSelectSceneSpriteSheet.png");
-    this->addChild(mainMenuSceneNode);
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("LevelSelectSceneSpriteSheet.plist");
     
     // game hud node
     gameHUDNode = CCSpriteBatchNode::create("GameHUD.png");

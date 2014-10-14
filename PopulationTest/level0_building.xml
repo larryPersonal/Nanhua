@@ -1,0 +1,92 @@
+<?xml encoding="ISO-8859-1"?>
+<project>
+    #buildings
+    <building>
+        <type>housing</type>
+        <posX>33</posX>
+        <posY>48</posY>
+    </building>
+    <building>
+        <type>granary</type>
+        <posX>44</posX>
+        <posY>48</posY>
+    </building>
+    
+    #sprite
+    
+    #roads
+    // road 1
+    <building>
+        <type>road</type>
+        <posX>45</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>46</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>47</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>48</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>49</posX>
+        <posY>47</posY>
+    </building>
+    
+    // road 2
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>51</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>52</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>53</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>54</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>55</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>56</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>57</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>58</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>39</posX>
+        <posY>59</posY>
+    </building>
+</project>
+

@@ -73,7 +73,6 @@ public:
     
     CCArray* mapTiles;
     CCArray* pathTiles; //this array keeps all mapTiles that are marked as Path.
-    CCArray* combatTiles;
     
     MapTile* getTileAt(int X, int Y);
     CCTMXTiledMap* getMap();
@@ -148,6 +147,12 @@ public:
     bool checkExtremePosition(float moveX, float moveY);
     
     CCPoint forceBounds(CCPoint &tilePos);
+    
+    void loadLevelBuildings(int level);
+    
+    void buildTheBuildingWhenLoadingMap(string type, int posX, int posY);
+    
+    void UnBuildAllPath();
 };
 
 

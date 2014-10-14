@@ -13,7 +13,7 @@
 
 using namespace cocos2d;
 
-class SystemMenu : public CCObject
+class SystemMenu : public CCLayer
 {
     
 public:
@@ -21,10 +21,10 @@ public:
     
     CCSprite* blackScreen;
     CCSprite* systemMenu_background;
-    CCMenuItemImage* systemMenu_resumeButton;
-    CCMenuItemImage* systemMenu_optionButton;
-    CCMenuItemImage* systemMenu_restartButton;
-    CCMenuItemImage* systemMenu_exitButton;
+    CCMenuItem* systemMenu_resumeButton;
+    CCMenuItem* systemMenu_optionButton;
+    CCMenuItem* systemMenu_restartButton;
+    CCMenuItem* systemMenu_exitButton;
     
     CCArray* menuItems;
     CCMenu* newMenu;
@@ -32,12 +32,18 @@ public:
     bool show;
     bool hide;
     
+    bool goingToEndGame = false;
+    
+    CCSpriteBatchNode* systemMenuNode;
+    
+    bool isActive;
+    
 public:
-    static SystemMenu* create(CCLayer*);
-    SystemMenu(CCLayer*);
+    SystemMenu();
     ~SystemMenu();
-    bool init(CCLayer*);
+    void createUI();
     static SystemMenu* getThis();
+    static SystemMenu* create();
     
     void clickResumeButton();
     void clickOptionButton();
@@ -48,9 +54,13 @@ public:
     void scheduleHideSystemMenu();
     void showSystemMenu(float);
     void hideSystemMenu(float);
-    void removeSystemMenu();
     
-    void releaseAll();
+    void clickSystemButton();
+    
+    void clear();
+    
+    void loadTexturtes();
+    void releaseTextures();
 };
 
 #endif /* defined(__PopulationTest__SystemMenu__) */

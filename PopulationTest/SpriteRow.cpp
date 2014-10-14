@@ -343,7 +343,7 @@ void SpriteRow::quitJob()
 bool SpriteRow::hasVacancy()
 {
     int count = 0;
-    CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* allSpritesOnMap = SpriteHandler::getThis()->spritesOnMap;
     for(int i = 0; i < allSpritesOnMap->count(); i++)
     {
         GameSprite* gs = (GameSprite*)allSpritesOnMap->objectAtIndex(i);

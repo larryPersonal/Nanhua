@@ -21,6 +21,7 @@
 #include "UIButtonControl.h"
 #include "SanGuoXiaoXueTang.h"
 #include "NanhuaGameStaticAPI.h"
+#include "UserProfile.h"
 
 GameHUD* GameHUD::SP;
 
@@ -63,8 +64,6 @@ GameHUD::GameHUD()
     showRandomEventManager = false;
     
     isThisTapCounted = false;
-    
-    startWar = false;
     
     leftPos = 0;
     maxPos = 100.0f;
@@ -181,6 +180,8 @@ GameHUD::GameHUD()
     hasTimer = false;
     targetTime = 0;
     currentTime = 0;
+    scenarioTime = 0;
+    hasScenario = false;
     
     playCharacterSmileAnimation = false;
     playCharacterSmileCountDown = 0.0f;
@@ -191,17 +192,19 @@ GameHUD::GameHUD()
     objectiveDescriptions = CCArray::create();
     objectiveDescriptions->retain();
     
-    finalObjective = false;
+    guardTowerScoreBar = NULL;
 }
 
 GameHUD::~GameHUD()
 {
     delete date;
 
+    /*
     if (SystemMenu::SP != NULL)
     {
         CC_SAFE_RELEASE(SystemMenu::SP);
     }
+    */
     
     addMoneyLabelArray->removeAllObjects();
     CC_SAFE_RELEASE(addMoneyLabelArray);
@@ -251,7 +254,8 @@ void GameHUD::resetGameHUD()
     
     growthPopulation = 0;
     mGameTapMode = Normal;
-    money = GameScene::getThis()->settingsLevel->default_start_money;
+    money = UserProfile::getThis()->settingsLevel->default_start_money;
+    CCLog("money is: %d", money);
     
     originalHappiness = 0;
     stickHappiness = false;
@@ -259,8 +263,6 @@ void GameHUD::resetGameHUD()
     showRandomEventManager = false;
     
     isThisTapCounted = false;
-    
-    startWar = false;
     
     leftPos = 0;
     maxPos = 100.0f;
@@ -283,7 +285,7 @@ void GameHUD::resetGameHUD()
     label_fade_in = false;
     label_fade_out = false;
     
-    targetMoney = GameScene::getThis()->settingsLevel->default_start_money;
+    targetMoney = UserProfile::getThis()->settingsLevel->default_start_money;
     isAddingMoney = false;
     
     targetReputation = 0;
@@ -352,8 +354,6 @@ void GameHUD::resetGameHUD()
     
     genderMale = true;
     
-    hasTimer = false;
-    targetTime = 0;
     currentTime = 0;
     
     playCharacterSmileAnimation = false;
@@ -362,8 +362,6 @@ void GameHUD::resetGameHUD()
     playDragonAnimation = false;
     playDragonCountDown = 0.0f;
     
-    finalObjective = false;
-    
     mGameCurrentFood = 0;
     mGameCurrentStorage = 0;
     
@@ -371,17 +369,17 @@ void GameHUD::resetGameHUD()
     mGameCurrentPopulation = 0;
     mGameCurrentPopulationRoom = 0;
     
-    reputation = GameScene::getThis()->configSettings->default_ini_reputation;
-    reputationMax = GameScene::getThis()->settingsLevel->default_max_reputation;
+    reputation = UserProfile::getThis()->configSettings->default_ini_reputation;
+    reputationMax = UserProfile::getThis()->settingsLevel->default_max_reputation;
     
     mGameReputation = reputation;
     mGameReputationMax = reputationMax;
     
-    ccColor3B colorBlack = ccc3(255, 255, 255);
+    // ccColor3B colorBlack = ccc3(255, 255, 255);
     stringstream ss;
     
     // reset food label
-    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    CCArray* allGranary = BuildingHandler::getThis()->granaryOnMap;
     for (int i = 0; i < allGranary->count(); i++)
     {
         Building* b = (Building*) allGranary->objectAtIndex(i);
@@ -394,7 +392,7 @@ void GameHUD::resetGameHUD()
     foodLabel->setString(ss.str().c_str());
     
     // reset population label
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
     for(int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
@@ -409,7 +407,7 @@ void GameHUD::resetGameHUD()
         }
     }
     
-    CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
+    CCArray* allHousing = BuildingHandler::getThis()->housingOnMap;
     for(int i = 0; i < allHousing->count(); i++)
     {
         Building* b = (Building*) allHousing->objectAtIndex(i);
@@ -422,24 +420,11 @@ void GameHUD::resetGameHUD()
     
     // reset achievement label
     ss.str(std::string());
-    ss << GameScene::getThis()->configSettings->default_ini_reputation;
+    ss << UserProfile::getThis()->configSettings->default_ini_reputation;
     achivementsLabel->setString(ss.str().c_str());
     
-    // reset average happiness label
-    if(GameScene::getThis()->systemConfig->debugMode)
-    {
-        ss.str(std::string());
-        ss << mAverageHappiness;
-        
-        average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
-        average_happiness_label->setColor(colorBlack);
-        average_happiness_label->setAnchorPoint(ccp(0, 0));
-        this->addChild(average_happiness_label, 2);
-        average_happiness_label->CCNode::setPosition(620, 0);
-    }
-    
     // reset debug mode feature
-    if(GameScene::getThis()->systemConfig->debugMode)
+    if(UserProfile::getThis()->systemConfig->debugMode)
     {
         // tap mode label
         ss.str(std::string());
@@ -466,15 +451,23 @@ void GameHUD::resetGameHUD()
             default:
                 break;
         }
-        tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
-        tapModeLabel->setColor(colorBlack);
-        tapModeLabel->setAnchorPoint(ccp(0, 0));
-        this->addChild(tapModeLabel, 2);
-        tapModeLabel->CCNode::setPosition(720, 0);
+        tapModeLabel->setString(ss.str().c_str());
+        
+        soldierName->setVisible(true);
+        enermyName->setVisible(true);
+        stopActionLabel->setVisible(true);
+        tapModeLabel->setVisible(true);
+    }
+    else
+    {
+        soldierName->setVisible(false);
+        enermyName->setVisible(false);
+        stopActionLabel->setVisible(false);
+        tapModeLabel->setVisible(false);
     }
     
     // reset debugging buttons
-    if(!GameScene::getThis()->systemConfig->debugMode)
+    if(!UserProfile::getThis()->systemConfig->debugMode)
     {
         stickHappinessButton->cocos2d::CCNode::setScale(0, 0);
         resumeHappinessButton->cocos2d::CCNode::setScale(0, 0);
@@ -484,12 +477,21 @@ void GameHUD::resetGameHUD()
         peaceButton->cocos2d::CCNode::setScale(0, 0);
         scoreButton->cocos2d::CCNode::setScale(0, 0);
         showRandomEventManagerButton->cocos2d::CCNode::setScale(0, 0);
+        
+        stickHappinessButton->setVisible(false);
+        resumeHappinessButton->setVisible(false);
+        pauseButton->setVisible(false);
+        resumeButton->setVisible(false);
+        warButton->setVisible(false);
+        peaceButton->setVisible(false);
+        scoreButton->setVisible(false);
+        showRandomEventManagerButton->setVisible(false);
     }
     
     // reset soldier helper
-    if(GameScene::getThis()->systemConfig->debugMode)
+    if(UserProfile::getThis()->systemConfig->debugMode)
     {
-        CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
         GameSprite* firstSoldier = NULL;
         for(int i = 0; i < allSprites->count(); i++)
         {
@@ -593,6 +595,12 @@ void GameHUD::update(float deltaTime)
     {
         currentTime += deltaTime;
         
+        if(currentTime >= scenarioTime && hasScenario)
+        {
+            hasScenario = false;
+            TutorialManager::getThis()->setupForScenario();
+        }
+        
         float timeLeft = targetTime - currentTime;
         if(timeLeft > 0)
         {
@@ -618,33 +626,12 @@ void GameHUD::update(float deltaTime)
             objectiveTime->setString("00:00");
             objectiveTime->setVisible(false);
             hasTimer = false;
-            
-            if(!finalObjective)
-            {
-                stringstream sss;
-                sss << "Your current objective has been failed!";
-                GameHUD::getThis()->addNewNotification(sss.str());
-            
-                // withdraw the objective. TODO: play the next objective
-            }
-            else
-            {
-                finalObjective = false;
-                if(GameManager::getThis()->getLevel() == 2)
-                {
-                    SanGuoXiaoXueTang::getThis()->showUI();
-                }
-                else
-                {
-                    clickScoreButton();
-                }
-            }
             ObjectiveHandler::getThis()->playObjective();
         }
     }
     
     // tokens debuging
-    CCArray* allTokens = GameScene::getThis()->spriteHandler->tokensOnMap;
+    CCArray* allTokens = SpriteHandler::getThis()->tokensOnMap;
     stringstream ss;
     ss.str(std::string());
     
@@ -778,14 +765,14 @@ void GameHUD::update(float deltaTime)
         // update date
         cumulatedTime += deltaTime;
         
-        if(cumulatedTime > GameScene::getThis()->configSettings->secondToDayRatio)
+        if(cumulatedTime > UserProfile::getThis()->configSettings->secondToDayRatio)
         {
             date->addDay();
             cumulatedTime = 0;
             
             if((date->week == 0 || date->week == 2) && date->day == 0)
             {
-                CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+                CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
                 for(int i = 0; i < spritesOnMap->count(); i++)
                 {
                     GameSprite* gs = (GameSprite*) spritesOnMap->objectAtIndex(i);
@@ -798,34 +785,26 @@ void GameHUD::update(float deltaTime)
         stringstream ss;
         
         // if it's the first day of the month, update money;
-        if (date->day == 0 && date->week == 0 && getMoney && !GameScene::getThis()->banditsAttackHandler->warMode)
+        //if (date->day == 0 && date->week == 0 && getMoney && !BanditsAttackHandler::getThis()->warMode)
+        if ((date->day == 2 || date->day == 4 || date->day == 6) && getMoney && !BanditsAttackHandler::getThis()->warMode)
         {
             int moneyAdded = 0;
-            CCArray* housingsOnMap = GameScene::getThis()->buildingHandler->housingOnMap;
-            CCArray* marketsOnMap = GameScene::getThis()->buildingHandler->marketOnMap;
+            CCArray* housingsOnMap = BuildingHandler::getThis()->housingOnMap;
+            CCArray* marketsOnMap = BuildingHandler::getThis()->marketOnMap;
             
+            // get tax collected from all housing
             for(int i = 0; i < housingsOnMap->count(); i++)
             {
                 Building* tempB = (Building*) housingsOnMap->objectAtIndex(i);
-                moneyAdded += tempB->memberSpriteList->count() * GameScene::getThis()->settingsLevel->gold_from_house;
+                moneyAdded += tempB->memberSpriteList->count() * UserProfile::getThis()->settingsLevel->gold_from_house;
                 
                 ss.str(std::string());
-                ss << "+" << tempB->memberSpriteList->count() * GameScene::getThis()->settingsLevel->gold_from_house;
-                tempB->addNotificationLabel(ss.str(), colorGreen);
-            }
-            
-            moneyAdded += marketsOnMap->count() * GameScene::getThis()->settingsLevel->gold_from_market;
-            
-            for(int i = 0; i < marketsOnMap->count(); i++)
-            {
-                Building* tempB = (Building*) marketsOnMap->objectAtIndex(i);
-                ss.str(std::string());
-                ss << "+" << GameScene::getThis()->settingsLevel->gold_from_market;
+                ss << "+" << tempB->memberSpriteList->count() * UserProfile::getThis()->settingsLevel->gold_from_house << "g";
                 tempB->addNotificationLabel(ss.str(), colorGreen);
             }
             
             ss.str(std::string());
-            ss << "You have collected " << moneyAdded << " gold for the month from the village.";
+            ss << "You have collected " << moneyAdded << " amount of gold in tax for this month.";
             
             addNewNotification(ss.str());
             
@@ -835,6 +814,130 @@ void GameHUD::update(float deltaTime)
             }
             getMoney = false;
             
+            // support market operations
+            int number_of_markets_supported = 0;
+            int number_of_markets_released = 0;
+            int foodSupportMarket = 0;
+            int moneyMarketGenerated = 0;
+            CCArray* granaryOnMap = BuildingHandler::getThis()->granaryOnMap;
+            
+            // check for markets operation
+            for (int i = 0; i < marketsOnMap->count(); i++)
+            {
+                Building* bui = (Building*) marketsOnMap->objectAtIndex(i);
+                if(bui->memberSpriteList->count() > 0)
+                {
+                    if(foodSupportMarket + UserProfile::getThis()->configSettings->market_food_cost <= targetFood)
+                    {
+                        foodSupportMarket += UserProfile::getThis()->configSettings->market_food_cost;
+                        moneyMarketGenerated += UserProfile::getThis()->configSettings->gold_from_market;
+                        number_of_markets_supported++;
+                        
+                        ss.str(std::string());
+                        ss << "+" << UserProfile::getThis()->configSettings->gold_from_market << "g";
+                        bui->addNotificationLabel(ss.str(), colorGreen);
+                    }
+                    else
+                    {
+                        for(int j = 0; j < bui->memberSpriteList->count(); j++)
+                        {
+                            GameSprite* gs = (GameSprite*) bui->memberSpriteList->objectAtIndex(j);
+                            if(gs->getTargetLocation() == bui)
+                            {
+                                gs->setTargetLocation(NULL);
+                                gs->currAction = IDLE;
+                            }
+                            
+                            // unlink the building with its member sprits who has this building as job location.
+                            if(gs->getJobLocation() == bui || gs->getPossessions()->jobLocation == bui)
+                            {
+                                gs->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
+                                gs->setJobLocation(NULL);
+                                gs->currAction = IDLE;
+                                gs->nextAction = IDLE;
+                                gs->setIsDoingJob(false);
+                                gs->setJob(NONE);
+                                gs->path->removeAllObjects();
+                                gs->hasAssigned = false;
+                            }
+                        }
+                        bui->memberSpriteList->removeAllObjects();
+                        bui->isCurrentWorking = false;
+                        number_of_markets_released++;
+                    }
+                }
+
+            }
+            
+            ss.str(std::string());
+            ss << "You have collected " << moneyMarketGenerated << " amount of gold from markets for this month.";
+            
+            addNewNotification(ss.str());
+            
+            if(moneyMarketGenerated != 0)
+            {
+                scheduleAddMoney(moneyMarketGenerated);
+            }
+            
+            if(number_of_markets_supported > 0)
+            {
+                ss.str(std::string());
+                ss << "Your village has supported " << number_of_markets_supported << " markets, " << foodSupportMarket << " food have been used.";
+                addNewNotification(ss.str().c_str());
+                for(int i = 0; i < granaryOnMap->count(); i++)
+                {
+                    Building* tempB = (Building*) granaryOnMap->objectAtIndex(i);
+                    if(foodSupportMarket < tempB->currentStorage)
+                    {
+                        tempB->currentStorage -= foodSupportMarket;
+                        ss.str(std::string());
+                        ss << "-" << foodSupportMarket;
+                        tempB->addNotificationLabel(ss.str(), colorRed);
+                        foodSupportMarket = 0;
+                    }
+                    else
+                    {
+                        foodSupportMarket -= tempB->currentStorage;
+                        ss.str(std::string());
+                        ss << "-" << tempB->currentStorage;
+                        tempB->addNotificationLabel(ss.str(), colorRed);
+                        tempB->currentStorage = 0;
+                    }
+                }
+                
+                if(foodSupportMarket > 0)
+                {
+                    for(int i = 0; i < marketsOnMap->count(); i++)
+                    {
+                        Building* tempB = (Building*) marketsOnMap->objectAtIndex(i);
+                        
+                        if(foodSupportMarket < tempB->currentStorage)
+                        {
+                            tempB->currentStorage -= foodSupportMarket;
+                            ss.str(std::string());
+                            ss << "-" << foodSupportMarket;
+                            tempB->addNotificationLabel(ss.str(), colorRed);
+                            foodSupportMarket = 0;
+                        }
+                        else
+                        {
+                            foodSupportMarket -= tempB->currentStorage;
+                            ss.str(std::string());
+                            ss << "-" << tempB->currentStorage;
+                            tempB->addNotificationLabel(ss.str(), colorRed);
+                            tempB->currentStorage = 0;
+                        }
+                    }
+                }
+            }
+            
+            if(number_of_markets_released > 0)
+            {
+                ss.str(std::string());
+                ss << "Due to limited food the village have, " << number_of_markets_released << " markets are closed.";
+                addNewNotification(ss.str().c_str());
+            }
+            
             int moneySupportGuardTower = 0;
             int foodSupportGuardTower = 0;
             int totalFood = 0;
@@ -842,8 +945,7 @@ void GameHUD::update(float deltaTime)
             int numberOfTowerSupported = 0;
             int numberOfTowerReleased = 0;
             
-            CCArray* militaryOnMap = GameScene::getThis()->buildingHandler->militaryOnMap;
-            CCArray* granaryOnMap = GameScene::getThis()->buildingHandler->granaryOnMap;
+            CCArray* militaryOnMap = BuildingHandler::getThis()->militaryOnMap;
             
             for(int i = 0; i < marketsOnMap->count(); i++)
             {
@@ -857,15 +959,21 @@ void GameHUD::update(float deltaTime)
                 totalFood += tempB->currentStorage;
             }
             
+            // check for guard towers operation
             for(int i = 0; i < militaryOnMap->count(); i++)
             {
                 Building* tempB = (Building*) militaryOnMap->objectAtIndex(i);
                 if(tempB->memberSpriteList->count() > 0)
                 {
-                    if(moneySupportGuardTower + GameScene::getThis()->configSettings->guard_tower_money_cost < targetMoney && foodSupportGuardTower + GameScene::getThis()->configSettings->guard_tower_food_cost < targetFood)
+                    /*
+                    moneySupportGuardTower += GameScene::getThis()->configSettings->guard_tower_money_cost;
+                    foodSupportGuardTower += GameScene::getThis()->configSettings->guard_tower_food_cost;
+                    numberOfTowerSupported++;
+                    */
+                    if(TutorialManager::getThis()->active || (moneySupportGuardTower + UserProfile::getThis()->configSettings->guard_tower_money_cost <= targetMoney && foodSupportGuardTower + UserProfile::getThis()->configSettings->guard_tower_food_cost <= targetFood))
                     {
-                        moneySupportGuardTower += GameScene::getThis()->configSettings->guard_tower_money_cost;
-                        foodSupportGuardTower += GameScene::getThis()->configSettings->guard_tower_food_cost;
+                        moneySupportGuardTower += UserProfile::getThis()->configSettings->guard_tower_money_cost;
+                        foodSupportGuardTower += UserProfile::getThis()->configSettings->guard_tower_food_cost;
                         numberOfTowerSupported++;
                     }
                     else
@@ -873,21 +981,35 @@ void GameHUD::update(float deltaTime)
                         for(int j = 0; j < tempB->memberSpriteList->count(); j++)
                         {
                             GameSprite* gs = (GameSprite*) tempB->memberSpriteList->objectAtIndex(j);
-                            gs->currAction = IDLE;
-                            gs->nextAction = IDLE;
-                            gs->setIsDoingJob(false);
-                            gs->spriteClass = "citizen";
-                            gs->setJob(NONE);
-                            gs->setJobLocation(NULL);
-                            gs->setTargetLocation(NULL);
-                            gs->changeToCitizen();
+                            if(gs->getTargetLocation() == tempB)
+                            {
+                                gs->setTargetLocation(NULL);
+                                gs->currAction = IDLE;
+                            }
+                            
+                            // unlink the building with its member sprits who has this building as job location.
+                            if(gs->getJobLocation() == tempB || gs->getPossessions()->jobLocation == tempB)
+                            {
+                                gs->setJobLocation(NULL);
+                                gs->changeSpriteTo(GlobalHelper::getSpriteByVillagerClass(gs, V_REFUGEE), GlobalHelper::getSpriteClassByVillagerClass(V_CITIZEN));
+                                gs->spriteName = gs->baseSpriteName;
+                                gs->changeSpriteRepWhenLoadingGame();
+                                gs->currAction = IDLE;
+                                gs->nextAction = IDLE;
+                                gs->setIsDoingJob(false);
+                                gs->setJob(NONE);
+                                gs->path->removeAllObjects();
+                                gs->hasAssigned = false;
+                            }
                         }
                         tempB->memberSpriteList->removeAllObjects();
+                        tempB->isCurrentWorking = false;
                         numberOfTowerReleased++;
                     }
                 }
             }
             
+            // at the first day of a month, check for guard towers
             if(numberOfTowerSupported > 0)
             {
                 ss.str(std::string());
@@ -939,6 +1061,16 @@ void GameHUD::update(float deltaTime)
                         }
                     }
                 }
+                
+                if(guardTowerScoreBar != NULL)
+                {
+                    guardTowerScore += numberOfTowerSupported * UserProfile::getThis()->configSettings->guard_tower_points;
+                    guardTowerScoreBar->setValue((guardTowerScore > 1000.0f ? 1000.0f : guardTowerScore) / 1000.0f);
+                    
+                    ss.str(std::string());
+                    ss << guardTowerScore;
+                    guardTowerScoreLabel->setString(ss.str().c_str());
+                }
             }
             
             if(numberOfTowerReleased > 0)
@@ -950,14 +1082,20 @@ void GameHUD::update(float deltaTime)
         }
         
         // if it's the first day of the month, update population growth;
-        if (((date->day == 0 && date->week == 0) || (date->day == 3 && date->week == 1) || (date->day == 5 && date->week == 2)) && increasePopulation && !GameScene::getThis()->banditsAttackHandler->warMode)
+        if (((date->day == 0 && date->week == 0) || (date->day == 3 && date->week == 1) || (date->day == 5 && date->week == 2)) && increasePopulation && !BanditsAttackHandler::getThis()->warMode)
         {
             checkReputaionPopulation();
             increasePopulation = false;
         }
         
         // if it's the last day of the month, change get money to true;
+        /*
         if (date->day == 6 && date->week == 3)
+        {
+            getMoney = true;
+        }
+        */
+        if (date->day == 1 || date->day == 3 || date->day == 5)
         {
             getMoney = true;
         }
@@ -1048,17 +1186,14 @@ void GameHUD::update(float deltaTime)
     }
     
     // get average happiness of the villagers
-    if(GameScene::getThis()->systemConfig->debugMode)
+    average_happiness = NanhuaGameStaticAPI::getAverageHappiness();
+    
+    if(mAverageHappiness != average_happiness)
     {
-        average_happiness = NanhuaGameStaticAPI::getAverageHappiness();
-        
-        if(mAverageHappiness != average_happiness)
-        {
-            mAverageHappiness = average_happiness;
-            std::stringstream ss;
-            ss << mAverageHappiness;
-            average_happiness_label->setString(ss.str().c_str());
-        }
+        mAverageHappiness = average_happiness;
+        std::stringstream ss;
+        ss << mAverageHappiness;
+        average_happiness_label->setString(ss.str().c_str());
     }
     
     // room and population change;
@@ -1083,7 +1218,7 @@ void GameHUD::update(float deltaTime)
     }
     
     temp = 0;
-    CCArray* housingOnMap = GameScene::getThis()->buildingHandler->housingOnMap;
+    CCArray* housingOnMap = BuildingHandler::getThis()->housingOnMap;
     for (int i = 0; i < housingOnMap->count(); i++)
     {
         Building* building = (Building*) housingOnMap->objectAtIndex(i);
@@ -1136,7 +1271,7 @@ void GameHUD::update(float deltaTime)
 
         }
         //tapModeLabel->setString(ss.str().c_str());
-        if(GameScene::getThis()->systemConfig->debugMode)
+        if(UserProfile::getThis()->systemConfig->debugMode)
         {
             tapModeLabel->setString(ss.str().c_str());
         }
@@ -1147,7 +1282,7 @@ void GameHUD::update(float deltaTime)
     // for food and storage change!
     temp = 0;
     int temp_storage = 0;
-    CCArray* buildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    CCArray* buildingsOnMap = BuildingHandler::getThis()->allBuildingsOnMap;
     for (int i = 0; i < buildingsOnMap->count(); i++)
     {
         Building* building = (Building*) buildingsOnMap->objectAtIndex(i);
@@ -1322,7 +1457,7 @@ void GameHUD::update(float deltaTime)
     updateStorage(deltaTime);
     
     // for level 3, update the build hospital button
-    if(GameManager::getThis()->getLevel() == 3 && targetMoney >= 1000 && targetFood >= 0)
+    if(UserProfile::getThis()->gameLevel == 3 && targetMoney >= 1000 && targetFood >= 0)
     {
         buildHospitalButton->setVisible(true);
         buildHospitalInstructionLabel->setVisible(true);
@@ -1333,7 +1468,7 @@ void GameHUD::update(float deltaTime)
         buildHospitalInstructionLabel->setVisible(false);
     }
     
-    if(GameManager::getThis()->getLevel() == 3)
+    if(UserProfile::getThis()->gameLevel == 3)
     {
         if(mGameNumberOfHospitals >= 2)
         {
@@ -1358,9 +1493,9 @@ void GameHUD::update(float deltaTime)
         hospitalNumberLabel->setVisible(false);
     }
     
-    if(mGameNumberOfHospitals != GameManager::getThis()->number_of_hospital)
+    if(mGameNumberOfHospitals != UserProfile::getThis()->number_of_hospital)
     {
-        mGameNumberOfHospitals = GameManager::getThis()->number_of_hospital;
+        mGameNumberOfHospitals = UserProfile::getThis()->number_of_hospital;
         stringstream ss;
         ss << mGameNumberOfHospitals;
         hospitalNumberLabel->setString(ss.str().c_str());
@@ -1578,7 +1713,7 @@ void GameHUD::setupForGuardTowerBar()
     this->addChild(guardTowerScoreBar, 2);
     
     stringstream ss;
-    ss << (guardTowerScore > 1000.0f ? 1000.0f : guardTowerScore) << "/1000";
+    ss << guardTowerScore;
     guardTowerScoreLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 24);
     guardTowerScoreLabel->setAnchorPoint(ccp(0, 1));
     guardTowerScoreLabel->setPosition(ccp(260.0f, screenSize.height - 60.0f));
@@ -1587,7 +1722,10 @@ void GameHUD::setupForGuardTowerBar()
 
 void GameHUD::clearGuardTowerBar()
 {
-    
+    this->removeChild(guardTowerScoreBar, true);
+    this->removeChild(guardTowerScoreLabel, true);
+    guardTowerScoreBar = NULL;
+    guardTowerScoreLabel = NULL;
 }
 
 void GameHUD::createTimeMenu()
@@ -2101,16 +2239,16 @@ void GameHUD::clickBuildButton()
             flag = true;
         }
         
-        if(currTapMode == Build && GameScene::getThis()->buildingHandler->selectedBuilding != NULL)
+        if(currTapMode == Build && BuildingHandler::getThis()->selectedBuilding != NULL)
         {
-            GameHUD::getThis()->scheduleAddMoney(GameScene::getThis()->buildingHandler->selectedBuilding->buildingCost);
+            GameHUD::getThis()->scheduleAddMoney(BuildingHandler::getThis()->selectedBuilding->buildingCost);
         }
         
         
         currTapMode = Normal;
-        GameScene::getThis()->buildingHandler->selectedBuilding = NULL;
-        GameScene::getThis()->mapHandler->UnBuildPreview();
-        GameScene::getThis()->mapHandler->UnPathPreview();
+        BuildingHandler::getThis()->selectedBuilding = NULL;
+        MapHandler::getThis()->UnBuildPreview();
+        MapHandler::getThis()->UnPathPreview();
         
         if(!(flag && !TutorialManager::getThis()->active))
         {
@@ -2136,7 +2274,7 @@ void GameHUD::clickBuildButton()
 void GameHUD::addPopulation(){
     CCPoint target = CCPointMake(39,60);
     
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE);
 }
 
 void GameHUD::createSystemMenu()
@@ -2194,7 +2332,7 @@ void GameHUD::createSystemMenu()
     
     resumeButton->setScale(screenSize.width / resumeButton->boundingBox().size.width * 0.05f);
     resumeButton->setAnchorPoint(ccp(0, 0));
-    resumeButton->setPosition(ccp(screenSize.width * 0.1f, -500));
+    resumeButton->setPosition(ccp(screenSize.width * 0.1f, 0));
     
     stickHappinessButton->setScale(screenSize.width / stickHappinessButton->boundingBox().size.width * 0.05f);
     stickHappinessButton->setAnchorPoint(ccp(0, 0));
@@ -2254,6 +2392,21 @@ void GameHUD::createSystemMenu()
     reputationCountLabel->setPosition(ccp(0, screenSize.height / 2.0f - 70.0f));
     this->addChild(reputationCountLabel);
     
+    if(UserProfile::getThis()->systemConfig->debugMode)
+    {
+        tokensOnMapLabel->setVisible(true);
+        moneyCountLabel->setVisible(true);
+        foodCountLabel->setVisible(true);
+        reputationCountLabel->setVisible(true);
+    }
+    else
+    {
+        tokensOnMapLabel->setVisible(false);
+        moneyCountLabel->setVisible(false);
+        foodCountLabel->setVisible(false);
+        reputationCountLabel->setVisible(false);
+    }
+    
     float happinessRate = average_happiness;
     
     xOffset = 0;
@@ -2292,6 +2445,15 @@ void GameHUD::createSystemMenu()
     happinessIcon->setAnchorPoint(ccp(1, 1));
     happinessIcon->setPosition(ccp(screenSize.width, screenSize.height - 100));
     
+    ss.str(std::string());
+    ss << mAverageHappiness;
+    ccColor3B colorBlack = ccc3(0, 0, 0);
+    
+    average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);
+    average_happiness_label->setColor(colorBlack);
+    average_happiness_label->setAnchorPoint(ccp(0.5, 1));
+    average_happiness_label->CCNode::setPosition(screenSize.width - happinessIcon->boundingBox().size.width / 2.0f, screenSize.height - 100 - happinessIcon->boundingBox().size.height);
+    
     this->addChild(systemButton, 5);
     this->addChild(buildHospitalButton, 5);
     this->addChild(hospitalIcon, 5);
@@ -2299,6 +2461,7 @@ void GameHUD::createSystemMenu()
     this->addChild(multiplyLabel, 5);
     this->addChild(hospitalNumberLabel, 5);
     this->addChild(happinessIcon, 5);
+    this->addChild(average_happiness_label, 5);
     
     this->addChild(stickHappinessButton, 5);
     this->addChild(resumeHappinessButton, 5);
@@ -2308,82 +2471,6 @@ void GameHUD::createSystemMenu()
     this->addChild(peaceButton, 5);
     this->addChild(scoreButton, 5);
     this->addChild(showRandomEventManagerButton, 5);
-}
-
-void GameHUD::banditsAttack(int banditsNo)
-{
-    if(!isAlerting && !isAlertingText)
-    {
-        if(startWar)
-        {
-            startWar = false;
-            peaceButton->setVisible(false);
-            peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() - 500));
-            warButton->setVisible(true);
-            warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() + 500));
-            GameScene::getThis()->banditsAttackHandler->stopWar();
-            
-            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-            for(int i = 0; i < allSprites->count(); i++)
-            {
-                GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-                if(gs->villagerClass != V_CLASS_END)
-                {
-                    if(gs->villagerClass == V_BANDIT)
-                    {
-                        gs->tryEscape = true;
-                        gs->escape();
-                    }
-                    else if(gs->villagerClass == V_REFUGEE || gs->villagerClass == V_CITIZEN)
-                    {
-                        gs->StopMoving();
-                        gs->currAction = IDLE;
-                    }
-                    else
-                    {
-                        gs->GoBuilding(gs->getPossessions()->jobLocation);
-                    }
-                }
-            }
-        }
-        else
-        {
-            startWar = true;
-            redMask->setOpacity((GLubyte) 0);
-            redMask->setVisible(true);
-            alertText->setScale(0);
-            alertText->setVisible(true);
-            isAlertingText = true;
-            alertTextFadeIn = true;
-            alertCumulativeTime = 0;
-            this->schedule(schedule_selector(GameHUD::alertBanditsAttackText), 1.0f / 120.0f);
-            
-            peaceButton->setVisible(true);
-            peaceButton->setPosition(ccp(peaceButton->getPositionX(), peaceButton->getPositionY() + 500));
-            warButton->setVisible(false);
-            warButton->setPosition(ccp(warButton->getPositionX(), warButton->getPositionY() - 500));
-            GameScene::getThis()->banditsAttackHandler->startWar();
-            GameScene::getThis()->banditsAttackHandler->banditsLeft = banditsNo;
-            
-            CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
-            for (int i = 0; i < allSprites->count(); i++)
-            {
-                GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
-                if(gs->villagerClass != V_BANDIT && gs->villagerClass != V_CLASS_END)
-                {
-                    if(gs->villagerClass == V_REFUGEE)
-                    {
-                        Building* b = gs->findNearestHouse();
-                        gs->GoBuilding(b);
-                    }
-                    else
-                    {
-                        gs->GoBuilding(gs->getHome());
-                    }
-                }
-            }
-        }
-    }
 }
 
 void GameHUD::alertBanditsAttackFade(float dt)
@@ -2538,6 +2625,8 @@ void GameHUD::UpdateBuildButton()
 
 void GameHUD::createSoldierHelper()
 {
+    ccColor3B colorBlack = ccc3(0, 0, 0);
+    
     stringstream ss;
     ss << "NULL";
     
@@ -2561,16 +2650,63 @@ void GameHUD::createSoldierHelper()
     stopActionLabel->setAnchorPoint(ccp(0, 0));
     stopActionLabel->setPosition(ccp(450, 0));
     this->addChild(stopActionLabel);
+    
+    // tap mode label
+    ss.str(std::string());
+    switch (currTapMode)
+    {
+        case 0:
+            ss << "Normal";
+            break;
+        case 1:
+            ss << "Build";
+            break;
+        case 2:
+            ss << "Deconstruct";
+            break;
+        case 3:
+            ss << "BuildPathPreview";
+            break;
+        case 4:
+            ss << "UnBuildPath";
+            break;
+        case 5:
+            ss << "BuildPathLine";
+            break;
+        default:
+            break;
+    }
+    
+    tapModeLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24, CCSizeMake(ss.str().length() * 20.0f, 5.0f), kCCTextAlignmentLeft);
+    tapModeLabel->setColor(colorBlack);
+    tapModeLabel->setAnchorPoint(ccp(0, 0));
+    this->addChild(tapModeLabel);
+    tapModeLabel->CCNode::setPosition(720, 0);
+    
+    if(UserProfile::getThis()->systemConfig->debugMode)
+    {
+        soldierName->setVisible(true);
+        enermyName->setVisible(true);
+        stopActionLabel->setVisible(true);
+        tapModeLabel->setVisible(true);
+    }
+    else
+    {
+        soldierName->setVisible(false);
+        enermyName->setVisible(false);
+        stopActionLabel->setVisible(false);
+        tapModeLabel->setVisible(false);
+    }
 }
 
 void GameHUD::updateSoldierHelper(float dt)
 {
-    if(!GameScene::getThis()->systemConfig->debugMode)
+    if(!UserProfile::getThis()->systemConfig->debugMode)
     {
         return;
     }
     
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
     GameSprite* firstSoldier = NULL;
     for(int i = 0; i < allSprites->count(); i++)
     {
@@ -3244,4 +3380,22 @@ void GameHUD::clearAllLabels()
         GameHUD::getThis()->removeChild(repLabel);
     }
     addReputationLabelArray->removeAllObjects();
+}
+
+void GameHUD::clearWhenQuitGame()
+{
+    notificationToBeScheduled.clear();
+    for(int i = 0; i < eventLabels->count(); i++)
+    {
+        NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
+        GameHUD::getThis()->removeChild(ns->notificationLabel, true);
+    }
+    eventLabels->removeAllObjects();
+    
+    clearAllLabels();
+    
+    if(guardTowerScoreBar != NULL)
+    {
+        clearGuardTowerBar();
+    }
 }

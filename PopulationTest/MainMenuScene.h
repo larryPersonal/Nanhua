@@ -29,10 +29,6 @@ class MainMenuScene : public cocos2d::CCLayer
     CCMenuItemImage* buttonOptions;
     CCMenuItemImage* buttonExit;
     
-    // loading screen module
-    CCSprite* loadingScreen;
-    CCSprite* loadingLabel;
-    
     CCLabelTTF* usernameLabel;
     
     CCSprite* blackScreen;
@@ -41,6 +37,10 @@ class MainMenuScene : public cocos2d::CCLayer
     CCLabelTTF* tutorialScoreLabel;
     CCLabelTTF* level1ScoreLabel;
     CCLabelTTF* level2ScoreLabel;
+    CCLabelTTF* level3ScoreLabel;
+    CCLabelTTF* level4ScoreLabel;
+    CCLabelTTF* level5ScoreLabel;
+    CCLabelTTF* level6ScoreLabel;
     CCLabelTTF* totalScoreLabel;
     CCMenuItem* cancelButton;
     
@@ -144,12 +144,10 @@ public:
     MainMenuScene();
     ~MainMenuScene();
     static MainMenuScene* getThis();
+    static MainMenuScene* create();
     
     // Method 'init' in cocos2d-x returns bool, instead of 'id' in cocos2d-iphone (an object pointer)
     virtual bool init();
-    
-    // there's no 'id' in cpp, so we recommend to return the class instance pointer
-    static CCScene* scene();
     
     void onButtonStartPressed(CCObject* pSender);
     void onButtonOptionsPressed(CCObject* pSender);
@@ -157,7 +155,6 @@ public:
     
     void onNewGame(CCObject* pSender);
     
-    void enableLoadingScreen();
     void loadSenarioChooseScene();
     
     void closeScoreScreen();
@@ -204,12 +201,9 @@ public:
     void enableModule();
     void disableModule();
     
-    virtual void ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
-    virtual void ccTouchesMoved(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     virtual void ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *pEvent);
     
-    // preprocessor macro for "static create()" constructor ( node() deprecated )
-    CREATE_FUNC(MainMenuScene);
+    void clearMainMenuScene();
     
 public:
     CCSprite* teacherManagementBackground;
@@ -227,10 +221,14 @@ public:
     bool teacherManagementIsOpen;
     bool teacherManagementIsClose;
     
+    CCSpriteBatchNode* teacherManagementNode;
+    CCSpriteBatchNode* mainMenuSceneNode;
+    
 public:
     bool checkIsTeacherLogin(std::string username, std::string password);
     void showTeacherScreen();
     void setupTeacherManagementScreen();
+    void removeTeacherManagementScreen();
     
     void scheduleTeacherManagementScreenOpen();
     void scheduleTeacherManagementScreenClose();
@@ -244,6 +242,14 @@ public:
     
     void openResetPasswordConfirmScreen(std::string username);
     void closeResetPasswordConfirmScreen();
+    
+    bool isActive();
+    
+    void loadTeacherManagementTextures();
+    void releaseTeacherManagementTextures();
+    
+    void loadMainMenuTextures();
+    void releaseMainMenuTextures();
 };
 
 #endif /* defined(__PopulationTest__MainMenuScene__) */

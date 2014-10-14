@@ -18,13 +18,9 @@ class BanditsAttackHandler
     static BanditsAttackHandler* SP;
     
 public:
-    int requiredPopulation;
-    int requiredGranary;
-    
     int banditsLeft;
     float cumulativeTime;
     float tresholdTime;
-    
     bool warMode;
     
 public:

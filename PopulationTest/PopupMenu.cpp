@@ -54,6 +54,11 @@ void PopupMenu::cleanup()
     this->removeFromParentAndCleanup(false);    //cleanup should be called by closeMenu()
 }
 
+void PopupMenu::clean()
+{
+    pOpenPopupMenu.clear();
+}
+
 void PopupMenu::backupCurrentPopupMenu()
 {
     if(BuildingInfoMenu::getThis() != NULL)
@@ -135,28 +140,21 @@ void PopupMenu::closeMenu(bool openPreviousMenu)
             
             if(pm->pmt == BuInfoMenu)
             {
-                //CCLog("test1");
                 BuildingInfoMenu* bim = BuildingInfoMenu::create(pm->b);
-                //bim->autorelease();
                 bim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SpInfoMenu)
             {
-                //CCLog("test2");
                 SpriteInfoMenu* sim = new SpriteInfoMenu(pm->gs);
-                //sim->autorelease();
                 sim->useAsTopmostPopupMenu();
             }
             else if(pm->pmt == SePopulationMenu)
             {
-                //CCLog("test3");
                 SelectPopulation* sp = SelectPopulation::create(pm->b);
-                //sp->autorelease();
                 sp->useAsTopmostPopupMenu();
             }
             else
             {
-                //CCLog("test4");
                 closeMenu(openPreviousMenu);
             }
         }

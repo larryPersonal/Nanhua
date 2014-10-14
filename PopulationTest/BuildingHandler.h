@@ -26,8 +26,6 @@ public:
     
     Building* selectedBuilding; //if in build mode, pointer to target building.
     
-    Building* mainBuilding;
-    
     CCArray * allBuildings;
     //for setup only
     CCArray * allBuildingLayers;
@@ -81,11 +79,11 @@ public:
     void removeBuildingFromMap(Building* b);
     void addBuildingToMap(Building* b);
     
-    
     Building* getRandomBuilding(Building* building);
-    
-    
+
     int getHighestBuildingID();
+    
+    void clear();
 };
 
 

@@ -7,7 +7,7 @@
             <key>back.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1491,3599},{465,133}}</string>
+                <string>{{1020,1391},{465,133}}</string>
                 <key>offset</key>
                 <string>{-4,-1}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>back_press.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1020,3478},{465,133}}</string>
+                <string>{{1245,1166},{465,133}}</string>
                 <key>offset</key>
                 <string>{-4,-1}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>charbg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1704,3096},{219,219}}</string>
+                <string>{{1020,1166},{219,219}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>create.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1491,3460},{465,133}}</string>
+                <string>{{1020,1530},{465,133}}</string>
                 <key>offset</key>
                 <string>{-4,-1}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>create_press.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1020,3339},{465,133}}</string>
+                <string>{{1020,1669},{465,133}}</string>
                 <key>offset</key>
                 <string>{-4,-1}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>inputBar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1020,3096},{678,98}}</string>
+                <string>{{1716,1166},{678,98}}</string>
                 <key>offset</key>
                 <string>{-1,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>inputBar1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1020,3096},{678,98}}</string>
+                <string>{{1716,1166},{678,98}}</string>
                 <key>offset</key>
                 <string>{-1,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>login.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1491,3321},{465,133}}</string>
+                <string>{{1020,1808},{465,133}}</string>
                 <key>offset</key>
                 <string>{-4,-1}</string>
                 <key>rotated</key>
@@ -108,23 +108,23 @@
                 <key>sourceSize</key>
                 <string>{475,139}</string>
             </dict>
-            <key>loginPage.png</key>
+            <key>loginPage.jpg</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1550},{2052,1540}}</string>
+                <string>{{4,4},{1540,1156}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{2052,1540}}</string>
+                <string>{{0,0},{1540,1156}}</string>
                 <key>sourceSize</key>
-                <string>{2052,1540}</string>
+                <string>{1540,1156}</string>
             </dict>
             <key>login_press.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1020,3200},{465,133}}</string>
+                <string>{{1491,1305},{465,133}}</string>
                 <key>offset</key>
                 <string>{-4,-1}</string>
                 <key>rotated</key>
@@ -134,23 +134,23 @@
                 <key>sourceSize</key>
                 <string>{475,139}</string>
             </dict>
-            <key>newsplashpage1.png</key>
+            <key>newsplashpage1.jpg</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{2052,1540}}</string>
+                <string>{{1550,4},{1540,1156}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{2052,1540}}</string>
+                <string>{{0,0},{1540,1156}}</string>
                 <key>sourceSize</key>
-                <string>{2052,1540}</string>
+                <string>{1540,1156}</string>
             </dict>
             <key>trophyscreen.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,3096},{1010,824}}</string>
+                <string>{{4,1166},{1010,824}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -168,9 +168,9 @@
             <key>realTextureFileName</key>
             <string>MainGamePageTexture.png</string>
             <key>size</key>
-            <string>{2060,3924}</string>
+            <string>{3094,1994}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:97611f9d1de4210f52277714dc2fd8dc:17b6a1337542824ab2a906768fd8c653:4cb3508663896acbff1fe8c76c93b362$</string>
+            <string>$TexturePacker:SmartUpdate:b7a4afd7c6d792bfec657d41723d672c:549807a4a3bb7d0e72c76c9caeabb56f:4cb3508663896acbff1fe8c76c93b362$</string>
             <key>textureFileName</key>
             <string>MainGamePageTexture.png</string>
         </dict>

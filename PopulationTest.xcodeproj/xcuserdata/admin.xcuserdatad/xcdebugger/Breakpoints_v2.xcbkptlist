@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/SenarioChooseScene.cpp"
-            timestampString = "429682298.145411"
+            timestampString = "434955449.003155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "SenarioChooseScene::chooseSenario2()"
             landmarkType = "5">
          </BreakpointContent>
@@ -72,11 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/ObjectiveHandler.cpp"
-            timestampString = "430823038.923352"
+            timestampString = "433064511.521053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "ObjectiveHandler::playObjective(bool showNotification)"
             landmarkType = "5">
          </BreakpointContent>
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameHUD.cpp"
-            timestampString = "430802817.438926"
+            timestampString = "431318720.060225"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "GameHUD::GameHUD()"
             landmarkType = "5">
          </BreakpointContent>
@@ -104,11 +104,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/ObjectiveHandler.cpp"
-            timestampString = "430820051.467515"
+            timestampString = "431508490.608467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "ObjectiveHandler::playObjective(bool showNotification)"
             landmarkType = "5">
          </BreakpointContent>
@@ -212,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "430821106.284692"
+            timestampString = "434956006.194623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1933"
-            endingLineNumber = "1933"
+            startingLineNumber = "2067"
+            endingLineNumber = "2067"
             landmarkName = "GameScene::update(float time)"
             landmarkType = "5">
          </BreakpointContent>
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/GameScene.cpp"
-            timestampString = "430821106.284692"
+            timestampString = "434956006.194623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1930"
-            endingLineNumber = "1930"
+            startingLineNumber = "2064"
+            endingLineNumber = "2064"
             landmarkName = "GameScene::update(float time)"
             landmarkType = "5">
          </BreakpointContent>
@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Senario.cpp"
-            timestampString = "430218947.171066"
+            timestampString = "434867138.19258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "Senario::selectButtonPressed(CCObject* pSender)"
             landmarkType = "5">
          </BreakpointContent>
@@ -260,11 +260,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Senario.cpp"
-            timestampString = "430218947.171066"
+            timestampString = "434867138.19258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "Senario::displayTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color, float limitX)"
             landmarkType = "5">
          </BreakpointContent>
@@ -276,11 +276,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/Senario.cpp"
-            timestampString = "430218947.171066"
+            timestampString = "434867138.19258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
             landmarkName = "Senario::displayTexts(std::string str, float startX, float startY, string font, float fontSize, ccColor3B color, float limitX)"
             landmarkType = "5">
          </BreakpointContent>
@@ -308,11 +308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/ScoreMenu.cpp"
-            timestampString = "430821106.284692"
+            timestampString = "431318037.483158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
             landmarkName = "ScoreMenu::create(CCLayer* layer)"
             landmarkType = "5">
          </BreakpointContent>
@@ -324,28 +324,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MainMenuScene.cpp"
-            timestampString = "429004044.418584"
+            timestampString = "434953408.887589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "926"
-            endingLineNumber = "926"
+            startingLineNumber = "980"
+            endingLineNumber = "980"
             landmarkName = "MainMenuScene::onButtonOptionsPressed(CCObject* pSender)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PopulationTest/MainMenuScene.cpp"
-            timestampString = "429002488.55669"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
-            landmarkName = "MainMenuScene::init()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -372,12 +356,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/SystemMenu.cpp"
-            timestampString = "427266828.201855"
+            timestampString = "431520146.707562"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "SystemMenu::clickOptionButton()"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "SystemMenu::clickExitButton()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -388,11 +372,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/MainMenuScene.cpp"
-            timestampString = "429003882.287206"
+            timestampString = "434953408.887589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "705"
+            endingLineNumber = "705"
             landmarkName = "MainMenuScene::clickLoginButton()"
             landmarkType = "5">
          </BreakpointContent>
@@ -404,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/ObjectiveHandler.cpp"
-            timestampString = "430823038.923352"
+            timestampString = "433064839.415561"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
+            startingLineNumber = "468"
+            endingLineNumber = "468"
             landmarkName = "ObjectiveHandler::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
@@ -420,13 +404,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PopulationTest/NotificationPopup.cpp"
-            timestampString = "430819418.588689"
+            timestampString = "434893131.421363"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "NotificationPopup::showScenario4Congratulations()"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "NotificationPopup::showScenario3Congratulations()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/SystemMenu.cpp"
+            timestampString = "431427131.030764"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "SystemMenu::createUI()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PopulationTest/SanGuoXiaoXueTang.h"
+            timestampString = "434866371.420028"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

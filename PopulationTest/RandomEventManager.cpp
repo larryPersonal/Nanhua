@@ -12,6 +12,7 @@
 #include "RandomEventFileReader.h"
 #include "RandomEvent.h"
 #include "GlobalHelper.h"
+#include "UIButtonControl.h"
 
 RandomEventManager* RandomEventManager::SP;
 
@@ -209,14 +210,13 @@ void RandomEventManager::constructRandomEventContent()
         background->addChild(tempLabel2);
     }
     
-    okButton = CCMenuItemImage::create("confirm.png", "confirm_press.png", this, menu_selector(RandomEventManager::hideUI));
+    // okButton = CCMenuItemImage::create("confirm.png", "confirm_press.png", this, menu_selector(RandomEventManager::hideUI));
+    okButton = CCSprite::createWithSpriteFrameName("confirm.png");
     okButton->setAnchorPoint(ccp(0.5f, 0.5f));
     okButton->setScale(0.6f);
-    okButton->setPosition(ccp(screenSize.width * 1.0f / 4.0f - 10.0f, - screenSize.height * 1.0f / 4.0f + 20.0f));
+    okButton->setPosition(ccp(screenSize.width * 3.0f / 4.0f - 5.0f, screenSize.height * 1.0f / 4.0f + 30.0f));
     
-    menu = CCMenu::create(okButton, NULL);
-    
-    background->addChild(menu);
+    background->addChild(okButton);
 }
 
 void RandomEventManager::setupDescription(std::string desc)
@@ -270,7 +270,7 @@ void RandomEventManager::removeRandomEventContent()
 {
     if(background != NULL)
     {
-        menu->removeChild(okButton, true);
+        background->removeChild(okButton, true);
         background->removeAllChildrenWithCleanup(true);
         descriptionLabels->removeAllObjects();
         CC_SAFE_RELEASE(descriptionLabels);
@@ -317,8 +317,8 @@ void RandomEventManager::applyRandomEventEffects()
         else if(tokens[0].compare("food") == 0)
         {
             int valueChange = ::atoi(tokens[1].c_str());
-            CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
-            CCArray* allMarket = GameScene::getThis()->buildingHandler->marketOnMap;
+            CCArray* allGranary = BuildingHandler::getThis()->granaryOnMap;
+            CCArray* allMarket = BuildingHandler::getThis()->marketOnMap;
             
             if(valueChange < 0)
             {
@@ -414,12 +414,4 @@ void RandomEventManager::removeTextures()
         CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("RandomEventsArt.plist");
         randomEventsNode = NULL;
     }
-}
-
-void RandomEventManager::clickSystemButton()
-{
-    SystemMenu* sm = SystemMenu::create(this);
-    sm->retain();
-    GameHUD::getThis()->pause = true;
-    sm->scheduleShowSystemMenu();
 }

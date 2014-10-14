@@ -1,6 +1,7 @@
 <?xml encoding="ISO-8859-1"?>
 <project>
 	<slide>
+        <scene>Grow_more_crops_and_harvest.png</scene>
         <clickToNext></clickToNext>
 		<sprite>
 			<width>60</width>

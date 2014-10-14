@@ -14,6 +14,7 @@
 #include "SoundtrackManager.h"
 #include "GlobalHelper.h"
 #include "AccountRow.h"
+#include "UserProfile.h"
 
 using namespace CocosDenshion;
 
@@ -59,6 +60,8 @@ MainMenuScene::MainMenuScene()
     accountRowArray->retain();
     
     mode = login;
+    
+    teacherManagementNode = NULL;
 }
 
 MainMenuScene::~MainMenuScene()
@@ -69,44 +72,38 @@ MainMenuScene::~MainMenuScene()
     CC_SAFE_RELEASE(accountRowArray);
 }
 
+MainMenuScene* MainMenuScene::create()
+{
+    MainMenuScene* pRet = new MainMenuScene();
+    if(pRet)
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
 MainMenuScene* MainMenuScene::getThis()
 {
     return SP;
 }
 
-CCScene* MainMenuScene::scene()
-{
-    srand(time(NULL));
-    
-    // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
-    
-    // 'layer' is an autorelease object
-    MainMenuScene *layer = MainMenuScene::create();
-    
-    // add layer as a child to scene
-    scene->addChild(layer);
-    
-    // return the scene
-    return scene;
-}
-
 bool MainMenuScene::init()
 {
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     CCRect boxrect = CCRectMake(0,0, screenSize.width * 0.8f,  screenSize.width * 0.1f);
     
-    if (GameManager::getThis()->isLoggedIn)
+    if (UserProfile::getThis()->isLoggedIn)
     {
-        backgroundImage = CCSprite::createWithSpriteFrameName("newsplashpage1.png");
+        backgroundImage = CCSprite::createWithSpriteFrameName("newsplashpage1.jpg");
     }
     else
     {
-        backgroundImage = CCSprite::createWithSpriteFrameName("loginPage.png");
+        backgroundImage = CCSprite::createWithSpriteFrameName("loginPage.jpg");
     }
     
     backgroundImage->setScale(screenSize.width/backgroundImage->boundingBox().size.width);
@@ -130,21 +127,6 @@ bool MainMenuScene::init()
     buttonExit->setPosition(ccp(0, -320));
     
     // buttonCredits = CCMenuItemImage::create("quit.png", "press_quit.png", this, menu_selector(MainMenuScene::onButtonCreditsPressed));
-    
-    /* loading screen module */
-    loadingScreen = CCSprite::createWithSpriteFrameName("loading screen.png");
-    loadingScreen->setScale(screenSize.width / loadingScreen->boundingBox().size.width);
-    loadingScreen->setAnchorPoint(ccp(0.5, 0.5));
-    loadingScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-    this->addChild(loadingScreen, 10);
-    loadingScreen->setVisible(false);
-    
-    loadingLabel = CCSprite::createWithSpriteFrameName("loading.png");
-    loadingLabel->setAnchorPoint(ccp(0.5f, 0.5f));
-    loadingLabel->setPosition(ccp(screenSize.width / 2.0f + 20.0f, screenSize.height / 2.0f - 120.0f));
-    loadingLabel->setScale(0.5f);
-    this->addChild(loadingLabel, 11);
-    loadingLabel->setVisible(false);
     
     highScoreScreen = CCSprite::createWithSpriteFrameName("trophyscreen.png");
     highScoreScreen->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -178,22 +160,42 @@ bool MainMenuScene::init()
     
     tutorialScoreLabel = CCLabelTTF::create("Tutorial high score is: 0", "GillSansMT", 32);
     tutorialScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
-    tutorialScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 100.0f));
+    tutorialScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 200.0f));
     highScoreScreen->addChild(tutorialScoreLabel);
     
     level1ScoreLabel = CCLabelTTF::create("Level 1 high score is: 0", "GillSansMT", 32);
     level1ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
-    level1ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 50.0f));
+    level1ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 150.0f));
     highScoreScreen->addChild(level1ScoreLabel);
     
     level2ScoreLabel = CCLabelTTF::create("Level 2 high score is: 0", "GillSansMT", 32);
     level2ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
-    level2ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 0.0f));
+    level2ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 100.0f));
     highScoreScreen->addChild(level2ScoreLabel);
+    
+    level3ScoreLabel = CCLabelTTF::create("Level 3 high score is: 0", "GillSansMT", 32);
+    level3ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
+    level3ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 50.0f));
+    highScoreScreen->addChild(level3ScoreLabel);
+    
+    level4ScoreLabel = CCLabelTTF::create("Level 4 high score is: 0", "GillSansMT", 32);
+    level4ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
+    level4ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + 0.0f));
+    highScoreScreen->addChild(level4ScoreLabel);
+    
+    level5ScoreLabel = CCLabelTTF::create("Level 5 high score is: 0", "GillSansMT", 32);
+    level5ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
+    level5ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 50.0f));
+    highScoreScreen->addChild(level5ScoreLabel);
+    
+    level6ScoreLabel = CCLabelTTF::create("Level 6 high score is: 0", "GillSansMT", 32);
+    level6ScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
+    level6ScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
+    highScoreScreen->addChild(level6ScoreLabel);
     
     totalScoreLabel = CCLabelTTF::create("Total score is: 0", "GillSansMT", 32);
     totalScoreLabel->setAnchorPoint(ccp(0.5, 0.5));
-    totalScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 50.0f));
+    totalScoreLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 150.0f));
     highScoreScreen->addChild(totalScoreLabel);
     
     highScoreScreen->setVisible(false);
@@ -234,18 +236,14 @@ bool MainMenuScene::init()
     passwordBoxLabel->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 250.0f));
     this->addChild(passwordBoxLabel, 9);
     
-    CCSprite* buttonSprite = CCSprite::createWithSpriteFrameName("login.png");
-    CCSprite* buttonPressedSprite = CCSprite::createWithSpriteFrameName("login_press.png");
     // the login button for the login window
-    loginButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickLoginButton));
+    loginButton = CCMenuItemImage::create("login.png", "login_press.png", this, menu_selector(MainMenuScene::clickLoginButton));
     loginButton->setScale(0.3f);
     loginButton->setAnchorPoint(ccp(0, 1));
     loginButton->setPosition(ccp(100.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
     
-    buttonSprite = CCSprite::createWithSpriteFrameName("create.png");
-    buttonPressedSprite = CCSprite::createWithSpriteFrameName("create_press.png");
     // create button
-    createButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickCreateButton));
+    createButton = CCMenuItemImage::create("create.png", "create_press.png", this, menu_selector(MainMenuScene::clickCreateButton));
     createButton->setScale(0.3f);
     createButton->setAnchorPoint(ccp(0, 1));
     createButton->setPosition(ccp(250.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
@@ -260,18 +258,14 @@ bool MainMenuScene::init()
     warningBackground->setScale(1.0f);
     this->addChild(warningBackground, 15);
     
-    buttonSprite = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
-    buttonPressedSprite = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
     // warning cancelButton
-    warningCancelButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::closeWarningScreen));
+    warningCancelButton = CCMenuItemImage::create("Closebtn_Sq.png", "Closebtn_Sq.png", this, menu_selector(MainMenuScene::closeWarningScreen));
     warningCancelButton->setAnchorPoint(ccp(0, 1));
     warningCancelButton->setPosition(ccp(screenSize.width / 2.0f - 180.0f, 0 + 18.0f));
     warningCancelButton->setScale(1.2f);
     
-    buttonSprite = CCSprite::createWithSpriteFrameName("confirm.png");
-    buttonPressedSprite = CCSprite::createWithSpriteFrameName("confirm_press.png");
     // warning confirmButton
-    warningConfirmButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::closeResetPasswordConfirmScreen));
+    warningConfirmButton = CCMenuItemImage::create("confirm.png", "confirm_press.png", this, menu_selector(MainMenuScene::closeResetPasswordConfirmScreen));
     warningConfirmButton->setAnchorPoint(ccp(0, 1));
     warningConfirmButton->setPosition(ccp(screenSize.width / 2.0f - 320.0f, -240.0f));
     warningConfirmButton->setScale(0.5f);
@@ -293,18 +287,14 @@ bool MainMenuScene::init()
     warningDescription->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 180.0f));
     warningBackground->addChild(warningDescription);
     
-    buttonSprite = CCSprite::createWithSpriteFrameName("create.png");
-    buttonPressedSprite = CCSprite::createWithSpriteFrameName("create_press.png");
     // create account button
-    createAccountButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickCreateAccountButton));
+    createAccountButton = CCMenuItemImage::create("create.png", "create_press.png", this, menu_selector(MainMenuScene::clickCreateAccountButton));
     createAccountButton->setScale(0.3f);
     createAccountButton->setAnchorPoint(ccp(0, 1));
     createAccountButton->setPosition(ccp(100.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
     
-    buttonSprite = CCSprite::createWithSpriteFrameName("back.png");
-    buttonPressedSprite = CCSprite::createWithSpriteFrameName("back_press.png");
     // back button
-    backButton = cocos2d::CCMenuItemSprite::create(buttonSprite, buttonPressedSprite, this, menu_selector(MainMenuScene::clickBackButton));
+    backButton = CCMenuItemImage::create("back.png", "back_press.png", this, menu_selector(MainMenuScene::clickBackButton));
     backButton->setScale(0.3f);
     backButton->setAnchorPoint(ccp(0, 1));
     backButton->setPosition(ccp(250.0f, screenSize.height * 1.0f / 4.0f - 340.0f));
@@ -411,10 +401,7 @@ bool MainMenuScene::init()
     this->addChild(mainMenuSceneMenu, 1);
     this->addChild(backgroundImage, 0);
     
-    this->setTouchEnabled(true);
-    this->schedule(schedule_selector(MainMenuScene::update), 1.0f/120.0f);
-    
-    if(GameManager::getThis()->isLoggedIn)
+    if(UserProfile::getThis()->isLoggedIn)
     {
         mode = mainPage;
     }
@@ -425,38 +412,85 @@ bool MainMenuScene::init()
     }
     
     configMode();
-
-    SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
+    
+    this->setTouchEnabled(true);
     
     GlobalHelper::clearCache();
-    
-    // teacher management screen
-    setupTeacherManagementScreen();
     
     return true;
 }
 
+void MainMenuScene::clearMainMenuScene()
+{
+    buttonStart->removeFromParentAndCleanup(true);
+    buttonOptions->removeFromParentAndCleanup(true);
+    buttonExit->removeFromParentAndCleanup(true);
+    mainMenuSceneMenu->removeAllChildren();
+    this->removeChild(mainMenuSceneMenu, true);
+    
+    this->removeChild(backgroundImage, true);
+    this->removeChild(blackScreen, true);
+    
+    cancelButtonMenu->removeChild(cancelButton, true);
+    cancelButtonMenu->removeAllChildren();
+    highScoreScreen->removeChild(cancelButtonMenu, true);
+    
+    highScoreScreen->removeChild(usernameLabel, true);
+    highScoreScreen->removeChild(tutorialScoreLabel, true);
+    highScoreScreen->removeChild(level1ScoreLabel, true);
+    highScoreScreen->removeChild(level2ScoreLabel, true);
+    highScoreScreen->removeChild(level3ScoreLabel, true);
+    highScoreScreen->removeChild(level4ScoreLabel, true);
+    highScoreScreen->removeChild(level5ScoreLabel, true);
+    highScoreScreen->removeChild(level6ScoreLabel, true);
+    highScoreScreen->removeChild(totalScoreLabel, true);
+    
+    this->removeChild(highScoreScreen, true);
+    this->removeChild(loginModuleTitle, true);
+    this->removeChild(usernameBox, true);
+    this->removeChild(passwordBox, true);
+    this->removeChild(usernameBoxLabel, true);
+    this->removeChild(passwordBoxLabel, true);
+    
+    loginMenu->removeChild(loginButton, true);
+    loginMenu->removeChild(createButton, true);
+    this->removeChild(loginMenu, true);
+    
+    warningCancelMenu->removeChild(warningCancelButton, true);
+    warningCancelMenu->removeChild(warningConfirmButton, true);
+    warningBackground->removeChild(warningCancelMenu, true);
+    warningBackground->removeChild(warningHead, true);
+    warningBackground->removeChild(warningDescription, true);
+    this->removeChild(warningBackground, true);
+    
+    signupMenu->removeChild(createAccountButton, true);
+    signupMenu->removeChild(backButton, true);
+    this->removeChild(signupMenu, true);
+    
+    loginCancelButtonMenu->removeChild(loginCancelButton, true);
+    loginBackground->removeChild(loginCancelButtonMenu, true);
+    loginBackground->removeChild(loginScreenTitleLabel, true);
+    loginBackground->removeChild(loginScreenInstructionLabel, true);
+    loginBackground->removeChild(loginScreenWarningLabel, true);
+    this->removeChild(loginBackground, true);
+    
+    this->removeChild(boyHead, true);
+    this->removeChild(girlHead, true);
+    
+    this->removeAllChildrenWithCleanup(true);
+}
+
 void MainMenuScene::onButtonStartPressed(CCObject* pSender){
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (loginBackground->isVisible() || highScoreScreen->isVisible())
     {
         return;
     }
-    /*
-    if (GameManager::getThis()->checkGameDataExists())
-    {
     
-        AlertBox* alert = AlertBox::create();
-        alert->useAsExclusivePopupMenu();
-        alert->setDisplayText("Load a previously saved game?");
-    
-        alert->addButton(0, "Yes", this, callfuncO_selector(MainMenuScene::onLoadGame), pSender);
-        alert->addButton(0, "No", this, callfuncO_selector(MainMenuScene::onNewGame), pSender);
-    }
-    else
-    {
-        onNewGame(NULL);
-    }
-    */
     SoundtrackManager::PlaySFX("Button_press.wav");
     
     onNewGame(NULL);
@@ -464,7 +498,6 @@ void MainMenuScene::onButtonStartPressed(CCObject* pSender){
 
 void MainMenuScene::onNewGame(cocos2d::CCObject *pSender)
 {
-    enableLoadingScreen();
     this->scheduleOnce(schedule_selector(MainMenuScene::loadSenarioChooseScene), 0.1f);
 }
 
@@ -599,6 +632,11 @@ void MainMenuScene::configMode()
 
 void MainMenuScene::clickLoginButton()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if(warningBackground->isVisible())
     {
         return;
@@ -611,6 +649,8 @@ void MainMenuScene::clickLoginButton()
     if(checkIsTeacherLogin(username, password))
     {
         // go to teacher management page
+        // loadTeacherManagementTextures();
+        setupTeacherManagementScreen();
         mode = teacher;
         configMode();
         showTeacherScreen();
@@ -655,18 +695,18 @@ void MainMenuScene::clickLoginButton()
             if(password.compare(expectedPassword) == 0)
             {
                 // login successful
-                GameManager::getThis()->username = username;
-                GameManager::getThis()->password = password;
+                UserProfile::getThis()->username = username;
+                UserProfile::getThis()->password = password;
                 
                 string key = username + "_gender";
                 bool isBoy = CCUserDefault::sharedUserDefault()->getBoolForKey(key.c_str());
-                GameManager::getThis()->gender = isBoy;
-                GameManager::getThis()->isLoggedIn = true;
+                UserProfile::getThis()->gender = isBoy;
+                UserProfile::getThis()->isLoggedIn = true;
                 
                 CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
                 
                 this->removeChild(backgroundImage);
-                backgroundImage = CCSprite::createWithSpriteFrameName("newsplashpage1.png");
+                backgroundImage = CCSprite::createWithSpriteFrameName("newsplashpage1.jpg");
                 backgroundImage->setScale(screenSize.width / backgroundImage->boundingBox().size.width);
                 backgroundImage->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
                 this->addChild(backgroundImage, 0);
@@ -705,6 +745,11 @@ bool MainMenuScene::checkIsTeacherLogin(string username, string password)
 
 void MainMenuScene::clickPlayAnolymouslyButton()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     startGame = true;
     SoundtrackManager::PlaySFX("Button_press.wav");
     scheduleLoginScreenJumpOut();
@@ -712,6 +757,11 @@ void MainMenuScene::clickPlayAnolymouslyButton()
 
 void MainMenuScene::clickCreateAccountButton()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (warningBackground->isVisible())
     {
         return;
@@ -773,6 +823,11 @@ void MainMenuScene::clickCreateAccountButton()
 
 void MainMenuScene::clickBackButton()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (warningBackground->isVisible())
     {
         return;
@@ -786,6 +841,11 @@ void MainMenuScene::clickBackButton()
 
 void MainMenuScene::clickCreateButton()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if(warningBackground->isVisible())
     {
         return;
@@ -871,7 +931,6 @@ void MainMenuScene::loginScreenJumpOut(float dt)
         else if(startGame)
         {
             startGame = false;
-            enableLoadingScreen();
             this->scheduleOnce(schedule_selector(MainMenuScene::loadSenarioChooseScene), 0.1f);
         }
         else
@@ -896,26 +955,21 @@ void MainMenuScene::closeLoginScreen()
 
 void MainMenuScene::loadSenarioChooseScene()
 {
-    this->removeChild(loadingScreen);
-    this->removeChild(loadingLabel);
-    
+    this->setTouchEnabled(false);
     GlobalHelper::clearCache();
-    // GlobalHelper::clearPreloadedTexture();
-    
-    CCDirector::sharedDirector()->replaceScene(SenarioChooseScene::scene());
-}
-
-void MainMenuScene::enableLoadingScreen()
-{
-    this->removeChild(backgroundImage);
-    this->removeChild(mainMenuSceneMenu);
-    this->removeChild(cancelButtonMenu);
-    
-    loadingScreen->setVisible(true);
-    loadingLabel->setVisible(true);
+    clearMainMenuScene();
+    // releaseMainMenuTextures();
+    SenarioChooseScene::getThis()->loadTextures();
+    SenarioChooseScene::getThis()->init();
+    GameManager::getThis()->enableSenarioChooseScene();
 }
 
 void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (highScoreScreen->isVisible() || loginBackground->isVisible())
     {
         return;
@@ -930,7 +984,7 @@ void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     
     scheduleScoreScreenJumpIn();
     
-    string username = GameManager::getThis()->username;
+    string username = UserProfile::getThis()->username;
     
     stringstream ss;
     ss << username << "_level_0_score";
@@ -948,12 +1002,40 @@ void MainMenuScene::onButtonOptionsPressed(CCObject* pSender){
     
     ss.str(std::string());
     ss << username << "_level_2_score";
-    float value = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+    float value2 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
     ss.str(std::string());
-    ss << "Level 2 high score is: " << value;
+    ss << "Level 2 high score is: " << value2;
     level2ScoreLabel->setString(ss.str().c_str());
     
-    value += value1 + value0;
+    ss.str(std::string());
+    ss << username << "_level_3_score";
+    float value3 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+    ss.str(std::string());
+    ss << "Level 3 high score is: " << value3;
+    level3ScoreLabel->setString(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << username << "_level_4_score";
+    float value4 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+    ss.str(std::string());
+    ss << "Level 4 high score is: " << value4;
+    level4ScoreLabel->setString(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << username << "_level_5_score";
+    float value5 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+    ss.str(std::string());
+    ss << "Level 5 high score is: " << value5;
+    level5ScoreLabel->setString(ss.str().c_str());
+    
+    ss.str(std::string());
+    ss << username << "_level_6_score";
+    float value6 = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+    ss.str(std::string());
+    ss << "Level 6 high score is: " << value6;
+    level6ScoreLabel->setString(ss.str().c_str());
+    
+    float value = value1 + value0 + value2 + value3 + value4 + value5 + value6;
     
     ss.str(std::string());
     ss << "Total high score is: " << value;
@@ -968,6 +1050,11 @@ void MainMenuScene::showTeacherScreen()
 
 void MainMenuScene::onButtonExitPressed(CCObject* pSender)
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (highScoreScreen->isVisible() || loginBackground->isVisible() || mode == teacher)
     {
         return;
@@ -980,10 +1067,10 @@ void MainMenuScene::onButtonExitPressed(CCObject* pSender)
     
     SoundtrackManager::PlaySFX("Button_press.wav");
     
-    GameManager::getThis()->username = "";
-    GameManager::getThis()->password = "";
-    GameManager::getThis()->gender = false;
-    GameManager::getThis()->isLoggedIn = false;
+    UserProfile::getThis()->username = "";
+    UserProfile::getThis()->password = "";
+    UserProfile::getThis()->gender = false;
+    UserProfile::getThis()->isLoggedIn = false;
     
     usernameBox->setText("");
     passwordBox->setText("");
@@ -993,7 +1080,7 @@ void MainMenuScene::onButtonExitPressed(CCObject* pSender)
     
     this->removeChild(backgroundImage);
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    backgroundImage = CCSprite::createWithSpriteFrameName("loginPage.png");
+    backgroundImage = CCSprite::createWithSpriteFrameName("loginPage.jpg");
     backgroundImage->setScale(screenSize.width / backgroundImage->boundingBox().size.width);
     backgroundImage->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     this->addChild(backgroundImage, 0);
@@ -1001,6 +1088,11 @@ void MainMenuScene::onButtonExitPressed(CCObject* pSender)
 
 void MainMenuScene::openWarningScreen()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (isWarningScreenJumpIn || isWarningScreenJumpOut)
     {
         return;
@@ -1013,6 +1105,11 @@ void MainMenuScene::openWarningScreen()
 
 void MainMenuScene::openResetPasswordConfirmScreen(std::string username)
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (isWarningScreenJumpIn || isWarningScreenJumpOut)
     {
         return;
@@ -1035,6 +1132,11 @@ void MainMenuScene::openResetPasswordConfirmScreen(std::string username)
 
 void MainMenuScene::closeResetPasswordConfirmScreen()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (isWarningScreenJumpIn || isWarningScreenJumpOut)
     {
         return;
@@ -1055,6 +1157,11 @@ void MainMenuScene::closeResetPasswordConfirmScreen()
 
 void MainMenuScene::closeScoreScreen()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (isScoreScreenJumpIn || isScoreScreenJumpOut)
     {
         return;
@@ -1066,6 +1173,11 @@ void MainMenuScene::closeScoreScreen()
 
 void MainMenuScene::closeWarningScreen()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     if (isWarningScreenJumpIn || isWarningScreenJumpOut)
     {
         return;
@@ -1196,19 +1308,12 @@ void MainMenuScene::warningScreenJumpOut(float dt)
     blackScreen->setOpacity((GLubyte) (255.0f * scale / 1.0f ));
 }
 
-
-void MainMenuScene::ccTouchesBegan(CCSet *touches, CCEvent *pEvent)
-{
-    // CCTouch* touch = (CCTouch*)*touches->begin();
-    // CCPoint touchLoc = touch->getLocation();
-}
-
-void MainMenuScene::ccTouchesMoved(CCSet *touches, CCEvent *pEvent){
-    // CCTouch* touch = (CCTouch*)*touches->begin();
-    // CCPoint touchLoc = touch->getLocation();
-}
-
 void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
+    if(!isActive())
+    {
+        return;
+    }
+    
     CCTouch* touch = (CCTouch*)*touches->begin();
     CCPoint touchLoc = touch->getLocation();
     
@@ -1231,9 +1336,9 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
         ss.str(std::string());
         ss << tempUser << "_gender";
         
-        GameManager::getThis()->username = tempUser;
-        GameManager::getThis()->password = tempPassword;
-        GameManager::getThis()->isLoggedIn = true;
+        UserProfile::getThis()->username = tempUser;
+        UserProfile::getThis()->password = tempPassword;
+        UserProfile::getThis()->isLoggedIn = true;
         
         startGame = true;
         scheduleLoginScreenJumpOut();
@@ -1241,9 +1346,10 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
         mode = login;
         configMode();
         
+        /*
         if(boyHead->boundingBox().containsPoint(touchLoc))
         {
-            GameManager::getThis()->gender = true;
+            UserProfile::getThis()->gender = true;
             CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
             
             AccountRow* accRow = AccountRow::create(scrollArea, userNumber);
@@ -1256,7 +1362,7 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
         }
         else
         {
-            GameManager::getThis()->gender = false;
+            UserProfile::getThis()->gender = false;
             CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), false);
             
             AccountRow* accRow = AccountRow::create(scrollArea, userNumber);
@@ -1267,6 +1373,7 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
             scrollArea->setScrollContentSize(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, 110.0f * userNumber));
             scrollArea->updateScrollBars();
         }
+        */
     }
     
     if(mode == login || mode == signup)
@@ -1288,105 +1395,108 @@ void MainMenuScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent){
 
 void MainMenuScene::update(float dt)
 {
-    if(mode == chooseCharacter)
+    if(isActive())
     {
-        if(!isInBoyAnimation)
+        if(mode == chooseCharacter)
         {
-            if(boyCheckTime <= 0)
+            if(!isInBoyAnimation)
             {
-                boyCheckTime = rand() % rangeTime + baseTime;
-                boyCumulativeTime = 0;
+                if(boyCheckTime <= 0)
+                {
+                    boyCheckTime = rand() % rangeTime + baseTime;
+                    boyCumulativeTime = 0;
+                }
+                else
+                {
+                    boyCumulativeTime += dt;
+                    if(boyCumulativeTime >= boyCheckTime)
+                    {
+                        boyCumulativeTime = 0;
+                        boyCheckTime = 0;
+                        
+                        int randomNumber = rand() % 100 + 1;
+                        if (randomNumber <= animationRatio)
+                        {
+                            isInBoyAnimation = true;
+                            boyFrameNo = -1;
+                        }
+                        else
+                        {
+                            isInBoyAnimation = false;
+                        }
+                    }
+                }
             }
             else
             {
-                boyCumulativeTime += dt;
-                if(boyCumulativeTime >= boyCheckTime)
+                boy_delay_current -= dt;
+                if (boy_delay_current <= 0)
                 {
-                    boyCumulativeTime = 0;
-                    boyCheckTime = 0;
+                    boyFrameNo++;
                     
-                    int randomNumber = rand() % 100 + 1;
-                    if (randomNumber <= animationRatio)
+                    if(boyFrameNo >= boyMaxFrameNo)
                     {
-                        isInBoyAnimation = true;
-                        boyFrameNo = -1;
-                    }
-                    else
-                    {
+                        boyFrameNo = 0;
                         isInBoyAnimation = false;
                     }
+                    
+                    boyXOffset = boyFrameNo % 4;
+                    boyYOffset = boyFrameNo / 4;
+                    
+                    boyRect.setRect(boyXOffset * frameWidth, boyYOffset * frameHeight, frameWidth, frameHeight);
+                    boyHead->setTextureRect(boyRect);
+                    boy_delay_current = boy_delay_animFrame;
                 }
             }
-        }
-        else
-        {
-            boy_delay_current -= dt;
-            if (boy_delay_current <= 0)
+            
+            if(!isInGirlAnimation)
             {
-                boyFrameNo++;
-                
-                if(boyFrameNo >= boyMaxFrameNo)
+                if(girlCheckTime <= 0)
                 {
-                    boyFrameNo = 0;
-                    isInBoyAnimation = false;
+                    girlCheckTime = rand() % rangeTime + baseTime;
+                    girlCumulativeTime = 0;
                 }
-                
-                boyXOffset = boyFrameNo % 4;
-                boyYOffset = boyFrameNo / 4;
-                
-                boyRect.setRect(boyXOffset * frameWidth, boyYOffset * frameHeight, frameWidth, frameHeight);
-                boyHead->setTextureRect(boyRect);
-                boy_delay_current = boy_delay_animFrame;
-            }
-        }
-        
-        if(!isInGirlAnimation)
-        {
-            if(girlCheckTime <= 0)
-            {
-                girlCheckTime = rand() % rangeTime + baseTime;
-                girlCumulativeTime = 0;
+                else
+                {
+                    girlCumulativeTime += dt;
+                    if(girlCumulativeTime >= girlCheckTime)
+                    {
+                        girlCumulativeTime = 0;
+                        girlCheckTime = 0;
+                        
+                        int randomNumber = rand() % 100 + 1;
+                        if (randomNumber <= animationRatio)
+                        {
+                            isInGirlAnimation = true;
+                            girlFrameNo = -1;
+                        }
+                        else
+                        {
+                            isInGirlAnimation = false;
+                        }
+                    }
+                }
             }
             else
             {
-                girlCumulativeTime += dt;
-                if(girlCumulativeTime >= girlCheckTime)
+                girl_delay_current -= dt;
+                if (girl_delay_current <= 0)
                 {
-                    girlCumulativeTime = 0;
-                    girlCheckTime = 0;
+                    girlFrameNo++;
                     
-                    int randomNumber = rand() % 100 + 1;
-                    if (randomNumber <= animationRatio)
+                    if(girlFrameNo >= girlMaxFrameNo)
                     {
-                        isInGirlAnimation = true;
-                        girlFrameNo = -1;
-                    }
-                    else
-                    {
+                        girlFrameNo = 0;
                         isInGirlAnimation = false;
                     }
+                    
+                    girlXOffset = girlFrameNo % 4;
+                    girlYOffset = girlFrameNo / 4;
+                    
+                    girlRect.setRect(girlXOffset * frameWidth, girlYOffset * frameHeight, frameWidth, frameHeight);
+                    girlHead->setTextureRect(girlRect);
+                    girl_delay_current = girl_delay_animFrame;
                 }
-            }
-        }
-        else
-        {
-            girl_delay_current -= dt;
-            if (girl_delay_current <= 0)
-            {
-                girlFrameNo++;
-                
-                if(girlFrameNo >= girlMaxFrameNo)
-                {
-                    girlFrameNo = 0;
-                    isInGirlAnimation = false;
-                }
-                
-                girlXOffset = girlFrameNo % 4;
-                girlYOffset = girlFrameNo / 4;
-                
-                girlRect.setRect(girlXOffset * frameWidth, girlYOffset * frameHeight, frameWidth, frameHeight);
-                girlHead->setTextureRect(girlRect);
-                girl_delay_current = girl_delay_animFrame;
             }
         }
     }
@@ -1425,9 +1535,10 @@ void MainMenuScene::setupTeacherManagementScreen()
     teacherManagementBackground->setScale(0.5f);
     teacherManagementBackground->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     
-    CCSprite* button = CCSprite::createWithSpriteFrameName("logout.png");
-    CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("logout_press.png");
-    teacherManagementScreenLogoutButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(MainMenuScene::clearTeacherManagementScreen));
+    //CCSprite* button = CCSprite::createWithSpriteFrameName("logout.png");
+    //CCSprite* buttonPressed = CCSprite::createWithSpriteFrameName("logout_press.png");
+    //teacherManagementScreenLogoutButton = cocos2d::CCMenuItemSprite::create(button, buttonPressed, this, menu_selector(MainMenuScene::clearTeacherManagementScreen));
+    teacherManagementScreenLogoutButton = CCMenuItemImage::create("logout.png", "logout_press.png", this, menu_selector(MainMenuScene::clearTeacherManagementScreen));
     teacherManagementScreenLogoutButton->setAnchorPoint(ccp(0.5f, 0.5f));
     teacherManagementScreenLogoutButton->setPosition(ccp(screenSize.width + 150.0f, -200.0f));
     teacherManagementScreenLogoutButton->setScale(0.7f);
@@ -1482,12 +1593,12 @@ void MainMenuScene::setupTeacherManagementScreen()
         ss.str(std::string());
         ss << username << "_level_4_open";
         flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
-        accRow->getUserAccount()->setScenario3Status(flag);
+        accRow->getUserAccount()->setScenario4Status(flag);
         
         ss.str(std::string());
         ss << username << "_level_5_open";
         flag = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str());
-        accRow->getUserAccount()->setScenario3Status(flag);
+        accRow->getUserAccount()->setScenario5Status(flag);
         
         accRow->refresh();
         
@@ -1573,25 +1684,63 @@ void MainMenuScene::teacherManagementScreenClose(float dt)
         teacherManagementIsClose = false;
         teacherManagementBackground->setVisible(false);
         configMode();
+        teacherManagementBackground->setScale(scale);
+        float opacity = 255.0f * (scale / 0.5f);
+        teacherManagementBackground->setOpacity((GLubyte) opacity);
+        blackScreen->setOpacity((GLubyte) opacity);
         this->unschedule(schedule_selector(MainMenuScene::teacherManagementScreenClose));
+        removeTeacherManagementScreen();
+        // releaseTeacherManagementTextures();
+    }
+    else
+    {
+        teacherManagementBackground->setScale(scale);
+    
+        float opacity = 255.0f * (scale / 0.5f);
+        
+        teacherManagementBackground->setOpacity((GLubyte) opacity);
+        blackScreen->setOpacity((GLubyte) opacity);
+    }
+}
+
+void MainMenuScene::removeTeacherManagementScreen()
+{
+    for(int i = 0; i < accountRowArray->count(); i++)
+    {
+        AccountRow* ar = (AccountRow*) accountRowArray->objectAtIndex(i);
+        ar->clear();
     }
     
-    teacherManagementBackground->setScale(scale);
+    accountRowArray->removeAllObjects();
     
-    float opacity = 255.0f * (scale / 0.5f);
+    teacherManagementScreenMenu->removeChild(teacherManagementScreenLogoutButton, true);
+    teacherManagementBackground->removeChild(teacherManagementScreenMenu, true);
+    teacherManagementBackground->removeChild(teacherManagementScreenTitile, true);
+    teacherManagementBackground->removeChild(scrollArea, true);
     
-    teacherManagementBackground->setOpacity((GLubyte) opacity);
-    blackScreen->setOpacity((GLubyte) opacity);
+    this->removeChild(teacherManagementBackground, true);
+    
+    GlobalHelper::clearCache();
 }
 
 void MainMenuScene::clearTeacherManagementScreen()
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     SoundtrackManager::PlaySFX("Button_press.wav");
     scheduleTeacherManagementScreenClose();
 }
 
 void MainMenuScene::deleteAccountRow(int index)
 {
+    if(!isActive())
+    {
+        return;
+    }
+    
     for (int i = index; i < accountRowArray->count(); i++)
     {
         if (i < accountRowArray->count() - 1)
@@ -1618,4 +1767,38 @@ void MainMenuScene::deleteAccountRow(int index)
     int userNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey("userNumber");
     scrollArea->setScrollContentSize(CCSizeMake(teacherManagementBackground->boundingBox().size.width * 2.0f, 110.0f * userNumber));
     scrollArea->updateScrollBars();
+}
+
+bool MainMenuScene::isActive()
+{
+    return MainMenuScene::getThis()->isVisible();
+}
+
+void MainMenuScene::loadTeacherManagementTextures()
+{
+    // teacher management node
+    teacherManagementNode = CCSpriteBatchNode::create("teacherManagement.png");
+    this->addChild(teacherManagementNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("teacherManagement.plist");
+}
+
+void MainMenuScene::releaseTeacherManagementTextures()
+{
+    this->removeChild(teacherManagementNode, true);
+    teacherManagementNode = NULL;
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("teacherManagement.plist");
+}
+
+void MainMenuScene::loadMainMenuTextures()
+{
+    mainMenuSceneNode = CCSpriteBatchNode::create("MainGamePageTexture.png");
+    this->addChild(mainMenuSceneNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("MainGamePageTexture.plist");
+}
+
+void MainMenuScene::releaseMainMenuTextures()
+{
+    this->removeChild(mainMenuSceneNode, true);
+    mainMenuSceneNode = NULL;
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("MainGamePageTexture.plist");
 }

@@ -38,6 +38,7 @@ CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
     CCTMXTiledMap *pRet = new CCTMXTiledMap();
     if (pRet->initWithTMXFile(tmxFile))
     {
+        // CCTMXTiledMap is loaded at the start so make it retain.
         pRet->autorelease();
         return pRet;
     }

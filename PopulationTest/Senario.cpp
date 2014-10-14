@@ -18,6 +18,9 @@
 #include "TutorialManager.h"
 #include "AnimatedDialogue.h"
 #include "SoundtrackManager.h"
+#include "UserProfile.h"
+#include "UIButtonControl.h"
+#include "SanGuoXiaoXueTang.h"
 
 Senario* Senario::SP;
 
@@ -47,6 +50,8 @@ Senario::Senario()
     backgroundImage = "interiorhouse.png";
     
     scenarioState = Introduction;
+    
+    mixNode = NULL;
 }
 
 Senario::~Senario()
@@ -88,16 +93,19 @@ void Senario::playSenario(const char* senario)
 {
     curSlide = 0;
     active = true;
+    UIButtonControl::pauseGame();
+    loadTextures();
     GameScene::getThis()->setTouchEnabled(true);
-    if(GameScene::getThis()->systemConfig->skipSenario)
+    if(UserProfile::getThis()->systemConfig->skipSenario)
     {
         buttonSelect();
     }
     else
     {
         readSenarioFile(senario);
+        CCLog("let's construct senario stage");
         constructSenarioStage(false);
-        GameScene::getThis()->mapHandler->centerMap();
+        MapHandler::getThis()->centerMap();
     }
 }
 
@@ -150,7 +158,7 @@ bool Senario::constructSenarioStage(bool skip)
     this->addChild(blackScreen, 1);
     spriteList.push_back(blackScreen);
     
-    skipButton = CCSprite::create("skip_button.png");
+    skipButton = CCSprite::createWithSpriteFrameName("skip_button.png");
     skipButton->retain();
     skipButton->setScale(1.0f);
     skipButton->setAnchorPoint(ccp(1, 1));
@@ -183,7 +191,7 @@ bool Senario::constructSenarioStage(bool skip)
         }
     }
     
-    if(GameScene::getThis()->systemConfig->hideSkipButton)
+    if(UserProfile::getThis()->systemConfig->hideSkipButton)
     {
         skipButton->setAnchorPoint(ccp(0, 1));
         skipButton->setPosition(ccp(screenSize.width, screenSize.height));
@@ -304,11 +312,11 @@ void Senario::selectButtonPressed(CCObject* pSender)
     
     if(ele->outcome)
     {
-        GameScene::getThis()->globalOutcomeModifier->banditsModifier = ele->banditsModifier;
-        GameScene::getThis()->globalOutcomeModifier->refugeesModifier = ele->refugeeModifier;
-        GameScene::getThis()->globalOutcomeModifier->goldModifier = ele->goldModifier;
-        GameScene::getThis()->globalOutcomeModifier->foodModifier = ele->foodModifier;
-        GameScene::getThis()->globalOutcomeModifier->populationModifier = ele->populationModifier;
+        GlobalOutcomeModifier::getThis()->banditsModifier = ele->banditsModifier;
+        GlobalOutcomeModifier::getThis()->refugeesModifier = ele->refugeeModifier;
+        GlobalOutcomeModifier::getThis()->goldModifier = ele->goldModifier;
+        GlobalOutcomeModifier::getThis()->foodModifier = ele->foodModifier;
+        GlobalOutcomeModifier::getThis()->populationModifier = ele->populationModifier;
     }
     
     string fileName = ele->nextFile;
@@ -589,48 +597,51 @@ void Senario::clearElements()
 
 void Senario::buttonSelect()
 {
+    CCLog("button select has been triggered 1 time");
     active = false;
     GameScene::getThis()->enableTouch();
     cumulativeTime = 0;
     lastTime = 0;
     
     clearScenario();
+    releaseTextures();
     
+    UIButtonControl::resumeGame();
     if(scenarioState == Introduction)
     {
         this->scenarioState = Tutorial;
-        TutorialManager::getThis()->setupForTutorial();
+        SanGuoXiaoXueTang::getThis()->theState = Part_1;
+        SanGuoXiaoXueTang::getThis()->showUI();
+        // TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
     }
     else if(scenarioState == Scenario2)
     {
         scenarioState = Tutorial2;
-        TutorialManager::getThis()->setupForTutorial();
+        TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
     }
     else if(scenarioState == Scenario3)
     {
         scenarioState = Scenario4;
-        TutorialManager::getThis()->setupForTutorial();
+        TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
     }
     else if(scenarioState == Scenario4)
     {
         scenarioState = Scenario5;
-        TutorialManager::getThis()->setupForTutorial();
+        TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
     }
     else if(scenarioState == Scenario5)
     {
         scenarioState = Scenario6;
-        TutorialManager::getThis()->setupForTutorial();
+        TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
     }
     else if(scenarioState == Scenario6)
     {
         scenarioState = Scenario6;
-        TutorialManager::getThis()->setupForTutorial();
+        TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
     }
     else
     {
-        GameHUD::getThis()->pause = false;
-        GlobalHelper::resumeAllVillagers();
-        if(GameScene::getThis()->globalOutcomeModifier->refugeesModifier > 0)
+        if(GlobalOutcomeModifier::getThis()->refugeesModifier > 0)
         {
             this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
         }
@@ -671,12 +682,12 @@ void Senario::activateRefugee(float dt)
     CCPoint target = CCPointMake(39,60);
     if(cumulativeTime >= lastTime + 1)
     {
-        GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE);
+        SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE);
         lastTime++;
-        if(lastTime >= GameScene::getThis()->globalOutcomeModifier->refugeesModifier)
+        if(lastTime >= GlobalOutcomeModifier::getThis()->refugeesModifier)
         {
             this->unschedule(schedule_selector(Senario::activateRefugee));
-            GameScene::getThis()->globalOutcomeModifier = 0;
+            GlobalOutcomeModifier::getThis()->refugeesModifier = 0;
         }
     }
 }
@@ -712,4 +723,25 @@ void Senario::update(float time)
             ad->update(time);
         }
     }
+}
+
+void Senario::loadTextures()
+{
+    if(mixNode != NULL)
+    {
+        releaseTextures();
+    }
+    mixNode = CCSpriteBatchNode::create("mix.png");
+    this->addChild(mixNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("mix.plist");
+}
+
+void Senario::releaseTextures()
+{
+    if(mixNode != NULL)
+    {
+        this->removeChild(mixNode, true);
+        mixNode = NULL;
+    }
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("mix.plist");
 }

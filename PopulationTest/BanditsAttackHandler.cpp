@@ -59,7 +59,7 @@ void BanditsAttackHandler::update(float dt)
 void BanditsAttackHandler::addBandit(){
     CCPoint target = CCPointMake(39,60);
     
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_BANDIT);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_BANDIT);
 
     /*
     int isMale = rand() % 2;
@@ -90,7 +90,7 @@ void BanditsAttackHandler::stopWar()
     cumulativeTime = 0;
     tresholdTime = 0;
     
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
+    CCArray* allSprites = SpriteHandler::getThis()->allSprites;
     for (int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);

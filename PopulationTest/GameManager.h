@@ -63,7 +63,7 @@ struct AreaUnlock
             int truecount = 0;
             for (int i = 0; i < tokens.size(); ++i)
             {
-                if (GameScene::getThis()->buildingHandler->getBuildingOnMapWithName(tokens[i]) != NULL)
+                if (BuildingHandler::getThis()->getBuildingOnMapWithName(tokens[i]) != NULL)
                 {
                     ++truecount;
                 }
@@ -74,8 +74,8 @@ struct AreaUnlock
         }
         //if prereqs.length = 0 assume true at this point.
         
-        if (required_bcount > GameScene::getThis()->buildingHandler->allBuildingsOnMap->count()) return false;
-        if (required_popn > GameScene::getThis()->spriteHandler->spritesOnMap->count()) return false;
+        if (required_bcount > BuildingHandler::getThis()->allBuildingsOnMap->count()) return false;
+        if (required_popn > SpriteHandler::getThis()->spritesOnMap->count()) return false;
         if (required_cash >currCash) return false;
         return true;
     }
@@ -106,8 +106,8 @@ struct MenuItemUnlock
         if (required_bcount == -1 && required_cash == -1 && required_popn == -1) return false; //to prevent a menu item from ever being unlocked automatically, set these 3 to -1.
         //if this is the case it shouldn't ever check to see if the population amount matches. 
         
-        if (required_bcount > GameScene::getThis()->buildingHandler->allBuildingsOnMap->count()) return false;
-        if (required_popn > GameScene::getThis()->spriteHandler->spritesOnMap->count()) return false;
+        if (required_bcount > BuildingHandler::getThis()->allBuildingsOnMap->count()) return false;
+        if (required_popn > SpriteHandler::getThis()->spritesOnMap->count()) return false;
         if (required_cash >currCash) return false; 
         
         
@@ -125,7 +125,7 @@ struct MenuItemUnlock
         int truecount = 0;
         for (int i = 0; i < tokens.size(); ++i)
         {
-            if (GameScene::getThis()->buildingHandler->getBuildingOnMapWithName(tokens[i]) != NULL)
+            if (BuildingHandler::getThis()->getBuildingOnMapWithName(tokens[i]) != NULL)
             {
                 ++truecount;
             }
@@ -161,11 +161,6 @@ class GameManager
 public:
     static GameManager* SP;
     
-    /* section that will consider to retain or discard */
-    bool loadedGame;
-    bool tutorialMode;
-    
-    
     bool UnlockConditionsMet(Building* b);
     bool ResearchConditionsMet(Building* b);
     void NewGameUnlocks();
@@ -179,19 +174,6 @@ public:
     void initMapUnlocks();
     void initMenuUnlocks();
     
-    int level;
-    int number_of_hospital;
-    
-    std::string gameMap;
-    
-    /* player profile */
-    std::string username;
-    std::string password;
-    bool gender;
-    bool isLoggedIn;
-    
-    bool hasGameHUD;
-    
 public:
     void UnlockAll();
     
@@ -203,14 +185,6 @@ public:
     void EndGameData();
     
     bool checkGameDataExists();
-    void loadGameData();
-    void newGameData();
-    bool saveGameData();
-    
-    
-    // Game values
-    bool firstPlay;
-    CCArray* loadedGameArea;
     
     // Research building list
     list<int> unlockedBuildingIDs;
@@ -220,8 +194,6 @@ public:
     CCArray* unlockedBuildings;
     CCArray* researchableBuildings;
     CCArray* lockedBuildings;
-    
-    
    
     void UpdateUnlocks();
     
@@ -236,17 +208,7 @@ public:
     AreaUnlock* getNextAreaUnlock();
     void triggerNextAreaUnlock();
     
-    void setTutorialMode(bool mode);
-    bool getTutorialMode();
-    
-    
-    void setLoadedGame(bool mode);
-    bool getLoadedGame();
-    
     bool hasLostGame();
-    
-    void setLevel(int);
-    int getLevel();
     
     /* Jerry added */
     int town_hall_level;
@@ -256,6 +218,10 @@ public:
     void parseHousingLimitation();
     bool parseHousingLimit(string);
     void loadHousingLimit();
+    
+    void enableMainMenuScene();
+    void enableSenarioChooseScene();
+    void enableGameScene();
 };
 
 

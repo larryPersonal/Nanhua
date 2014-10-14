@@ -17,13 +17,15 @@ using namespace cocos2d;
 class GameManagement
 {
 public:
-    static void saveGameToFile();
+    static void saveGameToFile(int type);
     static void saveData(int type);
     static void saveSpritesData(int type);
     static void saveBuildingData(int type);
     static void saveSystemData(int type);
     static void saveRoadData(int type);
     static void saveReputationOrbData(int type);
+    static void saveObjectiveData(int type);
+    static void saveTutorialData(int type);
     
     static bool loadData(int type);
     static void loadSystemData(int type);
@@ -32,6 +34,8 @@ public:
     static void loadSpritesLinks(int type);
     static void loadRoadData(int type);
     static void loadReputationOrbData(int type);
+    static void loadObjectiveData(int type);
+    static void loadTutorialData(int type);
     
     static void loadGameFile();
 };

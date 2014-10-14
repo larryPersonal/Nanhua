@@ -36,6 +36,7 @@ public:
     
     CCArray* getConstructingBuildings();
     
+    void clear();
 };
 
 #endif /* defined(__PopulationTest__ConstructionHandler__) */

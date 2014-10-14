@@ -7,28 +7,93 @@
             <key>back_icon.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2052},{170,151}}</string>
+                <string>{{4,1166},{174,155}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,4},{170,151}}</string>
+                <string>{{0,4},{174,155}}</string>
                 <key>sourceSize</key>
-                <string>{170,159}</string>
+                <string>{174,163}</string>
             </dict>
-            <key>screenlevelselect_v2.png</key>
+            <key>load_icon.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{2048,1536}}</string>
+                <string>{{184,1166},{174,155}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{2048,1536}}</string>
+                <string>{{0,4},{174,155}}</string>
                 <key>sourceSize</key>
-                <string>{2048,1536}</string>
+                <string>{174,163}</string>
+            </dict>
+            <key>play.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{364,1166},{564,133}}</string>
+                <key>offset</key>
+                <string>{-5,-2}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{3,5},{564,133}}</string>
+                <key>sourceSize</key>
+                <string>{580,139}</string>
+            </dict>
+            <key>play_press.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{364,1305},{564,133}}</string>
+                <key>offset</key>
+                <string>{-5,-2}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{3,5},{564,133}}</string>
+                <key>sourceSize</key>
+                <string>{580,139}</string>
+            </dict>
+            <key>screenlevelselect_v2.jpg</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{1540,1156}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{1540,1156}}</string>
+                <key>sourceSize</key>
+                <string>{1540,1156}</string>
+            </dict>
+            <key>skip.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{934,1166},{564,133}}</string>
+                <key>offset</key>
+                <string>{-5,-2}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{3,5},{564,133}}</string>
+                <key>sourceSize</key>
+                <string>{580,139}</string>
+            </dict>
+            <key>skip_press.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{934,1305},{564,133}}</string>
+                <key>offset</key>
+                <string>{-5,-2}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{3,5},{564,133}}</string>
+                <key>sourceSize</key>
+                <string>{580,139}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -38,9 +103,9 @@
             <key>realTextureFileName</key>
             <string>LevelSelectSceneSpriteSheet.png</string>
             <key>size</key>
-            <string>{1540,2205}</string>
+            <string>{1548,1442}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:382ef90e2f133ea75c59e8ba00ecc43f:30b415431949ab68e2eade51bed929ed:f6a28a69ed68c7042b3a8a4c0f83a77d$</string>
+            <string>$TexturePacker:SmartUpdate:a74988c9339bab392e4f6dc1aaf4073c:05a613541db9e549ebe0990d74183957:f6a28a69ed68c7042b3a8a4c0f83a77d$</string>
             <key>textureFileName</key>
             <string>LevelSelectSceneSpriteSheet.png</string>
         </dict>

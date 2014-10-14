@@ -26,6 +26,11 @@ Question::Question()
 {
     questionStr = "";
     answerIndex = 0;
+    
+    introStr = "";
+    isIntro = false;
+    
+    twoChoice = false;
 }
 
 Question::~Question()
@@ -51,4 +56,34 @@ void Question::addAnswerString(std::string aStr)
 std::vector<std::string> Question::getAnswers()
 {
     return answerStrs;
+}
+
+void Question::setIntroString(std::string iStr)
+{
+    introStr = iStr;
+}
+
+std::string Question::getIntroString()
+{
+    return introStr;
+}
+
+void Question::setIsIntro(bool flag)
+{
+    isIntro = flag;
+}
+
+bool Question::getIsIntro()
+{
+    return isIntro;
+}
+
+void Question::setTwoChoice(bool flag)
+{
+    twoChoice = flag;
+}
+
+bool Question::getTwoChoice()
+{
+    return twoChoice;
 }

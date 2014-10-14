@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "Sprite.h"
 #include <vector.h>
+#include "ReputationOrb.h"
 
 class SpriteHandler
 {
@@ -51,11 +52,14 @@ public:
     GameSprite* getSpriteToMap(CCPoint &tilePos, VillagerClass villagerClass);
     
     void removeSpriteFromMap(GameSprite *sprite);
+    void removeTokenFromMap(ReputationOrb* rOrb);
     
     void update(float);
     
     float getCumulatedTime();
     void setCumulatedTime(float);
+    
+    void clear();
 };
 
 

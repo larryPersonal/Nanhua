@@ -13,6 +13,7 @@
 #include "GlobalHelper.h"
 #include "SanGuoXiaoXueTang.h"
 #include "UIButtonControl.h"
+#include "UserProfile.h"
 
 ScoreMenu* ScoreMenu::SP;
 
@@ -71,7 +72,7 @@ bool ScoreMenu::init(CCLayer* layer)
     
     stringstream ss;
     
-    int level = GameManager::getThis()->getLevel();
+    int level = UserProfile::getThis()->gameLevel;
     if(level == 0)
     {
         ss << "Tutorial";
@@ -88,7 +89,7 @@ bool ScoreMenu::init(CCLayer* layer)
     scenarioTitle->setPosition(ccp(screenSize.width, screenSize.height / 2.0f * 3.0f - 150.0f));
     
     ss.str(std::string());
-    ss << "Player: " << GameManager::getThis()->username.c_str();
+    ss << "Player: " << UserProfile::getThis()->username.c_str();
     userLabel = CCLabelTTF::create(ss.str().c_str(), "GillSansMT", 44);
     userLabel->setAnchorPoint(ccp(0.5f, 1.0f));
     userLabel->setColor(colorBlack);
@@ -105,16 +106,16 @@ bool ScoreMenu::init(CCLayer* layer)
     ss << GameHUD::getThis()->targetReputation;
     
     float total = 0;
-    for (int i = 0; i < GameScene::getThis()->spriteHandler->spritesOnMap->count(); i++)
+    for (int i = 0; i < SpriteHandler::getThis()->spritesOnMap->count(); i++)
     {
-        GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(i);
+        GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(i);
         if(gs->villagerClass == V_SOLDIER)
         {
             total += 100.0f;
         }
     }
     
-    if(GameManager::getThis()->getLevel() == 2)
+    if(UserProfile::getThis()->gameLevel == 2)
     {
         ss << " + " << total;
     }
@@ -284,12 +285,12 @@ void ScoreMenu::removeScoreMenu()
 
 void ScoreMenu::clickScoreMenuButton()
 {
-    string username = GameManager::getThis()->username;
+    string username = UserProfile::getThis()->username;
     stringstream ss;
     
     GlobalHelper::resumeAllVillagers();
     GameHUD::getThis()->clearAllLabels();
-    if(GameManager::getThis()->getLevel() == 0)
+    if(UserProfile::getThis()->gameLevel == 0)
     {
         int reputation = GameHUD::getThis()->targetReputation;
         ss.str(std::string());
@@ -301,16 +302,16 @@ void ScoreMenu::clickScoreMenuButton()
         }
         
         ss.str(std::string());
-        ss << username << "_level_1_open";
+        ss << username << "_level_0_open";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
-        GameManager::getThis()->setLevel(1);
+        UserProfile::getThis()->gameLevel = 1;
         
         scheduleHideScoreMenu();
         
-        GameScene::getThis()->reSetupLevel();
+        GameScene::getThis()->reSetupLevel(false);
     }
-    else if(GameManager::getThis()->getLevel() == 1)
+    else if(UserProfile::getThis()->gameLevel == 1)
     {
         int reputation = GameHUD::getThis()->targetReputation;
         ss.str(std::string());
@@ -322,21 +323,21 @@ void ScoreMenu::clickScoreMenuButton()
         }
         
         ss.str(std::string());
-        ss << username << "_level_2_open";
+        ss << username << "_level_1_open";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
-        GameManager::getThis()->setLevel(2);
+        UserProfile::getThis()->gameLevel = 2;
         
         scheduleHideScoreMenu();
         
-        GameScene::getThis()->reSetupLevel();
+        GameScene::getThis()->reSetupLevel(false);
     }
-    else if(GameManager::getThis()->getLevel() == 2)
+    else if(UserProfile::getThis()->gameLevel == 2)
     {
         int reputation = GameHUD::getThis()->targetReputation;
         ss.str(std::string());
         ss << username << "_level_2_score";
-        CCArray* sprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* sprites = SpriteHandler::getThis()->spritesOnMap;
         float total = 0;
         for (int i = 0; i < sprites->count(); i++)
         {
@@ -361,16 +362,17 @@ void ScoreMenu::clickScoreMenuButton()
         }
         
         ss.str(std::string());
-        ss << username << "_level_3_open";
+        ss << username << "_level_2_open";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
-        GameManager::getThis()->setLevel(3);
+        UserProfile::getThis()->gameLevel = 3;
+        GameHUD::getThis()->clearGuardTowerBar();
         
         scheduleHideScoreMenu();
         
-        GameScene::getThis()->reSetupLevel();
+        GameScene::getThis()->reSetupLevel(false);
     }
-    else if(GameManager::getThis()->getLevel() == 3)
+    else if(UserProfile::getThis()->gameLevel == 3)
     {
         int reputation = GameHUD::getThis()->targetReputation;
         ss.str(std::string());
@@ -383,16 +385,16 @@ void ScoreMenu::clickScoreMenuButton()
         }
         
         ss.str(std::string());
-        ss << username << "_level_4_open";
+        ss << username << "_level_3_open";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
-        GameManager::getThis()->setLevel(4);
+        UserProfile::getThis()->gameLevel = 4;
         
         scheduleHideScoreMenu();
         
-        GameScene::getThis()->reSetupLevel();
+        GameScene::getThis()->reSetupLevel(false);
     }
-    else if(GameManager::getThis()->getLevel() == 4)
+    else if(UserProfile::getThis()->gameLevel == 4)
     {
         int reputation = GameHUD::getThis()->targetReputation;
         ss.str(std::string());
@@ -405,16 +407,16 @@ void ScoreMenu::clickScoreMenuButton()
         }
         
         ss.str(std::string());
-        ss << username << "_level_5_open";
+        ss << username << "_level_4_open";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
-        GameManager::getThis()->setLevel(5);
+        UserProfile::getThis()->gameLevel = 5;
         
         scheduleHideScoreMenu();
         
-        GameScene::getThis()->reSetupLevel();
+        GameScene::getThis()->reSetupLevel(false);
     }
-    else if(GameManager::getThis()->getLevel() == 5)
+    else if(UserProfile::getThis()->gameLevel == 5)
     {
         int reputation = GameHUD::getThis()->targetReputation;
         ss.str(std::string());
@@ -427,15 +429,29 @@ void ScoreMenu::clickScoreMenuButton()
         }
         
         ss.str(std::string());
-        ss << username << "_level_6_open";
+        ss << username << "_level_5_open";
         CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), true);
         
-        GameManager::getThis()->setLevel(6);
+        UserProfile::getThis()->gameLevel = 6;
         
         scheduleHideScoreMenu();
         
-        GameScene::getThis()->reSetupLevel();
-
+        GameScene::getThis()->reSetupLevel(false);
+    }
+    else if(UserProfile::getThis()->gameLevel == 6)
+    {
+        int reputation = GameHUD::getThis()->targetReputation;
+        ss.str(std::string());
+        ss << username << "_level_6_score";
+        
+        
+        float prevReputation = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
+        if(prevReputation < reputation)
+        {
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), (float) reputation);
+        }
+        
+        scheduleHideScoreMenu();
     }
 }
 

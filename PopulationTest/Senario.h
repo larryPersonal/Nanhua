@@ -53,6 +53,8 @@ public:
     
     ScenarioState scenarioState;
     
+    CCSpriteBatchNode* mixNode;
+    
 public:
     Senario();
     ~Senario();
@@ -91,6 +93,9 @@ public:
     void clearScenario();
     
     void stopGame();
+    
+    void loadTextures();
+    void releaseTextures();
 };
 
 #endif

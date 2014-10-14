@@ -53,9 +53,9 @@ AnimatedRain::AnimatedRain()
     rainSprite->setAnchorPoint(ccp(0.5, 0.5));
     
     CCPoint rainPos = CCPointMake(30, 23);
-    rainPos = GameScene::getThis()->mapHandler->locationFromTilePos(&rainPos);
+    rainPos = MapHandler::getThis()->locationFromTilePos(&rainPos);
     
-    GameScene::getThis()->mapHandler->getMap()->addChild(rainSprite, 999999);
+    MapHandler::getThis()->getMap()->addChild(rainSprite, 999999);
     rainSprite->setPosition(rainPos);
     
     path = CCArray::create();
@@ -97,14 +97,14 @@ void AnimatedRain::update(float deltaTime)
     // move the animated rain
     if(!isMoving)
     {
-        CCPoint mapTile = GameScene::getThis()->mapHandler->getRandomTile();
+        CCPoint mapTile = MapHandler::getThis()->getRandomTile();
         if(mapTile.x == -1 || mapTile.y == -1)
         {
             return;
         }
         
         CCPoint startPos = getWorldPosition();
-        startPos = GameScene::getThis()->mapHandler->tilePosFromLocation(startPos);
+        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
         
         if (CreatePath(startPos, mapTile))
         {
@@ -125,7 +125,7 @@ void AnimatedRain::update(float deltaTime)
                 PathfindingNode* node = (PathfindingNode*)path->objectAtIndex(0);
                 path->removeObject(node);
                 
-                nextPos = GameScene::getThis()->mapHandler->locationFromTilePos(&(node->tilepos));
+                nextPos = MapHandler::getThis()->locationFromTilePos(&(node->tilepos));
                 
                 isInAction = true;
             }
@@ -201,7 +201,7 @@ CCPoint AnimatedRain::getWorldPosition()
         return CCPointMake(-1,-1);
     }
     
-    return ccpAdd(rainSprite->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
+    return ccpAdd(rainSprite->getPosition(), MapHandler::getThis()->getMap()->getPosition());
 }
 
 bool AnimatedRain::CreatePath(CCPoint from, CCPoint to)

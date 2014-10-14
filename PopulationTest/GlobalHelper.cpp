@@ -145,7 +145,7 @@ bool GlobalHelper::isHorizontal()
 
 SpriteClass* GlobalHelper::getSpriteClassByVillagerClass(VillagerClass villagerClass)
 {
-    CCArray* allSpriteClass = GameScene::getThis()->spriteHandler->allSpriteClass;
+    CCArray* allSpriteClass = SpriteHandler::getThis()->allSpriteClass;
     for (int i = 0; i < allSpriteClass->count(); i++)
     {
         SpriteClass* sc = (SpriteClass*) allSpriteClass->objectAtIndex(i);
@@ -159,7 +159,7 @@ SpriteClass* GlobalHelper::getSpriteClassByVillagerClass(VillagerClass villagerC
 
 GameSprite* GlobalHelper::getSpriteByVillagerClass(GameSprite* gameSprite, VillagerClass villagerClass)
 {
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->allSprites;
+    CCArray* allSprites = SpriteHandler::getThis()->allSprites;
     bool isMale = (gameSprite->gender == 'm');
     for (int i = 0; i < allSprites->count(); i++)
     {
@@ -389,8 +389,8 @@ void GlobalHelper::clearCache()
 {
     CCTextureCache::sharedTextureCache()->removeAllTextures();
     CCTextureCache::sharedTextureCache()->purgeSharedTextureCache();
-    CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
-    CCDirector::sharedDirector()->purgeCachedData();
+    // CCAnimationCache::sharedAnimationCache()->purgeSharedAnimationCache();
+    // CCDirector::sharedDirector()->purgeCachedData();
 }
 
 void GlobalHelper::clearPreloadedTexture()
@@ -403,7 +403,7 @@ void GlobalHelper::resumeAllVillagers()
 {
     GameHUD::getThis()->pause = false;
     GameScene::getThis()->tapped = true;
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
     
     for (int i = 0; i < spritesOnMap->count(); i++)
     {

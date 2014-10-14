@@ -71,7 +71,7 @@ PathfindingNode* PathFinder::isOnList(CCPoint tilePos, CCArray* list)
 
 bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool isCombatingSprite)
 {
-    MapHandler* handler = GameScene::getThis()->mapHandler;
+    MapHandler* handler = MapHandler::getThis();
     if (handler->isTilePosWithinBounds(*tilePos))
     {
         if(isCombatingSprite)
@@ -83,7 +83,7 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool isCombatingSprite)
             destination.y == tilePos->y)
         {
             //the destination must always be reachable, in case someone wants to enter a building.
-            MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(tilePos->x, tilePos->y);
+            MapTile* targetTile = MapHandler::getThis()->getTileAt(tilePos->x, tilePos->y);
             if((targetTile->hasBuilding() && targetTile->building != NULL && targetTile->building->buildingType != DECORATION) || targetTile->isPath)
             {
                 return true;
@@ -99,7 +99,7 @@ bool PathFinder::isReachable(cocos2d::CCPoint *tilePos, bool isCombatingSprite)
         
         if (!handler->isTileBlocked(*tilePos))
         {
-            MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(tilePos->x, tilePos->y);
+            MapTile* targetTile = MapHandler::getThis()->getTileAt(tilePos->x, tilePos->y);
             
             if(targetTile->hasBuilding())
             {
@@ -253,7 +253,7 @@ CCPoint PathFinder::getNearestNoneBuildingPos( CCPoint* sourcePos )
             }
         }
         
-        MapTile* currTile = GameScene::getThis()->mapHandler->getTileAt(lowestCostNode->tilepos.x, lowestCostNode->tilepos.y);
+        MapTile* currTile = MapHandler::getThis()->getTileAt(lowestCostNode->tilepos.x, lowestCostNode->tilepos.y);
         
         if(currTile->hasBuilding())
         {
@@ -463,7 +463,7 @@ CCArray* PathFinder::getReachableTiles(PathfindingNode *fromTile,
         CCPoint adjacentTile = pointsToCheck[i];
         if (isReachable(&adjacentTile, isCombatingSprite))
         {
-            MapTile* adjTile = GameScene::getThis()->mapHandler->getTileAt(adjacentTile.x, adjacentTile.y);
+            MapTile* adjTile = MapHandler::getThis()->getTileAt(adjacentTile.x, adjacentTile.y);
             int G = 0;
             if(adjTile->hasBuilding())
             {

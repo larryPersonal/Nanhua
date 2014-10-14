@@ -320,6 +320,8 @@ public:
     virtual void unselected();
     virtual void setEnabled(bool bEnabled);
     
+    void clear();
+    
 protected:
     virtual void updateImagesVisibility();
 };

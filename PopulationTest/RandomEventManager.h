@@ -23,8 +23,7 @@ public:
     CCSprite* blackScreen;
     CCSprite* image;
     
-    CCMenuItem* okButton;
-    CCMenu* menu;
+    CCSprite* okButton;
     
     CCLabelTTF* titleLabel;
     
@@ -55,8 +54,6 @@ public:
     void removeRandomEventContent();
     
     void setupDescription(std::string desc);
-    
-    void clickSystemButton();
     
     void readRandomEventsFile();
     

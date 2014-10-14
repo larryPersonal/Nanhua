@@ -8,6 +8,12 @@
 
 #include "NotificationPopup.h"
 #include "GameHUD.h"
+#include "TutorialManager.h"
+#include "UIButtonControl.h"
+#include "GlobalHelper.h"
+#include "Senario.h"
+#include "UserProfile.h"
+#include "SanGuoXiaoXueTang.h"
 
 NotificationPopup* NotificationPopup::SP;
 
@@ -25,6 +31,9 @@ NotificationPopup::NotificationPopup()
     congratsContentLabel_scenario3 = NULL;
     
     targetScale = 0;
+    
+    proceedToNextLevel = false;
+    proceedToScenario1 = false;
 }
 
 NotificationPopup::~NotificationPopup()
@@ -54,6 +63,8 @@ NotificationPopup* NotificationPopup::create()
 
 void NotificationPopup::showUI()
 {
+    UIButtonControl::pauseGame();
+    
     createUI();
     
     active = true;
@@ -125,7 +136,18 @@ void NotificationPopup::jumpOut(float dt)
         if(proceedToNextLevel)
         {
             proceedToNextLevel = false;
+        
             GameHUD::getThis()->scheduleOnce(schedule_selector(GameHUD::clickScoreButton), 5.0f);
+        }
+        else if(proceedToScenario1)
+        {
+            proceedToScenario1 = false;
+            CCLog("I am going to senario 1.");
+            std::string filename = "senario_h.xml";
+            TutorialManager::getThis()->clearSprites();
+            GlobalHelper::clearCache();
+            CCLog("It's scenario time now.");
+            Senario::getThis()->playSenario(filename.c_str());
         }
     }
     else
@@ -211,6 +233,60 @@ void NotificationPopup::clickNotificationButton()
     }
 }
 
+void NotificationPopup::showScenario1Congratulations()
+{
+    if(!isJumpIn && !isJumpOut)
+    {
+        if(!active)
+        {
+            isJumpIn = true;
+            isJumpOut = false;
+            proceedToNextLevel = true;
+            
+            showUI();
+            
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            
+            congratsTitleLabel_scenario3 = CCLabelTTF::create("Congratulations!", "GillSansMT", 48);
+            congratsTitleLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
+            background->addChild(congratsTitleLabel_scenario3, 3);
+            
+            congratsContentLabel_scenario3 = CCLabelTTF::create("You have improved the village's development status!", "GillSansMT", 48);
+            congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
+            background->addChild(congratsContentLabel_scenario3, 3);
+        }
+    }
+}
+
+void NotificationPopup::showScenario2Congratulations()
+{
+    if(!isJumpIn && !isJumpOut)
+    {
+        if(!active)
+        {
+            isJumpIn = true;
+            isJumpOut = false;
+            proceedToNextLevel = true;
+            
+            showUI();
+            
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            
+            congratsTitleLabel_scenario3 = CCLabelTTF::create("Congratulations!", "GillSansMT", 48);
+            congratsTitleLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
+            background->addChild(congratsTitleLabel_scenario3, 3);
+            
+            congratsContentLabel_scenario3 = CCLabelTTF::create("You have protected the village!", "GillSansMT", 48);
+            congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
+            background->addChild(congratsContentLabel_scenario3, 3);
+        }
+    }
+}
+
 void NotificationPopup::showScenario3Congratulations()
 {
     if(!isJumpIn && !isJumpOut)
@@ -285,6 +361,61 @@ void NotificationPopup::showScenario5Congratulations()
             background->addChild(congratsTitleLabel_scenario3, 3);
             
             congratsContentLabel_scenario3 = CCLabelTTF::create("Your have harvested 1500 food for storage!", "GillSansMT", 48);
+            congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
+            background->addChild(congratsContentLabel_scenario3, 3);
+        }
+    }
+}
+
+void NotificationPopup::showScenario6Congratulations()
+{
+    if(!isJumpIn && !isJumpOut)
+    {
+        if(!active)
+        {
+            isJumpIn = true;
+            isJumpOut = false;
+            proceedToNextLevel = true;
+            
+            showUI();
+            
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            
+            congratsTitleLabel_scenario3 = CCLabelTTF::create("Congratulations!", "GillSansMT", 48);
+            congratsTitleLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
+            background->addChild(congratsTitleLabel_scenario3, 3);
+            
+            congratsContentLabel_scenario3 = CCLabelTTF::create("Your have successfully manned 5 soldiers!", "GillSansMT", 48);
+            congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
+            background->addChild(congratsContentLabel_scenario3, 3);
+        }
+
+    }
+}
+
+void NotificationPopup::annouceForScenario1()
+{
+    if(!isJumpIn && ! isJumpOut)
+    {
+        if(!active)
+        {
+            isJumpIn = true;
+            isJumpOut = false;
+            proceedToScenario1 = true;
+            
+            showUI();
+            
+            CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+            
+            congratsTitleLabel_scenario3 = CCLabelTTF::create("New commers!", "GillSansMT", 48);
+            congratsTitleLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
+            congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
+            background->addChild(congratsTitleLabel_scenario3, 3);
+            
+            congratsContentLabel_scenario3 = CCLabelTTF::create("A group of refugees come to our village!", "GillSansMT", 48);
             congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
             congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
             background->addChild(congratsContentLabel_scenario3, 3);

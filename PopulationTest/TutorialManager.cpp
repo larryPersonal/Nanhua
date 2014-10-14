@@ -13,6 +13,10 @@
 #include "GameManager.h"
 #include "Senario.h"
 #include "FloatingArraw.h"
+#include "NotificationPopup.h"
+#include "UserProfile.h"
+#include "UIButtonControl.h"
+#include "GameManagement.h"
 
 TutorialManager* TutorialManager::SP;
 
@@ -86,12 +90,18 @@ TutorialManager::TutorialManager()
     goNarr = false;
     
     freeBuilding = false;
+    
+    spritesArray = CCArray::create();
+    spritesArray->retain();
 }
 
 TutorialManager::~TutorialManager()
 {
     TutorialManager::SP = NULL;
     clearSprites();
+    spritesArray->removeAllObjects();
+    CC_SAFE_RELEASE(spritesArray);
+    FloatingArraw::getThis()->clear();
 }
 
 void TutorialManager::unlockAll()
@@ -156,102 +166,63 @@ void TutorialManager::lockAll()
 
 void TutorialManager::setupForTutorial()
 {
+    // save a copy for backup
+    GameManagement::saveGameToFile(3);
+    
     active = true;
     lockDropTokens = true;
     
-    bool setup = false;
-    if(!GameManager::getThis()->hasGameHUD)
-    {
-        GameHUD* hudlayer = GameHUD::getThis();
-        hudlayer->resetGameHUD();
-        GameScene::getThis()->setTouchEnabled(true);
-        GameScene::getThis()->addChild(hudlayer, 1);
-        SoundtrackManager::PlayBGM("in-game_1.wav");
-        GameManager::getThis()->hasGameHUD = true;
-        setup = true;
-    }
+    // SoundtrackManager::PlayBGM("in-game_1.wav");
     
-    /*
-    if(GameManager::getThis()->getLevel() == 2)
+    if(UserProfile::getThis()->systemConfig->skipTutorial)
     {
-        GameHUD::getThis()->setupForGuardTowerBar();
-    }
-    */
-    
-    if(GameScene::getThis()->systemConfig->skipTutorial)
-    {
-        if(setup)
-        {
-            GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::FirstRunPopulate), 0.1f);
-        }
         unlockAll();
-        
         active = false;
-        
-        ObjectiveHandler::getThis()->playObjective();
-        
         return;
     }
     
-    if(setup)
+    if(FloatingArraw::getThis() == NULL)
     {
-        // animated rain is not used for this time, maybe in later time?
-        //GameScene::getThis()->animatedRain = AnimatedRain::create();
-        
-        GameScene::getThis()->mapHandler->Populate(GameScene::getThis()->buildingHandler->allBuildingLayers);
-        
-        GameScene::getThis()->spriteHandler->initialize();
-        
-        GameManager::getThis()->initGameData();
-        
-        GameManager::getThis()->UpdateUnlocks();
-        GameScene::getThis()->schedule(schedule_selector(GameScene::update), 1.0f/60.0f);
-        GameScene::getThis()->mapHandler->rescaleScrollLimits();
-        GameHUD::getThis()->update(0.1f);
-        
         new FloatingArraw();
     }
     
-    GameHUD::getThis()->pause = true;
+    UIButtonControl::pauseGame();
     setupMiniDragon();
 }
 
 void TutorialManager::setupForScenario()
 {
-    GameManager::getThis()->setLevel(1);
+    UserProfile::getThis()->gameLevel = 1;
     
     lockAll();
     target = ccp(4400.0f, 2500.0f);
     this->schedule(schedule_selector(TutorialManager::moveCamera), 1.0f / 120.0f);
     
-    spritesArray = CCArray::create();
-    spritesArray->retain();
-    
     // CCLog("my very best warming!");
     
     CCPoint target = CCPointMake(39,64);
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.y += 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x -= 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x -= 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     target.x -= 1;
-    GameScene::getThis()->spriteHandler->addSpriteToMap(target, V_REFUGEE, true);
+    SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
     goNarr = true;
     active = false;
@@ -276,7 +247,7 @@ void TutorialManager::scheduleVillagers(float dt)
     {
         cumulativeTime = 0;
         CCPoint location = CCPointMake(39, 60);
-        GameScene::getThis()->spriteHandler->addSpriteToMap(location, V_REFUGEE);
+        SpriteHandler::getThis()->addSpriteToMap(location, V_REFUGEE);
         villagersToBeAdded--;
     }
 }
@@ -286,8 +257,8 @@ void TutorialManager::moveCamera(float dt)
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
     // get the currentPosition
-    float xPos = - GameScene::getThis()->mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
-    float yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
+    float xPos = - MapHandler::getThis()->getMap()->getPositionX() + screenSize.width / 2.0f;
+    float yPos = - MapHandler::getThis()->getMap()->getPositionY() + screenSize.height / 2.0f;
     
     // get the horizontal and vertical length difference between the screen centre and the target position!
     float xDiff = target.x - xPos;
@@ -307,16 +278,16 @@ void TutorialManager::moveCamera(float dt)
     float ySpeed = xSpeed * (yDiff / xDiff);
     
     // update the position of the screen centre.
-    GameScene::getThis()->mapHandler->moveMapBy(-xSpeed, -ySpeed);
+    MapHandler::getThis()->moveMapBy(-xSpeed, -ySpeed);
     
-    xPos = - GameScene::getThis()->mapHandler->getMap()->getPositionX() + screenSize.width / 2.0f;
+    xPos = - MapHandler::getThis()->getMap()->getPositionX() + screenSize.width / 2.0f;
     // yPos = - GameScene::getThis()->mapHandler->getMap()->getPositionY() + screenSize.height / 2.0f;
     
     if(xSpeed > 0)
     {
         if(xPos >= TutorialManager::getThis()->target.x)
         {
-            GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
+            MapHandler::getThis()->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
             this->unschedule(schedule_selector( TutorialManager::moveCamera ));
             
             if(TutorialManager::getThis()->miniDragon != NULL)
@@ -339,9 +310,10 @@ void TutorialManager::moveCamera(float dt)
                 }
             }
             
+            // after setup for scenario function, the game will proceed annouce for scenario 1 part.
             if(goNarr)
             {
-                setupNarrator();
+                annouceForScenario1();
                 goNarr = false;
             }
         }
@@ -350,7 +322,7 @@ void TutorialManager::moveCamera(float dt)
     {
         if(xPos <= TutorialManager::getThis()->target.x)
         {
-            GameScene::getThis()->mapHandler->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
+            MapHandler::getThis()->getMap()->setPosition(-TutorialManager::getThis()->target.x + screenSize.width / 2.0f, -TutorialManager::getThis()->target.y + screenSize.height / 2.0f);
             this->unschedule(schedule_selector( TutorialManager::moveCamera ));
             
             if(TutorialManager::getThis()->miniDragon != NULL)
@@ -375,14 +347,14 @@ void TutorialManager::moveCamera(float dt)
             
             if(goNarr)
             {
-                setupNarrator();
+                annouceForScenario1();
                 goNarr = false;
             }
         }
     }
     
-    GameScene::getThis()->mapHandler->rescaleScrollLimits();
-    GameScene::getThis()->mapHandler->moveMapBy(0.0f, 0.0f);
+    MapHandler::getThis()->rescaleScrollLimits();
+    MapHandler::getThis()->moveMapBy(0.0f, 0.0f);
 }
 
 void TutorialManager::fadeOut(float dt)
@@ -425,6 +397,12 @@ void TutorialManager::scheduleFadeOut(float tOpacity, float speed)
     this->schedule(schedule_selector( TutorialManager::fadeOut ), 1.0f / 120.0f);
 }
 
+void TutorialManager::annouceForScenario1()
+{
+    unlockAll();
+    NotificationPopup::getThis()->annouceForScenario1();
+}
+
 void TutorialManager::setupNarrator()
 {
     narrator = new Narrator();
@@ -442,19 +420,34 @@ void TutorialManager::setupMiniDragon()
 
 void TutorialManager::clearSprites()
 {
+    if(highlightedBuilding != NULL)
+    {
+        highlightedBuilding = NULL;
+    }
+    
     CCLog("I am going to clear all the sprites for showing.");
     for(int i = 0; i < spritesArray->count(); i++)
     {
         GameSprite* gs = (GameSprite*) spritesArray->objectAtIndex(i);
-        GameScene::getThis()->spriteHandler->removeSpriteFromMap(gs);
+        SpriteHandler::getThis()->removeSpriteFromMap(gs);
         CCLog("removing the sprites from map!");
     }
     spritesArray->removeAllObjects();
-    CC_SAFE_RELEASE(spritesArray);
     
     TutorialManager::getThis()->unschedule(schedule_selector(TutorialManager::fadeIn));
     TutorialManager::getThis()->unschedule(schedule_selector(TutorialManager::fadeOut));
+    GameHUD::getThis()->mask->setOpacity((GLubyte) 0);
     
+    unlockAll();
+    
+    clickable = false;
+    
+    villagersToBeAdded = 0;
+    cumulativeTime = 0;
+    show = false;
+    hide = false;
+    goNarr = false;
+
     if(miniDragon != NULL)
     {
         delete miniDragon;
@@ -466,8 +459,6 @@ void TutorialManager::clearSprites()
         delete narrator;
         narrator = NULL;
     }
-    
-    FloatingArraw::getThis()->clear();
 }
 
 void TutorialManager::scheduleForScenario(float time)

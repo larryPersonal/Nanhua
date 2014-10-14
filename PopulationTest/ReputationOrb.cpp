@@ -146,8 +146,8 @@ void ReputationOrb::disappearAnimation(float deltaTime)
         ++x_frameno;
         if (x_frameno >= x_maxframeno)
         {
-            GameScene::getThis()->spriteHandler->tokensOnMap->removeObject(this);
-            GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+            SpriteHandler::getThis()->tokensOnMap->removeObject(this);
+            MapHandler::getThis()->getMap()->removeChild(orbSprite);
             GameHUD::getThis()->removeChild(orbSprite);
         }
         else
@@ -278,7 +278,7 @@ void ReputationOrb::collect(CCPoint touchLoc)
     
     orbSprite->retain();
     
-    GameScene::getThis()->mapHandler->getMap()->removeChild(orbSprite);
+    MapHandler::getThis()->getMap()->removeChild(orbSprite);
     GameHUD::getThis()->addChild(orbSprite);
     orbSprite->setPosition(touchLoc);
     orbSprite->autorelease();

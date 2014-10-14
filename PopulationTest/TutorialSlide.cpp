@@ -72,6 +72,7 @@ TutorialSlide::TutorialSlide()
     delay = 0;
     
     clear = false;
+    setupGuardTowerBar = false;
 }
 
 TutorialSlide::~TutorialSlide()

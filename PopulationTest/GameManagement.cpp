@@ -11,11 +11,13 @@
 #include "GameManager.h"
 #include "GameHUD.h"
 #include "ReputationOrb.h"
+#include "UserProfile.h"
+#include "TutorialManager.h"
 
-void GameManagement::saveGameToFile()
+void GameManagement::saveGameToFile(int type)
 {
     CCLog("try saving......");
-    saveData(1);
+    saveData(type);
     CCLog("saving success!");
 }
 
@@ -35,16 +37,20 @@ void GameManagement::saveBuildingData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
-    CCArray* allBuildingsOnMap = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    CCArray* allBuildingsOnMap = BuildingHandler::getThis()->allBuildingsOnMap;
     
     // total number of buildings
     
@@ -61,7 +67,7 @@ void GameManagement::saveBuildingData(int type)
         
         buildingIndex++;
         
-        CCArray* allbuildings = GameScene::getThis()->buildingHandler->allBuildings;
+        CCArray* allbuildings = BuildingHandler::getThis()->allBuildings;
         
         int tag = 0;
         
@@ -234,7 +240,7 @@ void GameManagement::saveBuildingData(int type)
         ss << username << "_building_" << buildingIndex << "_memberNumber";
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), bui->memberSpriteList->count());
         
-        CCArray* allSpritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+        CCArray* allSpritesOnMap = SpriteHandler::getThis()->spritesOnMap;
         
         for (int j = 0; j < bui->memberSpriteList->count(); j++)
         {
@@ -304,7 +310,7 @@ void GameManagement::saveBuildingData(int type)
         CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), bui->cumulatedTimeResting);
         
         CCPoint tPos = bui->getWorldPosition();
-        tPos = GameScene::getThis()->mapHandler->tilePosFromLocation(tPos);
+        tPos = MapHandler::getThis()->tilePosFromLocation(tPos);
         
         // building position x
         ss.str(std::string());
@@ -337,12 +343,16 @@ void GameManagement::saveSystemData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -358,7 +368,7 @@ void GameManagement::saveSystemData(int type)
     // save the level number
     ss.str(std::string());
     ss << username << "_levelNumber";
-    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), GameManager::getThis()->getLevel());
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), UserProfile::getThis()->gameLevel);
     
     // CCLog("### level number : %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str()));
     
@@ -423,16 +433,20 @@ void GameManagement::saveSpritesData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
     
     ss.str(std::string());
     ss << username << "_numberOfGameSprites";
@@ -473,7 +487,7 @@ void GameManagement::saveSpritesData(int type)
         
         // sprite positions
         CCPoint tilePos = gs->getWorldPosition();
-        tilePos = GameScene::getThis()->mapHandler->tilePosFromLocation(tilePos);
+        tilePos = MapHandler::getThis()->tilePosFromLocation(tilePos);
         
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_position_x";
@@ -738,7 +752,7 @@ void GameManagement::saveSpritesData(int type)
         // CCLog ("### sprite should set visible next frame : %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()) ? "true" : "false");
         
         // sprite job location
-        CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+        CCArray* allBuildings = BuildingHandler::getThis()->allBuildingsOnMap;
         int index = 0;
         
         ss.str(std::string());
@@ -1163,6 +1177,35 @@ void GameManagement::saveSpritesData(int type)
         }
         
         CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), index);
+        
+        /*
+         * we must restore the path of the game sprites when saving so that we can resuming their path of moving during ruture game loading.
+         */
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_numberOfPathTiles";
+        
+        if(gs->path == NULL)
+        {
+            CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), 0);
+        }
+        else
+        {
+            CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), gs->path->count());
+        }
+        
+        for (int j = 0; j < gs->path->count(); j++)
+        {
+            ss.str(std::string());
+            ss << username << "_sprite_" << i << "_path_" << j << "posX";
+            
+            PathfindingNode* node = (PathfindingNode*) gs->path->objectAtIndex(j);
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), node->tilepos.x);
+            
+            ss.str(std::string());
+            ss << username << "_sprite_" << i << "_path_" << j << "posY";
+            
+            CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), node->tilepos.y);
+        }
     }
 }
 
@@ -1182,16 +1225,20 @@ void GameManagement::saveRoadData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
-    CCArray* allPath = GameScene::getThis()->mapHandler->pathTiles;
+    CCArray* allPath = MapHandler::getThis()->pathTiles;
     
     ss.str(std::string());
     ss << username << "_numberOfPathTiles";
@@ -1239,16 +1286,20 @@ void GameManagement::saveReputationOrbData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
-    CCArray* allReputationOrbs = GameScene::getThis()->spriteHandler->tokensOnMap;
+    CCArray* allReputationOrbs = SpriteHandler::getThis()->tokensOnMap;
     
     ss.str(std::string());
     ss << username << "_numberOfReputationOrbs";
@@ -1268,8 +1319,8 @@ void GameManagement::saveReputationOrbData(int type)
             return;
         }
         
-        CCPoint tilePos = ccpAdd(ro->orbSprite->getPosition(), GameScene::getThis()->mapHandler->getMap()->getPosition());
-        tilePos = GameScene::getThis()->mapHandler->tilePosFromLocation(tilePos);
+        CCPoint tilePos = ccpAdd(ro->orbSprite->getPosition(), MapHandler::getThis()->getMap()->getPosition());
+        tilePos = MapHandler::getThis()->tilePosFromLocation(tilePos);
         
         // orb position
         ss.str(std::string());
@@ -1285,6 +1336,155 @@ void GameManagement::saveReputationOrbData(int type)
     
 }
 
+void GameManagement::saveObjectiveData(int type)
+{
+    // CCLog("#############################################");
+    // CCLog("## save Objective");
+    // CCLog("#############################################");
+    stringstream ss;
+    ss.str(std::string());
+    
+    // 0 means auto save, 1 means fixed save, others mean custom save
+    if (type == 0)
+    {
+        ss << "autosave_";
+    }
+    else if(type == 1)
+    {
+        ss << "fixedsave_";
+    }
+    else if(type == 2)
+    {
+        ss << "customsave_";
+    }
+    else
+    {
+        ss << "backupsave_";
+    }
+    
+    ss << UserProfile::getThis()->username;
+    
+    std::string username = ss.str();
+    
+    // CCLog("## username: %s", username.c_str());
+    
+    // objective current id
+    ss.str(std::string());
+    ss << username << "_objective_current_id";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), ObjectiveHandler::getThis()->currID);
+    
+    // CCLog("## current id: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0));
+    
+    // objective next id
+    ss.str(std::string());
+    ss << username << "_objective_next_id";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), ObjectiveHandler::getThis()->nextID);
+    
+    // CCLog("## next id: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0));
+    
+    // objective progress number
+    ss.str(std::string());
+    ss << username << "_objective_progress_number";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), ObjectiveHandler::getThis()->progressNumber);
+    
+    // CCLog("## progress number: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0));
+    
+    // objective start population
+    ss.str(std::string());
+    ss << username << "_objective_start_population";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), ObjectiveHandler::getThis()->startPopulation);
+    
+    // CCLog("## start population: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0));
+    
+    // objective target population
+    ss.str(std::string());
+    ss << username << "_objective_target_population";
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), ObjectiveHandler::getThis()->targetPopulation);
+    
+    // CCLog("## target population: %d", CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0));
+    
+    // objective has timer
+    ss.str(std::string());
+    ss << username << "_objective_hasTimer";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), GameHUD::getThis()->hasTimer);
+    
+    // CCLog("## has timer: %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str(), false) ? "true" : "false");
+    
+    // objective target time
+    ss.str(std::string());
+    ss << username << "_objective_targetTime";
+    CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), GameHUD::getThis()->targetTime);
+    
+    // CCLog("## target time: %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0));
+    
+    // objective current time
+    ss.str(std::string());
+    ss << username << "_objective_currentTime";
+    CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), GameHUD::getThis()->currentTime);
+    
+    // CCLog("## current time: %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0));
+    
+    // objective scenario time
+    ss.str(std::string());
+    ss << username << "_objective_scenarioTime";
+    CCUserDefault::sharedUserDefault()->setFloatForKey(ss.str().c_str(), GameHUD::getThis()->scenarioTime);
+    
+    // CCLog("## scenario time: %f", CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0));
+    
+    // objective has scenario
+    ss.str(std::string());
+    ss << username << "_objective_hasScenario";
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), GameHUD::getThis()->hasScenario);
+    
+    // CCLog("## has scenario: %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str(), false) ? "true" : "false");
+    // CCLog("#############################################");
+}
+
+void GameManagement::saveTutorialData(int type)
+{
+    stringstream ss;
+    ss.str(std::string());
+    
+    // 0 means auto save, 1 means fixed save, others mean custom save
+    if (type == 0)
+    {
+        ss << "autosave_";
+    }
+    else if(type == 1)
+    {
+        ss << "fixedsave_";
+    }
+    else if(type == 2)
+    {
+        ss << "customsave_";
+    }
+    else
+    {
+        ss << "backupsave_";
+    }
+    
+    ss << UserProfile::getThis()->username;
+    
+    std::string username = ss.str();
+    
+    // save the status weather it is in tutorial
+    ss.str(std::string());
+    ss << username << "_tutorial_isInTutorial";
+    bool isInTutorial = false;
+    if(UserProfile::getThis()->gameLevel != 0 && UserProfile::getThis()->gameLevel != 2)
+    {
+        isInTutorial = false;
+    }
+    else
+    {
+        isInTutorial = TutorialManager::getThis()->active;
+    }
+    
+    // CCLog("** save tutorial data - key: %s", ss.str().c_str());
+    CCUserDefault::sharedUserDefault()->setBoolForKey(ss.str().c_str(), isInTutorial);
+    // CCLog("** isInTutorial: %s", CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str(), false) ? "true" : "false");
+}
+
 // try this save data first for testing purpose
 void GameManagement::saveData(int type)
 {
@@ -1293,15 +1493,9 @@ void GameManagement::saveData(int type)
     saveBuildingData(type);
     saveRoadData(type);
     saveReputationOrbData(type);
+    saveObjectiveData(type);
+    saveTutorialData(type);
 }
-
-
-
-
-
-
-
-
 
 void GameManagement::loadGameFile()
 {
@@ -1359,7 +1553,6 @@ void GameManagement::loadGameFile()
     CCLog("loading finish!");
 }
 
-
 void GameManagement::loadReputationOrbData(int type)
 {
     stringstream ss;
@@ -1374,12 +1567,16 @@ void GameManagement::loadReputationOrbData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -1397,7 +1594,7 @@ void GameManagement::loadReputationOrbData(int type)
         ss << username << "_orb_" << i << "_position_y";
         float positionY = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
         
-        ReputationOrb* ro = ReputationOrb::create("REN", GameScene::getThis()->configSettings->token_disappear_time);
+        ReputationOrb* ro = ReputationOrb::create("REN", UserProfile::getThis()->configSettings->token_disappear_time);
         CCSprite* newToken = ro->getSprite();
         newToken->setAnchorPoint(ccp(0.5, 0.5));
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -1405,18 +1602,17 @@ void GameManagement::loadReputationOrbData(int type)
         
         newToken->setScale(screenSize.width / spriteSize.width * 0.05f);
         
-        GameScene::getThis()->spriteHandler->tokensOnMap->addObject(ro);
+        SpriteHandler::getThis()->tokensOnMap->addObject(ro);
         
-        GameScene::getThis()->mapHandler->getMap()->addChild(newToken, 99999);
+        MapHandler::getThis()->getMap()->addChild(newToken, 99999);
         
         CCPoint targetPos = ccp(positionX, positionY);
         
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&targetPos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&targetPos);
         
         newToken->setPosition(target);
     }
 }
-
 
 void GameManagement::loadSpritesData(int type)
 {
@@ -1434,12 +1630,16 @@ void GameManagement::loadSpritesData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -1469,7 +1669,7 @@ void GameManagement::loadSpritesData(int type)
         
         // CCLog("****** sprite tilePos is: (%f, %f)", tilePos.x, tilePos.y);
         
-        GameSprite* gameSprite = GameScene::getThis()->spriteHandler->getSpriteToMap(tilePos, vc);
+        GameSprite* gameSprite = SpriteHandler::getThis()->getSpriteToMap(tilePos, vc);
         
         // sprite unique id
         ss.str(std::string());
@@ -1908,6 +2108,41 @@ void GameManagement::loadSpritesData(int type)
         value = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str());
         gameSprite->idleDelay = value;
         
+        /*
+         * we must load the path of the game sprites
+         */
+        ss.str(std::string());
+        ss << username << "_sprite_" << i << "_numberOfPathTiles";
+        int numberOfTiles = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+        
+        gameSprite->path = CCArray::create();
+        gameSprite->path->retain();
+        
+        if(numberOfTiles > 0)
+        {
+            for (int j = 0; j < numberOfTiles; j++)
+            {
+                ss.str(std::string());
+                ss << username << "_sprite_" << i << "_path_" << j << "posX";
+                
+                float pX = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0);
+                
+                ss.str(std::string());
+                ss << username << "_sprite_" << i << "_path_" << j << "posY";
+                
+                float pY = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0);
+                
+                PathfindingNode* node = new PathfindingNode();
+                node->tilepos = ccp(pX, pY);
+                node->parent = NULL;
+                node->F = 0;
+                node->G = 0;
+                node->H = 0;
+                
+                gameSprite->path->addObject(node);
+            }
+        }
+        
         if(gameSprite->villagerClass == V_SOLDIER || gameSprite->villagerClass == V_BANDIT)
         {
             gameSprite->spriteRep->setVisible(true);
@@ -1933,9 +2168,9 @@ void GameManagement::loadSpritesData(int type)
         }
         else
         {
-            for (int j = 0; j < GameScene::getThis()->spriteHandler->spritesOnMap->count(); j++)
+            for (int j = 0; j < SpriteHandler::getThis()->spritesOnMap->count(); j++)
             {
-                GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(j);
+                GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(j);
                 
                 if(gs->uniqueID == uniID)
                 {
@@ -1956,9 +2191,9 @@ void GameManagement::loadSpritesData(int type)
         int enermyID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         
         GameSprite* enermySprite = NULL;
-        for (int j = 0; j < GameScene::getThis()->spriteHandler->spritesOnMap->count(); j++)
+        for (int j = 0; j < SpriteHandler::getThis()->spritesOnMap->count(); j++)
         {
-            GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(j);
+            GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(j);
             
             if(gs->uniqueID == enermyID)
             {
@@ -1975,9 +2210,9 @@ void GameManagement::loadSpritesData(int type)
         int preEnermyID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
         
         GameSprite* preEnermySprite = NULL;
-        for (int j = 0; j < GameScene::getThis()->spriteHandler->spritesOnMap->count(); j++)
+        for (int j = 0; j < SpriteHandler::getThis()->spritesOnMap->count(); j++)
         {
-            GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(j);
+            GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(j);
             
             if(gs->uniqueID == preEnermyID)
             {
@@ -2006,12 +2241,16 @@ void GameManagement::loadSpritesLinks(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -2029,9 +2268,9 @@ void GameManagement::loadSpritesLinks(int type)
         
         GameSprite* theGameSprite = NULL;
         
-        for (int j = 0; j < GameScene::getThis()->spriteHandler->spritesOnMap->count(); j++)
+        for (int j = 0; j < SpriteHandler::getThis()->spritesOnMap->count(); j++)
         {
-            GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(j);
+            GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(j);
             
             if(gs->spriteDisplayedName.compare(name.c_str()) == 0)
             {
@@ -2047,7 +2286,7 @@ void GameManagement::loadSpritesLinks(int type)
         }
         
         // loading the sprite job location.
-        CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+        CCArray* allBuildings = BuildingHandler::getThis()->allBuildingsOnMap;
         
         ss.str(std::string());
         ss << username << "_sprite_" << i << "_jobLocation";
@@ -2199,12 +2438,16 @@ void GameManagement::loadSystemData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -2212,7 +2455,7 @@ void GameManagement::loadSystemData(int type)
     ss.str(std::string());
     ss << username << "_levelNumber";
     int levelNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str());
-    GameManager::getThis()->setLevel(levelNumber);
+    UserProfile::getThis()->gameLevel = levelNumber;
     
     // load the town hall level
     ss.str(std::string());
@@ -2267,12 +2510,16 @@ void GameManagement::loadBuildingData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -2292,7 +2539,7 @@ void GameManagement::loadBuildingData(int type)
         // CCLog("****** the id of the building is %d", id);
         
         // get the source image copy of the building want to load
-        Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(id);
+        Building* buildingToBuy = BuildingHandler::getThis()->getBuilding(id);
         
         // load the positionX and positionY of the building
         ss.str(std::string());
@@ -2306,7 +2553,7 @@ void GameManagement::loadBuildingData(int type)
         CCPoint tilePos = ccp(posX, posY);
         
         // build the building on the map
-        Building* bui = GameScene::getThis()->mapHandler->BuildOnMap(tilePos, buildingToBuy);
+        Building* bui = MapHandler::getThis()->BuildOnMap(tilePos, buildingToBuy);
         
         /* buildings are set up, load the stats of them */
         if(bui == NULL)
@@ -2509,9 +2756,9 @@ void GameManagement::loadBuildingData(int type)
             
             if(spriteID >= 0)
             {
-                for (int k = 0; k < GameScene::getThis()->spriteHandler->spritesOnMap->count(); k++)
+                for (int k = 0; k < SpriteHandler::getThis()->spritesOnMap->count(); k++)
                 {
-                    GameSprite* gs = (GameSprite*) GameScene::getThis()->spriteHandler->spritesOnMap->objectAtIndex(k);
+                    GameSprite* gs = (GameSprite*) SpriteHandler::getThis()->spritesOnMap->objectAtIndex(k);
                     if(gs->uniqueID == spriteID)
                     {
                         bui->memberSpriteList->addObject(gs);
@@ -2594,12 +2841,16 @@ void GameManagement::loadRoadData(int type)
     {
         ss << "fixedsave_";
     }
-    else
+    else if(type == 2)
     {
         ss << "customsave_";
     }
+    else
+    {
+        ss << "backupsave_";
+    }
     
-    ss << GameManager::getThis()->username;
+    ss << UserProfile::getThis()->username;
     
     std::string username = ss.str();
     
@@ -2623,20 +2874,124 @@ void GameManagement::loadRoadData(int type)
         
         // CCLog ("### path position y : %d", posY);
         
-        MapTile* mapTile = GameScene::getThis()->mapHandler->getTileAt(posX, posY);
+        MapTile* mapTile = MapHandler::getThis()->getTileAt(posX, posY);
         
         CCPoint position = ccp(posX, posY);
         
         if(!mapTile->isPath)
         {
-            GameScene::getThis()->mapHandler->PathLine(position, position);
+            MapHandler::getThis()->PathLine(position, position);
         }
+    }
+}
+
+void GameManagement::loadObjectiveData(int type)
+{
+    stringstream ss;
+    ss.str(std::string());
+    
+    // 0 means auto save, 1 means fixed save, others mean custom save
+    if (type == 0)
+    {
+        ss << "autosave_";
+    }
+    else if(type == 1)
+    {
+        ss << "fixedsave_";
+    }
+    else if(type == 2)
+    {
+        ss << "customsave_";
+    }
+    else
+    {
+        ss << "backupsave_";
+    }
+    
+    ss << UserProfile::getThis()->username;
+    
+    std::string username = ss.str();
+    
+    // objective current id
+    ss.str(std::string());
+    ss << username << "_objective_current_id";
+    int currID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    ObjectiveHandler::getThis()->playObjectiveWithObjectiveID(currID);
+    
+    // objective next id;
+    ss.str(std::string());
+    ss << username << "_objective_next_id";
+    int nextID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    ObjectiveHandler::getThis()->nextID = nextID;
+    
+    // objective progress number
+    ss.str(std::string());
+    ss << username << "_objective_progress_number";
+    int progress_number = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    ObjectiveHandler::getThis()->progressNumber = progress_number;
+    
+    // objective start population
+    ss.str(std::string());
+    ss << username << "_objective_start_population";
+    int start_population = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    ObjectiveHandler::getThis()->startPopulation = start_population;
+    
+    // objective target population
+    ss.str(std::string());
+    ss << username << "_objective_target_population";
+    int target_population = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    ObjectiveHandler::getThis()->targetPopulation = target_population;
+    
+    // objective has timer
+    ss.str(std::string());
+    ss << username << "_objective_hasTimer";
+    bool hasTimer = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str(), false);
+    GameHUD::getThis()->hasTimer = hasTimer;
+    
+    // objective target time
+    ss.str(std::string());
+    ss << username << "_objective_targetTime";
+    float targetTime = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0);
+    GameHUD::getThis()->targetTime = targetTime;
+    
+    // objective current time
+    ss.str(std::string());
+    ss << username << "_objective_currentTime";
+    float currentTime = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0);
+    GameHUD::getThis()->currentTime = currentTime;
+    
+    // objective scenario time
+    ss.str(std::string());
+    ss << username << "_objective_scenarioTime";
+    float scenarioTime = CCUserDefault::sharedUserDefault()->getFloatForKey(ss.str().c_str(), 0);
+    GameHUD::getThis()->scenarioTime = scenarioTime;
+    
+    // objective has scenario
+    ss.str(std::string());
+    ss << username << "_objective_hasScenario";
+    bool hasScenario = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str(), false);
+    GameHUD::getThis()->hasScenario = hasScenario;
+}
+
+void GameManagement::loadTutorialData(int type)
+{
+    if(type == 1)
+    {
+        // fixed save
+        GameScene::getThis()->reSetupLevel(true);
+    }
+    else if(type != 0 && type != 1 && type != 2)
+    {
+        // backup save
+        // play scenario already, then start to play tutorial again
+        UserProfile::getThis()->systemConfig->skipSenario = true;
+        GameScene::getThis()->configLevelData();
     }
 }
 
 bool GameManagement::loadData(int type)
 {
-    std::string username = GameManager::getThis()->username;
+    std::string username = UserProfile::getThis()->username;
     
     stringstream ss;
     
@@ -2669,6 +3024,48 @@ bool GameManagement::loadData(int type)
         {
             return false;
         }
+        else
+        {
+            ss.str(std::string());
+            ss << "customsave_";
+            ss << UserProfile::getThis()->username;
+            
+            std::string username1 = ss.str();
+            
+            // load the status weather it is in tutorial
+            ss.str(std::string());
+            ss << username1 << "_tutorial_isInTutorial";
+            bool isInTutorial = false;
+            if(UserProfile::getThis()->gameLevel != 0 && UserProfile::getThis()->gameLevel != 2)
+            {
+                isInTutorial = false;
+            }
+            else
+            {
+                isInTutorial = CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str(), false);
+            }
+            
+            if(isInTutorial)
+            {
+                ss.str(std::string());
+                ss << "backupsave_" << username << "_hasSavedGame";
+                if(!CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()))
+                {
+                    return false;
+                }
+                type = 3;
+            }
+        }
+    }
+    else
+    {
+        // backup save
+        ss.str(std::string());
+        ss << "backupsave_" << username << "_hasSavedGame";
+        if(!CCUserDefault::sharedUserDefault()->getBoolForKey(ss.str().c_str()))
+        {
+            return false;
+        }
     }
     
     // CCLog("trying to load the game data......");
@@ -2685,6 +3082,12 @@ bool GameManagement::loadData(int type)
     loadRoadData(type);
     loadReputationOrbData(type);
     // CCLog("loading data finished......");
+    
+    if(type == 0 || type == 2)
+    {
+        loadObjectiveData(type);
+    }
+    loadTutorialData(type);
     
     return true;
 }

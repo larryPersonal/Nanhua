@@ -36,8 +36,6 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
         // get the line first
         string str = fr->mFileContents.at(i);
         
-        // CCLog("### %s", str.c_str());
-        
         // if a line contains "<?xml", then this line is the xml header, ignore it and continue;
         if(str.find("<?xml") != std::string::npos)
         {
@@ -101,6 +99,10 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 {
                     objective->oType = RaisePopulationGoal;
                 }
+                else if(content.compare("ARMY") == 0)
+                {
+                    objective->oType = ArmyGoal;
+                }
                 else
                 {
                     objective->oType = DefaultGoal;
@@ -158,10 +160,6 @@ CCArray* ObjectiveManager::parseXMLFile(string xml)
                 content = str.substr(startPos + 10, endPos - startPos - 10);
                 objective->scenarioTime = ::atof(content.c_str()) * 60.0f;
                 objective->scheduleScenario = true;
-            }
-            else if(str.find("<finalObjective>") != std::string::npos)
-            {
-                objective->finalObjective = true;
             }
             else if(str.find("<reward>") != std::string::npos)
             {

@@ -39,9 +39,6 @@ public:
     
     CCMenu* senarioChooseSceneMenu;
     
-    CCSprite* loadingScreen;
-    CCSprite* loadingLabel;
-    
     bool isGoingToLoadGame;
     
 public:
@@ -49,12 +46,10 @@ public:
     ~SenarioChooseScene();
     
     static SenarioChooseScene* getThis();
+    static SenarioChooseScene* create();
     
     // Method 'init' in cocos2d-x returns bool, instead of 'id' in cocos2d-iphone (an object pointer)
     virtual bool init();
-    
-    // there's no 'id' in cpp, so we recommend to return the class instance pointer
-    static CCScene* scene();
     
     void chooseTutorial();
     void chooseSenario1();
@@ -68,8 +63,6 @@ public:
     void onOrientationChangedToPortrait();
     void onOrientationChangedToLandscape();
     
-    void enableLoadingScreen();
-    
     void loadingTutorial();
     void loadingSenario1();
     void loadingSenario2();
@@ -80,9 +73,6 @@ public:
     
     void chooseLoadGame();
     void loadingLoadGame();
-    
-    // preprocessor macro for "static create()" constructor ( node() deprecated )
-    CREATE_FUNC(SenarioChooseScene);
     
 public:
     // save file choose screen
@@ -116,12 +106,41 @@ public:
     CCLabelTTF* fixedSaveStatusLabel;
     CCLabelTTF* customSaveStatusLabel;
     
+    CCSpriteBatchNode* mainMenuSceneNode;
+    
 public:
+    // tutorial choose screen
+    CCSprite* tutorialChooseBackground;
+    CCMenuItem* TutorialChooseCloseButton;
+    CCLabelTTF* TutorialChooseLabel;
+    CCMenu* tutorialMenu;
+    
+    CCMenuItem* tutorialChoosePlayButton;
+    CCMenuItem* tutorialChooseSkipButton;
+    CCSprite* tutorialChooseBlackScreen;
+    
+    bool isTutorialChooseScreenOpening;
+    bool isTutorialChooseScreenClosing;
+    
+public:
+    void setupTutorialChooseScreen();
     void setupSaveFileChooseScreen();
+    
+    void scheduleTutorialChooseScreenOpening();
     void scheduleSaveFileChooseScreenOpening();
+    
+    void scheduleTutorialChooseScreenClosing();
     void scheduleSaveFileChooseScreenClosing();
+    
+    void tutorialChooseScreenOpen(float dt);
     void saveFileChooseScreenOpen(float dt);
+    
+    void tutorialChooseScreenClose(float dt);
     void saveFileChooseScreenClose(float dt);
+    
+    void playTutorial();
+    void playScenario1();
+    void chooseLoadScenario1();
     
     void loadAutoSaveGame();
     void loadFixedSaveGame();
@@ -130,9 +149,12 @@ public:
     void loadDisableWarning();
     void checkLoadStatus();
     
-    void clearTextureWhenLoadingMap();
-    
     void clear();
+    
+    bool isActive();
+    
+    void loadTextures();
+    void releaseTextures();
 };
 
 

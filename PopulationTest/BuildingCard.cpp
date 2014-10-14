@@ -154,32 +154,32 @@ void BuildingCard::init()
     {
         if(building->buildingType == HOUSING)
         {
-            CCArray* allHousing = GameScene::getThis()->buildingHandler->housingOnMap;
-            CCArray* allGhostHousing = GameScene::getThis()->buildingHandler->housingGhostOnMap;
+            CCArray* allHousing = BuildingHandler::getThis()->housingOnMap;
+            CCArray* allGhostHousing = BuildingHandler::getThis()->housingGhostOnMap;
             available_number = GameManager::getThis()->housingLimitation->housing_limits.at(level) - allHousing->count() - allGhostHousing->count();
         }
         else if(building->buildingType == AMENITY)
         {
-            CCArray* allAmenity = GameScene::getThis()->buildingHandler->amenityOnMap;
-            CCArray* allGhostAmenity = GameScene::getThis()->buildingHandler->amenityGhostOnMap;
+            CCArray* allAmenity = BuildingHandler::getThis()->amenityOnMap;
+            CCArray* allGhostAmenity = BuildingHandler::getThis()->amenityGhostOnMap;
             available_number = GameManager::getThis()->housingLimitation->farm_limits.at(level) - allAmenity->count() - allGhostAmenity->count();
         }
         else if(building->buildingType == GRANARY)
         {
-            CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
-            CCArray* allGhostGranary = GameScene::getThis()->buildingHandler->granaryGhostOnMap;
+            CCArray* allGranary = BuildingHandler::getThis()->granaryOnMap;
+            CCArray* allGhostGranary = BuildingHandler::getThis()->granaryGhostOnMap;
             available_number = GameManager::getThis()->housingLimitation->granary_limits.at(level) - allGranary->count() - allGhostGranary->count();
         }
         else if(building->buildingType == MARKET)
         {
-            CCArray* allMarket = GameScene::getThis()->buildingHandler->marketOnMap;
-            CCArray* allGhostMarket = GameScene::getThis()->buildingHandler->marketGhostOnMap;
+            CCArray* allMarket = BuildingHandler::getThis()->marketOnMap;
+            CCArray* allGhostMarket = BuildingHandler::getThis()->marketGhostOnMap;
             available_number = GameManager::getThis()->housingLimitation->market_limits.at(level) - allMarket->count() - allGhostMarket->count();
         }
         else if(building->buildingType == MILITARY)
         {
-            CCArray* allMimitary = GameScene::getThis()->buildingHandler->militaryOnMap;
-            CCArray* allGhostMilitary = GameScene::getThis()->buildingHandler->militaryGhostOnMap;
+            CCArray* allMimitary = BuildingHandler::getThis()->militaryOnMap;
+            CCArray* allGhostMilitary = BuildingHandler::getThis()->militaryGhostOnMap;
             available_number = GameManager::getThis()->housingLimitation->guard_tower_limits.at(level) - allMimitary->count() - allGhostMilitary->count();
         }
         
@@ -258,9 +258,9 @@ void BuildingCard::init()
     largeScale = ccp(cardBG->getScaleX(), cardBG->getScaleY());
     smallScale = largeScale * 0.98f;
     
-    mask = CCSprite::createWithSpriteFrameName("black.png");
+    mask = CCSprite::createWithSpriteFrameName("blackscreen.png");
     mask->cocos2d::CCNode::setScale(cardBG->boundingBox().size.width / mask->boundingBox().size.width, cardBG->boundingBox().size.height / mask->boundingBox().size.height * 1.05f);
-    mask->setOpacity((GLubyte) 120);
+    mask->setOpacity((GLubyte) 255);
     
     if(TutorialManager::getThis()->teachBuildRoad)
     {
@@ -301,7 +301,7 @@ void BuildingCard::init()
     // check whether we have enough money to buy this building
     if (type != 1 && type != 2 && type !=3 && GameHUD::getThis()->targetMoney < building->buildingCost)
     {
-        mask->setOpacity((GLubyte) 120);
+        mask->setOpacity((GLubyte) 255);
     }
     
     eventTrigger = CCMenuItemImage::create();
@@ -595,7 +595,7 @@ void BuildingCard::onMenuItemSelected(CCObject* pSender)
 
 void BuildingCard::tryToBuild(int tag)
 {
-    Building* buildingToBuy = GameScene::getThis()->buildingHandler->getBuilding(tag);
+    Building* buildingToBuy = BuildingHandler::getThis()->getBuilding(tag);
     if(buildingToBuy == NULL)
     {
         return;
@@ -610,7 +610,7 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == HOUSING)
     {
-        if(GameScene::getThis()->buildingHandler->housingOnMap->count() + GameScene::getThis()->buildingHandler->housingGhostOnMap->count() >= GameManager::getThis()->housingLimitation->housing_limits.at(level))
+        if(BuildingHandler::getThis()->housingOnMap->count() + BuildingHandler::getThis()->housingGhostOnMap->count() >= GameManager::getThis()->housingLimitation->housing_limits.at(level))
         {
             // alert player that the number of buildings has reached the limitation.
             return;
@@ -634,7 +634,7 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == GRANARY)
     {
-        if(GameScene::getThis()->buildingHandler->granaryOnMap->count() + GameScene::getThis()->buildingHandler->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
+        if(BuildingHandler::getThis()->granaryOnMap->count() + BuildingHandler::getThis()->granaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->granary_limits.at(level))
         {
             return;
         }
@@ -661,7 +661,7 @@ void BuildingCard::tryToBuild(int tag)
     else if(type == AMENITY)
     {
         // buildingToBuy  = GameScene::getThis()->buildingHandler->getRandomBuildingWithName(buildingToBuy->buildingName);
-        if(GameScene::getThis()->buildingHandler->amenityOnMap->count() + GameScene::getThis()->buildingHandler->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
+        if(BuildingHandler::getThis()->amenityOnMap->count() + BuildingHandler::getThis()->amenityGhostOnMap->count() >= GameManager::getThis()->housingLimitation->farm_limits.at(level))
         {
             return;
         }
@@ -687,7 +687,7 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == MARKET)
     {
-        if(GameScene::getThis()->buildingHandler->marketOnMap->count() + GameScene::getThis()->buildingHandler->marketGhostOnMap->count() >= GameManager::getThis()->housingLimitation->market_limits.at(level))
+        if(BuildingHandler::getThis()->marketOnMap->count() + BuildingHandler::getThis()->marketGhostOnMap->count() >= GameManager::getThis()->housingLimitation->market_limits.at(level))
         {
             return;
         }
@@ -712,7 +712,7 @@ void BuildingCard::tryToBuild(int tag)
     }
     else if(type == MILITARY)
     {
-        if(GameScene::getThis()->buildingHandler->militaryOnMap->count() + GameScene::getThis()->buildingHandler->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
+        if(BuildingHandler::getThis()->militaryOnMap->count() + BuildingHandler::getThis()->militaryGhostOnMap->count() >= GameManager::getThis()->housingLimitation->guard_tower_limits.at(level))
         {
             return;
         }
@@ -760,7 +760,7 @@ void BuildingCard::tryToBuild(int tag)
     {
         GameHUD::getThis()->scheduleAddMoney(-buildingToBuy->buildingCost);
         GameHUD::getThis()->setTapMode(1);
-        GameScene::getThis()->buildingHandler->selectedBuilding = buildingToBuy;
+        BuildingHandler::getThis()->selectedBuilding = buildingToBuy;
         
         GameHUD::getThis()->isThisTapCounted = false;
         
@@ -798,7 +798,7 @@ void BuildingCard::updateMask()
     {
         if(GameHUD::getThis()->targetMoney < building->buildingCost)
         {
-            mask->setOpacity((GLubyte) 120);
+            mask->setOpacity((GLubyte) 255);
         }
         else
         {

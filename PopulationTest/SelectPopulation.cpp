@@ -114,7 +114,7 @@ void SelectPopulation::createMenuItems()
     ccColor3B colorWhite = ccc3(255, 255, 255);
     
     // background
-    spriteBackground = CCSprite::create("SelectPopulationUI.png");
+    spriteBackground = CCSprite::createWithSpriteFrameName("SelectPopulationUI.png");
     spriteBackground->setScale(background_rect->width / spriteBackground->boundingBox().size.width * 1.4f);
     spriteBackground->setAnchorPoint(ccp(0.5, 0.5));
     this->addChild(spriteBackground, 3);
@@ -139,16 +139,16 @@ void SelectPopulation::createMenuItems()
     menuItemPositions = CCPointArray::create(menuItems->capacity());
     menuItemPositions->retain();
     
-    buttonClose = CCSprite::create("Closebtn_Sq.png");
+    buttonClose = CCSprite::createWithSpriteFrameName("Closebtn_Sq.png");
     buttonClose->setAnchorPoint(ccp(1, 1));
     this->addChild(buttonClose, 4);
     
-    buttonOk = CCSprite::create("assign_menu_accept.png");
+    buttonOk = CCSprite::createWithSpriteFrameName("assign_menu_accept.png");
     buttonOk->setScale(0.4);
     buttonOk->setAnchorPoint(ccp(1, 1));
     this->addChild(buttonOk, 4);
     
-    buttonCancel = CCSprite::create("stopsign.png");
+    buttonCancel = CCSprite::createWithSpriteFrameName("stopsign.png");
     buttonCancel->setScale(buttonOk->boundingBox().size.width / buttonCancel->boundingBox().size.width * 0.85f);
     buttonCancel->setAnchorPoint(ccp(1, 1));
     this->addChild(buttonCancel, 4);
@@ -223,7 +223,7 @@ void SelectPopulation::createMenuItems()
     
     for (int i = 0; i < population; i++)
     {
-        CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
+        CCSprite* eSpace = CCSprite::createWithSpriteFrameName("assign_menu_unfilled.png");
         eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
         eSpace->setAnchorPoint(ccp(0, 1));
         this->addChild(eSpace, 4);
@@ -246,7 +246,7 @@ void SelectPopulation::createMenuItems()
     }
     else
     {
-        spritesForSelection = GameScene::getThis()->spriteHandler->spritesOnMap;
+        spritesForSelection = SpriteHandler::getThis()->spritesOnMap;
     }
     
     int index = 0;
@@ -340,7 +340,7 @@ void SelectPopulation::createMenuItems()
     {
         GameSprite* gameSprite = (GameSprite*) spritesShown->objectAtIndex(i);
         
-        CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
+        CCSprite* memberSpriteBackground = CCSprite::createWithSpriteFrameName("assign_menu_filled.png");
         memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
         memberSpriteBackground->setAnchorPoint(ccp(0, 1));
         memberSpriteBackground->setPosition(ccp(45.0f + 70.0f * i, -105.0f));
@@ -445,8 +445,8 @@ void SelectPopulation::cancelTask()
     if(building->isUnderConstruction())
     {
         CCPoint tilePos = building->getWorldPosition();
-        tilePos = GameScene::getThis()->mapHandler->tilePosFromLocation(tilePos);
-        GameScene::getThis()->mapHandler->UnBuild(tilePos);
+        tilePos = MapHandler::getThis()->tilePosFromLocation(tilePos);
+        MapHandler::getThis()->UnBuild(tilePos);
         this->closeMenu(true);
         GameScene::getThis()->setTouchEnabled(true);
     }
@@ -477,6 +477,10 @@ void SelectPopulation::performTask()
         else if(building->buildingType == AMENITY)
         {
             scheduleFarming();
+        }
+        else if(building->buildingType == MARKET)
+        {
+            scheduleMarketing();
         }
     }
     this->closeAllPopupMenu();
@@ -581,6 +585,28 @@ void SelectPopulation::scheduleFarming()
     }
 }
 
+void SelectPopulation::scheduleMarketing()
+{
+    for (int i = 0; i < memberArray->count(); i++)
+    {
+        GameSprite* gameSprite = (GameSprite*) memberArray->objectAtIndex(i);
+        
+        // must change sprite first because the information for assigning will be lost if change sprite at last.
+        gameSprite->changeClassTo(GlobalHelper::getSpriteClassByVillagerClass(V_MARKET));
+        
+        gameSprite->nextAction = MARKETING;
+        
+        gameSprite->setJob(MARKETER);
+        
+        gameSprite->setJobLocation(building);
+        
+        building->isCurrentWorking = true;
+        
+        prepareJob(gameSprite);
+        
+        gameSprite->saySpeech(HAPPY, 5.0f);
+    }
+}
 
 void SelectPopulation::reposition(){
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
@@ -664,7 +690,7 @@ void SelectPopulation::update(float deltaTime){
         
         for (int i = 0; i < population; i++)
         {
-            CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
+            CCSprite* eSpace = CCSprite::createWithSpriteFrameName("assign_menu_unfilled.png");
             eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
             eSpace->setAnchorPoint(ccp(0, 1));
             this->addChild(eSpace, 4);
@@ -736,7 +762,7 @@ void SelectPopulation::update(float deltaTime){
         
         for (int i = 0; i < population; i++)
         {
-            CCSprite* eSpace = CCSprite::create("assign_menu_unfilled.png");
+            CCSprite* eSpace = CCSprite::createWithSpriteFrameName("assign_menu_unfilled.png");
             eSpace->setScale(70.0f / eSpace->boundingBox().size.width);
             eSpace->setAnchorPoint(ccp(0, 1));
             eSpace->setPosition(ccp(45.0f + 70.0f * i + hw, -105.0f + hh));
@@ -771,7 +797,6 @@ void SelectPopulation::update(float deltaTime){
         
         this->closeMenu(true);
     }
-    
     
     if(memberArray->count() == population && !buttonOk->isVisible() && memberArray->count() > 0 && !building->isCurrentConstructing && !building->isCurrentWorking)
     {
@@ -914,7 +939,7 @@ void SelectPopulation::selectSprite(GameSprite* gameSprite, SpriteRow* spriteRow
     {
         spriteRow->getMask()->setVisible(true);
         
-        CCSprite* memberSpriteBackground = CCSprite::create("assign_menu_filled.png");
+        CCSprite* memberSpriteBackground = CCSprite::createWithSpriteFrameName("assign_menu_filled.png");
         memberSpriteBackground->setScale(70.0f / memberSpriteBackground->boundingBox().size.width);
         memberSpriteBackground->setAnchorPoint(ccp(0, 1));
         memberSpriteBackground->setPosition(ccp(45.0f + 70.0f * memberRowArray->count() + hw, -105.0f + hh));
@@ -1196,7 +1221,7 @@ CCArray* SelectPopulation::sortByHappiness()
     }
     else
     {
-        spritesForSelection = GameScene::getThis()->spriteHandler->spritesOnMap;
+        spritesForSelection = SpriteHandler::getThis()->spritesOnMap;
     }
     
     CCArray* unsortedArray = CCArray::create();
@@ -1239,7 +1264,7 @@ CCArray* SelectPopulation::sortByEnergy()
     }
     else
     {
-        spritesForSelection = GameScene::getThis()->spriteHandler->spritesOnMap;
+        spritesForSelection = SpriteHandler::getThis()->spritesOnMap;
     }
     
     CCArray* unsortedArray = CCArray::create();

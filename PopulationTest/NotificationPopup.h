@@ -33,6 +33,7 @@ public:
     CCLabelTTF* congratsContentLabel_scenario3;
     
     bool proceedToNextLevel;
+    bool proceedToScenario1;
     
 public:
     NotificationPopup();
@@ -55,9 +56,14 @@ public:
     
     void clickNotificationButton();
     
+    void showScenario1Congratulations();
+    void showScenario2Congratulations();
     void showScenario3Congratulations();
     void showScenario4Congratulations();
     void showScenario5Congratulations();
+    void showScenario6Congratulations();
+    
+    void annouceForScenario1();
 };
 
 #endif

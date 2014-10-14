@@ -39,17 +39,8 @@ class GameScene : public CCLayer
 {
 public:
     static GameScene* SP;               // script pointer (GameScene)
-    static CCScene* thisScene;          // scene pointer  (CCScene)
     
     float currScale;                    // current scale factor -> control the view degree scale
-    
-    CCSprite* gameBG;                   // background image of the game, use to decorate the game map
-    
-    float cumulatedTime;
-    
-    ConfigSettings* configSettings;
-    SettingsLevel* settingsLevel;
-    SystemConfig* systemConfig;
     
     bool hasBeenDragged;
     bool isInDeccelerating;
@@ -57,26 +48,18 @@ public:
     
     bool tapped;
     
-    GlobalOutcomeModifier* globalOutcomeModifier;
-    
-    bool isSwipe;
-    
     CCSprite* loadingScreen;
     CCSprite* loadingLabel;
     
     Building* targetBuilding;
     AnimatedRain* animatedRain;
     
-    float teachBuildRoadCheckTime;
     float clearCacheTime;
     float clearCacheTimeLimit;
-    
-    float mGameGuardTowerScore;
     
 public:
     
     CCNode* screenCenter;
-    CCSize sz; 
 
     GameScene();
     ~GameScene();
@@ -93,12 +76,6 @@ public:
     // control orientation of the ipad
     void initOrientationChange();
     void onOrientationChanged();
-    
-    MapHandler* mapHandler;
-    SpriteHandler* spriteHandler;
-    BuildingHandler* buildingHandler;
-    ConstructionHandler* constructionHandler;
-    BanditsAttackHandler* banditsAttackHandler;
     
     CCPoint lastTilePosPreview;
     CCPoint firstPathPosPreview;
@@ -123,6 +100,7 @@ public:
     // internal touch functions
     bool handleTouchTokens(CCPoint touchLoc);
     bool handleTouchSprite(CCPoint touchLoc);
+    bool handleTouchBandits(CCPoint touchLoc);
     bool handleTouchBuilding(CCPoint touchLoc, CCPoint tilePos);
     
     void resetBuildMode();
@@ -142,6 +120,8 @@ public:
     
     void checkTeachBuildRoad();
     
+    void loadLevelBuildings();
+    
     CREATE_FUNC(GameScene);
     
 public:
@@ -156,15 +136,25 @@ public:
     float randomEventTresholdTimeMin;
     
     bool isEndingGame;
+    bool isInGame;
     
 public:
     void checkAutoSave(float deltaTime);
     
-    void reSetupLevel();
+    void reSetupLevel(bool newGame);
     void configSkipData();
     void configLevelData();
     
+    void startGame();
+    void loadGame();
     void stopGame();
+    
+    void configLevelAtStart();
+    
+public:
+    void constructGameScene();
+    void resetupAllData();
+    bool isActive();
 };
 
 #endif

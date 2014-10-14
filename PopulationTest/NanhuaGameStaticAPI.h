@@ -30,6 +30,12 @@ public:
     
     // get the number of citizens in the village;
     static int getNumberOfCitizens();
+    
+    // bandits attack
+    static void banditsAttack(int banditsNo);
+    
+    // bandits end attack
+    static void banditsEndAttack();
 };
 
 #endif

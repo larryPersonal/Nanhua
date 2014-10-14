@@ -1,0 +1,24 @@
+<?xml encoding="ISO-8859-1"?>
+<project>
+    <question>
+        <intro>曹^操^常^犯^头^风^眩^晕^病^，^经^华^佗^针^灸^治^疗^后^，^病^情^得^以^改^善^，^便^把^他^留^在^他^身^边^负^责^治^疗^。^但^华^佗^却^喜^欢^到^处^云^游^，^为^其^他^有^需^要^的^人^治^病^，^不^愿^被^困^在^宫^中^。^于^是^，^华^佗^就^托^词^妻^子^有^病^，^以^及^回^家^取^药^为^由^，^一^去^不^再^返^回^。^曹^操^多^次^写^信^催^促^华^佗^，^又^令^当^地^郡^县^把^华^佗^遣^还^，^最^后^派^人^偷^偷^察^看^，^才^知^华^佗^不^愿^为^侍^医^，^遂^将^他^逮^入^狱^中^再^处^死^。</intro>
+    </question>
+    <question>
+        <text>1^、^你^认^为^华^佗^不^愿^为^侍^医^而^选^择^欺^瞒^曹^操^的^决^定^正^确^吗^？</text>
+        <answer>正确</answer>
+        <answer>不正确</answer>
+        <answer></answer>
+        <answer></answer>
+        <index>0</index>
+        <twoChoice></twoChoice>
+    </question>
+    <question>
+        <text>2^、^你^认^为^曹^操^处^死^华^佗^的^决^定^正^确^吗^？</text>
+        <answer>正确</answer>
+        <answer>不正确</answer>
+        <answer></answer>
+        <answer></answer>
+        <index>0</index>
+        <twoChoice></twoChoice>
+    </question>
+</project>

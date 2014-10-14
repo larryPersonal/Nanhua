@@ -317,6 +317,10 @@ void TutorialReader::parseXMLFile(string xml)
             {
                 slide->hideObjective = true;
             }
+            else if(str.find("<setupGuardTowerBar>") != std::string::npos)
+            {
+                slide->setupGuardTowerBar = true;
+            }
             else if(str.find("<connectHouse>") != std::string::npos)
             {
                 slide->connectHouse = true;

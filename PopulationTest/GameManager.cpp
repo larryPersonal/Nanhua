@@ -19,13 +19,21 @@
 //#include <iterator>
 #include <cstring>
 
+#include "MainMenuScene.h"
+#include "SenarioChooseScene.h"
+#include "GameScene.h"
+#include "Senario.h"
+#include "TutorialManager.h"
+#include "SanGuoXiaoXueTang.h"
+#include "ObjectiveHandler.h"
+#include "NotificationPopup.h"
+#include "RandomEventManager.h"
 
 GameManager* GameManager::SP;
 
 GameManager::GameManager()
 {
     GameManager::SP = this;
-    loadedGame = false;
     unlockedBuildings = CCArray::create();
     unlockedBuildings->retain();
     lockedBuildings = CCArray::create();
@@ -36,26 +44,10 @@ GameManager::GameManager()
     
     areaUnlockIndex = 0;
     
-    tutorialMode = false;
-    
-    loadedGameArea = CCArray::create();
-    loadedGameArea->retain();
-    
-    level = 0;
-    number_of_hospital = 0;
     town_hall_level = 0;
-    
-    gameMap = "";
     
     housingLimitation = new HousingLimit();
     parseHousingLimitation();
-    
-    username = "";
-    password = "";
-    gender = true;
-    isLoggedIn = false;
-    
-    hasGameHUD = false;
     
     init();
 }
@@ -84,12 +76,8 @@ GameManager* GameManager::getThis()
 
 void GameManager::init()
 {
-    
-    
     initMapUnlocks();
     initMenuUnlocks();
-    
-    firstPlay = CCUserDefault::sharedUserDefault()->getBoolForKey("firstPlay", true);
 }
 
 void GameManager::initMapUnlocks()
@@ -163,7 +151,6 @@ void GameManager::EndGameData()
     unlockedBuildings->removeAllObjects();
     lockedBuildings->removeAllObjects();
     researchableBuildings->removeAllObjects();
-    
 }
 
 // this method is only called when GameScene is set up
@@ -185,13 +172,13 @@ void GameManager::initGameData()
     for (list<int>::iterator it = unlockedBuildingIDs.begin(); it != unlockedBuildingIDs.end(); it++)
     {
         CCLog("%d", (*it));
-        unlockedBuildings->addObject(GameScene::getThis()->buildingHandler->getBuilding(*it));
+        unlockedBuildings->addObject(BuildingHandler::getThis()->getBuilding(*it));
     }
     for (list<int>::iterator it = researchableBuildingIDs.begin(); it != researchableBuildingIDs.end(); it++)
-        researchableBuildings->addObject(GameScene::getThis()->buildingHandler->getBuilding(*it));
+        researchableBuildings->addObject(BuildingHandler::getThis()->getBuilding(*it));
     
     
-    lockedBuildings->initWithArray(GameScene::getThis()->buildingHandler->allBuildings);
+    lockedBuildings->initWithArray(BuildingHandler::getThis()->allBuildings);
     lockedBuildings->removeObjectsInArray(unlockedBuildings);
     lockedBuildings->removeObjectsInArray(researchableBuildings);
 }
@@ -209,403 +196,6 @@ bool GameManager::checkGameDataExists(){
     }
     return false;
 }
-
-void GameManager::loadGameData()
-{
-    CCLog("Loading game data");
-    
-    
-    std::string test = CCFileUtils::sharedFileUtils()->getWritablePath();
-    test += "mayansave.txt";
-    std::ifstream readFile;
-    std::string out;
-
-    readFile.open(test.c_str());
-    
-    int mode = 0;
-    
-    
-    if (readFile.is_open())
-    {
-        while (!readFile.eof())
-        {
-            std::getline(readFile, out);
-            
-            if (out.compare("[GAMEMANAGER]") == 0)
-            {
-                mode = 1;
-                continue;
-            }
-            if (out.compare("[PEOPLE]") == 0)
-            {
-                mode = 2;
-                continue;
-            }
-            if (out.compare("[BUILDING]")==0)
-            {
-                mode = 3;
-                continue;
-            }
-            if (out.compare("[MAP]")==0)
-            {
-                mode = 4;
-                continue;
-            }
-            if (out.compare("[UNLOCKS]")==0)
-            {
-                mode = 5;
-                continue;
-            }
-            if (out.compare("[RESEARCHS]")==0)
-            {
-                mode = 6;
-                continue;
-            }
-            if (out.compare("[MENUITEMUNLOCKS]")==0)
-            {
-                mode = 7;
-                continue;
-            }
-
-
-            std::vector<std::string> tokens;
-            std::stringstream ss(out);
-            std::string buffer;
-            
-            
-            switch (mode)
-            {
-                case 1:
-                {
-                    if (out.length() == 0) break;
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                        
-                    }
-                    
-                    areaUnlockIndex = atoi(tokens[1].c_str());
-                    
-                }
-                    break;
-                case 2:
-                {
-                    if (out.length() == 0) break;
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                      
-                    }
-                    //GameSprite* sp = GameScene::getThis()->spriteHandler->getSpriteTemplate(tokens[0].c_str(), tokens[1].c_str()[0], tokens[2].c_str()[0]);
-                    //if (sp != NULL)
-                    //{
-                        //CCPoint target = ccp(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
-                        //GameScene::getThis()->spriteHandler->loadSpriteToMap(target, sp, tokens[5]);
-                    //}
-                    
-                    
-                }
-                break;
-                case 3:
-                {
-                    if (out.length() == 0) break;
-                    
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                                
-                    }
-                    Building* b = GameScene::getThis()->buildingHandler->getBuilding(tokens[0]);
-                    if (b != NULL)
-                    {
-                        CCPoint target = ccp(atoi(tokens[1].c_str()), atoi(tokens[2].c_str()));
-                        
-                        GameScene::getThis()->mapHandler->Build(target, b, false, true, tokens[3]);
-                        
-                    }
-                    
-               
-                    
-                    break;
-                }
-                    
-                case 4:
-                {
-                    if (out.length() == 0) break;
-                    
-                    std::string buffer;
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                    }
-                    
-                    if (atoi(tokens[2].c_str()) == 1)
-                    {
-                    
-                        CCPoint target = ccp(atoi(tokens[0].c_str()), atoi(tokens[1].c_str()));
-                        MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(atoi(tokens[0].c_str()), atoi(tokens[1].c_str()));
-                        targetTile->pathHere();
-                        GameScene::getThis()->mapHandler->pathTiles->addObject(targetTile);
-                        CCTMXLayer* groundzero = GameScene::getThis()->mapHandler->getMap()->layerNamed("Ground_0");
-                        groundzero->setTileGID(3, target); //exact GID of map tile. Count from L to R, U to Down in TMX tile map, starting from 1.
-                    }
-                    
-                    
-                    break;
-                }
-                case 5:
-                {
-                    if (out.length() == 0) break;
-                    std::string buffer;
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                    }
-                    
-                    for (int i = 0; i < tokens.size(); ++i)
-                    {
-                        int targetID = atoi(tokens[i].c_str());
-                        unlockedBuildingIDs.push_back(targetID);
-                        
-                        
-                    }
-
-                    
-                    
-                    break;
-                }
-                case 6:
-                {
-                    if (out.length() == 0) break;
-                    std::string buffer;
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                    }
-                    
-                    for (int i = 0; i < tokens.size(); ++i)
-                    {
-                        int targetID = atoi(tokens[i].c_str());
-                        researchableBuildingIDs.push_back(targetID);
-                        
-                        
-                    }
-                    break;
-                }
-                case 7:
-                {
-                    if (out.length() == 0) break;
-                    std::string buffer;
-                    while (ss.peek() != EOF)
-                    {
-                        std::getline(ss, buffer, ':' );
-                        
-                        tokens.push_back(buffer);
-                        
-                        buffer = "";
-                    }
-                    
-                    for (int i = 0; i < tokens.size(); ++i)
-                    {
-                        fliplockMenuItem(i, atoi(tokens[i].c_str()));
-                                                
-                        
-                    }
-                    break;
-
-                }
-            }
-            
-            
-        }
-    }
-    
-    readFile.close();
-    //PushScene mainscene is NOT supposed to be here!!!!
-}
-
-void GameManager::newGameData()
-{
-    CCLog("Creating new data..");
-    //playarea_min = ccp(1, 10);
-    //playarea_max = ccp(16, 25);
-    areaUnlockIndex = 0;
-}
-
-bool GameManager::saveGameData()
-{
-    CCLog("Saving data");
-    /*
-    //Flag for tutorial
-    CCUserDefault::sharedUserDefault()->setBoolForKey   ("firstPlay", firstPlay);
-    
-    std::string test = CCFileUtils::sharedFileUtils()->getWriteablePath();
-    test += "mayansave.txt";
-    
-    std::ofstream writeFile;
-    writeFile.open(test.c_str());
-    
-    writeFile << "[GAMEMANAGER]\n";
-    writeFile << GlobalHelper::Convert(currentMoney) +":";
-    writeFile << GlobalHelper::Convert(areaUnlockIndex) +":";
-    writeFile << GlobalHelper::Convert(GameTimer::getThis()->getTimeElapsed()) +":";
-    writeFile << GlobalHelper::Convert(GameTimer::getThis()->getLastTime()) +":";
-    
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->isImplementingBirthRatePolicy()) +":";
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->getBirthRateDurationLeft()) +":";
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->monthly_localBirthRate) +":";
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->isImplementingCulturalExchangePolicy()) +":";
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->getCulturalExchangeDurationLeft())+":";
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->getCulturalExchangeRatio())+":"; //cultural exchange rate
-    
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->maxAlienPopulation) +":";
-    
-    writeFile << GlobalHelper::Convert(GameScene::getThis()->policyHandler->percentTax)+":";
-    
-    writeFile << GlobalHelper::Convert(TutorialHandler::getThis()->getSequenceIndex())+":";
-    
-    
-    
-    
-    writeFile << "\n";
-    
-    //TODO: building locks and unlocks
-    writeFile << "[UNLOCKS]\n";
-    
-    for (int i = 0; i < unlockedBuildings->count(); ++i)
-    {
-        writeFile << GlobalHelper::Convert(((Building*)unlockedBuildings->objectAtIndex(i))->ID);
-        if (i != (unlockedBuildings->count()-1)) writeFile << ":";
-        
-        
-    }
-    writeFile << "\n";
-    writeFile << "[MENUITEMUNLOCKS]\n";
-    
-    for (int i = 0; i < gameMenuUnlocks.size(); ++i)
-    {
-        writeFile << GlobalHelper::Convert(gameMenuUnlocks[i].isUnlocked);
-        if (i != (gameMenuUnlocks.size() - 1)) writeFile << ":";
-        
-    }
-    
-    //TODO: research locks and unlocks
-    
-    writeFile << "\n";
-   
-    writeFile << "[RESEARCHS]\n";
-    for (int i = 0; i < researchableBuildings->count(); ++i)
-    {
-        writeFile << GlobalHelper::Convert(((Building*)researchableBuildings->objectAtIndex(i))->ID);
-        if (i < researchableBuildings->count() -1) writeFile << ":";
-    }
-    writeFile << "\n";
-
-    BuildingHandler* bh = GameScene::getThis()->buildingHandler;
-    writeFile << "[BUILDING]\n";
-    for (int i = 0; i < bh->allBuildingsOnMap->count(); ++i)
-    {
-        Building* b = (Building*) bh->allBuildingsOnMap->objectAtIndex(i);
-        if (b != NULL)
-        {
-            
- 
-            CCPoint bPosition = b->getWorldPosition();
-            bPosition = GameScene::getThis()->mapHandler->tilePosFromLocation(bPosition);
-            
-            
-            writeFile << b->buildingName +":" + GlobalHelper::Convert(bPosition.x) +":" + GlobalHelper::Convert(bPosition.y) +":" +GlobalHelper::Convert(b->currentExp) +"|" + GlobalHelper::Convert(b->currentLevel) + "|" + GlobalHelper::Convert(b->ID) + "\n";
-            
-        }
-            
-    }
- 
-    writeFile << "[PEOPLE]\n";
-    SpriteHandler* sh = GameScene::getThis()->spriteHandler;
-    for (int i = 0; i < sh->spritesOnMap->count(); ++i)
-    {
-        GameSprite* sp = (GameSprite*)sh->spritesOnMap->objectAtIndex(i);
-        if (sp != NULL)
-        {
-            CCPoint sPosition = sp->getWorldPosition();
-            sPosition = GameScene::getThis()->mapHandler->tilePosFromLocation(sPosition);
-            
-            
-            int homeID = 0, workID = 0;
-            if (sp->getPossessions()->hasHouse)
-                homeID = sp->getPossessions()->homeLocation->ID;
-            else
-                homeID = -1;
-            
-            if (sp->getPossessions()->hasJob)
-                workID = sp->getPossessions()->jobLocation->ID;
-            else
-                workID = -1;
-            
-            writeFile << sp->spriteClass +":" +sp->gender +":" + sp->race + ":" +GlobalHelper::Convert(sPosition.x)+ ":" +GlobalHelper::Convert(sPosition.y) +":" +"|" + GlobalHelper::Convert(sp->getPossessions()->happinessRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->loyaltyRating) +"|" + GlobalHelper::Convert(sp->getPossessions()->movementRange) + "|" + GlobalHelper::Convert(sp->getPossessions()->energyRating) +"|" +
-            GlobalHelper::Convert(sp->getPossessions()->classLevel) + "|" + GlobalHelper::Convert(sp->getPossessions()->expRating) + "|" + GlobalHelper::Convert(sp->getPossessions()->hasHouse) + "|"+ GlobalHelper::Convert(homeID) + "|" + GlobalHelper::Convert(workID) +
-            "\n";
-        }
-        
-        
-    }
-
-    
-    writeFile << "[MAP]\n";
-    MapHandler* mh = GameScene::getThis()->mapHandler;
-    for (int i = 0; i < mh->getMap()->getMapSize().width; ++i)
-    {
-        for (int j = 0; j < mh->getMap()->getMapSize().height; ++j)
-        {
-            MapTile* tile = mh->getTileAt(i, j);
-            if (tile->isPath)
-            {
-                writeFile << GlobalHelper::Convert(i) +":" + GlobalHelper::Convert(j) +":" + GlobalHelper::Convert(1) +"\n";
-            }
-            else
-            {
-                writeFile << GlobalHelper::Convert(i) +":" + GlobalHelper::Convert(j) +":" + GlobalHelper::Convert(0) +"\n";
-                
-            }
-            
-            
-        }
-    }
-    
-    
-    
-    writeFile.close();
-
-    */
-    
-    CCLog("Saved data");
-    return true;
-}
-
 
 CCPoint GameManager::getMinArea()
 {
@@ -643,10 +233,7 @@ bool GameManager::ResearchConditionsMet(Building* b)
 
 void GameManager::UpdateUnlocks()
 {
-    //check map area unlocks
-    GameScene* scene = GameScene::getThis();
-    
-    if (scene->buildingHandler->allBuildingsOnMap == NULL || scene->spriteHandler->spritesOnMap == NULL) return;
+    if (BuildingHandler::getThis()->allBuildingsOnMap == NULL || SpriteHandler::getThis()->spritesOnMap == NULL) return;
    
     /*update building unlocks*/
     if (lockedBuildings->count() == 0) return; //don't bother if everything's been unlocked already
@@ -698,7 +285,7 @@ void GameManager::UpdateUnlocks()
 void GameManager::NewGameUnlocks()
 {
     /*builds the unlock ID list for a new game. This should not be called when loading from a save*/
-    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
+    CCArray* allBuildings = BuildingHandler::getThis()->allBuildings;
     
     unlockedBuildingIDs.clear();
     researchableBuildingIDs.clear();
@@ -734,7 +321,7 @@ void GameManager::UnlockAll()
         areaUnlocks[i].isUnlocked = true;
     }
     
-    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
+    CCArray* allBuildings = BuildingHandler::getThis()->allBuildings;
     
     unlockedBuildingIDs.clear();
     researchableBuildingIDs.clear();
@@ -800,31 +387,9 @@ void GameManager::triggerNextAreaUnlock()
     {
         areaUnlockIndex = areaUnlocks.size() -1;
     }
-    GameScene::getThis()->mapHandler->updatePlayArea(areaUnlocks[areaUnlockIndex].min , areaUnlocks[areaUnlockIndex].max);
+    MapHandler::getThis()->updatePlayArea(areaUnlocks[areaUnlockIndex].min , areaUnlocks[areaUnlockIndex].max);
     
 }
-
-void GameManager::setTutorialMode(bool mode)
-{
-    tutorialMode = mode;
-}
-
-bool GameManager::getTutorialMode()
-{
-    return tutorialMode;
-}
-
-
-void GameManager::setLoadedGame(bool mode)
-{
-    loadedGame = mode;
-}
-
-bool GameManager::getLoadedGame()
-{
-    return loadedGame;
-}
-
 
 bool GameManager::hasLostGame()
 {
@@ -834,16 +399,6 @@ bool GameManager::hasLostGame()
     
     return false;
 
-}
-
-void GameManager::setLevel(int level)
-{
-    this->level = level;
-}
-
-int GameManager::getLevel()
-{
-    return level;
 }
 
 void GameManager::parseHousingLimitation()
@@ -956,4 +511,43 @@ void GameManager::loadHousingLimit()
             housingLimitation->housing_limits.push_back(atoi(hl[ss.str().c_str()]["housing"].asString().c_str()));
         }
     }
+}
+
+void GameManager::enableGameScene()
+{
+    MainMenuScene::getThis()->setVisible(false);
+    SenarioChooseScene::getThis()->setVisible(false);
+    SanGuoXiaoXueTang::getThis()->setVisible(true);
+    Senario::getThis()->setVisible(true);
+    TutorialManager::getThis()->setVisible(true);
+    GameHUD::getThis()->setVisible(true);
+    ObjectiveHandler::getThis()->setVisible(true);
+    NotificationPopup::getThis()->setVisible(true);
+    RandomEventManager::getThis()->setVisible(true);
+}
+
+void GameManager::enableMainMenuScene()
+{
+    MainMenuScene::getThis()->setVisible(true);
+    SenarioChooseScene::getThis()->setVisible(false);
+    SanGuoXiaoXueTang::getThis()->setVisible(false);
+    Senario::getThis()->setVisible(false);
+    TutorialManager::getThis()->setVisible(false);
+    GameHUD::getThis()->setVisible(false);
+    ObjectiveHandler::getThis()->setVisible(false);
+    NotificationPopup::getThis()->setVisible(false);
+    RandomEventManager::getThis()->setVisible(false);
+}
+
+void GameManager::enableSenarioChooseScene()
+{
+    MainMenuScene::getThis()->setVisible(false);
+    SenarioChooseScene::getThis()->setVisible(true);
+    SanGuoXiaoXueTang::getThis()->setVisible(false);
+    Senario::getThis()->setVisible(false);
+    TutorialManager::getThis()->setVisible(false);
+    GameHUD::getThis()->setVisible(false);
+    ObjectiveHandler::getThis()->setVisible(false);
+    NotificationPopup::getThis()->setVisible(false);
+    RandomEventManager::getThis()->setVisible(false);
 }

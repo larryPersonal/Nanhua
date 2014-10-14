@@ -11,30 +11,32 @@
 #include "MainMenuScene.h"
 #include "GameManagement.h"
 #include "GlobalHelper.h"
-#include "RandomEventManager.h"
+#include "UIButtonControl.h"
 
 SystemMenu* SystemMenu::SP;
-SystemMenu* SystemMenu::create(CCLayer* layer)
-{
-    SystemMenu *pRet = new SystemMenu(layer);
-    if (pRet && pRet->init(layer))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-        return NULL;
-    }
-}
 
 SystemMenu* SystemMenu::getThis()
 {
     return SP;
 }
 
-SystemMenu::SystemMenu(CCLayer* layer)
+SystemMenu* SystemMenu::create()
+{
+    SystemMenu* sm = new SystemMenu();
+    
+    if(sm)
+    {
+        sm->autorelease();
+        return sm;
+    }
+    else
+    {
+        CC_SAFE_DELETE(sm);
+        return NULL;
+    }
+}
+
+SystemMenu::SystemMenu()
 {
     SystemMenu::SP = this;
     menuItems = CCArray::create();
@@ -42,6 +44,9 @@ SystemMenu::SystemMenu(CCLayer* layer)
     
     show = false;
     hide = false;
+    isActive = false;
+    
+    goingToEndGame = false;
 }
 
 SystemMenu::~SystemMenu()
@@ -51,22 +56,25 @@ SystemMenu::~SystemMenu()
     CC_SAFE_RELEASE(menuItems);
 }
 
-bool SystemMenu::init(CCLayer* layer)
+void SystemMenu::createUI()
 {
+    loadTexturtes();
+    
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     blackScreen = CCSprite::createWithSpriteFrameName("blackscreen.png");
     blackScreen->cocos2d::CCNode::setScale(screenSize.width / blackScreen->boundingBox().size.width, screenSize.height / blackScreen->boundingBox().size.height);
     blackScreen->setAnchorPoint(ccp(0.5, 0.5));
     blackScreen->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
     blackScreen->setOpacity((GLubyte) 0);
-    layer->addChild(blackScreen, 31);
+    this->addChild(blackScreen, 31);
     
-    systemMenu_background = CCSprite::create("PauseMenu.png");
+    systemMenu_background = CCSprite::createWithSpriteFrameName("PauseMenu.png");
     systemMenu_background->setScale(1.0f);
     systemMenu_background->setAnchorPoint(ccp(0.5, 0.5));
     systemMenu_background->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
-    layer->addChild(systemMenu_background, 32);
+    this->addChild(systemMenu_background, 32);
     
+    systemMenu_resumeButton = CCMenuItemImage::create("resumebtn.png", "resumepressbtn.png", this, menu_selector(SystemMenu::clickResumeButton));
     systemMenu_resumeButton = CCMenuItemImage::create("resumebtn.png", "resumepressbtn.png", this, menu_selector( SystemMenu::clickResumeButton ));
     systemMenu_resumeButton->setScale((systemMenu_background->boundingBox().size.width / systemMenu_resumeButton->boundingBox().size.width) * 0.6f, systemMenu_background->boundingBox().size.height / systemMenu_resumeButton->boundingBox().size.height * 0.15f);
     systemMenu_resumeButton->setAnchorPoint(ccp(0.5, 1));
@@ -102,35 +110,33 @@ bool SystemMenu::init(CCLayer* layer)
     systemMenu_background->addChild(newMenu);
     
     systemMenu_background->setScale(0);
-    
-    return true;
 }
 
 void SystemMenu::clickResumeButton()
 {
     GlobalHelper::resumeAllVillagers();
     scheduleHideSystemMenu();
-    //releaseAll();
 }
 
 void SystemMenu::clickOptionButton()
 {
     CCLog("Option Button: Under Construction!");
-    GameManagement::saveGameToFile();
+    // 0 means auto save, 1 means fixed save, 2 means custom save
+    GameManagement::saveGameToFile(2);
 }
 
 void SystemMenu::clickExitButton()
 {
     GameScene::getThis()->setTouchEnabled(false);
     
-    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildingsOnMap;
+    CCArray* allBuildings = BuildingHandler::getThis()->allBuildingsOnMap;
     for(int i = 0; i < allBuildings->count(); i++)
     {
         Building* bui = (Building*) allBuildings->objectAtIndex(i);
         bui->stopUpdate();
     }
     
-    CCArray* allSprites = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* allSprites = SpriteHandler::getThis()->spritesOnMap;
     for(int i = 0; i < allSprites->count(); i++)
     {
         GameSprite* gs = (GameSprite*) allSprites->objectAtIndex(i);
@@ -139,15 +145,12 @@ void SystemMenu::clickExitButton()
     }
     
     GameScene::getThis()->isEndingGame = true;
-    GameScene::getThis()->unschedule(schedule_selector(GameScene::update));
     GameScene::getThis()->unschedule(schedule_selector(GameScene::scrollToCenter));
     GameScene::getThis()->unschedule(schedule_selector(GameScene::decceleratingDragging));
     
-    GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::stopGame), 0.1f);
+    goingToEndGame = true;
     
-    SystemMenu::getThis()->removeSystemMenu();
-    
-    GameManager::getThis()->hasGameHUD = false;
+    scheduleHideSystemMenu();
 }
 
 void SystemMenu::clickRestartButton()
@@ -156,19 +159,14 @@ void SystemMenu::clickRestartButton()
     GameManagement::loadGameFile();
 }
 
-void SystemMenu::releaseAll()
-{
-    RandomEventManager::getThis()->removeChild(blackScreen);
-    RandomEventManager::getThis()->removeChild(systemMenu_background);
-    CC_SAFE_RELEASE(this);
-}
-
 void SystemMenu::scheduleShowSystemMenu()
 {
     if(!show && !hide)
     {
+        isActive = true;
         show = true;
-        GameHUD::getThis()->schedule(schedule_selector(SystemMenu::showSystemMenu), 1.0f/120.0f);
+        createUI();
+        this->schedule(schedule_selector(SystemMenu::showSystemMenu), 1.0f/120.0f);
     }
 }
 
@@ -176,8 +174,9 @@ void SystemMenu::scheduleHideSystemMenu()
 {
     if(!show && !hide)
     {
+        isActive = false;
         hide = true;
-        GameHUD::getThis()->schedule(schedule_selector(SystemMenu::hideSystemMenu), 1.0f/120.0f);
+        this->schedule(schedule_selector(SystemMenu::hideSystemMenu), 1.0f/120.0f);
     }
 }
 
@@ -189,7 +188,7 @@ void SystemMenu::showSystemMenu(float dt)
     {
         scale = 1.0f;
         SystemMenu::getThis()->show = false;
-        GameHUD::getThis()->unschedule(schedule_selector(SystemMenu::showSystemMenu));
+        this->unschedule(schedule_selector(SystemMenu::showSystemMenu));
     }
     
     float opacity = 255.0f * (scale / 1.0f);
@@ -206,8 +205,22 @@ void SystemMenu::hideSystemMenu(float dt)
     {
         scale = 0;
         SystemMenu::getThis()->hide = false;
-        GameHUD::getThis()->unschedule(schedule_selector(SystemMenu::hideSystemMenu));
-        SystemMenu::getThis()->removeSystemMenu();
+        this->unschedule(schedule_selector(SystemMenu::hideSystemMenu));
+        
+        UIButtonControl::resumeGame();
+        
+        if(SystemMenu::getThis()->goingToEndGame)
+        {
+            SystemMenu::getThis()->goingToEndGame = false;
+            GameScene::getThis()->scheduleOnce(schedule_selector(GameScene::stopGame), 0.1f);
+        }
+        
+        float opacity = 255.0f * (scale / 1.0f);
+        
+        SystemMenu::getThis()->blackScreen->setOpacity((GLubyte) opacity);
+        SystemMenu::getThis()->systemMenu_background->setScale(scale);
+        
+        clear();
     }
     else
     {
@@ -218,15 +231,52 @@ void SystemMenu::hideSystemMenu(float dt)
     }
 }
 
-void SystemMenu::removeSystemMenu()
+void SystemMenu::clickSystemButton()
 {
-    GameHUD::getThis()->pause = false;
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
-    
-    for (int i = 0; i < spritesOnMap->count(); i++)
+    if(isActive)
     {
-        GameSprite* sp = (GameSprite*)spritesOnMap->objectAtIndex(i);
-        sp->followPath();
+        scheduleHideSystemMenu();
+        UIButtonControl::resumeGame();
     }
-    releaseAll();
+    else
+    {
+        scheduleShowSystemMenu();
+        UIButtonControl::pauseGame();
+    }
+}
+
+void SystemMenu::clear()
+{
+    menuItems->removeAllObjects();
+    SystemMenu::getThis()->newMenu->removeChild(SystemMenu::getThis()->systemMenu_resumeButton, true);
+    SystemMenu::getThis()->newMenu->removeChild(SystemMenu::getThis()->systemMenu_restartButton, true);
+    SystemMenu::getThis()->newMenu->removeChild(SystemMenu::getThis()->systemMenu_optionButton, true);
+    SystemMenu::getThis()->newMenu->removeChild(SystemMenu::getThis()->systemMenu_exitButton, true);
+    
+    SystemMenu::getThis()->systemMenu_background->removeChild(SystemMenu::getThis()->newMenu, true);
+    
+    this->removeChild(SystemMenu::getThis()->blackScreen, true);
+    
+    this->removeChild(SystemMenu::getThis()->systemMenu_background, true);
+    
+    SystemMenu::getThis()->systemMenu_background = NULL;
+    SystemMenu::getThis()->blackScreen = NULL;
+    
+    releaseTextures();
+    
+    GlobalHelper::clearCache();
+}
+
+void SystemMenu::loadTexturtes()
+{
+    systemMenuNode = CCSpriteBatchNode::create("SystemMenu.png");
+    this->addChild(systemMenuNode);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("SystemMenu.plist");
+}
+
+void SystemMenu::releaseTextures()
+{
+    this->removeChild(systemMenuNode, true);
+    SystemMenu::getThis()->systemMenuNode = NULL;
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("SystemMenu.plist");
 }

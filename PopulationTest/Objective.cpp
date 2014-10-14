@@ -32,8 +32,6 @@ Objective::Objective()
     
     scenarioTime = 0;
     scheduleScenario = false;
-    
-    finalObjective = false;
 }
 
 Objective::~Objective()

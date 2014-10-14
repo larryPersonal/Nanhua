@@ -13,6 +13,11 @@
 
 using namespace cocos2d;
 
+enum SanGuoXiaoXueTangState
+{
+    Part_Default, Part_1, Part_2, Part_3, Part_4
+};
+
 class SanGuoXiaoXueTang : public CCLayer
 {
 public:
@@ -20,30 +25,62 @@ public:
     
     CCSprite* background;
     
-    CCSprite* frame;
-    
     CCSpriteBatchNode* myNode;
     
+    /*
     CCLabelTTF* titleLabel;
     CCLabelTTF* answerLabel1;
     CCLabelTTF* answerLabel2;
     CCLabelTTF* answerLabel3;
     CCLabelTTF* answerLabel4;
+    */
     
     CCSprite* buttonAnswer1;
     CCSprite* buttonAnswer2;
     CCSprite* buttonAnswer3;
     CCSprite* buttonAnswer4;
     
+    CCLabelTTF* resultTitleLabel;
+    CCLabelTTF* resultLabel1;
+    CCLabelTTF* resultLabel2;
+    CCLabelTTF* rewardTitleLabel;
+    CCLabelTTF* rewardLabel;
+    
+    int correct;
+    int wrong;
+    int moneyReward;
+    
+    CCSprite* feedbackIcon;
     CCLabelTTF* feedbackLabel;
     CCLabelTTF* buttonNextLabel;
     CCSprite* buttonNext;
+    
+    CCSprite* dragon;
+    CCSprite* bubble;
     
     int curQuestionIndex;
     CCArray* questionList;
     
     bool active;
     bool isInQuestionStage;
+    bool isInRewardStage;
+    bool isInIntroStage;
+    bool twoChoice;
+    
+    CCArray* questionTokens;
+    CCArray* answerArray1;
+    CCArray* answerArray2;
+    CCArray* answerArray3;
+    CCArray* answerArray4;
+    
+    float startX;
+    float startY;
+    float maxX;
+    float gapY;
+    float offX;
+    float offY;
+    
+    SanGuoXiaoXueTangState theState;
     
 public:
     int index;
@@ -81,6 +118,7 @@ public:
     
     void readQuestionFiles();
     void loadQuestion();
+    void clearQuestion();
 };
 
 #endif

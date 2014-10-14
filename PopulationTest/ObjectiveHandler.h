@@ -18,6 +18,7 @@ class ObjectiveHandler : public CCLayer
 public:
     CCArray* objectives;
     
+    int currID;
     int nextID;
     
     int progressNumber;
@@ -37,6 +38,7 @@ public:
     
     void loadObjective();
     void playObjective(bool showNotification = true);
+    void playObjectiveWithObjectiveID(int objectiveID, bool showNotification = true);
     
     void update(float);
     

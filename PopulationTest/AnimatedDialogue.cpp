@@ -50,7 +50,7 @@ AnimatedDialogue::~AnimatedDialogue()
 
 void AnimatedDialogue::setup(std::string spritePicture)
 {
-    sprite = CCSprite::create(spritePicture.c_str());
+    sprite = CCSprite::createWithSpriteFrameName(spritePicture.c_str());
     if(hasFadeInAnimation)
     {
         currentAlpha = 0;

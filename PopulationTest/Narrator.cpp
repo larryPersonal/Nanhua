@@ -180,7 +180,7 @@ void Narrator::update(float dt)
 
 void Narrator::activateSprite(float dt)
 {
-    CCArray* spritesOnMap = GameScene::getThis()->spriteHandler->spritesOnMap;
+    CCArray* spritesOnMap = SpriteHandler::getThis()->spritesOnMap;
     cumulativeTime += dt;
     if(cumulativeTime >= 6.0f)
     {
@@ -190,7 +190,7 @@ void Narrator::activateSprite(float dt)
     {
         GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(4);
         CCPoint tilePos = CCPointMake(29,33);
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&tilePos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&tilePos);
         
         sp->spriteRep->setPosition(target);
     }
@@ -198,7 +198,7 @@ void Narrator::activateSprite(float dt)
     {
         GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(3);
         CCPoint tilePos = CCPointMake(29,33);
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&tilePos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&tilePos);
         
         sp->spriteRep->setPosition(target);
     }
@@ -206,7 +206,7 @@ void Narrator::activateSprite(float dt)
     {
         GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(2);
         CCPoint tilePos = CCPointMake(29,33);
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&tilePos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&tilePos);
         
         sp->spriteRep->setPosition(target);
     }
@@ -214,7 +214,7 @@ void Narrator::activateSprite(float dt)
     {
         GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(1);
         CCPoint tilePos = CCPointMake(29,33);
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&tilePos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&tilePos);
         
         sp->spriteRep->setPosition(target);
     }
@@ -222,7 +222,7 @@ void Narrator::activateSprite(float dt)
     {
         GameSprite* sp = (GameSprite*) spritesOnMap->objectAtIndex(0);
         CCPoint tilePos = CCPointMake(29,33);
-        CCPoint target = GameScene::getThis()->mapHandler->locationFromTilePos(&tilePos);
+        CCPoint target = MapHandler::getThis()->locationFromTilePos(&tilePos);
         
         sp->spriteRep->setPosition(target);
     }
@@ -236,5 +236,6 @@ void Narrator::setupForScenario()
     std::string filename = "senario_h.xml";
     TutorialManager::getThis()->clearSprites();
     GlobalHelper::clearCache();
+    CCLog("It's scenario time now.");
     Senario::getThis()->playSenario(filename.c_str());
 }

@@ -190,6 +190,8 @@ public:
     bool hasTimer;
     float targetTime;
     float currentTime;
+    float scenarioTime;
+    bool hasScenario;
     
     CCLabelTTF* objectiveTitle;
     CCArray* objectiveDescriptions;
@@ -277,8 +279,7 @@ public:
     CCRect objectiveButtonRect;
     CCRect objectiveButtonBlueRect;
     CCRect objectiveGlowingRect;
-    
-    bool startWar;
+
     CCSprite* peaceButton;
     CCSprite* warButton;
     
@@ -311,8 +312,6 @@ public:
     bool genderMale;
     
     CCSprite* scoreButton;
-    
-    bool finalObjective;
     
 public:
     GameHUD();
@@ -361,7 +360,6 @@ public:
     void clickPopulationLabel();
     
     void stickGameHappiness();
-    void banditsAttack(int banditsNumber = 1);
     void alertBanditsAttackFade(float);
     void alertBanditsAttackText(float);
     
@@ -423,7 +421,6 @@ public:
     void scheduleAddFood(int);
     void scheduleAddStorage(int);
     
-    
     void scheduleShowNewObjectiveNotification();
     void scheduleHideNewObjectiveNotification();
     void showNewObjectiveNotification(float);
@@ -442,6 +439,8 @@ public:
     void clickShowRandomEventManagerButton();
     
     void clearAllLabels();
+    
+    void clearWhenQuitGame();
 };
 
 #endif

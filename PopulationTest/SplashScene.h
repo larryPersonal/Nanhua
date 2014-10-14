@@ -21,10 +21,7 @@ class SplashScene : public cocos2d::CCLayerColor
     CCSprite* splashImage;
     int transitionState;
     
-    CCSpriteBatchNode* teacherManagementNode;
-    CCSpriteBatchNode* mainGamePageNode;
     CCSpriteBatchNode* extraTextureNode;
-    CCSpriteBatchNode* mainMenuSceneNode;
     CCSpriteBatchNode* gameHUDNode;
     CCSpriteBatchNode* buildingInforMenuNode;
     CCSpriteBatchNode* buildScrollNode;

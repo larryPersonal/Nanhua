@@ -18,11 +18,12 @@
 #include "RefugeeCFG.h"
 #include "BuilderCFG.h"
 #include "BanditCFG.h"
+#include "MarketerCFG.h"
 
 #include "NameGenerator.h"
 #include "GlobalHelper.h"
-#include "ReputationOrb.h"
 #include "TutorialManager.h"
+#include "UserProfile.h"
 
 #include <json/json.h>
 
@@ -297,6 +298,11 @@ void SpriteHandler::initialize()
                 targetClass = "bandit";
                 villagerClass = V_BANDIT;
                 break;
+            case 6:
+                configContent = marketerConfig;
+                defaultContent = marketerDefaults;
+                targetClass = "marketer";
+                villagerClass = V_MARKET;
             default:
                 break;
         }
@@ -381,7 +387,7 @@ void SpriteHandler::addSpriteToMap(cocos2d::CCPoint &tilePos, VillagerClass vill
     newSprite->makeSprite(&tilePos);
     
     // set the unique id for that sprite
-    string username = GameManager::getThis()->username;
+    string username = UserProfile::getThis()->username;
     stringstream ss;
     ss << username << "_sprite_unique_id";
     
@@ -510,6 +516,20 @@ void SpriteHandler::removeSpriteFromMap(GameSprite* sprite)
     sprite->release();
 }
 
+void SpriteHandler::removeTokenFromMap(ReputationOrb* rOrb)
+{
+    tokensOnMap->removeObject(rOrb);
+    
+    if(rOrb->collected)
+    {
+        GameHUD::getThis()->removeChild(rOrb->orbSprite, true);
+    }
+    else
+    {
+        MapHandler::getThis()->getMap()->removeChild(rOrb->orbSprite, true);
+    }
+}
+
 // Artificial Intelligence Included
 void SpriteHandler::update(float dt)
 {
@@ -519,7 +539,7 @@ void SpriteHandler::update(float dt)
      */
     cumulatedTime += dt;
     
-    if(cumulatedTime >= (GameScene::getThis()->settingsLevel->global_hungry_decay / 100.0f))
+    if(cumulatedTime >= (UserProfile::getThis()->settingsLevel->global_hungry_decay / 100.0f))
     {
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -602,7 +622,7 @@ void SpriteHandler::update(float dt)
     /*
      * schedule the ren token dropping mechanism. The ren tokens will be dropped by chance.
      */
-    if(!GameScene::getThis()->banditsAttackHandler->warMode)
+    if(!BanditsAttackHandler::getThis()->warMode)
     {
         for(int i = 0; i < spritesOnMap->count(); i++)
         {
@@ -633,4 +653,13 @@ float SpriteHandler::getCumulatedTime()
 void SpriteHandler::setCumulatedTime(float time)
 {
     cumulatedTime = time;
+}
+
+void SpriteHandler::clear()
+{
+    cumulatedTime = 0;
+    cumulatedTime_energy = 0;
+    tokensOnMap->removeAllObjects();
+    spritesOnMap->removeAllObjects();
+    fishAnimOnMap->removeAllObjects();
 }

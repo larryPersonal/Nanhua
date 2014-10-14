@@ -40,10 +40,10 @@ BattlePair::~BattlePair()
 void BattlePair::update(float deltaTime)
 {
     CCPoint soldierPos = soldier->getWorldPosition();
-    soldierPos = GameScene::getThis()->mapHandler->tilePosFromLocation(soldierPos);
+    soldierPos = MapHandler::getThis()->tilePosFromLocation(soldierPos);
     
     CCPoint banditPos = bandit->getWorldPosition();
-    banditPos = GameScene::getThis()->mapHandler->tilePosFromLocation(banditPos);
+    banditPos = MapHandler::getThis()->tilePosFromLocation(banditPos);
     
     int tempDistance = bandit->getPathDistance(banditPos, soldierPos);
     
@@ -75,7 +75,7 @@ void BattlePair::update(float deltaTime)
             for(int i = 0; i < 4; i++)
             {
                 CCPoint adjacentTile = pointsToCheck[i];
-                MapTile* targetTile = GameScene::getThis()->mapHandler->getTileAt(adjacentTile.x, adjacentTile.y);
+                MapTile* targetTile = MapHandler::getThis()->getTileAt(adjacentTile.x, adjacentTile.y);
                 if(targetTile->isPath)
                 {
                     if(validTile == NULL)
@@ -137,10 +137,10 @@ void BattlePair::update(float deltaTime)
 void BattlePair::battle()
 {
     CCPoint soldierPos = soldier->getWorldPosition();
-    soldierPos = GameScene::getThis()->mapHandler->tilePosFromLocation(soldierPos);
+    soldierPos = MapHandler::getThis()->tilePosFromLocation(soldierPos);
     
     CCPoint banditPos = bandit->getWorldPosition();
-    banditPos = GameScene::getThis()->mapHandler->tilePosFromLocation(banditPos);
+    banditPos = MapHandler::getThis()->tilePosFromLocation(banditPos);
     
     if(soldierPos.x < banditPos.x && soldierPos.y == banditPos.y)
     {

@@ -87,12 +87,24 @@ void SanGuoXiaoXueTangFileReader::parseXMLFile(string xml)
                 content = str.substr(startPos + 6, endPos - startPos - 6);
                 question->setQuestionString(content);
             }
+            else if(str.find("<intro>") != std::string::npos && str.find("</intro>") != std::string::npos)
+            {
+                startPos = str.find("<intro>");
+                endPos = str.find("</intro>");
+                content = str.substr(startPos + 7, endPos - startPos - 7);
+                question->setIntroString(content);
+                question->setIsIntro(true);
+            }
             else if(str.find("<answer>") != std::string::npos && str.find("</answer>") != std::string::npos)
             {
                 startPos = str.find("<answer>");
                 endPos = str.find("</answer>");
                 content = str.substr(startPos + 8, endPos - startPos - 8);
                 question->addAnswerString(content);
+            }
+            else if(str.find("<twoChoice>") != std::string::npos && str.find("</twoChoice>") != std::string::npos)
+            {
+                question->setTwoChoice(true);
             }
             else if(str.find("<index>") != std::string::npos && str.find("</index>") != std::string::npos)
             {

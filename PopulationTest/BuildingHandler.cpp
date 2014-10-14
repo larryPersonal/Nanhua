@@ -1061,3 +1061,32 @@ Building* BuildingHandler::getRandomBuilding(Building* bui)
     
     return foundBuildings[targetIdx];
 }
+
+void BuildingHandler::clear()
+{
+    allBuildingsOnMap->removeAllObjects();
+    allBuildingsGhostOnMap->removeAllObjects();
+    
+    housingOnMap->removeAllObjects();
+    housingGhostOnMap->removeAllObjects();
+    granaryOnMap->removeAllObjects();
+    granaryGhostOnMap->removeAllObjects();
+    amenityOnMap->removeAllObjects();
+    amenityGhostOnMap->removeAllObjects();
+    commerceOnMap->removeAllObjects();
+    commerceGhostOnMap->removeAllObjects();
+    militaryOnMap->removeAllObjects();
+    militaryGhostOnMap->removeAllObjects();
+    educationOnMap->removeAllObjects();
+    educationGhostOnMap->removeAllObjects();
+    socialOnMap->removeAllObjects();
+    socialGhostOnMap->removeAllObjects();
+    specialOnMap->removeAllObjects();
+    specialGhostOnMap->removeAllObjects();
+    decorationOnMap->removeAllObjects();
+    decorationGhostOnMap->removeAllObjects();
+    marketOnMap->removeAllObjects();
+    marketGhostOnMap->removeAllObjects();
+    riverOnMap->removeAllObjects();
+    riverGhostOnMap->removeAllObjects();
+}

@@ -12,6 +12,7 @@
 #include "SpriteInfoMenu.h"
 #include "SelectPopulation.h"
 #include "TutorialManager.h"
+#include "GameManager.h"
 
 float portraitScale; //hack
 BuildingInfoMenu* BuildingInfoMenu::SP;
@@ -168,7 +169,7 @@ void BuildingInfoMenu::createMenuItems()
     {
         ss << building->memberSpriteList->count() * 100;
     }
-    else if(building->buildingType == MARKET)
+    else if(building->buildingType == MARKET && building->memberSpriteList->count() > 0)
     {
         ss << "500";
     }
@@ -350,7 +351,7 @@ void BuildingInfoMenu::createMenuItems()
     selectWorkerButton->setScale( 150.0f / selectWorkerButton->boundingBox().size.width );
     selectWorkerButton->setAnchorPoint(ccp(0, 1));
     
-    if((!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY) || building->memberSpriteList->count() > 0)
+    if((!building->isUnderConstruction() && building->buildingType != AMENITY && building->buildingType != MILITARY && building->buildingType != MARKET) || building->memberSpriteList->count() > 0)
     {
         selectWorkerButton->setVisible(false);
     }
@@ -538,7 +539,7 @@ void BuildingInfoMenu::createMenuItems()
     houseLimitTitle->setColor(colorYellow);
     this->addChild(houseLimitTitle);
     
-    CCArray* allHouse = GameScene::getThis()->buildingHandler->housingOnMap;
+    CCArray* allHouse = BuildingHandler::getThis()->housingOnMap;
     mGameHouseNumber = allHouse->count();
     
     ss.str(string());
@@ -565,7 +566,7 @@ void BuildingInfoMenu::createMenuItems()
     marketLimitTitle->setColor(colorYellow);
     this->addChild(marketLimitTitle);
     
-    CCArray* allMarket = GameScene::getThis()->buildingHandler->marketOnMap;
+    CCArray* allMarket = BuildingHandler::getThis()->marketOnMap;
     mGameMarketNumber = allMarket->count();
     
     ss.str(std::string());
@@ -592,7 +593,7 @@ void BuildingInfoMenu::createMenuItems()
     granaryLimitTitle->setColor(colorYellow);
     this->addChild(granaryLimitTitle);
     
-    CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+    CCArray* allGranary = BuildingHandler::getThis()->granaryOnMap;
     mGameGranaryNumber = allGranary->count();
     
     ss.str(string());
@@ -619,7 +620,7 @@ void BuildingInfoMenu::createMenuItems()
     farmLimitTitle->setColor(colorYellow);
     this->addChild(farmLimitTitle);
     
-    CCArray* allFarm = GameScene::getThis()->buildingHandler->amenityOnMap;
+    CCArray* allFarm = BuildingHandler::getThis()->amenityOnMap;
     mGameFarmNumber = allFarm->count();
     
     ss.str(string());
@@ -646,7 +647,7 @@ void BuildingInfoMenu::createMenuItems()
     guardTowerLimitTitle->setColor(colorYellow);
     this->addChild(guardTowerLimitTitle);
     
-    CCArray* allTower = GameScene::getThis()->buildingHandler->militaryOnMap;
+    CCArray* allTower = BuildingHandler::getThis()->militaryOnMap;
     mGameTowerNumber = allTower->count();
     
     ss.str(string());
@@ -1220,7 +1221,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         upgradeBarLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/";
+        ss << BuildingHandler::getThis()->housingOnMap->count() << "/";
         if(GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel) > 99999)
         {
             ss << "~";
@@ -1232,7 +1233,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         houseLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->marketOnMap->count() << "/";
+        ss << BuildingHandler::getThis()->marketOnMap->count() << "/";
         if(GameManager::getThis()->housingLimitation->market_limits.at(mGameLevel) > 99999)
         {
             ss << "~";
@@ -1244,7 +1245,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         marketLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->granaryOnMap->count() << "/";
+        ss << BuildingHandler::getThis()->granaryOnMap->count() << "/";
         if(GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel) > 99999)
         {
             ss << "~";
@@ -1256,7 +1257,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         granaryLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->amenityOnMap->count() << "/";
+        ss << BuildingHandler::getThis()->amenityOnMap->count() << "/";
         if(GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel) > 99999)
         {
             ss << "~";
@@ -1268,7 +1269,7 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         farmLimitLabel->setString(ss.str().c_str());
         
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/";
+        ss << BuildingHandler::getThis()->militaryOnMap->count() << "/";
         if(GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel) > 99999)
         {
             ss << "~";
@@ -1283,6 +1284,17 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         cancelUpgradeButton->setVisible(false);
     }
     
+    if(GameManager::getThis()->town_hall_level >= 5)
+    {
+        if(upgradeButton->isVisible() || cancelUpgradeButton->isVisible())
+        {
+            upgradeButton->setVisible(false);
+            cancelUpgradeButton->setVisible(false);
+            upgradeBar->setVisible(false);
+            upgradeBarLabel->setVisible(false);
+        }
+    }
+    
     if (building->current_upgrade_unit != mGameUpgradeUnit)
     {
         mGameUpgradeUnit = building->current_upgrade_unit;
@@ -1293,35 +1305,35 @@ void BuildingInfoMenu::refreshAllMenuItemValues()
         upgradeBar->setValue((float) building->current_upgrade_unit / (float) building->upgrade_unit_max);
     }
     
-    if (GameScene::getThis()->buildingHandler->housingOnMap->count() != mGameHouseNumber)
+    if (BuildingHandler::getThis()->housingOnMap->count() != mGameHouseNumber)
     {
-        mGameHouseNumber = GameScene::getThis()->buildingHandler->housingOnMap->count();
+        mGameHouseNumber = BuildingHandler::getThis()->housingOnMap->count();
         ss.str(std::string());
-        ss << GameScene::getThis()->buildingHandler->housingOnMap->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
+        ss << BuildingHandler::getThis()->housingOnMap->count() << "/" << GameManager::getThis()->housingLimitation->housing_limits.at(mGameLevel);
         houseLimitLabel->setOpacity(255);
     }
     
-    if (GameScene::getThis()->buildingHandler->granaryOnMap->count() != mGameGranaryNumber)
+    if (BuildingHandler::getThis()->granaryOnMap->count() != mGameGranaryNumber)
     {
-        mGameGranaryNumber = GameScene::getThis()->buildingHandler->granaryOnMap->count();
+        mGameGranaryNumber = BuildingHandler::getThis()->granaryOnMap->count();
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->granaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel);
+        ss << BuildingHandler::getThis()->granaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->granary_limits.at(mGameLevel);
         granaryLimitLabel->setString(ss.str().c_str());
     }
     
-    if (GameScene::getThis()->buildingHandler->amenityOnMap->count() != mGameFarmNumber)
+    if (BuildingHandler::getThis()->amenityOnMap->count() != mGameFarmNumber)
     {
-        mGameFarmNumber = GameScene::getThis()->buildingHandler->amenityOnMap->count();
+        mGameFarmNumber = BuildingHandler::getThis()->amenityOnMap->count();
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->amenityOnMap->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel);
+        ss << BuildingHandler::getThis()->amenityOnMap->count() << "/" << GameManager::getThis()->housingLimitation->farm_limits.at(mGameLevel);
         farmLimitLabel->setString(ss.str().c_str());
     }
     
-    if (GameScene::getThis()->buildingHandler->militaryOnMap->count() != mGameTowerNumber)
+    if (BuildingHandler::getThis()->militaryOnMap->count() != mGameTowerNumber)
     {
-        mGameTowerNumber = GameScene::getThis()->buildingHandler->militaryOnMap->count();
+        mGameTowerNumber = BuildingHandler::getThis()->militaryOnMap->count();
         ss.str(string());
-        ss << GameScene::getThis()->buildingHandler->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
+        ss << BuildingHandler::getThis()->militaryOnMap->count() << "/" << GameManager::getThis()->housingLimitation->guard_tower_limits.at(mGameLevel);
         guardTowerLimitLabel->setString(ss.str().c_str());
     }
     
@@ -1368,7 +1380,7 @@ void BuildingInfoMenu::upgrade()
     {
         int level = GameManager::getThis()->town_hall_level;
         int food = 0;
-        CCArray* allGranary = GameScene::getThis()->buildingHandler->granaryOnMap;
+        CCArray* allGranary = BuildingHandler::getThis()->granaryOnMap;
         for (int i = 0; i < allGranary->count(); i++)
         {
             Building* b = (Building*) allGranary->objectAtIndex(i);

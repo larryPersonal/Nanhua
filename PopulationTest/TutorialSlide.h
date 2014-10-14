@@ -80,6 +80,7 @@ public:
     float delay;
     
     bool clear;
+    bool setupGuardTowerBar;
     
 public:
     TutorialSlide();

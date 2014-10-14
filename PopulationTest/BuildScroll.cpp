@@ -13,6 +13,7 @@
 #include "GameHUD.h"
 #include "TutorialManager.h"
 #include "FloatingArraw.h"
+#include "UserProfile.h"
 
 BuildScroll* BuildScroll::SP;
 
@@ -89,12 +90,12 @@ void BuildScroll::createMenuItems()
     
     // scroll section for other villagers
     scrollArea = new ScrollArea();
-    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.96f, buildMenu->boundingBox().size.height * 0.92f), CCSizeMake(GameScene::getThis()->buildingHandler->allBuildings->count() , buildMenu->boundingBox().size.height * 0.92f));
+    scrollArea->createScrollArea(CCSizeMake(buildMenu->boundingBox().size.width * 0.96f, buildMenu->boundingBox().size.height * 0.92f), CCSizeMake(BuildingHandler::getThis()->allBuildings->count() , buildMenu->boundingBox().size.height * 0.92f));
     scrollArea->enableScrollHorizontal(0, "bar.png", "bar.png");
     scrollArea->setAnchorPoint(ccp(0, 0));
     
     // create all building references for all building categories.
-    CCArray* allBuildings = GameScene::getThis()->buildingHandler->allBuildings;
+    CCArray* allBuildings = BuildingHandler::getThis()->allBuildings;
     // list down all the buildings
     
     numberOfBuildingCards = 0;
@@ -109,20 +110,6 @@ void BuildScroll::createMenuItems()
     bc = BuildingCard::create(NULL, scrollArea, numberOfBuildingCards, 3);
     numberOfBuildingCards++;
     buildingCards->addObject(bc);
-    
-    if(GameManager::getThis()->getLevel() != 0)
-    {
-        for (int i = 0; i < allBuildings->count(); i++)
-        {
-            Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
-            if(tempBuilding->buildingType == SOCIAL)
-            {
-                bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
-                numberOfBuildingCards++;
-                buildingCards->addObject(bc);
-            }
-        }
-    }
     
     for(int i = 0; i < allBuildings->count(); i++)
     {
@@ -146,7 +133,7 @@ void BuildScroll::createMenuItems()
             // if (!nameExists(tempBuilding->buildingName))
             // {
             
-        
+            
             bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
             buildingCards->addObject(bc);
@@ -184,6 +171,20 @@ void BuildScroll::createMenuItems()
             bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
             numberOfBuildingCards++;
             buildingCards->addObject(bc);
+        }
+    }
+    
+    if(UserProfile::getThis()->gameLevel != 0)
+    {
+        for (int i = 0; i < allBuildings->count(); i++)
+        {
+            Building* tempBuilding = (Building*) allBuildings->objectAtIndex(i);
+            if(tempBuilding->buildingType == SOCIAL)
+            {
+                bc = BuildingCard::create(tempBuilding, scrollArea, numberOfBuildingCards, 0);
+                numberOfBuildingCards++;
+                buildingCards->addObject(bc);
+            }
         }
     }
     
