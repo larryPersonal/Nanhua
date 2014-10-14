@@ -1925,6 +1925,12 @@ void GameScene::stopGame()
         RandomEventManager::getThis()->hideUI();
     }
     
+    // close score menu
+    if(ScoreMenu::getThis() != NULL)
+    {
+        ScoreMenu::getThis()->scheduleHideScoreMenu();
+    }
+    
     // clear all fish anims
     CCArray* fishAnimOnMap = SpriteHandler::getThis()->fishAnimOnMap;
     while(fishAnimOnMap->count() > 0)
