@@ -929,21 +929,25 @@ void Building::leaveGranuary(GameSprite* sp)
     else if(sp->getJob() == BUILDER)
     {
         CCPoint startPos = sp->getWorldPosition();
-        CCPoint endPos = sp->jobLocation->getWorldPosition();
         
-        startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
-        endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
-        
-        if(startPos.equals(endPos))
+        if(sp->jobLocation)
         {
-            sp->currAction = BUILD;
-            sp->setTargetLocation(sp->jobLocation);
-            sp->isDoingJob = true;
-        }
-        else
-        {
-            sp->setTargetLocation(sp->jobLocation);
-            sp->GoBuild(sp->jobLocation);
+            CCPoint endPos = sp->jobLocation->getWorldPosition();
+            
+            startPos = MapHandler::getThis()->tilePosFromLocation(startPos);
+            endPos = MapHandler::getThis()->tilePosFromLocation(endPos);
+            
+            if(startPos.equals(endPos))
+            {
+                sp->currAction = BUILD;
+                sp->setTargetLocation(sp->jobLocation);
+                sp->isDoingJob = true;
+            }
+            else
+            {
+                sp->setTargetLocation(sp->jobLocation);
+                sp->GoBuild(sp->jobLocation);
+            }
         }
     }
     else

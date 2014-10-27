@@ -92,7 +92,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>The mini dragon rushes in.</text>
+            <text>The mini dragon rushed in.</text>
             <limitX>960</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
@@ -465,7 +465,7 @@
 		</sprite>
 		<dialogue>
             <name></name>
-            <text>(Xiao Hua goes outside to meet the refuges.)</text>
+            <text>(Xiao Hua went outside to meet the refugees.)</text>
             <limitX>960</limitX>
             <textOffY>30</textOffY>
 			<width>85</width>

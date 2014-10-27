@@ -1,5 +1,7 @@
 <?xml encoding="ISO-8859-1"?>
 
+
+
 <tutorial>
     <slide>
         <speech>Hello! My name is Xiao Long - nice to meet you. I will be your guide and assist you in rebuilding your village.</speech>
@@ -38,10 +40,10 @@
         <cameraMove>4400,2500</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
-        <addVillager>2</addVillager>
         <fade_in>0</fade_in>
         <hideArrow></hideArrow>
         <deHighlight></deHighlight>
+        <addVillager>2</addVillager>
         <unlock>
             <pause></pause>
         </unlock>

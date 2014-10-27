@@ -80,6 +80,8 @@ public:
     
     bool freeBuilding;
     
+    bool lockModule;
+    
     CCArray* spritesArray;
     
 public:

@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{260,107}</string>
             </dict>
-            <key>optionsbtn.png</key>
+            <key>resumebtn.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,749},{254,105}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{260,107}</string>
             </dict>
-            <key>optionspressbtn.png</key>
+            <key>resumepressbtn.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,860},{254,105}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{260,107}</string>
             </dict>
-            <key>restartbtn.png</key>
+            <key>system_load.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,971},{254,105}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{260,107}</string>
             </dict>
-            <key>restartpressbtn.png</key>
+            <key>system_load_press.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,1082},{254,105}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{260,107}</string>
             </dict>
-            <key>resumebtn.png</key>
+            <key>system_save.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,1193},{254,105}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{260,107}</string>
             </dict>
-            <key>resumepressbtn.png</key>
+            <key>system_save_press.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,1304},{254,105}}</string>
@@ -131,7 +131,7 @@
             <key>size</key>
             <string>{356,1413}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cf9acfabd50cd5c26ce16ba24edd12cc:c89719fe657c4c96d9bab02d2ec2d5f3:793a479ad200106a70ef52e9bfc8bb31$</string>
+            <string>$TexturePacker:SmartUpdate:585a06df71116dbb11993d07d2109fd5:10a9028c3d5bd0101ff69b643eb91db0:793a479ad200106a70ef52e9bfc8bb31$</string>
             <key>textureFileName</key>
             <string>SystemMenu.png</string>
         </dict>

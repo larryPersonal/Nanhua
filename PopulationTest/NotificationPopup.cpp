@@ -252,7 +252,7 @@ void NotificationPopup::showScenario1Congratulations()
             congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
             background->addChild(congratsTitleLabel_scenario3, 3);
             
-            congratsContentLabel_scenario3 = CCLabelTTF::create("You have improved the village's development status!", "GillSansMT", 48);
+            congratsContentLabel_scenario3 = CCLabelTTF::create("You have developed the village!", "GillSansMT", 48);
             congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
             congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
             background->addChild(congratsContentLabel_scenario3, 3);
@@ -306,7 +306,7 @@ void NotificationPopup::showScenario3Congratulations()
             congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
             background->addChild(congratsTitleLabel_scenario3, 3);
             
-            congratsContentLabel_scenario3 = CCLabelTTF::create("You have built 2 hospitals!", "GillSansMT", 48);
+            congratsContentLabel_scenario3 = CCLabelTTF::create("2 hospitals were built!", "GillSansMT", 48);
             congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
             congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
             background->addChild(congratsContentLabel_scenario3, 3);
@@ -333,7 +333,7 @@ void NotificationPopup::showScenario4Congratulations()
             congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
             background->addChild(congratsTitleLabel_scenario3, 3);
             
-            congratsContentLabel_scenario3 = CCLabelTTF::create("Your village has raised 10 population!", "GillSansMT", 48);
+            congratsContentLabel_scenario3 = CCLabelTTF::create("The village grew in population!", "GillSansMT", 48);
             congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
             congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
             background->addChild(congratsContentLabel_scenario3, 3);
@@ -360,7 +360,7 @@ void NotificationPopup::showScenario5Congratulations()
             congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
             background->addChild(congratsTitleLabel_scenario3, 3);
             
-            congratsContentLabel_scenario3 = CCLabelTTF::create("Your have harvested 1500 food for storage!", "GillSansMT", 48);
+            congratsContentLabel_scenario3 = CCLabelTTF::create("1500 food were stored!", "GillSansMT", 48);
             congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
             congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
             background->addChild(congratsContentLabel_scenario3, 3);
@@ -387,7 +387,7 @@ void NotificationPopup::showScenario6Congratulations()
             congratsTitleLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 100.0f));
             background->addChild(congratsTitleLabel_scenario3, 3);
             
-            congratsContentLabel_scenario3 = CCLabelTTF::create("Your have successfully manned 5 soldiers!", "GillSansMT", 48);
+            congratsContentLabel_scenario3 = CCLabelTTF::create("5 soldiers were manned!", "GillSansMT", 48);
             congratsContentLabel_scenario3->setAnchorPoint(ccp(0.5f, 1.0f));
             congratsContentLabel_scenario3->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - 200.0f));
             background->addChild(congratsContentLabel_scenario3, 3);

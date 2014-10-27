@@ -645,6 +645,7 @@ void Senario::buttonSelect()
         {
             this->schedule(schedule_selector(Senario::activateRefugee), 1.0f / 120.0f);
         }
+        TutorialManager::getThis()->lockModule = false;
     }
 }
 

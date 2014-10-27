@@ -248,7 +248,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>Xiao Long rushes in.</text>
+            <text>Xiao Long rushed in.</text>
             <textOffY>30</textOffY>
             <limitX>900</limitX>
             <width>85</width>
@@ -275,7 +275,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Long</name>
-            <text>Master, another group of refuges have just arrived. Oh no, what should we do? They are now waiting outside, hoping to speak to you.</text>
+            <text>Master, another group of refugees have just arrived. Oh no, what should we do? They are now waiting outside, hoping to speak to you.</text>
 			<limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
@@ -292,7 +292,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>Xiao Hua goes outside to meet the refuges.</text>
+            <text>Xiao Hua goes outside to meet the refugees.</text>
             <textOffY>30</textOffY>
             <limitX>960</limitX>
             <width>85</width>
@@ -378,7 +378,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>Xiao Hua would decide if he wants to build new house to accommodate the refuges.</text>
+            <text>Xiao Hua would decide if he wants to build new house to accommodate the refugees.</text>
             <limitX>850</limitX>
             <textOffY>30</textOffY>
             <width>85</width>

@@ -82,6 +82,8 @@ public:
     
     SanGuoXiaoXueTangState theState;
     
+    bool lockModule;
+    
 public:
     int index;
     

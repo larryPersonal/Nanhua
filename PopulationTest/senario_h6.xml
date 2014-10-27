@@ -216,7 +216,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Long</name>
-            <text>I am afraid no.</text>
+            <text>I am afraid not.</text>
 			<limitX>960</limitX>
             <width>85</width>
 			<left>15</left>

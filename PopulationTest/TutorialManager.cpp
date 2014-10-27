@@ -178,6 +178,9 @@ void TutorialManager::setupForTutorial()
     {
         unlockAll();
         active = false;
+        lockModule = false;
+        CCLog("try my best");
+        UIButtonControl::resumeGame();
         return;
     }
     
@@ -230,6 +233,7 @@ void TutorialManager::setupForScenario()
 
 void TutorialManager::addVillagers(int num)
 {
+    CCLog("one villager added!");
     villagersToBeAdded = num;
     this->schedule(schedule_selector(TutorialManager::scheduleVillagers), 1.0f/120.0f);
 }

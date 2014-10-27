@@ -4,7 +4,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>Xiao Hua decides that he would not build new house to accommodate the refuges.</text>
+            <text>Xiao Hua decides that he would not build new house to accommodate the refugees.</text>
             <limitX>900</limitX>
             <textOffY>30</textOffY>
             <width>85</width>
@@ -156,7 +156,7 @@
         <clickToNext></clickToNext>
         <dialogue>
             <name></name>
-            <text>The refuges left the village and soon became bandits who would occasionally raid your village, resulting in loss of resources.</text>
+            <text>The refugees left the village and soon became bandits who would occasionally raid your village, resulting in loss of resources.</text>
             <limitX>900</limitX>
             <textOffY>30</textOffY>
             <width>85</width>

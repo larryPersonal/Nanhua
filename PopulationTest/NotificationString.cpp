@@ -9,9 +9,9 @@
 #include "NotificationString.h"
 #include "GameHUD.h"
 
-NotificationString* NotificationString::create(std::string input, float startY)
+NotificationString* NotificationString::create(std::string input, float borderY)
 {
-    NotificationString* pRet = new NotificationString(input, startY);
+    NotificationString* pRet = new NotificationString(input, borderY);
     if(pRet)
     {
         pRet->autorelease();
@@ -24,16 +24,16 @@ NotificationString* NotificationString::create(std::string input, float startY)
     }
 }
 
-NotificationString::NotificationString(std::string input, float startY)
+NotificationString::NotificationString(std::string input, float borderY)
 {
     borderX = 200;
-    borderY = 200;
-    this->startY = borderY + startY;
+    this->borderY = borderY;
+    this->targetY = borderY;
     
     isUp = false;
     
     notificationLabel = CCLabelTTF::create(input.c_str(), "Arial", 16);
-    notificationLabel->setAnchorPoint(ccp(1, 1));
+    notificationLabel->setAnchorPoint(ccp(0, 0));
     notificationLabel->setOpacity((GLubyte) 0);
     GameHUD::getThis()->addChild(notificationLabel);
 }
@@ -45,8 +45,7 @@ NotificationString::~NotificationString()
 
 void NotificationString::scheduleSlideIn()
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    notificationLabel->setPosition(ccp(screenSize.width + borderX, screenSize.height - startY));
+    notificationLabel->setPosition(ccp(0 - borderX, 0));
     notificationLabel->setOpacity((GLubyte) 0);
 }
 
@@ -62,17 +61,16 @@ void NotificationString::scheduleSlideOut()
 
 void NotificationString::slideIn(float dt)
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     float posX = notificationLabel->getPositionX();
-    posX -= 20;
+    posX += 20;
     
-    if(posX <= screenSize.width)
+    if(posX >= 0)
     {
-        posX = screenSize.width;
+        posX = 0;
         GameHUD::getThis()->slideIn = false;
     }
     
-    float opacity = 255.0f * ((borderX + screenSize.width - posX) / borderX);
+    float opacity = 255.0f * ((borderX + posX) / borderX);
     
     notificationLabel->setPosition(ccp(posX, notificationLabel->getPositionY()));
     notificationLabel->setOpacity((GLubyte) opacity);
@@ -80,22 +78,12 @@ void NotificationString::slideIn(float dt)
 
 void NotificationString::slideUp(float dt, int id)
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    CCArray* eventLabels = GameHUD::getThis()->eventLabels;
-    float height = 0;
-    
-    for (int i = 0; i < id; i++)
-    {
-        NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
-        height += ns->notificationLabel->boundingBox().size.height;
-    }
-    
     float posY = notificationLabel->getPositionY();
     posY += 10;
     
-    if(posY >= screenSize.height - borderY - height)
+    if(posY >= targetY)
     {
-        posY = screenSize.height - borderY - height;
+        posY = targetY;
         isUp = false;
     }
     else
@@ -108,20 +96,18 @@ void NotificationString::slideUp(float dt, int id)
 
 bool NotificationString::slideOut(float dt)
 {
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     float posX = notificationLabel->getPositionX();
-    posX += 20;
+    posX -= 20;
     
-    if(posX >= screenSize.width + borderX)
+    if(posX <= 0 - borderX)
     {
-        posX = screenSize.width + borderX;
+        posX = 0 - borderX;
         
-        float opacity = 255.0f * ((borderX + screenSize.width - posX) / borderX);
+        float opacity = 255.0f * ((0 - posX) / borderX);
         
         notificationLabel->setPosition(ccp(posX, notificationLabel->getPositionY()));
         notificationLabel->setOpacity((GLubyte) opacity);
         
-        GameHUD::getThis()->slideUp = true;
         GameHUD::getThis()->slideOut = false;
         
         GameHUD::getThis()->removeChild(notificationLabel);
@@ -130,7 +116,7 @@ bool NotificationString::slideOut(float dt)
     }
     else
     {
-        float opacity = 255.0f * ((borderX + screenSize.width - posX) / borderX);
+        float opacity = 255.0f * ((0 - posX) / borderX);
     
         notificationLabel->setPosition(ccp(posX, notificationLabel->getPositionY()));
         notificationLabel->setOpacity((GLubyte) opacity);

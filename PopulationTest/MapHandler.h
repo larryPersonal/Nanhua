@@ -118,7 +118,7 @@ public:
     
     /*building*/
     Building* BuildOnMap(CCPoint &target, Building* building);
-    bool Build(CCPoint &target, Building* building, bool isNewBuilding, bool skipConstruction=false, std::string withDetails = "", bool inGame=false);
+    Building* Build(CCPoint &target, Building* building, bool isNewBuilding, bool skipConstruction=false, std::string withDetails = "", bool inGame=false);
     bool BuildPreview(CCPoint &target, Building* building);
     void ForceUnbuild(CCPoint &target);
     void UnBuild(CCPoint &target);
@@ -153,6 +153,8 @@ public:
     void buildTheBuildingWhenLoadingMap(string type, int posX, int posY);
     
     void UnBuildAllPath();
+    
+    void setUniqueBuildingID(Building* bui);
 };
 
 

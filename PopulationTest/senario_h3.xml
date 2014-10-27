@@ -186,7 +186,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Long</name>
-            <text>So far only a few soldiers are infected. But it is deadly contagious.</text>
+            <text>So far only a few soldiers are infected. But it is highly contagious.</text>
 			<limitX>960</limitX>
             <width>85</width>
 			<left>15</left>

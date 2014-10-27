@@ -82,14 +82,14 @@ void SystemMenu::createUI()
     
     menuItems->addObject(systemMenu_resumeButton);
     
-    systemMenu_restartButton = CCMenuItemImage::create("restartbtn.png", "restartpressbtn.png", this, menu_selector( SystemMenu::clickRestartButton ));
+    systemMenu_restartButton = CCMenuItemImage::create("system_load.png", "system_load_press.png", this, menu_selector( SystemMenu::clickRestartButton ));
     systemMenu_restartButton->setScale(systemMenu_resumeButton->boundingBox().size.width / systemMenu_restartButton->boundingBox().size.width, systemMenu_resumeButton->boundingBox().size.height / systemMenu_restartButton->boundingBox().size.height);
     systemMenu_restartButton->setAnchorPoint(ccp(0.5, 1));
     systemMenu_restartButton->setPosition(ccp(systemMenu_background->boundingBox().size.width / 2.0f, systemMenu_background->boundingBox().size.height / 2.0f + systemMenu_resumeButton->boundingBox().size.height));
     
     menuItems->addObject(systemMenu_restartButton);
     
-    systemMenu_optionButton = CCMenuItemImage::create("optionsbtn.png", "optionspressbtn.png", this, menu_selector( SystemMenu::clickOptionButton ));
+    systemMenu_optionButton = CCMenuItemImage::create("system_save.png", "system_save_press.png", this, menu_selector( SystemMenu::clickOptionButton ));
     systemMenu_optionButton->setScale(systemMenu_resumeButton->boundingBox().size.width / systemMenu_optionButton->boundingBox().size.width, systemMenu_resumeButton->boundingBox().size.height / systemMenu_optionButton->boundingBox().size.height);
     systemMenu_optionButton->setAnchorPoint(ccp(0.5, 1));
     systemMenu_optionButton->setPosition(ccp(systemMenu_background->boundingBox().size.width / 2.0f, systemMenu_background->boundingBox().size.height / 2.0f));

@@ -169,7 +169,7 @@ GameHUD::GameHUD()
     eventLabels = CCArray::create();
     eventLabels->retain();
     
-    numberOfEventsToDisplay = 8;
+    numberOfEventsToDisplay = 4;
     
     slideIn = false;
     slideUp = false;
@@ -415,7 +415,8 @@ void GameHUD::resetGameHUD()
     }
     
     ss.str(std::string());
-    ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+    // ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+    ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel->setString(ss.str().c_str());
     
     // reset achievement label
@@ -785,8 +786,8 @@ void GameHUD::update(float deltaTime)
         stringstream ss;
         
         // if it's the first day of the month, update money;
-        //if (date->day == 0 && date->week == 0 && getMoney && !BanditsAttackHandler::getThis()->warMode)
-        if ((date->day == 2 || date->day == 4 || date->day == 6) && getMoney && !BanditsAttackHandler::getThis()->warMode)
+        if (date->day == 0 && date->week == 0 && getMoney && !BanditsAttackHandler::getThis()->warMode)
+        // if ((date->day == 2 || date->day == 4 || date->day == 6) && getMoney && !BanditsAttackHandler::getThis()->warMode)
         {
             int moneyAdded = 0;
             CCArray* housingsOnMap = BuildingHandler::getThis()->housingOnMap;
@@ -1088,17 +1089,18 @@ void GameHUD::update(float deltaTime)
             increasePopulation = false;
         }
         
-        // if it's the last day of the month, change get money to true;
-        /*
+        // if it's the last day of the month, change get money to true
         if (date->day == 6 && date->week == 3)
         {
             getMoney = true;
         }
-        */
+        
+        /*
         if (date->day == 1 || date->day == 3 || date->day == 5)
         {
             getMoney = true;
         }
+        */
         
         if ((date->day == 6 && date->week == 3) || (date->day == 2 && date->week == 1) || (date->day == 4 && date->week == 2))
         {
@@ -1192,7 +1194,7 @@ void GameHUD::update(float deltaTime)
     {
         mAverageHappiness = average_happiness;
         std::stringstream ss;
-        ss << mAverageHappiness;
+        ss << ((int) floor(mAverageHappiness + 0.5f));
         average_happiness_label->setString(ss.str().c_str());
     }
     
@@ -1205,7 +1207,8 @@ void GameHUD::update(float deltaTime)
         mGameCurrentPopulation = temp;
         mGameCurrentPopulationCitizen = tempCitizen;
         std::stringstream ss;
-        ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+        // ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+        ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
         if(mGameCurrentPopulation > mGameCurrentPopulationRoom)
         {
@@ -1229,7 +1232,8 @@ void GameHUD::update(float deltaTime)
     {
         mGameCurrentPopulationRoom = temp;
         std::stringstream ss;
-        ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+        // ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+        ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
         populationLabel->setString(ss.str().c_str());
         if(mGameCurrentPopulation > mGameCurrentPopulationRoom)
         {
@@ -1371,21 +1375,26 @@ void GameHUD::update(float deltaTime)
     /* control the notification panel */
     if(notificationToBeScheduled.size() > 0)
     {
-        if(!slideIn)
+        if(!slideIn && !slideUp)
         {
-            float height = 0;
-            for (int i = 0; i < eventLabels->count(); i++)
-            {
-                NotificationString* ns = (NotificationString*) eventLabels->objectAtIndex(i);
-                height += ns->notificationLabel->boundingBox().size.height;
-            }
-            
-            NotificationString* ns = NotificationString::create(notificationToBeScheduled.front(), height);
+            NotificationString* ns = NotificationString::create(notificationToBeScheduled.front(), 0);
             ns->scheduleSlideIn();
             eventLabels->addObject(ns);
             notificationToBeScheduled.erase(notificationToBeScheduled.begin());
             
-            slideIn = true;
+            float height = ns->notificationLabel->boundingBox().size.height;
+            
+            for (int i = 0; i < eventLabels->count() - 1; i++){
+                NotificationString* nstr = (NotificationString*) eventLabels->objectAtIndex(i);
+                nstr->targetY += height + 100;
+                nstr->isUp = true;
+            }
+            
+            if(eventLabels->count() > 1){
+                slideUp = true;
+            } else {
+                slideIn = true;
+            }
         }
     }
     
@@ -1408,7 +1417,7 @@ void GameHUD::update(float deltaTime)
         {
             if(i == eventLabels->count() - 1)
             {
-                if(ns->notificationLabel->getPositionX() > screenSize.width)
+                if(ns->notificationLabel->getPositionX() < 0)
                 {
                     ns->slideIn(deltaTime);
                 }
@@ -1419,7 +1428,7 @@ void GameHUD::update(float deltaTime)
         {
             if(i == 0)
             {
-                if(ns->notificationLabel->getPositionX() < screenSize.width + ns->borderX)
+                if(ns->notificationLabel->getPositionX() > 0 - ns->borderX)
                 {
                     if(ns->slideOut(deltaTime))
                     {
@@ -1431,7 +1440,9 @@ void GameHUD::update(float deltaTime)
         
         if(slideUp)
         {
-            ns->slideUp(deltaTime, i);
+            if(ns->isUp){
+                ns->slideUp(deltaTime, i);
+            }
             
             if(i == eventLabels->count() - 1)
             {
@@ -1440,12 +1451,15 @@ void GameHUD::update(float deltaTime)
                 for(int j = 0; j < eventLabels->count(); j++)
                 {
                     NotificationString* tempNS = (NotificationString*) eventLabels->objectAtIndex(i);
-                    tmp = tempNS->isUp;
+                    if(tempNS->isUp){
+                        tmp = true;
+                    }
                 }
                 
                 if(!tmp)
                 {
                     slideUp = false;
+                    slideIn = true;
                 }
             }
         }
@@ -1661,7 +1675,8 @@ void GameHUD::createStatsMenu()
     mGameCurrentPopulationRoom = 0;
     
     ss.str(std::string());
-    ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+    // ss << mGameCurrentPopulationCitizen << "/" << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
+    ss << mGameCurrentPopulation << "/" << mGameCurrentPopulationRoom;
     populationLabel = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 14);
     populationLabel->setColor(colorWhite);
     populationLabel->setAnchorPoint(ccp(0.5, 1));
@@ -2446,7 +2461,7 @@ void GameHUD::createSystemMenu()
     happinessIcon->setPosition(ccp(screenSize.width, screenSize.height - 100));
     
     ss.str(std::string());
-    ss << mAverageHappiness;
+    ss << ((int) floor(mAverageHappiness + 0.5f));
     ccColor3B colorBlack = ccc3(0, 0, 0);
     
     average_happiness_label = CCLabelTTF::create(ss.str().c_str(), "Shojumaru-Regular", 24);

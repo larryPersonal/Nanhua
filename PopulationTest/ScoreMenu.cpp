@@ -249,6 +249,12 @@ void ScoreMenu::showScoreMenu(float dt)
         scale = 0.5f;
         ScoreMenu::getThis()->show = false;
         GameHUD::getThis()->unschedule(schedule_selector(ScoreMenu::showScoreMenu));
+        
+        GameHUD::getThis()->money = GameHUD::getThis()->targetMoney;
+        GameHUD::getThis()->reputation = GameHUD::getThis()->targetReputation;
+        GameHUD::getThis()->updateMoney(1);
+        GameHUD::getThis()->updateFood(1);
+        GameHUD::getThis()->updateReputation(1);
     }
     
     float opacity = 255.0f * (scale / 0.5f);

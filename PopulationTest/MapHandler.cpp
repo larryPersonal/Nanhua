@@ -821,11 +821,11 @@ Building* MapHandler::BuildOnMap(cocos2d::CCPoint &target, Building* building)
     return cloneBuilding;
 }
 
-bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewBuilding, bool skipConstruction, std::string withDetails, bool inGame)
+Building* MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewBuilding, bool skipConstruction, std::string withDetails, bool inGame)
 {
     if (!building)
     {
-        return false;
+        return NULL;
     }
     
     /*Note: do NOT use the pointer directly! The pointer points to the main instance of the building. */
@@ -834,13 +834,13 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
     
     if (cloneBuilding->buildingType == BUILDINGCATEGORYMAX)
     {
-        return false;
+        return NULL;
     }
     
     // Don't build if tiles are occupied. EDIT: Ignore this rule if Building is a decoration, which allows it to build on OOB tiles and over each other.
     if (!isBuildableOnTile(target, cloneBuilding))
     {
-        return false;
+        return NULL;
     }
 
     cloneBuilding->buildingRep = CCSprite::create();
@@ -872,6 +872,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
         sss << username << "_building_unique_id";
         int buildingUniqueID = CCUserDefault::sharedUserDefault()->getIntegerForKey(sss.str().c_str(), 0);
         CCUserDefault::sharedUserDefault()->setIntegerForKey(sss.str().c_str(), buildingUniqueID + 1);
+        // CCLog("Building unique id: %d", buildingUniqueID);
     
         cloneBuilding->uniqueID = buildingUniqueID;
     }
@@ -934,7 +935,7 @@ bool MapHandler::Build(cocos2d::CCPoint &target, Building* building, bool isNewB
             TutorialManager::getThis()->miniDragon->clickNext();
         }
     }
-    return true;
+    return cloneBuilding;
 }
 
 bool MapHandler::BuildPreview(cocos2d::CCPoint &target, Building* building)
@@ -1674,3 +1675,17 @@ void MapHandler::UnBuildAllPath()
         MapHandler::getThis()->UnPath(tilePos);
     }
 }
+
+void MapHandler::setUniqueBuildingID(Building* bui)
+{
+    // set the unique id for that building
+    string username = UserProfile::getThis()->username;
+    stringstream ss;
+    ss << username << "_building_unique_id";
+    
+    int uniqueID = CCUserDefault::sharedUserDefault()->getIntegerForKey(ss.str().c_str(), 0);
+    bui->uniqueID = uniqueID;
+    CCUserDefault::sharedUserDefault()->setIntegerForKey(ss.str().c_str(), uniqueID + 1);
+}
+
+

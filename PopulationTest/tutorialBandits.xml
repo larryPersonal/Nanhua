@@ -57,7 +57,6 @@
             <objectiveButton></objectiveButton>
             <villager></villager>
         </unlock>
-        <showObjective></showObjective>
     </slide>
     <slide>
         <speech>Now tap on the guard tower to assign a villager man the guard tower. Manned guard tower will cost you extra food and gold monthly.</speech>
@@ -76,7 +75,7 @@
         <showObjective></showObjective>
     </slide>
     <slide>
-        <speech>Great! Now your village is protected against bandits! Just in time too – looks like some bandits are attacking.</speech>
+        <speech>Great! Now your village is protected against bandits! Just in time too ^–^ looks like some bandits are attacking.</speech>
         <clickToNext></clickToNext>
         <addBandit>2</addBandit>
         <lock>

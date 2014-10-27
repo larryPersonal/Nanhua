@@ -94,6 +94,7 @@ void MiniDragon::playMiniDraggon()
     {
         readTutorialFile();
         constructTutorialSlide();
+        TutorialManager::getThis()->lockModule = false;
     }
     else
     {

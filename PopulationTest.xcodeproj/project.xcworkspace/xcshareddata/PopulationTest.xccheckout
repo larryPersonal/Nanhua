@@ -5,27 +5,31 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>BEE9CDC9-661F-4E80-9737-CAF1FDF3BA71</string>
+	<string>47970145-BF96-4A4D-895F-4FC36EEA6E7B</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PopulationTest</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>13B0F07CBBB4B0610B82F60790D037179D2C5EF2</key>
+		<string>https://github.com/larryPersonal/Nanhua.git</string>
 		<key>70C648A8-9019-440A-82C5-41D452BF4925</key>
 		<string>https://github.com/larryPersonal/Nanhua.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>PopulationTest.xcodeproj/project.xcworkspace</string>
+	<string>PopulationTest.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>70C648A8-9019-440A-82C5-41D452BF4925</key>
+		<key>13B0F07CBBB4B0610B82F60790D037179D2C5EF2</key>
 		<string>../..</string>
+		<key>70C648A8-9019-440A-82C5-41D452BF4925</key>
+		<string>../../../Nanhua Values</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/larryPersonal/Nanhua.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>70C648A8-9019-440A-82C5-41D452BF4925</string>
+	<string>13B0F07CBBB4B0610B82F60790D037179D2C5EF2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>70C648A8-9019-440A-82C5-41D452BF4925</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Nanhua Values</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>13B0F07CBBB4B0610B82F60790D037179D2C5EF2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Nanhua%20Values</string>
 		</dict>
 	</array>
 </dict>

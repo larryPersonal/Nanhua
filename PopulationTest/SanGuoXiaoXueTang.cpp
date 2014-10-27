@@ -160,36 +160,6 @@ void SanGuoXiaoXueTang::createUI()
     buttonNextLabel->setColor(colorBlack);
     this->addChild(buttonNextLabel, 4);
     
-    /*
-    answerLabel1 = CCLabelTTF::create("Option1: ", "GillSansMT", 52);
-    answerLabel1->setAnchorPoint(ccp(0.5f, 0.5f));
-    answerLabel1->setScale(0.5f);
-    answerLabel1->setPosition(ccp(screenSize.width * 0.3f, screenSize.height * 0.4f));
-    answerLabel1->setColor(colorBlack);
-    this->addChild(answerLabel1, 4);
-    
-    answerLabel2 = CCLabelTTF::create("Option2: ", "GillSansMT", 52);
-    answerLabel2->setAnchorPoint(ccp(0.5f, 0.5f));
-    answerLabel2->setScale(0.5f);
-    answerLabel2->setPosition(ccp(screenSize.width * 0.7f, screenSize.height * 0.4f));
-    answerLabel2->setColor(colorBlack);
-    this->addChild(answerLabel2, 4);
-    
-    answerLabel3 = CCLabelTTF::create("Option3: ", "GillSansMT", 52);
-    answerLabel3->setAnchorPoint(ccp(0.5f, 0.5f));
-    answerLabel3->setScale(0.5f);
-    answerLabel3->setPosition(ccp(screenSize.width * 0.3f, screenSize.height * 0.2f));
-    answerLabel3->setColor(colorBlack);
-    this->addChild(answerLabel3, 4);
-    
-    answerLabel4 = CCLabelTTF::create("Option4: ", "GillSansMT", 52);
-    answerLabel4->setAnchorPoint(ccp(0.5f, 0.5f));
-    answerLabel4->setScale(0.5f);
-    answerLabel4->setPosition(ccp(screenSize.width * 0.7f, screenSize.height * 0.2f));
-    answerLabel4->setColor(colorBlack);
-    this->addChild(answerLabel4, 4);
-    */
-    
     dragon = CCSprite::createWithSpriteFrameName("dragon_c.png");
     dragon->setScale(screenSize.width / dragon->boundingBox().size.width * 0.2f);
     dragon->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -248,6 +218,8 @@ void SanGuoXiaoXueTang::showUI()
     wrong = 0;
     moneyReward = 0;
     
+    lockModule = false;
+    
     active = true;
     preloadTextures();
     createUI();
@@ -261,48 +233,52 @@ void SanGuoXiaoXueTang::showUI()
 
 void SanGuoXiaoXueTang::hideUI()
 {
-    active = false;
-    clear();
-    // san guo xiao xue tang has been completed, resume the game play
-    UIButtonControl::resumeGame();
-    
-    switch (theState) {
-        case Part_1:
-        {
-            SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
-            TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
+    if(!lockModule){
+        active = false;
+        lockModule = true;
+        clear();
+        // san guo xiao xue tang has been completed, resume the game play
+        UIButtonControl::resumeGame();
+        
+        switch (theState) {
+            case Part_1:
+            {
+                CCLog("test 9");
+                SoundtrackManager::PlayBGM("Ishikari Lore.mp3");
+                TutorialManager::getThis()->scheduleOnce(schedule_selector(TutorialManager::setupForTutorial), 1.0f);
+            }
+                break;
+            case Part_2:
+            {
+                string filename = "scenario2.xml";
+                Senario::getThis()->scenarioState = Scenario2;
+                Senario::getThis()->playSenario(filename.c_str());
+                ObjectiveHandler::getThis()->playObjective();
+            }
+                break;
+            case Part_3:
+            {
+                string filename = "senario_h4.xml";
+                Senario::getThis()->scenarioState = Scenario4;
+                Senario::getThis()->playSenario(filename.c_str());
+                ObjectiveHandler::getThis()->playObjective();
+            }
+                break;
+            case Part_4:
+            {
+                string filename = "senario_h5.xml";
+                Senario::getThis()->scenarioState = Scenario5;
+                Senario::getThis()->playSenario(filename.c_str());
+                ObjectiveHandler::getThis()->playObjective();
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case Part_2:
-        {
-            string filename = "scenario2.xml";
-            Senario::getThis()->scenarioState = Scenario2;
-            Senario::getThis()->playSenario(filename.c_str());
-            ObjectiveHandler::getThis()->playObjective();
-        }
-            break;
-        case Part_3:
-        {
-            string filename = "senario_h4.xml";
-            Senario::getThis()->scenarioState = Scenario4;
-            Senario::getThis()->playSenario(filename.c_str());
-            ObjectiveHandler::getThis()->playObjective();
-        }
-            break;
-        case Part_4:
-        {
-            string filename = "senario_h5.xml";
-            Senario::getThis()->scenarioState = Scenario5;
-            Senario::getThis()->playSenario(filename.c_str());
-            ObjectiveHandler::getThis()->playObjective();
-        }
-            break;
-        default:
-            break;
+        
+        GameHUD::getThis()->scheduleAddMoney(moneyReward);
+        // GameHUD::getThis()->clickScoreButton();
     }
-    
-    GameHUD::getThis()->scheduleAddMoney(moneyReward);
-    // GameHUD::getThis()->clickScoreButton();
 }
 
 void SanGuoXiaoXueTang::readQuestionFiles()
@@ -524,28 +500,28 @@ void SanGuoXiaoXueTang::clearQuestion()
     for (int i = 0; i < answerArray1->count(); i++)
     {
         CCLabelTTF* theLabel = (CCLabelTTF*)answerArray1->objectAtIndex(i);
-        background->removeChild(theLabel, true);
+        this->removeChild(theLabel, true);
     }
     answerArray1->removeAllObjects();
     
     for (int i = 0; i < answerArray2->count(); i++)
     {
         CCLabelTTF* theLabel = (CCLabelTTF*)answerArray2->objectAtIndex(i);
-        background->removeChild(theLabel, true);
+        this->removeChild(theLabel, true);
     }
     answerArray2->removeAllObjects();
     
     for (int i = 0; i < answerArray3->count(); i++)
     {
         CCLabelTTF* theLabel = (CCLabelTTF*)answerArray3->objectAtIndex(i);
-        background->removeChild(theLabel, true);
+        this->removeChild(theLabel, true);
     }
     answerArray3->removeAllObjects();
     
     for (int i = 0; i < answerArray4->count(); i++)
     {
         CCLabelTTF* theLabel = (CCLabelTTF*)answerArray4->objectAtIndex(i);
-        background->removeChild(theLabel, true);
+        this->removeChild(theLabel, true);
     }
     answerArray4->removeAllObjects();
 }
@@ -584,12 +560,6 @@ void SanGuoXiaoXueTang::clear()
 {
     clearQuestion();
     
-    /*
-    buttonAnswer1->removeChild(answerLabel1, true);
-    buttonAnswer2->removeChild(answerLabel2, true);
-    buttonAnswer3->removeChild(answerLabel3, true);
-    buttonAnswer4->removeChild(answerLabel4, true);
-    */
     buttonNext->removeChild(buttonNextLabel, true);
     
     this->removeChild(buttonAnswer1, true);
@@ -597,12 +567,7 @@ void SanGuoXiaoXueTang::clear()
     this->removeChild(buttonAnswer3, true);
     this->removeChild(buttonAnswer4, true);
     this->removeChild(buttonNext, true);
-    /*
-    this->removeChild(answerLabel1, true);
-    this->removeChild(answerLabel2, true);
-    this->removeChild(answerLabel3, true);
-    this->removeChild(answerLabel4, true);
-    */
+
     this->removeChild(buttonNextLabel, true);
     this->removeChild(dragon, true);
     this->removeChild(bubble, true);

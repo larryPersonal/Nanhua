@@ -191,7 +191,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Long</name>
-            <text>I would suggest opening the inventory and giving out rations to the villagers.</text>
+            <text>I would suggest opening the storehouse and giving out rations to the villagers.</text>
 			<limitX>960</limitX>
             <width>85</width>
 			<left>15</left>

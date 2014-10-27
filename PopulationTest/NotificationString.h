@@ -18,7 +18,7 @@ public:
     CCLabelTTF* notificationLabel;
     float borderX;
     float borderY;
-    float startY;
+    float targetY;
     bool isUp;
     float cumulativeTime;
     

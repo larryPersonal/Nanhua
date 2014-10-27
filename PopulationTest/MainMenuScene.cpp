@@ -15,6 +15,8 @@
 #include "GlobalHelper.h"
 #include "AccountRow.h"
 #include "UserProfile.h"
+#include "UIButtonControl.h"
+#include "TutorialManager.h"
 
 using namespace CocosDenshion;
 
@@ -62,6 +64,9 @@ MainMenuScene::MainMenuScene()
     mode = login;
     
     teacherManagementNode = NULL;
+    
+    UIButtonControl::pauseGame();
+    TutorialManager::getThis()->lockModule = true;
 }
 
 MainMenuScene::~MainMenuScene()
@@ -211,7 +216,7 @@ bool MainMenuScene::init()
     usernameBox->setAnchorPoint(ccp(0, 1));
     usernameBox->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 200.0f));
     usernameBox->setFontColor(ccBLACK);
-    usernameBox->setPlaceHolder("Name:");
+    usernameBox->setPlaceHolder(" Name:");
     usernameBox->setMaxLength(20);
     usernameBox->setReturnType(kKeyboardReturnTypeDone);
     this->addChild(usernameBox, 9);
@@ -220,7 +225,7 @@ bool MainMenuScene::init()
     passwordBox->setAnchorPoint(ccp(0, 1));
     passwordBox->setPosition(ccp(screenSize.width / 2.0f + 100.0f, screenSize.height * 3.0f / 4.0f - 280.0f));
     passwordBox->setFontColor(ccBLACK);
-    passwordBox->setPlaceHolder("Password:");
+    passwordBox->setPlaceHolder(" Password:");
     passwordBox->setMaxLength(30);
     passwordBox->setReturnType(kKeyboardReturnTypeDone);
     passwordBox->setInputFlag(kEditBoxInputFlagPassword);

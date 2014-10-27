@@ -209,6 +209,7 @@ void GameScene::configLevelData()
     {
         Senario::getThis()->scenarioState = Scenario1;
         TutorialManager::getThis()->active = false;
+        TutorialManager::getThis()->lockModule = false;
         TutorialManager::getThis()->unlockAll();
         ObjectiveHandler::getThis()->playObjective();
     }
@@ -847,7 +848,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
         }
     }
     
-    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL)
+    if(TutorialManager::getThis()->active && TutorialManager::getThis()->miniDragon != NULL && !TutorialManager::getThis()->lockModule)
     {
         if(TutorialManager::getThis()->clickable && TutorialManager::getThis()->miniDragon->clickToNext && !TutorialManager::getThis()->miniDragon->lockClick)
         {
@@ -1602,7 +1603,7 @@ void GameScene::ccTouchesEnded(CCSet *touches, CCEvent *pEvent)
                     //build
                     //allow a building to be built on top of a path.
                     MapHandler::getThis()->UnPath(tilePos);
-                    if (MapHandler::getThis()->Build(tilePos, newBuilding, true, false, "", true))
+                    if (MapHandler::getThis()->Build(tilePos, newBuilding, true, false, "", true) != NULL)
                     {
                         GameHUD::getThis()->closeAllMenuAndResetTapMode();
                         lastTilePosPreview.x = INT_MAX;
@@ -1851,6 +1852,8 @@ void GameScene::FirstRunPopulate()
             // I must restore all the paths from the villagers!
             gs->followPath();
         }
+        
+        TutorialManager::getThis()->lockModule = false;
     }
     else
     {
@@ -1992,6 +1995,10 @@ void GameScene::stopGame()
     MainMenuScene::getThis()->init();
     GameManager::getThis()->enableMainMenuScene();
     
+    // reset pause flag and lock module flag
+    TutorialManager::getThis()->lockModule = true;
+    UIButtonControl::pauseGame();
+    
     isEndingGame = false;
     isInGame = false;
     
@@ -2021,7 +2028,9 @@ void GameScene::update(float time)
         return;
     }
     
-    if(!GameHUD::getThis()->pause)
+    // CCLog("pause: %s,    lockModule: %s", GameHUD::getThis()->pause ? "true" : "false", TutorialManager::getThis()->lockModule ? "true" : "false");
+    
+    if(!GameHUD::getThis()->pause && !TutorialManager::getThis()->lockModule)
     {
         for (int i = 0; i < SpriteHandler::getThis()->spritesOnMap->count(); i++)
         {

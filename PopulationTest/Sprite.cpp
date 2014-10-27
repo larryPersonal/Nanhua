@@ -1601,8 +1601,10 @@ void GameSprite::updateZIndex()
     
     if(villagerClass != V_BANDIT && villagerClass != V_SOLDIER)
     {
-        spriteRep->setZOrder( MapHandler::getThis()->calcZIndex(currPos, 0, true, this) );
-        speechBubble->setZOrder( MapHandler::getThis()->calcZIndex(currPos, 0, true, this) );
+        //spriteRep->setZOrder( MapHandler::getThis()->calcZIndex(currPos, 0, true, this) );
+        //speechBubble->setZOrder( MapHandler::getThis()->calcZIndex(currPos, 0, true, this) );
+        spriteRep->setZOrder( 99999 );
+        speechBubble->setZOrder( 99999 );
     }
     else
     {

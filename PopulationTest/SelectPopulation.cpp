@@ -195,11 +195,11 @@ void SelectPopulation::createMenuItems()
     {
         if(building->isCurrentConstructing)
         {
-            ss << "Construction in progress";
+            ss << "Construction in Progress";
         }
         else
         {
-            ss << "Construction in prepare";
+            ss << "Assign Villagers";
         }
     }
     else
@@ -636,8 +636,8 @@ void SelectPopulation::reposition(){
     
     labelBuildingName->CCNode::setPosition(50.0f + hw, -90.0f + hh);
     
-    workerLabel->setPosition(ccp(-halfWidth / 2.0f + 40.0f + hw, halfHeight - 40.0f + hh));
-    taskLabel->setPosition(ccp(halfWidth / 2.0f + 40.0f + hw, halfHeight - 40.0f + hh));
+    workerLabel->setPosition(ccp(-halfWidth / 2.0f + 80.0f + hw, halfHeight - 45.0f + hh));
+    taskLabel->setPosition(ccp(halfWidth / 2.0f + 60.0f + hw, halfHeight - 45.0f + hh));
     
     // for empty space
     for (int i = 0; i < emptySpaceArray->count(); i++)

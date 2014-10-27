@@ -168,7 +168,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Long</name>
-            <text>Well, some of them were refuges who had lost their families to the war.</text>
+            <text>Well, some of them were refugees who had lost their families to the war.</text>
 			<limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
@@ -370,7 +370,7 @@
 		</sprite>
 		<dialogue>
             <name>Xiao Hua</name>
-            <text>And by doing so, we need to take in more refuges to strengthen our army and this will use up more resources.</text>
+            <text>And by doing so, we need to take in more refugees to strengthen our army and this will use up more resources.</text>
 			<limitX>960</limitX>
             <width>85</width>
 			<left>15</left>
