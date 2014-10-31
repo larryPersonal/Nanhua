@@ -3253,7 +3253,7 @@ void GameManagement::loadTutorialData(int type)
         // backup save
         // play scenario already, then start to play tutorial again
         UserProfile::getThis()->systemConfig->skipSenario = true;
-        GameScene::getThis()->configLevelData();
+        GameScene::getThis()->configLevelData(false);
     }
 }
 

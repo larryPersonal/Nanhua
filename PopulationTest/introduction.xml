@@ -6,6 +6,7 @@
         <clickToNext></clickToNext>
     </slide>
     <slide>
+        <playBGM>Cheerful_Music_at_Library.mp3</playBGM>
         <clickToNext></clickToNext>
         <sprite>
 			<width>60</width>

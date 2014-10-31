@@ -6,8 +6,8 @@
     <id>1</id>
     <type>DISPLAY</type>
     <tittle>Health Improvements</title>
-    <content>Build 2 hospitals! Each cost 3000 gold and 1000 food.</content>
-    <next>2</next>
+    <content>Build 3 hospitals! Each cost 2400 gold and 800 food.</content>
+    <next>3</next>
     <finalObjective></finalObjective>
 </objective>
 

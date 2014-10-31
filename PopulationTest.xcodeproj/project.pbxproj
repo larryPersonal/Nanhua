@@ -503,6 +503,12 @@
 		848DDAFD19050CCE001229B8 /* FloatingArraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DDAFC19050CCE001229B8 /* FloatingArraw.cpp */; };
 		848DDB0019052CBB001229B8 /* NotificationString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DDAFF19052CBB001229B8 /* NotificationString.cpp */; };
 		848DFC95172E32C100BAA843 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848DFC93172E32C100BAA843 /* GameManager.cpp */; };
+		848E48E01A038A6A00378F08 /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848E48DF1A038A6A00378F08 /* backgroundMusic.mp3 */; };
+		848E48E21A038A7000378F08 /* Cheerful_Music_at_Library.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848E48E11A038A7000378F08 /* Cheerful_Music_at_Library.mp3 */; };
+		848E48E41A038A7400378F08 /* guardhouse_training.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848E48E31A038A7400378F08 /* guardhouse_training.mp3 */; };
+		848E48E61A038A7900378F08 /* in-game_bandit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848E48E51A038A7900378F08 /* in-game_bandit.mp3 */; };
+		848E48E81A038A7C00378F08 /* Ishikari Lore.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848E48E71A038A7C00378F08 /* Ishikari Lore.mp3 */; };
+		848E48EA1A038A8000378F08 /* warscene.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 848E48E91A038A8000378F08 /* warscene.mp3 */; };
 		848F567119923CC50093FC6A /* Question.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848F567019923CC50093FC6A /* Question.cpp */; };
 		848F567419923F780093FC6A /* SanGuoXiaoXueTangFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848F567319923F780093FC6A /* SanGuoXiaoXueTangFileReader.cpp */; };
 		848F5676199242480093FC6A /* questions_part1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 848F5675199242480093FC6A /* questions_part1.xml */; };
@@ -1582,6 +1588,12 @@
 		848DDAFF19052CBB001229B8 /* NotificationString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotificationString.cpp; sourceTree = "<group>"; };
 		848DFC93172E32C100BAA843 /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
 		848DFC94172E32C100BAA843 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		848E48DF1A038A6A00378F08 /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
+		848E48E11A038A7000378F08 /* Cheerful_Music_at_Library.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Cheerful_Music_at_Library.mp3; sourceTree = "<group>"; };
+		848E48E31A038A7400378F08 /* guardhouse_training.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = guardhouse_training.mp3; sourceTree = "<group>"; };
+		848E48E51A038A7900378F08 /* in-game_bandit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "in-game_bandit.mp3"; sourceTree = "<group>"; };
+		848E48E71A038A7C00378F08 /* Ishikari Lore.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Ishikari Lore.mp3"; sourceTree = "<group>"; };
+		848E48E91A038A8000378F08 /* warscene.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warscene.mp3; sourceTree = "<group>"; };
 		848EB39616F070A50048463A /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
 		848F566F19923A000093FC6A /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
 		848F567019923CC50093FC6A /* Question.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Question.cpp; sourceTree = "<group>"; };
@@ -2047,6 +2059,7 @@
 		365FB9B016E5E30B00A57CF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				848E48DE1A038A6000378F08 /* audio */,
 				848F06F519938450008690ED /* ScoreMenu */,
 				840FAB091990F8D30039DC58 /* san guo xiao xue tang */,
 				8412AE37196E2FB70091C76C /* random event manager */,
@@ -3725,6 +3738,19 @@
 			name = textures;
 			sourceTree = "<group>";
 		};
+		848E48DE1A038A6000378F08 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				848E48DF1A038A6A00378F08 /* backgroundMusic.mp3 */,
+				848E48E11A038A7000378F08 /* Cheerful_Music_at_Library.mp3 */,
+				848E48E31A038A7400378F08 /* guardhouse_training.mp3 */,
+				848E48E51A038A7900378F08 /* in-game_bandit.mp3 */,
+				848E48E71A038A7C00378F08 /* Ishikari Lore.mp3 */,
+				848E48E91A038A8000378F08 /* warscene.mp3 */,
+			);
+			name = audio;
+			sourceTree = "<group>";
+		};
 		848F06F519938450008690ED /* ScoreMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -4425,6 +4451,7 @@
 				842A0F57190A494A008B16AF /* sortbyhappiness_uppress.png in Resources */,
 				8414CF2218FF9AB80052CA91 /* Happinessicon.png in Resources */,
 				365FB9C616E5E30B00A57CF0 /* iTunesArtwork in Resources */,
+				848E48EA1A038A8000378F08 /* warscene.mp3 in Resources */,
 				8497259B19B868D200F8E93C /* refugees_at_town.png in Resources */,
 				841ADE411947030500D50463 /* loginPage.png in Resources */,
 				849086C019B0455B00CE24EA /* Extra.plist in Resources */,
@@ -4498,9 +4525,11 @@
 				84E0CCCB19BD79AB002498B7 /* quizscreen.png in Resources */,
 				8436BCED193C46A200FC2243 /* Howling_Wind.wav in Resources */,
 				840813C7193B1E510085EAFC /* Clash_of_Battles.wav in Resources */,
+				848E48E61A038A7900378F08 /* in-game_bandit.mp3 in Resources */,
 				8490CAC119A60AA00070ACE8 /* happinessEmote.plist in Resources */,
 				84902B1619AED05A00D4869E /* level0_building.xml in Resources */,
 				36AC556F18D6981900C165F5 /* scroller.png in Resources */,
+				848E48E81A038A7C00378F08 /* Ishikari Lore.mp3 in Resources */,
 				8497259A19B868D200F8E93C /* refugee_outside_great_wall.png in Resources */,
 				84F2912318FE307D0045F834 /* timeclock_week4.png in Resources */,
 				367E24B4193DB4A6000CA2A7 /* packedportraits.plist in Resources */,
@@ -4526,6 +4555,7 @@
 				84007D441973DE980048F23E /* goodharvest.png in Resources */,
 				36041A551713B61300A14BE6 /* banditbehavior.lua in Resources */,
 				842B84C91906599800D43E2E /* objectiveScreen.png in Resources */,
+				848E48E01A038A6A00378F08 /* backgroundMusic.mp3 in Resources */,
 				36D87D0E18C5BEFD00FE8B31 /* YoungGirl.png in Resources */,
 				8402BBE419138F4D00005700 /* Energybarblue.png in Resources */,
 				73E09BD319743015007B59C8 /* path.png in Resources */,
@@ -4538,6 +4568,7 @@
 				842A0F48190A2EB2008B16AF /* soldierAnimationDR.png in Resources */,
 				8490CAEA19A60F250070ACE8 /* noPathEmote.png in Resources */,
 				843BE2B218F7F1BA00682E5B /* speechdialog.png in Resources */,
+				848E48E41A038A7400378F08 /* guardhouse_training.mp3 in Resources */,
 				84F2913118FE9A5B0045F834 /* red.png in Resources */,
 				8444D6BD190779E500D5AFAC /* banditAttackLeftDown.png in Resources */,
 				36423C281917258200975B4C /* hit sfx.wav in Resources */,
@@ -4575,6 +4606,7 @@
 				849ACF3E19ECECD00023B327 /* MainGamePageTexture.png in Resources */,
 				8410546618E94ECB003D88C6 /* exitbtn.png in Resources */,
 				8418C39618D8399D00C8C9B9 /* objective_tutorial.xml in Resources */,
+				848E48E21A038A7000378F08 /* Cheerful_Music_at_Library.mp3 in Resources */,
 				84E0CCD319BD79BF002498B7 /* SanGuoXiaoXueTang.plist in Resources */,
 				842A0F54190A494A008B16AF /* sortbyhappiness_up.png in Resources */,
 				84968FD7196BB14C0007AE42 /* scenario4_disable.png in Resources */,

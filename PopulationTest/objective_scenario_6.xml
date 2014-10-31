@@ -6,8 +6,8 @@
     <id>1</id>
     <type>ARMY</type>
     <tittle>General 2</title>
-    <content>Build an army, 5 guard towers with 5 manned towers.</content>
-    <value>5</value>
+    <content>Build an army, 6 guard towers with 6 manned towers.</content>
+    <value>6</value>
     <next>2</next>
     <finalObjective></finalObjective>
 </objective>

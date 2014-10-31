@@ -56,10 +56,10 @@ void UIButtonControl::clickPauseButton()
 
 void UIButtonControl::clickBuildHospitalButton()
 {
-    if(GameHUD::getThis()->targetMoney >= 1000 && GameHUD::getThis()->targetFood >= 0)
+    if(GameHUD::getThis()->targetMoney >= 2400 && GameHUD::getThis()->targetFood >= 800)
     {
-        GameHUD::getThis()->scheduleAddMoney(-1000);
-        GameHUD::getThis()->scheduleAddFood(0);
+        GameHUD::getThis()->scheduleAddMoney(-2400);
+        GameHUD::getThis()->scheduleAddFood(-800);
         UserProfile::getThis()->number_of_hospital++;
         
         if(UserProfile::getThis()->number_of_hospital == 2)

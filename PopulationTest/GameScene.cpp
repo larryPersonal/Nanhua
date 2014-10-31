@@ -193,7 +193,7 @@ void GameScene::configSkipData()
     }
 }
 
-void GameScene::configLevelData()
+void GameScene::configLevelData(bool newGame)
 {
     int level = UserProfile::getThis()->gameLevel;
     
@@ -204,6 +204,7 @@ void GameScene::configLevelData()
         filename = "introduction.xml";
         Senario::getThis()->scenarioState = Introduction;
         Senario::getThis()->playSenario(filename.c_str());
+        GameManager::getThis()->town_hall_level = 0;
     }
     else if(level == 1)
     {
@@ -212,11 +213,20 @@ void GameScene::configLevelData()
         TutorialManager::getThis()->lockModule = false;
         TutorialManager::getThis()->unlockAll();
         ObjectiveHandler::getThis()->playObjective();
+        if(newGame)
+        {
+            GameManager::getThis()->town_hall_level = 0;
+        }
     }
     else if(level == 2)
     {
         SanGuoXiaoXueTang::getThis()->theState = Part_2;
         SanGuoXiaoXueTang::getThis()->showUI();
+        if(newGame){
+            GameManager::getThis()->town_hall_level = 1;
+        } else if(GameManager::getThis()->town_hall_level < 1) {
+            GameManager::getThis()->town_hall_level = 1;
+        }
     }
     else if(level == 3)
     {
@@ -224,16 +234,28 @@ void GameScene::configLevelData()
         Senario::getThis()->scenarioState = Scenario3;
         Senario::getThis()->playSenario(filename.c_str());
         ObjectiveHandler::getThis()->playObjective();
+        if(newGame)
+        {
+            GameManager::getThis()->town_hall_level = 2;
+        }
     }
     else if(level == 4)
     {
         SanGuoXiaoXueTang::getThis()->theState = Part_3;
         SanGuoXiaoXueTang::getThis()->showUI();
+        if(newGame)
+        {
+            GameManager::getThis()->town_hall_level = 3;
+        }
     }
     else if(level == 5)
     {
         SanGuoXiaoXueTang::getThis()->theState = Part_4;
         SanGuoXiaoXueTang::getThis()->showUI();
+        if(newGame)
+        {
+            GameManager::getThis()->town_hall_level = 3;
+        }
     }
     else if(level == 6)
     {
@@ -241,6 +263,10 @@ void GameScene::configLevelData()
         Senario::getThis()->scenarioState = Scenario6;
         Senario::getThis()->playSenario(filename.c_str());
         ObjectiveHandler::getThis()->playObjective();
+        if(newGame)
+        {
+            GameManager::getThis()->town_hall_level = 3;
+        }
     }
 }
 
@@ -253,7 +279,7 @@ void GameScene::reSetupLevel(bool newGame)
         // 1 means fixed save
         GameManagement::saveGameToFile(1);
     }
-    configLevelData();
+    configLevelData(newGame);
 }
 
 bool GameScene::init()

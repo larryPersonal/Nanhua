@@ -143,7 +143,7 @@ public:
     
     void reSetupLevel(bool newGame);
     void configSkipData();
-    void configLevelData();
+    void configLevelData(bool newGame);
     
     void startGame();
     void loadGame();

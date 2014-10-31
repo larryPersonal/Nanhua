@@ -125,7 +125,7 @@ struct ConfigSettings
     ConfigSettings()
     {
         // related to sprite
-        default_hapiness = 50;
+        default_hapiness = 80;
         default_hapiness_limit = 100;
         default_loyalty = 50;
         default_loyalty_limit = 100;
@@ -231,7 +231,7 @@ struct SettingsLevel
     // all these variables can have variant values for different levels
     void setLevel0()
     {
-        default_start_money = 2500000;
+        default_start_money = 8000;
         default_max_reputation = 400;
         projected_population_growth = 20;
         

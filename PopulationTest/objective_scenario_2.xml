@@ -30,9 +30,9 @@
     <id>4</id>
     <type>DISPLAY</type>
     <tittle>Governor</title>
-    <content>Try to mater your toops in 30 minutes!</content>
+    <content>Try to mater your toops in 15 minutes!</content>
     <next>5</next>
-    <time>5</time>
+    <time>15</time>
     <finalObjective></finalObjective>
 </objective>
 

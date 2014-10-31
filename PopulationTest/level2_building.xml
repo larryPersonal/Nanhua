@@ -4,15 +4,70 @@
     <building>
         <type>housing</type>
         <posX>33</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
         <posY>48</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>49</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>50</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>51</posY>
     </building>
     <building>
         <type>granary</type>
         <posX>44</posX>
         <posY>48</posY>
     </building>
+    <building>
+        <type>amenity</type>
+        <posX>43</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>amenity</type>
+        <posX>43</posX>
+        <posY>49</posY>
+    </building>
     
     #sprite
+    <building>
+        <type>sprite</type>
+        <posX>34</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>sprite</type>
+        <posX>35</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>sprite</type>
+        <posX>36</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>sprite</type>
+        <posX>37</posX>
+        <posY>47</posY>
+    </building>
     
     #roads
     // road 1
@@ -91,39 +146,59 @@
     
     // road 3
     <building>
-        <type>road</road>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>51</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>50</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>49</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>48</posY>
+    </building>
+    <building>
+        <type>road</type>
         <posX>34</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>35</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>36</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>37</posX>
         <posY>48</posY>
     </building>
     
     // road 4
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>41</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>42</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>43</posX>
         <posY>48</posY>
     </building>

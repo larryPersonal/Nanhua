@@ -4,7 +4,52 @@
     <building>
         <type>housing</type>
         <posX>33</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
         <posY>48</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>49</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>50</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>52</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>53</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>54</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>55</posY>
+    </building>
+    <building>
+        <type>housing</type>
+        <posX>32</posX>
+        <posY>51</posY>
     </building>
     <building>
         <type>granary</type>
@@ -12,40 +57,97 @@
         <posY>48</posY>
     </building>
     <building>
-        <type>military</type>
-        <posX>37</posX>
-        <posY>53</posY>
+        <type>granary</type>
+        <posX>45</posX>
+        <posY>45</posY>
     </building>
     <building>
-        <type>market</type>
-        <posX>38</posX>
-        <posY>55</posY>
+        <type>granary</type>
+        <posX>45</posX>
+        <posY>43</posY>
+    </building>
+    
+    <building>
+        <type>amenity</type>
+        <posX>43</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>amenity</type>
+        <posX>43</posX>
+        <posY>49</posY>
+    </building>
+    <building>
+        <type>amenity</type>
+        <posX>42</posX>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>amenity</type>
+        <posX>42</posX>
+        <posY>49</posY>
+    </building>
+    
+    <building>
+        <type>military</type>
+        <posX>37</posX>
+        <posY>52</posY>
+    </building>
+    <building>
+        <type>military</type>
+        <posX>40</posX>
+        <posY>52</posY>
     </building>
     
     #sprite
     <building>
         <type>sprite</type>
-        <posX>33</posX>
-        <posY>46</posY>
-    </building>
-    <building>
-        <type>sprite</type>
         <posX>34</posX>
-        <posY>46</posY>
+        <posY>47</posY>
     </building>
     <building>
         <type>sprite</type>
         <posX>35</posX>
-        <posY>46</posY>
+        <posY>47</posY>
     </building>
     <building>
         <type>sprite</type>
         <posX>36</posX>
-        <posY>46</posY>
+        <posY>47</posY>
+    </building>
+    <building>
+        <type>sprite</type>
+        <posX>37</posX>
+        <posY>47</posY>
     </building>
     
     #roads
     // road 1
+    <building>
+        <type>road</type>
+        <posX>44</posX>
+        <posY>43</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>44</posX>
+        <posY>44</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>44</posX>
+        <posY>45</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>44</posX>
+        <posY>46</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>44</posX>
+        <posY>47</posY>
+    </building>
     <building>
         <type>road</type>
         <posX>45</posX>
@@ -121,39 +223,79 @@
     
     // road 3
     <building>
-        <type>road</road>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>55</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>54</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>53</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>52</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>51</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>50</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>49</posY>
+    </building>
+    <building>
+        <type>road</type>
+        <posX>33</posX>
+        <posY>48</posY>
+    </building>
+    <building>
+        <type>road</type>
         <posX>34</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>35</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>36</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>37</posX>
         <posY>48</posY>
     </building>
     
     // road 4
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>41</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>42</posX>
         <posY>48</posY>
     </building>
     <building>
-        <type>road</road>
+        <type>road</type>
         <posX>43</posX>
         <posY>48</posY>
     </building>

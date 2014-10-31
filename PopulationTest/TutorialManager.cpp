@@ -215,6 +215,7 @@ void TutorialManager::setupForScenario()
     target.x += 1;
     SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
+    /*
     target.y += 1;
     SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
     
@@ -226,6 +227,7 @@ void TutorialManager::setupForScenario()
     
     target.x -= 1;
     SpriteHandler::getThis()->addSpriteToMap(target, V_REFUGEE, true);
+    */
     
     goNarr = true;
     active = false;

@@ -6,8 +6,8 @@
     <id>1</id>
     <type>RAISE_POPULATION</type>
     <tittle>City Planner</title>
-    <content>Build house to raise 10 more population.</content>
-    <value>2</value>
+    <content>Build house to raise 8 more population.</content>
+    <value>8</value>
     <next>2</next>
     <finalObjective></finalObjective>
 </objective>
