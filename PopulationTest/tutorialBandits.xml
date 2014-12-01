@@ -6,7 +6,7 @@
         <cameraMove>4400,2500</cameraMove>
         <clickToNext></clickToNext>
         <lockClick></lockClick>
-        <addVillager>5</addVillager>
+        <addVillager>2</addVillager>
         <lock>
             <villager></villager>
             <buildButton></buildButton>

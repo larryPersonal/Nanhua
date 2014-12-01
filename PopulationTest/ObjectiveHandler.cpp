@@ -353,6 +353,10 @@ void ObjectiveHandler::playObjective(bool showNotification)
         GameHUD::getThis()->currentTime = 0;
         GameHUD::getThis()->hasTimer = true;
     }
+    else
+    {
+        GameHUD::getThis()->objectiveTime->setVisible(false);
+    }
     
     stringstream sss;
     sss << "You receive a new objective!";

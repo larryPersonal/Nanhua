@@ -947,7 +947,8 @@ static EAGLView *view = 0;
     
     url                         =   [NSURL fileURLWithPath:path];
     player                      =   [[MPMoviePlayerController alloc] initWithContentURL:url]; // LEAK HERE
-    player.view.frame           =   CGRectMake(0, 0, self.frame.size.height, self.frame.size.width);
+    // player.view.frame           =   CGRectMake(0, 0, self.frame.size.height, self.frame.size.width);
+    player.view.frame           =   CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     player.fullscreen           =   YES;
     player.scalingMode          =   MPMovieScalingModeNone;
     player.controlStyle         =   MPMovieControlStyleNone;

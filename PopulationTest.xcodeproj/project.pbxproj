@@ -4407,7 +4407,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					365FB99A16E5E30B00A57CF0 = {
-						DevelopmentTeam = W3EYCT2ME5;
+						DevelopmentTeam = QAT7Q4CF37;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -5174,7 +5174,7 @@
 		365FBC6016E5E31000A57CF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (W3EYCT2ME5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (39S5XW5KTT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5202,7 +5202,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-llua";
-				PROVISIONING_PROFILE = "bfeab779-f9ae-4816-96f3-c078a5df805d";
+				PROVISIONING_PROFILE = "29459cda-b6d1-4199-b7e9-39e7e970ca56";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -5212,7 +5212,7 @@
 		365FBC6116E5E31000A57CF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Quek (W3EYCT2ME5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christopher Quek (39S5XW5KTT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -5238,7 +5238,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-llua";
-				PROVISIONING_PROFILE = "bfeab779-f9ae-4816-96f3-c078a5df805d";
+				PROVISIONING_PROFILE = "29459cda-b6d1-4199-b7e9-39e7e970ca56";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -5284,7 +5284,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "4a2ddb40-a4f7-4482-84b8-c3234750356a";
+				PROVISIONING_PROFILE = "29459cda-b6d1-4199-b7e9-39e7e970ca56";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5332,7 +5332,7 @@
 					"-lsqlite3",
 				);
 				PRODUCT_NAME = PopulationTest;
-				PROVISIONING_PROFILE = "4a2ddb40-a4f7-4482-84b8-c3234750356a";
+				PROVISIONING_PROFILE = "29459cda-b6d1-4199-b7e9-39e7e970ca56";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
